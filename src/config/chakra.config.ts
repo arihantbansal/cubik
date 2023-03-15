@@ -1,4 +1,4 @@
-// import { extendTheme, ThemeConfig } from "@chakra-ui/react";
+import { extendTheme, ThemeConfig } from '@chakra-ui/react';
 // import { Avatar } from "theme/components/avatar";
 // import { Button } from "theme/components/buttons";
 // import { Input } from "theme/components/input";

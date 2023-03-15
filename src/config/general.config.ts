@@ -7,9 +7,9 @@ type ConfigInterface = {
 };
 const config: ConfigInterface = {
   general: {
-    name: "cubik",
-    domain: "cubik.so",
-    twitterHandle: "@_cubik",
+    name: 'cubik',
+    domain: 'cubik.so',
+    twitterHandle: '@_cubik',
   },
 };
 
