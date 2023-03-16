@@ -11,9 +11,52 @@ datasource db {
   relationMode = "prisma"
 }
 
-model User {
-  id            String @id @default(uuid()) @map("_id")
-  username      String
-  walletAddress String @unique
-  avatar        String
+model UserModel {
+  id               String            @id @default(uuid()) @map("_id")
+  username         String            @unique
+  mainWallet       String
+  profilePicture   String            @db.VarChar(500)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @default(now())
+  userDetailsModel UserDetailsModel?
+}
+
+model UserDetailsModel {
+  id             String    @id @default(uuid()) @map("_id")
+  firstName      String?
+  lastName       String?
+  bio            String?   @db.VarChar(1000)
+  email          String?
+  website        String?
+  twitterHandle  String?
+  githubHandle   String?
+  linkedinUrl    String?
+  telegramHandle String?
+  userModelId    String    @unique
+  user           UserModel @relation(fields: [userModelId], references: [id])
+
+  @@index([userModelId])
+}
+
+model FundingRound {
+  id                     String       @id @default(uuid()) @map("_id")
+  roundNumber            Int
+  roundName              String
+  roundDetailsId         String       @unique
+  matchedPool            Float
+  communityContributions Float
+  roundDetails           RoundDetails @relation(fields: [roundDetailsId], references: [id])
+
+  @@index([roundDetailsId])
+}
+
+model RoundDetails {
+  id           String        @id @default(uuid()) @map("_id")
+  FundingRound FundingRound?
+}
+
+model ProjectsModel {
+  id String @id @default(uuid()) @map("_id")
+
+  // fundingRound FundingRound[]
 }
