@@ -1,6 +1,6 @@
-import { Button } from "@chakra-ui/react";
-import type { NextPage } from "next";
-import { signIn, useSession } from "next-auth/react";
+import { Button } from '@chakra-ui/react';
+import type { NextPage } from 'next';
+import { signIn, useSession } from 'next-auth/react';
 
 const Home: NextPage = () => {
   const { data, status } = useSession();
@@ -9,10 +9,10 @@ const Home: NextPage = () => {
     <>
       <Button
         onClick={async () => {
-          const res = await signIn("credentials", {
-            callbackUrl: "",
+          const res = await signIn('credentials', {
+            callbackUrl: '',
             redirect: false,
-            wallet: "test",
+            wallet: 'test',
           });
           console.log(res);
         }}
