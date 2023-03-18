@@ -16,6 +16,7 @@ model UserModel {
   username         String            @unique
   mainWallet       String            @unique
   profilePicture   String            @db.VarChar(500)
+  tx               String            @db.VarChar(500)
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   userDetailsModel UserDetailsModel?
