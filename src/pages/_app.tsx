@@ -15,7 +15,11 @@ const WalletContext: any = dynamic(() => import('../context/wallet-context'), {
 const AppProvider = ({ children, pageProps }: any) => {
   return (
     <WalletContext>
-      <SessionProvider session={pageProps.session}>
+      <SessionProvider
+        session={pageProps.session}
+        refetchInterval={5 * 60}
+        refetchOnWindowFocus={true}
+      >
         <ChakraProvider theme={theme}>{children}</ChakraProvider>
       </SessionProvider>
     </WalletContext>
