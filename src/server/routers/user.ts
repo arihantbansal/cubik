@@ -1,6 +1,6 @@
-import { procedure, router } from "../trpc";
-import { z } from "zod";
-import { prisma } from "../utils/prisma";
+import { procedure, router } from '../trpc';
+import { z } from 'zod';
+import { prisma } from '../utils/prisma';
 
 export const userRouter = router({
   create: procedure

@@ -12,29 +12,24 @@ const WalletContext: any = dynamic(() => import('../context/wallet-context'), {
   ssr: false,
 });
 
-const AppProvider = ({ children, pageProps }: any) => {
-  return (
-    <WalletContext>
-      <SessionProvider
-        session={pageProps.session}
-        refetchInterval={5 * 60}
-        refetchOnWindowFocus={true}
-      >
-        <ChakraProvider theme={theme}>{children}</ChakraProvider>
-      </SessionProvider>
-    </WalletContext>
-  );
-};
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) => {
   return (
-    <AppProvider pageProps={pageProps}>
-      <AppLayout>
-        <Component {...pageProps} />
-      </AppLayout>
-    </AppProvider>
+    <WalletContext>
+      <SessionProvider
+        session={session}
+        refetchInterval={5 * 60}
+        refetchOnWindowFocus={true}
+      >
+        <ChakraProvider theme={theme}>
+          <AppLayout>
+            <Component {...pageProps} />
+          </AppLayout>
+        </ChakraProvider>
+      </SessionProvider>
+    </WalletContext>
   );
 };
 
