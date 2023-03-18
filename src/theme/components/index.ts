@@ -7,13 +7,11 @@ import { Tabs } from './tabs';
 import { Tag } from './tag';
 
 export const components = {
-  components: {
-    Button,
-    Input,
-    Avatar,
-    Tag,
-    Tabs,
-    Menu,
-    Select,
-  },
+  Button,
+  Input,
+  Avatar,
+  Tag,
+  Tabs,
+  Menu,
+  Select,
 };

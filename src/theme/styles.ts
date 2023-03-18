@@ -1,19 +1,22 @@
 import { mode, StyleFunctionProps } from '@chakra-ui/theme-tools';
+import '@fontsource/plus-jakarta-sans';
 
 export const styles = {
   global: (props: StyleFunctionProps) => ({
     fonts: {
-      heading: `'Poppins', sans-serif`,
-      body: `'Poppins', sans-serif`,
+      heading: `'Plus Jakarta Sans', sans-serif`,
+      body: `'Plus Jakarta Sans', sans-serif`,
     },
     body: {
-      bg: mode('#01020B', '#01020B')(props),
-      color: mode('white', 'white')(props),
+      bg: mode('#000000', '#000000')(props),
+      color: mode('#E0FFFD', '#E0FFFD')(props),
+      '::-webkit-scrollbar': {
+        display: 'none',
+      },
     },
     text: {
       marginTop: '0',
     },
-
     '.chakra-alert': {
       gap: '1.2rem',
       bg: 'black',
@@ -24,16 +27,16 @@ export const styles = {
       rounded: '6px',
       fontSize: '16px',
       lineHeight: '0',
-      fontWeight: '600',
+      fontWeight: '500',
       height: '2.5rem',
-      bg: mode('red !important', 'red')(props),
-      color: mode('black', 'white')(props),
+      bg: mode('#4ADE80 !important', '#4ADE80')(props),
+      color: mode('black', 'black')(props),
       _hover: {
-        bg: mode('red !important', 'red')(props),
+        bg: mode('#4ADE80 !important', '#4ADE80')(props),
         color: mode('black', 'white')(props),
       },
       _active: {
-        bg: mode('red !important', 'red')(props),
+        bg: mode('#4ADE80 !important', '#4ADE80')(props),
         color: mode('black', 'white')(props),
       },
     },
@@ -79,16 +82,16 @@ export const styles = {
       color: 'black',
     },
     '.wallet-adapter-dropdown-list': {
-      bg: 'red',
-      color: 'red',
+      bg: '#4ADE80',
+      color: 'black',
       shadow: 'none',
       border: '1px solid',
       borderColor: 'gray.200',
       rounded: 'md',
     },
     '.wallet-adapter-dropdown-list-item': {
-      bg: 'red',
-      color: 'red',
+      bg: '#4ADE80',
+      color: 'black',
       border: '1px solid gray.100',
       fontSize: 'lg',
       fontWeight: '400',

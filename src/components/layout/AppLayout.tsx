@@ -1,4 +1,6 @@
+import { Button, Container } from '@chakra-ui/react';
 import { FC, ReactNode } from 'react';
+import { Header } from './navigation/Header';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -8,14 +10,21 @@ interface AuthProviderProps {
 }
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  return <>{children}</>;
+  return (
+    <Container maxW="full" p="0">
+      {children}
+    </Container>
+  );
 };
 
 const AppLayout: FC<AppLayoutProps> = ({ children }) => {
   return (
     <AuthProvider>
-      {/* <Header /> */}
-      <div>hello world</div>
+      <Header>
+        <Button variant="connect_wallet" h="fit-content">
+          Connect Wallet
+        </Button>
+      </Header>
       {children}
     </AuthProvider>
   );

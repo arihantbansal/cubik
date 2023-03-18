@@ -1,6 +1,6 @@
-import config from '@/config/general.config';
-import SeoPropsType from '@/types/seo';
+import SeoPropsType from '~/types/seo';
 import Head from 'next/head';
+import config from '~/config/general.config';
 
 const SEO = ({ title, description, image }: SeoPropsType) => {
   return (

@@ -20,7 +20,7 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { Cross as Hamburger } from 'hamburger-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { memo } from 'react';
+import React, { memo } from 'react';
 import { BiChevronDown } from 'react-icons/bi';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import Logo from '~/components/common/logo/Logo';
@@ -188,10 +188,12 @@ const MobileNavCollapsible = memo(function MobileNavCollapsible({
   isOpen,
   onToggle,
   onClose,
+  children,
 }: {
   isOpen: boolean;
   onToggle: () => void;
   onClose: () => void;
+  children: React.ReactNode;
 }) {
   const router = useRouter();
   return (
@@ -204,16 +206,7 @@ const MobileNavCollapsible = memo(function MobileNavCollapsible({
         p="1rem 2.5rem 2rem 2.5rem"
         gap="1.4rem"
       >
-        <Button
-          onClick={() => {
-            router.push('/connect-wallet');
-            onToggle();
-          }}
-          w="full"
-        >
-          {' '}
-          Connect Wallet
-        </Button>
+        {children}
         <Link href="/projects" style={{ width: '100%' }} passHref>
           <Flex
             direction={'row'}
@@ -261,7 +254,11 @@ const MobileNavCollapsible = memo(function MobileNavCollapsible({
   );
 });
 
-export const Header = memo(function Header() {
+export const Header = memo(function Header({
+  children,
+}: {
+  children?: React.ReactNode;
+}) {
   const [isSmallerThan800] = useMediaQuery('(max-width: 800px)');
   const router = useRouter();
   const { isOpen, onToggle, onClose } = useDisclosure();
@@ -273,19 +270,20 @@ export const Header = memo(function Header() {
     show_get_a_wallet_button = true;
   } else if (pathName === '/connect-wallet') {
     show_get_a_wallet_button = true;
-  } else {
-    show_get_a_wallet_button = false;
   }
 
   return (
     <Container
-      border="1px solid red"
+      w="full"
+      zIndex="100"
       maxW={'full'}
       position="fixed"
+      top="0"
       p="0"
+      minH="4rem"
       bg="transparent"
       sx={{
-        backdropFilter: 'blur(10px)',
+        backdropFilter: 'blur(20px)',
         margin: '0px !important',
         marginTop: '0px !important',
       }}
@@ -295,7 +293,7 @@ export const Header = memo(function Header() {
         maxW="7xl"
         alignItems={'center'}
         justifyContent={'space-between'}
-        py={{ base: '0.6rem', md: '1.5rem' }}
+        py={{ base: '1rem', md: '1.5rem' }}
         px="1.5rem"
       >
         <Box as="button" fontSize={'5xl'} onClick={() => router.push('/')}>
@@ -332,15 +330,7 @@ export const Header = memo(function Header() {
               Get Wallet
             </Button>
           ) : (
-            <Hamburger
-              toggled={isOpen}
-              toggle={onToggle}
-              size={25}
-              duration={0.4}
-              color="white"
-              hideOutline
-              rounded
-            />
+            children
           )
         ) : (
           <>
@@ -371,7 +361,10 @@ export const Header = memo(function Header() {
             <HStack gap="0.5rem">
               {!show_get_a_wallet_button ? (
                 <>
-                  <Button onClick={() => router.push('/connect-wallet')}>
+                  <Button
+                    variant={'connect_wallet'}
+                    onClick={() => router.push('/connect-wallet')}
+                  >
                     Connect Wallet
                   </Button>
                 </>
@@ -404,11 +397,12 @@ export const Header = memo(function Header() {
           </>
         )}
       </Flex>
-      <MobileNavCollapsible
+      {/* <MobileNavCollapsible
         onClose={onClose}
         isOpen={isOpen}
         onToggle={onToggle}
-      />
+      > */}
+      {/* </MobileNavCollapsible> */}
     </Container>
   );
 });

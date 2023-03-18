@@ -4,8 +4,8 @@ const Logo = () => {
   return (
     <HStack gap="0.2rem" alignItems={'center'} justify="space-between">
       <Center
-        width={{ base: '1.2rem', md: '1.8rem' }}
-        height={{ base: '1.2rem', md: '1.8rem' }}
+        width={{ base: '1.4rem', md: '1.8rem' }}
+        height={{ base: '1.4rem', md: '1.8rem' }}
       >
         <svg
           width="101"
