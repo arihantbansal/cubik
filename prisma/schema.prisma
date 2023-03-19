@@ -59,13 +59,16 @@ model UserDetailsModel {
 }
 
 model FundingRound {
-  id                     String       @id @default(uuid()) @map("_id")
+  id                     String            @id @default(uuid()) @map("_id")
   roundNumber            Int
   roundName              String
-  roundDetailsId         String       @unique
   matchedPool            Float
   communityContributions Float
-  roundDetails           RoundDetails @relation(fields: [roundDetailsId], references: [id])
+  active                 Boolean           @default(true)
+  roundDetailsId         String            @unique
+  roundDetails           RoundDetails      @relation(fields: [roundDetailsId], references: [id])
+  PojectJoinRound        PojectJoinRound[]
+  tx                     String            @db.VarChar(500)
 
   @@index([roundDetailsId])
 }
@@ -75,8 +78,29 @@ model RoundDetails {
   FundingRound FundingRound?
 }
 
-model ProjectsModel {
-  id String @id @default(uuid()) @map("_id")
+model PojectJoinRound {
+  id           String        @id @default(uuid()) @map("_id")
+  projectId    String
+  tx           String        @db.VarChar(500)
+  roundId      String
+  project      ProjectsModel @relation(fields: [projectId], references: [id])
+  fundingRound FundingRound  @relation(fields: [roundId], references: [id])
 
-  // fundingRound FundingRound[]
+  @@index([projectId])
+  @@index([roundId])
+}
+
+model ProjectsModel {
+  id                String            @id @default(uuid()) @map("_id")
+  name              String
+  short_description String            @db.VarChar(2000)
+  logo              String            @db.VarChar(1000)
+  owner_publickey   String
+  long_description  String            @db.VarChar(5000)
+  industry          String
+  project_link      String            @default("")
+  twitter_handle    String            @default("")
+  github_link       String            @default("")
+  projectUserCount  Int               @default(0)
+  PojectJoinRound   PojectJoinRound[]
 }
