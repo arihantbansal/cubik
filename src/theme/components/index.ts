@@ -5,7 +5,7 @@ import { Menu } from './menu';
 import { Select } from './select';
 import { Tabs } from './tabs';
 import { Tag } from './tag';
-
+import { Textarea } from './textArea';
 export const components = {
   Button,
   Input,
@@ -14,4 +14,5 @@ export const components = {
   Tabs,
   Menu,
   Select,
+  Textarea,
 };

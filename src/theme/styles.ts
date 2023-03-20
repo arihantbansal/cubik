@@ -108,103 +108,29 @@ export const styles = {
     '.wallet-adapter-dropdown-list-item:not([disabled]):hover': {
       bg: '#eaeaea',
     },
-    // dispatch styles
-    '.dsp- .topicView': {
-      background: 'transparent !important',
-    },
-    '.dsp- .alertContainer': {
-      background: 'transparent !important',
-      display: 'none',
-    },
-    '.dsp- .topicViewContainer .topicViewContent': {
-      padding: '0px !important',
-    },
-    '.dsp- .topicViewContainer': {
-      background: 'transparent !important',
-      padding: '0px !important',
-      minHeight: '40rem',
-    },
-    '.breadcrumbContainer': {
-      backgroundColor: 'red',
-    },
-    '.dsp- .topicContentBox .headerAndActions .topicHeader': {
-      display: 'none',
-      padding: 'none',
-    },
-
-    '.dsp- .topicContentBox .headerAndActions .topicToolsContainer': {
-      display: 'none',
-      padding: 'none',
-    },
-    '.dsp- .postContent': {
-      background: '#141414 !important',
-      border: '1px solid #242424 !important',
-      borderRadius: '4px',
-      color: '#242424',
-      height: '5rem',
-      _placeholder: {
-        color: '#242424',
-      },
-    },
-    '.dsp- .topicContentBox .activityInfo': {
-      display: 'none',
-      padding: 'none',
-    },
-    '.dsp- .breadcrumbContainer': {
-      display: 'none',
-    },
-    '.dsp- .createPostContainer': {
-      border: 'none',
-    },
-    '.dsp- .topicContentBox': {
-      background: 'none',
-      padding: '0px !important',
-    },
-    '.dsp- .createPostButton': {
-      color: 'black',
-      backgroundColor: 'white',
-    },
-    '.dsp- .postContentContainer': {
-      background: 'transparent !important',
-      padding: '0px',
-    },
-    '.dsp- .box .postHeader .walletId': {
-      color: '#C5C5C5',
-    },
-    '.dsp- .votePostContainer': {
-      display: 'none',
-    },
-    '.dsp- .box .postBody': {
-      color: 'white',
-    },
-    '.dsp- .actionDivider': {
-      display: 'none',
-    },
-    '.dsp- .box .actionsContainer .right .awardButton:disabled': {
-      display: 'none',
-    },
-    '.dsp- .box .actionsContainer .right .replyButton:disabled': {
-      color: '#FF8EFF',
-    },
-    '.dsp- .box .actionsContainer .right .replyButton svg': {
-      display: 'none',
-    },
-    '.dsp- .addGIFButton:disabled': {
-      color: '#FF8EFF',
-      borderColor: '#FF8EFF',
-    },
-    '.dsp- ': {
-      padding: 'none',
-    },
-    '.dsp- .roleLabelContainer': {
-      display: 'none',
-    },
     // react slick
     '.slick-next': {
       right: '0px',
     },
     '.slick-prev': {
       left: '0px',
+    },
+
+    //taptap
+    '.ProseMirror': {
+      minHeight: '20rem',
+      height: 'fit-content',
+      border: 'none',
+      padding: '0.5rem 1.6rem',
+      overflow: 'scroll',
+      _focus: {
+        outline: 'none',
+      },
+
+      '&::-moz-focus-inner': {
+        border: 'none',
+        outline: 'none !important',
+      },
     },
   }),
 };

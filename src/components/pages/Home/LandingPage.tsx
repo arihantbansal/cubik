@@ -77,7 +77,7 @@ const HeroBackground = () => {
     // height="100vh"
     //border="1px solid green"
     // alignSelf={'center'}
-    // border="1px solid red"
+    // border="1px dashed #0386CF  "
     // position={'absolute'}
     // w="100rem"
     // height={'100vh'}
@@ -86,7 +86,7 @@ const HeroBackground = () => {
     // minH={{ base: '100rem', md: '130rem', lg: '190rem', xl: '160vh' }}
     // border={{
     //   base: '1px solid blue',
-    //   md: '1px solid red',
+    //   md: '1px dashed #0386CF  ',
     //   lg: '1px solid green',
     // }}
     // minW="90rem"
