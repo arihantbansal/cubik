@@ -8,34 +8,40 @@ const cubik = definePartsStyle((props) => {
   const { colorScheme: c } = props; // extract colorScheme from component props
 
   return {
+    tablist: {
+      width: '100%',
+      backgroundColor: 'transparent',
+      gap: '32px',
+    },
     tab: {
-      padding: '10px 8px',
+      padding: '8px 8px 12px 8px',
+      fontWeight: '600',
+      fontSize: '18px',
+      lineHeight: '22px',
       backgroundColor: 'transparent',
       borderBottom: '1px solid transparent',
-      color: '#717171',
-      fontWeight: '600',
+      color: 'neutral.7',
       mb: '-1px',
       _hover: {
         borderBottom: '1px solid transparent',
-        color: '#717171',
+        color: 'neutral.7',
         mb: '-1px',
       },
       _selected: {
-        borderBottom: '1px solid #D645A6',
-        color: 'white',
+        borderBottom: '1px solid',
+        borderColor: 'brand.teal5',
+        color: 'brand.teal6',
         mb: '-1px',
       },
     },
-    tablist: {
-      width: '100%',
-      // borderBottom: '1px solid #222222',
-      backgroundColor: 'transparent',
-    },
     tabpanel: {
-      padding: '0',
+      padding: '32px 0px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'start',
+      justifyContent: 'start',
+      gap: '32px',
       backgroundColor: 'transparent',
-      borderBottomRadius: 'lg',
-      borderTopRightRadius: 'lg',
     },
   };
 });

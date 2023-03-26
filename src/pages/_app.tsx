@@ -12,6 +12,8 @@ const WalletContext: any = dynamic(() => import('../context/wallet-context'), {
   ssr: false,
 });
 
+// Show a progress bar for page transitions
+
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },

@@ -31,12 +31,12 @@ export const Button = {
       height: 'fit-content',
       _hover: {
         border: 'none',
-        background: '#ffffff10',
+        background: '#ffffff04',
         color: '#A8F0E6',
       },
       _active: {
         border: 'none',
-        background: '#ffffff10',
+        background: '#ffffff04',
         color: '#A8F0E6',
       },
     }),

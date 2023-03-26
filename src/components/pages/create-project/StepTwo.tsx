@@ -1,7 +1,8 @@
 import {
   Box,
   Button,
-  ButtonGroup,
+  CardBody,
+  CardFooter,
   FormControl,
   FormErrorMessage,
   FormHelperText,
@@ -9,7 +10,6 @@ import {
   Icon,
   Input,
   InputGroup,
-  VStack,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
@@ -73,7 +73,7 @@ const StepTwo: React.FC<StepTwoProps> = ({
 
   return (
     <>
-      <VStack w="full" spacing="2rem">
+      <CardBody>
         <FormControl isInvalid={Boolean(errors.projectLink)} id="projectLink">
           <FormLabel>Project Link</FormLabel>
           <Input
@@ -163,12 +163,8 @@ const StepTwo: React.FC<StepTwoProps> = ({
             <FormHelperText></FormHelperText>
           )}
         </FormControl>
-      </VStack>
-      <ButtonGroup
-        display={'flex'}
-        width="full"
-        justifyContent={'space-between'}
-      >
+      </CardBody>
+      <CardFooter>
         <Button
           variant={'outline'}
           onClick={onPrevious}
@@ -183,7 +179,7 @@ const StepTwo: React.FC<StepTwoProps> = ({
         >
           Next
         </Button>
-      </ButtonGroup>
+      </CardFooter>
     </>
   );
 };

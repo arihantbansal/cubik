@@ -1,6 +1,8 @@
 import {
   Box,
   Button,
+  CardBody,
+  CardFooter,
   Center,
   FormControl,
   FormErrorMessage,
@@ -119,7 +121,7 @@ const StepOne: React.FC<StepOneProps> = ({
   console.log('error - ', errors);
   return (
     <>
-      <VStack w="full" spacing="2rem">
+      <CardBody>
         <FormControl w="full" isInvalid={Boolean(errors.projectName)}>
           <FormLabel pb="0.5rem" htmlFor="projectName">
             Project Name
@@ -344,8 +346,8 @@ const StepOne: React.FC<StepOneProps> = ({
             </VStack>
           </HStack>
         </FormControl>
-      </VStack>
-      <HStack w="full">
+      </CardBody>
+      <CardFooter>
         <Button
           variant={'outline'}
           ml="auto"
@@ -354,7 +356,7 @@ const StepOne: React.FC<StepOneProps> = ({
         >
           Next
         </Button>
-      </HStack>
+      </CardFooter>
     </>
   );
 };

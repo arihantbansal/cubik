@@ -1,4 +1,11 @@
-import { Box, Center, Container, HStack, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  Card,
+  CardHeader,
+  Center,
+  Container,
+  HStack,
+} from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -140,24 +147,16 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
 
   return (
     <Container maxW="full" p="0" my="10rem">
-      <VStack
-        bg="surface.card"
-        p="32px"
-        maxW="35rem"
-        mx="auto"
-        border={'1px solid #FFFFFF10'}
-        rounded="16px"
-        gap="2rem"
-      >
-        <VStack textAlign={'center'} alignItems="center" maxW="full">
+      <Card maxW="36rem" mx="auto">
+        <CardHeader>
           <Box as="h1" textStyle={'title1'}>
             Create New Project
           </Box>
-          <Box as="p" textStyle={'body4'}>
+          <Box as="p" textStyle={'body4'} color="neutral.9">
             Bring your vision to life! Create a project, receive grants through
             public donations, and make an impact.
           </Box>
-        </VStack>
+        </CardHeader>
         <HStack w="full" justify="space-between">
           <ProjectTimeline index={1} name={'Basic Information'} />
           <ProjectTimeline index={2} name={'Basic Information'} />
@@ -194,7 +193,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
           )}
           {step === 3 && <StepThree onPrevious={goToPreviousStep} />}
         </form>
-      </VStack>
+      </Card>
     </Container>
   );
 };

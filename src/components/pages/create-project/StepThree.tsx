@@ -1,12 +1,12 @@
 import {
   Box,
   Button,
-  ButtonGroup,
+  CardBody,
+  CardFooter,
   Flex,
   HStack,
   Icon,
   IconButton,
-  VStack,
 } from '@chakra-ui/react';
 import { Color } from '@tiptap/extension-color';
 import Heading from '@tiptap/extension-heading';
@@ -70,12 +70,11 @@ const StepThree = ({ onPrevious }: { onPrevious: () => void }) => {
 
   return (
     <>
-      <VStack
-        minH={'full'}
-        w="full"
+      <CardBody
+        rounded={'8px'}
+        gap="1rem"
         border={'1px solid'}
         borderColor="neutral.3"
-        rounded={'8px'}
         backgroundColor={'surface.input_field'}
       >
         {/* editor controls */}
@@ -187,12 +186,8 @@ const StepThree = ({ onPrevious }: { onPrevious: () => void }) => {
             </div>
           </Box>
         )}
-      </VStack>
-      <ButtonGroup
-        display={'flex'}
-        width="full"
-        justifyContent={'space-between'}
-      >
+      </CardBody>
+      <CardFooter>
         <Button
           variant={'outline'}
           onClick={onPrevious}
@@ -206,7 +201,7 @@ const StepThree = ({ onPrevious }: { onPrevious: () => void }) => {
         >
           Submit Project
         </Button>
-      </ButtonGroup>
+      </CardFooter>
     </>
   );
 };

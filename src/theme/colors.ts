@@ -12,12 +12,30 @@ export const colors = {
     card_stroke: '#67697A16',
     card_on_hover_stroke: '#D645A640',
     text_pink: '#FF85D6',
-    green: '#4ADE80',
     deep_green: '#091414',
-    red: '#FF4747',
     cta_stroke: '#D645A660',
     stoke_white: '#FFFFFF12',
     stroke: '#4D5454',
+    green: {
+      1: '#D6FFE5',
+      2: '#31F579',
+      3: '#091F12',
+    },
+    red: {
+      1: '#330002',
+      2: '#FF333D',
+      3: '#FFCAC2',
+    },
+    blue: {
+      1: '#BAE6FD',
+      2: '#33ADFF',
+      3: '#00213D',
+    },
+    yellow: {
+      1: '#FEF08A',
+      2: '#FFD83D',
+      3: '#F59E0B',
+    },
   },
   brand: {
     teal1: '#040A09',
