@@ -1,5 +1,6 @@
 import {
   Button,
+  Card,
   Center,
   Collapse,
   FormControl,
@@ -11,13 +12,12 @@ import {
   InputRightElement,
   Spinner,
   useDisclosure,
-  Card,
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Controller,
   FieldValues,
@@ -26,12 +26,12 @@ import {
 } from 'react-hook-form';
 import { HiCheck } from 'react-icons/hi';
 
+import { v4 as uuidV4 } from 'uuid';
 import * as yup from 'yup';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import FramerCarousel from '~/components/pages/connect-wallet/create-profile/FramerNFTCarousel';
 import ProfilePicture from '~/components/pages/connect-wallet/create-profile/ProfilePicture';
 import { trpc } from '~/utils/trpc';
-import { v4 as uuidV4 } from 'uuid';
 
 const CreateProfile = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -52,7 +52,12 @@ const CreateProfile = () => {
         redirect: false,
         wallet: publicKey?.toBase58(),
       });
-      router.push('/' + data.username);
+      console.log('user profile created succesfully');
+      //todo: redirecting
+      // router.push({
+      //   pathname: '/[username]',
+      //   query: { username: data.username },
+      // });
     },
   });
   const schema = yup.object().shape({

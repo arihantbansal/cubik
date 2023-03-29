@@ -20,8 +20,13 @@ const UserNavMenu = () => {
   const router = useRouter();
 
   function handleSignOut() {
-    disconnect();
-    signOut();
+    disconnect()
+      .then(() => {
+        signOut();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   if (!session?.user.id) return <>no user</>;

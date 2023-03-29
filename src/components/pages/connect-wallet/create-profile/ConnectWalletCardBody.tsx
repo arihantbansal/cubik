@@ -15,7 +15,7 @@ import { WalletReadyState } from '@solana/wallet-adapter-base';
 import type { Wallet } from '@solana/wallet-adapter-react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import Image from 'next/image';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 
 export const ConnectWalletCardBody = () => {
@@ -66,18 +66,22 @@ export const ConnectWalletCardBody = () => {
   );
 
   // if wallet connection throws error then stop spinner
-  // useEffect(() => {
-  //   if (connecting) {
-  //     if (publicKey) {
-  //       setSpinning(false);
-  //     }
-  //   }
-  // }, [publicKey, connecting]);
+  useEffect(() => {
+    if (connecting) {
+      if (publicKey) {
+        setSpinning(false);
+      }
+    }
+  }, [publicKey, connecting]);
+
+  function shortenWalletName(walletName: string) {
+    return walletName.split(' ')[0];
+  }
 
   const WalletButton = ({ wallet }: { wallet: Wallet }) => {
     return (
       <Flex
-        minW={isLargerThan480 ? '96px' : '104px'}
+        minW={isLargerThan480 ? '96px' : '110px'}
         // h="88px"
         p="16px"
         rounded="12px"
@@ -147,7 +151,7 @@ export const ConnectWalletCardBody = () => {
           textStyle={'title5'}
           textAlign={'center'}
         >
-          {wallet.adapter.name}
+          {shortenWalletName(wallet.adapter.name)}
         </Box>
       </Flex>
     );

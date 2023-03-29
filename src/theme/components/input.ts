@@ -95,6 +95,15 @@ export const Input: ComponentStyleConfig = {
           color: '#636666',
         },
       },
+      addon: {
+        fontFamily: 'mono',
+        color: '#636666',
+        background: '#0F0F0F',
+        boxShadow: 'none',
+        outline: '1px solid #141414',
+        border: '1px solid',
+        borderColor: '#141414',
+      },
     },
     filled: {
       field: {

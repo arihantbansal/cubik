@@ -6,6 +6,7 @@ import { Input } from './input';
 import { Menu } from './menu';
 import { Modal } from './modal';
 import { Select } from './select';
+import { Slider } from './slider';
 import { Tabs } from './tabs';
 import { Tag } from './tag';
 import { Textarea } from './textArea';
@@ -22,4 +23,5 @@ export const components = {
   Card,
   Modal,
   Drawer,
+  Slider,
 };

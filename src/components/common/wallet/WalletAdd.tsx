@@ -84,6 +84,7 @@ export const WalletAddress: FC<PropsType> = ({
   return (
     <HStack
       w="100%"
+      height={logoSize}
       transform={{ base: 'translateX(-5px) scale(0.9)', sm: 'none' }}
       justify={'space-between'}
     >

@@ -1,6 +1,5 @@
 import { Container } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
 import SEO from 'src/components/SEO';
 import AdminView from '~/components/pages/user-profile/AdminView';
 import { User } from '~/types/user';
@@ -10,9 +9,7 @@ type profilePropsType = {
 };
 
 const ProfilePage = (props: profilePropsType) => {
-  const [loading, setLoading] = useState<boolean>(false);
   const { data: session } = useSession();
-  console.log('4. props in profile page - ', props);
   return (
     <>
       <SEO

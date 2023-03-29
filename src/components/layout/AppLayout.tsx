@@ -11,31 +11,35 @@ interface AppLayoutProps {
   children: ReactNode;
 }
 interface AuthProviderProps {
+  onClose: any;
   children: ReactNode;
 }
 
-const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
+const AuthProvider: FC<AuthProviderProps> = ({ onClose, children }) => {
   const router = useRouter();
   const { data: session } = useSession();
   const { publicKey } = useWallet();
   const { prevAsPath } = useAsPath();
 
   async function auth() {
-    if (publicKey) {
-      const signInResponse = await signIn('credentials', {
-        callbackUrl: '',
-        redirect: false,
-        wallet: publicKey.toBase58(),
+    if (!publicKey) return;
+    const signInResponse = await signIn('credentials', {
+      callbackUrl: '',
+      redirect: false,
+      wallet: publicKey.toBase58(),
+    });
+    if (signInResponse?.status === 401) {
+      router.push('/create-profile');
+      return onClose();
+    }
+    if (prevAsPath) {
+      return router.push(prevAsPath);
+    }
+    if (session) {
+      return router.push({
+        pathname: '/[username]',
+        query: { username: session.user.username },
       });
-      console.log('sign in response - ', signInResponse);
-      if (signInResponse?.status === 401) {
-        router.push('/create-profile');
-        return;
-      }
-      console.log('session', session);
-      return router.push(
-        prevAsPath ? prevAsPath : '/' + session?.user.username
-      );
     }
   }
 
@@ -52,12 +56,14 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
 const AppLayout: FC<AppLayoutProps> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const router = useRouter();
+  const { publicKey } = useWallet();
   const { status } = useSession();
 
   useEffect(() => {
-    console.log('status - ', status);
-  }, [status]);
+    if (publicKey && status === 'authenticated') {
+      onClose();
+    }
+  }, [onClose, publicKey, status]);
 
   const NavbarCTA = () => {
     switch (status) {
@@ -85,7 +91,7 @@ const AppLayout: FC<AppLayoutProps> = ({ children }) => {
   };
 
   return (
-    <AuthProvider>
+    <AuthProvider onClose={onClose}>
       <ConnectWalletModal isOpen={isOpen} onClose={onClose} />
       <Header>
         <NavbarCTA />
