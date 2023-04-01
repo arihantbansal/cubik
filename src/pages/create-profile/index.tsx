@@ -54,10 +54,10 @@ const CreateProfile = () => {
       });
       console.log('user profile created succesfully');
       //todo: redirecting
-      // router.push({
-      //   pathname: '/[username]',
-      //   query: { username: data.username },
-      // });
+      router.push({
+        pathname: '/[username]',
+        query: { username: data.username },
+      });
     },
   });
   const schema = yup.object().shape({
@@ -104,7 +104,7 @@ const CreateProfile = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   if (!publicKey) {
-    return <>no wallet connected</>;
+    router.push('/');
   }
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -114,15 +114,24 @@ const CreateProfile = () => {
       id: uuidV4(),
       profilePicture: pfp,
       tx: 'afsdsdad',
-      mainWallet: publicKey.toBase58(),
+      mainWallet: publicKey?.toBase58() as string,
     });
   };
 
   if (creatingNewProfileLoadingState) {
     return (
-      <Center w="full" h="full">
-        <Spinner />
-      </Center>
+      <Card
+        overflow="hidden"
+        w="full"
+        maxW={'24rem'}
+        mx="auto"
+        my="10rem"
+        gap="1rem"
+      >
+        <Center w="full" h="full">
+          <Spinner />
+        </Center>
+      </Card>
     );
   }
 
@@ -202,7 +211,10 @@ const CreateProfile = () => {
               outline="1px solid #242424"
               w="full"
             >
-              <WalletAddress walletAddress={publicKey.toBase58()} size="xs" />
+              <WalletAddress
+                walletAddress={publicKey?.toBase58() as string}
+                size="xs"
+              />
             </Center>
           </HStack>
           <FormErrorMessage>

@@ -9,44 +9,25 @@ import {
   InputRightAddon,
   useDisclosure,
 } from '@chakra-ui/react';
-import {
-  chakraComponents,
-  OptionBase,
-  Props,
-  Select,
-} from 'chakra-react-select';
+import { OptionBase } from 'chakra-react-select';
 import { useEffect, useState } from 'react';
-import { useController, UseControllerProps, useForm } from 'react-hook-form';
+import FlipNumbers from 'react-flip-numbers';
+import { Controller, useForm } from 'react-hook-form';
 import PaymentModal from '../payment-modal/PaymentModal';
+import { ControlledSelect } from './ControlledSelect';
 import Graph from './Graph';
 import { tokens } from './Token';
 
 interface tokenGroup extends OptionBase {
   label: string;
   value: string;
-  icon: any;
+  icon: JSX.Element;
 }
-const token: tokenGroup[] = tokens;
 
-interface FormValues {
-  cohort: string;
-  amount: string;
+export interface FormValues {
+  amount: number;
   token: string;
-  donation_to_matching_pool: number;
 }
-type ControlledSelectProps = UseControllerProps<FormValues> &
-  Props & {
-    label: string;
-  };
-const customComponents = {
-  Option: ({ children, ...props }: { children: any; props: any }) => (
-    // @ts-ignore
-    <chakraComponents.Option {...props}>
-      {/* @ts-ignore */}
-      {props?.data?.icon} {children}
-    </chakraComponents.Option>
-  ),
-};
 
 type ProjectDonationSimulatorProps = {
   cta: string;
@@ -54,169 +35,47 @@ type ProjectDonationSimulatorProps = {
   width: number;
 };
 
+export const token: tokenGroup[] = tokens;
+
 export const ProjectDonationSimulator = ({
   cta,
   height,
   width,
 }: ProjectDonationSimulatorProps) => {
-  const [donation, setDonation] = useState(100);
+  const [donation, setDonation] = useState(200);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const {
     handleSubmit,
-    register,
     setValue,
-    watch,
+    getValues,
     control,
     formState: { errors, isSubmitting },
-  } = useForm({
+  } = useForm<FormValues>({
     defaultValues: {
-      donation_amount: donation.toFixed(1),
+      amount: donation,
+      token: token[0].value,
     },
   });
 
   useEffect(() => {
     // use api to convert this and add this
-    setValue('donation_amount', (donation / 0.00000051).toFixed(1));
-  }, [donation]);
+    const token = getValues('token');
+    console.log('selected token - ', token, 'donation - ', donation);
+    if (token === 'sol') {
+      setValue('amount', donation * 22);
+    } else if (token === 'usdc') {
+      setValue('amount', donation);
+    } else if (token === 'bonk') {
+      setValue('amount', donation * 0.0000005);
+    } else {
+      setValue('amount', 0);
+    }
+  }, [donation, getValues, setValue]);
 
   function onSubmit(values: any) {
     onOpen();
   }
-
-  const ControlledSelect = ({
-    control,
-    name,
-    rules,
-    ...props
-  }: ControlledSelectProps) => {
-    const {
-      field: { onChange, onBlur, value, ref },
-      fieldState: { error },
-    } = useController<FormValues>({
-      name,
-      control,
-      rules,
-    });
-
-    return (
-      <Select
-        useBasicStyles
-        name={name}
-        ref={ref}
-        defaultValue={token[0].value}
-        onChange={onChange}
-        onBlur={onBlur}
-        value={value}
-        // @ts-ignore
-        components={customComponents}
-        placeholder="Token"
-        colorScheme="blackAlpha"
-        chakraStyles={{
-          container: (provided) => ({
-            ...provided,
-            w: '130px !important',
-            paddingEnd: '0 !important',
-            backgroundColor: '#001F1B',
-            border: '1px solid #E0FFFD16',
-            rounded: '8px',
-            _placeholder: { fontSize: 'md' },
-          }),
-          valueContainer: (provided) => ({
-            ...provided,
-            paddingStart: '10px',
-            color: '#fff',
-            backgroundColor: 'transparent',
-            fontWeight: '600',
-            alignItems: 'end',
-            textAlign: 'end',
-            p: '0',
-            w: '100px !important',
-          }),
-          input: (provided) => ({
-            ...provided,
-            backgroundColor: 'transparent',
-          }),
-          indicatorsContainer: (provided) => ({
-            ...provided,
-            border: 'none',
-            outline: 'none',
-            boxShadow: 'none',
-          }),
-          indicatorSeparator: (provided) => ({
-            ...provided,
-            display: 'none',
-          }),
-          inputContainer: (provided) => ({
-            ...provided,
-            backgroundColor: 'transparent',
-            display: 'none',
-          }),
-          dropdownIndicator: (provided) => ({
-            ...provided,
-            p: 0,
-            backgroundColor: 'transparent',
-            marginEnd: '0px',
-            color: 'white',
-            border: 'none',
-            outline: 'none',
-            w: '30px !important',
-          }),
-          control: (provided, state) => ({
-            ...provided,
-            backgroundColor: 'transparent',
-            borderBottomLeftRadius: state.menuIsOpen ? 0 : 'md',
-            borderBottomRightRadius: state.menuIsOpen ? 0 : 'md',
-            transitionDuration: 0,
-            width: '100%',
-            border: 'none',
-            outline: 'none',
-            boxShadow: 'none',
-            rounded: '8px',
-            _hover: {
-              border: 'none',
-              boxShadow: 'none',
-              outline: 'none',
-              borderRight: 'none',
-            },
-            _active: {
-              border: 'none',
-              boxShadow: 'none',
-              outline: 'none',
-              borderRight: 'none',
-            },
-            _focus: {
-              border: 'none',
-              boxShadow: 'none',
-              outline: 'none',
-              borderRight: 'none',
-            },
-          }),
-          menu: (provided) => ({
-            ...provided,
-            my: 0,
-            backgroundColor: '#242424',
-            fontSize: 'sm',
-            borderTopLeftRadius: 0,
-            borderTopRightRadius: 0,
-            shadow: `0 0 0 1px #242424`,
-            borderWidth: '1px',
-            borderColor: '#242424',
-            borderBottomRadius: '4px',
-          }),
-          menuList: (provided, state) => ({
-            //...provided,
-            _selected: { backgroundColor: 'red' },
-            backgroundColor: '#242424',
-            borderTopLeftRadius: 0,
-            borderTopRightRadius: 0,
-            borderWidth: 0,
-          }),
-        }}
-        {...props}
-      />
-    );
-  };
 
   return (
     <>
@@ -235,59 +94,68 @@ export const ProjectDonationSimulator = ({
         >
           <HStack>
             <InputGroup border="1px solid #141414" rounded={'8px'}>
-              <Input
-                type="number"
-                step="any"
-                color="white"
-                fontWeight="600"
-                border="1px solid #141414"
-                px="0.7rem"
-                boxShadow={'none'}
-                borderRight={'none'}
-                _hover={{
-                  outline: 'none',
-                  boxShadow: 'none',
-                  border: '1px solid #141414',
-                  borderRight: 'none',
+              <Controller
+                name="amount"
+                control={control}
+                defaultValue={donation}
+                rules={{
+                  required: true,
                 }}
-                _active={{
-                  outline: 'none',
-                  boxShadow: 'none',
-                  border: '1px solid #141414',
-                  borderRight: 'none',
-                }}
-                _focus={{
-                  outline: 'none',
-                  boxShadow: 'none',
-                  border: '1px solid #141414',
-                  borderRight: 'none',
-                }}
-                _focusVisible={{
-                  outline: 'none',
-                  boxShadow: 'none',
-                  border: '1px solid #141414',
-                  borderRight: 'none',
-                }}
-                _visited={{
-                  outline: 'none',
-                  boxShadow: 'none',
-                  border: '1px solid #141414',
-                  borderRight: 'none',
-                }}
-                _placeholder={{
-                  fontWeight: '500',
-                  color: '#636666',
-                }}
-                id="donation_amount"
-                placeholder="Amount"
-                {...register('donation_amount', {
-                  required: 'This is required',
-                  minLength: {
-                    value: 4,
-                    message: 'Minimum length should be 4',
-                  },
-                })}
-              />{' '}
+                render={({ field: { onChange, onBlur, ...field } }) => (
+                  <Input
+                    type="number"
+                    step="any"
+                    color="white"
+                    fontWeight="600"
+                    border="1px solid #141414"
+                    px="0.7rem"
+                    boxShadow={'none'}
+                    borderRight={'none'}
+                    _hover={{
+                      outline: 'none',
+                      boxShadow: 'none',
+                      border: '1px solid #141414',
+                      borderRight: 'none',
+                    }}
+                    _active={{
+                      outline: 'none',
+                      boxShadow: 'none',
+                      border: '1px solid #141414',
+                      borderRight: 'none',
+                    }}
+                    _focus={{
+                      outline: 'none',
+                      boxShadow: 'none',
+                      border: '1px solid #141414',
+                      borderRight: 'none',
+                    }}
+                    _focusVisible={{
+                      outline: 'none',
+                      boxShadow: 'none',
+                      border: '1px solid #141414',
+                      borderRight: 'none',
+                    }}
+                    _visited={{
+                      outline: 'none',
+                      boxShadow: 'none',
+                      border: '1px solid #141414',
+                      borderRight: 'none',
+                    }}
+                    _placeholder={{
+                      fontWeight: '500',
+                      color: '#636666',
+                    }}
+                    id="amount"
+                    placeholder="Amount"
+                    onChange={onChange}
+                    onBlur={({ target: { value } }) => {
+                      setDonation(parseInt(value));
+                    }}
+                    {...field}
+                  />
+                )}
+              />
+
               <InputRightAddon
                 textAlign={'end'}
                 justifyContent={'end'}
@@ -295,21 +163,28 @@ export const ProjectDonationSimulator = ({
                 outline="none"
                 minWidth="1.5rem"
               >
-                ${donation}
+                $
+                <FlipNumbers
+                  height={15}
+                  width={10}
+                  color="#636666"
+                  //background="black"
+                  play
+                  perspective={700}
+                  numbers={String(donation)}
+                />
               </InputRightAddon>
             </InputGroup>
             <ControlledSelect
-              // @ts-ignore
               control={control}
               name="token"
               id="token"
               options={token}
-              label="Food Groups"
-              rules={{ required: 'Please select a token' }}
+              label={'Token'}
             />
           </HStack>
           <FormErrorMessage>
-            {errors.donation_amount && errors.donation_amount.message}
+            {errors.amount && errors.amount.message}
           </FormErrorMessage>
         </FormControl>
         <Button
@@ -331,7 +206,7 @@ export const ProjectDonationSimulator = ({
 const ProjectDonationSimulatorCard = () => {
   return (
     <Card height={'full'} p="16px" h="fit-content">
-      <ProjectDonationSimulator cta={'Donate'} height={150} width={150} />
+      <ProjectDonationSimulator cta={'Donate'} height={130} width={150} />
     </Card>
   );
 };

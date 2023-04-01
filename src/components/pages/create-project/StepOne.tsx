@@ -104,7 +104,6 @@ const StepOne: React.FC<StepOneProps> = ({
   errors,
   setValue,
   getValues,
-  watch,
   control,
 }) => {
   const onDrop = useCallback((acceptedFiles: any[]) => {

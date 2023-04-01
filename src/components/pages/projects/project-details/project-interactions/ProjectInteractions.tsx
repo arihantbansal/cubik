@@ -9,12 +9,10 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
-import { projectType } from '~/types/project';
-import { User } from '~/types/user';
 import ProjectDonationSimulator from './project-donation-simulator/ProjectDonationSimulator';
 import { ProjectsDonation } from './ProjectDonation';
 
-const ProjectOwner = ({ projectOwner }: { projectOwner: User }) => {
+const ProjectOwner = ({ projectOwner }: { projectOwner: any }) => {
   const router = useRouter();
   console.log('project owners - ', projectOwner);
   return (
@@ -95,7 +93,13 @@ const SimilarProject = () => {
 };
 
 // sidebar
-const SideBar = ({ projectDetails }: { projectDetails: projectType }) => {
+const SideBar = ({
+  loading,
+  projectDetails,
+}: {
+  loading: boolean;
+  projectDetails: any;
+}) => {
   return (
     <VStack
       gap="48px"
@@ -112,9 +116,16 @@ const SideBar = ({ projectDetails }: { projectDetails: projectType }) => {
         <Box as="p" textStyle={'title3'}>
           Projects Creator
         </Box>
-        {projectDetails.owner.map((projectOwner, key) => {
+        <ProjectOwner
+          projectOwner={{
+            id: '1234',
+            username: 'irfan',
+            mainwallet: '0x49fj3nfugmrivhrt748cvjhsdkwe',
+          }}
+        />
+        {/* {projectDetails.owner.map((projectOwner, key) => {
           return <ProjectOwner projectOwner={projectOwner} key={key} />;
-        })}
+        })} */}
       </VStack>
       <VStack
         gap="16px"
@@ -132,9 +143,11 @@ const SideBar = ({ projectDetails }: { projectDetails: projectType }) => {
 
 // section 2
 export const ProjectInteractions = ({
+  loading,
   projectDetails,
 }: {
-  projectDetails: projectType;
+  loading: boolean;
+  projectDetails: any;
 }) => {
   const [isSmallerThank768] = useMediaQuery('(min-width: 768px)');
   return (
@@ -146,10 +159,10 @@ export const ProjectInteractions = ({
       flexDir={{ base: 'column', md: 'column' }}
       justifyContent="start"
     >
-      <ProjectsDonation projectDetails={projectDetails} />
+      <ProjectsDonation loading={loading} projectDetails={projectDetails} />
       {isSmallerThank768 && <ProjectDonationSimulator />}
       <Box height="2px" backgroundColor="#1A1A1A" w="full" />
-      <SideBar projectDetails={projectDetails} />
+      <SideBar loading={loading} projectDetails={projectDetails} />
     </Stack>
   );
 };

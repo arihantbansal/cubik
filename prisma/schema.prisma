@@ -21,6 +21,7 @@ model UserModel {
   updatedAt        DateTime          @updatedAt
   userDetailsModel UserDetailsModel?
   Session          Session[]
+  project         ProjectsModel[]
 }
 
 model Session {
@@ -88,6 +89,11 @@ model PojectJoinRound {
 
   @@index([projectId])
   @@index([roundId])
+    // once the project is verified it will apply for grant 
+  // project applied for grant - approval pending by org
+  // rejected by org - rejected + reason
+  // approved by org - approved in grant and will go live when the round is live status should show participating in round (if the round is comming)
+  // if the round is going on and the project is approved by org then the status should show participating in round - live
 }
 
 model ProjectsModel {
@@ -101,6 +107,25 @@ model ProjectsModel {
   project_link      String            @default("")
   twitter_handle    String            @default("")
   github_link       String            @default("")
+  discord_link      String            @default("")
+  telegram_link     String            @default("")
   projectUserCount  Int               @default(0)
+  owner            UserModel         @relation(fields: [owner_publickey], references: [mainWallet])
   PojectJoinRound   PojectJoinRound[]
+  // on project create staus -  review by dao, 
+  // project is either verified by dao - verified, 
+  // project not verified by dao - review failed + reason, 
+
+
+  @@index([owner_publickey])
 }
+
+model Contribution {
+  id           String        @id @default(uuid()) @map("_id")
+  amount       Float
+  tx           String        @db.VarChar(500)
+  token String
+  split        Float
+
+}
+

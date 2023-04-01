@@ -10,6 +10,7 @@ import {
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 import { Link, LinkProps } from '@chakra-ui/react';
 
@@ -108,6 +109,7 @@ export const ProjectsDetailedDescription = ({
         <VStack align="start" gap="0.5rem">
           <ReactMarkdown
             components={ChakraUIRenderer(newTheme)}
+            rehypePlugins={[rehypeRaw]}
             remarkPlugins={[remarkGfm]}
           >
             {description}

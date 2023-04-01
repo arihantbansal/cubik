@@ -1,8 +1,9 @@
 import { useClipboard } from '@chakra-ui/hooks';
 import { Center, HStack, Text } from '@chakra-ui/layout';
+import { useToast } from '@chakra-ui/react';
 import { FC, SetStateAction, useEffect } from 'react';
 import { TbCopy } from 'react-icons/tb';
-//import { SuccessToast } from '../UI/Toasts/Toasts';
+import { SuccessToast } from '../toasts/Toasts';
 
 type PropsType = {
   size?: string;
@@ -20,6 +21,7 @@ export const WalletAddress: FC<PropsType> = ({
   const { onCopy, value, setValue, hasCopied } = useClipboard('');
   // const toast = useToast();
   const addr = walletAddress;
+  const toast = useToast();
 
   useEffect(() => {
     if (addr) {
@@ -119,7 +121,7 @@ export const WalletAddress: FC<PropsType> = ({
         <Center
           onClick={() => {
             onCopy();
-            // SuccessToast({ toast, message: 'Copied' });
+            SuccessToast({ toast, message: 'Wallet Address Copied' });
           }}
           transform={'scale(0.95)'}
           opacity={'0.8'}

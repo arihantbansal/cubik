@@ -6,6 +6,7 @@ import { Input } from './input';
 import { Menu } from './menu';
 import { Modal } from './modal';
 import { Select } from './select';
+import { Skeleton } from './skeleton';
 import { Slider } from './slider';
 import { Tabs } from './tabs';
 import { Tag } from './tag';
@@ -24,4 +25,5 @@ export const components = {
   Modal,
   Drawer,
   Slider,
+  Skeleton,
 };

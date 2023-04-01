@@ -2,16 +2,15 @@ import {
   Box,
   Slider,
   SliderFilledTrack,
-  SliderMark,
   SliderThumb,
   SliderTrack,
   Tooltip,
   VStack,
 } from '@chakra-ui/react';
 import { useMemo } from 'react';
+import FlipNumbers from 'react-flip-numbers';
 import GraphProps from '~/types/graphProps';
 import { calculateProjectMatchingFund } from '~/utils/calculateProjectMatchingFund';
-import { formatNumberWithK } from '~/utils/formatWithK';
 import { BonkLine } from './BonkLine';
 import { GraphLine } from './GraphLines';
 
@@ -40,10 +39,11 @@ const Graph: React.FC<GraphProps> = ({
         1, // step
         [1, 3, 4, 5], // projectContributions
         [{ funding: [1, 2, 3, 4, 5, 6] }, { funding: [2, 1, 1, 6, 7] }], // grants
-        1000 // availableMatch
+        500 // availableMatch
       ),
     []
   );
+
   console.log('data -', data);
   return (
     <VStack width={'100%'} gap="0">
@@ -54,12 +54,12 @@ const Graph: React.FC<GraphProps> = ({
           data={data}
           donationAmount={donationAmount}
         />
-        <BonkLine
+        {/* <BonkLine
           width={width}
           height={height}
           data={bonkData}
           donationAmount={donationAmount}
-        />
+        /> */}
       </Box>
       <Slider
         variant="cubik"
@@ -77,7 +77,7 @@ const Graph: React.FC<GraphProps> = ({
         py="0"
         value={donationAmount} // Add this line to sync the Slider with the donationAmount
       >
-        <SliderMark
+        {/* <SliderMark
           fontSize={'sm'}
           bg="transparent"
           value={maximumDonationValue}
@@ -86,7 +86,7 @@ const Graph: React.FC<GraphProps> = ({
         </SliderMark>
         <SliderMark fontSize={'sm'} bg="transparent" value={0}>
           ${0}
-        </SliderMark>
+        </SliderMark> */}
         <SliderTrack>
           <SliderFilledTrack />
         </SliderTrack>
@@ -96,8 +96,19 @@ const Graph: React.FC<GraphProps> = ({
           boxShadow={'xl'}
           bg="transparent"
           color="white"
+          fontWeight={'700'}
           placement="bottom"
-          label={`$${donationAmount}`}
+          label={
+            <FlipNumbers
+              height={16}
+              width={12}
+              color="white"
+              //background="black"
+              play
+              perspective={300}
+              numbers={'$' + String(donationAmount)}
+            />
+          }
         >
           <SliderThumb />
         </Tooltip>

@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   Button,
+  Card,
   Center,
   Container,
   Heading,
@@ -9,23 +10,25 @@ import {
   VStack,
   Wrap,
 } from '@chakra-ui/react';
+import { ProjectsModel } from '@prisma/client';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { BiLink } from 'react-icons/bi';
 import CustomTag from '~/components/common/tags/CustomTag';
-import { projectType } from '~/types/project';
+import GetFormattedLink from '~/components/HOC/GetLink';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { getDomain } from '~/utils/getDomain';
 
 type PropsType = {
-  project: projectType;
+  project: ProjectsModel;
 };
 
 const ProjectCard = ({ project }: PropsType) => {
   const router = useRouter();
   console.log(project);
+  const industry = JSON.parse(project.industry);
   return (
-    <Center
+    <Card
       onClick={() => {
         router.push({
           pathname: '/projects/[projectId]',
@@ -33,12 +36,8 @@ const ProjectCard = ({ project }: PropsType) => {
         });
       }}
       w="100%"
-      flexDirection="column"
-      h={{ base: '', md: '20rem' }}
-      backgroundColor="#070914"
-      rounded="6px"
+      p="24px"
       cursor="pointer"
-      p={{ base: '1.5rem', xl: '1rem 1.8rem' }}
       maxW={{
         base: '83vw',
         sm: '83vw',
@@ -46,15 +45,9 @@ const ProjectCard = ({ project }: PropsType) => {
         lg: '30vw',
         xl: '24rem',
       }}
-      _hover={{
-        backgroundColor: '#060714',
-      }}
     >
       <VStack w="full" alignItems={'start'} justifyContent="start">
-        <HStack
-          py={{ base: '0.5rem', md: '1rem' }}
-          justifyContent={'space-between'}
-        >
+        <HStack justifyContent={'space-between'}>
           <Avatar
             src={project.logo}
             name="anchor"
@@ -68,34 +61,16 @@ const ProjectCard = ({ project }: PropsType) => {
               as="p"
               textStyle={{ base: 'title4', md: 'title2' }}
             >
-              {project.project_name}
+              {project.name}
             </Box>
             <Heading as="p" textStyle={{ base: 'title2', md: 'title1' }}>
-              ${formatNumberWithK(project.total)}
+              ${formatNumberWithK(10)}
             </Heading>
           </HStack>
           <HStack w="full" justify="space-between">
-            <Button
-              as="a"
-              href={project.project_link}
-              target="_blank"
-              h="fit-content"
-              leftIcon={<BiLink />}
-              variant={'unstyled'}
-              fontSize={{ base: 'xs', md: 'sm' }}
-              color="#FF85D6"
-              fontWeight={'600'}
-              display="flex"
-              alignItems={'center'}
-              justifyContent="start"
-              gap="0px"
-              iconSpacing={'3px'}
-              _hover={{
-                textDecoration: 'underline',
-              }}
-            >
-              {getDomain(project.project_link)}
-            </Button>
+            <Center>
+              <GetFormattedLink link={project.project_link} />
+            </Center>
             <Box
               color="#B4B0B2"
               as="p"
@@ -105,20 +80,21 @@ const ProjectCard = ({ project }: PropsType) => {
             </Box>
           </HStack>
         </VStack>
+        <Box
+          color="#B4B0B2"
+          as="p"
+          pt="1rem"
+          textStyle={{ base: 'body4', md: 'body4' }}
+          sx={{
+            noOfLines: '2',
+          }}
+        >
+          {project.short_description}
+        </Box>
       </VStack>
-      <Box
-        color="#B4B0B2"
-        as="p"
-        pt="1rem"
-        textStyle={{ base: 'body4', md: 'body4' }}
-        sx={{
-          noOfLines: '2',
-        }}
-      >
-        {project.short_description}
-      </Box>
+
       <Wrap w="full" mt="auto" pb="0.4rem">
-        {project.industry.map((tag, key) => {
+        {industry.map((tag: any, key: any) => {
           return (
             <CustomTag color={tag.label} key={key}>
               {tag.label}
@@ -126,24 +102,27 @@ const ProjectCard = ({ project }: PropsType) => {
           );
         })}
       </Wrap>
-    </Center>
+    </Card>
   );
 };
-const ProjectsList = ({ allProjectsData }: any) => {
+const ProjectsList = ({
+  allProjectsData,
+}: {
+  allProjectsData: ProjectsModel[];
+}) => {
   console.log('project data - ', allProjectsData);
   return (
     <Container maxW="7xl" overflow={'visible'} p="0">
       <Wrap
         spacing="1.5rem"
         w="100%"
-        padding="2rem 0px"
         margin="0"
         justify={'center'}
         align="center"
         direction={{ base: 'column', sm: 'row', md: 'row' }}
       >
         {allProjectsData.map(
-          (project: projectType, key: React.Key | null | undefined) => {
+          (project: ProjectsModel, key: React.Key | null | undefined) => {
             return <ProjectCard project={project} key={key} />;
           }
         )}

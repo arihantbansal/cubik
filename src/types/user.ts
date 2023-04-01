@@ -1,10 +1,7 @@
-import { UserProject } from './userProject';
+import { Prisma } from '@prisma/client';
 
-export type User = {
-  id: string;
-  username: string;
-  mainwallet: string;
-  verified: boolean;
-  icon: string;
-  projects: UserProject[];
-};
+export type UserWithProjectType = Prisma.UserModelGetPayload<{
+  include: {
+    project: true;
+  };
+}>;

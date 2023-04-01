@@ -1,9 +1,15 @@
-import { Button, Container, Skeleton, useDisclosure } from '@chakra-ui/react';
+import {
+  Button,
+  Center,
+  Container,
+  Skeleton,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { FC, ReactNode, useEffect } from 'react';
-import { useAsPath } from '~/store/pathStore';
+import { WalletAddress } from '../common/wallet/WalletAdd';
 import ConnectWalletModal from '../pages/connect-wallet/ConnectWalletModal';
 import { Header } from './navigation/Header';
 import UserNavMenu from './navigation/UserNavMenu';
@@ -19,7 +25,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ onClose, children }) => {
   const router = useRouter();
   const { data: session } = useSession();
   const { publicKey } = useWallet();
-  const { prevAsPath } = useAsPath();
 
   async function auth() {
     if (!publicKey) return;
@@ -29,13 +34,13 @@ const AuthProvider: FC<AuthProviderProps> = ({ onClose, children }) => {
       wallet: publicKey.toBase58(),
     });
     if (signInResponse?.status === 401) {
+      // wallet connected but user does not exist
       router.push('/create-profile');
       return onClose();
     }
-    if (prevAsPath) {
-      return router.push(prevAsPath);
-    }
-    if (session) {
+    if (session && router.pathname === '/create-profile') {
+      // wallet connected and profile created succesfully
+      //todo: if success popup showing wen created profile then remove this code
       return router.push({
         pathname: '/[username]',
         query: { username: session.user.username },
@@ -56,16 +61,24 @@ const AuthProvider: FC<AuthProviderProps> = ({ onClose, children }) => {
 
 const AppLayout: FC<AppLayoutProps> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { publicKey } = useWallet();
+  const { publicKey, disconnect } = useWallet();
+  const router = useRouter();
   const { status } = useSession();
 
   useEffect(() => {
+    //console.log('status, pubkey -', status, publicKey);
     if (publicKey && status === 'authenticated') {
       onClose();
     }
   }, [onClose, publicKey, status]);
 
   const NavbarCTA = () => {
+    // if (router.pathname === '/create-profile' && publicKey)
+    //   return (
+    //     <Center cursor={'pointer'} onClick={disconnect}>
+    //       <WalletAddress walletAddress={publicKey?.toBase58()} />
+    //     </Center>
+    //   );
     switch (status) {
       case 'loading':
         return (
@@ -82,7 +95,9 @@ const AppLayout: FC<AppLayoutProps> = ({ children }) => {
       case 'authenticated':
         return <UserNavMenu />;
       default:
-        return (
+        return publicKey ? (
+          <Center as="button" onClick={disconnect}></Center>
+        ) : (
           <Button variant="connect_wallet" h="fit-content" onClick={onOpen}>
             Connect Wallet
           </Button>

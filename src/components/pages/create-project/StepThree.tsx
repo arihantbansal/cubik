@@ -14,7 +14,7 @@ import Link from '@tiptap/extension-link';
 import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
-import { EditorContent, useEditor } from '@tiptap/react';
+import { EditorContent, JSONContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import parse from 'html-react-parser';
 import { useState } from 'react';
@@ -28,9 +28,19 @@ import {
   MdOutlineFormatUnderlined,
 } from 'react-icons/md';
 
-const StepThree = ({ onPrevious }: { onPrevious: () => void }) => {
+const StepThree = ({
+  onPrevious,
+  onSubmit,
+  setLoadingSubmit,
+  LoadingSubmit,
+}: {
+  onPrevious: () => void;
+  onSubmit: (editorData: string) => void;
+  setLoadingSubmit: (loading: boolean) => void;
+  LoadingSubmit: boolean;
+}) => {
   const [url, setUrl] = useState<string>('');
-  const [editorData, setEditorData] = useState('Enter Description Here...');
+  const [editorData, setEditorData] = useState<string>();
   const [preview, setPreview] = useState(false);
   const editor = useEditor({
     extensions: [
@@ -161,7 +171,7 @@ const StepThree = ({ onPrevious }: { onPrevious: () => void }) => {
         <Box w={'full'} h="1px" backgroundColor="neutral.3" />
         {preview ? (
           <Box w={'full'} height={'20rem'} overflow="scroll" p="0.5rem 1.6rem">
-            {parse(editorData)}
+            {parse(editorData as string)}
           </Box>
         ) : (
           <Box w={'full'} height={'20rem'} overflow="scroll">
@@ -197,7 +207,12 @@ const StepThree = ({ onPrevious }: { onPrevious: () => void }) => {
         </Button>
         <Button
           variant={'connect_wallet'}
-          // onClick={onSubmit}
+          isLoading={LoadingSubmit}
+          onClick={() => {
+            setLoadingSubmit(true);
+            // @ts-ignore
+            onSubmit(editorData);
+          }}
         >
           Submit Project
         </Button>

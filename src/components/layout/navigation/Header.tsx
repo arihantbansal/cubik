@@ -163,7 +163,15 @@ export const Header = memo(function Header({
         <Box as="button" fontSize={'5xl'} onClick={() => router.push('/')}>
           <Logo />
         </Box>
-        <HStack display={{ base: 'none', md: 'flex' }} pl="5rem" gap="1rem">
+        <HStack
+          display={{
+            base: 'none',
+            // md: router.pathname === '/create-profile' ? 'none' : 'flex',
+            md: 'none',
+          }}
+          pl="5rem"
+          gap="1rem"
+        >
           <Link href="/projects" passHref>
             <Text fontSize="sm" fontWeight={'600'} cursor={'pointer'}>
               Projects

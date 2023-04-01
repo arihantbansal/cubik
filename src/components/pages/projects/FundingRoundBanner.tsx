@@ -216,7 +216,7 @@ const FundingRoundBanner = () => {
       overflow="hidden"
       w="full"
       gap="3rem"
-      rounded="12px"
+      rounded="16px"
       justify={'space-between'}
       align="start"
       direction={{ base: 'column', md: 'row' }}
@@ -260,7 +260,11 @@ const FundingRoundBanner = () => {
       }}
     >
       <VStack align={'start'} spacing="1.4rem">
-        <Box as="p" textStyle={{ base: 'title1', md: 'headline3' }}>
+        <Box
+          color="neutral.11"
+          as="p"
+          textStyle={{ base: 'title1', md: 'headline3' }}
+        >
           Web3 Open Source Software Round
         </Box>
         <HStack

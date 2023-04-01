@@ -1,7 +1,7 @@
-import { procedure, router } from '../trpc';
-import { z } from 'zod';
-import { prisma } from '../utils/prisma';
 import { TRPCError } from '@trpc/server';
+import { z } from 'zod';
+import { procedure, router } from '../trpc';
+import { prisma } from '../utils/prisma';
 
 export const projectsRouter = router({
   create: procedure
@@ -84,4 +84,26 @@ export const projectsRouter = router({
     });
     return res;
   }),
+
+  findPubkey: procedure
+    .input(
+      z.object({
+        publickey: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      if (!input.publickey) {
+        return new TRPCError({
+          message: 'publickey does not exist',
+          code: 'BAD_REQUEST',
+        });
+      }
+      const res = await prisma.projectsModel.findMany({
+        where: {
+          owner_publickey: input.publickey,
+        },
+      });
+
+      return res;
+    }),
 });

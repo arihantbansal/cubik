@@ -7,13 +7,13 @@ import {
   MenuItem,
   MenuList,
 } from '@chakra-ui/menu';
-import { Avatar } from '@chakra-ui/react';
+import { Avatar as ChakraAvatar, Center } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { BiChevronDown } from 'react-icons/bi';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
-
+import Avatar from 'boring-avatars';
 const UserNavMenu = () => {
   const { disconnect, disconnecting } = useWallet();
   const { data: session } = useSession();
@@ -56,11 +56,12 @@ const UserNavMenu = () => {
           </MenuButton>
           <MenuList bg="#121212" border="1px solid #222222">
             <HStack p="0.5rem 1rem" gap="0.5rem">
-              <Avatar
+              <ChakraAvatar
                 size={'sm'}
                 name={session.user.username}
                 src={session.user.image ? session.user.image : undefined}
               />
+
               <VStack
                 alignItems={'start'}
                 justify="center"
@@ -68,12 +69,14 @@ const UserNavMenu = () => {
                 spacing="0"
               >
                 <Text fontSize="md">{session.user.username}</Text>
-                <WalletAddress
-                  // @ts-ignore
-                  walletAddress={session.user.mainWallet}
-                  size="xs"
-                  copy={true}
-                />
+                <Center>
+                  <WalletAddress
+                    // @ts-ignore
+                    walletAddress={session.user.mainWallet}
+                    size="xs"
+                    copy={true}
+                  />
+                </Center>
               </VStack>
             </HStack>
             <MenuDivider />
@@ -84,7 +87,7 @@ const UserNavMenu = () => {
               onClick={() => {
                 console.log('pushing to profile');
                 router.push({
-                  pathname: '/create-project',
+                  pathname: '/submit-project',
                 });
               }}
               sx={{

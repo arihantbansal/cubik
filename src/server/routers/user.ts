@@ -1,5 +1,5 @@
-import { procedure, router } from '../trpc';
 import { z } from 'zod';
+import { procedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
 
 export const userRouter = router({
@@ -26,6 +26,24 @@ export const userRouter = router({
           tx: input.tx,
         },
       });
+      return res;
+    }),
+  findOne: procedure
+    .input(
+      z.object({
+        username: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const res = await prisma.userModel.findUnique({
+        where: {
+          username: input.username,
+        },
+        include: {
+          project: true,
+        },
+      });
+      console.log('response find one - ', res);
       return res;
     }),
 

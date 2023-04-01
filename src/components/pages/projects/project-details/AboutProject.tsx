@@ -12,11 +12,15 @@ import {
   DrawerOverlay,
   HStack,
   IconButton,
+  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
   Stack,
   useDisclosure,
   VStack,
   Wrap,
 } from '@chakra-ui/react';
+import { ProjectsModel } from '@prisma/client';
 import { Key, useRef } from 'react';
 import {
   FaDiscord,
@@ -28,8 +32,6 @@ import {
 import { HiLink } from 'react-icons/hi';
 import CustomTag from '~/components/common/tags/CustomTag';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
-import { projectType } from '~/types/project';
-import { formatNumberWithK } from '~/utils/formatWithK';
 import { getDomain } from '~/utils/getDomain';
 import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
 import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
@@ -106,15 +108,36 @@ const ProjectLink = ({ urlName }: { urlName: string }) => {
 };
 
 export const AboutProject = ({
+  loading,
   projectDetails,
 }: {
-  projectDetails: projectType;
+  loading: boolean;
+  projectDetails: ProjectsModel;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
+  console.log(projectDetails);
+  // const industry = loading ? undefined : JSON.parse(projectDetails.industry);
 
-  const industry = projectDetails.industry;
-  const socials = projectDetails.socials;
+  const socials = [
+    {
+      name: 'twitter',
+      url: projectDetails?.twitter_handle && projectDetails.twitter_handle,
+    },
+    {
+      name: 'discord',
+      url: projectDetails?.discord_link && projectDetails.discord_link,
+    },
+    {
+      name: 'telegram',
+      url: projectDetails?.telegram_link && projectDetails.telegram_link,
+    },
+    {
+      name: 'github',
+      url: projectDetails?.github_link && projectDetails.github_link,
+    },
+  ];
+
   return (
     <Container
       maxW="6xl"
@@ -132,7 +155,9 @@ export const AboutProject = ({
         width={'100%'}
       >
         <HStack justify={{ base: 'space-between', md: 'start' }} align="center">
-          <Avatar src={projectDetails.logo} size="xl" />
+          <SkeletonCircle fadeDuration={0.8} size="20" isLoaded={!loading}>
+            <Avatar src={projectDetails?.logo} size="xl" />
+          </SkeletonCircle>
           <VStack
             display={{ base: 'flex', md: 'none' }}
             ml="auto"
@@ -142,9 +167,9 @@ export const AboutProject = ({
           >
             <VStack align={'end'} gap="0" spacing="0" pb="0.5rem">
               <Box as="p" textStyle={{ base: 'headline4', md: 'display3' }}>
-                {formatNumberWithK(
+                {/* {formatNumberWithK(
                   Number(((projectDetails.usd_total as number) * 19).toFixed(2))
-                )}
+                )} */}
                 $
               </Box>
               <Box
@@ -158,78 +183,115 @@ export const AboutProject = ({
           </VStack>
         </HStack>
         <HStack gap="1rem">
-          <Box
-            as="p"
-            textStyle={{ base: 'headline4', md: 'headline3' }}
-            textTransform="capitalize"
-            color="neutral.11"
-          >
-            {projectDetails.project_name}
-          </Box>
-          <Wrap flexDirection={'row'} spacing="0.4rem" pt="0.5rem">
-            {industry.map((tag: any, key: React.Key | null | undefined) => {
-              return (
-                <CustomTag color={tag.label} key={key}>
-                  {tag.label}
-                </CustomTag>
-              );
-            })}
-          </Wrap>
-        </HStack>
-        <Box
-          as="p"
-          textStyle={{ base: 'body3', md: 'body2' }}
-          color="neutral.9"
-        >
-          {projectDetails.short_description}
-        </Box>
-        <HStack>
-          <Button
-            variant="unstyled"
-            display={'flex'}
-            alignItems="center"
+          <Skeleton
+            height="26px"
             rounded="full"
-            color="brand.teal6"
-            backgroundColor="brand.teal2"
-            p={{ base: '0.5rem 0.8rem', md: '0.2rem 1rem' }}
-            iconSpacing={{ base: '0.3rem', md: '0.4rem' }}
-            leftIcon={<ProjectLink urlName={'url'} />}
-            _hover={{
-              backgroundColor: 'brand.teal3',
-            }}
-            as="a"
-            href={projectDetails.project_link}
-            target="_blank"
+            width={loading ? '20rem' : 'fit-content'}
+            isLoaded={!loading}
           >
             <Box
               as="p"
-              textStyle={{ base: 'body5', md: 'body4' }}
-              color="brand.teal.6"
-              pb="0.1rem"
+              minW="6rem"
+              textStyle={{ base: 'headline4', md: 'headline3' }}
+              textTransform="capitalize"
+              color="neutral.11"
             >
-              {getDomain(projectDetails.project_link)}
+              {projectDetails?.name}
             </Box>
-          </Button>
-          {socials.map((link: { name: string; url: string }, key: Key) => (
-            <IconButton
-              aria-label={link.name}
-              variant={'unstyled'}
-              fontSize={{ base: 'sm', sm: 'md', md: 'xl' }}
-              display="flex"
-              alignItems={'center'}
+          </Skeleton>
+          {/* {!loading && industry && (
+            <Wrap flexDirection={'row'} spacing="0.4rem" pt="0.5rem">
+              {industry.map((tag: any, key: React.Key | null | undefined) => {
+                return (
+                  <CustomTag color={tag.label} key={key}>
+                    {tag.label}
+                  </CustomTag>
+                );
+              })}
+            </Wrap>
+          )} */}
+        </HStack>
+        <SkeletonText
+          rounded={'full'}
+          width="100%"
+          noOfLines={2}
+          spacing="4"
+          skeletonHeight="2"
+          isLoaded={!loading}
+        >
+          <Box
+            as="p"
+            textStyle={{ base: 'body3', md: 'body2' }}
+            color="neutral.9"
+          >
+            {projectDetails?.short_description}
+          </Box>
+        </SkeletonText>
+        <HStack>
+          <Skeleton
+            height="fit-content"
+            minW={'6rem'}
+            rounded="full"
+            width={'fit-content'}
+            isLoaded={!loading}
+          >
+            <Button
+              variant="unstyled"
+              display={'flex'}
+              alignItems="center"
               rounded="full"
               color="brand.teal6"
               backgroundColor="brand.teal2"
-              key={key}
-              icon={<ProjectLink urlName={link.name} />}
+              p={{ base: '0.5rem 0.8rem', md: '0.2rem 1rem' }}
+              iconSpacing={{ base: '0.3rem', md: '0.4rem' }}
+              leftIcon={<ProjectLink urlName={'url'} />}
               _hover={{
                 backgroundColor: 'brand.teal3',
               }}
               as="a"
-              href={link.name}
+              href={projectDetails?.project_link}
               target="_blank"
+            >
+              <Box
+                as="p"
+                textStyle={{ base: 'body5', md: 'body4' }}
+                color="brand.teal.6"
+                pb="0.1rem"
+              >
+                {getDomain(projectDetails?.project_link)}
+              </Box>
+            </Button>
+          </Skeleton>
+          {loading ? (
+            <SkeletonCircle
+              w="10"
+              height="10"
+              fadeDuration={0.8}
+              size="20"
+              isLoaded={!loading}
             />
-          ))}
+          ) : (
+            socials.map((link: { name: string; url: string }, key: Key) => (
+              <IconButton
+                aria-label={link.name}
+                variant={'unstyled'}
+                fontSize={{ base: 'sm', sm: 'md', md: 'xl' }}
+                display="flex"
+                alignItems={'center'}
+                rounded="full"
+                color="brand.teal6"
+                backgroundColor="brand.teal2"
+                key={key}
+                icon={<ProjectLink urlName={link.name} />}
+                _hover={{
+                  backgroundColor: 'brand.teal3',
+                }}
+                as="a"
+                href={link.name}
+                target="_blank"
+              />
+            ))
+          )}
         </HStack>
       </Stack>
       <Center w="full" display={{ base: 'flex', md: 'none' }}>
@@ -242,17 +304,30 @@ export const AboutProject = ({
           Donate
         </Button>
       </Center>
-      <MobileDrawer
+      {/* <MobileDrawer
         logo={projectDetails.logo}
-        projectName={projectDetails.project_name}
+        projectName={projectDetails.name}
         walletAddress={projectDetails.owner_publickey}
         isOpen={isOpen}
         onClose={onClose}
         btnRef={btnRef}
-      />
-      <ProjectsDetailedDescription
-        description={projectDetails.long_description}
-      />
+      />*/}
+      {loading ? (
+        <VStack w="full" gap="1rem">
+          <Skeleton me="auto" height="26px" rounded="full" width="20rem" />
+          <SkeletonText
+            width={'full'}
+            mt="4"
+            noOfLines={8}
+            spacing="4"
+            skeletonHeight="2"
+          />
+        </VStack>
+      ) : (
+        <ProjectsDetailedDescription
+          description={projectDetails.long_description}
+        />
+      )}
       <ProjectsTabs />
     </Container>
   );

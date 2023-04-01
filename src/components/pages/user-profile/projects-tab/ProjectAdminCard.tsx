@@ -8,24 +8,34 @@ import {
   Center,
   Stack,
 } from '@chakra-ui/react';
+import { ProjectsModel } from '@prisma/client';
 import { useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
-import { UserProject } from '~/types/userProject';
 import FundingOverview from './project-admin-dashboard/FundingOverview';
 import Vault from './project-admin-dashboard/project-vault/Vault';
 import ProjectInsights from './project-admin-dashboard/ProjectInsights';
 import ProjectBanner from './ProjectBanner';
 import ProjectHeader from './ProjectHeader';
 
-const ProjectAdminCard = ({ project }: { project: UserProject }) => {
+const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
   const [showVault, setShowVault] = useState(false);
+  let status = 'pending';
+  if (project.name === 'Solmon') {
+    status = 'active';
+  }
+  console.log('project - ', project);
   return (
-    <Card px="0px" pt={project.status ? '0px' : '24px'} pb="24px" gap="24px">
-      <ProjectBanner status={project.status} />
+    <Card
+      px="0px"
+      pt={status === 'inactive' ? '24px' : '0px'}
+      pb="24px"
+      gap="24px"
+    >
+      <ProjectBanner status={status} />
       <CardHeader>
         <ProjectHeader project={project} />
       </CardHeader>
-      {project.status === 'active' && (
+      {/*{status === 'active' && (
         <>
           <CardBody borderTop={'1px solid'} borderColor="neutral.3">
             <Stack
@@ -64,7 +74,7 @@ const ProjectAdminCard = ({ project }: { project: UserProject }) => {
             </Center>
           </CardFooter>
         </>
-      )}
+      )} */}
     </Card>
   );
 };

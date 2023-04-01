@@ -117,6 +117,45 @@ export const styles = {
     },
 
     //taptap
+    '#reset-des blockquote': {
+      all: 'revert !important',
+    },
+    '#reset-des ol': {
+      all: 'revert !important',
+    },
+    '#reset-des li': {
+      all: 'revert !important',
+    },
+    '#reset-des a': {
+      all: 'revert !important',
+    },
+    '#reset-des ul': {
+      all: 'revert !important',
+    },
+    '#reset-des strong': {
+      all: 'revert !important',
+    },
+    '#reset-des br': {
+      all: 'revert !important',
+    },
+    '#reset-des h1': {
+      all: 'revert !important',
+    },
+    '#reset-des h2': {
+      all: 'revert !important',
+    },
+    '#reset-des h3': {
+      all: 'revert !important',
+    },
+    '#reset-des h4': {
+      all: 'revert !important',
+    },
+    '#reset-des h5': {
+      all: 'revert !important',
+    },
+    '#reset-des h6': {
+      all: 'revert !important',
+    },
     '.ProseMirror': {
       minHeight: '20rem',
       height: 'fit-content',

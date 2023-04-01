@@ -14,40 +14,36 @@ import {
 import { BiSearch } from 'react-icons/bi';
 import FundingRoundBanner from '~/components/pages/projects/FundingRoundBanner';
 import ProjectsList from '~/components/pages/projects/ProjectsList';
-import { projectType } from '~/types/project';
+
+import { trpc } from '~/utils/trpc';
 
 type projectsPropsType = {
   allProjectsData: {
-    data: [projectType];
+    data: any;
   };
 };
 
 const Projects = (props: projectsPropsType) => {
-  const fetchedPropsData = props.allProjectsData.data.map(
-    // @ts-ignore
-    (element: { industry: string; socials: string }) => ({
-      ...element,
-      industry: JSON.parse(element.industry),
-      socials: JSON.parse(element.socials),
-    })
-  );
-
-  console.log('get all projects data - ', fetchedPropsData);
+  const projects = trpc.project.findMany.useQuery();
 
   return (
     <main>
-      <Container
-        maxW="7xl"
-        px={{ base: '1.8rem', lg: '2rem' }}
-        py={{ base: '4rem', md: '5rem' }}
-      >
-        <VStack w="full" alignItems={'start'} justifyContent="start">
+      <Container maxW="7xl" py={{ base: '4rem', md: '8rem' }}>
+        <VStack w="full" alignItems={'start'} justifyContent="start" gap="2rem">
           <VStack w="full" align={'start'} gap={{ base: '2rem', md: '2rem' }}>
             <VStack align={'start'}>
-              <Box as="p" textStyle={{ base: 'headline3', md: 'headline1' }}>
+              <Box
+                color="neutral.11"
+                as="p"
+                textStyle={{ base: 'headline3', md: 'headline1' }}
+              >
                 Discover and Fund Public Goods
               </Box>
-              <Box as="p" textStyle={{ base: 'body3', md: 'body2' }}>
+              <Box
+                color="neutral.9"
+                as="p"
+                textStyle={{ base: 'body3', md: 'body2' }}
+              >
                 Help fund projects that matter to you and your community
               </Box>
             </VStack>
@@ -55,8 +51,9 @@ const Projects = (props: projectsPropsType) => {
             <InputGroup
               rounded="8px"
               h="fit-content"
-              background={'#05060F'}
+              background={'#0F0F0F'}
               border="1px solid #1B181A"
+              w={'36%'}
               zIndex="1"
             >
               <InputLeftElement
@@ -85,17 +82,17 @@ const Projects = (props: projectsPropsType) => {
               />
             </InputGroup>
           </VStack>
-          <Tabs p="4rem 0rem" variant={'cubik'}>
-            <TabList gap={{ base: '0.5rem', md: '1rem' }}>
-              <Tab fontSize={{ base: 'md', md: 'lg' }}>Projects</Tab>
-              <Tab fontSize={{ base: 'md', md: 'lg' }}>Collections</Tab>
+          <Tabs variant={'cubik'}>
+            <TabList>
+              <Tab>Projects</Tab>
+              <Tab>Collections</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
-                <ProjectsList allProjectsData={props.allProjectsData.data} />
+                <ProjectsList allProjectsData={projects.data ?? []} />
               </TabPanel>
               <TabPanel>
-                <ProjectsList allProjectsData={props.allProjectsData.data} />
+                <ProjectsList allProjectsData={projects.data ?? []} />
               </TabPanel>
             </TabPanels>
           </Tabs>
@@ -104,26 +101,4 @@ const Projects = (props: projectsPropsType) => {
     </main>
   );
 };
-export async function getServerSideProps() {
-  try {
-    const allProjectsData = await getAllProjects();
-    // @ts-ignore
-    if (!allProjectsData) {
-      return {
-        notFound: true,
-      };
-    }
-    return {
-      props: { allProjectsData },
-    };
-  } catch (e) {
-    return {
-      notFound: true,
-    };
-  }
-}
-
 export default Projects;
-function getAllProjects() {
-  throw new Error('Function not implemented.');
-}

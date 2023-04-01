@@ -7,15 +7,21 @@ import {
   HStack,
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import type { ProjectsModel } from '@prisma/client';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { v4 as uuidV4 } from 'uuid';
 import { array, object, string } from 'yup';
 import { StepOne, StepThree, StepTwo } from '~/components/pages/create-project';
-
+import { trpc } from '~/utils/trpc';
+import { uploadToCloudinary } from '~/utils/upload';
 type SubmitProjectProps = {
   onSubmit: (project: Project) => void;
 };
-type Project = any;
+type Project = ProjectsModel;
+
 export type FormData = {
   projectName: string;
   tagline: string;
@@ -31,6 +37,13 @@ export type FormData = {
 
 const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
   const [step, setStep] = useState<number>(1);
+  const router = useRouter();
+  const [LoadingSubmit, setLoadingSubmit] = useState<boolean>(false);
+  const { data: session } = useSession();
+  const createProjectMutation = trpc.project.create.useMutation();
+  // const userProjects = trpc.project.findPubkey.useQuery({
+  //   publickey: session?.user.mainWallet,
+  // });
   const {
     control,
     register,
@@ -69,10 +82,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
 
   const goToNextStep = () => setStep(step + 1);
 
-  const handleStepOneSubmit = (data: any) => {
-    console.log('step one was submitted here is the data - ', data);
-    // setValue('logo', data.logo[0]);
-    console.log('go to next step');
+  const handleStepOneSubmit = (event: any) => {
     goToNextStep();
   };
 
@@ -82,20 +92,32 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
     goToNextStep();
   };
 
-  const handleStepThreeSubmit = (data: any) => {
-    const project: Project = {
-      projectName: data.projectName,
-      tagline: data.tagline,
-      logo: data.logo[0],
-      socials: {
-        twitter: data.twitter,
-        github: data.github,
-        projectLink: data.projectLink,
-        discord: data.discord,
-      },
-      description: data.description,
-    };
-    onSubmit(project);
+  const handleStepThreeSubmit = async (editorData: string) => {
+    if (!session?.user) return;
+    try {
+      const imageUrl = await uploadToCloudinary(getValues('logo'));
+      const projectSubmissionResponse = await createProjectMutation.mutateAsync(
+        {
+          id: uuidV4(),
+          name: getValues().projectName,
+          short_description: getValues().tagline,
+          logo: imageUrl,
+          long_description: editorData,
+          industry: JSON.stringify(getValues().category),
+          github: getValues().github,
+          twitter: 'https://twitter.com/undefined',
+          link: getValues().projectLink,
+        }
+      );
+      setLoadingSubmit(false);
+      router.push({
+        pathname: '/projects/[projectId]',
+        query: { projectId: projectSubmissionResponse.id },
+      });
+    } catch (e) {
+      console.log('there was an error submitting form - ', e);
+      setLoadingSubmit(false);
+    }
   };
 
   const ProjectTimeline = ({
@@ -159,10 +181,11 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
         </CardHeader>
         <HStack w="full" justify="space-between">
           <ProjectTimeline index={1} name={'Basic Information'} />
-          <ProjectTimeline index={2} name={'Basic Information'} />
-          <ProjectTimeline index={3} name={'Basic Information'} />
+          <ProjectTimeline index={2} name={'Project Links'} />
+          <ProjectTimeline index={3} name={'Detailed Info'} />
         </HStack>
         <form
+          // @ts-ignore
           onSubmit={handleSubmit(onSubmit)}
           style={{
             width: '100%',
@@ -191,7 +214,14 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
               errors={errors}
             />
           )}
-          {step === 3 && <StepThree onPrevious={goToPreviousStep} />}
+          {step === 3 && (
+            <StepThree
+              onPrevious={goToPreviousStep}
+              onSubmit={handleStepThreeSubmit}
+              setLoadingSubmit={setLoadingSubmit}
+              LoadingSubmit={LoadingSubmit}
+            />
+          )}
         </form>
       </Card>
     </Container>
