@@ -94,7 +94,7 @@ export const projectsRouter = router({
     .query(async ({ input }) => {
       if (!input.publickey) {
         return new TRPCError({
-          message: 'publickey does not exist',
+          message: 'Publickey does not exist',
           code: 'BAD_REQUEST',
         });
       }

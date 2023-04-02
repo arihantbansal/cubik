@@ -21,7 +21,7 @@ model UserModel {
   updatedAt        DateTime          @updatedAt
   userDetailsModel UserDetailsModel?
   Session          Session[]
-  project         ProjectsModel[]
+  project          ProjectsModel[]
 }
 
 model Session {
@@ -59,7 +59,58 @@ model UserDetailsModel {
   @@index([userModelId])
 }
 
-model FundingRound {
+model PojectJoinRound {
+  id           String                 @id @default(uuid()) @map("_id")
+  projectId    String
+  tx           String                 @db.VarChar(500)
+  roundId      String
+  status       ProjectJoinRoundStatus @default(pending)
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+  project      ProjectsModel          @relation(fields: [projectId], references: [id])
+  fundingRound Round                  @relation(fields: [roundId], references: [id])
+
+  @@index([projectId])
+  @@index([roundId])
+}
+
+enum ProjectJoinRoundStatus {
+  pending
+  approved
+  rejected
+}
+
+model ProjectsModel {
+  id                String              @id @default(uuid()) @map("_id")
+  name              String
+  short_description String              @db.VarChar(2000)
+  logo              String              @db.VarChar(1000)
+  owner_publickey   String
+  long_description  String              @db.VarChar(5000)
+  industry          String
+  project_link      String              @default("")
+  twitter_handle    String              @default("")
+  github_link       String              @default("")
+  discord_link      String              @default("")
+  telegram_link     String              @default("")
+  projectUserCount  Int                 @default(0)
+  status            ProjectVerifyStatus @default(review)
+  failedReason      String?             @default("")
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  owner             UserModel           @relation(fields: [owner_publickey], references: [mainWallet])
+  PojectJoinRound   PojectJoinRound[]
+
+  @@index([owner_publickey])
+}
+
+enum ProjectVerifyStatus {
+  review
+  verified
+  failed
+}
+
+model Round {
   id                     String            @id @default(uuid()) @map("_id")
   roundNumber            Int
   roundName              String
@@ -75,57 +126,14 @@ model FundingRound {
 }
 
 model RoundDetails {
-  id           String        @id @default(uuid()) @map("_id")
-  FundingRound FundingRound?
-}
-
-model PojectJoinRound {
-  id           String        @id @default(uuid()) @map("_id")
-  projectId    String
-  tx           String        @db.VarChar(500)
-  roundId      String
-  project      ProjectsModel @relation(fields: [projectId], references: [id])
-  fundingRound FundingRound  @relation(fields: [roundId], references: [id])
-
-  @@index([projectId])
-  @@index([roundId])
-    // once the project is verified it will apply for grant 
-  // project applied for grant - approval pending by org
-  // rejected by org - rejected + reason
-  // approved by org - approved in grant and will go live when the round is live status should show participating in round (if the round is comming)
-  // if the round is going on and the project is approved by org then the status should show participating in round - live
-}
-
-model ProjectsModel {
-  id                String            @id @default(uuid()) @map("_id")
-  name              String
-  short_description String            @db.VarChar(2000)
-  logo              String            @db.VarChar(1000)
-  owner_publickey   String
-  long_description  String            @db.VarChar(5000)
-  industry          String
-  project_link      String            @default("")
-  twitter_handle    String            @default("")
-  github_link       String            @default("")
-  discord_link      String            @default("")
-  telegram_link     String            @default("")
-  projectUserCount  Int               @default(0)
-  owner            UserModel         @relation(fields: [owner_publickey], references: [mainWallet])
-  PojectJoinRound   PojectJoinRound[]
-  // on project create staus -  review by dao, 
-  // project is either verified by dao - verified, 
-  // project not verified by dao - review failed + reason, 
-
-
-  @@index([owner_publickey])
+  id           String @id @default(uuid()) @map("_id")
+  FundingRound Round?
 }
 
 model Contribution {
-  id           String        @id @default(uuid()) @map("_id")
-  amount       Float
-  tx           String        @db.VarChar(500)
-  token String
-  split        Float
-
+  id     String @id @default(uuid()) @map("_id")
+  amount Float
+  tx     String @db.VarChar(500)
+  token  String
+  split  Float
 }
-
