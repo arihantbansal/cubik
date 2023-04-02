@@ -5,46 +5,43 @@ import {
   HStack,
   VStack,
 } from '@chakra-ui/react';
+import { FC, memo } from 'react';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
-import Avatar from 'boring-avatars';
 import { UserWithProjectType } from '~/types/user';
 
 type profileHeaderType = {
   user: UserWithProjectType;
 };
 
-const ProfileHeader = ({ user }: profileHeaderType) => {
+const ProfileHeader: FC<profileHeaderType> = ({ user }: profileHeaderType) => {
   return (
-    <HStack w="full" align={'center'} justify="start" gap={'16px'}>
+    <HStack
+      w="full"
+      align={'center'}
+      justify="start"
+      gap={{ base: '6px', sm: '12px', md: '16px' }}
+    >
       <Center>
-        {user.profilePicture ? (
-          <ChakraAvatar
-            border="3px solid #FFFFFF20"
-            src={user.profilePicture}
-            name={user.username}
-            width="80px"
-            height="80px"
-          />
-        ) : (
-          <Avatar
-            size={84}
-            name={user.mainWallet as string}
-            variant="marble"
-            colors={[
-              '#05299E',
-              '#5E4AE3',
-              '#947BD3',
-              '#F0A7A0',
-              '#F26CA7',
-              '#FFFFFF',
-              '#CAF0F8',
-              '#CCA43B',
-            ]}
-          />
-        )}
+        <ChakraAvatar
+          border="3px solid #FFFFFF20"
+          src={user.profilePicture}
+          name={user.username}
+          width={{ base: '56px', sm: '72px', md: '84px' }}
+          height={{ base: '56px', sm: '72px', md: '84px' }}
+        />
       </Center>
-      <VStack p="8px" gap="8px" justifyContent={'center'} alignItems={'start'}>
-        <Box as="p" textStyle={'title1'} color={'neutral.11'}>
+      <VStack
+        p={{ base: 'px', sm: '6px', md: '8px' }}
+        gap={{ base: '2px', sm: '6px', md: '8px' }}
+        justifyContent={'center'}
+        alignItems={'start'}
+      >
+        <Box
+          as="p"
+          textStyle={{ base: 'title4', sm: 'title2', md: 'title1' }}
+          fontWeight="700"
+          color={'neutral.11'}
+        >
           @{user.username}
         </Box>
         <Center>
@@ -59,4 +56,4 @@ const ProfileHeader = ({ user }: profileHeaderType) => {
   );
 };
 
-export default ProfileHeader;
+export default memo(ProfileHeader);

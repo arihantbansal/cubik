@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidV4 } from 'uuid';
 import { array, object, string } from 'yup';
+import withAuth from '~/components/HOC/WithAuth';
 import { StepOne, StepThree, StepTwo } from '~/components/pages/create-project';
 import { trpc } from '~/utils/trpc';
 import { uploadToCloudinary } from '~/utils/upload';
@@ -228,4 +229,4 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
   );
 };
 
-export default SubmitProject;
+export default withAuth(SubmitProject, { redirect: '/' });

@@ -3,6 +3,7 @@ import {
   Card,
   Center,
   Collapse,
+  Container,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -34,25 +35,29 @@ import ProfilePicture from '~/components/pages/connect-wallet/create-profile/Pro
 import { trpc } from '~/utils/trpc';
 
 const CreateProfile = () => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
-  const [pfp, setPFP] = useState<string>('');
   const { publicKey } = useWallet();
-  const router = useRouter();
+  const [pfp, setPFP] = useState<string>(
+    `https://source.boringavatars.com/marble/120/${publicKey?.toBase58()}?colors=05299E,5E4AE3,947BD3,F0A7A0,F26CA7,FFFFFF,CAF0F8,CCA43B`
+  );
+  const [userName, setUsername] = useState<string>('');
   const [creatingNewProfileLoadingState, setCreatingNewProfileLoadingState] =
     useState(false);
-  const [userName, setUsername] = useState<string>('');
+
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const router = useRouter();
+
   const usernameStatusResponse = trpc.user.checkUsername.useQuery({
     username: userName as string,
   });
+
   const userCreateMutation = trpc.user.create.useMutation({
     onSuccess: (data) => {
-      console.log('created user', data);
       signIn('credentials', {
         callbackUrl: '',
         redirect: false,
         wallet: publicKey?.toBase58(),
       });
-      console.log('user profile created succesfully');
       //todo: redirecting
       router.push({
         pathname: '/[username]',
@@ -60,6 +65,7 @@ const CreateProfile = () => {
       });
     },
   });
+
   const schema = yup.object().shape({
     username: yup
       .string()
@@ -71,16 +77,9 @@ const CreateProfile = () => {
         // @ts-ignore
         function (username: string) {
           if (username?.length < 4) {
-            console.log('less than 4 - ', username);
             return true;
           }
           setUsername(username);
-          console.log(
-            'status showing for -',
-            username,
-            'and data is - ',
-            usernameStatusResponse.data
-          );
           if (!usernameStatusResponse.data) {
             return true;
           } else {
@@ -99,13 +98,10 @@ const CreateProfile = () => {
     trigger,
     getValues,
     control,
-    setError,
     formState: { errors, isSubmitting },
-  } = useForm({ resolver: yupResolver(schema) });
-
-  if (!publicKey) {
-    router.push('/');
-  }
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setCreatingNewProfileLoadingState(true);
@@ -118,7 +114,7 @@ const CreateProfile = () => {
     });
   };
 
-  if (creatingNewProfileLoadingState) {
+  if (creatingNewProfileLoadingState || !publicKey) {
     return (
       <Card
         overflow="hidden"
@@ -136,102 +132,113 @@ const CreateProfile = () => {
   }
 
   return (
-    <Card overflow="hidden" maxW={'24rem'} mx="auto" my="10rem" gap="1rem">
-      <FormControl
-        w="full"
-        pb="1rem"
-        variant={'outline'}
-        colorScheme={'pink'}
-        isRequired
+    <Container maxW="full" py={{ base: '2rem', md: '4rem' }}>
+      <Card
+        overflow="hidden"
+        maxW={'24rem'}
+        mx="auto"
+        gap="1rem"
+        p={{ base: '22px', md: '32px' }}
       >
-        <FormLabel fontSize={{ base: 'xs', md: 'sm' }} htmlFor="profilePicture">
-          Profile Picture
-        </FormLabel>
-        <ProfilePicture onOpen={onOpen} pfp={pfp} />
-      </FormControl>
-      <Collapse in={isOpen} animateOpacity>
-        <FramerCarousel onClose={onClose} setPFP={setPFP} PFP={pfp} />
-      </Collapse>
-      <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl
+          w="full"
           pb="1rem"
           variant={'outline'}
           colorScheme={'pink'}
-          isInvalid={!!errors.username}
           isRequired
         >
-          <FormLabel fontSize={{ base: 'xs', md: 'sm' }} htmlFor="username">
-            Username
+          <FormLabel
+            fontSize={{ base: 'xs', md: 'sm' }}
+            htmlFor="profilePicture"
+          >
+            Profile Picture
           </FormLabel>
-          <InputGroup>
-            <Controller
-              name="username"
-              control={control}
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, ...field } }) => (
-                <Input
-                  {...field}
-                  autoComplete="false"
-                  onChange={({ target: { value } }) => {
-                    trigger('username');
-                    onChange(value);
-                  }}
-                />
-              )}
-            />
-            {!creatingNewProfileLoadingState && usernameStatusResponse && (
-              <InputRightElement fontSize="18px">
-                {usernameStatusResponse.isLoading && (
-                  <Spinner size={'xs'} thickness="1px" />
+          <ProfilePicture onOpen={onOpen} pfp={pfp} />
+        </FormControl>
+        <Collapse in={isOpen} animateOpacity>
+          <FramerCarousel onClose={onClose} setPFP={setPFP} PFP={pfp} />
+        </Collapse>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormControl
+            pb="1rem"
+            variant={'outline'}
+            colorScheme={'pink'}
+            isInvalid={!!errors.username}
+            isRequired
+          >
+            <FormLabel fontSize={{ base: 'xs', md: 'sm' }} htmlFor="username">
+              Username
+            </FormLabel>
+            <InputGroup>
+              <Controller
+                name="username"
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, ...field } }) => (
+                  <Input
+                    {...field}
+                    autoComplete="false"
+                    onChange={({ target: { value } }) => {
+                      trigger('username');
+                      onChange(value);
+                    }}
+                  />
                 )}
-                {!usernameStatusResponse.data &&
-                  !usernameStatusResponse.isLoading &&
-                  userName === getValues('username') &&
-                  !errors.username && <HiCheck color={'green'} />}
-              </InputRightElement>
-            )}
-          </InputGroup>
-          <FormErrorMessage textAlign={'start'}>
-            {errors.username && <>{errors.username.message}</>}
-          </FormErrorMessage>
-        </FormControl>
-        {/* ---- wallet ---- */}
-        <FormControl pb="1rem" isRequired>
-          <FormLabel fontSize={{ base: 'xs', md: 'sm' }} htmlFor="publickey">
-            Wallet Address
-          </FormLabel>
-          <HStack gap="0.5rem">
-            <Center
-              rounded="4px"
-              bg="#242424"
-              height="2.5rem"
-              px="1.3rem"
-              outline="1px solid #242424"
-              w="full"
-            >
-              <WalletAddress
-                walletAddress={publicKey?.toBase58() as string}
-                size="xs"
               />
-            </Center>
-          </HStack>
-          <FormErrorMessage>
-            {errors.publickey ? <>{errors.publickey.message}</> : <></>}
-          </FormErrorMessage>
-        </FormControl>
-        <Button
-          variant={'connect_wallet'}
-          mt={'3rem'}
-          w="full"
-          type="submit"
-          isLoading={isSubmitting}
-        >
-          Submit
-        </Button>
-      </form>
-    </Card>
+              {!creatingNewProfileLoadingState && usernameStatusResponse && (
+                <InputRightElement fontSize="18px">
+                  {usernameStatusResponse.isLoading && (
+                    <Spinner size={'xs'} thickness="1px" />
+                  )}
+                  {!usernameStatusResponse.data &&
+                    !usernameStatusResponse.isLoading &&
+                    userName === getValues('username') &&
+                    !errors.username && <HiCheck color={'green'} />}
+                </InputRightElement>
+              )}
+            </InputGroup>
+            <FormErrorMessage textAlign={'start'}>
+              {errors.username && <>{errors.username.message}</>}
+            </FormErrorMessage>
+          </FormControl>
+          {/* ---- wallet ---- */}
+          <FormControl pb="1rem" isRequired>
+            <FormLabel fontSize={{ base: 'xs', md: 'sm' }} htmlFor="publickey">
+              Wallet Address
+            </FormLabel>
+            <HStack gap="0.5rem">
+              <Center
+                rounded="4px"
+                bg="#242424"
+                height="2.5rem"
+                px="1.3rem"
+                outline="1px solid #242424"
+                w="full"
+              >
+                <WalletAddress
+                  walletAddress={publicKey?.toBase58() as string}
+                  size="xs"
+                />
+              </Center>
+            </HStack>
+            <FormErrorMessage>
+              {errors.publickey ? <>{errors.publickey.message}</> : <></>}
+            </FormErrorMessage>
+          </FormControl>
+          <Button
+            variant={'connect_wallet'}
+            mt={'3rem'}
+            w="full"
+            type="submit"
+            isLoading={isSubmitting}
+          >
+            Submit
+          </Button>
+        </form>
+      </Card>
+    </Container>
   );
 };
 

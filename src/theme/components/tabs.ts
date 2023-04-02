@@ -11,13 +11,13 @@ const cubik = definePartsStyle((props) => {
     tablist: {
       width: '100%',
       backgroundColor: 'transparent',
-      gap: '32px',
+      gap: { base: '10px', md: '32px' },
     },
     tab: {
       padding: '8px 8px 12px 8px',
       fontWeight: '600',
-      fontSize: '18px',
-      lineHeight: '22px',
+      fontSize: { base: '16px', md: '18px' },
+      lineHeight: { base: '16px', md: '22px' },
       backgroundColor: 'transparent',
       borderBottom: '1px solid transparent',
       color: 'neutral.7',

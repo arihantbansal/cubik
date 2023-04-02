@@ -153,6 +153,32 @@ export const Button = {
         outline: isMobileSafari ? '' : '1px solid #14665B',
       },
     }),
+    project_button_secondary: (props: StyleFunctionProps) => ({
+      color: '#A8F0E6',
+      backgroundColor: 'transparent',
+      height: 'full',
+      width: { base: 'full', md: 'full' },
+      padding: { base: '12px 20px 12px 20px', md: '16px 20px 16px 20px' },
+      outline: isMobileSafari ? '' : '1px solid #A8F0E6',
+      border: isMobileSafari ? '1px solid #A8F0E6' : '',
+      fontSize: '14px',
+      fontWeight: '700',
+      lineHeight: '18px',
+      borderRadius: '8px',
+      transition: 'all 0.6s',
+      _hover: {
+        color: '#031513',
+        backgroundColor: '#E0FFFD',
+        outline: 'none',
+        transition: 'all 0.6s',
+      },
+      _active: {
+        color: '#031513',
+        backgroundColor: '#E0FFFD',
+        outline: 'none',
+        transition: 'all 0.6s',
+      },
+    }),
   },
   sizes: {
     md: {

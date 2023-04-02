@@ -1,11 +1,21 @@
 import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import LandingPage from '~/components/pages/landing-page/LandingPage';
+import SEO from '~/components/SEO';
 
 const Home: NextPage = () => {
   const { data, status } = useSession();
 
-  return <LandingPage />;
+  return (
+    <>
+      <SEO
+        title={`Cubik`}
+        description={`Fund Public Goods Through Community Voting On Solana `}
+        image={`https://solana.ghost.io/content/images/2022/06/solana-network-upgrades.png`}
+      />
+      <LandingPage />
+    </>
+  );
 };
 
 export default Home;

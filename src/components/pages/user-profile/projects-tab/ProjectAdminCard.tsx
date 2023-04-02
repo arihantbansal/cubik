@@ -19,28 +19,35 @@ import ProjectHeader from './ProjectHeader';
 
 const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
   const [showVault, setShowVault] = useState(false);
-  let status = 'pending';
+  let status = 'live';
   if (project.name === 'Solmon') {
-    status = 'active';
+    status = 'verified';
   }
-  console.log('project - ', project);
   return (
     <Card
       px="0px"
-      pt={status === 'inactive' ? '24px' : '0px'}
-      pb="24px"
-      gap="24px"
+      pt={
+        status === 'inactive' ? { base: '16px', sm: '20px', md: '24px' } : '0px'
+      }
+      pb={{ base: '16px', sm: '20px', md: '24px' }}
+      gap={{ base: '16px', sm: '20px', md: '24px' }}
+      w="100%"
+      border={'none'}
     >
       <ProjectBanner status={status} />
       <CardHeader>
         <ProjectHeader project={project} />
       </CardHeader>
-      {/*{status === 'active' && (
+      {status === 'verified' && (
         <>
-          <CardBody borderTop={'1px solid'} borderColor="neutral.3">
+          <CardBody
+            gap={{ base: '64px', sm: '72px', md: '24px' }}
+            borderTop={'1px solid'}
+            borderColor="neutral.3"
+          >
             <Stack
-              gap="80px"
-              padding="24px"
+              gap={{ base: '64px', sm: '72px', md: '80px' }}
+              padding={{ base: '16px', sm: '20px', md: '24px' }}
               direction={{ base: 'column', lg: 'row' }}
             >
               <FundingOverview />
@@ -74,7 +81,7 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
             </Center>
           </CardFooter>
         </>
-      )} */}
+      )}
     </Card>
   );
 };

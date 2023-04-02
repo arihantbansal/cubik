@@ -1,6 +1,5 @@
 import { Avatar as ChakraAvatar, Center } from '@chakra-ui/react';
-import Avatar from 'boring-avatars';
-import { useSession } from 'next-auth/react';
+import { useWallet } from '@solana/wallet-adapter-react';
 import { BiUpArrowAlt } from 'react-icons/bi';
 
 const ProfilePicture = ({
@@ -10,7 +9,7 @@ const ProfilePicture = ({
   onOpen: () => void;
   pfp: string;
 }) => {
-  const { data: session } = useSession();
+  const { publicKey } = useWallet();
   return (
     <Center
       w="fit-content"
@@ -30,25 +29,7 @@ const ProfilePicture = ({
       >
         <BiUpArrowAlt color="black" />
       </Center>
-      {pfp.length === 0 ? (
-        <Avatar
-          size={84}
-          name={session?.user.mainWallet as string}
-          variant="marble"
-          colors={[
-            '#05299E',
-            '#5E4AE3',
-            '#947BD3',
-            '#F0A7A0',
-            '#F26CA7',
-            '#FFFFFF',
-            '#CAF0F8',
-            '#CCA43B',
-          ]}
-        />
-      ) : (
-        <ChakraAvatar src={pfp} width="84px" height="84px" />
-      )}
+      <ChakraAvatar src={pfp} width="84px" height="84px" />
     </Center>
   );
 };

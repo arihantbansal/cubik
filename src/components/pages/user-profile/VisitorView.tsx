@@ -1,5 +1,4 @@
 import {
-  Container,
   Flex,
   Tab,
   TabList,
@@ -7,10 +6,12 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react';
+import { FC, memo } from 'react';
 import { UserWithProjectType } from '~/types/user';
 import UserDetails from './details-tab/UserDetails';
+import { VisitorProjectEmptyState } from './empty-states/ProjectEmptyState';
 import ProfileHeader from './ProfileHeader';
-import ProjectAdminCard from './projects-tab/ProjectAdminCard';
+import ProjectVisitorCard from './projects-tab/ProjectVisitorCard';
 import { VisitorViewSkeleton } from './skeletons/ProfileViewSkeletons';
 
 type visitorViewType = {
@@ -18,18 +19,21 @@ type visitorViewType = {
   isLoading: boolean;
 };
 
-const VisitorView = ({ user, isLoading }: visitorViewType) => {
+const VisitorView: FC<visitorViewType> = ({
+  user,
+  isLoading,
+}: visitorViewType) => {
   if (isLoading) return <VisitorViewSkeleton />;
   return (
-    <Flex flexDir={'column'} gap="48px" my="8rem">
+    <Flex flexDir={'column'} gap="48px">
       <ProfileHeader user={user} />
-      <Tabs variant={'cubik'}>
+      <Tabs variant={'cubik'} isLazy>
         <TabList>
           <Tab>Details</Tab>
           <Tab>Projects</Tab>
           <Tab>Contributions</Tab>
         </TabList>
-        <TabPanels p={{ base: '1rem', md: '0rem' }}>
+        <TabPanels p={'0'}>
           <TabPanel>
             <Flex maxW={'full'} p="0" flexDir="column" gap="32px">
               <UserDetails />
@@ -37,9 +41,13 @@ const VisitorView = ({ user, isLoading }: visitorViewType) => {
           </TabPanel>
           <TabPanel>
             <Flex direction="column" w="full" gap="32px">
-              {user.project.map((project, key) => (
-                <ProjectAdminCard project={project} key={key} />
-              ))}
+              {user.project.length ? (
+                user.project.map((project, key) => (
+                  <ProjectVisitorCard project={project} key={key} />
+                ))
+              ) : (
+                <VisitorProjectEmptyState />
+              )}
             </Flex>
           </TabPanel>
           <TabPanel></TabPanel>
@@ -49,4 +57,4 @@ const VisitorView = ({ user, isLoading }: visitorViewType) => {
   );
 };
 
-export default VisitorView;
+export default memo(VisitorView);

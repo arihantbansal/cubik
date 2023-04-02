@@ -11,7 +11,7 @@ import SplineAsset from './SplineAsset';
 
 const MotionBox = motion(Box);
 const height = {
-  base: '44rem',
+  base: '100vh',
   sm: '44rem',
   md: '60rem',
   lg: '74rem',
@@ -71,162 +71,13 @@ const BackgroundImageWrapper = ({
   );
 };
 
-const HeroBackground = () => {
-  return (
-    //<Center
-    // height="100vh"
-    //border="1px solid green"
-    // alignSelf={'center'}
-    // border="1px dashed #0386CF  "
-    // position={'absolute'}
-    // w="100rem"
-    // height={'100vh'}
-    // alignItems={'bottom'}
-    // w="100vw"
-    // minH={{ base: '100rem', md: '130rem', lg: '190rem', xl: '160vh' }}
-    // border={{
-    //   base: '1px solid blue',
-    //   md: '1px dashed #0386CF  ',
-    //   lg: '1px solid green',
-    // }}
-    // minW="90rem"
-    // maxW="130rem"
-    // overflow="hidden"
-    // _before={{
-    //   content: '""',
-    //   zIndex: '10',
-    //   position: 'relative',
-    //   top: 0,
-    //   left: 0,
-    //   bottom: 0,
-    //   width: '25vw',
-    //   background: 'linear-gradient(90deg, #000000 1%, rgb(0 0 0 / 0%) 50%)',
-    // }}
-    // _after={{
-    //   content: '""',
-    //   zIndex: '10',
-    //   position: 'absolute',
-    //   top: 0,
-    //   right: 0,
-    //   bottom: 0,
-    //   width: '25vw',
-    //   background: 'linear-gradient(271deg, #000000 1%, rgb(0 0 0 / 0%) 50%)',
-    // }}
-    //>
-    {
-      /* <Center
-        position={'relative'}
-        mb="100%"
-        top="0"
-        left="0"
-        background="red"
-        width={{ base: '200vw', sm: '150vw', md: '100vw', xl: '100vw' }}
-        border={'1px solid yellow'}
-        height="fit-content"
-      >
-          <Image
-            src="/images/5.PNG"
-            alt="hero background"
-            width={2000}
-            height={1000}
-          />
-        </MouseParallaxChild>
-      </Center>
-      <Center
-        position={'absolute'}
-        width={{ base: '200vw', sm: '150vw', md: '200vw', xl: '200vw' }}
-        transform={'translateY(100%)'}
-        background="green"
-        height="fit-content"
-        bgImage={'/images/5.PNG'}
-      >  
-     <MouseParallaxChild factorX={0.1} factorY={0.06} >
-          <Image
-            src="/images/4.PNG"
-            alt="hero background"
-            width={1000}
-            height={300}
-          />
-         {/* </MouseParallaxChild> 
-     </Center>  <Center
-        alignItems={'end'}
-        objectPosition="center"
-        position="absolute"
-        height={'100%'}
-      >
-        <MouseParallaxChild
-          style={{ height: 'full', objectPosition: 'center' }}
-          factorX={0.15}
-          factorY={0.07}
-        >
-          <Image
-            src="/images/3.PNG"
-            style={{
-              objectPosition: 'center',
-              objectFit: 'contain',
-            }}
-            alt="hero background"
-            width={5000}
-            height={5000}
-          />
-        </MouseParallaxChild>{' '}
-      </Center>
-      <Center alignItems={'end'} w="100%" height={'100%'}>
-        <MouseParallaxChild
-          style={{
-            height: 'full',
-            position: 'absolute',
-          }}
-          factorX={0.1}
-          factorY={0.08}
-        >
-          <Image
-            src="/images/2.PNG"
-            alt="hero background"
-            style={{
-              objectPosition: 'center',
-              objectFit: 'contain',
-            }}
-            width={5000}
-            height={5000}
-          />
-        </MouseParallaxChild>{' '}
-      </Center>
-      <Center
-        alignItems={'end'}
-        objectPosition="center"
-        position="absolute"
-        height={'100%'}
-      >
-        <MouseParallaxChild
-          style={{ height: 'full', objectPosition: 'center' }}
-          factorX={0.25}
-          factorY={0.09}
-        >
-          <Image
-            src="/images/1.PNG"
-            style={{
-              objectPosition: 'center',
-              objectFit: 'contain',
-            }}
-            alt="hero background"
-            width={2000}
-            height={3000}
-          />
-        </MouseParallaxChild>
-      </Center> */
-    }
-    // </Center>
-  );
-};
-
 const LandingPage = () => {
   const router = useRouter();
 
   return (
     <Container background="black" maxW="full" px="0">
       <Center p="0" maxW="100vw" width="full">
-        <Center top="0" position={'fixed'}>
+        <Center top={{ base: '-1rem', md: '5rem' }} position={'fixed'}>
           <MouseParallaxContainer globalFactorX={0.1} globalFactorY={0.1}>
             <Center
               _before={{

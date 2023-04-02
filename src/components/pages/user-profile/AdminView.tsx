@@ -1,5 +1,4 @@
 import {
-  Container,
   Flex,
   Tab,
   TabList,
@@ -7,10 +6,13 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react';
+import { FC, memo } from 'react';
 
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import { UserWithProjectType } from '~/types/user';
 import UserDetails from './details-tab/UserDetails';
+import { AdminProjectEmptyState } from './empty-states/ProjectEmptyState';
+
 import ProfileHeader from './ProfileHeader';
 import ProjectAdminCard from './projects-tab/ProjectAdminCard';
 import { AdminViewSkeleton } from './skeletons/ProfileViewSkeletons';
@@ -20,7 +22,7 @@ type adminViewType = {
   isLoading: boolean;
 };
 
-const AdminView = ({ user, isLoading }: adminViewType) => {
+const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
   const { hasError, ErrorBoundaryWrapper } = useErrorBoundary();
 
   if (hasError) {
@@ -31,7 +33,11 @@ const AdminView = ({ user, isLoading }: adminViewType) => {
 
   return (
     <ErrorBoundaryWrapper>
-      <Flex w={'full'} flexDir={'column'} gap="48px" my="8rem">
+      <Flex
+        w={'full'}
+        flexDir={'column'}
+        gap={{ base: '32px', sm: '40px', md: '56px' }}
+      >
         <ProfileHeader user={user} />
         <Tabs variant={'cubik'}>
           <TabList>
@@ -39,24 +45,22 @@ const AdminView = ({ user, isLoading }: adminViewType) => {
             <Tab>Projects</Tab>
             <Tab>Contributions</Tab>
           </TabList>
-          <TabPanels p={{ base: '1rem', md: '0rem' }}>
+          <TabPanels p={'0'}>
             <TabPanel>
               <Flex maxW={'full'} p="0" flexDir="column" gap="32px">
                 <UserDetails />
               </Flex>
             </TabPanel>
             <TabPanel>
-              <Container
-                maxW={'full'}
-                p="0"
-                display={'flex'}
-                flexDir="column"
-                gap="32px"
-              >
-                {user.project.map((project, key) => (
-                  <ProjectAdminCard project={project} key={key} />
-                ))}
-              </Container>
+              <Flex direction="column" w="full" gap="32px">
+                {user.project.length ? (
+                  user.project.map((project, key) => (
+                    <ProjectAdminCard project={project} key={key} />
+                  ))
+                ) : (
+                  <AdminProjectEmptyState />
+                )}
+              </Flex>
             </TabPanel>
             <TabPanel></TabPanel>
           </TabPanels>
@@ -66,4 +70,4 @@ const AdminView = ({ user, isLoading }: adminViewType) => {
   );
 };
 
-export default AdminView;
+export default memo(AdminView);

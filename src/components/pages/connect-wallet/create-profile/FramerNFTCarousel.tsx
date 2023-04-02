@@ -3,8 +3,7 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import { memo, useEffect, useRef, useState } from 'react';
-import { GetNftFromMetaData } from '~/utils/getNFTfromMetaData';
-import { metaplexGetByOwner } from '~/utils/metaplexGetByOwner';
+import { useNftDataByOwner } from '~/hooks/getNFTsByOwner';
 import Carousel from './Carousel';
 
 type CarouselPropsType = {
@@ -18,11 +17,13 @@ const FramerCarousel = memo(function FramerCarousel({
   setPFP,
   PFP,
 }: CarouselPropsType) {
+  const carousel = useRef<HTMLElement>();
+  const [carouselWidth, setCarouselWidth] = useState(0);
+
   const { data: session } = useSession();
   const { publicKey } = useWallet();
-  const [nftsData, setNftsData] = useState<any>();
-  const [carouselWidth, setCarouselWidth] = useState(0);
-  const carousel = useRef<HTMLElement>();
+
+  const { data: nftsData, isLoading, error } = useNftDataByOwner(publicKey);
 
   useEffect(() => {
     if (carousel.current) {
@@ -30,27 +31,15 @@ const FramerCarousel = memo(function FramerCarousel({
         carousel.current.scrollWidth - carousel.current.offsetWidth
       );
     }
-  }, [carouselWidth, nftsData]);
+  }, [carouselWidth]);
 
-  useEffect(() => {
-    try {
-      metaplexGetByOwner(publicKey).then((nfts) => {
-        if (nfts && nfts.length > 0) {
-          GetNftFromMetaData({ NFTMetadataURIs: nfts })
-            .then(async (nftsData) => {
-              setNftsData(nftsData);
-            })
-            .catch((e) => {
-              //console.log('error in return value - ', e);
-            });
-        } else {
-          //console.log('metaPlexGetByOwner returned empty array');
-        }
-      });
-    } catch (e) {
-      // console.log('error in useEffect');
-    }
-  }, [publicKey]);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error</div>;
+  }
 
   return (
     <>
@@ -89,7 +78,7 @@ const FramerCarousel = memo(function FramerCarousel({
         ref={carousel}
         as={motion.div}
       >
-        {nftsData?.length > 0 ? (
+        {nftsData && nftsData?.length > 0 ? (
           <Carousel
             carouselWidth={carouselWidth}
             nftsData={nftsData}

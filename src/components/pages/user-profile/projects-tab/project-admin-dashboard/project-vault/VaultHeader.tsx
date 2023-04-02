@@ -3,13 +3,25 @@ import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 
 const VaultHeader = () => {
   return (
-    <Stack direction={{ Base: 'row', md: 'column' }} w="full">
+    <Stack
+      direction={{ base: 'column', md: 'row' }}
+      gap={{ base: '16px', sm: '20px', md: '24px' }}
+      w="full"
+    >
       <VStack alignItems={'start'}>
-        <Box as="p" textStyle="title5" color={'neutral.8'}>
+        <Box
+          as="p"
+          textStyle={{ base: 'title6', sm: 'title6', md: 'title5' }}
+          color={'neutral.8'}
+        >
           Project Vault
         </Box>
-        <HStack gap="6px" align={'end'}>
-          <Box as="p" textStyle={'title1'} color="neutral.11">
+        <HStack gap="6px" align={{ base: 'center', md: 'center' }}>
+          <Box
+            as="p"
+            textStyle={{ base: 'title3', sm: 'title2', md: 'title1' }}
+            color="neutral.11"
+          >
             $5489.60
           </Box>
           <WalletAddress
@@ -20,7 +32,11 @@ const VaultHeader = () => {
         </HStack>
       </VStack>
       <Center w="full">
-        <Button ml="auto" variant={'connect_wallet'}>
+        <Button
+          w={{ base: 'full', md: 'auto' }}
+          ml="auto"
+          variant={'connect_wallet'}
+        >
           Withdraw
         </Button>
       </Center>

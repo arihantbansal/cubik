@@ -10,7 +10,7 @@ const GetFormattedLink = ({ link }: { link: string }) => {
         noOfLines={1}
         as="p"
         whiteSpace={'nowrap'}
-        textStyle={'body.5'}
+        textStyle={{ base: 'body6', sm: 'body5', md: 'body4' }}
         color={'brand.teal5'}
         w="full"
       >

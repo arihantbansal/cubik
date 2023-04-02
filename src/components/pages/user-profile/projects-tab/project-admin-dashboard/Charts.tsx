@@ -192,7 +192,7 @@ export const FundingChart = () => {
           options: {
             chart: {
               height: '100%',
-              width: '200px',
+              width: '320px',
             },
           },
         },
@@ -337,8 +337,8 @@ export const VisitorsChart = () => {
           breakpoint: 480,
           options: {
             chart: {
-              height: '100%',
-              width: '200px',
+              height: '80%',
+              width: '320px',
             },
           },
         },

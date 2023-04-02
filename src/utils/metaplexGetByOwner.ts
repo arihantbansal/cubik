@@ -8,18 +8,29 @@ export type NFTData = {
 const connection = new Connection(process.env.NEXT_PUBLIC_RPC_URL as string);
 const metaplex = Metaplex.make(connection);
 
-export const metaplexGetByOwner = async (
+export const metaplexGetByOwner = (
   publicKey: PublicKey | null
 ): Promise<string[]> => {
-  try {
-    const metaplexResponse = await metaplex
+  return new Promise((resolve, reject) => {
+    if (!publicKey) {
+      reject([]);
+      return;
+    }
+
+    metaplex
       .nfts()
-      .findAllByOwner({ owner: publicKey as PublicKey });
-    const promises = metaplexResponse.map(
-      (nftMetadata: { uri: any }) => nftMetadata.uri
-    );
-    return await Promise.all(promises);
-  } catch (error) {
-    return [];
-  }
+      .findAllByOwner({ owner: publicKey })
+      .then((metaplexResponse) => {
+        const promises = metaplexResponse.map(
+          (nftMetadata: { uri: any }) => nftMetadata.uri
+        );
+        return Promise.all(promises);
+      })
+      .then((results) => {
+        resolve(results);
+      })
+      .catch(() => {
+        reject([]);
+      });
+  });
 };

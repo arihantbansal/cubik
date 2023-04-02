@@ -12,17 +12,32 @@ import {
   Tabs,
   VStack,
 } from '@chakra-ui/react';
-import React from 'react';
 
 const ProfileHeaderSkeleton = () => {
   return (
     <HStack w="full" align={'center'} justify="start" gap={'16px'}>
       <Center>
-        <SkeletonCircle width="84px" height="84px" />
+        <SkeletonCircle
+          width={{ base: '80px', md: '84px' }}
+          height={{ base: '80px', md: '84px' }}
+        />
       </Center>
-      <VStack p="8px" gap="8px" justifyContent={'center'} alignItems={'start'}>
-        <Skeleton w="14rem" height="28px" opacity={'0.6'} />
-        <Skeleton w="10rem" height="22px" opacity={'0.3'} />
+      <VStack
+        p="8px"
+        gap={{ base: '6px', md: '8px' }}
+        justifyContent={'center'}
+        alignItems={'start'}
+      >
+        <Skeleton
+          w={{ base: '10rem', md: '14rem' }}
+          height="28px"
+          opacity={'0.6'}
+        />
+        <Skeleton
+          w={{ base: '8rem', md: '10rem' }}
+          height="22px"
+          opacity={'0.3'}
+        />
       </VStack>
     </HStack>
   );
@@ -36,42 +51,50 @@ const ProfileTabsSkeleton = () => {
         <Tab>Projects</Tab>
         <Tab>Contributions</Tab>
       </TabList>
-      <TabPanels p={{ base: '1rem', md: '0rem' }}>
+      <TabPanels p="0">
         <TabPanel>
           <Flex maxW={'full'} p="0" flexDir="column" gap="32px">
             <Stack direction={{ base: 'column', md: 'row' }} gap="32px">
-              <Skeleton w="275px" height="220px" rounded="12px" />
               <Skeleton
-                w="420px"
-                height="220px"
+                w={{ base: '320px', md: '275px' }}
+                height={{ base: '180px', md: '220px' }}
+                rounded="12px"
+              />
+              <Skeleton
+                w={{ base: '320px', md: '420px' }}
+                height={{ base: '180px', md: '220px' }}
                 opacity={'0.6'}
                 rounded="12px"
               />
               <Skeleton
-                w="400px"
-                height="220px"
+                w={{ base: '320px', md: '400px' }}
+                height={{ base: '180px', md: '220px' }}
                 opacity={'0.3'}
                 rounded="12px"
               />
             </Stack>
           </Flex>
         </TabPanel>
-        <TabPanel>
-          {/* {projects.data ? (
-          <Container
-            maxW={'full'}
-            p="0"
-            display={'flex'}
-            flexDir="column"
-            gap="32px"
-          >
-            {projects.data.map((project, key) => (
-              <ProjectAdminCard project={project} key={key} />
-            ))}
-          </Container>
-        ) : (
-          ''
-        )} */}
+        <TabPanel w="100%">
+          <Stack direction={'column'} gap="32px" w="100%">
+            <Skeleton
+              w={{ base: '320px', md: '100%' }}
+              height={{ base: '180px', md: '220px' }}
+              rounded="12px"
+            />
+            <Skeleton
+              w={{ base: '320px', md: '100%' }}
+              height={{ base: '180px', md: '220px' }}
+              opacity={'0.6'}
+              rounded="12px"
+            />
+            <Skeleton
+              w={{ base: '320px', md: '100%' }}
+              height={{ base: '180px', md: '220px' }}
+              opacity={'0.3'}
+              rounded="12px"
+            />
+          </Stack>
         </TabPanel>
         <TabPanel></TabPanel>
       </TabPanels>
@@ -80,7 +103,7 @@ const ProfileTabsSkeleton = () => {
 };
 export const AdminViewSkeleton = () => {
   return (
-    <Flex flexDir={'column'} gap="48px" my="8rem">
+    <Flex flexDir={'column'} gap="48px">
       <ProfileHeaderSkeleton />
       <ProfileTabsSkeleton />
     </Flex>
@@ -89,7 +112,7 @@ export const AdminViewSkeleton = () => {
 
 export const VisitorViewSkeleton = () => {
   return (
-    <Flex flexDir={'column'} gap="48px" my="8rem">
+    <Flex flexDir={'column'} gap="48px">
       <ProfileHeaderSkeleton />
       <ProfileTabsSkeleton />
     </Flex>
