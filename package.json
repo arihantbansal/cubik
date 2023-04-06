@@ -50,6 +50,7 @@
     "@trpc/react-query": "^10.16.0",
     "@trpc/server": "^10.16.0",
     "apexcharts": "^3.37.2",
+    "axios": "^1.3.4",
     "bignumber.js": "^9.1.1",
     "bs58": "^5.0.0",
     "chakra-react-select": "^4.6.0",

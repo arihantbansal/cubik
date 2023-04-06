@@ -1,5 +1,4 @@
 import { Container } from '@chakra-ui/react';
-import { useWallet } from '@solana/wallet-adapter-react';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -16,7 +15,6 @@ const ProfilePage = () => {
   const [userProfileLoading, setUserProfileLoading] = useState(true);
   const { data: session } = useSession();
   const router = useRouter();
-  const wallet = useWallet();
 
   const user = trpc.user.findOne.useQuery({
     username: router.query.username as string,
@@ -30,7 +28,7 @@ const ProfilePage = () => {
   // }, [session]);
 
   if (!user.data) {
-    console.log('user not found');
+    console.log('user not found - ', user.data);
     return (
       <Container maxW="7xl" w="full" p="8rem">
         this page does not exist try searching for something else

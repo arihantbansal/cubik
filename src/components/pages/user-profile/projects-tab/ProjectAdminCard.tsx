@@ -23,6 +23,7 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
   if (project.name === 'Solmon') {
     status = 'verified';
   }
+
   return (
     <Card
       px="0px"

@@ -172,6 +172,18 @@ export const Button = {
         outline: 'none',
         transition: 'all 0.6s',
       },
+      _disabled: {
+        color: '#031513',
+        backgroundColor: '#E0FFFD !important',
+        outline: 'none',
+        transition: 'all 0.6s',
+      },
+      _visited: {
+        color: '#031513',
+        backgroundColor: '#E0FFFD !important',
+        outline: 'none',
+        transition: 'all 0.6s',
+      },
       _active: {
         color: '#031513',
         backgroundColor: '#E0FFFD',

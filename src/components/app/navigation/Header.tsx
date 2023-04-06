@@ -1,18 +1,16 @@
 import {
   Box,
-  Button,
   Center,
   Collapse,
   Container,
   Flex,
   HStack,
-  Input,
-  InputGroup,
-  Text,
   useDisclosure,
   useMediaQuery,
 } from '@chakra-ui/react';
-import { Cross as Hamburger } from 'hamburger-react';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { Turn as Hamburger } from 'hamburger-react';
 import Link from 'next/link';
 import { Router, useRouter } from 'next/router';
 import NProgress from 'nprogress';
@@ -105,7 +103,7 @@ const MobileNavCollapsible = memo(function MobileNavCollapsible({
   );
 });
 
-const LOADER_PAGES = ['/connect-wallet', '/', '/contact'];
+const LOADER_PAGES = ['/submit-project', '/projects'];
 
 export const Header = memo(function Header({
   children,
@@ -113,6 +111,7 @@ export const Header = memo(function Header({
   children?: React.ReactNode;
 }) {
   const router = useRouter();
+  const { connected } = useWallet();
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [isDesktop] = useMediaQuery('(min-width: 768px)');
   const [isLoading, setIsLoading] = useState(false);
@@ -206,14 +205,20 @@ export const Header = memo(function Header({
           {isDesktop ? (
             <Center w="fit-content">{children}</Center>
           ) : (
-            <HStack outline="1px solid red" gap="0">
-              <Center display={{ base: 'flex', md: 'none' }}>{children}</Center>
+            <HStack gap="0">
+              {connected ? (
+                <Center display={{ base: 'flex', md: 'none' }} gap="0">
+                  {children}
+                </Center>
+              ) : (
+                ''
+              )}
               <Hamburger
                 toggled={isOpen}
                 toggle={onToggle}
-                size={25}
+                size={24}
                 duration={0.4}
-                color="white"
+                color="#A8F0E6"
                 hideOutline
                 rounded
               />
@@ -226,7 +231,7 @@ export const Header = memo(function Header({
         isOpen={isOpen}
         onToggle={onToggle}
       >
-        {children}
+        {connected ? '' : <WalletMultiButton />}
       </MobileNavCollapsible>
     </Container>
   );

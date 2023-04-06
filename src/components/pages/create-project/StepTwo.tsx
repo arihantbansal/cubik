@@ -10,15 +10,26 @@ import {
   Icon,
   Input,
   InputGroup,
+  InputLeftAddon,
+  InputLeftElement,
+  Text,
+  VStack,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { FaTwitter } from 'react-icons/fa';
+import { FieldErrors, UseFormRegister, UseFormTrigger } from 'react-hook-form';
+import {
+  FaDiscord,
+  FaGithub,
+  FaLink,
+  FaTelegramPlane,
+  FaTwitter,
+} from 'react-icons/fa';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { FormData } from '~/pages/submit-project';
-
+import { AiFillGithub, AiOutlineTwitter } from 'react-icons/ai';
 type StepTwoProps = {
-  onSubmit: (data: any) => void;
+  trigger: UseFormTrigger<FormData>;
+  onSubmit: () => void;
   onPrevious: () => void;
   register: UseFormRegister<FormData>;
   errors: FieldErrors<StepTwoFormValues>;
@@ -32,49 +43,27 @@ type StepTwoFormValues = {
   discord: string;
 };
 const StepTwo: React.FC<StepTwoProps> = ({
+  trigger,
   onSubmit,
   register,
   onPrevious,
   errors,
 }: StepTwoProps) => {
-  const [isTwitterConnected, setIsTwitterConnected] = useState(false);
-
-  const onTwitterConnect = async () => {
-    try {
-      const response = await fetch('/api/twitter/auth');
-      const { url } = await response.json();
-      window.location.replace(url);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const verifyTwitterHandle = async () => {
-    const twitterHandle = ''; //control.getValues('twitter');
-    if (twitterHandle) {
-      try {
-        const response = await fetch(
-          `/api/twitter/verify?handle=${twitterHandle}`
-        );
-        const { success } = await response.json();
-        if (success) {
-          setIsTwitterConnected(true);
-        } else {
-          setIsTwitterConnected(false);
-          // setValue('twitter', '');
-        }
-      } catch (error) {
-        console.error(error);
-        setIsTwitterConnected(false);
-        //setValue('twitter', '');
-      }
+  const handleSubmit = async () => {
+    const isValid = await trigger();
+    if (isValid) {
+      onSubmit();
     }
   };
 
   return (
     <>
       <CardBody>
-        <FormControl isInvalid={Boolean(errors.projectLink)} id="projectLink">
+        <FormControl
+          isRequired
+          isInvalid={Boolean(errors.projectLink)}
+          id="projectLink"
+        >
           <FormLabel>Project Link</FormLabel>
           <Input
             placeholder="https://example.com"
@@ -89,80 +78,92 @@ const StepTwo: React.FC<StepTwoProps> = ({
             <FormHelperText></FormHelperText>
           )}
         </FormControl>
-        <FormControl id="twitter">
-          <FormLabel>Twitter</FormLabel>
-          <InputGroup>
-            {!isTwitterConnected && (
-              <Button
-                leftIcon={
-                  <Icon as={FaTwitter} width={6} height={6} color="#021412" />
-                }
-                variant={'connect_twitter'}
-                onBlur={verifyTwitterHandle}
-                onClick={onTwitterConnect}
-              >
-                Connect Twitter
-              </Button>
-            )}
-          </InputGroup>
-        </FormControl>
-        <FormControl isInvalid={Boolean(errors.github)} id="github">
-          <FormLabel>Github</FormLabel>
-          <Input
-            placeholder="https://github.com/example"
-            type="url"
-            {...register('github')}
-          />
-        </FormControl>
-        {errors.github && (
-          <FormErrorMessage>{errors.github.message}</FormErrorMessage>
-        )}
-        <FormControl isInvalid={Boolean(errors.telegram)} id="telegram">
-          <FormLabel>
-            Telegram{' '}
-            <Box
-              pl="0.5rem"
-              as="span"
-              textStyle={'body4'}
-              color="surface.stoke_white"
-            >
-              (Optional)
-            </Box>
-          </FormLabel>
-          <Input
-            placeholder="https://telegram.com"
-            type="url"
-            {...register('telegram')}
-          />
-          {errors.telegram ? (
-            <FormErrorMessage>{errors.telegram.message}</FormErrorMessage>
-          ) : (
-            <FormHelperText></FormHelperText>
-          )}
-        </FormControl>
-        <FormControl isInvalid={Boolean(errors.discord)} id="discord">
-          <FormLabel>
-            Discord{' '}
-            <Box
-              pl="0.5rem"
-              as="span"
-              textStyle={'body4'}
-              color="surface.stoke_white"
-            >
-              (Optional)
-            </Box>
-          </FormLabel>
-          <Input
-            placeholder="https://discord.gg"
-            type="url"
-            {...register('discord')}
-          />
-          {errors.discord ? (
-            <FormErrorMessage>{errors.discord.message}</FormErrorMessage>
-          ) : (
-            <FormHelperText></FormHelperText>
-          )}
-        </FormControl>
+        <VStack align={'start'} gap="16px">
+          <Box as="p" textStyle="title5" color="neutral.11">
+            Socials
+          </Box>
+          <FormControl
+            isRequired
+            id="twitter"
+            isInvalid={Boolean(errors.twitter)}
+          >
+            <InputGroup>
+              <InputLeftAddon pointerEvents="none">
+                <FaTwitter size={'16'} />
+                <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="400">
+                  Twitter
+                </Text>
+              </InputLeftAddon>
+              <Input
+                placeholder="https://twitter.com.com/twitter"
+                type="twitter"
+                {...register('twitter', {
+                  required: true,
+                })}
+              />
+            </InputGroup>
+          </FormControl>
+          <FormControl id="github">
+            <InputGroup>
+              <InputLeftAddon pointerEvents="none">
+                <FaGithub size={'16'} />
+                <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="400">
+                  Github
+                </Text>
+              </InputLeftAddon>
+              <Input
+                placeholder="https://github.com/example"
+                type="url"
+                {...register('github')}
+              />
+            </InputGroup>
+          </FormControl>
+          <FormControl isInvalid={Boolean(errors.telegram)} id="telegram">
+            <InputGroup>
+              <InputLeftAddon pointerEvents="none">
+                <FaTelegramPlane color="gray.300" />
+                <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="400">
+                  Telegram
+                </Text>
+              </InputLeftAddon>
+              <Input
+                placeholder="https://telegram.com"
+                type="url"
+                {...register('telegram')}
+              />
+            </InputGroup>
+          </FormControl>
+          <FormControl isInvalid={Boolean(errors.discord)} id="discord">
+            <InputGroup>
+              <InputLeftAddon pointerEvents="none">
+                <FaDiscord color="gray.300" />
+                <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="400">
+                  Discord
+                </Text>
+              </InputLeftAddon>
+              <Input
+                placeholder="https://discord.gg"
+                type="url"
+                {...register('discord')}
+              />
+            </InputGroup>
+          </FormControl>
+          <FormControl variant='withAddOn' isInvalid={Boolean(errors.discord)} id="discord">
+            <InputGroup>
+              <InputLeftAddon pointerEvents="none">
+                <FaLink color="gray.300" />
+                <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="400">
+                  Custom
+                </Text>
+              </InputLeftAddon>
+              <Input
+                placeholder="https://example.com"
+                type="url"
+                {...register('discord')}
+              />
+            </InputGroup>
+          </FormControl>
+        </VStack>
       </CardBody>
       <CardFooter>
         <Button
@@ -174,7 +175,7 @@ const StepTwo: React.FC<StepTwoProps> = ({
         </Button>
         <Button
           variant={'outline'}
-          onClick={onSubmit}
+          onClick={handleSubmit}
           rightIcon={<Icon as={FiChevronRight} width={5} height={5} />}
         >
           Next

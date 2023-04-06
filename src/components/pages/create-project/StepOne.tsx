@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
 import Image from 'next/image';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import {
   Control,
@@ -25,72 +25,17 @@ import {
   UseFormGetValues,
   UseFormRegister,
   UseFormSetValue,
+  UseFormTrigger,
   UseFormWatch,
 } from 'react-hook-form';
 import { FiChevronRight } from 'react-icons/fi';
 import { RxImage } from 'react-icons/rx';
 import { FormData } from '~/pages/submit-project';
-
-const category = [
-  {
-    label: 'NFT',
-    value: 'nft',
-    colorScheme: 'red',
-  },
-  {
-    label: 'DeFi',
-    value: 'defi',
-    colorScheme: 'yellow',
-  },
-  {
-    label: 'Infrastructure',
-    value: 'infrastructure',
-    colorScheme: 'blue',
-  },
-  {
-    label: 'SDK',
-    value: 'sdk',
-    colorScheme: 'black',
-  },
-  {
-    label: 'Wallet',
-    value: 'wallet',
-    colorScheme: 'orange',
-  },
-  {
-    label: 'DAO',
-    value: 'dao',
-    colorScheme: 'white',
-  },
-  {
-    label: 'Analytics',
-    value: 'analytics',
-    colorScheme: 'purple',
-  },
-  {
-    label: 'dAPP',
-    value: 'dapp',
-    colorScheme: 'yellow',
-  },
-  {
-    label: 'Oracles',
-    value: 'oracles',
-    colorScheme: 'pink',
-  },
-  {
-    label: 'SPL',
-    value: 'spl',
-    colorScheme: 'blue',
-  },
-  {
-    label: 'Tools',
-    value: 'tool',
-    colorScheme: 'green',
-  },
-];
+import { category } from './projectCategories';
 
 type StepOneProps = {
   onSubmit: (data: any) => void;
+  trigger: UseFormTrigger<FormData>;
   register: UseFormRegister<FormData>;
   errors: FieldErrors<FormData>;
   setValue: UseFormSetValue<FormData>;
@@ -99,6 +44,7 @@ type StepOneProps = {
   control: Control<FormData>;
 };
 const StepOne: React.FC<StepOneProps> = ({
+  trigger,
   onSubmit,
   register,
   errors,
@@ -106,22 +52,63 @@ const StepOne: React.FC<StepOneProps> = ({
   getValues,
   control,
 }) => {
+  const [disableButton, setDisableButton] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const onDrop = useCallback((acceptedFiles: any[]) => {
     setValue('logo', acceptedFiles[0]);
   }, []);
-
-  // @ts-ignore
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     // @ts-ignore
     accept: 'image/*',
     onDrop,
   });
-  console.log('error - ', errors);
+  // create an arry of random colors
+  const colors = [
+    'red',
+    'orange',
+    'yellow',
+    'green',
+    'teal',
+    'blue',
+    'cyan',
+    'purple',
+    'pink',
+    'gray',
+  ];
+
+  const categoryWithColors = category.map((item, index) => {
+    return {
+      ...item,
+      colorScheme: colors[Math.floor(Math.random() * colors.length)],
+    };
+  });
+
+  const isFormValid = () => {
+    const hasErrors = Object.keys(errors).length > 0;
+    const hasValues =
+      !!getValues('projectName') &&
+      !!getValues('tagline') &&
+      !!getValues('category');
+    return !hasErrors && hasValues;
+  };
+
+  useEffect(() => {
+    setDisableButton(!isFormValid() || isSubmitting);
+  }, [errors, isSubmitting]);
+
+  useEffect(() => {
+    setDisableButton(!isFormValid());
+  }, [errors]);
+
   return (
     <>
       <CardBody>
-        <FormControl w="full" isInvalid={Boolean(errors.projectName)}>
+        <FormControl
+          isRequired
+          w="full"
+          isInvalid={Boolean(errors.projectName)}
+        >
           <FormLabel pb="0.5rem" htmlFor="projectName">
             Project Name
           </FormLabel>
@@ -137,7 +124,7 @@ const StepOne: React.FC<StepOneProps> = ({
             <FormErrorMessage>{errors.projectName.message}</FormErrorMessage>
           )}
         </FormControl>
-        <FormControl isInvalid={Boolean(errors.tagline)}>
+        <FormControl isRequired isInvalid={Boolean(errors.tagline)}>
           <FormLabel pb="0.5rem" htmlFor="tagline">
             Tagline
           </FormLabel>
@@ -158,12 +145,12 @@ const StepOne: React.FC<StepOneProps> = ({
         <Controller
           control={control}
           name="category"
-          rules={{ required: 'Please enter at least Tag.' }}
+          rules={{ required: 'Please enter at least 1 Tag.' }}
           render={({
             field: { onChange, onBlur, value, name, ref },
             fieldState: { error },
           }) => (
-            <FormControl py={4} isInvalid={!!error} id="category">
+            <FormControl isRequired py={4} isInvalid={!!error} id="category">
               <FormLabel pb="0.5rem" htmlFor="category">
                 Choose Categories
               </FormLabel>
@@ -174,9 +161,10 @@ const StepOne: React.FC<StepOneProps> = ({
                 onChange={onChange}
                 onBlur={onBlur}
                 value={value}
-                options={category}
+                options={categoryWithColors}
                 placeholder="Search Categories..."
                 closeMenuOnSelect={false}
+                selectedOptionStyle="check"
                 variant="unstyled"
                 focusBorderColor="transparent"
                 chakraStyles={{
@@ -213,12 +201,21 @@ const StepOne: React.FC<StepOneProps> = ({
                   }),
                   inputContainer: (provided, state) => ({
                     ...provided,
-                    ps: '1rem',
+                    ps: '8px',
                     backgroundColor: 'transparent',
                     border: 'none',
                     boxShadow: 'none',
                     outline: 'none',
                   }),
+                  valueContainer: (provided, state) => ({
+                    ...provided,
+                    ps: '8px',
+                    border: 'none',
+                    backgroundColor: 'transparent',
+                    boxShadow: 'none',
+                    outline: 'none',
+                  }),
+
                   clearIndicator: (provided, state) => ({
                     ...provided,
                     display: 'none',
@@ -238,37 +235,45 @@ const StepOne: React.FC<StepOneProps> = ({
                   }),
                   menu: (provided, state) => ({
                     ...provided,
-                    border: 'none',
-                    backgroundColor: 'surface.input_field',
+                    //border: 'none',
+                    transform: 'translateY(-10px)',
+                    backgroundColor: '#0F0F0F',
                   }),
                   menuList: (provided, state) => ({
                     ...provided,
-                    backgroundColor: 'surface.input_field',
-                    border: '1px solid',
-                    borderColor: 'surface.stoke_white',
+                    backgroundColor: '#0F0F0F',
+                    border: '1px solid #141414',
+                    borderTop: 'none',
+                    borderTopRadius: 'none',
+                    boxShadow: 'none',
+                    padding: '0px',
                   }),
                   option: (provided, state) => ({
                     ...provided,
-                    color: 'neutral.7',
+                    color: 'neutral.11',
                     fontSize: '14px',
+                    fontWeight: '400',
                     backgroundColor: state.isSelected
-                      ? 'surface.stoke_white'
+                      ? '#010F0D'
                       : state.isFocused
-                      ? 'transparent'
-                      : 'surface.input_field',
+                      ? '#010F0D'
+                      : '#0F0F0F',
+                    _hover: {
+                      backgroundColor: '#010F0D',
+                    },
                     ':active': {
-                      backgroundColor: 'surface.input_field',
+                      backgroundColor: '#0F0F0F',
                     },
                   }),
                   control: (provided, state) => ({
                     ...provided,
                     border: 'none',
-                    backgroundColor: 'surface.input_field',
+                    backgroundColor: '#0F0F0F',
                     boxShadow: 'none',
                     outline: 'none',
                     ':hover': {
                       border: 'none',
-                      backgroundColor: 'surface.input_field',
+                      backgroundColor: '#0F0F0F',
                     },
                   }),
                   placeholder: (provided, state) => ({
@@ -280,7 +285,9 @@ const StepOne: React.FC<StepOneProps> = ({
                   }),
                 }}
               />
-              <FormErrorMessage>{error && error.message}</FormErrorMessage>
+              <FormErrorMessage pt="1rem">
+                {error && error.message}
+              </FormErrorMessage>
             </FormControl>
           )}
         />
@@ -347,14 +354,31 @@ const StepOne: React.FC<StepOneProps> = ({
         </FormControl>
       </CardBody>
       <CardFooter>
-        <Button
-          variant={'outline'}
-          ml="auto"
-          onClick={onSubmit}
-          rightIcon={<Icon as={FiChevronRight} width={5} height={5} />}
-        >
-          Next
-        </Button>
+        <CardFooter>
+          <Button
+            disabled={disableButton}
+            variant={'outline'}
+            ml="auto"
+            onClick={async () => {
+              setIsSubmitting(true);
+              const isValid = await trigger([
+                'projectName',
+                'tagline',
+                'category',
+              ]);
+
+              if (isValid) {
+                //@ts-ignore
+                onSubmit();
+              } else {
+                setIsSubmitting(false);
+              }
+            }}
+            rightIcon={<Icon as={FiChevronRight} width={5} height={5} />}
+          >
+            Next
+          </Button>
+        </CardFooter>
       </CardFooter>
     </>
   );

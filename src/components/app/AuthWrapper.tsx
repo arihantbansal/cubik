@@ -2,7 +2,7 @@ import { Container } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import React, { FC, ReactNode, useEffect } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
 
 interface AuthWrapperProps {
   children: ReactNode;
@@ -21,7 +21,8 @@ const AuthWrapper: FC<AuthWrapperProps> = ({ children }) => {
       wallet: publicKey.toBase58(),
     });
     if (signInResponse?.status === 401) {
-      router.push('/create-profile');
+      console.log('now redirect to create-profile which is prefetched');
+      router.push('/create-profile'); //todo: add prefetching here to make it faster ( prefetching does not work in development server )
     }
     if (session && router.pathname === '/create-profile') {
       router.push({

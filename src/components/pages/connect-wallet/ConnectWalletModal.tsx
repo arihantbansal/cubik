@@ -1,25 +1,26 @@
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Button,
   Box,
+  Drawer,
   DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  Drawer,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   useMediaQuery,
 } from '@chakra-ui/react';
+import useConnectWalletModalStore from '~/store/walletModalStore';
 import { ConnectWalletCardBody } from './create-profile/ConnectWalletCardBody';
 
-const ConnectWalletModal = ({ isOpen, onClose }: any) => {
+export const ConnectWalletModal = () => {
+  const { isOpen, onClose } = useConnectWalletModalStore();
   const [isLargerThan480] = useMediaQuery('(max-width: 600px)');
 
   return isLargerThan480 ? (
@@ -93,5 +94,3 @@ const ConnectWalletModal = ({ isOpen, onClose }: any) => {
     </Modal>
   );
 };
-
-export default ConnectWalletModal;

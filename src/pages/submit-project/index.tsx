@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { ProjectsModel } from '@prisma/client';
+import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -18,6 +19,7 @@ import withAuth from '~/components/HOC/WithAuth';
 import { StepOne, StepThree, StepTwo } from '~/components/pages/create-project';
 import { trpc } from '~/utils/trpc';
 import { uploadToCloudinary } from '~/utils/upload';
+
 type SubmitProjectProps = {
   onSubmit: (project: Project) => void;
 };
@@ -50,6 +52,8 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
     register,
     handleSubmit,
     watch,
+    setError,
+    trigger,
     formState: { errors },
     setValue,
     getValues,
@@ -63,16 +67,19 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
           .required("Tagline can't be empty")
           .max(240, 'Must be at most 240 characters'),
         logo: string().required("Logo can't be empty"),
-        category: array().of(
-          object({
-            label: string().required(),
-            value: string().required(),
-            colorScheme: string().required(),
-          })
-        ),
-        twitter: string(),
-        github: string().required("Project Github can't be empty"),
+        category: array()
+          .of(
+            object({
+              label: string().required(),
+              value: string().required(),
+              colorScheme: string().required(),
+            })
+          )
+          .max(3, 'Must be at most 3 categories')
+          .required('Must select at least one category'),
+        twitter: string().required("Twitter handle can't be empty"),
         projectLink: string().required("Project Link can't be empty"),
+        github: string(),
         telegram: string(),
         discord: string(),
         description: string().required(),
@@ -83,13 +90,14 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
 
   const goToNextStep = () => setStep(step + 1);
 
-  const handleStepOneSubmit = (event: any) => {
+  const handleStepOneSubmit = async (event: any) => {
+    // check if there was an error in submitting the form
     goToNextStep();
   };
 
   const goToPreviousStep = () => setStep(step - 1);
 
-  const handleStepTwoSubmit = (data: any) => {
+  const handleStepTwoSubmit = () => {
     goToNextStep();
   };
 
@@ -110,6 +118,25 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
           link: getValues().projectLink,
         }
       );
+      // console.log(
+      //   'values',
+      //   uuidV4(),
+      //   getValues().projectName,
+      //   getValues().tagline,
+      //   'imageUrl',
+      //   editorData,
+      //   JSON.stringify(getValues().category),
+      //   getValues().github,
+      //   'https://twitter.com/undefined',
+      //   getValues().projectLink,
+      //   'errors - ',
+      //   errors.projectLink,
+      //   errors.projectName,
+      //   errors.tagline,
+      //   errors.category,
+      //   errors.github,
+      //   errors.description
+      // );
       setLoadingSubmit(false);
       router.push({
         pathname: '/projects/[projectId]',
@@ -121,6 +148,8 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
     }
   };
 
+  const MotionHStack = motion(HStack);
+
   const ProjectTimeline = ({
     index,
     name,
@@ -128,15 +157,22 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
     index: number;
     name: string;
   }) => {
+    const status =
+      index < step ? 'complete' : step === index ? 'active' : 'inactive';
+
     return (
-      <HStack
-        bg={
-          step < index
-            ? 'transparent'
-            : step === index
-            ? 'brand.teal2'
-            : 'brand.teal4'
-        }
+      <MotionHStack
+        initial={false}
+        animate={status}
+        transition={{
+          duration: 2,
+          ease: 'easeInOut',
+        }}
+        variants={{
+          inactive: { backgroundColor: 'transparent' },
+          active: { backgroundColor: '#010F0D' },
+          complete: { backgroundColor: '#14665B' },
+        }}
         w="full"
         rounded="full"
         border="1px solid #FFFFFF10"
@@ -145,31 +181,37 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
         align={'center'}
         justify="start"
       >
-        <Center
-          w="1.1rem"
-          height="1.1rem"
-          rounded="full"
-          as="p"
-          bg="white"
-          color="black"
-          backgroundColor={step < index ? 'neutral.7' : 'brand.teal6'}
-          textStyle={'body5'}
-        >
-          {index}
-        </Center>
+        <Box as={motion.div}>
+          <Center
+            w="1.1rem"
+            height="1.1rem"
+            rounded="full"
+            as="p"
+            bg="white"
+            color={'black'}
+            textStyle={'body5'}
+          >
+            {index}
+          </Center>
+        </Box>
         <Box
           as="p"
           textStyle={'body5'}
-          color={step < index ? 'neutral.7' : 'brand.teal6'}
+          color={status === 'inactive' ? 'neutral.7' : 'brand.teal6'}
         >
           {name}
         </Box>
-      </HStack>
+      </MotionHStack>
     );
   };
 
   return (
-    <Container maxW="full" p="0" my="10rem">
+    <Container
+      transition="all .25s ease"
+      maxW="full"
+      p={{ base: '1rem', md: '0' }}
+      my="10rem"
+    >
       <Card maxW="36rem" mx="auto">
         <CardHeader>
           <Box as="h1" textStyle={'title1'}>
@@ -198,6 +240,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
         >
           {step === 1 && (
             <StepOne
+              trigger={trigger}
               onSubmit={handleStepOneSubmit}
               register={register}
               errors={errors}
@@ -209,6 +252,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
           )}
           {step === 2 && (
             <StepTwo
+              trigger={trigger}
               onSubmit={handleStepTwoSubmit}
               register={register}
               onPrevious={goToPreviousStep}
