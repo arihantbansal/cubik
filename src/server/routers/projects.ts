@@ -8,14 +8,17 @@ export const projectsRouter = router({
     .input(
       z.object({
         id: z.string().nonempty(),
-        name: z.string().nonempty(),
-        short_description: z.string().nonempty(),
-        long_description: z.string().nonempty(),
         industry: z.string().nonempty(),
         logo: z.string().nonempty(),
-        github: z.string().nonempty(),
-        twitter: z.string().nonempty(),
-        link: z.string().nonempty(),
+        long_description: z.string().nonempty(),
+        name: z.string().nonempty(),
+        short_description: z.string().nonempty(),
+        discord_link: z.string(),
+        project_link: z.string(),
+        twitter_handle: z.string(),
+        github_link: z.string(),
+        projectUserCount: z.number(),
+        telegram_link: z.string(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -36,15 +39,19 @@ export const projectsRouter = router({
       const res = await prisma.projectsModel.create({
         data: {
           id: input.id,
-          name: input.name,
           industry: input.industry,
           logo: input.logo,
           long_description: input.long_description,
+          name: input.name,
           owner_publickey: ctx.session.user.mainWallet,
           short_description: input.short_description,
-          project_link: input.link,
-          github_link: input.github,
-          twitter_handle: input.twitter,
+          discord_link: input.discord_link,
+          status: 'review',
+          projectUserCount: input.projectUserCount,
+          telegram_link: input.telegram_link,
+          project_link: input.project_link,
+          twitter_handle: input.twitter_handle,
+          github_link: input.github_link,
         },
       });
       return res;

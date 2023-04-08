@@ -78,7 +78,6 @@
     "react-query": "^3.39.3",
     "rehype-raw": "^6.1.1",
     "remark-gfm": "^3.0.1",
-    "simple-zustand-devtools": "^1.1.0",
     "superjson": "^1.12.2",
     "tiptap-markdown": "^0.6.0",
     "uuid": "^9.0.0",
@@ -87,6 +86,7 @@
     "zustand": "^4.3.6"
   },
   "devDependencies": {
+    "simple-zustand-devtools": "^1.1.0",
     "@types/d3": "^7.4.0",
     "@types/markdown-it": "^12.2.3",
     "@types/node": "18.15.3",

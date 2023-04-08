@@ -7,6 +7,15 @@ import {
   HStack,
   Icon,
   IconButton,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  Input,
+  VStack,
+  ModalFooter,
 } from '@chakra-ui/react';
 import { Color } from '@tiptap/extension-color';
 import Heading from '@tiptap/extension-heading';
@@ -18,7 +27,11 @@ import { EditorContent, JSONContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import parse from 'html-react-parser';
 import { useState } from 'react';
-import { AiOutlineLink, AiOutlineOrderedList } from 'react-icons/ai';
+import {
+  AiOutlineExpand,
+  AiOutlineLink,
+  AiOutlineOrderedList,
+} from 'react-icons/ai';
 import { BiHeading } from 'react-icons/bi';
 import { BsBlockquoteLeft, BsTypeItalic } from 'react-icons/bs';
 import { FiChevronLeft } from 'react-icons/fi';
@@ -27,6 +40,8 @@ import {
   MdOutlineFormatListBulleted,
   MdOutlineFormatUnderlined,
 } from 'react-icons/md';
+import { AiOutlineExpandAlt } from 'react-icons/ai';
+import { DescriptionPreview } from './DescriptionPreview';
 
 const StepThree = ({
   onPrevious,
@@ -39,9 +54,12 @@ const StepThree = ({
   setLoadingSubmit: (loading: boolean) => void;
   LoadingSubmit: boolean;
 }) => {
+  const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
+  const [isEditorModalOpen, setIsEditorModal] = useState(false);
   const [url, setUrl] = useState<string>('');
   const [editorData, setEditorData] = useState<string>();
   const [preview, setPreview] = useState(false);
+  const [HTMLPreviewData, setHTMLPreviewData] = useState('');
   const editor = useEditor({
     extensions: [
       Underline,
@@ -69,7 +87,9 @@ const StepThree = ({
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       const json = editor.getJSON();
-      console.log('char count', editor.storage);
+      console.log('html', html);
+      // @ts-ignore
+      setHTMLPreviewData(parse(html as string));
       setEditorData(html);
     },
     editorProps: {
@@ -78,8 +98,80 @@ const StepThree = ({
     content: editorData,
   });
 
+  const EditorCardBody = () => {
+    return (
+      <Box
+        position={'relative'}
+        w={'full'}
+        height={'20rem'}
+        overflow="scroll"
+      ></Box>
+    );
+  };
+
+  const handleAddLink = () => {
+    if (url) {
+      // @ts-ignore
+      editor
+        .chain()
+        .focus()
+        .extendMarkRange('link')
+        .setLink({ href: url })
+        .run();
+      setUrl('');
+      setIsLinkModalOpen(false);
+    }
+  };
   return (
     <>
+      <Modal
+        variant="cubik"
+        isOpen={isLinkModalOpen}
+        onClose={() => setIsLinkModalOpen(false)}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add a link</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <VStack spacing={4}>
+              <Input
+                type="url"
+                placeholder="Enter URL"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+              />
+            </VStack>
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="connect_wallet" onClick={handleAddLink}>
+              Submit
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <Modal
+        isCentered
+        isOpen={isEditorModalOpen}
+        onClose={() => setIsEditorModal(false)}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add a link</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <EditorCardBody />
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              variant="connect_wallet"
+              onClick={() => setIsEditorModal(false)}
+            >
+              Submit
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <CardBody
         rounded={'8px'}
         gap="1rem"
@@ -98,7 +190,7 @@ const StepThree = ({
               variant={'markdownIconButton'}
               bg={editor?.isActive('heading', { level: 2 }) ? '#ffffff30' : ''}
               onClick={() => {
-                editor?.commands.toggleHeading({ level: 1 });
+                editor?.commands.toggleHeading({ level: 2 });
               }}
               icon={<BiHeading size={20} />}
             />
@@ -131,12 +223,10 @@ const StepThree = ({
               <MdOutlineFormatUnderlined size={20} />
             </IconButton>
             <IconButton
-              aria-label="Markdown bold"
+              aria-label="Markdown link"
               variant={'markdownIconButton'}
               bg={editor?.isActive('link') ? '#ffffff30' : ''}
-              onClick={() =>
-                editor?.chain().focus().toggleLink({ href: url }).run()
-              }
+              onClick={() => setIsLinkModalOpen(true)}
               icon={<AiOutlineLink size={20} />}
             />
             <IconButton
@@ -158,7 +248,7 @@ const StepThree = ({
               icon={<AiOutlineOrderedList size={20} />}
             />
             <IconButton
-              aria-label="Markdown bold"
+              aria-label="Markdown blockquote"
               variant={'markdownIconButton'}
               bg={editor?.isActive('blockquote') ? '#ffffff30' : ''}
               onClick={() => {
@@ -171,15 +261,38 @@ const StepThree = ({
         <Box w={'full'} h="1px" backgroundColor="neutral.3" />
         {preview ? (
           <Box w={'full'} height={'20rem'} overflow="scroll" p="0.5rem 1.6rem">
-            {parse(editorData as string)}
+            <DescriptionPreview description={HTMLPreviewData} />
           </Box>
         ) : (
-          <Box w={'full'} height={'20rem'} overflow="scroll">
+          <Box
+            position={'relative'}
+            w={'full'}
+            height={'20rem'}
+            overflow="scroll"
+          >
+            <IconButton
+              as={'button'}
+              cursor="pointer"
+              zIndex={'10'}
+              position={'fixed'}
+              bottom="0.5rem"
+              _hover={{
+                backgroundColor: '#001F1B',
+              }}
+              right={'0.5rem'}
+              aria-label="expand"
+              variant={'expand IconButton'}
+              onClick={() => {
+                setIsEditorModal(true);
+              }}
+              icon={<AiOutlineExpand size={20} color="#A8F0E6" />}
+            />
             <div
               style={{
                 height: '100% !important',
                 overflow: 'hidden',
                 border: 'none !important',
+                outline: '1px solid red',
               }}
               className="reset"
             >
@@ -188,6 +301,7 @@ const StepThree = ({
                 placeholder="Enter your project description here"
                 style={{
                   height: '100%',
+                  outline: '1px solid red',
                 }}
                 width={'100%'}
                 height={'100%'}
@@ -211,7 +325,9 @@ const StepThree = ({
           onClick={() => {
             setLoadingSubmit(true);
             // @ts-ignore
-            onSubmit(editorData);
+            if (editorData) {
+              onSubmit(editorData);
+            }
           }}
         >
           Submit Project

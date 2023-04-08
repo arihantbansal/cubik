@@ -50,10 +50,12 @@ const StepTwo: React.FC<StepTwoProps> = ({
   errors,
 }: StepTwoProps) => {
   const handleSubmit = async () => {
-    const isValid = await trigger();
-    if (isValid) {
-      onSubmit();
-    }
+    trigger(['projectLink', 'twitter']).then((isValid) => {
+      console.log('here');
+      if (isValid) {
+        onSubmit;
+      }
+    });
   };
 
   return (
@@ -148,7 +150,11 @@ const StepTwo: React.FC<StepTwoProps> = ({
               />
             </InputGroup>
           </FormControl>
-          <FormControl variant='withAddOn' isInvalid={Boolean(errors.discord)} id="discord">
+          <FormControl
+            variant="withAddOn"
+            isInvalid={Boolean(errors.discord)}
+            id="discord"
+          >
             <InputGroup>
               <InputLeftAddon pointerEvents="none">
                 <FaLink color="gray.300" />
@@ -175,7 +181,15 @@ const StepTwo: React.FC<StepTwoProps> = ({
         </Button>
         <Button
           variant={'outline'}
-          onClick={handleSubmit}
+          onClick={async () => {
+            const isValid = await trigger(['projectLink', 'twitter']);
+            if (isValid) {
+              //@ts-ignore
+              onSubmit();
+            } else {
+              console.log('trigger is invalid');
+            }
+          }}
           rightIcon={<Icon as={FiChevronRight} width={5} height={5} />}
         >
           Next
