@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { ProjectsModel } from '@prisma/client';
+import { log } from 'console';
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -121,10 +122,10 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
           );
         }
       );
-
-      const projectSubmissionResponse = await createProjectMutation
-        .mutateAsync({
-          id: uuidV4(),
+      const id = uuidV4();
+      try {
+        createProjectMutation.mutate({
+          id: id,
           name: getValues().projectName,
           short_description: getValues().tagline,
           logo: imageUrl,
@@ -136,14 +137,14 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
           discord_link: getValues().projectLink,
           telegram_link: getValues().telegram,
           projectUserCount: 0, /// change the length by fetching the user projects and add one more
-        })
-        .catch((error) => {
-          throw new Error(`Error creating project: ${error.message}`);
         });
+      } catch (error) {
+        console.log(error, '--error');
+      }
 
       console.log('projectSubmissionResponse');
-      setProjectid(projectSubmissionResponse.id);
-      console.log('project submission data - ', projectSubmissionResponse);
+      setProjectid(id);
+      console.log('project submission data - ');
       goToNextStep();
     } catch (e) {
       console.error('There was an error submitting the project:', e);
