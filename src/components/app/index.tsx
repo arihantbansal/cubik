@@ -17,7 +17,12 @@ const AppLayout: FC<AppLayoutProps> = ({ children }) => {
       <Header>
         <NavbarCTA />
       </Header>
-      <Container my="5.2rem" maxW="full" p="0" h="100%">
+      <Container
+        mt={{ base: '4.2rem', md: '5.2rem' }}
+        maxW="full"
+        p="0"
+        h="100%"
+      >
         {children}
       </Container>
     </AuthWrapper>

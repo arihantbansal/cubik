@@ -22,6 +22,10 @@ export const styles = {
       bg: 'black',
       color: 'white',
     },
+    '#mouse-parallax-container': {
+      width: '100%',
+      height: '100%',
+    },
     // ---- wallet adapter ui ---
     '.wallet-adapter-modal-overlay': {
       bg: 'rgba(0, 0, 0, 0.72)',

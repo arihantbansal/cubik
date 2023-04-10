@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
-const DetailsSection = ({ height }: { height: any }) => {
+const DetailsSection = () => {
   const [email, setEmail] = useState('');
   const [state, setState] = useState<'initial' | 'submitting' | 'success'>(
     'initial'
@@ -18,8 +18,7 @@ const DetailsSection = ({ height }: { height: any }) => {
   const [error, setError] = useState(false);
   return (
     <VStack
-      backgroundColor="#000000"
-      mt={height}
+      backgroundColor="transparent"
       overflow="hidden"
       spacing="0"
       w="100%"
