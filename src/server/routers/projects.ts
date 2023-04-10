@@ -2,6 +2,7 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { procedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
+import { log } from 'console';
 
 export const projectsRouter = router({
   create: procedure
@@ -36,25 +37,34 @@ export const projectsRouter = router({
           cause: 'Corrupted session',
         });
       }
-      const res = await prisma.projectsModel.create({
-        data: {
-          id: input.id,
-          industry: input.industry,
-          logo: input.logo,
-          long_description: input.long_description,
-          name: input.name,
-          owner_publickey: ctx.session.user.mainWallet,
-          short_description: input.short_description,
-          discord_link: input.discord_link,
-          status: 'review',
-          projectUserCount: input.projectUserCount,
-          telegram_link: input.telegram_link,
-          project_link: input.project_link,
-          twitter_handle: input.twitter_handle,
-          github_link: input.github_link,
-        },
-      });
-      return res;
+      try {
+        const res = await prisma.projectsModel.create({
+          data: {
+            id: input.id,
+            industry: input.industry,
+            logo: input.logo,
+            long_description: input.long_description,
+            name: input.name,
+            owner_publickey: ctx.session.user.mainWallet,
+            short_description: input.short_description,
+            discord_link: input.discord_link,
+            status: 'review',
+            projectUserCount: input.projectUserCount,
+            telegram_link: input.telegram_link,
+            project_link: input.project_link,
+            twitter_handle: input.twitter_handle,
+            github_link: input.github_link,
+          },
+        });
+        return res;
+      } catch (error) {
+        console.log(error);
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: (error as Error).message,
+          cause: (error as Error).stack,
+        });
+      }
     }),
 
   findOne: procedure

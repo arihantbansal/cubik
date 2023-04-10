@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { procedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
+import { TRPCError } from '@trpc/server';
 
 export const userRouter = router({
   create: procedure
@@ -17,16 +18,25 @@ export const userRouter = router({
       /*
             A check for signature is missing 
         */
-      const res = prisma.userModel.create({
-        data: {
-          id: input.id,
-          mainWallet: input.mainWallet,
-          profilePicture: input.profilePicture,
-          username: input.username,
-          tx: input.tx,
-        },
-      });
-      return res;
+      try {
+        const res = prisma.userModel.create({
+          data: {
+            id: input.id,
+            mainWallet: input.mainWallet,
+            profilePicture: input.profilePicture,
+            username: input.username,
+            tx: input.tx,
+          },
+        });
+        return res;
+      } catch (error) {
+        console.log(error);
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: (error as Error).message,
+          cause: (error as Error).stack,
+        });
+      }
     }),
   findOne: procedure
     .input(
