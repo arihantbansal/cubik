@@ -69,6 +69,16 @@ export const projectsRouter = router({
           id: input.id,
         },
         include: {
+          comments: {
+            include: {
+              Reply: {
+                include: {
+                  user: true,
+                },
+              },
+              user: true,
+            },
+          },
           PojectJoinRound: {
             include: {
               fundingRound: true,

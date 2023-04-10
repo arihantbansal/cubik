@@ -22,6 +22,8 @@ model UserModel {
   userDetailsModel UserDetailsModel?
   Session          Session[]
   project          ProjectsModel[]
+  Reply            Reply[]
+  Comments         Comments[]
 }
 
 model Session {
@@ -96,10 +98,11 @@ model ProjectsModel {
   projectUserCount  Int                 @default(0)
   status            ProjectVerifyStatus @default(review)
   failedReason      String?             @default("")
+  comments          Comments[]
+  PojectJoinRound   PojectJoinRound[]
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   owner             UserModel           @relation(fields: [owner_publickey], references: [mainWallet])
-  PojectJoinRound   PojectJoinRound[]
 
   @@index([owner_publickey])
 }
@@ -137,3 +140,33 @@ model Contribution {
   token  String
   split  Float
 }
+
+model Comments {
+  id              String        @id @default(uuid()) @map("_id")
+  comment         String        @db.Text
+  userId          String
+  projectsModelId String
+  Reply           Reply[]
+  user            UserModel     @relation(fields: [userId], references: [id])
+  ProjectsModel   ProjectsModel @relation(fields: [projectsModelId], references: [id])
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([projectsModelId])
+}
+
+model Reply {
+  id          String     @id @default(uuid()) @map("_id")
+  reply       String     @db.Text
+  commentId   String
+  replyUserId String
+  comment     Comments?  @relation(fields: [commentId], references: [id])
+  user        UserModel? @relation(fields: [replyUserId], references: [id])
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([commentId])
+  @@index([replyUserId])
+}
+
