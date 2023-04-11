@@ -1,4 +1,5 @@
 import { ChakraProvider } from '@chakra-ui/react';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import type { AppProps, AppType } from 'next/app';
@@ -35,6 +36,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           </ChakraProvider>
         </SessionProvider>
       </WalletContext>
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>
   );
 };

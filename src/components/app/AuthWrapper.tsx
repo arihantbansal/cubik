@@ -24,12 +24,13 @@ const AuthWrapper: FC<AuthWrapperProps> = ({ children }) => {
       console.log('now redirect to create-profile which is prefetched');
       router.push('/create-profile'); //todo: add prefetching here to make it faster ( prefetching does not work in development server )
     }
-    if (session && router.pathname === '/create-profile') {
-      router.push({
-        pathname: '/[username]',
-        query: { username: session.user.username },
-      });
-    }
+    //todo: not redirecting user from here but giving him option to go to profile page
+    // if (session && router.pathname === '/create-profile') {
+    //   router.push({
+    //     pathname: '/[username]',
+    //     query: { username: session.user.username },
+    //   });
+    // }
   }
 
   useEffect(() => {

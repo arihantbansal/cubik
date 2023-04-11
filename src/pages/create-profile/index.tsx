@@ -34,9 +34,20 @@ import FramerCarousel from '~/components/pages/connect-wallet/create-profile/Fra
 import ProfilePicture from '~/components/pages/connect-wallet/create-profile/ProfilePicture';
 import { trpc } from '~/utils/trpc';
 
+const onSuccess = () => {
+  console.log('React query success');
+};
+
+const onError = () => {
+  console.log('React query failure');
+};
+
 const CreateProfile = () => {
-  console.log('create-profile rendered');
+  const router = useRouter();
   const { publicKey } = useWallet();
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  const [userNameIsAvailable, setUserNameIsAvailable] =
+    useState<boolean>(false);
   const [pfp, setPFP] = useState<string>(
     `https://source.boringavatars.com/marble/120/${publicKey?.toBase58()}?square&?colors=05299E,5E4AE3,947BD3,F0A7A0,F26CA7,FFFFFF,CAF0F8,CCA43B`
   );
@@ -44,14 +55,7 @@ const CreateProfile = () => {
   const [creatingNewProfileLoadingState, setCreatingNewProfileLoadingState] =
     useState(false);
 
-  const { isOpen, onClose, onOpen } = useDisclosure();
-
-  const router = useRouter();
-
-  const usernameStatusResponse = trpc.user.checkUsername.useQuery({
-    username: userName as string,
-  });
-
+  console.log('4. create-profile rendered ', userName);
   const userCreateMutation = trpc.user.create.useMutation({
     onSuccess: (data) => {
       signIn('credentials', {
@@ -67,9 +71,34 @@ const CreateProfile = () => {
     },
   });
 
+  const {
+    isLoading: usernameStatusLoading,
+    isError: usernameStatusError,
+    data: usernameStatusResponse,
+    refetch,
+  } = trpc.user.checkUsername.useQuery(
+    {
+      username: userName as string,
+    },
+    {
+      cacheTime: 0,
+      enabled: false,
+      onSuccess,
+      onError,
+    }
+  );
+
+  console.log(
+    '5. usernameStatusResponse - ',
+    usernameStatusLoading,
+    usernameStatusError,
+    usernameStatusResponse
+  );
+
   const schema = yup.object().shape({
     username: yup
       .string()
+      .required('Username is required')
       .min(0, 'Username must be at least 4 characters')
       .max(15)
       .matches(/^[a-zA-Z0-9]+$/, 'Username must be alphanumeric and no spaces')
@@ -77,18 +106,23 @@ const CreateProfile = () => {
         'is-unique',
         // @ts-ignore
         function (username: string) {
-          if (username?.length < 4) {
-            return true;
-          }
+          console.log('1. refetching username -', username);
+          refetch();
           setUsername(username);
-          if (!usernameStatusResponse.data) {
-            return true;
-          } else {
+          console.log('2. setUsername - ', username);
+          if (usernameStatusError) {
+            console.log('3. return error');
+            throw new yup.ValidationError('trpc error');
+          } else if (usernameStatusResponse) {
+            console.log('3. return - error');
             throw new yup.ValidationError(
               username + ' is not available',
               null,
               'username'
             );
+          } else {
+            console.log('3. return - true');
+            return true;
           }
         }
       ),
@@ -106,7 +140,7 @@ const CreateProfile = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setCreatingNewProfileLoadingState(true);
-    userCreateMutation.mutate({
+    await userCreateMutation.mutate({
       username: data.username,
       id: uuidV4(),
       profilePicture: pfp,
@@ -173,32 +207,47 @@ const CreateProfile = () => {
             <InputGroup>
               <Controller
                 name="username"
+                defaultValue=""
                 control={control}
                 rules={{
                   required: true,
                 }}
-                render={({ field: { onChange, ...field } }) => (
+                render={({ field: { onChange, ...field } }: { field: any }) => (
                   <Input
                     {...field}
                     autoComplete="false"
                     onChange={({ target: { value } }) => {
-                      trigger('username');
+                      setUserNameIsAvailable(false);
                       onChange(value);
+                      if (value.length > 3)
+                        trigger('username')
+                          .then((res: boolean) => {
+                            console.log(
+                              '6. Validation returned response -',
+                              res
+                            );
+                            if (res) {
+                              setUserNameIsAvailable(true);
+                            }
+                          })
+                          .catch((e) =>
+                            console.log('6. validation error - ', e)
+                          )
+                          .finally(() => console.log('7. Validation ended'));
                     }}
                   />
                 )}
               />
-              {!creatingNewProfileLoadingState && usernameStatusResponse && (
+              {
                 <InputRightElement fontSize="18px">
-                  {usernameStatusResponse.isLoading && (
+                  {/* {usernameStatusLoading && (
                     <Spinner size={'xs'} thickness="1px" />
+                  )} */}
+                  {!errors.username && userNameIsAvailable && (
+                    <HiCheck color={'green'} />
                   )}
-                  {!usernameStatusResponse.data &&
-                    !usernameStatusResponse.isLoading &&
-                    userName === getValues('username') &&
-                    !errors.username && <HiCheck color={'green'} />}
                 </InputRightElement>
-              )}
+              }
             </InputGroup>
             <FormErrorMessage textAlign={'start'}>
               {errors.username && <>{errors.username.message}</>}
