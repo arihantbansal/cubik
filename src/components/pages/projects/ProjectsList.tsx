@@ -7,15 +7,20 @@ import {
   Container,
   Heading,
   HStack,
+  IconButton,
+  SlideFade,
   VStack,
   Wrap,
 } from '@chakra-ui/react';
 import { ProjectsModel } from '@prisma/client';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiLink } from 'react-icons/bi';
+import { BsPlus } from 'react-icons/bs';
+import { MdRemove } from 'react-icons/md';
 import CustomTag from '~/components/common/tags/CustomTag';
 import GetFormattedLink from '~/components/HOC/GetLink';
+import useListStore from '~/store/listStore';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { getDomain } from '~/utils/getDomain';
 
@@ -25,16 +30,41 @@ type PropsType = {
 
 const ProjectCard = ({ project }: PropsType) => {
   const router = useRouter();
-  console.log(project);
+  const addProject = useListStore((state) => state.addProject);
+  const removeProject = useListStore((state) => state.removeProject);
+  const projectList = useListStore((state) => state.projectList);
+
+  const [isHovered, setIsHovered] = useState(false);
+  const [addedToList, setAddedToList] = useState(
+    !!projectList.find((item) => item.id === project.id)
+  );
+
   const industry = JSON.parse(project.industry);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+  const handleAddOrRemoveProject = () => {
+    if (addedToList) {
+      removeProject(project.id);
+      setAddedToList(false);
+    } else {
+      addProject(project);
+      setAddedToList(true);
+    }
+  };
+
+  useEffect(() => {
+    setAddedToList(!!projectList.find((item) => item.id === project.id));
+  }, [projectList]);
+
   return (
     <Card
-      onClick={() => {
-        router.push({
-          pathname: '/projects/[projectId]',
-          query: { projectId: project.id },
-        });
-      }}
+      onClick={() => setIsHovered(true)}
       w="100%"
       p="24px"
       cursor="pointer"
@@ -45,12 +75,15 @@ const ProjectCard = ({ project }: PropsType) => {
         lg: '30vw',
         xl: '24rem',
       }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <VStack w="full" alignItems={'start'} justifyContent="start">
         <HStack justifyContent={'space-between'}>
           <Avatar
             src={project.logo}
             name="anchor"
+            borderRadius={'8px'}
             size={{ base: 'md', md: 'lg' }}
           />
         </HStack>
@@ -91,20 +124,38 @@ const ProjectCard = ({ project }: PropsType) => {
         >
           {project.short_description}
         </Box>
+        <SlideFade in={isHovered} offsetY="0px" reverse>
+          <HStack
+            w="full"
+            justifyContent="start"
+            position="absolute"
+            bottom="24px"
+          >
+            <Button w="calc(100% - 6rem)" variant="connect_wallet">
+              View Details
+            </Button>
+            <IconButton
+              onClick={handleAddOrRemoveProject}
+              aria-label="link"
+              variant="connect_wallet"
+              icon={addedToList ? <MdRemove size={22} /> : <BsPlus size={22} />}
+            />
+          </HStack>
+        </SlideFade>
+        <Wrap w="full" mt="auto" pb="0.4rem">
+          {industry.map((tag: any, key: any) => {
+            return (
+              <CustomTag color={tag.label} key={key}>
+                {tag.label}
+              </CustomTag>
+            );
+          })}
+        </Wrap>
       </VStack>
-
-      <Wrap w="full" mt="auto" pb="0.4rem">
-        {industry.map((tag: any, key: any) => {
-          return (
-            <CustomTag color={tag.label} key={key}>
-              {tag.label}
-            </CustomTag>
-          );
-        })}
-      </Wrap>
     </Card>
   );
 };
+
 const ProjectsList = ({
   allProjectsData,
 }: {

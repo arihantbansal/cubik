@@ -2,9 +2,18 @@ import { Box, Center } from '@chakra-ui/react';
 import { components, Props, Select } from 'chakra-react-select';
 import { useEffect } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
-import { FormValues, token } from './ProjectDonationSimulator';
+import {
+  DonationFormType,
+  ListDonationFormType,
+} from '~/interfaces/donationForm';
+import { tokens } from '../tokens/DonationTokens';
+import { tokenGroup } from '~/interfaces/token';
 
-type ControlledSelectProps = UseControllerProps<FormValues> &
+export const token: tokenGroup[] = tokens;
+
+type ControlledSelectProps = UseControllerProps<
+  DonationFormType | ListDonationFormType
+> &
   Props & {
     label: string;
   };
@@ -59,7 +68,7 @@ export const ControlledSelect = ({
 }: ControlledSelectProps) => {
   const {
     field: { onChange, onBlur, value, ref },
-  } = useController<FormValues>({
+  } = useController<DonationFormType | ListDonationFormType>({
     name,
     control,
     rules,

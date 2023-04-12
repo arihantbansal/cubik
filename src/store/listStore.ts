@@ -5,19 +5,18 @@ import create from 'zustand';
 
 type Store = {
   projectList: ProjectsModel[];
-  count: number;
+  count: () => number;
   addProject: (project: ProjectsModel) => void;
   removeProject: (id: string) => void;
 };
 
 const useListStore = create<Store>((set, get) => ({
   projectList: [],
-  count: 0,
+  count: () => get().projectList.length,
   addProject: (project) =>
     set(
       produce((state) => {
         state.projectList.push(project);
-        state.count = state.projectList.length;
       })
     ),
   removeProject: (id) =>
@@ -26,7 +25,6 @@ const useListStore = create<Store>((set, get) => ({
         state.projectList = state.projectList.filter(
           (project: ProjectsModel) => project.id !== id
         );
-        state.count = state.projectList.length;
       })
     ),
 }));

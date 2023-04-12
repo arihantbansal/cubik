@@ -12,6 +12,7 @@ import {
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useRef } from 'react';
 import { createSolanaPayRequest } from '~/utils/createSolPayTransaction';
+import QRCode from 'qrcode.react';
 
 const PaymentModal = ({ isOpen, onOpen, onClose }: any) => {
   const initialRef = useRef();
@@ -27,7 +28,9 @@ const PaymentModal = ({ isOpen, onOpen, onClose }: any) => {
   );
   return (
     <>
-      <Modal // @ts-ignore
+      <Modal
+        variant={'cubik'}
+        // @ts-ignore
         initialFocusRef={initialRef}
         isOpen={isOpen}
         onClose={onClose}
@@ -38,7 +41,25 @@ const PaymentModal = ({ isOpen, onOpen, onClose }: any) => {
           <ModalHeader>Scan QR Code to Pay</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Box display="flex" justifyContent="center"></Box>
+            <Box display="flex" justifyContent="center">
+              <QRCode
+                value={paymentUrl}
+                level={'L'}
+                radius={22}
+                includeMargin={true}
+                size={256}
+                bgColor="#000000"
+                fgColor="#FFFFFF"
+                imageSettings={{
+                  src: 'https://static.zpao.com/favicon.png',
+                  x: undefined,
+                  y: undefined,
+                  height: 24,
+                  width: 24,
+                  excavate: true,
+                }}
+              />
+            </Box>
             <Box mt={4} textAlign="center">
               Or visit this URL:
               <Box as="pre" mt={2} fontSize="sm" color="blue.600">

@@ -62,7 +62,7 @@ const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
           w="full"
           maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
         >
-          View Project
+          View Details
         </Button>
       </Center>
     </Stack>

@@ -1,18 +1,24 @@
 import { Box, Button, Center, VStack } from '@chakra-ui/react';
+import { Player } from '@lottiefiles/react-lottie-player';
 import { useRouter } from 'next/router';
 
 export const AdminProjectEmptyState = () => {
   const router = useRouter();
   return (
-    <Center
-      p="80px 18px"
-      w="full"
-      outline="2px dashed #1D1F1E"
-      minH="10rem"
-      rounded="12px"
-    >
+    <Center p="60px 4vh" w="full" minH="18vh" rounded="12px">
       <VStack gap="16px">
         <VStack>
+          <Box>
+            <Player
+              autoplay
+              loop
+              speed={1}
+              src={
+                'https://lottie.host/be917fc4-0f7a-44f9-bcaa-e5e7c510a0ae/Kqn7bSMJkY.json'
+              }
+              style={{ height: '200px', width: '200px' }}
+            />
+          </Box>
           <Box
             color="white"
             as="p"
@@ -44,15 +50,20 @@ export const AdminProjectEmptyState = () => {
 export const VisitorProjectEmptyState = () => {
   const router = useRouter();
   return (
-    <Center
-      p="80px 18px"
-      w="full"
-      outline="2px dashed #1D1F1E"
-      minH="10rem"
-      rounded="12px"
-    >
+    <Center p="60px 4vh" w="full" minH="18vh" rounded="12px">
       <VStack gap="16px">
         <VStack>
+          <Box>
+            <Player
+              autoplay
+              loop
+              speed={1}
+              src={
+                'https://lottie.host/be917fc4-0f7a-44f9-bcaa-e5e7c510a0ae/Kqn7bSMJkY.json'
+              }
+              style={{ height: '200px', width: '200px' }}
+            />
+          </Box>
           <Box
             color="white"
             as="p"

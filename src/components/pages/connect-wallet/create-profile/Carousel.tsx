@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Skeleton } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import { memo, useState } from 'react';
@@ -26,6 +26,10 @@ const Carousel = memo(function Carousel({
     setIsDragging(false);
   };
 
+  if (!nftsData) {
+    return <div>Error: No NFT data available</div>;
+  }
+
   return (
     <Box
       display={'flex'}
@@ -36,57 +40,57 @@ const Carousel = memo(function Carousel({
       drag="x"
       w="fit-content"
       cursor="grab"
-      //border="1px solid red"
-      //overflow="visible"
       alignItems="start"
       justifyContent="flex-start"
       as={motion.div}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      {nftsData
-        ? nftsData.map((nft: any) => (
-            <Box
-              onDragStart={handleDragStart}
-              onDragEnd={handleDragEnd}
-              rounded="6px"
-              minW="5rem"
-              minH="5rem"
-              as={motion.div}
-              key={nft.image}
-              _hover={{
-                //cursor: 'pointer',
-                outline: '1px solid #fff',
+      {nftsData.map((nft: any) => (
+        <Box
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          rounded="6px"
+          minW="5rem"
+          minH="5rem"
+          as={motion.div}
+          key={nft.image}
+          _hover={{
+            outline: '1px solid #fff',
+          }}
+          onClick={() => {
+            if (!isDragging) {
+              setPFP(nft.image);
+            }
+          }}
+          pointerEvents={isDragging ? 'none' : 'all'}
+        >
+          <Skeleton
+            isLoaded={!isDragging}
+            startColor="gray.900"
+            endColor="gray.700"
+            w="5rem"
+            h="5rem"
+            borderRadius="6px"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={nft.image}
+              alt={nft.image}
+              loading="lazy"
+              style={{
+                outline:
+                  session?.user.image === nft.image ? '1px solid #fff' : 'none',
+                pointerEvents: 'none',
+                borderRadius: '6px',
+                width: '5rem',
+                height: '5rem',
+                objectFit: 'cover',
               }}
-              onClick={() => {
-                if (!isDragging) {
-                  // todo: set user image as nft.image
-                  setPFP(nft.image);
-                }
-              }}
-              pointerEvents={isDragging ? 'none' : 'all'}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={nft.image}
-                alt={nft.image}
-                loading="lazy"
-                style={{
-                  outline:
-                    session?.user.image === nft.image
-                      ? '1px solid #fff'
-                      : 'none',
-                  pointerEvents: 'none',
-                  // border: '1px solid red',
-                  borderRadius: '6px',
-                  width: '5rem',
-                  height: '5rem',
-                  objectFit: 'cover',
-                }}
-              />
-            </Box>
-          ))
-        : 'no data'}
+            />
+          </Skeleton>
+        </Box>
+      ))}
     </Box>
   );
 });

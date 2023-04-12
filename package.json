@@ -65,6 +65,7 @@
     "next-auth": "^4.20.1",
     "nprogress": "^0.2.0",
     "prisma": "^4.11.0",
+    "qrcode.react": "^3.1.0",
     "react": "18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-device-detect": "^2.2.3",
@@ -86,7 +87,6 @@
     "zustand": "^4.3.6"
   },
   "devDependencies": {
-    "simple-zustand-devtools": "^1.1.0",
     "@types/d3": "^7.4.0",
     "@types/markdown-it": "^12.2.3",
     "@types/node": "18.15.3",
@@ -97,6 +97,7 @@
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
     "husky": "^8.0.3",
+    "simple-zustand-devtools": "^1.1.0",
     "typescript": "4.9.5"
   }
 }

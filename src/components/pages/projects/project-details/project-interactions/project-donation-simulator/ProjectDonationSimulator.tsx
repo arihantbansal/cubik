@@ -9,25 +9,15 @@ import {
   InputRightAddon,
   useDisclosure,
 } from '@chakra-ui/react';
-import { OptionBase } from 'chakra-react-select';
 import { useEffect, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import { Controller, useForm } from 'react-hook-form';
-import PaymentModal from '../payment-modal/PaymentModal';
-import { ControlledSelect } from './ControlledSelect';
+import PaymentModal from '../../../../../common/payment-modal/PaymentModal';
+import { ControlledSelect } from '../../../../../common/select/ControlledSelect';
 import Graph from './Graph';
-import { tokens } from './Token';
-
-interface tokenGroup extends OptionBase {
-  label: string;
-  value: string;
-  icon: JSX.Element;
-}
-
-export interface FormValues {
-  amount: number;
-  token: string;
-}
+import { tokens } from '../../../../../common/tokens/DonationTokens';
+import { tokenGroup } from '~/interfaces/token';
+import { DonationFormType } from '~/interfaces/donationForm';
 
 type ProjectDonationSimulatorProps = {
   cta: string;
@@ -51,7 +41,7 @@ export const ProjectDonationSimulator = ({
     getValues,
     control,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>({
+  } = useForm<DonationFormType>({
     defaultValues: {
       amount: donation,
       token: token[0].value,
