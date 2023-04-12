@@ -21,6 +21,7 @@ import { v4 as uuidV4 } from 'uuid';
 import { array, object, string } from 'yup';
 import withAuth from '~/components/HOC/WithAuth';
 import { StepOne, StepThree, StepTwo } from '~/components/pages/create-project';
+import { addField } from '~/server/utils/notion';
 import { trpc } from '~/utils/trpc';
 import { uploadToCloudinary } from '~/utils/upload';
 
@@ -48,7 +49,12 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
   const router = useRouter();
   const [LoadingSubmit, setLoadingSubmit] = useState<boolean>(false);
   const { data: session } = useSession();
-  const createProjectMutation = trpc.project.create.useMutation();
+  const createProjectMutation = trpc.project.create.useMutation({
+    onSuccess: async (data) => {
+      const a = await addField(data);
+      console.log(a);
+    },
+  });
   // const userProjects = trpc.project.findPubkey.useQuery({
   //   publickey: session?.user.mainWallet,
   // });
@@ -153,6 +159,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
     }
   };
 
+  //@ts-ignore
   const MotionHStack = motion(HStack);
 
   const ProjectTimeline = ({

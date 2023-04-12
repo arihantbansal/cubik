@@ -57,7 +57,6 @@
     "chakra-ui-markdown-renderer": "^4.1.0",
     "cloudinary": "^1.35.0",
     "d3": "^7.8.3",
-    "dotenv": "^16.0.3",
     "framer-motion": "^10.3.2",
     "hamburger-react": "^2.5.0",
     "html-react-parser": "^3.0.12",

@@ -1,6 +1,3 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
-
 export enum NotionConfig {
   API_URL = 'https://api.notion.com/v1',
   NOTION_VERSION = '2022-06-28',
@@ -9,7 +6,7 @@ export enum NotionConfig {
 export const NotionTable = {
   parent: {
     type: 'page_id',
-    page_id: process.env.NOTION_PAGEID,
+    page_id: process.env.NEXT_PUBLIC_NOTION_PAGEID,
   },
   title: [
     {
