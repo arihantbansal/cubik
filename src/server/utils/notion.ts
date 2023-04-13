@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { NotionConfig } from '../enums/notion';
-import { NotionTable } from '../enums/notion';
+import { NotionConfig, ProjectStatus, NotionTable } from '../enums/notion';
 import { ProjectsModel } from '@prisma/client';
 
 const token = `${process.env.NEXT_PUBLIC_NOTION_TOKEN}` as string;
@@ -22,22 +21,31 @@ export async function createTable() {
 }
 
 export async function addField(data: ProjectsModel) {
-  // create the type of the field
-  const field = {
-    parent: { database_id: process.env.NEXT_PUBLIC_NOTION_PAGEID },
+  const record = await createNotionPayload(data);
+  const response = await axios.post(NotionConfig.API_URL + '/pages', record, {
+    headers: {
+      'Notion-Version': NotionConfig.NOTION_VERSION,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response;
+}
+
+async function createNotionPayload(data: ProjectsModel) {
+  // https://developers.notion.com/reference/property-value-object
+  const record = {
+    parent: {
+      database_id: process.env.NEXT_PUBLIC_NOTION_DATABASEID,
+    },
     properties: {
       'Project Name': {
-        title: [
-          {
-            text: {
-              content: data.name,
-            },
-          },
-        ],
+        title: [{ text: { content: data.name } }],
       },
       'Project Status': {
         select: {
-          name: data.status,
+          name: ProjectStatus[data.status],
         },
       },
       'Short Description': {
@@ -64,9 +72,15 @@ export async function addField(data: ProjectsModel) {
       Twitter: {
         url: data.twitter_handle,
       },
-      Github: { url: data.github_link },
-      Discord: { url: data.discord_link },
-      Telegram: { url: data.telegram_link },
+      Github: {
+        url: data.github_link,
+      },
+      Discord: {
+        url: data.discord_link,
+      },
+      Telegram: {
+        url: data.telegram_link,
+      },
       'Failed Reason': {
         rich_text: [
           {
@@ -109,17 +123,13 @@ export async function addField(data: ProjectsModel) {
           },
         ],
       },
+      'Created Date': {
+        date: {
+          start: new Date(),
+        },
+      },
     },
   };
 
-  axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-  const response = await axios.post(NotionConfig.API_URL + '/pages', field, {
-    headers: {
-      'Notion-Version': NotionConfig.NOTION_VERSION,
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return response;
+  return record;
 }
