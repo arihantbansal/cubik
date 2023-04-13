@@ -8,7 +8,8 @@ import { TbListSearch } from 'react-icons/tb';
 import { ImCheckboxChecked } from 'react-icons/im';
 import { HiBan } from 'react-icons/hi';
 
-const ProjectBanner = ({ status }: { status: string }) => {
+//todo: use enums for status
+const ProjectStatusBanner = ({ status }: { status: string }) => {
   switch (status) {
     case 'under_review':
       return (
@@ -161,7 +162,7 @@ const ProjectBanner = ({ status }: { status: string }) => {
           <HStack></HStack>
         </HStack>
       );
-    case 'approval_failed':
+    case 'verification_failed':
       return (
         <HStack
           w="full"
@@ -313,4 +314,4 @@ const ProjectBanner = ({ status }: { status: string }) => {
   }
 };
 
-export default ProjectBanner;
+export default ProjectStatusBanner;

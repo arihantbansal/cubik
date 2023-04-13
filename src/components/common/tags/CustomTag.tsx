@@ -99,7 +99,7 @@ const CustomTag = ({
     default:
       return (
         <Tag variant="colorful" fontSize="xs">
-          <Box as="p" textStyle={'body5'}>
+          <Box as="p" textStyle={{ base: 'body6', md: 'body5' }}>
             {children}
           </Box>
         </Tag>

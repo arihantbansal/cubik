@@ -1,6 +1,6 @@
 import { Card, CardHeader } from '@chakra-ui/react';
 import { ProjectsModel } from '@prisma/client';
-import ProjectBanner from './ProjectBanner';
+import ProjectBanner from './ProjectStatusBanner';
 import ProjectHeader from './ProjectHeader';
 
 const ProjectVisitorCard = ({ project }: { project: ProjectsModel }) => {

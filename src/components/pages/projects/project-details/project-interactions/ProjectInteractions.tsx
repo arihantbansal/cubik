@@ -93,13 +93,7 @@ const SimilarProject = () => {
 };
 
 // sidebar
-const SideBar = ({
-  loading,
-  projectDetails,
-}: {
-  loading: boolean;
-  projectDetails: any;
-}) => {
+const SideBar = ({ projectDetails }: { projectDetails: any }) => {
   return (
     <VStack
       gap="48px"
@@ -143,10 +137,8 @@ const SideBar = ({
 
 // section 2
 export const ProjectInteractions = ({
-  loading,
   projectDetails,
 }: {
-  loading: boolean;
   projectDetails: any;
 }) => {
   const [isSmallerThank768] = useMediaQuery('(min-width: 768px)');
@@ -159,10 +151,10 @@ export const ProjectInteractions = ({
       flexDir={{ base: 'column', md: 'column' }}
       justifyContent="start"
     >
-      <ProjectsDonation loading={loading} projectDetails={projectDetails} />
+      <ProjectsDonation projectDetails={projectDetails} />
       {isSmallerThank768 && <ProjectDonationSimulator />}
       <Box height="2px" backgroundColor="#1A1A1A" w="full" />
-      <SideBar loading={loading} projectDetails={projectDetails} />
+      <SideBar projectDetails={projectDetails} />
     </Stack>
   );
 };

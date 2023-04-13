@@ -2,7 +2,8 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { procedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
-import { log } from 'console';
+import { ProjectsModel } from '@prisma/client';
+import { ProjectVerifyStatus } from '@prisma/client';
 
 export const projectsRouter = router({
   create: procedure
@@ -128,6 +129,33 @@ export const projectsRouter = router({
       const res = await prisma.projectsModel.findMany({
         where: {
           owner_publickey: input.publickey,
+        },
+      });
+
+      return res;
+    }),
+
+  updateProjectStatus: procedure
+    .input(
+      z.object({
+        id: z.string().nonempty(),
+        status: z.enum(['review', 'verified', 'failed']),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      if (ctx?.session?.user.mainWallet !== 'asfd') {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          cause: `User doesn't have permission to access Rounds create`,
+          message: 'Invalid User Session trying to access Round creation',
+        });
+      }
+      const res = await prisma.projectsModel.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          status: input.status as ProjectVerifyStatus,
         },
       });
 

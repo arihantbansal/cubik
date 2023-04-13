@@ -10,6 +10,7 @@ const baseStyle = definePartsStyle({
     bg: 'orange.400',
     color: 'blackAlpha.700',
   },
+  label: {},
 });
 const colorful = definePartsStyle({
   // define the part you're going to style
@@ -19,6 +20,7 @@ const colorful = definePartsStyle({
     rounded: '8px',
     padding: '0.3rem 1rem',
   },
+  label: {},
 });
 
 export const Tag = defineMultiStyleConfig({

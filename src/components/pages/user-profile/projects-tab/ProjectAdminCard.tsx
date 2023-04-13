@@ -14,7 +14,7 @@ import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import FundingOverview from './project-admin-dashboard/FundingOverview';
 import Vault from './project-admin-dashboard/project-vault/Vault';
 import ProjectInsights from './project-admin-dashboard/ProjectInsights';
-import ProjectBanner from './ProjectBanner';
+import ProjectStatusBanner from './ProjectStatusBanner';
 import ProjectHeader from './ProjectHeader';
 
 const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
@@ -35,7 +35,7 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
       w="100%"
       border={'none'}
     >
-      <ProjectBanner status={status} />
+      <ProjectStatusBanner status={status} />
       <CardHeader>
         <ProjectHeader project={project} />
       </CardHeader>

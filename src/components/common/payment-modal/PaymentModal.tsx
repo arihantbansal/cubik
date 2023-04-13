@@ -67,7 +67,6 @@ const PaymentModal = ({ isOpen, onOpen, onClose }: any) => {
               </Box>
             </Box>
           </ModalBody>
-
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close

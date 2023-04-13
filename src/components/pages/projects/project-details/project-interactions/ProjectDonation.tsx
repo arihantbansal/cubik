@@ -23,10 +23,8 @@ const VoteModalBody = () => {
   return <></>;
 };
 export const ProjectsDonation = ({
-  loading,
   projectDetails,
 }: {
-  loading: boolean;
   projectDetails: ProjectsModel;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -87,15 +85,13 @@ export const ProjectsDonation = ({
         alignItems={{ base: 'center', md: 'start' }}
       >
         <VStack align={'end'} gap="0" spacing="0" pb="0.5rem">
-          <Skeleton isLoaded={!loading}>
-            <Box as="p" textStyle="display3" color="neutral.11">
-              {formatNumberWithK(
-                // Number(((projectDetails.usd_total as number) * 19).toFixed(2))
-                10
-              )}
-              $
-            </Box>
-          </Skeleton>
+          <Box as="p" textStyle="display3" color="neutral.11">
+            {formatNumberWithK(
+              // Number(((projectDetails.usd_total as number) * 19).toFixed(2))
+              10
+            )}
+            $
+          </Box>
           <Box as="p" textStyle="body2" color="neutral.8">
             Estimated Funds Raised
           </Box>
