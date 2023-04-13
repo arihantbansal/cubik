@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { ProjectsModel } from '@prisma/client';
+import axios from 'axios';
 import { log } from 'console';
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
@@ -51,13 +52,13 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
   const { data: session } = useSession();
   const createProjectMutation = trpc.project.create.useMutation({
     onSuccess: async (data) => {
-      const a = await addField(data);
+      const a = await axios.post('/api/createNotion', {
+        data: data,
+      });
       console.log(a);
     },
   });
-  // const userProjects = trpc.project.findPubkey.useQuery({
-  //   publickey: session?.user.mainWallet,
-  // });
+
   const {
     control,
     register,

@@ -3,6 +3,12 @@ export enum NotionConfig {
   NOTION_VERSION = '2022-06-28',
 }
 
+export const ProjectStatus = {
+  review: 'under_review',
+  verified: 'verification_successful',
+  failed: 'verification_failed',
+};
+
 export const NotionTable = {
   parent: {
     type: 'page_id',

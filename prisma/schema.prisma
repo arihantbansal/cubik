@@ -115,30 +115,27 @@ enum ProjectVerifyStatus {
 
 model Round {
   id                     String            @id @default(uuid()) @map("_id")
-  roundNumber            Int
   roundName              String
   matchedPool            Float
   communityContributions Float
   active                 Boolean           @default(true)
-  roundDetailsId         String            @unique
-  roundDetails           RoundDetails      @relation(fields: [roundDetailsId], references: [id])
   PojectJoinRound        PojectJoinRound[]
+  Contribution           Contribution[]
   tx                     String            @db.VarChar(500)
-
-  @@index([roundDetailsId])
-}
-
-model RoundDetails {
-  id           String @id @default(uuid()) @map("_id")
-  FundingRound Round?
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
 }
 
 model Contribution {
-  id     String @id @default(uuid()) @map("_id")
-  amount Float
-  tx     String @db.VarChar(500)
-  token  String
-  split  Float
+  id      String @id @default(uuid()) @map("_id")
+  amount  Float
+  tx      String @db.VarChar(500)
+  token   String
+  split   Float
+  roundId String
+  Round   Round  @relation(fields: [roundId], references: [id])
+
+  @@index([roundId])
 }
 
 model Comments {
@@ -169,4 +166,3 @@ model Reply {
   @@index([commentId])
   @@index([replyUserId])
 }
-
