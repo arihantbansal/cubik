@@ -28,88 +28,121 @@ export default async function handler(
     },
     properties: {
       'Project Name': {
-        title: [{ text: { content: data.name ?? null } }],
+        title: [{ text: { content: data.name } }],
       },
-      'Project Status': {
-        select: {
-          name: ProjectStatus[data.status] ?? null,
-        },
-      },
-      'Short Description': {
-        rich_text: [
-          {
-            type: 'text',
-            text: {
-              content: data.short_description ?? null,
-              link: null,
+      ...(data.status == undefined
+        ? undefined
+        : {
+            'Project Status': {
+              select: {
+                name: ProjectStatus[data.status],
+              },
             },
-            annotations: {
-              bold: false,
-              italic: false,
-              strikethrough: false,
-              underline: false,
-              code: false,
-              color: 'default',
+          }),
+
+      ...(data.short_description == undefined
+        ? undefined
+        : {
+            'Short Description': {
+              rich_text: [
+                {
+                  type: 'text',
+                  text: {
+                    content: data.short_description,
+                    link: null,
+                  },
+                  annotations: {
+                    bold: false,
+                    italic: false,
+                    strikethrough: false,
+                    underline: false,
+                    code: false,
+                    color: 'default',
+                  },
+                  plain_text: data.short_description,
+                  href: null,
+                },
+              ],
             },
-            plain_text: data.short_description ?? null,
-            href: null,
-          },
-        ],
-      },
-      Twitter: {
-        url: data.twitter_handle ?? null,
-      },
-      Github: {
-        url: data.github_link ?? null,
-      },
-      Discord: {
-        url: data.discord_link ?? null,
-      },
-      Telegram: {
-        url: data.telegram_link ?? null,
-      },
-      'Failed Reason': {
-        rich_text: [
-          {
-            type: 'text',
-            text: {
-              content: data.failedReason,
-              link: null,
+          }),
+      ...(data.twitter_handle == undefined
+        ? undefined
+        : {
+            Twitter: {
+              url: data.twitter_handle,
             },
-            annotations: {
-              bold: false,
-              italic: false,
-              strikethrough: false,
-              underline: false,
-              code: false,
-              color: 'default',
+          }),
+      ...(data.github_link == undefined
+        ? undefined
+        : {
+            Github: {
+              url: data.github_link,
             },
-            plain_text: data.failedReason,
-            href: null,
-          },
-        ],
-      },
-      'Long Description': {
-        rich_text: [
-          {
-            type: 'text',
-            text: {
-              content: data.long_description ?? null,
-              link: null,
+          }),
+      ...(data.discord_link == undefined
+        ? undefined
+        : {
+            Discord: {
+              url: data.discord_link,
             },
-            annotations: {
-              bold: false,
-              italic: false,
-              strikethrough: false,
-              underline: false,
-              code: false,
-              color: 'default',
+          }),
+      ...(data.telegram_link == undefined
+        ? undefined
+        : {
+            Telegram: {
+              url: data.telegram_link,
             },
-            plain_text: data.long_description ?? null,
-            href: null,
-          },
-        ],
-      },
+          }),
+      ...(data.failedReason == undefined
+        ? undefined
+        : {
+            'Failed Reason': {
+              rich_text: [
+                {
+                  type: 'text',
+                  text: {
+                    content: data.failedReason,
+                    link: null,
+                  },
+                  annotations: {
+                    bold: false,
+                    italic: false,
+                    strikethrough: false,
+                    underline: false,
+                    code: false,
+                    color: 'default',
+                  },
+                  plain_text: data.failedReason,
+                  href: null,
+                },
+              ],
+            },
+          }),
+      ...(data.long_description == undefined
+        ? undefined
+        : {
+            'Long Description': {
+              rich_text: [
+                {
+                  type: 'text',
+                  text: {
+                    content: data.long_description,
+                    link: null,
+                  },
+                  annotations: {
+                    bold: false,
+                    italic: false,
+                    strikethrough: false,
+                    underline: false,
+                    code: false,
+                    color: 'default',
+                  },
+                  plain_text: data.long_description,
+                  href: null,
+                },
+              ],
+            },
+          }),
       'Created Date': {
         date: {
           start: new Date(),
