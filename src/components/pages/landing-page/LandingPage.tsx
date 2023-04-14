@@ -111,10 +111,22 @@ const LandingPage = () => {
                   />
                 </Box>
               </Box>
-              <BackgroundImageWrapper imgURL={'/images/4.PNG'} factor={0.1} />
-              <BackgroundImageWrapper imgURL={'/images/3.PNG'} factor={0.15} />
-              <BackgroundImageWrapper imgURL={'/images/2.PNG'} factor={0.0} />
-              <BackgroundImageWrapper imgURL={'/images/1.PNG'} factor={0.25} />
+              <BackgroundImageWrapper
+                imgURL={'https://d1yweukyu067aq.cloudfront.net/images/4.PNG'}
+                factor={0.1}
+              />
+              <BackgroundImageWrapper
+                imgURL={'https://d1yweukyu067aq.cloudfront.net/images/3.PNG'}
+                factor={0.15}
+              />
+              <BackgroundImageWrapper
+                imgURL={'https://d1yweukyu067aq.cloudfront.net/images/2.PNG'}
+                factor={0.0}
+              />
+              <BackgroundImageWrapper
+                imgURL={'https://d1yweukyu067aq.cloudfront.net/images/1.PNG'}
+                factor={0.25}
+              />
             </MouseParallaxContainer>{' '}
           </Flex>
           <VStack

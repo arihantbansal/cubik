@@ -44,7 +44,7 @@ const NavbarCTA: FC = () => {
     default:
       CTA = publicKey ? (
         <Center as="button" onClick={disconnect}>
-          Loading...
+          Connecting...
         </Center>
       ) : (
         <WalletMultiButton />

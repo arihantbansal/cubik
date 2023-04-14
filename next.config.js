@@ -9,6 +9,9 @@ const nextConfig = {
 
     return config;
   },
+  images: {
+    domains: ['d1yweukyu067aq.cloudfront.net'],
+  },
 };
 
 module.exports = nextConfig;

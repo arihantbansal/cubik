@@ -15,6 +15,8 @@ import { memo, useEffect, useRef, useState } from 'react';
 import { useNftDataByOwner } from '~/hooks/getNFTsByOwner';
 import Carousel from './Carousel';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
+import { BsImage } from 'react-icons/bs';
+
 type CarouselPropsType = {
   onClose: () => void;
   setPFP: (pfp: string) => void;
@@ -63,7 +65,7 @@ const FramerCarousel = memo(function FramerCarousel({
 
   return (
     <>
-      <HStack w="full" justify={'space-between'}>
+      <HStack pb="12px" w="full" justify={'space-between'}>
         <Text textAlign={'center'} fontSize={{ base: 'xs', md: 'sm' }}>
           Select NFT
         </Text>
@@ -85,11 +87,19 @@ const FramerCarousel = memo(function FramerCarousel({
             }
           }}
         >
-          {PFP ? 'Select' : 'Cancel'}
+          {!nftsData ? (PFP ? 'Select' : 'Cancel') : 'Close'}
         </Button>
       </HStack>
-      <HStack alignItems={'center'} position={'relative'} overflow="visible">
+      <HStack
+        w="full"
+        alignItems={'center'}
+        position={'relative'}
+        overflow="visible"
+      >
         <IconButton
+          display={
+            nftsData && nftsData?.length > 0 && isLoading ? 'block' : 'none'
+          }
           position={'absolute'}
           variant="unstyled"
           rounded="full"
@@ -104,6 +114,8 @@ const FramerCarousel = memo(function FramerCarousel({
           onClick={() => scrollCarousel('left')}
         />
         <Box
+          w="full"
+          m="0 !important"
           // @ts-ignore
           ref={carousel}
           as={motion.div}
@@ -136,20 +148,27 @@ const FramerCarousel = memo(function FramerCarousel({
               align={'center'}
               gap="0"
               spacing="0"
-              py="1.2rem"
+              py="0.8rem"
             >
               <Center pb="0.5rem">{/* <CiImageOn size="26px" /> */}</Center>
               {isLoading ? (
                 <Spinner />
               ) : (
-                <Text fontSize="xs" maxW="8rem" textAlign={'center'}>
-                  You do not have NFTs in your wallet.
-                </Text>
+                <VStack gap="4px" p="0">
+                  <BsImage size="22" />
+                  <Text fontSize="xs" maxW="12rem" textAlign={'center'}>
+                    You do not have NFTs in your wallet to use as Profile
+                    Picture.
+                  </Text>
+                </VStack>
               )}
             </VStack>
           )}
         </Box>
         <IconButton
+          display={
+            nftsData && nftsData?.length > 0 && isLoading ? 'block' : 'none'
+          }
           position={'absolute'}
           variant="unstyled"
           rounded="full"

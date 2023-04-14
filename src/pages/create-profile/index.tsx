@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import {
@@ -44,7 +44,8 @@ const onError = () => {
 
 const CreateProfile = () => {
   const router = useRouter();
-  const { publicKey } = useWallet();
+  const session = useSession();
+  const { connected, publicKey } = useWallet();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [userNameIsAvailable, setUserNameIsAvailable] =
     useState<boolean>(false);
@@ -54,6 +55,7 @@ const CreateProfile = () => {
   const [userName, setUsername] = useState<string>('');
   const [creatingNewProfileLoadingState, setCreatingNewProfileLoadingState] =
     useState(false);
+  const [loadingUserName, setLoadingUserName] = useState(false);
 
   console.log('4. create-profile rendered ', userName);
   const userCreateMutation = trpc.user.create.useMutation({
@@ -105,24 +107,29 @@ const CreateProfile = () => {
       .test(
         'is-unique',
         // @ts-ignore
-        function (username: string) {
+        async function (username: string) {
           console.log('1. refetching username -', username);
-          refetch();
-          setUsername(username);
-          console.log('2. setUsername - ', username);
-          if (usernameStatusError) {
-            console.log('3. return error');
-            throw new yup.ValidationError('trpc error');
-          } else if (usernameStatusResponse) {
-            console.log('3. return - error');
-            throw new yup.ValidationError(
-              username + ' is not available',
-              null,
-              'username'
-            );
-          } else {
-            console.log('3. return - true');
-            return true;
+          setLoadingUserName(true); // Set loading state
+          try {
+            await refetch();
+            setUsername(username);
+            console.log('2. setUsername - ', username);
+            if (usernameStatusError) {
+              console.log('3. return error');
+              throw new yup.ValidationError('trpc error');
+            } else if (usernameStatusResponse) {
+              console.log('3. return - error');
+              throw new yup.ValidationError(
+                username + ' is not available',
+                null,
+                'username'
+              );
+            } else {
+              console.log('3. return - true');
+              return true;
+            }
+          } finally {
+            setLoadingUserName(false); // Clear loading state
           }
         }
       ),
@@ -165,6 +172,18 @@ const CreateProfile = () => {
       </Card>
     );
   }
+
+  if (!connected) {
+    return <>404</>;
+  }
+  if (session.status === 'authenticated') {
+    console.log('session user', session.data.user);
+    router.push({
+      pathname: '/[username]',
+      query: { username: session.data.user.username },
+    });
+  }
+  console.log('session status', session.status);
 
   return (
     <Container maxW="full" py={{ base: '2rem', md: '4rem' }}>
@@ -240,9 +259,7 @@ const CreateProfile = () => {
               />
               {
                 <InputRightElement fontSize="18px">
-                  {/* {usernameStatusLoading && (
-                    <Spinner size={'xs'} thickness="1px" />
-                  )} */}
+                  {loadingUserName && <Spinner size={'xs'} thickness="1px" />}
                   {!errors.username && userNameIsAvailable && (
                     <HiCheck color={'green'} />
                   )}
