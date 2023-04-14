@@ -8,7 +8,7 @@ import {
   Center,
   Stack,
 } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
+import { ProjectsModel, ProjectVerifyStatus } from '@prisma/client';
 import { useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import FundingOverview from './project-admin-dashboard/FundingOverview';
@@ -35,7 +35,7 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
       w="100%"
       border={'none'}
     >
-      <ProjectStatusBanner status={status} />
+      <ProjectStatusBanner status={project.status} />
       <CardHeader>
         <ProjectHeader project={project} />
       </CardHeader>

@@ -16,8 +16,10 @@ import { Link, LinkProps } from '@chakra-ui/react';
 
 export const ProjectsDetailedDescription = ({
   description,
+  maxH,
 }: {
   description: string;
+  maxH?: string;
 }) => {
   //const projectDescription = description[0] === '"' ? JSON.parse(description) : description;
   const { isOpen, onToggle } = useDisclosure();
@@ -105,8 +107,8 @@ export const ProjectsDetailedDescription = ({
       <Box color="#FFFFFF" as="p" textStyle={'title2'} pb="0.6rem">
         About Project
       </Box>
-      <Collapse startingHeight={'20rem'} in={isOpen} animateOpacity>
-        <VStack align="start" gap="0.5rem">
+      {maxH ? (
+        <VStack maxH={maxH} overflow="scroll" align="start" gap="0.5rem">
           <ReactMarkdown
             components={ChakraUIRenderer(newTheme)}
             rehypePlugins={[rehypeRaw]}
@@ -115,8 +117,24 @@ export const ProjectsDetailedDescription = ({
             {description}
           </ReactMarkdown>
         </VStack>
-      </Collapse>
-      <Center position="relative" height={isOpen ? '6rem' : '0'}>
+      ) : (
+        <Collapse startingHeight={'20rem'} in={isOpen} animateOpacity>
+          <VStack align="start" gap="0.5rem">
+            <ReactMarkdown
+              components={ChakraUIRenderer(newTheme)}
+              rehypePlugins={[rehypeRaw]}
+              remarkPlugins={[remarkGfm]}
+            >
+              {description}
+            </ReactMarkdown>
+          </VStack>
+        </Collapse>
+      )}
+      <Center
+        display={maxH ? 'none' : 'flex'}
+        position="relative"
+        height={isOpen ? '6rem' : '0'}
+      >
         <Button
           background={
             'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%)'

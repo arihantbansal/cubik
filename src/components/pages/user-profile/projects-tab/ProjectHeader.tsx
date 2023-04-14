@@ -34,83 +34,114 @@ const DrawerBodyContent = ({ project }: { project: ProjectsModel }) => {
   const socials = [{ name: 'string', url: 'string' }];
 
   return (
-    <VStack gap="64px" w="full">
-      <HStack w="full" justifyContent={'space-between'} align="top">
-        <Avatar
-          src={project.logo}
-          name={project.name}
-          borderRadius="8px"
-          width={{ base: '36px', sm: '48px', md: '102px' }}
-          height={{ base: '36px', sm: '48px', md: '102px' }}
-        />
-        <HStack h="fit-content">
-          <Button variant="connect_wallet">Apply For Grant</Button>
-        </HStack>
-      </HStack>
-      <VStack gap="24px" w="full" align="start">
-        <HStack align={'start'} w="full">
-          <Box as="p" textStyle="headline3" color="neutral.11">
-            {project.name}
-          </Box>
-        </HStack>
-        <Box as="p" textStyle={'body9'} color="neutral.9">
-          {project.short_description}
-        </Box>
-        <HStack>
-          <HStack>
+    <VStack gap={{ base: '32px', md: '64px' }} w="full">
+      <VStack align={'start'} w="full" gap="24px">
+        <HStack w="full" justifyContent={'space-between'} align="top">
+          <Avatar
+            src={project.logo}
+            name={project.name}
+            borderRadius="8px"
+            width={{ base: '80px', md: '102px' }}
+            height={{ base: '80px', md: '102px' }}
+          />
+          <Stack
+            display={{ base: 'none', md: 'flex' }}
+            direction="row"
+            h="fit-content"
+          >
             <Button
-              variant="unstyled"
-              display={'flex'}
-              alignItems="center"
-              rounded="full"
-              color="brand.teal6"
-              backgroundColor="brand.teal2"
-              p={{ base: '0.5rem 0.8rem', md: '0.2rem 1rem' }}
-              iconSpacing={{ base: '0.3rem', md: '0.4rem' }}
-              leftIcon={<ProjectLink urlName={'url'} />}
-              _hover={{
-                backgroundColor: 'brand.teal3',
-              }}
-              as="a"
-              href={project.project_link}
-              target="_blank"
+              variant="secondary"
+              h="38px"
+              maxW="164px"
+              borderRadius={'8px'}
             >
-              <Box
-                as="p"
-                textStyle={{ base: 'body5', md: 'body4' }}
-                color="brand.teal.6"
-                pb="0.1rem"
-              >
-                {getDomain(project.project_link)}
-              </Box>
+              Edit Project
             </Button>
-
-            {socials.length > 2 &&
-              socials.map((link: { name: string; url: string }, key: Key) => (
-                <IconButton
-                  aria-label={link.name}
-                  variant={'unstyled'}
-                  fontSize={{ base: 'sm', sm: 'md', md: 'xl' }}
-                  display="flex"
-                  alignItems={'center'}
-                  rounded="full"
-                  color="brand.teal6"
-                  backgroundColor="brand.teal2"
-                  key={key}
-                  icon={<ProjectLink urlName={link.name} />}
-                  _hover={{
-                    backgroundColor: 'brand.teal3',
-                  }}
-                  as="a"
-                  href={link.name}
-                  target="_blank"
-                />
-              ))}
-          </HStack>
+            <Button variant="connect_wallet">Apply For Grant</Button>
+          </Stack>
         </HStack>
+        <VStack gap={{ base: '4px', md: '16px' }} w="full" align="start">
+          <HStack align={'start'} w="full">
+            <Box
+              as="p"
+              textStyle={{ base: 'headline4', md: 'headline3' }}
+              color="neutral.11"
+            >
+              {project.name}
+            </Box>
+          </HStack>
+          <Box as="p" textStyle={'body9'} color="neutral.9">
+            {project.short_description}
+          </Box>
+          <HStack>
+            <HStack>
+              <Button
+                variant="unstyled"
+                display={'flex'}
+                alignItems="center"
+                rounded="full"
+                color="brand.teal6"
+                backgroundColor="brand.teal2"
+                p={{ base: '0.5rem 0.8rem', md: '0.2rem 1rem' }}
+                iconSpacing={{ base: '0.3rem', md: '0.4rem' }}
+                leftIcon={<ProjectLink urlName={'url'} />}
+                _hover={{
+                  backgroundColor: 'brand.teal3',
+                }}
+                as="a"
+                href={project.project_link}
+                target="_blank"
+              >
+                <Box
+                  as="p"
+                  textStyle={{ base: 'body5', md: 'body4' }}
+                  color="brand.teal.6"
+                  pb="0.1rem"
+                >
+                  {getDomain(project.project_link)}
+                </Box>
+              </Button>
+              {socials.length > 2 &&
+                socials.map((link: { name: string; url: string }, key: Key) => (
+                  <IconButton
+                    aria-label={link.name}
+                    variant={'unstyled'}
+                    fontSize={{ base: 'sm', sm: 'md', md: 'xl' }}
+                    display="flex"
+                    alignItems={'center'}
+                    rounded="full"
+                    color="brand.teal6"
+                    backgroundColor="brand.teal2"
+                    key={key}
+                    icon={<ProjectLink urlName={link.name} />}
+                    _hover={{
+                      backgroundColor: 'brand.teal3',
+                    }}
+                    as="a"
+                    href={link.name}
+                    target="_blank"
+                  />
+                ))}
+            </HStack>
+          </HStack>
+        </VStack>
       </VStack>
+      <Stack
+        display={{ base: 'flex', md: 'none' }}
+        direction={'row'}
+        w="full"
+        h="fit-content"
+      >
+        <Button variant="secondary" h="38px" maxW="164px" borderRadius={'8px'}>
+          Edit Project
+        </Button>
+        <Button variant="connect_wallet">Apply For Grant</Button>
+      </Stack>
       <Center>
-        <ProjectsDetailedDescription description={project.long_description} />
+        <ProjectsDetailedDescription
+          description={project.long_description}
+          maxH="36vh"
+        />
       </Center>
     </VStack>
   );
@@ -134,7 +165,11 @@ const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
         gap={headerSpacing}
         w="full"
       >
-        <HStack gap={{ base: '8px', sm: '12px', md: '16px' }}>
+        <Stack
+          w="full"
+          direction="row"
+          gap={{ base: '8px', sm: '12px', md: '16px' }}
+        >
           <Center>
             <Avatar
               src={project.logo}
@@ -152,14 +187,16 @@ const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
             <Box
               as="p"
               textStyle={{ base: 'title4', sm: 'title3', md: 'title2' }}
+              noOfLines={1}
+              textAlign="left"
               color="white"
             >
               {project.name}
             </Box>
             <GetFormattedLink link={project.project_link} />
           </VStack>
-        </HStack>
-        <Center w="full" justifyContent={'end'}>
+        </Stack>
+        <Center justifyContent={'end'}>
           <Button
             variant={'project_button_secondary'}
             //@ts-ignore
@@ -172,6 +209,7 @@ const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
           </Button>
         </Center>
         <Drawer
+          w="fit-content"
           maxW="40rem"
           isOpen={isOpen}
           placement="bottom"
@@ -187,11 +225,20 @@ const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
             borderTopRadius={'24px'}
             border="1px solid ##1D1F1E"
             background="#080808"
-            padding="40px"
+            padding={{ base: '20px', md: '40px' }}
             maxW="80rem !important"
             mx="auto"
           >
-            <DrawerBody>
+            <DrawerCloseButton
+              transform={{
+                base: 'translate(-1rem, 1rem)',
+                md: 'translateY(-3rem)',
+              }}
+              rounded="full"
+              backgroundColor="#141414"
+              border="1px solid #ffffff10"
+            />
+            <DrawerBody p="0">
               <DrawerBodyContent project={project} />
             </DrawerBody>
           </DrawerContent>

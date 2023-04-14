@@ -7,11 +7,38 @@ import { RxLapTimer } from 'react-icons/rx';
 import { TbListSearch } from 'react-icons/tb';
 import { ImCheckboxChecked } from 'react-icons/im';
 import { HiBan } from 'react-icons/hi';
+import { ProjectVerifyStatus } from '@prisma/client';
 
 //todo: use enums for status
 const ProjectStatusBanner = ({ status }: { status: string }) => {
   switch (status) {
-    case 'under_review':
+    case 'draft':
+      return (
+        <HStack
+          w="full"
+          gap="8px"
+          backgroundColor={'neutral.3'}
+          borderBottom="1px solid"
+          borderColor="neutral.5"
+          padding={'12px 24px'}
+          borderTopRadius={'16px'}
+        >
+          <HStack rounded="full" bg="neutral.4" p="6px 11px 6px 9px">
+            <RiDraftLine size={16} color="#D7E0DF" />
+            <Box
+              as="p"
+              noOfLines={1}
+              whiteSpace={'nowrap'}
+              color="#D7E0DF"
+              textStyle={'body5'}
+            >
+              Draft
+            </Box>
+          </HStack>
+          <HStack></HStack>
+        </HStack>
+      );
+    case ProjectVerifyStatus.review:
       return (
         <HStack
           w="full"
@@ -48,7 +75,7 @@ const ProjectStatusBanner = ({ status }: { status: string }) => {
           <HStack></HStack>
         </HStack>
       );
-    case 'verified':
+    case ProjectVerifyStatus.verified:
       return (
         <HStack
           w="full"
@@ -81,6 +108,42 @@ const ProjectStatusBanner = ({ status }: { status: string }) => {
           >
             Congratulations! Your project has been verified. You can now apply
             for grants.
+          </Box>
+          <HStack></HStack>
+        </HStack>
+      );
+    case ProjectVerifyStatus.failed:
+      return (
+        <HStack
+          w="full"
+          gap="8px"
+          backgroundColor={'#140001'}
+          borderBottom="1px solid"
+          borderColor="surface.red.1"
+          padding={'12px 24px'}
+          borderTopRadius={'16px'}
+        >
+          <HStack rounded="full" bg="#660005" p="6px 11px 6px 9px">
+            <AiOutlineWarning size={16} color="#FFCAC2" />
+            <Box
+              as="p"
+              noOfLines={1}
+              whiteSpace={'nowrap'}
+              color="#FFCAC2"
+              textStyle={'body5'}
+            >
+              Approval Failed
+            </Box>
+          </HStack>
+          <Box
+            as="p"
+            noOfLines={1}
+            display={{ base: 'none', md: 'block' }}
+            whiteSpace={'nowrap'}
+            textStyle={'body5'}
+            color="#FFCAC2"
+          >
+            Unfortunately your project did not meet the review criteria.
           </Box>
           <HStack></HStack>
         </HStack>
@@ -134,68 +197,6 @@ const ProjectStatusBanner = ({ status }: { status: string }) => {
               </Box>
             </HStack>
           </Center>
-        </HStack>
-      );
-    case 'draft':
-      return (
-        <HStack
-          w="full"
-          gap="8px"
-          backgroundColor={'neutral.3'}
-          borderBottom="1px solid"
-          borderColor="neutral.5"
-          padding={'12px 24px'}
-          borderTopRadius={'16px'}
-        >
-          <HStack rounded="full" bg="neutral.4" p="6px 11px 6px 9px">
-            <RiDraftLine size={16} color="#D7E0DF" />
-            <Box
-              as="p"
-              noOfLines={1}
-              whiteSpace={'nowrap'}
-              color="#D7E0DF"
-              textStyle={'body5'}
-            >
-              Draft
-            </Box>
-          </HStack>
-          <HStack></HStack>
-        </HStack>
-      );
-    case 'verification_failed':
-      return (
-        <HStack
-          w="full"
-          gap="8px"
-          backgroundColor={'#140001'}
-          borderBottom="1px solid"
-          borderColor="surface.red.1"
-          padding={'12px 24px'}
-          borderTopRadius={'16px'}
-        >
-          <HStack rounded="full" bg="#660005" p="6px 11px 6px 9px">
-            <AiOutlineWarning size={16} color="#FFCAC2" />
-            <Box
-              as="p"
-              noOfLines={1}
-              whiteSpace={'nowrap'}
-              color="#FFCAC2"
-              textStyle={'body5'}
-            >
-              Approval Failed
-            </Box>
-          </HStack>
-          <Box
-            as="p"
-            noOfLines={1}
-            display={{ base: 'none', md: 'block' }}
-            whiteSpace={'nowrap'}
-            textStyle={'body5'}
-            color="#FFCAC2"
-          >
-            Unfortunately your project did not meet the review criteria.
-          </Box>
-          <HStack></HStack>
         </HStack>
       );
     case 'selected':

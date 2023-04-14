@@ -139,11 +139,11 @@ export const projectsRouter = router({
     .input(
       z.object({
         id: z.string().nonempty(),
-        status: z.enum(['review', 'verified', 'failed']),
+        status: z.enum([ProjectVerifyStatus.review, ProjectVerifyStatus.verified, ProjectVerifyStatus.failed]),
       })
     )
     .mutation(async ({ input, ctx }) => {
-      if (ctx?.session?.user.mainWallet !== 'asfd') {
+      if (ctx?.session?.user.mainWallet !== '8Fy7yHo7Sn7anUtG7VANLEDxCWbLjku1oBVa4VouEVVP') {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           cause: `User doesn't have permission to access Rounds create`,

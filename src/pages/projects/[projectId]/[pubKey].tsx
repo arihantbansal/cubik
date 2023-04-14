@@ -30,7 +30,7 @@ const ProjectAuthenticationRoute = () => {
           variant={'connect_wallet'}
           onClick={() => {
             projectUpdateMutation.mutate({
-              id: '',
+              id: router.query.projectId as string,
               status: ProjectVerifyStatus.verified,
             });
           }}
@@ -41,7 +41,7 @@ const ProjectAuthenticationRoute = () => {
           variant={'connect_wallet'}
           onClick={() => {
             projectUpdateMutation.mutate({
-              id: '',
+              id: router.query.projectId as string,
               status: ProjectVerifyStatus.failed,
             });
           }}
