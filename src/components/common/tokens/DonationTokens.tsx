@@ -1,5 +1,3 @@
-import { Icon } from '@chakra-ui/react';
-
 export const tokens = [
   {
     label: 'USDC',

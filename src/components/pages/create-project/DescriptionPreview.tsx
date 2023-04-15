@@ -1,16 +1,8 @@
-import {
-  Box,
-  Button,
-  Center,
-  Collapse,
-  Stack,
-  useDisclosure,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Stack, useDisclosure, VStack } from '@chakra-ui/react';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
-import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
 
 import { Link, LinkProps } from '@chakra-ui/react';
 

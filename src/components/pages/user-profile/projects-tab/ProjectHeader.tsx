@@ -3,21 +3,18 @@ import {
   Box,
   Button,
   Center,
-  HStack,
-  Stack,
-  VStack,
   Drawer,
   DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
   DrawerCloseButton,
-  useDisclosure,
+  DrawerContent,
+  DrawerOverlay,
+  HStack,
   IconButton,
+  Stack,
+  useDisclosure,
+  VStack,
 } from '@chakra-ui/react';
 import { ProjectsModel } from '@prisma/client';
-import { useRouter } from 'next/router';
 import { Key, useRef } from 'react';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import { getDomain } from '~/utils/getDomain';
@@ -148,7 +145,6 @@ const DrawerBodyContent = ({ project }: { project: ProjectsModel }) => {
 };
 
 const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
-  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
   const headerSpacing = {

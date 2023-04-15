@@ -1,6 +1,5 @@
 import { Center, HStack, Text } from '@chakra-ui/react';
 import { Player } from '@lottiefiles/react-lottie-player';
-import React from 'react';
 
 const Toast = ({
   url,

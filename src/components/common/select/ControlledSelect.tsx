@@ -6,8 +6,8 @@ import {
   DonationFormType,
   ListDonationFormType,
 } from '~/interfaces/donationForm';
-import { tokens } from '../tokens/DonationTokens';
 import { tokenGroup } from '~/interfaces/token';
+import { tokens } from '../tokens/DonationTokens';
 
 export const token: tokenGroup[] = tokens;
 

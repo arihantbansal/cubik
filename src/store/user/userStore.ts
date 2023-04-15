@@ -6,7 +6,7 @@ type IUserStore = {
   user: any;
 };
 
-export const useUserStore = create<IUserStore>((set, get) => ({
+export const useUserStore = create<IUserStore>((set, _get) => ({
   user: 'user',
   setUser: (data: any) => {
     set(

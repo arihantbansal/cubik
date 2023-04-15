@@ -2,7 +2,6 @@ import {
   Avatar,
   Box,
   Button,
-  Center,
   Container,
   Drawer,
   DrawerBody,
@@ -11,29 +10,12 @@ import {
   DrawerHeader,
   DrawerOverlay,
   HStack,
-  IconButton,
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
-  Stack,
   useDisclosure,
   VStack,
-  Wrap,
 } from '@chakra-ui/react';
 import { ProjectsModel } from '@prisma/client';
-import { Key, useRef } from 'react';
-import {
-  FaDiscord,
-  FaGithub,
-  FaTelegramPlane,
-  FaTwitter,
-  FaYoutube,
-} from 'react-icons/fa';
-import { HiLink } from 'react-icons/hi';
-import CustomTag from '~/components/common/tags/CustomTag';
+import { useRef } from 'react';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
-import { formatNumberWithK } from '~/utils/formatWithK';
-import { getDomain } from '~/utils/getDomain';
 import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
 import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
 import ProjectDetailsHeader from './ProjectDetailsHeader';

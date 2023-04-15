@@ -1,15 +1,6 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  HStack,
-  IconButton,
-  Stack,
-  VStack,
-  Wrap,
-} from '@chakra-ui/react';
+import { Avatar, Box, HStack, Stack, VStack } from '@chakra-ui/react';
 import { ProjectsModel } from '@prisma/client';
-import React, { Key } from 'react';
+import React from 'react';
 import {
   FaDiscord,
   FaGithub,
@@ -19,8 +10,6 @@ import {
 } from 'react-icons/fa';
 import { HiLink } from 'react-icons/hi';
 import CustomTag from '~/components/common/tags/CustomTag';
-import { formatNumberWithK } from '~/utils/formatWithK';
-import { getDomain } from '~/utils/getDomain';
 
 export const ProjectLink = ({ urlName }: { urlName: string }) => {
   switch (urlName) {

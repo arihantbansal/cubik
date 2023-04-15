@@ -1,13 +1,12 @@
-// store.ts
-import { ProjectsModel } from '@prisma/client';
+ import { ProjectsModel } from '@prisma/client';
 import produce from 'immer';
-import create from 'zustand';
+import {create} from 'zustand';
 
 type Store = {
   projectList: ProjectsModel[];
   count: () => number;
-  addProject: (project: ProjectsModel) => void;
-  removeProject: (id: string) => void;
+  addProject: (_project: ProjectsModel) => void;
+  removeProject: (_id: string) => void;
 };
 
 const useListStore = create<Store>((set, get) => ({

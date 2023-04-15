@@ -12,12 +12,12 @@ import {
 import { useEffect, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import { Controller, useForm } from 'react-hook-form';
+import { DonationFormType } from '~/interfaces/donationForm';
+import { tokenGroup } from '~/interfaces/token';
 import PaymentModal from '../../../../../common/payment-modal/PaymentModal';
 import { ControlledSelect } from '../../../../../common/select/ControlledSelect';
-import Graph from './Graph';
 import { tokens } from '../../../../../common/tokens/DonationTokens';
-import { tokenGroup } from '~/interfaces/token';
-import { DonationFormType } from '~/interfaces/donationForm';
+import Graph from './Graph';
 
 type ProjectDonationSimulatorProps = {
   cta: string;
@@ -63,7 +63,7 @@ export const ProjectDonationSimulator = ({
     }
   }, [donation, getValues, setValue]);
 
-  function onSubmit(values: any) {
+  function onSubmit(_values: any) {
     onOpen();
   }
 

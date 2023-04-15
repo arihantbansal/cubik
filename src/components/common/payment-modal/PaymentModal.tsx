@@ -9,14 +9,12 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
-import { useWallet } from '@solana/wallet-adapter-react';
+import QRCode from 'qrcode.react';
 import { useRef } from 'react';
 import { createSolanaPayRequest } from '~/utils/createSolPayTransaction';
-import QRCode from 'qrcode.react';
 
 const PaymentModal = ({ isOpen, onOpen, onClose }: any) => {
   const initialRef = useRef();
-  const wallet = useWallet();
 
   const amount = 10;
   const splToken = 'So11111111111111111111111111111111111111112'; // Replace with the actual SPL token address

@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Card,
-  CardBody,
   CardFooter,
   CardHeader,
   Center,
@@ -12,7 +11,6 @@ import {
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { ProjectsModel } from '@prisma/client';
 import axios from 'axios';
-import { log } from 'console';
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -22,12 +20,11 @@ import { v4 as uuidV4 } from 'uuid';
 import { array, object, string } from 'yup';
 import withAuth from '~/components/HOC/WithAuth';
 import { StepOne, StepThree, StepTwo } from '~/components/pages/create-project';
-import { addField } from '~/server/utils/notion';
 import { trpc } from '~/utils/trpc';
 import { uploadToCloudinary } from '~/utils/upload';
 
 type SubmitProjectProps = {
-  onSubmit: (project: Project) => void;
+  onSubmit: (_project: Project) => void;
 };
 type Project = ProjectsModel;
 

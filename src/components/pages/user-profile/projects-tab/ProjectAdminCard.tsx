@@ -8,14 +8,14 @@ import {
   Center,
   Stack,
 } from '@chakra-ui/react';
-import { ProjectsModel, ProjectVerifyStatus } from '@prisma/client';
+import { ProjectsModel } from '@prisma/client';
 import { useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import FundingOverview from './project-admin-dashboard/FundingOverview';
 import Vault from './project-admin-dashboard/project-vault/Vault';
 import ProjectInsights from './project-admin-dashboard/ProjectInsights';
-import ProjectStatusBanner from './ProjectStatusBanner';
 import ProjectHeader from './ProjectHeader';
+import ProjectStatusBanner from './ProjectStatusBanner';
 
 const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
   const [showVault, setShowVault] = useState(false);

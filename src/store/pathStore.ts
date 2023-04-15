@@ -7,7 +7,7 @@ interface AsPathStoreType {
   currentAsPath: string | undefined;
 }
 
-const asPathStore = create<AsPathStoreType>((set) => ({
+const asPathStore = create<AsPathStoreType>(() => ({
   prevAsPath: undefined,
   currentAsPath: undefined,
 }));

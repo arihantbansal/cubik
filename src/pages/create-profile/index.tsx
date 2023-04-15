@@ -138,7 +138,6 @@ const CreateProfile = () => {
   const {
     handleSubmit,
     trigger,
-    getValues,
     control,
     formState: { errors, isSubmitting },
   } = useForm({

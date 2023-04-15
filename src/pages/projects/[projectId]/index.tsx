@@ -1,5 +1,4 @@
-import { Center, Container, Stack } from '@chakra-ui/react';
-import { QueryClient } from '@tanstack/react-query';
+import { Container, Stack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { AboutProject } from '~/components/pages/projects/project-details/AboutProject';
 import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';

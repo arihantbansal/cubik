@@ -12,10 +12,10 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import { memo, useEffect, useRef, useState } from 'react';
-import { useNftDataByOwner } from '~/hooks/getNFTsByOwner';
-import Carousel from './Carousel';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import { BsImage } from 'react-icons/bs';
+import { useNftDataByOwner } from '~/hooks/getNFTsByOwner';
+import Carousel from './Carousel';
 
 type CarouselPropsType = {
   onClose: () => void;

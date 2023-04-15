@@ -1,9 +1,5 @@
 import {
-  Box,
   Container,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Tab,
   TabList,
   TabPanel,
@@ -11,9 +7,7 @@ import {
   Tabs,
   VStack,
 } from '@chakra-ui/react';
-import { BiSearch } from 'react-icons/bi';
 import ExplorePageHeader from '~/components/pages/projects/ExplorePageHeader';
-import FundingRoundBanner from '~/components/pages/projects/FundingRoundBanner';
 import ProjectsList from '~/components/pages/projects/ProjectsList';
 
 import { trpc } from '~/utils/trpc';
@@ -24,7 +18,7 @@ type projectsPropsType = {
   };
 };
 
-const Projects = (props: projectsPropsType) => {
+const Projects = (_props: projectsPropsType) => {
   const projects = trpc.project.findMany.useQuery();
 
   return (

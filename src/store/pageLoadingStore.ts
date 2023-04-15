@@ -1,9 +1,9 @@
 import produce, { Draft } from 'immer';
-import create from 'zustand';
+import {create} from 'zustand';
 
 type loadingStoreState = {
   isLoading: boolean;
-  setIsLoading: (isLoading: boolean) => void;
+  setIsLoading: (_isLoading: boolean) => void;
 };
 
 const useLoadingStore = create<loadingStoreState>((set) => ({

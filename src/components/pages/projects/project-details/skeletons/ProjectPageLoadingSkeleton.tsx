@@ -1,18 +1,9 @@
-import React from 'react';
 import {
-  Box,
-  Center,
-  Flex,
   HStack,
   Skeleton,
   SkeletonCircle,
   SkeletonText,
   Stack,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
   VStack,
 } from '@chakra-ui/react';
 

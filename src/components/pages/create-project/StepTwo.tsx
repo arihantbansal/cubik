@@ -11,11 +11,9 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
-  InputLeftElement,
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { useState } from 'react';
 import { FieldErrors, UseFormRegister, UseFormTrigger } from 'react-hook-form';
 import {
   FaDiscord,
@@ -26,7 +24,6 @@ import {
 } from 'react-icons/fa';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { FormData } from '~/pages/submit-project';
-import { AiFillGithub, AiOutlineTwitter } from 'react-icons/ai';
 type StepTwoProps = {
   trigger: UseFormTrigger<FormData>;
   onSubmit: () => void;

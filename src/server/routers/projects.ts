@@ -1,9 +1,8 @@
+import { ProjectVerifyStatus } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { procedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
-import { ProjectsModel } from '@prisma/client';
-import { ProjectVerifyStatus } from '@prisma/client';
 
 export const projectsRouter = router({
   create: procedure

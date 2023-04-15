@@ -15,14 +15,12 @@ import {
 import { ProjectsModel } from '@prisma/client';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { BiLink } from 'react-icons/bi';
 import { BsPlus } from 'react-icons/bs';
 import { MdRemove } from 'react-icons/md';
 import CustomTag from '~/components/common/tags/CustomTag';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import useListStore from '~/store/listStore';
 import { formatNumberWithK } from '~/utils/formatWithK';
-import { getDomain } from '~/utils/getDomain';
 
 type PropsType = {
   project: ProjectsModel;

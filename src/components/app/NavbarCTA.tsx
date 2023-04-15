@@ -1,4 +1,4 @@
-import { Center, HStack, Skeleton, useMediaQuery } from '@chakra-ui/react';
+import { Center, HStack, Skeleton } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useSession } from 'next-auth/react';
@@ -7,10 +7,6 @@ import IconButtonBadge from './ListButton';
 import UserNavMenu from './navbar-menu/UserNavMenu';
 
 const NavbarCTA: FC = () => {
-  const [isLargerThan768] = useMediaQuery('(min-width: 768px)', {
-    ssr: true,
-    fallback: false, // return false on the server, and re-evaluate on the client side
-  });
   const { publicKey, disconnect } = useWallet();
 
   const { status } = useSession();

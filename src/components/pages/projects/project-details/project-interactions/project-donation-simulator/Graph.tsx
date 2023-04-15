@@ -11,7 +11,6 @@ import { useMemo } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import GraphProps from '~/types/graphProps';
 import { calculateProjectMatchingFund } from '~/utils/calculateProjectMatchingFund';
-import { BonkLine } from './BonkLine';
 import { GraphLine } from './GraphLines';
 
 const Graph: React.FC<GraphProps> = ({

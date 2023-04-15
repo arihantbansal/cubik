@@ -7,15 +7,15 @@ import {
   HStack,
   Icon,
   IconButton,
+  Input,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
   ModalBody,
   ModalCloseButton,
-  Input,
-  VStack,
+  ModalContent,
   ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  VStack,
 } from '@chakra-ui/react';
 import { Color } from '@tiptap/extension-color';
 import Heading from '@tiptap/extension-heading';
@@ -23,7 +23,7 @@ import Link from '@tiptap/extension-link';
 import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
-import { EditorContent, JSONContent, useEditor } from '@tiptap/react';
+import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import parse from 'html-react-parser';
 import { useState } from 'react';
@@ -40,7 +40,6 @@ import {
   MdOutlineFormatListBulleted,
   MdOutlineFormatUnderlined,
 } from 'react-icons/md';
-import { AiOutlineExpandAlt } from 'react-icons/ai';
 import { DescriptionPreview } from './DescriptionPreview';
 
 const StepThree = ({

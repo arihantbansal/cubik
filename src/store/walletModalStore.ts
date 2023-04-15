@@ -1,4 +1,4 @@
-import create from 'zustand';
+import {create} from 'zustand';
 
 const useConnectWalletModalStore = create(() => {
   const { isOpen, onOpen, onClose } = {

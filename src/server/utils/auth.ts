@@ -1,13 +1,11 @@
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { UserModel } from "@prisma/client";
 import { type GetServerSidePropsContext } from "next";
 import {
-  getServerSession,
-  type NextAuthOptions,
-  type DefaultSession,
+  getServerSession, type DefaultSession, type NextAuthOptions
 } from "next-auth";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { prisma } from "./prisma";
 import credentialsProvider from "next-auth/providers/credentials";
-import { UserModel } from "@prisma/client";
+import { prisma } from "./prisma";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
@@ -44,7 +42,7 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     credentialsProvider({
-      async authorize(credentials, req) {
+      async authorize(credentials, _req) {
         if (!credentials) {
           throw new Error("User Cannot be authenticated");
         }

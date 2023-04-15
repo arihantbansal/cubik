@@ -21,6 +21,7 @@ const BackgroundImageWrapper = ({
   return (
     <MouseParallaxChild
       style={{
+        zIndex: '1',
         position: 'absolute',
         bottom: '50%',
         left: '50%',
@@ -32,8 +33,8 @@ const BackgroundImageWrapper = ({
       factorY={factor}
     >
       <Box
-        w={'90rem'}
-        height="51rem"
+        w={{ base: '50rem', md: '80rem' }}
+        height={{ base: '37rem', md: '58rem' }}
         overflow={'hidden'}
         position={'absolute'}
         top="50%"
@@ -45,7 +46,7 @@ const BackgroundImageWrapper = ({
           alt="hero background"
           layout="responsive"
           width={1200}
-          height={800}
+          height={1170}
           objectFit="contain"
         />
       </Box>
@@ -58,43 +59,44 @@ const LandingPage = () => {
 
   return (
     <Container background="black" maxW="full" px="0">
-      <Center bg="black" h={{ base: '38rem', md: '51rem' }} w="full">
-        <Center background="black" position={'fixed'}>
-          <Flex
-            zIndex={'1'}
-            h="60rem"
-            w="100vw"
-            maxW="90rem"
-            _before={{
-              content: '""',
-              zIndex: '10',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              bottom: 0,
-              width: '25vw',
-              height: '100vh',
-              background:
-                'linear-gradient(90deg, #000000 1%, rgb(0 0 0 / 0%) 50%)',
-            }}
-            _after={{
-              content: '""',
-              zIndex: '10',
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              bottom: 0,
-              width: '25vw',
-              height: '100vh',
-              background:
-                'linear-gradient(271deg, #000000 1%, rgb(0 0 0 / 0%) 50%)',
-            }}
-          >
-            <MouseParallaxContainer globalFactorX={0.1} globalFactorY={0.1}>
-              <Box position={'relative'} height="55rem" overflow="hidden">
+      <MouseParallaxContainer globalFactorX={0.1} globalFactorY={0.1}>
+        <Center bg="black" height={{ base: '37rem', md: '56rem' }} w="full">
+          <Center overflow={'hidden'} background="black" position={'fixed'}>
+            <Flex
+              overflow={'hidden'}
+              zIndex={'1'}
+              h="60rem"
+              w="80rem"
+              maxW="90rem"
+              _before={{
+                content: '""',
+                zIndex: '10',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                bottom: 0,
+                width: '25vw',
+                height: '100vh',
+                background:
+                  'linear-gradient(90deg, #000000 1%, rgb(0 0 0 / 0%) 50%)',
+              }}
+              _after={{
+                content: '""',
+                zIndex: '10',
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                bottom: 0,
+                width: '25vw',
+                height: '100vh',
+                background:
+                  'linear-gradient(271deg, #000000 1%, rgb(0 0 0 / 0%) 50%)',
+              }}
+            >
+              <Box position={'relative'} h="56rem" w="100vw" overflow="hidden">
                 <Box
-                  w={'90rem'}
-                  h="55rem"
+                  w={'80rem'}
+                  h="56rem"
                   overflow={'hidden'}
                   position={'absolute'}
                   top="50%"
@@ -102,7 +104,8 @@ const LandingPage = () => {
                   transform={'translate(-50%,-50%)'}
                 >
                   <Image
-                    src={'/images/6.PNG'}
+                    // background Image
+                    src={'https://d1yweukyu067aq.cloudfront.net/images/6.png'}
                     alt="hero background"
                     layout="responsive"
                     width={1200}
@@ -112,11 +115,11 @@ const LandingPage = () => {
                 </Box>
               </Box>
               <BackgroundImageWrapper
-                imgURL={'https://d1yweukyu067aq.cloudfront.net/images/4.PNG'}
+                imgURL={'https://d1yweukyu067aq.cloudfront.net/images/4.png'}
                 factor={0.1}
               />
               <BackgroundImageWrapper
-                imgURL={'https://d1yweukyu067aq.cloudfront.net/images/3.PNG'}
+                imgURL={'https://d1yweukyu067aq.cloudfront.net/images/3.png'}
                 factor={0.15}
               />
               <BackgroundImageWrapper
@@ -127,105 +130,111 @@ const LandingPage = () => {
                 imgURL={'https://d1yweukyu067aq.cloudfront.net/images/1.PNG'}
                 factor={0.25}
               />
-            </MouseParallaxContainer>{' '}
-          </Flex>
-          <VStack
-            zIndex={'2'}
-            h="1rem"
-            position={'absolute'}
-            textAlign="center"
-            mx="auto"
-            maxW={'4xl'}
-            alignItems={'center'}
-            justify="center"
-            gap={{ base: '0rem', md: '', lg: '1.4rem' }}
-            px={{ base: '5rem', sm: '8rem', md: '8rem', lg: '2rem' }}
-            pt={{ base: '4rem', md: '16rem' }}
-          >
-            <Center pt="2rem" w="full" flexDirection={'column'}>
+            </Flex>
+            <VStack
+              zIndex={'2'}
+              h="1rem"
+              position={'absolute'}
+              textAlign="center"
+              mx="auto"
+              maxW={{ base: '100vw', md: '4xl' }}
+              alignItems={'center'}
+              justify="center"
+              gap={{ base: '0rem', lg: '1.4rem' }}
+              px={{ base: '1rem', md: '8rem', lg: '2rem' }}
+              pt={'1rem'}
+            >
+              <Center
+                maxW={{ base: '30rem', md: 'full' }}
+                pt="1rem"
+                w="full"
+                flexDirection={'column'}
+              >
+                <MotionBox
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    transition: { delay: 0, duration: 1 },
+                  }}
+                  textTransform="uppercase"
+                  pb="0.4rem"
+                  as="p"
+                  textStyle={{
+                    base: 'overline3',
+                    lg: 'overline1',
+                  }}
+                  color="brand.teal4"
+                >
+                  Join the Movement
+                </MotionBox>
+                <MotionBox
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    transition: { delay: 0, duration: 1 },
+                  }}
+                  zIndex={1}
+                  as="p"
+                  lineHeight={{ base: '1.2', md: '1.4' }}
+                  textStyle={{
+                    base: 'headline2',
+                    md: 'display3',
+                    lg: 'display1',
+                  }}
+                >
+                  Fund Public Goods Through Community Voting On Solana
+                </MotionBox>
+              </Center>
               <MotionBox
+                w="md"
+                px={{ base: '1rem', md: '0' }}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                pt={{ base: '1rem', md: '0rem' }}
+                flexDirection={{ base: 'column', md: 'row' }}
+                maxW={{ base: '20rem', md: 'full' }}
+                gap={{ base: '0.6rem', md: '1rem' }}
                 initial={{ opacity: 0, y: 40 }}
                 animate={{
                   opacity: 1,
                   y: 0,
-                  transition: { delay: 0, duration: 1 },
+                  transition: { delay: 0.15, duration: 1 },
                 }}
-                textTransform="uppercase"
-                pb="0.4rem"
-                as="p"
-                textStyle={{
-                  base: 'overline2',
-                  lg: 'overline1',
-                }}
-                color="brand.teal4"
               >
-                Join the Movement
+                <Button
+                  onClick={() => {
+                    router.push('/projects');
+                  }}
+                  variant="primary"
+                >
+                  Explore Projects
+                </Button>
+                <Button
+                  onClick={() => {
+                    router.push('/connect-wallet');
+                  }}
+                  variant="secondary"
+                >
+                  Get Started
+                </Button>
               </MotionBox>
-              <MotionBox
-                initial={{ opacity: 0, y: 40 }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  transition: { delay: 0, duration: 1 },
+              <Center
+                transform={{
+                  base: 'translateY(-1rem)',
+                  md: 'translateY(0rem)',
                 }}
-                zIndex={1}
-                as="p"
-                lineHeight={{ base: '1.2', md: '1.4' }}
-                textStyle={{
-                  base: 'headline1',
-                  md: 'display3',
-                  lg: 'display1',
-                }}
+                zIndex="0"
+                minH={{ base: '280px', md: '500px' }}
               >
-                Fund Public Goods Through Community Voting On Solana
-              </MotionBox>
-            </Center>
-            <MotionBox
-              w="md"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              pt={{ base: '1rem', md: '0rem' }}
-              flexDirection={{ base: 'column', md: 'row' }}
-              maxW={{ base: '20rem', md: 'full' }}
-              gap={{ base: '0.6rem', md: '1rem' }}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                transition: { delay: 0.15, duration: 1 },
-              }}
-            >
-              <Button
-                onClick={() => {
-                  router.push('/projects');
-                }}
-                variant="primary"
-              >
-                Explore Projects
-              </Button>
-              <Button
-                onClick={() => {
-                  router.push('/connect-wallet');
-                }}
-                variant="secondary"
-              >
-                Get Started
-              </Button>
-            </MotionBox>
-            <Center
-              transform={{
-                base: 'translateY(-1rem)',
-                md: 'translateY(-1rem)',
-              }}
-              zIndex="0"
-              minH={{ base: '280px', md: '600px', lg: '700px' }}
-            >
-              <SplineAsset />
-            </Center>
-          </VStack>
+                <SplineAsset />
+              </Center>
+            </VStack>
+          </Center>
         </Center>
-      </Center>
+      </MouseParallaxContainer>
       <Center
         position={'relative'}
         h="full"

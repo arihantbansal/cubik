@@ -10,6 +10,11 @@ export default function SplineAsset() {
   return isSmallerThan800 ? (
     <Spline scene="https://prod.spline.design/pFJMp0UpB5jxTNqw/scene.splinecode" />
   ) : (
-    <Spline scene="https://prod.spline.design/yf3HawGE1cvYNAxl/scene.splinecode" />
+    <Spline
+      onLoad={() => {
+        console.log('spline asset loaded');
+      }}
+      scene="https://prod.spline.design/yf3HawGE1cvYNAxl/scene.splinecode"
+    />
   );
 }

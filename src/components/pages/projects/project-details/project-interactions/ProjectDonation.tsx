@@ -1,22 +1,6 @@
-import {
-  Avatar,
-  Box,
-  Heading,
-  HStack,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  Skeleton,
-  SkeletonCircle,
-  useDisclosure,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Modal, useDisclosure, VStack } from '@chakra-ui/react';
 import { ProjectsModel } from '@prisma/client';
 
-import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import { formatNumberWithK } from '~/utils/formatWithK';
 
 const VoteModalBody = () => {

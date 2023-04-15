@@ -5,7 +5,7 @@ export const Button = {
   baseStyles: {},
   backgroundColor: 'black',
   variants: {
-    solid: (props: StyleFunctionProps) => ({
+    solid: (_props: StyleFunctionProps) => ({
       rounded: '4px',
       padding: '12px 22px',
       backgroundColor: 'red',
@@ -17,7 +17,7 @@ export const Button = {
       fontSize: '14px',
       height: 'fit-content',
     }),
-    outline: (props: StyleFunctionProps) => ({
+    outline: (_props: StyleFunctionProps) => ({
       rounded: '8px',
       padding: '8px 16px',
       h: '3rem',
@@ -40,7 +40,7 @@ export const Button = {
         color: '#A8F0E6',
       },
     }),
-    markdownIconButton: (props: StyleFunctionProps) => ({
+    markdownIconButton: (_props: StyleFunctionProps) => ({
       borderRadius: '4px',
       border: 'none',
       background: 'red.800',
@@ -50,14 +50,14 @@ export const Button = {
       color: '#ADB8B6',
       _hover: { height: '30px', maxW: '10px', background: '#ffffff30' },
     }),
-    primary: (props: StyleFunctionProps) => ({
+    primary: (_props: StyleFunctionProps) => ({
       color: '#031513',
       backgroundColor: '#A8F0E6',
       outline: isMobileSafari ? '' : '1px solid #A8F0E6',
       height: 'full',
       width: { base: 'full', md: 'full' },
-      padding: { base: '10px 32px 14px 32px', md: '12px 44px 16px 44px' },
-      fontSize: '16px',
+      padding: { base: '12px 32px 14px 32px', md: '14px 44px 14px 44px' },
+      fontSize: {base:'14px', md:'16px'},
       letterSpacing: '-1%',
       fontWeight: '600',
       lineHeight: '22px',
@@ -71,15 +71,15 @@ export const Button = {
         transition: 'all 0.6s',
       },
     }),
-    secondary: (props: StyleFunctionProps) => ({
+    secondary: (_props: StyleFunctionProps) => ({
       color: '#A8F0E6',
       backgroundColor: 'transparent',
       height: 'full',
       width: { base: 'full', md: 'full' },
-      padding: { base: '10px 32px 14px 32px', md: '12px 40px 16px 40px' },
+      padding: { base: '12px 32px 14px 32px', md: '14px 44px 14px 44px' },
       outline: isMobileSafari ? '' : '1px solid #A8F0E6',
       border: isMobileSafari ? '1px solid #A8F0E6' : '',
-      fontSize: '16px',
+      fontSize: {base:'14px', md:'16px'},
       fontWeight: '600',
       lineHeight: '22px',
       borderRadius: '12px',
@@ -92,7 +92,7 @@ export const Button = {
         transition: 'all 0.6s',
       },
     }),
-    connect_wallet: (props: StyleFunctionProps) => ({
+    connect_wallet: (_props: StyleFunctionProps) => ({
       color: '#031513',
       backgroundColor: '#A8F0E6',
       padding: { base: '8px 20px 10px 20px', md: '8px 20px 10px 20px' },
@@ -112,7 +112,7 @@ export const Button = {
         color: '#031513',
       },
     }),
-    primary_white: (props: StyleFunctionProps) => ({
+    primary_white: (_props: StyleFunctionProps) => ({
       color: '#00010A',
       backgroundColor: '#E0FFFD',
       padding: '14px 80px 16px 80px',
@@ -134,7 +134,7 @@ export const Button = {
         color: '#031513',
       },
     }),
-    connect_twitter: (props: StyleFunctionProps) => ({
+    connect_twitter: (_props: StyleFunctionProps) => ({
       color: '#031513',
       backgroundColor: '#E0FFFD',
       outline: isMobileSafari ? '' : '1px solid #A8F0E6',
@@ -153,7 +153,7 @@ export const Button = {
         outline: isMobileSafari ? '' : '1px solid #14665B',
       },
     }),
-    project_button_secondary: (props: StyleFunctionProps) => ({
+    project_button_secondary: (_props: StyleFunctionProps) => ({
       color: '#A8F0E6',
       backgroundColor: 'transparent',
       height: 'full',

@@ -2,7 +2,7 @@ import { Box, Center, Container, Heading, Text } from '@chakra-ui/react';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React from 'react';
 import SEO from 'src/components/SEO';
 import superjson from 'superjson';
 import AdminView from '~/components/pages/user-profile/AdminView';
@@ -12,7 +12,6 @@ import { trpc } from '~/utils/trpc';
 
 const ProfilePage = () => {
   console.log('profile component rendered');
-  const [userProfileLoading, setUserProfileLoading] = useState(true);
   const { data: session } = useSession();
   const router = useRouter();
 
