@@ -31,7 +31,7 @@ const ProjectAuthenticationRoute = () => {
           onClick={() => {
             projectUpdateMutation.mutate({
               id: router.query.projectId as string,
-              status: ProjectVerifyStatus.verified,
+              status: ProjectVerifyStatus.VERIFIED,
             });
           }}
         >
@@ -42,7 +42,7 @@ const ProjectAuthenticationRoute = () => {
           onClick={() => {
             projectUpdateMutation.mutate({
               id: router.query.projectId as string,
-              status: ProjectVerifyStatus.failed,
+              status: ProjectVerifyStatus.FAILED,
             });
           }}
         >
