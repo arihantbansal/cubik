@@ -6,6 +6,7 @@
     "source.organizeImports": false
   },
   "typescript.tsdk": "node_modules/typescript/lib",
+  "workbench.colorCustomizations": {},
   "[typescript]": {
     "editor.defaultFormatter": "ms-vsliveshare.vsliveshare"
   }

@@ -20,6 +20,7 @@ import GetFormattedLink from '~/components/HOC/GetLink';
 import { getDomain } from '~/utils/getDomain';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
 import { ProjectLink } from '../../projects/project-details/ProjectDetailsHeader';
+import { trpc } from '~/utils/trpc';
 
 const DrawerBodyContent = ({ project }: { project: ProjectsModel }) => {
   console.log(
@@ -29,7 +30,7 @@ const DrawerBodyContent = ({ project }: { project: ProjectsModel }) => {
     project?.github_link
   );
   const socials = [{ name: 'string', url: 'string' }];
-
+  const projectVerfiyMutation = trpc.project.joinRound.useMutation();
   return (
     <VStack gap={{ base: '32px', md: '64px' }} w="full">
       <VStack align={'start'} w="full" gap="24px">

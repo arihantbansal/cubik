@@ -61,26 +61,7 @@ model UserDetailsModel {
   @@index([userModelId])
 }
 
-model PojectJoinRound {
-  id           String                 @id @default(uuid()) @map("_id")
-  projectId    String
-  tx           String                 @db.VarChar(500)
-  roundId      String
-  status       ProjectJoinRoundStatus @default(pending)
-  createdAt    DateTime               @default(now())
-  updatedAt    DateTime               @updatedAt
-  project      ProjectsModel          @relation(fields: [projectId], references: [id])
-  fundingRound Round                  @relation(fields: [roundId], references: [id])
 
-  @@index([projectId])
-  @@index([roundId])
-}
-
-enum ProjectJoinRoundStatus {
-  pending
-  approved
-  rejected
-}
 
 model ProjectsModel {
   id                String              @id @default(uuid()) @map("_id")
@@ -96,8 +77,9 @@ model ProjectsModel {
   discord_link      String              @default("")
   telegram_link     String              @default("")
   projectUserCount  Int                 @default(0)
-  status            ProjectVerifyStatus @default(review)
+  status            ProjectVerifyStatus @default(REVIEW)
   failedReason      String?             @default("")
+  mutliSigAddress   String?             @default("")
   comments          Comments[]
   PojectJoinRound   PojectJoinRound[]
   createdAt         DateTime            @default(now())
@@ -108,16 +90,38 @@ model ProjectsModel {
 }
 
 enum ProjectVerifyStatus {
-  review
-  verified
-  failed
+  REVIEW
+  VERIFIED
+  FAILED
+}
+model PojectJoinRound {
+  id           String                 @id @default(uuid()) @map("_id")
+  projectId    String
+  tx           String                 @db.VarChar(500)
+  roundId      String
+  status       ProjectJoinRoundStatus @default(PENDING)
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+  project      ProjectsModel          @relation(fields: [projectId], references: [id])
+  fundingRound Round                  @relation(fields: [roundId], references: [id])
+
+  @@index([projectId])
+  @@index([roundId])
+}
+
+enum ProjectJoinRoundStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
 
 model Round {
   id                     String            @id @default(uuid()) @map("_id")
   roundName              String
-  matchedPool            Float
-  communityContributions Float
+  matchedPool            Float           @default(0)
+  communityContributions Float            @default(0)
+  notionPage             String            @db.VarChar(500)
+  projectCount           Int               @default(0)
   active                 Boolean           @default(true)
   PojectJoinRound        PojectJoinRound[]
   Contribution           Contribution[]
@@ -125,6 +129,7 @@ model Round {
   createdAt              DateTime          @default(now())
   updatedAt              DateTime          @updatedAt
 }
+
 
 model Contribution {
   id      String @id @default(uuid()) @map("_id")
