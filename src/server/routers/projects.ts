@@ -79,16 +79,23 @@ export const projectsRouter = router({
           id: input.id,
         },
         include: {
-          comments: {
-            include: {
-              Reply: {
-                include: {
-                  user: true,
-                },
-              },
-              user: true,
-            },
-          },
+           owner: true,
+        Team: {
+          include:{
+            user:true
+          }
+        },
+        comments:{
+          include:{
+            user:true
+            ,Reply:{
+              include:{
+                comment:true,
+                user:true
+              }
+            }
+          }
+        },
           PojectJoinRound: {
             include: {
               fundingRound: true,
@@ -107,6 +114,7 @@ export const projectsRouter = router({
             fundingRound: true,
           },
         },
+       
       },
     });
     return res;
@@ -211,7 +219,44 @@ export const projectsRouter = router({
     })
 
     return res
+  }),
+  // remove this and add it to create project
+  createTeam: procedure.input(z.object({
+    id: z.string().nonempty(),
+    projectId: z.string().nonempty(),
+    userId: z.string().nonempty(),
+  })).mutation(async ({ input, ctx }) => {
+    if (!ctx.session) {
+      throw new TRPCError({
+        code: 'FORBIDDEN',
+        message: 'Session not found',
+        cause: 'User not logged in',
+      });
+    }
+    if (!ctx.session.user.mainWallet) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'User wallet not found',
+        cause: 'Corrupted session',
+      });
+    }
+    try {
+      const res = await prisma.team.create({
+        data: {
+          id: input.id,
+          projectsModelId: input.projectId,
+          userId: input.userId,
+        },
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: (error as Error).message,
+        cause: (error as Error).stack,
+      });
+    }
   })
-
   
 });

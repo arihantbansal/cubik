@@ -20,6 +20,7 @@ model UserModel {
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   userDetailsModel UserDetailsModel?
+  team             Team[]
   Session          Session[]
   project          ProjectsModel[]
   Reply            Reply[]
@@ -61,8 +62,6 @@ model UserDetailsModel {
   @@index([userModelId])
 }
 
-
-
 model ProjectsModel {
   id                String              @id @default(uuid()) @map("_id")
   name              String
@@ -85,6 +84,7 @@ model ProjectsModel {
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   owner             UserModel           @relation(fields: [owner_publickey], references: [mainWallet])
+  Team              Team[]
 
   @@index([owner_publickey])
 }
@@ -94,6 +94,17 @@ enum ProjectVerifyStatus {
   VERIFIED
   FAILED
 }
+
+model Team {
+  id              String        @id @default(uuid()) @map("_id")
+  userId          String
+  projectsModelId String
+  user            UserModel     @relation(fields: [userId], references: [id])
+  ProjectsModel   ProjectsModel @relation(fields: [projectsModelId], references: [id])
+  @@index([projectsModelId])
+  @@index([userId])
+}
+
 model PojectJoinRound {
   id           String                 @id @default(uuid()) @map("_id")
   projectId    String
@@ -118,8 +129,8 @@ enum ProjectJoinRoundStatus {
 model Round {
   id                     String            @id @default(uuid()) @map("_id")
   roundName              String
-  matchedPool            Float           @default(0)
-  communityContributions Float            @default(0)
+  matchedPool            Float             @default(0)
+  communityContributions Float             @default(0)
   notionPage             String            @db.VarChar(500)
   projectCount           Int               @default(0)
   active                 Boolean           @default(true)
@@ -129,7 +140,6 @@ model Round {
   createdAt              DateTime          @default(now())
   updatedAt              DateTime          @updatedAt
 }
-
 
 model Contribution {
   id      String @id @default(uuid()) @map("_id")
