@@ -12,33 +12,33 @@ import { ProjectVerifyStatus } from '@prisma/client';
 //todo: use enums for status
 const ProjectStatusBanner = ({ status }: { status: string }) => {
   switch (status) {
-    case 'draft':
-      return (
-        <HStack
-          w="full"
-          gap="8px"
-          backgroundColor={'neutral.3'}
-          borderBottom="1px solid"
-          borderColor="neutral.5"
-          padding={'12px 24px'}
-          borderTopRadius={'16px'}
-        >
-          <HStack rounded="full" bg="neutral.4" p="6px 11px 6px 9px">
-            <RiDraftLine size={16} color="#D7E0DF" />
-            <Box
-              as="p"
-              noOfLines={1}
-              whiteSpace={'nowrap'}
-              color="#D7E0DF"
-              textStyle={'body5'}
-            >
-              Draft
-            </Box>
-          </HStack>
-          <HStack></HStack>
-        </HStack>
-      );
-    case ProjectVerifyStatus.review:
+    // case 'draft':
+    //   return (
+    //     <HStack
+    //       w="full"
+    //       gap="8px"
+    //       backgroundColor={'neutral.3'}
+    //       borderBottom="1px solid"
+    //       borderColor="neutral.5"
+    //       padding={'12px 24px'}
+    //       borderTopRadius={'16px'}
+    //     >
+    //       <HStack rounded="full" bg="neutral.4" p="6px 11px 6px 9px">
+    //         <RiDraftLine size={16} color="#D7E0DF" />
+    //         <Box
+    //           as="p"
+    //           noOfLines={1}
+    //           whiteSpace={'nowrap'}
+    //           color="#D7E0DF"
+    //           textStyle={'body5'}
+    //         >
+    //           Draft
+    //         </Box>
+    //       </HStack>
+    //       <HStack></HStack>
+    //     </HStack>
+    //   );
+    case ProjectVerifyStatus.REVIEW:
       return (
         <HStack
           w="full"
@@ -75,7 +75,7 @@ const ProjectStatusBanner = ({ status }: { status: string }) => {
           <HStack></HStack>
         </HStack>
       );
-    case ProjectVerifyStatus.verified:
+    case ProjectVerifyStatus.VERIFIED:
       return (
         <HStack
           w="full"
@@ -112,7 +112,7 @@ const ProjectStatusBanner = ({ status }: { status: string }) => {
           <HStack></HStack>
         </HStack>
       );
-    case ProjectVerifyStatus.failed:
+    case ProjectVerifyStatus.FAILED:
       return (
         <HStack
           w="full"
