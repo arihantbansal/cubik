@@ -45,7 +45,7 @@ async function createNotionPayload(data: ProjectsModel) {
       },
       'Project Status': {
         select: {
-          name: ProjectStatus[data.status],
+          name: ProjectStatus[data.status as any],
         },
       },
       'Short Description': {

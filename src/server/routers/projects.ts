@@ -1,4 +1,4 @@
-import { ProjectVerifyStatus } from '@prisma/client';
+import { ProjectJoinRoundStatus, ProjectVerifyStatus } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { procedure, router } from '../trpc';
@@ -48,7 +48,7 @@ export const projectsRouter = router({
             owner_publickey: ctx.session.user.mainWallet,
             short_description: input.short_description,
             discord_link: input.discord_link,
-            status: 'review',
+            status: ProjectVerifyStatus.REVIEW,
             projectUserCount: input.projectUserCount,
             telegram_link: input.telegram_link,
             project_link: input.project_link,
@@ -138,7 +138,7 @@ export const projectsRouter = router({
     .input(
       z.object({
         id: z.string().nonempty(),
-        status: z.enum([ProjectVerifyStatus.review, ProjectVerifyStatus.verified, ProjectVerifyStatus.failed]),
+        status: z.enum([ProjectVerifyStatus.REVIEW, ProjectVerifyStatus.VERIFIED, ProjectVerifyStatus.FAILED]),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -206,7 +206,7 @@ export const projectsRouter = router({
         tx: input.tx,
         projectId: input.projectId,
         roundId: input.roundId,
-        status: "pending",
+        status: ProjectJoinRoundStatus.PENDING,
       }
     })
 
