@@ -32,6 +32,7 @@ import { FiChevronRight } from 'react-icons/fi';
 import { RxImage } from 'react-icons/rx';
 import { FormData } from '~/pages/submit-project';
 import { category } from './projectCategories';
+import { trpc } from '~/utils/trpc';
 
 type StepOneProps = {
   onSubmit: (data: any) => void;
@@ -62,6 +63,9 @@ const StepOne: React.FC<StepOneProps> = ({
     // @ts-ignore
     accept: 'image/*',
     onDrop,
+  });
+  const teamSearch = trpc.user.searchUser.useQuery({
+    username: '', // add a use state for handling the search, it returns data in UserModel[], works like a fizzy finder
   });
   // create an arry of random colors
   const colors = [

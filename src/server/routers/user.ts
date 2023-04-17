@@ -77,4 +77,16 @@ export const userRouter = router({
 
       return true;
     }),
+    searchUser: procedure.input(z.object({
+      username: z.string()
+    })).query(async ({input}) => {
+      const res = await prisma.userModel.findMany({
+        where:{
+          username:{
+            search: input.username
+          }
+        }
+      })
+      return res
+    })
 });

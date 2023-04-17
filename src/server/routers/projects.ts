@@ -1,8 +1,9 @@
-import { ProjectJoinRoundStatus, ProjectVerifyStatus } from '@prisma/client';
+import { ProjectJoinRoundStatus, ProjectVerifyStatus, Team } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { procedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
+import { v4 as uuid } from 'uuid';
 
 export const projectsRouter = router({
   create: procedure
@@ -20,6 +21,7 @@ export const projectsRouter = router({
         github_link: z.string(),
         projectUserCount: z.number(),
         telegram_link: z.string(),
+        team: z.array(z.string())
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -36,6 +38,16 @@ export const projectsRouter = router({
           message: 'User wallet not found',
           cause: 'Corrupted session',
         });
+      }
+      let team: Team[] = []
+      if(input.team.length > 0){
+        team = input.team.map((teamId)=>{
+          return {
+            id: uuid(),
+            projectsModelId: input.id,
+            userId: teamId
+          }
+        })
       }
       try {
         const res = await prisma.projectsModel.create({
@@ -56,6 +68,9 @@ export const projectsRouter = router({
             github_link: input.github_link,
           },
         });
+        await prisma.team.createMany({
+          data: team
+        })
         return res;
       } catch (error) {
         console.log(error);
