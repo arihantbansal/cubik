@@ -14,7 +14,7 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react';
-import { Select } from 'chakra-react-select';
+import { GroupBase, OptionsOrGroups, Select } from 'chakra-react-select';
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
@@ -44,6 +44,7 @@ type StepOneProps = {
   watch: UseFormWatch<FormData>;
   control: Control<FormData>;
 };
+
 const StepOne: React.FC<StepOneProps> = ({
   trigger,
   onSubmit,
@@ -55,6 +56,10 @@ const StepOne: React.FC<StepOneProps> = ({
 }) => {
   const [disableButton, setDisableButton] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [currentTeammateName, setCurrentTeammateName] = useState<
+    string | undefined
+  >(undefined);
+
   const onDrop = useCallback((acceptedFiles: any[]) => {
     setValue('logo', acceptedFiles[0]);
   }, []);
@@ -64,9 +69,20 @@ const StepOne: React.FC<StepOneProps> = ({
     accept: 'image/*',
     onDrop,
   });
+
   const teamSearch = trpc.user.searchUser.useQuery({
-    username: '', // add a use state for handling the search, it returns data in UserModel[], works like a fizzy finder
+    username: currentTeammateName || '',
   });
+
+  const teamWithNames =
+    teamSearch.data?.map((item) => {
+      return {
+        value: item.id,
+        label: item.username,
+      };
+    }) || [];
+
+  console.log('team search ', teamSearch.data);
   // create an arry of random colors
   const colors = [
     'red',
@@ -171,6 +187,163 @@ const StepOne: React.FC<StepOneProps> = ({
                 selectedOptionStyle="check"
                 variant="unstyled"
                 focusBorderColor="transparent"
+                chakraStyles={{
+                  container: (provided, state) => ({
+                    ...provided,
+                    border: 'none',
+                    background: 'surface.input_field',
+                    outline: '0px !important',
+                    borderRadius: '8px',
+                    height: '40px',
+                    boxShadow: '0',
+                    ps: '0rem',
+                    w: 'full',
+                    ':focus': {
+                      outline: 'none',
+                      boxShadow: '0',
+                      border: 'none',
+                    },
+                    ':hover': {
+                      outline: 'none',
+                      boxShadow: '0 !important',
+                      border: 'none !important',
+                    },
+                    ':active': {
+                      outline: 'none',
+                      boxShadow: '0',
+                      border: 'none',
+                    },
+                    ':selected': {
+                      outline: 'none',
+                      boxShadow: '0',
+                      border: 'none',
+                    },
+                  }),
+                  inputContainer: (provided, state) => ({
+                    ...provided,
+                    ps: '8px',
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    boxShadow: 'none',
+                    outline: 'none',
+                  }),
+                  valueContainer: (provided, state) => ({
+                    ...provided,
+                    ps: '8px',
+                    border: 'none',
+                    backgroundColor: 'transparent',
+                    boxShadow: 'none',
+                    outline: 'none',
+                  }),
+
+                  clearIndicator: (provided, state) => ({
+                    ...provided,
+                    display: 'none',
+                  }),
+                  dropdownIndicator: (provided, state) => ({
+                    ...provided,
+                    background: '',
+                    borderColor: 'transparent !important',
+                    outline: '0px !important',
+                    boxShadow: '0',
+                    p: 0,
+                    w: '60px',
+                  }),
+                  indicatorSeparator: (provided, state) => ({
+                    ...provided,
+                    display: 'none',
+                  }),
+                  menu: (provided, state) => ({
+                    ...provided,
+                    //border: 'none',
+                    transform: 'translateY(-10px)',
+                    backgroundColor: '#0F0F0F',
+                  }),
+                  menuList: (provided, state) => ({
+                    ...provided,
+                    backgroundColor: '#0F0F0F',
+                    border: '1px solid #141414',
+                    borderTop: 'none',
+                    borderTopRadius: 'none',
+                    boxShadow: 'none',
+                    padding: '0px',
+                  }),
+                  option: (provided, state) => ({
+                    ...provided,
+                    color: 'neutral.11',
+                    fontSize: '14px',
+                    fontWeight: '400',
+                    backgroundColor: state.isSelected
+                      ? '#010F0D'
+                      : state.isFocused
+                      ? '#010F0D'
+                      : '#0F0F0F',
+                    _hover: {
+                      backgroundColor: '#010F0D',
+                    },
+                    ':active': {
+                      backgroundColor: '#0F0F0F',
+                    },
+                  }),
+                  control: (provided, state) => ({
+                    ...provided,
+                    border: 'none',
+                    backgroundColor: '#0F0F0F',
+                    boxShadow: 'none',
+                    outline: 'none',
+                    ':hover': {
+                      border: 'none',
+                      backgroundColor: '#0F0F0F',
+                    },
+                  }),
+                  placeholder: (provided, state) => ({
+                    ...provided,
+                    textAlign: 'start',
+                    fontSize: '14px',
+                    px: '1rem',
+                    color: '#636666',
+                  }),
+                }}
+              />
+              <FormErrorMessage pt="1rem">
+                {error && error.message}
+              </FormErrorMessage>
+            </FormControl>
+          )}
+        />
+        <Controller
+          control={control}
+          name="team"
+          render={({
+            field: { onChange, onBlur, value, name, ref },
+            fieldState: { error },
+          }) => (
+            <FormControl isRequired py={4} isInvalid={!!error} id="team">
+              <FormLabel pb="0.5rem" htmlFor="team">
+                Search Team
+              </FormLabel>
+              <Select
+                isMulti
+                name={name}
+                ref={ref}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                options={
+                  teamWithNames as unknown as OptionsOrGroups<
+                    string,
+                    GroupBase<string>
+                  >
+                }
+                placeholder="Search Categories..."
+                closeMenuOnSelect={false}
+                selectedOptionStyle="check"
+                variant="unstyled"
+                focusBorderColor="transparent"
+                onInputChange={(inputValue) => {
+                  console.log('name changed - ', inputValue);
+                  setCurrentTeammateName(inputValue);
+                }}
                 chakraStyles={{
                   container: (provided, state) => ({
                     ...provided,

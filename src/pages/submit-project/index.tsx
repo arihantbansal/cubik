@@ -39,6 +39,7 @@ export type FormData = {
   telegram: string;
   discord: string;
   description: string;
+  team: string[];
 };
 
 const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
@@ -141,7 +142,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
           discord_link: getValues().projectLink,
           telegram_link: getValues().telegram,
           projectUserCount: 0, /// change the length by fetching the user projects and add one more
-          team: [], // add just the userId for each selected team member
+          team: [''],
         });
       } catch (error) {
         console.log(error, '--error');
