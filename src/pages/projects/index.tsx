@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import ExplorePageHeader from '~/components/pages/projects/ExplorePageHeader';
 import ProjectsList from '~/components/pages/projects/ProjectsList';
+import ProjectListLoadingSkeleton from '~/components/pages/projects/skeletons/ProjectListLoadingSkeleton';
 
 import { trpc } from '~/utils/trpc';
 
@@ -19,24 +20,41 @@ type projectsPropsType = {
 };
 
 const Projects = (_props: projectsPropsType) => {
-  const projects = trpc.project.findMany.useQuery();
+  const {
+    data: projects,
+    isLoading,
+    isError,
+    error,
+  } = trpc.project.findMany.useQuery();
 
   return (
     <main>
-      <Container maxW="7xl" py={{ base: '4rem', md: '8rem' }}>
+      <Container
+        px={{ base: '1.5rem', sm: '2rem', md: '2rem', xl: '0px' }}
+        maxW="7xl"
+        py={{ base: '2rem', md: '3rem' }}
+      >
         <VStack w="full" alignItems={'start'} justifyContent="start" gap="2rem">
           <ExplorePageHeader />
-          <Tabs variant={'cubik'}>
+          <Tabs variant={'cubik'} w="full">
             <TabList>
               <Tab>Projects</Tab>
               <Tab>Collections</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
-                <ProjectsList allProjectsData={projects.data ?? []} />
+                {isLoading || !projects ? (
+                  <ProjectListLoadingSkeleton />
+                ) : (
+                  <ProjectsList allProjectsData={projects} />
+                )}
               </TabPanel>
               <TabPanel>
-                <ProjectsList allProjectsData={projects.data ?? []} />
+                {isLoading || !projects ? (
+                  ''
+                ) : (
+                  <ProjectsList allProjectsData={projects} />
+                )}
               </TabPanel>
             </TabPanels>
           </Tabs>

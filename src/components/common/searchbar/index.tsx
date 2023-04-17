@@ -3,12 +3,14 @@ import React from 'react';
 import { BiSearch } from 'react-icons/bi';
 
 type SearchBarProps = {
+  display?: any;
   width: any;
 };
 
-export const SearchBar = ({ width }: SearchBarProps) => {
+export const SearchBar = ({ display, width }: SearchBarProps) => {
   return (
     <InputGroup
+      display={display}
       rounded="8px"
       h="fit-content"
       background={'#0F0F0F'}

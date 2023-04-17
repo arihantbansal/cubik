@@ -35,24 +35,6 @@ const ProjectDetailsHeader = ({
 }: {
   projectDetails: ProjectsModel;
 }) => {
-  const socials = [
-    {
-      name: 'twitter',
-      url: projectDetails?.twitter_handle && projectDetails.twitter_handle,
-    },
-    {
-      name: 'discord',
-      url: projectDetails?.discord_link && projectDetails.discord_link,
-    },
-    {
-      name: 'telegram',
-      url: projectDetails?.telegram_link && projectDetails.telegram_link,
-    },
-    {
-      name: 'github',
-      url: projectDetails?.github_link && projectDetails.github_link,
-    },
-  ];
   return (
     <Stack
       direction={{ base: 'row', md: 'row' }}
@@ -62,12 +44,12 @@ const ProjectDetailsHeader = ({
     >
       <Avatar
         src={projectDetails?.logo}
-        width={{ base: '4.8rem', md: '6rem' }}
-        height={{ base: '4.8rem', md: '6rem' }}
+        width={{ base: '4.8rem', md: '6.2rem' }}
+        height={{ base: '4.8rem', md: '6.2rem' }}
       />
       <VStack
         justify={'center'}
-        gap={{ base: '8px', md: '16px' }}
+        gap={{ base: '8px', md: '14px' }}
         alignItems={'start'}
         justifyContent="center"
       >

@@ -29,9 +29,6 @@ const filterTokens = (tokens: TokenInfo[]) => {
 };
 
 const getBalances = async (address: string) => {
-  console.log(
-    `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${process.env.NEXT_PUBLIC_HELIUS_API_KEY}`
-  );
   const { data } = await axios.get(
     `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${process.env.NEXT_PUBLIC_HELIUS_API_KEY}`
   );
@@ -40,8 +37,17 @@ const getBalances = async (address: string) => {
 
 const WalletBalance = () => {
   const { data: session } = useSession();
-  const { isLoading, error, data } = useQuery('balances', () =>
-    getBalances(session?.user.mainWallet as string)
+  const { isLoading, error, data } = useQuery(
+    'balances',
+    () => getBalances(session?.user.mainWallet as string),
+    {
+      // Cache data for 5 minutes (in milliseconds)
+      staleTime: 5 * 60 * 1000,
+      // Don't automatically refetch data in the background
+      refetchIntervalInBackground: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    }
   );
 
   if (!session?.user.id) return <>no user</>;
@@ -81,6 +87,8 @@ const WalletBalance = () => {
         </HStack>
       )}
       {filteredData?.map((token) => {
+        const tokenBalance = token.amount / 10 ** token.decimals;
+
         return token.tokenAccount ==
           'BYgQgaAcgxmAHh7iAYeyV2V1RVTd9edvesrQbSiAYKET' ? (
           <HStack p="0px 2px" gap="8px" w="full">
@@ -95,13 +103,11 @@ const WalletBalance = () => {
               textStyle={'title5'}
               color="neutral.11"
             >
-              {token.amount / LAMPORTS_PER_SOL === 0
+              {tokenBalance === 0
                 ? 0
-                : token.amount / LAMPORTS_PER_SOL < 0.01
-                ? (token.amount / LAMPORTS_PER_SOL).toFixed(4)
-                : formatNumberWithK(
-                    +(token.amount / LAMPORTS_PER_SOL).toFixed(1)
-                  )}
+                : tokenBalance < 0.01
+                ? tokenBalance.toFixed(4)
+                : formatNumberWithK(+tokenBalance.toFixed(1))}
             </Box>
           </HStack>
         ) : token.tokenAccount ==
@@ -118,13 +124,11 @@ const WalletBalance = () => {
               textStyle={'title5'}
               color="neutral.11"
             >
-              {token.amount / LAMPORTS_PER_SOL === 0
+              {tokenBalance === 0
                 ? 0
-                : token.amount / LAMPORTS_PER_SOL < 0.01
-                ? (token.amount / LAMPORTS_PER_SOL).toFixed(4)
-                : formatNumberWithK(
-                    +(token.amount / LAMPORTS_PER_SOL).toFixed(1)
-                  )}
+                : tokenBalance < 0.01
+                ? tokenBalance.toFixed(4)
+                : formatNumberWithK(+tokenBalance.toFixed(1))}
             </Box>
           </HStack>
         ) : null;

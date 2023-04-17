@@ -96,7 +96,7 @@ const LandingPage = () => {
               <Box position={'relative'} h="56rem" w="100vw" overflow="hidden">
                 <Box
                   w={'80rem'}
-                  h="56rem"
+                  h="57rem"
                   overflow={'hidden'}
                   position={'absolute'}
                   top="50%"

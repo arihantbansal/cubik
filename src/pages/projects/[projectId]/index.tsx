@@ -1,7 +1,7 @@
-import { Container, Stack } from '@chakra-ui/react';
+import { Center, Container, Spinner, Stack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { AboutProject } from '~/components/pages/projects/project-details/AboutProject';
 import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';
+import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-details/ProjectDetailsAndTabs';
 import ProjectPageLoadingSkeleton from '~/components/pages/projects/project-details/skeletons/ProjectPageLoadingSkeleton';
 import SEO from '~/components/SEO';
 import { trpc } from '~/utils/trpc';
@@ -16,6 +16,7 @@ const ProjectDetails = () => {
   if (isError) {
     return <>{error.message}</>;
   }
+
   return (
     <>
       <SEO
@@ -29,17 +30,23 @@ const ProjectDetails = () => {
             maxW="7xl"
             mx="auto"
             direction={{ base: 'column', md: 'row' }}
-            gap={{ base: '24px', md: '120px' }}
+            gap={{ base: '24px', md: '12px', lg: '80px', xl: '100px' }}
             px={{ base: '1rem', sm: '2rem', md: '2rem', xl: '1rem' }}
+            alignItems={'start'}
+            justifyContent={'start'}
           >
-            {isLoading ? (
+            {!data ? (
               <ProjectPageLoadingSkeleton />
-            ) : !data ? (
-              <>data not</>
             ) : (
               <>
-                <AboutProject projectDetails={data} />
-                <ProjectInteractions projectDetails={data} />
+                <ProjectDetailsAndTabs
+                  projectDetails={data}
+                  isLoading={isLoading}
+                />
+                <ProjectInteractions
+                  projectDetails={data}
+                  isLoading={isLoading}
+                />
               </>
             )}
           </Stack>

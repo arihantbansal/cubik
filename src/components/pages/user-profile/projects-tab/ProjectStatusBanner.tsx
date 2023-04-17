@@ -2,42 +2,14 @@ import { Box, Center, HStack } from '@chakra-ui/react';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { FiClock } from 'react-icons/fi';
 import { MdVerified } from 'react-icons/md';
-import { RiDraftLine } from 'react-icons/ri';
 import { RxLapTimer } from 'react-icons/rx';
 import { TbListSearch } from 'react-icons/tb';
 import { ImCheckboxChecked } from 'react-icons/im';
 import { HiBan } from 'react-icons/hi';
 import { ProjectVerifyStatus } from '@prisma/client';
 
-//todo: use enums for status
 const ProjectStatusBanner = ({ status }: { status: string }) => {
   switch (status) {
-    // case 'draft':
-    //   return (
-    //     <HStack
-    //       w="full"
-    //       gap="8px"
-    //       backgroundColor={'neutral.3'}
-    //       borderBottom="1px solid"
-    //       borderColor="neutral.5"
-    //       padding={'12px 24px'}
-    //       borderTopRadius={'16px'}
-    //     >
-    //       <HStack rounded="full" bg="neutral.4" p="6px 11px 6px 9px">
-    //         <RiDraftLine size={16} color="#D7E0DF" />
-    //         <Box
-    //           as="p"
-    //           noOfLines={1}
-    //           whiteSpace={'nowrap'}
-    //           color="#D7E0DF"
-    //           textStyle={'body5'}
-    //         >
-    //           Draft
-    //         </Box>
-    //       </HStack>
-    //       <HStack></HStack>
-    //     </HStack>
-    //   );
     case ProjectVerifyStatus.REVIEW:
       return (
         <HStack

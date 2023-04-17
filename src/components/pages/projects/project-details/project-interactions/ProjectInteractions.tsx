@@ -3,18 +3,37 @@ import {
   Box,
   Card,
   HStack,
+  IconButton,
   Stack,
   useMediaQuery,
   VStack,
+  Wrap,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { Key } from 'react';
+import {
+  FaDiscord,
+  FaGithub,
+  FaTelegramPlane,
+  FaTwitter,
+  FaYoutube,
+} from 'react-icons/fa';
+import { HiLink } from 'react-icons/hi';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
-import ProjectDonationSimulator from './project-donation-simulator/ProjectDonationSimulator';
-import { ProjectsDonation } from './ProjectDonation';
+import {
+  ProjectCreatorTeamType,
+  ProjectWithCommentsAndRoundsType,
+} from '~/types/IProjectDetails';
+import { ProjectCTAs } from './ProjectCTAs';
 
-const ProjectOwner = ({ projectOwner }: { projectOwner: any }) => {
+type ProjectCreatorTeamMemberProps = {
+  teamMember: ProjectCreatorTeamType;
+};
+
+const ProjectCreatorTeamMember = ({
+  teamMember,
+}: ProjectCreatorTeamMemberProps) => {
   const router = useRouter();
-  console.log('project owners - ', projectOwner);
   return (
     <Card
       gap="16px"
@@ -25,22 +44,25 @@ const ProjectOwner = ({ projectOwner }: { projectOwner: any }) => {
       onClick={() => {
         router.push({
           pathname: '/[username]',
-          query: { username: projectOwner.username },
+          query: { username: teamMember.id },
         });
       }}
       justifyContent={'space-between'}
     >
       <HStack gap="0.6rem">
-        <Avatar size={{ base: 'sm', md: 'sm' }} src={projectOwner.icon} />
+        <Avatar
+          size={{ base: 'sm', md: 'sm' }}
+          src={teamMember.user.profilePicture}
+        />
         <Box color={'white'} as="p" textStyle={'body3'}>
-          @{projectOwner?.username}
+          @{teamMember.user.username}
         </Box>
       </HStack>
-      {projectOwner?.mainwallet && (
-        <Box color="#B4B0B2" as="p" textStyle={'body4'}>
-          {TruncatedAddr({ walletAddress: projectOwner.mainwallet })}
-        </Box>
-      )}
+      <Box color="#B4B0B2" as="p" textStyle={'body4'}>
+        {TruncatedAddr({
+          walletAddress: teamMember.user.mainWallet,
+        })}
+      </Box>
     </Card>
   );
 };
@@ -92,11 +114,62 @@ const SimilarProject = () => {
   );
 };
 
+const SocialLinks = ({ urlName }: { urlName: string }) => {
+  switch (urlName) {
+    case 'url':
+      return <HiLink color="#E0FFFD" size={18} />;
+    case 'twitter':
+      return <FaTwitter color="#E0FFFD" size={18} />;
+    case 'discord':
+      return <FaDiscord color="#E0FFFD" size={18} />;
+    case 'telegram':
+      return <FaTelegramPlane color="#E0FFFD" size={18} />;
+    case 'youtube':
+      return <FaYoutube color="#E0FFFD" size={18} />;
+    case 'github':
+      return <FaGithub color="#E0FFFD" size={18} />;
+    default:
+      return <></>;
+  }
+};
+
 // sidebar
-const SideBar = ({ projectDetails }: { projectDetails: any }) => {
+const ProjectCreatorAndLinks = ({
+  projectDetails,
+  isLoading,
+}: {
+  projectDetails: ProjectWithCommentsAndRoundsType;
+  isLoading: boolean;
+}) => {
+  const socials = [
+    {
+      name: projectDetails?.twitter_handle ? 'twitter' : undefined,
+      url: projectDetails?.twitter_handle
+        ? projectDetails.twitter_handle
+        : undefined,
+    },
+    {
+      name: projectDetails?.discord_link ? 'discord' : undefined,
+      url: projectDetails?.discord_link
+        ? projectDetails.discord_link
+        : undefined,
+    },
+    {
+      name: projectDetails?.telegram_link ? 'telegram' : undefined,
+
+      url: projectDetails?.telegram_link
+        ? projectDetails.telegram_link
+        : undefined,
+    },
+    {
+      name: projectDetails?.github_link ? 'github' : undefined,
+      url: projectDetails?.github_link ? projectDetails.github_link : undefined,
+    },
+  ];
+
   return (
     <VStack
-      gap="48px"
+      gap={{ base: '24px', md: '64px' }}
       w="full"
       justify={'space-between'}
       direction={'column'}
@@ -108,19 +181,53 @@ const SideBar = ({ projectDetails }: { projectDetails: any }) => {
         w={{ base: 'auto', sm: 'auto', md: 'full' }}
       >
         <Box as="p" textStyle={'title3'}>
-          Projects Creator
+          Links
         </Box>
-        <ProjectOwner
-          projectOwner={{
-            id: '1234',
-            username: 'irfan',
-            mainwallet: '0x49fj3nfugmrivhrt748cvjhsdkwe',
-          }}
-        />
-        {/* {projectDetails.owner.map((projectOwner, key) => {
-          return <ProjectOwner projectOwner={projectOwner} key={key} />;
-        })} */}
+        <Wrap direction={'row'}>
+          {socials.map(
+            (
+              link: { name: string | undefined; url: string | undefined },
+              key: Key
+            ) =>
+              link.name && (
+                <IconButton
+                  aria-label={link.name}
+                  variant={'unstyled'}
+                  fontSize={{ base: 'sm', sm: 'md', md: 'xl' }}
+                  display="flex"
+                  alignItems={'center'}
+                  rounded="full"
+                  color="brand.teal6"
+                  backgroundColor="brand.teal2"
+                  key={key}
+                  icon={<SocialLinks urlName={link.name} />}
+                  _hover={{
+                    backgroundColor: 'brand.teal3',
+                  }}
+                  as="a"
+                  href={link.url}
+                  target="_blank"
+                />
+              )
+          )}
+        </Wrap>
       </VStack>
+      {projectDetails.Team.length > 0 && (
+        <VStack
+          gap="16px"
+          align={'start'}
+          w={{ base: 'auto', sm: 'auto', md: 'full' }}
+        >
+          <Box as="p" textStyle={'title3'}>
+            Projects Creator
+          </Box>
+          {projectDetails.Team.map(
+            (teamMember: ProjectCreatorTeamType, key: Key) => (
+              <ProjectCreatorTeamMember teamMember={teamMember} key={key} />
+            )
+          )}
+        </VStack>
+      )}
       <VStack
         gap="16px"
         align={'start'}
@@ -135,26 +242,32 @@ const SideBar = ({ projectDetails }: { projectDetails: any }) => {
   );
 };
 
-// section 2
+interface ProjectInteractionsProps {
+  projectDetails: ProjectWithCommentsAndRoundsType;
+  isLoading: boolean;
+}
+
 export const ProjectInteractions = ({
   projectDetails,
-}: {
-  projectDetails: any;
-}) => {
+  isLoading,
+}: ProjectInteractionsProps) => {
   const [isSmallerThank768] = useMediaQuery('(min-width: 768px)');
+
   return (
     <Stack
       w="full"
-      flex="1.2"
-      gap={{ base: '48px', md: '48px' }}
-      display={'flex'}
-      flexDir={{ base: 'column', md: 'column' }}
+      maxW="20rem"
+      flex="1"
+      // position={{ base: 'relative', lg: 'fixed' }}
+      gap="48px"
+      flexDir="column"
       justifyContent="start"
     >
-      <ProjectsDonation projectDetails={projectDetails} />
-      {isSmallerThank768 && <ProjectDonationSimulator />}
-      <Box height="2px" backgroundColor="#1A1A1A" w="full" />
-      <SideBar projectDetails={projectDetails} />
+      <ProjectCTAs projectDetails={projectDetails} isLoading={isLoading} />
+      <ProjectCreatorAndLinks
+        projectDetails={projectDetails}
+        isLoading={isLoading}
+      />
     </Stack>
   );
 };

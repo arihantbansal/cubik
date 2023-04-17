@@ -2,9 +2,29 @@ import { StyleFunctionProps } from '@chakra-ui/theme-tools';
 import { isMobileSafari } from 'react-device-detect';
 
 export const Button = {
-  baseStyles: {},
-  backgroundColor: 'black',
+  baseStyles: {
+    color: '#031513',
+    backgroundColor: '#A8F0E6',
+    outline: isMobileSafari ? '' : '1px solid #A8F0E6',
+    height: 'full',
+    width: { base: 'full', md: 'full' },
+    padding: { base: '12px 32px 14px 32px', md: '14px 44px 14px 44px' },
+    fontSize: {base:'14px', md:'16px'},
+    letterSpacing: '-1%',
+    fontWeight: '600',
+    lineHeight: '22px',
+    borderRadius: '12px',
+    transition: 'all 0.6s',
+    _hover: {
+      color: '#14665B',
+      backgroundColor: '#E0FFFD',
+      outline: isMobileSafari ? '' : '1px solid #E0FFFD',
+      shadow: '0px 4px 60px rgba(168, 240, 230, 0.4)',
+      transition: 'all 0.6s',
+    },
+  }, 
   variants: {
+    
     solid: (_props: StyleFunctionProps) => ({
       rounded: '4px',
       padding: '12px 22px',
@@ -153,17 +173,15 @@ export const Button = {
         outline: isMobileSafari ? '' : '1px solid #14665B',
       },
     }),
-    project_button_secondary: (_props: StyleFunctionProps) => ({
-      color: '#A8F0E6',
-      backgroundColor: 'transparent',
+    project_button_primary: (_props: StyleFunctionProps) => ({
+      color: '#001F1B',
+      backgroundColor: '#A8F0E6',
       height: 'full',
-      width: { base: 'full', md: 'full' },
-      padding: { base: '12px 20px 12px 20px', md: '16px 20px 16px 20px' },
-      outline: isMobileSafari ? '' : '1px solid #A8F0E6',
-      border: isMobileSafari ? '1px solid #A8F0E6' : '',
-      fontSize: '14px',
+      width: { base: 'full', md: '100%' },
+      padding: { base: '12px 20px', md: '14px 20px' },
+      fontSize: {base:'14px', md:'16px'},
       fontWeight: '700',
-      lineHeight: '18px',
+      lineHeight: '16px',
       borderRadius: '8px',
       transition: 'all 0.6s',
       _hover: {
@@ -191,6 +209,27 @@ export const Button = {
         transition: 'all 0.6s',
       },
     }),
+    project_button_secondary: (_props: StyleFunctionProps) => ({
+      color: '#A8F0E6',
+      backgroundColor: 'transparent',
+      height: 'full',
+      width: { base: 'full', md: '100%' },
+      padding: { base: '8px 20px', md: '10px 20px' },
+      outline: isMobileSafari ? '0px' : '1px solid #A8F0E6',
+      border: isMobileSafari ? '1px solid #A8F0E6' : '0px',
+      fontSize: {base:'14px', md:'16px'},
+      fontWeight: '700',
+      lineHeight: '16px',
+      borderRadius: '8px',
+      transition: 'all 0.6s',
+      _disabled: {
+        color: '#031513',
+        backgroundColor: '#E0FFFD !important',
+        outline: 'none',
+        transition: 'all 0.6s',
+      },
+     }),
+
   },
   sizes: {
     md: {

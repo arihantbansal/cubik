@@ -3,6 +3,7 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useSession } from 'next-auth/react';
 import { FC } from 'react';
+import { WalletAddress } from '../common/wallet/WalletAdd';
 import IconButtonBadge from './ListButton';
 import UserNavMenu from './navbar-menu/UserNavMenu';
 
@@ -40,10 +41,12 @@ const NavbarCTA: FC = () => {
     default:
       CTA = publicKey ? (
         <Center as="button" onClick={disconnect}>
-          Connecting...
+          <WalletAddress walletAddress={publicKey.toBase58()} />
         </Center>
       ) : (
-        <WalletMultiButton />
+        <Center w="10rem">
+          <WalletMultiButton />
+        </Center>
       );
   }
 

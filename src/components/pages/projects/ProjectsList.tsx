@@ -63,15 +63,16 @@ const ProjectCard = ({ project }: PropsType) => {
   return (
     <Card
       onClick={() => setIsHovered(true)}
-      w="100%"
       p="24px"
+      h="17.8rem"
       cursor="pointer"
+      w="100%"
       maxW={{
-        base: '83vw',
-        sm: '83vw',
-        md: '42vw',
-        lg: '30vw',
-        xl: '24rem',
+        base: '85vw',
+        sm: '87vw',
+        md: '44vw',
+        lg: '29.5vw',
+        xl: '25.5rem',
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -119,6 +120,7 @@ const ProjectCard = ({ project }: PropsType) => {
           sx={{
             noOfLines: '2',
           }}
+          h="3.2rem"
         >
           {project.short_description}
         </Box>
@@ -129,7 +131,16 @@ const ProjectCard = ({ project }: PropsType) => {
             position="absolute"
             bottom="24px"
           >
-            <Button w="calc(100% - 6rem)" variant="connect_wallet">
+            <Button
+              w="calc(100% - 6rem)"
+              variant="connect_wallet"
+              onClick={() => {
+                router.push({
+                  pathname: '/projects/[id]',
+                  query: { id: project.id },
+                });
+              }}
+            >
               View Details
             </Button>
             <IconButton
@@ -140,7 +151,13 @@ const ProjectCard = ({ project }: PropsType) => {
             />
           </HStack>
         </SlideFade>
-        <Wrap w="full" mt="auto" pb="0.4rem">
+        <Wrap
+          w="full"
+          mt="auto"
+          align={'center'}
+          justify="start"
+          //  pb="0.4rem"
+        >
           {industry.map((tag: any, key: any) => {
             return (
               <CustomTag color={tag.label} key={key}>

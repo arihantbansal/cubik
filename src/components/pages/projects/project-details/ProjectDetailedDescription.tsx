@@ -104,59 +104,15 @@ export const ProjectsDetailedDescription = ({
 
   return (
     <Stack alignSelf={'start'} w="full" direction={'column'} gap="0.5rem">
-      <Box color="#FFFFFF" as="p" textStyle={'title2'} pb="0.6rem">
-        About Project
-      </Box>
-      {maxH ? (
-        <VStack maxH={maxH} overflow="scroll" align="start" gap="0.5rem">
-          <ReactMarkdown
-            components={ChakraUIRenderer(newTheme)}
-            rehypePlugins={[rehypeRaw]}
-            remarkPlugins={[remarkGfm]}
-          >
-            {description}
-          </ReactMarkdown>
-        </VStack>
-      ) : (
-        <Collapse startingHeight={'20rem'} in={isOpen} animateOpacity>
-          <VStack align="start" gap="0.5rem">
-            <ReactMarkdown
-              components={ChakraUIRenderer(newTheme)}
-              rehypePlugins={[rehypeRaw]}
-              remarkPlugins={[remarkGfm]}
-            >
-              {description}
-            </ReactMarkdown>
-          </VStack>
-        </Collapse>
-      )}
-      <Center
-        display={maxH ? 'none' : 'flex'}
-        position="relative"
-        height={isOpen ? '6rem' : '0'}
-      >
-        <Button
-          background={
-            'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%)'
-          }
-          h="8rem"
-          position={'absolute'}
-          bottom="0"
-          variant={'unstyled'}
-          onClick={onToggle}
-          w="full"
+      <VStack maxH={maxH} overflow="scroll" align="start" gap="0.5rem">
+        <ReactMarkdown
+          components={ChakraUIRenderer(newTheme)}
+          rehypePlugins={[rehypeRaw]}
+          remarkPlugins={[remarkGfm]}
         >
-          <Box
-            border="1px solid white"
-            rounded="8px"
-            w="8rem"
-            mx="auto"
-            p="8px"
-          >
-            Read {isOpen ? 'Less' : 'More'}
-          </Box>
-        </Button>
-      </Center>
+          {description}
+        </ReactMarkdown>
+      </VStack>
     </Stack>
   );
 };

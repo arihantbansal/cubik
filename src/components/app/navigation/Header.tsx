@@ -42,9 +42,13 @@ const MobileNavCollapsible = memo(function MobileNavCollapsible({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  let landingPage: boolean = false;
+  if (router.pathname === '/') {
+    landingPage = true;
+  }
   return (
     <Collapse in={isOpen} animateOpacity>
-      <Center w="full" px="1.2rem">
+      <Center display={landingPage ? 'none' : 'flex'} w="full" px="1.2rem">
         <SearchBar width={{ base: '100%' }} />
       </Center>
       <Flex
@@ -118,6 +122,15 @@ export const Header = memo(function Header({
 
   const [currentRoute, setCurrentRoute] = useState('');
 
+  const isActiveRoute = (route: string): boolean => {
+    return router.pathname === route;
+  };
+
+  let landingPage: boolean = false;
+  if (router.pathname === '/') {
+    landingPage = true;
+  }
+
   useEffect(() => {
     const handleRouteChangeStart = () => {
       setIsLoading(true);
@@ -165,53 +178,67 @@ export const Header = memo(function Header({
         alignItems={'center'}
         justifyContent={'space-between'}
       >
-        <HStack gap="40px">
+        <HStack w="full" gap="40px">
           <Box as="button" fontSize={'5xl'} onClick={() => router.push('/')}>
             <Logo />
           </Box>
           {isDesktop && router.pathname != '/create-profile' && (
             <>
               <SearchBar
-                width={{ base: '12rem', sm: '13rem', md: '10rem', lg: '16rem' }}
+                display={landingPage ? 'none' : 'flex'}
+                width={{ base: '12rem', sm: '13rem', md: '20rem', lg: '30rem' }}
               />
-              <Link href="/projects" passHref prefetch>
-                <Box
-                  as="p"
-                  textStyle={'title4'}
-                  color="brand.teal5"
-                  cursor={'pointer'}
-                >
-                  Projects
-                </Box>
-              </Link>
-              <Link href="/grants" passHref prefetch>
-                <Box
-                  as="p"
-                  textStyle={'title4'}
-                  color="brand.teal5"
-                  cursor={'pointer'}
-                >
-                  Grants
-                </Box>
-              </Link>
+              <HStack
+                gap="40px"
+                //   mx={landingPage ? 'auto' : ''}
+                w="full"
+                alignItems={'center'}
+                justifyContent={landingPage ? 'center' : 'flex-start'}
+                mx="auto"
+              >
+                <Link href="/projects" passHref prefetch>
+                  <Box
+                    as="p"
+                    textStyle={'title4'}
+                    color={
+                      isActiveRoute('/projects') ? 'brand.teal5' : 'neutral.8'
+                    }
+                    cursor={'pointer'}
+                  >
+                    Projects
+                  </Box>
+                </Link>
+                <Link href="/grants" passHref prefetch>
+                  <Box
+                    as="p"
+                    textStyle={'title4'}
+                    color={
+                      isActiveRoute('/grants') ? 'brand.teal5' : 'neutral.8'
+                    }
+                    cursor={'pointer'}
+                  >
+                    Grants
+                  </Box>
+                </Link>
+              </HStack>
             </>
           )}
         </HStack>
-        <Center
-          h={{ base: '1.6rem', md: '2.6rem' }}
-          justifyContent="end"
-          w="full"
-        >
+        <Center h={{ base: '1.6rem', md: '2.6rem' }} justifyContent="end">
           {isDesktop ? (
             <Center w="fit-content">{children}</Center>
           ) : (
             <HStack gap="0">
               {connected ? (
-                <Center display={{ base: 'flex', md: 'none' }} gap="0">
+                <Center
+                  w={'100%'}
+                  display={{ base: 'flex', md: 'none' }}
+                  gap="0"
+                >
                   {children}
                 </Center>
               ) : (
-                ''
+                'dfdfdfdf'
               )}
               <Hamburger
                 toggled={isOpen}
