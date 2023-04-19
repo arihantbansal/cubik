@@ -39,7 +39,10 @@ export type FormData = {
   telegram: string;
   discord: string;
   description: string;
-  team: string[];
+  team: {
+    label: string;
+    value: string;
+  }[];
 };
 
 const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
@@ -48,6 +51,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
   const router = useRouter();
   const [LoadingSubmit, setLoadingSubmit] = useState<boolean>(false);
   const { data: session } = useSession();
+
   const createProjectMutation = trpc.project.create.useMutation({
     onSuccess: async (data) => {
       const a = await axios.post('/api/createNotion', {
@@ -142,7 +146,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
           discord_link: getValues().projectLink,
           telegram_link: getValues().telegram,
           projectUserCount: 0, /// change the length by fetching the user projects and add one more
-          team: [''],
+          team: getValues().team.map((member) => member.value),
         });
       } catch (error) {
         console.log(error, '--error');

@@ -328,7 +328,7 @@ const StepOne: React.FC<StepOneProps> = ({
                 ref={ref}
                 onChange={onChange}
                 onBlur={onBlur}
-                value={value}
+                value={value as any}
                 options={
                   teamWithNames as unknown as OptionsOrGroups<
                     string,
@@ -341,7 +341,6 @@ const StepOne: React.FC<StepOneProps> = ({
                 variant="unstyled"
                 focusBorderColor="transparent"
                 onInputChange={(inputValue) => {
-                  console.log('name changed - ', inputValue);
                   setCurrentTeammateName(inputValue);
                 }}
                 chakraStyles={{
