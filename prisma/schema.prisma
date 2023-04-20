@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
@@ -23,8 +23,9 @@ model UserModel {
   project          ProjectsModel[]
   Reply            Reply[]
   Comments         Comments[]
-  @@fulltext([username])
+  Contribution     Contribution[]
 
+  @@fulltext([username])
 }
 
 model Session {
@@ -85,6 +86,7 @@ model ProjectsModel {
   updatedAt         DateTime            @updatedAt
   owner             UserModel           @relation(fields: [owner_publickey], references: [mainWallet])
   Team              Team[]
+  Contribution      Contribution[]
 
   @@index([owner_publickey])
 }
@@ -101,6 +103,7 @@ model Team {
   projectsModelId String
   user            UserModel     @relation(fields: [userId], references: [id])
   ProjectsModel   ProjectsModel @relation(fields: [projectsModelId], references: [id])
+
   @@index([projectsModelId])
   @@index([userId])
 }
@@ -142,15 +145,24 @@ model Round {
 }
 
 model Contribution {
-  id      String @id @default(uuid()) @map("_id")
-  amount  Float
-  tx      String @db.VarChar(500)
-  token   String
-  split   Float
-  roundId String
-  Round   Round  @relation(fields: [roundId], references: [id])
+  id              String        @id @default(uuid()) @map("_id")
+  tx              String        @db.VarChar(500)
+  totalAmount     Float
+  token           String
+  split           Float
+  usdContribution Float
+  roundId         String
+  projectId       String
+  userId          String
+  user            UserModel     @relation(fields: [userId], references: [id])
+  ProjectsModel   ProjectsModel @relation(fields: [projectId], references: [id])
+  Round           Round         @relation(fields: [roundId], references: [id])
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 
+  @@index([projectId])
   @@index([roundId])
+  @@index([userId])
 }
 
 model Comments {

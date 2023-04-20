@@ -49,6 +49,11 @@ export const projectsRouter = router({
           }
         })
       }
+      const teamOwner: Team = {
+        id: uuid(),
+        projectsModelId: input.id,
+        userId: ctx.session.user.id
+      }
       try {
         const res = await prisma.projectsModel.create({
           data: {
@@ -69,7 +74,7 @@ export const projectsRouter = router({
           },
         });
         await prisma.team.createMany({
-          data: team
+          data: [teamOwner,...team]
         })
         return res;
       } catch (error) {
