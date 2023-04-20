@@ -63,11 +63,7 @@ const MobileDrawer = ({
           </HStack>
         </DrawerHeader>
         <DrawerBody>
-          <ProjectDonationSimulator
-            cta={'Proceed to pay'}
-            height={80}
-            width={120}
-          />
+          <ProjectDonationSimulator height={80} width={120} />
         </DrawerBody>
       </DrawerContent>
     </Drawer>
@@ -90,7 +86,7 @@ export const ProjectDetailsAndTabs = ({
     <Container
       display={'flex'}
       w="full"
-      maxW="4xl"
+      maxW="50rem"
       flex="3"
       flexDir="column"
       alignItems={{ base: 'end', md: 'center' }}

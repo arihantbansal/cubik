@@ -7,20 +7,6 @@ import {
 const { definePartsStyle, defineMultiStyleConfig } =
   createMultiStyleConfigHelpers(parts.keys);
 
-const baseStyle = definePartsStyle((props) => {
-  const { colorScheme: c } = props;
-  return {
-    dialog: {
-      borderRadius: 'md',
-      bg: `${c}.100`,
-      _dark: {
-        bg: `${c}.600`,
-        color: 'white',
-      },
-    },
-  };
-});
-
 const cubik = definePartsStyle({
   overlay: {
     bg: 'rgba(0, 0, 0, 0.72)',
@@ -35,7 +21,6 @@ const cubik = definePartsStyle({
     backdropFilter: 'blur(10px)',
     padding: '32px 0px',
     gap: '24px',
-    width: '416px',
   },
   dialogContainer: {
     outline: '1px dashed red',
@@ -71,30 +56,9 @@ const cubik = definePartsStyle({
   },
 });
 
-const xl = defineStyle({
-  px: '6',
-  py: '0',
-  fontSize: 'xl',
-});
-
-const sm = defineStyle({
-  fontSize: 'sm',
-  py: '2',
-  pt: '8',
-});
-
-const sizes = {
-  xl: definePartsStyle({ header: sm, dialog: xl }),
-};
 
 export const Modal = defineMultiStyleConfig({
-  baseStyle,
-  sizes,
   variants: {
     cubik,
-  },
-  defaultProps: {
-    colorScheme: 'purple', //set the default color scheme to purple
-    size: 'xl',
   },
 });
