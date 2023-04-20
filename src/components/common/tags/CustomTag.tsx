@@ -5,7 +5,7 @@ const CustomTag = ({
   color,
   children,
 }: {
-  color: string;
+  color?: string;
   children: React.ReactChild;
 }) => {
   switch (color) {
