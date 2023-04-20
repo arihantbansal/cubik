@@ -65,16 +65,21 @@ const primary = definePartsStyle({
   },
 });
 const cubik = definePartsStyle({
-  field: {
+  root: {
     border: '1px solid',
-    borderColor: 'gray.200',
+    borderColor: '#272929',
+    rounded: '8px', background: '#0F0F0F',
+  },
+  field: {
+    border: 'none',
     rounded: '8px',
     background: 'transparent',
     fontWeight: 'bold',
     textAlign: 'end',
   },
   stepper: {
-    color: 'purple.500',
+    width: '30px',
+    color: '#636666',
     border: 'none',
     background: 'transparent',
   },

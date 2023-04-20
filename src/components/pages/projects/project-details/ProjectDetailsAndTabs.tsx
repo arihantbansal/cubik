@@ -90,7 +90,7 @@ export const ProjectDetailsAndTabs = ({
     <Container
       display={'flex'}
       w="full"
-      maxW="4xl"
+      maxW="50rem"
       flex="3"
       flexDir="column"
       alignItems={{ base: 'end', md: 'center' }}

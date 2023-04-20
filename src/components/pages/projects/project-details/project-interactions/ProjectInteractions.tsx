@@ -256,7 +256,7 @@ export const ProjectInteractions = ({
   return (
     <Stack
       w="full"
-      maxW="20rem"
+      maxW="26rem"
       flex="1"
       // position={{ base: 'relative', lg: 'fixed' }}
       gap="48px"

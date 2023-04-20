@@ -1,13 +1,17 @@
 import {
+  Box,
   Button,
   Card,
   FormControl,
   FormErrorMessage,
+  FormLabel,
   HStack,
   Input,
   InputGroup,
   InputRightAddon,
+  Stack,
   useDisclosure,
+  VStack,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
@@ -20,7 +24,6 @@ import { tokens } from '../../../../../common/tokens/DonationTokens';
 import Graph from './Graph';
 
 type ProjectDonationSimulatorProps = {
-  cta: string;
   height: number;
   width: number;
 };
@@ -28,7 +31,6 @@ type ProjectDonationSimulatorProps = {
 export const token: tokenGroup[] = tokens;
 
 export const ProjectDonationSimulator = ({
-  cta,
   height,
   width,
 }: ProjectDonationSimulatorProps) => {
@@ -40,11 +42,13 @@ export const ProjectDonationSimulator = ({
     setValue,
     getValues,
     control,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<DonationFormType>({
     defaultValues: {
       amount: donation,
       token: token[0].value,
+      matchingPoolDonation: 15,
     },
   });
 
@@ -68,7 +72,197 @@ export const ProjectDonationSimulator = ({
   }
 
   return (
-    <>
+    <Stack gap="64px" direction={'row'}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        style={{
+          width: '40rem',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+        }}
+      >
+        <VStack w="full" gap="16px">
+          <FormControl
+            gap="16px"
+            paddingTop={{ base: '3.5rem', md: '1.5rem' }}
+            //@ts-ignore
+            isInvalid={errors.donation_amount}
+          >
+            <FormLabel htmlFor="name" textStyle={'title4'} color="neutral.11">
+              Donation Amount
+            </FormLabel>
+            <HStack>
+              <InputGroup border="1px solid #141414" rounded={'8px'}>
+                <Controller
+                  name="amount"
+                  control={control}
+                  defaultValue={donation}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, onBlur, ...field } }) => (
+                    <Input
+                      type="number"
+                      step="any"
+                      color="white"
+                      fontWeight="600"
+                      border="1px solid #141414"
+                      px="0.7rem"
+                      boxShadow={'none'}
+                      borderRight={'none'}
+                      _hover={{
+                        outline: 'none',
+                        boxShadow: 'none',
+                        border: '1px solid #141414',
+                        borderRight: 'none',
+                      }}
+                      _active={{
+                        outline: 'none',
+                        boxShadow: 'none',
+                        border: '1px solid #141414',
+                        borderRight: 'none',
+                      }}
+                      _focus={{
+                        outline: 'none',
+                        boxShadow: 'none',
+                        border: '1px solid #141414',
+                        borderRight: 'none',
+                      }}
+                      _focusVisible={{
+                        outline: 'none',
+                        boxShadow: 'none',
+                        border: '1px solid #141414',
+                        borderRight: 'none',
+                      }}
+                      _visited={{
+                        outline: 'none',
+                        boxShadow: 'none',
+                        border: '1px solid #141414',
+                        borderRight: 'none',
+                      }}
+                      _placeholder={{
+                        fontWeight: '500',
+                        color: '#636666',
+                      }}
+                      id="amount"
+                      placeholder="Amount"
+                      onChange={onChange}
+                      onBlur={({ target: { value } }) => {
+                        setDonation(parseInt(value));
+                      }}
+                      {...field}
+                    />
+                  )}
+                />
+                <InputRightAddon
+                  textAlign={'end'}
+                  justifyContent={'end'}
+                  borderLeft={'none'}
+                  outline="none"
+                  minWidth="1.5rem"
+                >
+                  $
+                  <FlipNumbers
+                    height={15}
+                    width={10}
+                    color="#636666"
+                    //background="black"
+                    play
+                    perspective={700}
+                    numbers={String(donation)}
+                  />
+                </InputRightAddon>
+              </InputGroup>
+              <ControlledSelect
+                control={control}
+                name="token"
+                id="token"
+                options={token}
+                label={'Token'}
+              />
+            </HStack>
+            <FormErrorMessage>
+              {errors.amount && errors.amount.message}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl pb="1.5rem">
+            <FormLabel
+              textStyle={'body5'}
+              color="neutral.8"
+              htmlFor="donation_to_matching_pool"
+            >
+              Donate to Cubik Matching pool.
+            </FormLabel>
+            <HStack gap="0.1rem">
+              {Array.from([0, 5, 10, 25, 30]).map((percentage, key) => {
+                return (
+                  <VStack
+                    cursor="pointer"
+                    key={key}
+                    backgroundColor={
+                      watch('matchingPoolDonation') === percentage
+                        ? '#14665B'
+                        : '#242424'
+                    }
+                    _hover={{ outline: '1px solid #3E3E3E' }}
+                    outline={
+                      watch('matchingPoolDonation') === percentage
+                        ? '1px solid #E0FFFD16'
+                        : '1px solid #242424'
+                    }
+                    rounded="8px"
+                    w="3.5rem"
+                    h="2.5rem"
+                    align={'center'}
+                    justify="center"
+                    onClick={() => {
+                      setValue('matchingPoolDonation', percentage);
+                    }}
+                  >
+                    <Box
+                      as="p"
+                      fontSize="sm"
+                      fontWeight={'500'}
+                      color="#E0FFFD"
+                    >
+                      {percentage}%
+                    </Box>
+                  </VStack>
+                );
+              })}
+            </HStack>
+            <FormErrorMessage>
+              {errors.matchingPoolDonation ? (
+                <>{errors.matchingPoolDonation.message}</>
+              ) : (
+                <></>
+              )}
+            </FormErrorMessage>
+          </FormControl>
+        </VStack>
+        <VStack w="full" gap="16px">
+          <HStack w="full" justify={'space-between'}>
+            <Box as="p" textStyle={'body5'}>
+              Matching pool contribution
+            </Box>
+            <Box as="p" textStyle={'title5'}>
+              $250.50
+            </Box>
+          </HStack>
+          <Button
+            variant={'connect_wallet'}
+            w="full"
+            mt={4}
+            colorScheme="teal"
+            isLoading={isSubmitting}
+            type="submit"
+          >
+            Donate
+          </Button>
+        </VStack>
+      </form>
       <Graph
         width={width}
         height={height}
@@ -76,129 +270,6 @@ export const ProjectDonationSimulator = ({
         donationAmount={donation}
         setDonationAmount={setDonation}
       />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl
-          paddingTop={{ base: '3.5rem', md: '1.5rem' }}
-          //@ts-ignore
-          isInvalid={errors.donation_amount}
-        >
-          <HStack>
-            <InputGroup border="1px solid #141414" rounded={'8px'}>
-              <Controller
-                name="amount"
-                control={control}
-                defaultValue={donation}
-                rules={{
-                  required: true,
-                }}
-                render={({ field: { onChange, onBlur, ...field } }) => (
-                  <Input
-                    type="number"
-                    step="any"
-                    color="white"
-                    fontWeight="600"
-                    border="1px solid #141414"
-                    px="0.7rem"
-                    boxShadow={'none'}
-                    borderRight={'none'}
-                    _hover={{
-                      outline: 'none',
-                      boxShadow: 'none',
-                      border: '1px solid #141414',
-                      borderRight: 'none',
-                    }}
-                    _active={{
-                      outline: 'none',
-                      boxShadow: 'none',
-                      border: '1px solid #141414',
-                      borderRight: 'none',
-                    }}
-                    _focus={{
-                      outline: 'none',
-                      boxShadow: 'none',
-                      border: '1px solid #141414',
-                      borderRight: 'none',
-                    }}
-                    _focusVisible={{
-                      outline: 'none',
-                      boxShadow: 'none',
-                      border: '1px solid #141414',
-                      borderRight: 'none',
-                    }}
-                    _visited={{
-                      outline: 'none',
-                      boxShadow: 'none',
-                      border: '1px solid #141414',
-                      borderRight: 'none',
-                    }}
-                    _placeholder={{
-                      fontWeight: '500',
-                      color: '#636666',
-                    }}
-                    id="amount"
-                    placeholder="Amount"
-                    onChange={onChange}
-                    onBlur={({ target: { value } }) => {
-                      setDonation(parseInt(value));
-                    }}
-                    {...field}
-                  />
-                )}
-              />
-
-              <InputRightAddon
-                textAlign={'end'}
-                justifyContent={'end'}
-                borderLeft={'none'}
-                outline="none"
-                minWidth="1.5rem"
-              >
-                $
-                <FlipNumbers
-                  height={15}
-                  width={10}
-                  color="#636666"
-                  //background="black"
-                  play
-                  perspective={700}
-                  numbers={String(donation)}
-                />
-              </InputRightAddon>
-            </InputGroup>
-            <ControlledSelect
-              control={control}
-              name="token"
-              id="token"
-              options={token}
-              label={'Token'}
-            />
-          </HStack>
-          <FormErrorMessage>
-            {errors.amount && errors.amount.message}
-          </FormErrorMessage>
-        </FormControl>
-        <Button
-          variant={'connect_wallet'}
-          w="full"
-          mt={4}
-          colorScheme="teal"
-          isLoading={isSubmitting}
-          type="submit"
-        >
-          {cta}
-        </Button>
-      </form>
-      <PaymentModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
-    </>
+    </Stack>
   );
 };
-
-const ProjectDonationSimulatorCard = () => {
-  return (
-    <Card height={'full'} p="16px" h="fit-content">
-      <ProjectDonationSimulator cta={'Donate'} height={130} width={150} />
-    </Card>
-  );
-};
-
-export default ProjectDonationSimulatorCard;

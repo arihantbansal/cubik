@@ -15,13 +15,14 @@ const ProjectCardSkeleton = () => {
     <Card
       w="100%"
       p="24px"
+      h="17.8rem"
       cursor="pointer"
       maxW={{
-        base: '83vw',
-        sm: '83vw',
-        md: '42vw',
-        lg: '30vw',
-        xl: '24rem',
+        base: '85vw',
+        sm: '87vw',
+        md: '44vw',
+        lg: '29.5vw',
+        xl: '25.5rem',
       }}
     >
       <VStack gap="18px" w="full" alignItems={'start'} justifyContent="start">
