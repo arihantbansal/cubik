@@ -8,7 +8,7 @@ import {
   Center,
   Stack,
 } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
+import { ProjectsModel, ProjectVerifyStatus } from '@prisma/client';
 import { useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import FundingOverview from './project-admin-dashboard/FundingOverview';
@@ -19,10 +19,6 @@ import ProjectStatusBanner from './ProjectStatusBanner';
 
 const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
   const [showVault, setShowVault] = useState(false);
-  let status = 'live';
-  if (project.name === 'Solmon') {
-    status = 'verified';
-  }
 
   return (
     <Card
@@ -39,7 +35,7 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
       <CardHeader>
         <ProjectHeader project={project} />
       </CardHeader>
-      {status === 'verified' && (
+      {project.status === ProjectVerifyStatus.VERIFIED && (
         <>
           <CardBody
             gap={{ base: '64px', sm: '72px', md: '24px' }}
