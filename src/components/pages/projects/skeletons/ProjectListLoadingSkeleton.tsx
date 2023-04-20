@@ -15,7 +15,7 @@ const ProjectCardSkeleton = () => {
     <Card
       w="100%"
       p="24px"
-      h="17.8rem"
+      h="22rem"
       cursor="pointer"
       maxW={{
         base: '85vw',
@@ -24,7 +24,13 @@ const ProjectCardSkeleton = () => {
         lg: '29.5vw',
         xl: '25.5rem',
       }}
+      background={'#0C0D0D'}
+      border="none"
     >
+      <Skeleton
+        w={{ base: 'full', md: 'full' }}
+        h={{ base: '2.5rem', md: '3.3rem' }}
+      />
       <VStack gap="18px" w="full" alignItems={'start'} justifyContent="start">
         <HStack justifyContent={'space-between'}>
           <Skeleton

@@ -28,7 +28,7 @@ export const ProjectsDetailedDescription = ({
     a: (props: LinkProps) => {
       const { children } = props;
       return (
-        <Link color="#31F579" href={props.href} isExternal>
+        <Link color="#A8F0E6" href={props.href} textDecor="none" isExternal>
           {children}
         </Link>
       );
@@ -85,14 +85,8 @@ export const ProjectsDetailedDescription = ({
       const { children } = props;
       return (
         <Box
-          _before={{
-            content: '"•"',
-            color: '#D7E0DF',
-            display: 'inline-block',
-            width: '1rem',
-            marginLeft: '-1rem',
-          }}
-          as="p"
+          as="li"
+          ml="1rem"
           textStyle={{ base: 'body4', md: 'body3' }}
           color="#D7E0DF"
         >

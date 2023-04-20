@@ -454,7 +454,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
                     });
                   }}
                 >
-                  View on Profile
+                  View Project
                 </Button>
               </CardFooter>
             </>

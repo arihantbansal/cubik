@@ -63,8 +63,8 @@ const ProjectCard = ({ project }: PropsType) => {
   return (
     <Card
       onClick={() => setIsHovered(true)}
-      p="24px"
-      h="17.8rem"
+      p="0"
+      h="23rem"
       cursor="pointer"
       w="100%"
       maxW={{
@@ -76,96 +76,165 @@ const ProjectCard = ({ project }: PropsType) => {
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      gap="0"
+      background={'#0C0D0D'}
+      border="none"
     >
-      <VStack w="full" alignItems={'start'} justifyContent="start">
-        <HStack justifyContent={'space-between'}>
-          <Avatar
-            src={project.logo}
-            name="anchor"
-            borderRadius={'8px'}
-            size={{ base: 'md', md: 'lg' }}
-          />
-        </HStack>
-        <VStack gap="0" spacing="0" w="full">
-          <HStack align={'end'} w="full" justify="space-between">
-            <Box
-              pb="0.3rem"
-              as="p"
-              textStyle={{ base: 'title4', md: 'title2' }}
-            >
-              {project.name}
-            </Box>
-            <Heading as="p" textStyle={{ base: 'title2', md: 'title1' }}>
-              ${formatNumberWithK(10)}
-            </Heading>
-          </HStack>
-          <HStack w="full" justify="space-between">
-            <Center>
-              <GetFormattedLink link={project.project_link} />
-            </Center>
-            <Box
-              color="#B4B0B2"
-              as="p"
-              textStyle={{ base: 'body5', md: 'body5' }}
-            >
-              Raised
-            </Box>
-          </HStack>
-        </VStack>
-        <Box
-          color="#B4B0B2"
-          as="p"
-          pt="1rem"
-          textStyle={{ base: 'body4', md: 'body4' }}
-          sx={{
-            noOfLines: '2',
-          }}
-          h="3.2rem"
+      <Center w="full" bg="#001F1B" borderTopRadius={'16px'}>
+        <HStack
+          w="full"
+          gap="8px"
+          borderColor="red"
+          borderBottom={'red'}
+          padding={'12px 24px'}
+          borderTopRadius={'16px'}
+          justifyContent="space-between"
         >
-          {project.short_description}
-        </Box>
-        <SlideFade in={isHovered} offsetY="0px" reverse>
-          <HStack
+          <Box
             w="full"
-            justifyContent="start"
-            position="absolute"
-            bottom="24px"
+            as="p"
+            noOfLines={1}
+            whiteSpace={'nowrap'}
+            color="#ADB8B6"
+            textStyle={'overline4'}
+            textTransform="uppercase"
+            letterSpacing={'0.2em'}
+            fontSize={{ base: '8px', md: '10px' }}
           >
-            <Button
-              w="calc(100% - 6rem)"
-              variant="connect_wallet"
-              onClick={() => {
-                router.push({
-                  pathname: '/projects/[id]',
-                  query: { id: project.id },
-                });
-              }}
-            >
-              View Details
-            </Button>
-            <IconButton
-              onClick={handleAddOrRemoveProject}
-              aria-label="link"
-              variant="connect_wallet"
-              icon={addedToList ? <MdRemove size={22} /> : <BsPlus size={22} />}
+            Participating In
+          </Box>
+          <Box
+            display={{ base: 'none', md: 'block' }}
+            as="p"
+            w="fit-content"
+            whiteSpace={'nowrap'}
+            textStyle={'title5'}
+            color="#A8F0E6"
+          >
+            Alpha Grant Round
+          </Box>
+        </HStack>
+      </Center>
+      <VStack
+        w="full"
+        alignItems={'start'}
+        justifyContent="space-between"
+        h="full"
+        gap="0"
+      >
+        <VStack p="24px" gap="16px" w="full" alignItems={'start'}>
+          <HStack justifyContent={'space-between'}>
+            <Avatar
+              src={project.logo}
+              name="anchor"
+              borderRadius={'8px'}
+              size={{ base: 'md', md: 'lg' }}
             />
           </HStack>
-        </SlideFade>
-        <Wrap
+          <VStack gap="0" spacing="0" w="full">
+            <HStack align={'end'} w="full" justify="space-between">
+              <Box as="p" textStyle={{ base: 'title4', md: 'title3' }}>
+                {project.name}
+              </Box>
+              <Box
+                as="p"
+                color="#A8F0E6"
+                textStyle={{ base: 'title4', md: 'title3' }}
+              >
+                ${formatNumberWithK(10)}
+              </Box>
+            </HStack>
+            <HStack w="full" justify="space-between">
+              <Center>
+                <GetFormattedLink link={project.project_link} />
+              </Center>
+              <Box
+                color="neutral8"
+                as="p"
+                textStyle={{ base: 'body5', md: 'body5' }}
+              >
+                Raised
+              </Box>
+            </HStack>
+          </VStack>
+          <Box
+            color="neutral8"
+            as="p"
+            textStyle={{ base: 'body4', md: 'body4' }}
+            sx={{
+              noOfLines: '2',
+            }}
+            alignContent="start"
+            alignItems={'start'}
+            textAlign={'start'}
+          >
+            {project.short_description}
+          </Box>
+        </VStack>
+        <VStack
+          marginTop={'0px !important'}
+          p="8px 24px 24px 24px"
           w="full"
-          mt="auto"
-          align={'center'}
-          justify="start"
-          //  pb="0.4rem"
+          position={'relative'}
         >
-          {industry.map((tag: any, key: any) => {
-            return (
-              <CustomTag color={tag.label} key={key}>
-                {tag.label}
-              </CustomTag>
-            );
-          })}
-        </Wrap>
+          <SlideFade in={isHovered} offsetY="0px" reverse>
+            <HStack
+              w="full"
+              justifyContent="start"
+              position="absolute"
+              left="0"
+              p="8px 24px 24px 24px"
+              bottom="0px"
+              justify={'space-between'}
+            >
+              <Button
+                background={'#1D1F1E'}
+                color="white"
+                fontWeight={'700'}
+                borderColor="transparent"
+                outline="none"
+                w="calc(100% - 2.2rem)"
+                variant="connect_wallet"
+                onClick={() => {
+                  router.push({
+                    pathname: '/projects/[id]',
+                    query: { id: project.id },
+                  });
+                }}
+              >
+                View Details
+              </Button>
+              <IconButton
+                background={'#1D1F1E'}
+                color="white"
+                fontWeight={'700'}
+                borderColor="transparent"
+                outline="none"
+                onClick={handleAddOrRemoveProject}
+                aria-label="link"
+                variant="connect_wallet"
+                icon={
+                  addedToList ? <MdRemove size={26} /> : <BsPlus size={26} />
+                }
+              />
+            </HStack>
+          </SlideFade>
+          <Wrap
+            w="full"
+            mt="auto"
+            align={'center'}
+            justify="start"
+            //  pb="0.4rem"
+          >
+            {industry.map((tag: any, key: any) => {
+              return (
+                <CustomTag color={tag.label} key={key}>
+                  {tag.label}
+                </CustomTag>
+              );
+            })}
+          </Wrap>
+        </VStack>
       </VStack>
     </Card>
   );

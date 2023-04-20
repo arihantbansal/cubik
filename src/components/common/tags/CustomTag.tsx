@@ -98,8 +98,18 @@ const CustomTag = ({
 
     default:
       return (
-        <Tag variant="colorful" fontSize="xs">
-          <Box as="p" textStyle={{ base: 'body6', md: 'body5' }}>
+        <Tag
+          rounded="full"
+          variant="colorful"
+          backgroundColor="#1D1F1E"
+          fontSize="xs"
+          p="8px 12px"
+        >
+          <Box
+            as="p"
+            color="#D7E0DF"
+            textStyle={{ base: 'body6', md: 'body5' }}
+          >
             {children}
           </Box>
         </Tag>

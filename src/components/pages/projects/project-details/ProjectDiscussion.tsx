@@ -6,6 +6,7 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react';
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 interface CommentType {
   id: string;
@@ -17,45 +18,56 @@ interface CommentType {
 const Discussions = () => {
   const [comments, setComments] = useState<CommentType[]>([]);
   const [message, setMessage] = useState<string>('');
+  const session = useSession();
   return (
     <>
-      <VStack w={'full'} mt={6}>
-        <Textarea
-          h={32}
-          minH={32}
-          placeholder="Start wrting here....."
-          border={'1px solid white'}
-          value={message}
-          onChange={(e) => {
-            setMessage(e.target.value);
-          }}
-        />
-        <HStack w={'full'} align={'end'} justify={'end'}>
-          <Button
-            onClick={() => {
-              //   if (!user) return null;
-              //   setComments([
-              //     ...comments,
-              //     {
-              //       avatar: user?.icon as string,
-              //       date: Date.now(),
-              //       id: uuidV4(),
-              //       message: message,
-              //       name: user?.username as string,
-              //     },
-              //   ]);
-              setMessage('');
+      <VStack position={'relative'} w={'full'} mt={6}>
+        <HStack w="full" align={'top'} gap="18px">
+          <Avatar
+            src={session.data?.user.profilePicture}
+            width="54px"
+            height="54px"
+          />
+          <Textarea
+            h={32}
+            minH={32}
+            p="0.8rem"
+            placeholder="Add a comment"
+            border={'1px solid #1D1F1E'}
+            backgroundColor="transparent"
+            _hover={{
+              backgroundColor: 'transparent',
             }}
-            backgroundColor={'#D645A6 !important'}
-            color="white"
-            py={{ base: '1rem', md: '1.2rem' }}
-            px={{ base: '1rem', md: '1.6rem' }}
-            fontSize={{ base: 'sm', md: 'md' }}
-            fontWeight="700"
-          >
-            Comment
-          </Button>
+            _active={{
+              backgroundColor: 'transparent',
+            }}
+            _focus={{
+              backgroundColor: 'transparent',
+              border: '1px solid #1D1F1E',
+            }}
+            value={message}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
+          />
         </HStack>
+        <Button
+          position={'absolute'}
+          top="0"
+          right="0"
+          variant={'unstyled'}
+          backgroundColor={'transparent !important'}
+          color="#636666"
+          zIndex={'100'}
+          _hover={{
+            backgroundColor: '#63666630',
+          }}
+          px={{ base: '1rem', md: '1.6rem' }}
+          fontSize={{ base: 'sm', md: 'md' }}
+          fontWeight="700"
+        >
+          Post
+        </Button>
       </VStack>
       <VStack align={'start'} w={'full'}>
         {comments?.map((el) => {

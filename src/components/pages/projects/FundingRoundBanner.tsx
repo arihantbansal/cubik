@@ -183,7 +183,7 @@ function RippleEffect() {
 }
 
 const RoundStatus = () => {
-  const finalDate = new Date('2023-04-01T00:00:00');
+  const finalDate = new Date('2023-05-02T00:00:00');
 
   return (
     <VStack
