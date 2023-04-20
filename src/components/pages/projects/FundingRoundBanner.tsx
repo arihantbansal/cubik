@@ -244,7 +244,6 @@ const FundingRoundBanner = () => {
         zIndex: '-1',
         position: 'absolute',
         bottom: '0%',
-        border: '1px solid red',
         right: '0',
         transform: 'translate(50%, -50%)',
         width: '20vw',

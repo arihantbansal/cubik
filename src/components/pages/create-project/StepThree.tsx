@@ -291,7 +291,6 @@ const StepThree = ({
                 height: '100% !important',
                 overflow: 'hidden',
                 border: 'none !important',
-                outline: '1px solid red',
               }}
               className="reset"
             >
@@ -300,7 +299,6 @@ const StepThree = ({
                 placeholder="Enter your project description here"
                 style={{
                   height: '100%',
-                  outline: '1px solid red',
                 }}
                 width={'100%'}
                 height={'100%'}

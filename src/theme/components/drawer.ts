@@ -27,7 +27,6 @@ const cubik = definePartsStyle({
   },
   dialog: {
     mt: '18vh',
-    border: '1px solid red',
     borderTopRadius: '16px',
     bg: `surface.card`,
     padding: '48px 0px',

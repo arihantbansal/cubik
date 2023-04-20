@@ -27,7 +27,6 @@ const baseStyle = definePartsStyle({
 const sizes = {
   md: definePartsStyle({
     container: {
-      border: '1px solid red',
       borderRadius: '0',
     },
   }),

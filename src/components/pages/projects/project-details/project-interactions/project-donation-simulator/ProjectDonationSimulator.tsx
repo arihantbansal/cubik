@@ -72,7 +72,7 @@ export const ProjectDonationSimulator = ({
   }
 
   return (
-    <Stack border="1px solid red" gap="64px" direction={'row'}>
+    <Stack gap="64px" direction={'row'}>
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{
