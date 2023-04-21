@@ -28,8 +28,8 @@ export const styles = {
     },
     // ---- wallet adapter ui ---
     '.wallet-adapter-modal-overlay': {
-      bg: 'rgba(0, 0, 0, 0.72)',
-      backdropFilter: 'blur(10px)',
+      bg: 'rgba(0, 0, 0, 0.12)',
+      backdropFilter: 'blur(12px)',
     },
     '.wallet-adapter-modal-wrapper': {
       borderRadius: '20px',
@@ -39,7 +39,7 @@ export const styles = {
       backdropFilter: 'blur(10px)',
       padding: '44px 0px 16px 0px',
       gap: '0px',
-      width: '416px',
+      width: {base:'10px', md:'416px'},
       overflow: 'hidden',
     },
     '.wallet-adapter-modal-wrapper:before': {

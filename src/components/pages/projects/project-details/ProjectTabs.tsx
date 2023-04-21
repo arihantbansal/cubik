@@ -19,7 +19,7 @@ export const ProjectsTabs = ({
         <Tab>Discussion</Tab>
         <Tab>Contributors</Tab>
       </TabList>
-      <TabPanels p={{ base: '1rem', md: '0rem' }}>
+      <TabPanels p="0">
         <TabPanel>
           {isLoading ? (
             <ProjectsDetailedDescriptionSkeleton />

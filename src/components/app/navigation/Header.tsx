@@ -173,7 +173,7 @@ export const Header = memo(function Header({
       {shouldShowLoader && <Loader />}
       <Flex
         mx="auto"
-        p={{ base: '20px 24px', md: '20px 20px' }}
+        p={{ base: '20px 16px', md: '20px 20px' }}
         maxW="7xl"
         alignItems={'center'}
         justifyContent={'space-between'}

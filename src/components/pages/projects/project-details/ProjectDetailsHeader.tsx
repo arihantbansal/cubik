@@ -38,29 +38,33 @@ const ProjectDetailsHeader = ({
   return (
     <Stack
       direction={{ base: 'row', md: 'row' }}
-      gap={{ base: '16px', md: '24px' }}
+      gap={{ base: '8px', md: '24px' }}
       width={'100%'}
       alignItems={'center'}
     >
       <Avatar
         src={projectDetails?.logo}
-        width={{ base: '4.8rem', md: '6.2rem' }}
-        height={{ base: '4.8rem', md: '6.2rem' }}
+        width={{ base: '4.4rem', md: '6.2rem' }}
+        height={{ base: '4.4rem', md: '6.2rem' }}
       />
       <VStack
         justify={'center'}
-        gap={{ base: '8px', md: '14px' }}
+        gap={{ base: '2px', md: '14px' }}
         alignItems={'start'}
         justifyContent="center"
       >
-        <Stack gap="1rem" direction={'row'}>
+        <Stack gap="24px" direction={'row'}>
           <Box
             as="p"
             minW="6rem"
-            textStyle={{ base: 'headline4', md: 'headline3' }}
+            textStyle={{ base: 'title1', md: 'headline3' }}
             textTransform="capitalize"
             color="neutral.11"
-            noOfLines={2}
+            // prevent the name from going into second line
+            noOfLines={1}
+            overflow="hidden"
+            whiteSpace="nowrap"
+            textOverflow="ellipsis"
           >
             {projectDetails?.name}
           </Box>
@@ -69,6 +73,7 @@ const ProjectDetailsHeader = ({
             flexDirection={'row'}
             spacing="0.4rem"
             pt="0.5rem"
+            display={{ base: 'none', md: 'flex' }}
           >
             {JSON.parse(projectDetails.industry)?.map(
               (tag: any, key: React.Key | null | undefined) => {
@@ -85,6 +90,9 @@ const ProjectDetailsHeader = ({
           as="p"
           textStyle={{ base: 'body4', md: 'body2' }}
           color="neutral.9"
+          // prevent the name from going into second line
+          noOfLines={2}
+          textOverflow="ellipsis"
         >
           {projectDetails?.short_description}
         </Box>

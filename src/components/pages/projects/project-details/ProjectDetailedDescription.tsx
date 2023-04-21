@@ -4,6 +4,7 @@ import {
   Center,
   Collapse,
   Stack,
+  Text,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
@@ -36,9 +37,15 @@ export const ProjectsDetailedDescription = ({
     p: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={{ base: 'body4', md: 'body3' }} color="#D7E0DF">
+        <Text
+          fontSize={{ base: '14px', md: '16px' }}
+          lineHeight={{ base: '22px', md: '24px' }}
+          fontWeight="400"
+          letterSpacing="normal"
+          color="#D7E0DF"
+        >
           {children}
-        </Box>
+        </Text>
       );
     },
     h1: (props: any) => {
@@ -84,14 +91,17 @@ export const ProjectsDetailedDescription = ({
     li: (props: any) => {
       const { children } = props;
       return (
-        <Box
+        <Text
           as="li"
           ml="1rem"
-          textStyle={{ base: 'body4', md: 'body3' }}
+          fontSize={{ base: '14px', md: '16px' }}
+          lineHeight={{ base: '24px', md: '24px' }}
+          fontWeight="400"
+          letterSpacing="normal"
           color="#D7E0DF"
         >
           {children}
-        </Box>
+        </Text>
       );
     },
   };

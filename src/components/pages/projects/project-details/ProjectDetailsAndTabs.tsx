@@ -10,18 +10,31 @@ import {
   DrawerHeader,
   DrawerOverlay,
   HStack,
+  Skeleton,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
 import { Prisma, ProjectsModel } from '@prisma/client';
-import { useRef } from 'react';
+import { Key, useRef } from 'react';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
-import { ProjectWithCommentsAndRoundsType } from '~/types/IProjectDetails';
+import {
+  ProjectCreatorTeamType,
+  ProjectWithCommentsAndRoundsType,
+} from '~/types/IProjectDetails';
 import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
+import {
+  ProjectCreatorTeamMember,
+  ProjectFundingData,
+  ProjectOwner,
+  ProjectSocials,
+} from './project-interactions/ProjectInteractions';
 import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
 import ProjectDetailsHeader from './ProjectDetailsHeader';
 import { ProjectsTabs } from './ProjectTabs';
-import { ProjectDetailSkeleton } from './skeletons/ProjectPageLoadingSkeleton';
+import {
+  MobileOnlyViewSkeleton,
+  ProjectDetailSkeleton,
+} from './skeletons/ProjectPageLoadingSkeleton';
 
 type MobileDrawerTypes = {
   logo: string;
@@ -70,6 +83,34 @@ const MobileDrawer = ({
   );
 };
 
+const MobileOnlyViews = ({
+  projectDetails,
+}: {
+  projectDetails: ProjectWithCommentsAndRoundsType;
+}) => {
+  return (
+    <VStack gap="32px" w="full" display={{ base: 'flex', md: 'none' }}>
+      <HStack w="full">
+        <Button w="full" fontSize={'16px'} variant="connect_wallet">
+          Donate
+        </Button>
+        <Button
+          w="full"
+          h="40px"
+          borderRadius={'8px'}
+          variant="secondary"
+          fontSize="14px"
+          pb="8px"
+        >
+          Visit Project
+        </Button>
+      </HStack>
+      <ProjectSocials projectDetails={projectDetails} /> <ProjectFundingData />
+      <ProjectOwner projectDetails={projectDetails} />
+    </VStack>
+  );
+};
+
 export const ProjectDetailsAndTabs = ({
   projectDetails,
   isLoading,
@@ -91,37 +132,22 @@ export const ProjectDetailsAndTabs = ({
       flexDir="column"
       alignItems={{ base: 'end', md: 'center' }}
       justifyContent="start"
-      gap={{ base: '24px', md: '64px' }}
+      gap={{ base: '32px', md: '64px' }}
+      p="0"
     >
       <>
         {isLoading ? (
-          <ProjectDetailSkeleton />
+          <>
+            <ProjectDetailSkeleton />
+            <MobileOnlyViewSkeleton />
+          </>
         ) : (
-          <ProjectDetailsHeader projectDetails={projectDetails} />
+          <>
+            <ProjectDetailsHeader projectDetails={projectDetails} />
+            <MobileOnlyViews projectDetails={projectDetails} />
+          </>
         )}
       </>
-      {/* visible on mobile */}
-      <HStack w="full" display={{ base: 'flex', md: 'none' }}>
-        <Button
-          onClick={onOpen}
-          w="full"
-          fontSize={'16px'}
-          variant="connect_wallet"
-        >
-          Donate
-        </Button>
-        <Button
-          onClick={onOpen}
-          w="full"
-          h="40px"
-          borderRadius={'8px'}
-          variant="secondary"
-          fontSize="14px"
-          pb="8px"
-        >
-          Visit Project
-        </Button>
-      </HStack>
       {/* <MobileDrawer
         logo={projectDetails.logo}
         projectName={projectDetails.name}
@@ -130,6 +156,7 @@ export const ProjectDetailsAndTabs = ({
         onClose={onClose}
         btnRef={btnRef}
       />*/}
+
       <ProjectsTabs projectDetails={projectDetails} isLoading={isLoading} />
     </Container>
   );

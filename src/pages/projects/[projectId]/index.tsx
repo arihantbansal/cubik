@@ -19,11 +19,11 @@ const ProjectDetails = () => {
 
   return (
     <>
-      <SEO
+      {/* <SEO
         title={(data?.name as string) ?? ''}
         description={(data?.short_description as string) ?? ''}
         image={(data?.logo as string) ?? ''}
-      />
+      /> */}
       <main style={{ width: 'full' }}>
         <Container maxW={'full'} p="0" py={{ base: '2rem', md: '3rem' }}>
           <Stack
