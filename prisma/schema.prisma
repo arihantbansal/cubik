@@ -24,6 +24,7 @@ model UserModel {
   Reply            Reply[]
   Comments         Comments[]
   Contribution     Contribution[]
+  Round            Round[]
 
   @@fulltext([username])
 }
@@ -137,11 +138,16 @@ model Round {
   notionPage             String            @db.VarChar(500)
   projectCount           Int               @default(0)
   active                 Boolean           @default(true)
+  userId                 String
+  token                  String
+  User                   UserModel         @relation(fields: [userId], references: [id])
   PojectJoinRound        PojectJoinRound[]
   Contribution           Contribution[]
   tx                     String            @db.VarChar(500)
   createdAt              DateTime          @default(now())
   updatedAt              DateTime          @updatedAt
+
+  @@index([userId])
 }
 
 model Contribution {
