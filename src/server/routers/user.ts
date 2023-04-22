@@ -57,19 +57,34 @@ export const userRouter = router({
       return res;
     }),
 
-  checkUsername: procedure
+  searchUser: procedure
     .input(
       z.object({
         username: z.string(),
       })
     )
     .query(async ({ input }) => {
+      if (input.username.length < 2) return [];
+      const res = await prisma.userModel.findMany({
+        where: {
+          username: {
+            contains: input.username,
+          },
+        },
+      });
+      return res;
+    }),
+
+  checkUsername: procedure
+    .input(z.object({ username: z.string() }))
+    .mutation(async ({ input }) => {
       if (input.username.length < 3) return false;
       const res = await prisma.userModel.findUnique({
         where: {
           username: input.username,
         },
       });
+      console.log(res, input.username);
 
       if (!res) {
         return false;
@@ -77,18 +92,4 @@ export const userRouter = router({
 
       return true;
     }),
-    searchUser: procedure.input(z.object({
-      username: z.string()
-    })).query(async ({input}) => {
-      if(input.username.length < 2) return []
-      const res = await prisma.userModel.findMany({
-        where:{
-          username:{            
-            contains: input.username,
-            
-          }
-        }
-      })
-      return res
-    })
 });

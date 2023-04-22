@@ -73,29 +73,7 @@ const CreateProfile = () => {
     },
   });
 
-  const {
-    isLoading: usernameStatusLoading,
-    isError: usernameStatusError,
-    data: usernameStatusResponse,
-    refetch,
-  } = trpc.user.checkUsername.useQuery(
-    {
-      username: userName as string,
-    },
-    {
-      cacheTime: 0,
-      enabled: false,
-      onSuccess,
-      onError,
-    }
-  );
-
-  console.log(
-    '5. usernameStatusResponse - ',
-    usernameStatusLoading,
-    usernameStatusError,
-    usernameStatusResponse
-  );
+  const checkUsernameMutation = trpc.user.checkUsername.useMutation();
 
   const schema = yup.object().shape({
     username: yup
@@ -108,24 +86,23 @@ const CreateProfile = () => {
         'is-unique',
         // @ts-ignore
         async function (username: string) {
-          console.log('1. refetching username -', username);
           setLoadingUserName(true); // Set loading state
           try {
-            await refetch();
+            const usercheck = await checkUsernameMutation.mutateAsync({
+              username: username,
+            });
+            console.log(usercheck, 's');
+
             setUsername(username);
-            console.log('2. setUsername - ', username);
-            if (usernameStatusError) {
-              console.log('3. return error');
-              throw new yup.ValidationError('trpc error');
-            } else if (usernameStatusResponse) {
-              console.log('3. return - error');
+            // await refetch();
+
+            if (usercheck) {
               throw new yup.ValidationError(
                 username + ' is not available',
                 null,
                 'username'
               );
             } else {
-              console.log('3. return - true');
               return true;
             }
           } finally {
@@ -176,13 +153,11 @@ const CreateProfile = () => {
     return <>404</>;
   }
   if (session.status === 'authenticated') {
-    console.log('session user', session.data.user);
     router.push({
       pathname: '/[username]',
       query: { username: session.data.user.username },
     });
   }
-  console.log('session status', session.status);
 
   return (
     <Container maxW="full" py={{ base: '2rem', md: '4rem' }}>
@@ -240,10 +215,6 @@ const CreateProfile = () => {
                       if (value.length > 3)
                         trigger('username')
                           .then((res: boolean) => {
-                            console.log(
-                              '6. Validation returned response -',
-                              res
-                            );
                             if (res) {
                               setUserNameIsAvailable(true);
                             }

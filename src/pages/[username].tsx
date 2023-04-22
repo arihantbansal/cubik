@@ -15,9 +15,14 @@ const ProfilePage = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  const user = trpc.user.findOne.useQuery({
-    username: router.query.username as string,
-  });
+  const user = trpc.user.findOne.useQuery(
+    {
+      username: router.query.username as string,
+    },
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   // useEffect(() => {
   //   console.log('use effect called - ', session?.user, user.data);
