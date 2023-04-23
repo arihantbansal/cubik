@@ -82,7 +82,7 @@ model ProjectsModel {
   failedReason      String?             @default("")
   mutliSigAddress   String?             @default("")
   comments          Comments[]
-  PojectJoinRound   PojectJoinRound[]
+  ProjectJoinRound   ProjectJoinRound[]
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   owner             UserModel           @relation(fields: [owner_publickey], references: [mainWallet])
@@ -109,7 +109,7 @@ model Team {
   @@index([userId])
 }
 
-model PojectJoinRound {
+model ProjectJoinRound {
   id           String                 @id @default(uuid()) @map("_id")
   projectId    String
   tx           String                 @db.VarChar(500)
@@ -141,7 +141,7 @@ model Round {
   userId                 String
   token                  String
   User                   UserModel         @relation(fields: [userId], references: [id])
-  PojectJoinRound        PojectJoinRound[]
+ ProjectJoinRound        ProjectJoinRound[]
   Contribution           Contribution[]
   tx                     String            @db.VarChar(500)
   createdAt              DateTime          @default(now())
