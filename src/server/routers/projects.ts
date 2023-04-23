@@ -1,4 +1,8 @@
-import { ProjectJoinRoundStatus, ProjectVerifyStatus, Team } from '@prisma/client';
+import {
+  ProjectJoinRoundStatus,
+  ProjectVerifyStatus,
+  Team,
+} from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { procedure, router } from '../trpc';
@@ -21,7 +25,7 @@ export const projectsRouter = router({
         github_link: z.string(),
         projectUserCount: z.number(),
         telegram_link: z.string(),
-        team: z.array(z.string())
+        team: z.array(z.string()),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -39,21 +43,21 @@ export const projectsRouter = router({
           cause: 'Corrupted session',
         });
       }
-      let team: Team[] = []
-      if(input.team.length > 0){
-        team = input.team.map((teamId)=>{
+      let team: Team[] = [];
+      if (input.team.length > 0) {
+        team = input.team.map((teamId) => {
           return {
             id: uuid(),
             projectsModelId: input.id,
-            userId: teamId
-          }
-        })
+            userId: teamId,
+          };
+        });
       }
       const teamOwner: Team = {
         id: uuid(),
         projectsModelId: input.id,
-        userId: ctx.session.user.id
-      }
+        userId: ctx.session.user.id,
+      };
       try {
         const res = await prisma.projectsModel.create({
           data: {
@@ -74,8 +78,8 @@ export const projectsRouter = router({
           },
         });
         await prisma.team.createMany({
-          data: [teamOwner,...team]
-        })
+          data: [teamOwner, ...team],
+        });
         return res;
       } catch (error) {
         console.log(error);
@@ -99,24 +103,24 @@ export const projectsRouter = router({
           id: input.id,
         },
         include: {
-           owner: true,
-        Team: {
-          include:{
-            user:true
-          }
-        },
-        comments:{
-          include:{
-            user:true
-            ,Reply:{
-              include:{
-                comment:true,
-                user:true
-              }
-            }
-          }
-        },
-          PojectJoinRound: {
+          owner: true,
+          Team: {
+            include: {
+              user: true,
+            },
+          },
+          comments: {
+            include: {
+              user: true,
+              Reply: {
+                include: {
+                  comment: true,
+                  user: true,
+                },
+              },
+            },
+          },
+          ProjectJoinRound: {
             include: {
               fundingRound: true,
             },
@@ -129,12 +133,11 @@ export const projectsRouter = router({
   findMany: procedure.query(async () => {
     const res = await prisma.projectsModel.findMany({
       include: {
-        PojectJoinRound: {
+        ProjectJoinRound: {
           include: {
             fundingRound: true,
           },
         },
-       
       },
     });
     return res;
@@ -166,11 +169,18 @@ export const projectsRouter = router({
     .input(
       z.object({
         id: z.string().nonempty(),
-        status: z.enum([ProjectVerifyStatus.REVIEW, ProjectVerifyStatus.VERIFIED, ProjectVerifyStatus.FAILED]),
+        status: z.enum([
+          ProjectVerifyStatus.REVIEW,
+          ProjectVerifyStatus.VERIFIED,
+          ProjectVerifyStatus.FAILED,
+        ]),
       })
     )
     .mutation(async ({ input, ctx }) => {
-      if (ctx?.session?.user.mainWallet !== '8Fy7yHo7Sn7anUtG7VANLEDxCWbLjku1oBVa4VouEVVP') {
+      if (
+        ctx?.session?.user.mainWallet !==
+        '8Fy7yHo7Sn7anUtG7VANLEDxCWbLjku1oBVa4VouEVVP'
+      ) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           cause: `User doesn't have permission to access Rounds create`,
@@ -188,58 +198,59 @@ export const projectsRouter = router({
 
       return res;
     }),
-    
-  joinRound: procedure.input(z.object({
-    id: z.string().nonempty(),
-    tx: z.string().nonempty(),
-    projectId: z.string().nonempty(),
-    roundId: z.string().nonempty(),
-  })).mutation(async ({ input, ctx }) => {
 
-    if (!ctx.session) {
-      throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: 'Session not found',
-        cause: 'User not logged in',
-      });
-    }
-    const project = await prisma.projectsModel.findUnique({
-      where:{
-        id: input.projectId
+  joinRound: procedure
+    .input(
+      z.object({
+        id: z.string().nonempty(),
+        tx: z.string().nonempty(),
+        projectId: z.string().nonempty(),
+        roundId: z.string().nonempty(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      if (!ctx.session) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'Session not found',
+          cause: 'User not logged in',
+        });
       }
-    })
-    if(project?.owner_publickey !== ctx.session.user.mainWallet){
-      throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: 'User is not the owner for this project',
-        cause: 'Invalid User ',
+      const project = await prisma.projectsModel.findUnique({
+        where: {
+          id: input.projectId,
+        },
       });
-    }
-    const round = await prisma.round.findUnique({
-      where:{
-        id: input.roundId
+      if (project?.owner_publickey !== ctx.session.user.mainWallet) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'User is not the owner for this project',
+          cause: 'Invalid User ',
+        });
       }
-    })
-    if(!round){
-      throw new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'Round not found',
-        cause: 'Invalid Round ',
+      const round = await prisma.round.findUnique({
+        where: {
+          id: input.roundId,
+        },
       });
-    }
-    
-    const res = await prisma.pojectJoinRound.create({
-      data:{
-        id: input.id,
-        tx: input.tx,
-        projectId: input.projectId,
-        roundId: input.roundId,
-        status: ProjectJoinRoundStatus.PENDING,
+      if (!round) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Round not found',
+          cause: 'Invalid Round ',
+        });
       }
-    })
 
-    return res
-  }),
- 
-  
+      const res = await prisma.projectJoinRound.create({
+        data: {
+          id: input.id,
+          tx: input.tx,
+          projectId: input.projectId,
+          roundId: input.roundId,
+          status: ProjectJoinRoundStatus.PENDING,
+        },
+      });
+
+      return res;
+    }),
 });
