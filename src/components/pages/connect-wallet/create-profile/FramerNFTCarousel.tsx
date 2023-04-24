@@ -98,12 +98,12 @@ const FramerCarousel = memo(function FramerCarousel({
       >
         <IconButton
           display={
-            nftsData && nftsData?.length > 0 && isLoading ? 'block' : 'none'
+            nftsData && nftsData?.length > 0 && !isLoading ? 'block' : 'none'
           }
           position={'absolute'}
           variant="unstyled"
           rounded="full"
-          background={'#ffffff70'}
+          background={'#ffffff80'}
           h={'26px !important'}
           w={'26px !important'}
           maxW="26px"
@@ -167,13 +167,13 @@ const FramerCarousel = memo(function FramerCarousel({
         </Box>
         <IconButton
           display={
-            nftsData && nftsData?.length > 0 && isLoading ? 'block' : 'none'
+            nftsData && nftsData?.length > 0 && !isLoading ? 'block' : 'none'
           }
           position={'absolute'}
           variant="unstyled"
           rounded="full"
           right="-6px"
-          background={'#ffffff70'}
+          background={'#ffffff80'}
           zIndex={'2'}
           h={'26px !important'}
           w={'26px !important'}

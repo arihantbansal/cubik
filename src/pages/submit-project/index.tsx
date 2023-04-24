@@ -289,7 +289,6 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
           )}
           {step === 4 && (
             <>
-              {' '}
               <CardHeader w="full">
                 <Center>
                   <svg

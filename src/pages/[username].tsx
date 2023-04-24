@@ -24,13 +24,6 @@ const ProfilePage = () => {
     }
   );
 
-  // useEffect(() => {
-  //   console.log('use effect called - ', session?.user, user.data);
-  //   if (session && !user.isLoading) {
-  //     setUserProfileLoading(false); // session takes a while to load so we will show the loading screen until it is loaded
-  //   }
-  // }, [session]);
-
   if (!user.data) {
     console.log('user not found - ', user.data);
     return (

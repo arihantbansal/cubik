@@ -1,7 +1,7 @@
 import { Box, Skeleton } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
-import { memo, useState } from 'react';
+import { Key, memo, useState } from 'react';
 
 const Carousel = memo(function Carousel({
   carouselWidth,
@@ -46,7 +46,7 @@ const Carousel = memo(function Carousel({
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      {nftsData.map((nft: any) => (
+      {nftsData.map((nft: any, key: Key) => (
         <Box
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
@@ -54,7 +54,7 @@ const Carousel = memo(function Carousel({
           minW="5rem"
           minH="5rem"
           as={motion.div}
-          key={nft.image}
+          key={key}
           _hover={{
             outline: '1px solid #fff',
           }}

@@ -170,7 +170,7 @@ const StepOne: React.FC<StepOneProps> = ({
             field: { onChange, onBlur, value, name, ref },
             fieldState: { error },
           }) => (
-            <FormControl isRequired py={4} isInvalid={!!error} id="category">
+            <FormControl isRequired isInvalid={!!error} id="category">
               <FormLabel pb="0.5rem" htmlFor="category">
                 Choose Categories
               </FormLabel>
@@ -318,7 +318,7 @@ const StepOne: React.FC<StepOneProps> = ({
             field: { onChange, onBlur, value, name, ref },
             fieldState: { error },
           }) => (
-            <FormControl isRequired py={4} isInvalid={!!error} id="team">
+            <FormControl isRequired isInvalid={!!error} id="team">
               <FormLabel pb="0.5rem" htmlFor="team">
                 Search Team
               </FormLabel>

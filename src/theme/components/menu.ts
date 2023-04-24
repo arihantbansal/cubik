@@ -15,9 +15,7 @@ const baseStyle = definePartsStyle({
   list: {
     p: '8px',
     borderRadius: '16px',
-    border: '1px solid #1D1F1E',
-    background: 'linear-gradient(322.35deg, #000000 0%, #0F0F0F 100%)',
-    boxShadow: '0px 2px 40px #000000',
+    
   },
   item: {
     // this will style the MenuItem and MenuItemOption components

@@ -184,6 +184,7 @@ const UserNavMenu = () => {
         </MenuButton>
         <MenuList
           background={'linear-gradient(322.35deg, #000000 0%, #0F0F0F 100%)'}
+          border="1px solid #1D1F1E"
           gap="8px"
           display={'flex'}
           flexDir="column"
