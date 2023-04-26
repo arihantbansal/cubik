@@ -82,7 +82,7 @@ model ProjectsModel {
   failedReason      String?             @default("")
   mutliSigAddress   String?             @default("")
   comments          Comments[]
-  ProjectJoinRound   ProjectJoinRound[]
+  ProjectJoinRound  ProjectJoinRound[]
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   owner             UserModel           @relation(fields: [owner_publickey], references: [mainWallet])
@@ -131,23 +131,37 @@ enum ProjectJoinRoundStatus {
 }
 
 model Round {
-  id                     String            @id @default(uuid()) @map("_id")
+  id                     String             @id @default(uuid()) @map("_id")
   roundName              String
-  matchedPool            Float             @default(0)
-  communityContributions Float             @default(0)
-  notionPage             String            @db.VarChar(500)
-  projectCount           Int               @default(0)
-  active                 Boolean           @default(true)
+  matchedPool            Float              @default(0)
+  communityContributions Float              @default(0)
+  notionPage             String             @db.VarChar(500)
+  projectCount           Int                @default(0)
+  active                 Boolean            @default(true)
   userId                 String
   token                  String
-  User                   UserModel         @relation(fields: [userId], references: [id])
- ProjectJoinRound        ProjectJoinRound[]
+  description            String             @default("") @db.Text
+  endtime                DateTime           @default(now())
+  startTime              DateTime           @default(now())
+  sponsor                Sponsor[]
+  User                   UserModel          @relation(fields: [userId], references: [id])
+  ProjectJoinRound       ProjectJoinRound[]
   Contribution           Contribution[]
-  tx                     String            @db.VarChar(500)
-  createdAt              DateTime          @default(now())
-  updatedAt              DateTime          @updatedAt
+  tx                     String             @db.VarChar(500)
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
 
   @@index([userId])
+}
+
+model Sponsor {
+  id      String @id @default(uuid()) @map("_id")
+  name    String
+  logo    String @db.VarChar(500)
+  roundId String
+  Round   Round  @relation(fields: [roundId], references: [id])
+
+  @@index([roundId])
 }
 
 model Contribution {
