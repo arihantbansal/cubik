@@ -1,20 +1,22 @@
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { UserModel } from "@prisma/client";
-import { type GetServerSidePropsContext } from "next";
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { UserModel } from '@prisma/client';
+import { type GetServerSidePropsContext } from 'next';
 import {
-  getServerSession, type DefaultSession, type NextAuthOptions
-} from "next-auth";
-import credentialsProvider from "next-auth/providers/credentials";
-import { prisma } from "./prisma";
+  getServerSession,
+  type DefaultSession,
+  type NextAuthOptions,
+} from 'next-auth';
+import credentialsProvider from 'next-auth/providers/credentials';
+import { prisma } from './prisma';
 
-declare module "next-auth" {
+declare module 'next-auth' {
   interface Session extends DefaultSession {
     user: {
       id: string;
       mainWallet: string;
       username: string;
       profilePicture: string;
-    } & DefaultSession["user"];
+    } & DefaultSession['user'];
   }
 }
 
@@ -36,7 +38,7 @@ export const authOptions: NextAuthOptions = {
   },
   secret: process.env.SECRET,
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
     maxAge: 15 * 24 * 60 * 60,
   },
   adapter: PrismaAdapter(prisma),
@@ -44,10 +46,11 @@ export const authOptions: NextAuthOptions = {
     credentialsProvider({
       async authorize(credentials, _req) {
         if (!credentials) {
-          throw new Error("User Cannot be authenticated");
+          throw new Error('User Cannot be authenticated');
         }
         const user = credentials as {
           wallet: string;
+          signature: string;
         };
 
         const res = await prisma.userModel.findUnique({
@@ -58,25 +61,24 @@ export const authOptions: NextAuthOptions = {
         if (!res) {
           return null;
         }
-        console.log("df", res);
 
         return res;
       },
       credentials: {},
-      type: "credentials",
+      type: 'credentials',
     }),
   ],
   pages: {
-    signIn: "/",
-    signOut: "/",
-    error: "/",
-    verifyRequest: "/",
-    newUser: "/",
+    signIn: '/',
+    signOut: '/',
+    error: '/',
+    verifyRequest: '/',
+    newUser: '/',
   },
 };
 export const getServerAuthSession = (ctx: {
-  req: GetServerSidePropsContext["req"];
-  res: GetServerSidePropsContext["res"];
+  req: GetServerSidePropsContext['req'];
+  res: GetServerSidePropsContext['res'];
 }) => {
   return getServerSession(ctx.req, ctx.res, authOptions);
 };

@@ -1,6 +1,7 @@
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import * as anchor from '@coral-xyz/anchor';
 import Squads from '@sqds/sdk';
+
 export const createValut = async (
   wallet: NodeWallet,
   name: string,

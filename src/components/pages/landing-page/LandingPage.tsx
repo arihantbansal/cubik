@@ -1,5 +1,6 @@
 import { Box, Button, Center, Container, Flex, VStack } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import { getCsrfToken } from 'next-auth/react';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import {
@@ -213,7 +214,7 @@ const LandingPage = () => {
                   Explore Projects
                 </Button>
                 <Button
-                  onClick={() => {
+                  onClick={async () => {
                     router.push('/connect-wallet');
                   }}
                   variant="secondary"
