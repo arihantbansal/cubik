@@ -131,16 +131,20 @@ export const projectsRouter = router({
     }),
 
   findMany: procedure.query(async () => {
-    const res = await prisma.projectsModel.findMany({
-      include: {
-        ProjectJoinRound: {
-          include: {
-            fundingRound: true,
+    try {
+      const res = await prisma.projectsModel.findMany({
+        include: {
+          ProjectJoinRound: {
+            include: {
+              fundingRound: true,
+            },
           },
         },
-      },
-    });
-    return res;
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
   }),
 
   findPubkey: procedure
