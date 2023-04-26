@@ -10,7 +10,6 @@ interface AuthWrapperProps {
 
 const AuthWrapper: FC<AuthWrapperProps> = ({ children }) => {
   const router = useRouter();
-  const { data: session } = useSession();
   const { publicKey } = useWallet();
 
   async function auth() {
@@ -21,16 +20,10 @@ const AuthWrapper: FC<AuthWrapperProps> = ({ children }) => {
       wallet: publicKey.toBase58(),
     });
     if (signInResponse?.status === 401) {
+      // there will be a condition here if the user has connecting wallet for new profile or for linking a different wallet
       console.log('now redirect to create-profile which is prefetched');
       router.push('/create-profile'); //todo: add prefetching here to make it faster ( prefetching does not work in development server )
     }
-    //todo: not redirecting user from here but giving him option to go to profile page
-    // if (session && router.pathname === '/create-profile') {
-    //   router.push({
-    //     pathname: '/[username]',
-    //     query: { username: session.user.username },
-    //   });
-    // }
   }
 
   useEffect(() => {

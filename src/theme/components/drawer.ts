@@ -1,7 +1,6 @@
 import { modalAnatomy as parts } from '@chakra-ui/anatomy';
-import {
-  createMultiStyleConfigHelpers
-} from '@chakra-ui/styled-system';
+import { createMultiStyleConfigHelpers } from '@chakra-ui/styled-system';
+import { isMobileSafari } from 'react-device-detect';
 
 const { definePartsStyle, defineMultiStyleConfig } =
   createMultiStyleConfigHelpers(parts.keys);
@@ -9,21 +8,14 @@ const { definePartsStyle, defineMultiStyleConfig } =
 const baseStyle = definePartsStyle((props) => {
   const { colorScheme: c } = props;
   return {
-    dialog: {
-      borderRadius: 'md',
-      bg: `${c}.100`,
-      _dark: {
-        bg: `${c}.600`,
-        color: 'white',
-      },
-    },
+    dialog: {},
   };
 });
 
 const cubik = definePartsStyle({
   overlay: {
-    bg: '#ffff',
-    backdropFilter: 'blur(10px)',
+    bg: `${isMobileSafari ? '' : 'transparent'}`,
+    backdropFilter: `${isMobileSafari ? 'blur(10px)' : 'blur(10px)'}`,
   },
   dialog: {
     mt: '18vh',
@@ -32,9 +24,6 @@ const cubik = definePartsStyle({
     padding: '48px 0px',
     gap: '16px',
     width: 'full',
-  },
-  dialogContainer: {
-    outline: '1px dashed red',
   },
   header: {
     display: 'flex',
@@ -83,9 +72,6 @@ const cubikWeb = definePartsStyle({
     gap: '16px',
     width: 'full',
     maxW: '20rem',
-  },
-  dialogContainer: {
-    outline: '1px dashed red',
   },
   header: {
     display: 'flex',
