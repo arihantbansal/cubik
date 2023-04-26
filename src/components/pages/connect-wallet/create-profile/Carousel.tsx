@@ -1,4 +1,4 @@
-import { Box, Skeleton } from '@chakra-ui/react';
+import { Box, Flex, Skeleton } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import { Key, memo, useState } from 'react';
@@ -31,8 +31,7 @@ const Carousel = memo(function Carousel({
   }
 
   return (
-    <Box
-      display={'flex'}
+    <Flex
       flexDir="row"
       gap="0.5rem"
       py="1rem"
@@ -40,7 +39,7 @@ const Carousel = memo(function Carousel({
       drag="x"
       w="fit-content"
       cursor="grab"
-      alignItems="start"
+      alignItems="center"
       justifyContent="flex-start"
       as={motion.div}
       onDragStart={handleDragStart}
@@ -91,7 +90,7 @@ const Carousel = memo(function Carousel({
           </Skeleton>
         </Box>
       ))}
-    </Box>
+    </Flex>
   );
 });
 

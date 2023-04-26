@@ -10,6 +10,7 @@ import {
   VStack,
   Wrap,
 } from '@chakra-ui/react';
+import { ProjectsModel } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { Key } from 'react';
 import {
@@ -214,9 +215,11 @@ const SocialLinks = ({ urlName }: { urlName: string }) => {
 };
 
 export const ProjectSocials = ({
+  hideTitle,
   projectDetails,
 }: {
-  projectDetails: ProjectWithCommentsAndRoundsType;
+  hideTitle?: boolean;
+  projectDetails: ProjectWithCommentsAndRoundsType | ProjectsModel;
 }) => {
   const socials = [
     {
@@ -245,9 +248,11 @@ export const ProjectSocials = ({
   ];
   return (
     <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
-      <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
-        Socials
-      </Box>
+      {!hideTitle && (
+        <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
+          Socials
+        </Box>
+      )}
       <Wrap direction={'row'}>
         {socials.map(
           (

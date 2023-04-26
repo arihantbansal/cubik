@@ -21,6 +21,7 @@ export const Input: ComponentStyleConfig = {
         backgroundColor: '#0F0F0F',
         rounded: '8px',
         border: 'none',
+        pb: '4px',
         fontSize: '14px',
         height: '40px',
         _focus: {

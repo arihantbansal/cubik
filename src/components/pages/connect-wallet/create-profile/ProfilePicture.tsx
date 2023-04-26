@@ -3,17 +3,28 @@ import { BiUpArrowAlt } from 'react-icons/bi';
 
 const ProfilePicture = ({
   onOpen,
+  onClose,
+  isOpen,
   pfp,
 }: {
   onOpen: () => void;
+  onClose: () => void;
+  isOpen: boolean;
   pfp: string;
 }) => {
   return (
     <Center
+      cursor={'pointer'}
       w="fit-content"
       transform={{ base: 'scale(0.9)', md: 'scale(1)' }}
       position="relative"
-      onClick={onOpen}
+      onClick={() => {
+        if (isOpen) {
+          onClose();
+        } else {
+          onOpen();
+        }
+      }}
     >
       <Center
         cursor={'pointer'}

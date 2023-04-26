@@ -1,5 +1,4 @@
 import { Box, Modal, useDisclosure, VStack } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
 
 import { formatNumberWithK } from '~/utils/formatWithK';
 
@@ -9,7 +8,7 @@ const VoteModalBody = () => {
 export const ProjectsDonation = ({
   projectDetails,
 }: {
-  projectDetails: ProjectsModel;
+  projectDetails: any;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 

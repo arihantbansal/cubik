@@ -8,9 +8,9 @@ const { definePartsStyle, defineMultiStyleConfig } =
 const baseStyle = definePartsStyle({
   // define the part you're going to style
   container: {
-    backgroundColor: 'blue.50',
+    backgroundColor: '#080808',
     _dark: {
-      backgroundColor: 'blue.800',
+      backgroundColor: '#080808',
     },
   },
   header: {

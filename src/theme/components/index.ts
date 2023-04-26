@@ -1,6 +1,8 @@
+import { Alert } from './alert';
 import { Avatar } from './avatar';
 import { Button } from './buttons';
 import { Card } from './card';
+import { Checkbox } from './checkbox';
 import { Drawer } from './drawer';
 import { Input } from './input';
 import { Menu } from './menu';
@@ -14,18 +16,20 @@ import { Tag } from './tag';
 import { Textarea } from './textArea';
 
 export const components = {
-  Button,
-  Input,
-  Avatar,
+  Alert,
   Tag,
   Tabs,
-  Menu,
-  Select,
-  Textarea,
   Card,
+  Menu,
   Modal,
+  Input,
   Drawer,
   Slider,
+  Avatar,
+  Select,
+  Button,
+  Checkbox,
+  Textarea,
   Skeleton,
   NumberInput,
 };

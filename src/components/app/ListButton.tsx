@@ -21,7 +21,6 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { AiOutlineDelete } from 'react-icons/ai';
@@ -35,6 +34,7 @@ import { tokens } from '../common/tokens/DonationTokens';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { ActionMeta } from 'react-select';
+import { ProjectsModel } from '@prisma/client';
 
 export const token: tokenGroup[] = tokens;
 
@@ -207,20 +207,25 @@ const IconButtonBadge = () => {
           {listItemsCount > 0 && (
             <Badge
               position={'absolute'}
-              transform={'translate(22px, -16px)'}
+              transform={{
+                base: 'translate(14px, -10px)',
+                md: 'translate(22px, -16px)',
+              }}
               rounded="full"
               backgroundColor={'#FFE53D'}
-              minW="1rem"
-              minH="1rem"
+              minW={{ base: '0.7rem', md: '1rem' }}
+              minH={{ base: '0.7rem', md: '1rem' }}
               display={'flex'}
               alignItems="center"
               justifyContent={'center'}
               colorScheme="green"
             >
-              <Text>{listItemsCount}</Text>
+              <Text fontSize={{ base: '8px', md: '14px' }}>
+                {listItemsCount}
+              </Text>
             </Badge>
           )}
-        </HStack>{' '}
+        </HStack>
         <MenuList
           height="80vh"
           maxH={'70rem'}

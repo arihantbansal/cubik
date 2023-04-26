@@ -15,22 +15,34 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { ProjectsModel } from '@prisma/client';
-import { Key, useRef } from 'react';
+import { Key, useRef, useState } from 'react';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import { getDomain } from '~/utils/getDomain';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
 import { ProjectLink } from '../../projects/project-details/ProjectDetailsHeader';
 import { trpc } from '~/utils/trpc';
+import { ProjectSocials } from '../../projects/project-details/project-interactions/ProjectInteractions';
+import EditProjectDetails from './project-admin-dashboard/ProjectAdminDetailsDrawer/EditProjectDetails';
+import ApplyForGrant from './project-admin-dashboard/ProjectAdminDetailsDrawer/ApplyForGrant';
 
-const DrawerBodyContent = ({ project }: { project: ProjectsModel }) => {
-  console.log(
-    project?.twitter_handle,
-    project?.discord_link,
-    project?.telegram_link,
-    project?.github_link
-  );
-  const socials = [{ name: 'string', url: 'string' }];
+enum drawerBodyViewEnum {
+  PROJECT_DETAILS = 'project_details',
+  GRANTS = 'apply_for_grant',
+  EDIT = 'edit',
+}
+
+const ProjectDetails = ({
+  project,
+  setDrawerBodyView,
+}: {
+  project: ProjectsModel;
+  setDrawerBodyView: any;
+}) => {
   const projectVerfiyMutation = trpc.project.joinRound.useMutation();
+  const onGoringRounds = trpc.round.findActive.useQuery();
+
+  console.log('- on going rounds', onGoringRounds.data);
+
   return (
     <VStack gap={{ base: '32px', md: '64px' }} w="full">
       <VStack align={'start'} w="full" gap="24px">
@@ -55,7 +67,14 @@ const DrawerBodyContent = ({ project }: { project: ProjectsModel }) => {
             >
               Edit Project
             </Button>
-            <Button variant="connect_wallet">Apply For Grant</Button>
+            <Button
+              variant="apply_for_grant"
+              onClick={() => {
+                setDrawerBodyView(drawerBodyViewEnum.GRANTS);
+              }}
+            >
+              Apply For Grant
+            </Button>
           </Stack>
         </HStack>
         <VStack gap={{ base: '4px', md: '16px' }} w="full" align="start">
@@ -71,8 +90,8 @@ const DrawerBodyContent = ({ project }: { project: ProjectsModel }) => {
           <Box as="p" textStyle={'body9'} color="neutral.9">
             {project.short_description}
           </Box>
-          <HStack>
-            <HStack>
+          <HStack w="full">
+            <HStack w="full">
               <Button
                 variant="unstyled"
                 display={'flex'}
@@ -80,7 +99,7 @@ const DrawerBodyContent = ({ project }: { project: ProjectsModel }) => {
                 rounded="full"
                 color="brand.teal6"
                 backgroundColor="brand.teal2"
-                p={{ base: '0.5rem 0.8rem', md: '0.2rem 1rem' }}
+                p={{ base: '0.5rem 0.8rem', md: '0.4rem 1rem' }}
                 iconSpacing={{ base: '0.3rem', md: '0.4rem' }}
                 leftIcon={<ProjectLink urlName={'url'} />}
                 _hover={{
@@ -99,27 +118,7 @@ const DrawerBodyContent = ({ project }: { project: ProjectsModel }) => {
                   {getDomain(project.project_link)}
                 </Box>
               </Button>
-              {socials.length > 2 &&
-                socials.map((link: { name: string; url: string }, key: Key) => (
-                  <IconButton
-                    aria-label={link.name}
-                    variant={'unstyled'}
-                    fontSize={{ base: 'sm', sm: 'md', md: 'xl' }}
-                    display="flex"
-                    alignItems={'center'}
-                    rounded="full"
-                    color="brand.teal6"
-                    backgroundColor="brand.teal2"
-                    key={key}
-                    icon={<ProjectLink urlName={link.name} />}
-                    _hover={{
-                      backgroundColor: 'brand.teal3',
-                    }}
-                    as="a"
-                    href={link.name}
-                    target="_blank"
-                  />
-                ))}
+              <ProjectSocials hideTitle={true} projectDetails={project} />
             </HStack>
           </HStack>
         </VStack>
@@ -147,6 +146,9 @@ const DrawerBodyContent = ({ project }: { project: ProjectsModel }) => {
 
 const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [drawerBodyView, setDrawerBodyView] = useState<drawerBodyViewEnum>(
+    drawerBodyViewEnum.PROJECT_DETAILS
+  );
   const btnRef = useRef();
   const headerSpacing = {
     base: '16px',
@@ -219,8 +221,11 @@ const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
             backdropFilter="blur(8px)"
           />
           <DrawerContent
+            m="3px"
+            border="1px solid #1D1F1E !important"
+            borderColor={'#1D1F1E'}
+            borderBottom={'none'}
             borderTopRadius={'24px'}
-            border="1px solid ##1D1F1E"
             background="#080808"
             padding={{ base: '20px', md: '40px' }}
             maxW="80rem !important"
@@ -235,8 +240,17 @@ const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
               backgroundColor="#141414"
               border="1px solid #ffffff10"
             />
-            <DrawerBody p="0">
-              <DrawerBodyContent project={project} />
+            <DrawerBody p="2px">
+              {drawerBodyView === drawerBodyViewEnum.GRANTS ? (
+                <ApplyForGrant />
+              ) : drawerBodyView === drawerBodyViewEnum.EDIT ? (
+                <EditProjectDetails />
+              ) : (
+                <ProjectDetails
+                  project={project}
+                  setDrawerBodyView={setDrawerBodyView}
+                />
+              )}
             </DrawerBody>
           </DrawerContent>
         </Drawer>
