@@ -1,7 +1,7 @@
 import { Card, CardHeader } from '@chakra-ui/react';
 import { ProjectsModel } from '@prisma/client';
 import ProjectBanner from './ProjectStatusBanner';
-import ProjectHeader from './ProjectHeader';
+import ProjectHeader, { ProjectHeaderVisitorView } from './ProjectHeader';
 
 const ProjectVisitorCard = ({ project }: { project: ProjectsModel }) => {
   return (
@@ -14,7 +14,7 @@ const ProjectVisitorCard = ({ project }: { project: ProjectsModel }) => {
     >
       <ProjectBanner status={status} />
       <CardHeader>
-        <ProjectHeader project={project} />
+        <ProjectHeaderVisitorView project={project} />
       </CardHeader>
     </Card>
   );

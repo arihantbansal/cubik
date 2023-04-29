@@ -13,6 +13,7 @@ import { VisitorProjectEmptyState } from './empty-states/ProjectEmptyState';
 import ProfileHeader from './ProfileHeader';
 import ProjectVisitorCard from './projects-tab/ProjectVisitorCard';
 import { VisitorViewSkeleton } from './skeletons/ProfileViewSkeletons';
+import { ProjectVerifyStatus } from '@prisma/client';
 
 type visitorViewType = {
   user: UserWithProjectType;
@@ -24,6 +25,10 @@ const VisitorView: FC<visitorViewType> = ({
   isLoading,
 }: visitorViewType) => {
   if (isLoading) return <VisitorViewSkeleton />;
+  // filter projects by status and remove the project with ProjectVerifyStatus.REVIEW
+  const filteredProjects = user.project.filter(
+    (project) => project.status !== ProjectVerifyStatus.REVIEW
+  );
   return (
     <Flex flexDir={'column'} gap="48px">
       <ProfileHeader user={user} />
@@ -41,8 +46,8 @@ const VisitorView: FC<visitorViewType> = ({
           </TabPanel>
           <TabPanel>
             <Flex direction="column" w="full" gap="32px">
-              {user.project.length ? (
-                user.project.map((project, key) => (
+              {filteredProjects.length ? (
+                filteredProjects.map((project, key) => (
                   <ProjectVisitorCard project={project} key={key} />
                 ))
               ) : (
