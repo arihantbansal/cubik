@@ -9,27 +9,6 @@ interface AuthWrapperProps {
 }
 
 const AuthWrapper: FC<AuthWrapperProps> = ({ children }) => {
-  const router = useRouter();
-  const { publicKey } = useWallet();
-
-  async function auth() {
-    if (!publicKey) return;
-    const signInResponse = await signIn('credentials', {
-      callbackUrl: '',
-      redirect: false,
-      wallet: publicKey.toBase58(),
-    });
-    if (signInResponse?.status === 401) {
-      // there will be a condition here if the user has connecting wallet for new profile or for linking a different wallet
-      console.log('now redirect to create-profile which is prefetched');
-      router.push('/create-profile'); //todo: add prefetching here to make it faster ( prefetching does not work in development server )
-    }
-  }
-
-  useEffect(() => {
-    auth();
-  }, [publicKey]);
-
   return (
     <Container maxW="full" p="0">
       {children}

@@ -238,7 +238,7 @@ export const Header = memo(function Header({
                   {children}
                 </Center>
               ) : (
-                'dfdfdfdf'
+                ''
               )}
               <Hamburger
                 toggled={isOpen}
