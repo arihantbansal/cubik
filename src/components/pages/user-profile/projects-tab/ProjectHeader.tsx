@@ -9,7 +9,6 @@ import {
   DrawerContent,
   DrawerOverlay,
   HStack,
-  IconButton,
   Stack,
   useDisclosure,
   VStack,
@@ -25,7 +24,7 @@ import { ProjectSocials } from '../../projects/project-details/project-interacti
 import EditProjectDetails from './project-admin-dashboard/ProjectAdminDetailsDrawer/EditProjectDetails';
 import ApplyForGrant from './project-admin-dashboard/ProjectAdminDetailsDrawer/ApplyForGrant';
 
-enum drawerBodyViewEnum {
+export enum drawerBodyViewEnum {
   PROJECT_DETAILS = 'project_details',
   GRANTS = 'apply_for_grant',
   EDIT = 'edit',
@@ -38,11 +37,6 @@ const ProjectDetails = ({
   project: ProjectsModel;
   setDrawerBodyView: any;
 }) => {
-  const projectVerfiyMutation = trpc.project.joinRound.useMutation();
-  const onGoringRounds = trpc.round.findActive.useQuery();
-
-  console.log('- on going rounds', onGoringRounds.data);
-
   return (
     <VStack gap={{ base: '32px', md: '64px' }} w="full">
       <VStack align={'start'} w="full" gap="24px">
@@ -212,7 +206,10 @@ const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
           maxW="40rem"
           isOpen={isOpen}
           placement="bottom"
-          onClose={onClose}
+          onClose={() => {
+            setDrawerBodyView(drawerBodyViewEnum.PROJECT_DETAILS);
+            onClose();
+          }}
           //@ts-ignore
           finalFocusRef={btnRef}
         >
@@ -242,7 +239,7 @@ const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
             />
             <DrawerBody p="2px">
               {drawerBodyView === drawerBodyViewEnum.GRANTS ? (
-                <ApplyForGrant />
+                <ApplyForGrant setDrawerBodyView={setDrawerBodyView} />
               ) : drawerBodyView === drawerBodyViewEnum.EDIT ? (
                 <EditProjectDetails />
               ) : (
