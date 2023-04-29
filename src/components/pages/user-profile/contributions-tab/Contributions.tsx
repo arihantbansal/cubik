@@ -24,7 +24,7 @@ const Contributions = () => {
       <Table variant="unstyled">
         <Thead>
           <Tr>
-            <Th>
+            <Th px="12px">
               <Text
                 color="#ADB8B6"
                 size="16px"
@@ -34,7 +34,7 @@ const Contributions = () => {
                 Projects
               </Text>
             </Th>
-            <Th>
+            <Th px="12px">
               <Text
                 color="#ADB8B6"
                 size="16px"
@@ -44,7 +44,7 @@ const Contributions = () => {
                 Category
               </Text>
             </Th>
-            <Th>
+            <Th px="12px">
               <Text
                 color="#ADB8B6"
                 size="16px"
@@ -54,7 +54,7 @@ const Contributions = () => {
                 Status
               </Text>
             </Th>
-            <Th>
+            <Th px="12px">
               <Text
                 color="#ADB8B6"
                 size="16px"
@@ -64,7 +64,7 @@ const Contributions = () => {
                 Contributors
               </Text>
             </Th>
-            <Th>
+            <Th px="12px">
               <Text
                 color="#ADB8B6"
                 size="16px"
@@ -74,12 +74,16 @@ const Contributions = () => {
                 Total Amount Raised
               </Text>
             </Th>
-            <Th></Th>
+            <Th px="12px"></Th>
           </Tr>
         </Thead>
         <Tbody>
-          <Tr>
-            <Td>
+          <Tr
+            _hover={{
+              background: '#1C1C1C',
+            }}
+          >
+            <Td px="12px">
               <HStack align={'start'} gap="16px">
                 <Avatar src="https://img.onesignal.com/permanent/0d9397a8-f8b4-469e-a109-734cce31c12c" />
                 <VStack align={'start'} justify="center" gap="0">
@@ -95,10 +99,10 @@ const Contributions = () => {
                 </VStack>
               </HStack>
             </Td>
-            <Td>
+            <Td px="12px">
               <CustomTag>NFTs</CustomTag>
             </Td>
-            <Td>
+            <Td px="12px">
               <VStack align={'start'} justify="center">
                 <Box
                   as="p"
@@ -113,7 +117,7 @@ const Contributions = () => {
                 </Box>
               </VStack>
             </Td>
-            <Td>
+            <Td px="12px">
               <AvatarGroup size="sm" max={3} spacing="-4">
                 <Avatar
                   name="Ryan Florence"
@@ -147,17 +151,17 @@ const Contributions = () => {
                 />
               </AvatarGroup>
             </Td>
-            <Td>
+            <Td px="12px">
               <Box as="p" textStyle={'title3'} color="neutral.11">
                 $12,248.64
               </Box>
             </Td>
-            <Td>
+            <Td px="12px">
               <BiChevronRight size="24" />
             </Td>
           </Tr>
           <Tr>
-            <Td>
+            <Td px="12px">
               <HStack align={'start'} gap="16px">
                 <Avatar src="https://solana.com/_next/image?url=%2Fapi%2Fprojectimg%2Fckx5uuxi6003009latrl4rkbn%3Ftype%3DLOGO&w=1920&q=75" />
                 <VStack align={'start'} justify="center" gap="0">
@@ -173,13 +177,13 @@ const Contributions = () => {
                 </VStack>
               </HStack>
             </Td>
-            <Td>
+            <Td px="12px">
               <HStack>
                 <CustomTag>Wallet</CustomTag>
                 <CustomTag>NFTs</CustomTag>
               </HStack>
             </Td>
-            <Td>
+            <Td px="12px">
               <VStack align={'start'} justify="center">
                 <Box
                   as="p"
@@ -194,7 +198,7 @@ const Contributions = () => {
                 </Box>
               </VStack>
             </Td>
-            <Td>
+            <Td px="12px">
               <AvatarGroup size="sm" max={3} spacing="-4">
                 <Avatar
                   name="Ryan Florence"
@@ -206,17 +210,17 @@ const Contributions = () => {
                 />
               </AvatarGroup>
             </Td>
-            <Td>
+            <Td px="12px">
               <Box as="p" textStyle={'title3'} color="neutral.11">
                 $12,248.64
               </Box>
             </Td>
-            <Td>
+            <Td px="12px">
               <BiChevronRight size="24" />
             </Td>
           </Tr>
           <Tr>
-            <Td>
+            <Td px="12px">
               <HStack align={'start'} gap="16px">
                 <Avatar src="https://solana.com/_next/image?url=%2Fapi%2Fprojectimg%2Fckwgwh8w830938eysxhy5e8syg%3Ftype%3DLOGO&w=1920&q=75" />
                 <VStack align={'start'} justify="center" gap="0">
@@ -232,14 +236,14 @@ const Contributions = () => {
                 </VStack>
               </HStack>
             </Td>
-            <Td>
+            <Td px="12px">
               <HStack>
                 <CustomTag>App</CustomTag>
                 <CustomTag>Defi</CustomTag>
                 <CustomTag>dApp</CustomTag>
               </HStack>
             </Td>
-            <Td>
+            <Td px="12px">
               <VStack align={'start'} justify="center">
                 <Box
                   as="p"
@@ -254,7 +258,7 @@ const Contributions = () => {
                 </Box>
               </VStack>
             </Td>
-            <Td>
+            <Td px="12px">
               <AvatarGroup size="sm" max={3} spacing="-4">
                 <Avatar
                   name="Ryan Florence"
@@ -291,12 +295,12 @@ const Contributions = () => {
                 />
               </AvatarGroup>
             </Td>
-            <Td>
+            <Td px="12px">
               <Box as="p" textStyle={'title3'} color="neutral.11">
                 $12,248.64
               </Box>
             </Td>
-            <Td>
+            <Td px="12px">
               <BiChevronRight size="24" />
             </Td>
           </Tr>
