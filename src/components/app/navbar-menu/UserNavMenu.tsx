@@ -28,7 +28,9 @@ const UserNavMenu = () => {
   function handleSignOut() {
     disconnect()
       .then(() => {
-        signOut();
+        signOut({
+          redirect: false,
+        });
       })
       .catch((e) => {
         console.log(e);

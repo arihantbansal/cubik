@@ -77,4 +77,55 @@ export const roundRouter = router({
       });
       return roundRes;
     }),
+  updateStatus: procedure
+    .input(
+      z.object({
+        id: z.string().nonempty(),
+        status: z.enum(['ACCEPTED', 'REJECTED']),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const roundInfo = await prisma.round.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+      if (!roundInfo) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Round not found',
+          cause: 'Round not found',
+        });
+      }
+
+      if (roundInfo.userId !== ctx.session?.user.id) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'Invalid Round Admin',
+          cause: 'round user id doesnt match login user id',
+        });
+      }
+
+      if (input.status === 'REJECTED') {
+        const roundRes = await prisma.projectJoinRound.update({
+          where: {
+            id: input.id,
+          },
+          data: {
+            status: 'REJECTED',
+          },
+        });
+        return roundRes;
+      } else {
+        const roundRes = await prisma.projectJoinRound.update({
+          where: {
+            id: input.id,
+          },
+          data: {
+            status: 'APPROVED',
+          },
+        });
+        return roundRes;
+      }
+    }),
 });
