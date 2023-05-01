@@ -9,7 +9,7 @@ export const contributionRouter = router({
       z.object({
         userId: z.string().nonempty(),
         token: z.string().nonempty(),
-        split: z.number().positive(),
+        split: z.number(),
         totalAmount: z.number().positive(),
         tx: z.string().nonempty(),
         usd: z.number().positive(),

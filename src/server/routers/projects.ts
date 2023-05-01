@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { procedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
 import { v4 as uuid } from 'uuid';
+import { Grant } from '~/utils/calculateProjectMatchingFund';
 
 export const projectsRouter = router({
   create: procedure
@@ -256,5 +257,73 @@ export const projectsRouter = router({
       });
 
       return res;
+    }),
+
+  projectGraph: procedure
+    .input(
+      z.object({
+        id: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const res = await prisma.projectsModel.findUnique({
+        where: {
+          id: input.id,
+        },
+        include: {
+          Contribution: true,
+          ProjectJoinRound: {
+            include: {
+              fundingRound: {
+                include: {
+                  ProjectJoinRound: {
+                    include: {
+                      project: {
+                        include: {
+                          Contribution: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+      const round = await prisma.round.findUnique({
+        where: {
+          id: res?.ProjectJoinRound[0].roundId,
+        },
+        include: {
+          ProjectJoinRound: {
+            include: {
+              project: {
+                include: {
+                  Contribution: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      const contri = res?.Contribution.map((contribution) => {
+        return contribution.usdContribution;
+      });
+      let roundContri: Grant[] = [];
+      round?.ProjectJoinRound.forEach((round) => {
+        roundContri.push({
+          funding: round.project?.Contribution.map((contribution) => {
+            return contribution.usdContribution;
+          }),
+        });
+      });
+      console.log(roundContri, contri, round?.matchedPool);
+
+      return {
+        contribution: contri,
+        round: roundContri,
+        matchingPool: round?.matchedPool,
+      };
     }),
 });
