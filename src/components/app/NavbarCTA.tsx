@@ -4,17 +4,17 @@ import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { FC, useEffect } from 'react';
 import { createMessage, verifyMessage } from '~/utils/getsignMessage';
-import { WalletAddress } from '../common/wallet/WalletAdd';
-import IconButtonBadge from './ListButton';
+import IconButtonBadge from './list/ListButton';
 import UserNavMenu from './navbar-menu/UserNavMenu';
 import * as anchor from '@coral-xyz/anchor';
 import { useRouter } from 'next/router';
+import MemoizedIconButtonBadge from './list/ListButton';
 
 const NavbarCTA: FC = () => {
   const { publicKey, disconnect, connecting, connected, signMessage } =
     useWallet();
   const router = useRouter();
-  const { status, data } = useSession();
+  const { status } = useSession();
 
   let CTA;
 
@@ -81,7 +81,7 @@ const NavbarCTA: FC = () => {
       CTA = (
         <HStack gap={{ base: '2px', md: '16px' }}>
           <>
-            <IconButtonBadge />
+            <MemoizedIconButtonBadge />
             <UserNavMenu />
           </>
         </HStack>

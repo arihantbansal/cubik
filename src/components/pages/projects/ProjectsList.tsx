@@ -1,14 +1,16 @@
 import {
   Avatar,
+  AvatarGroup,
   Box,
   Button,
   Card,
   Center,
   Container,
-  Heading,
+  Flex,
   HStack,
   IconButton,
   SlideFade,
+  useToast,
   VStack,
   Wrap,
 } from '@chakra-ui/react';
@@ -16,8 +18,10 @@ import { ProjectsModel } from '@prisma/client';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { BsPlus } from 'react-icons/bs';
+import { HiCheck } from 'react-icons/hi';
 import { MdRemove } from 'react-icons/md';
 import CustomTag from '~/components/common/tags/CustomTag';
+import { RemoveToast, SuccessToast } from '~/components/common/toasts/Toasts';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import useListStore from '~/store/listStore';
 import { formatNumberWithK } from '~/utils/formatWithK';
@@ -28,6 +32,7 @@ type PropsType = {
 
 const ProjectCard = ({ project }: PropsType) => {
   const router = useRouter();
+  const toast = useToast();
   const addProject = useListStore((state) => state.addProject);
   const removeProject = useListStore((state) => state.removeProject);
   const projectList = useListStore((state) => state.projectList);
@@ -50,9 +55,11 @@ const ProjectCard = ({ project }: PropsType) => {
     if (addedToList) {
       removeProject(project.id);
       setAddedToList(false);
+      RemoveToast({ toast, message: 'Project removed from list' });
     } else {
       addProject(project);
       setAddedToList(true);
+      SuccessToast({ toast, message: 'Project added to list' });
     }
   };
 
@@ -63,6 +70,7 @@ const ProjectCard = ({ project }: PropsType) => {
   return (
     <Card
       onClick={() => setIsHovered(true)}
+      outline={addedToList ? '2px solid #659C95' : '2px solid transparent'}
       p="0"
       h="23rem"
       cursor="pointer"
@@ -79,7 +87,21 @@ const ProjectCard = ({ project }: PropsType) => {
       gap="0"
       background={'#0C0D0D'}
       border="none"
+      position={'relative'}
     >
+      {addedToList && (
+        <Center
+          position={'absolute'}
+          w="1.6rem"
+          h="1.6rem"
+          rounded="full"
+          bg="#659C95"
+          right="-0.6rem"
+          top="-0.6rem"
+        >
+          <HiCheck size={16} color="#001F1B" />
+        </Center>
+      )}
       <Center w="full" bg="#001F1B" borderTopRadius={'16px'}>
         <HStack
           w="full"
@@ -179,12 +201,15 @@ const ProjectCard = ({ project }: PropsType) => {
         >
           <SlideFade in={isHovered} offsetY="0px" reverse>
             <HStack
+              zIndex={'9'}
               w="full"
               justifyContent="start"
               position="absolute"
               left="0"
               p="8px 24px 24px 24px"
               bottom="0px"
+              backgroundColor={'#0C0D0D'}
+              borderRadius="36px"
               justify={'space-between'}
             >
               <Button
@@ -219,21 +244,81 @@ const ProjectCard = ({ project }: PropsType) => {
               />
             </HStack>
           </SlideFade>
-          <Wrap
+          <HStack
+            overflowX="hidden" // Set overflowX to hidden
             w="full"
-            mt="auto"
-            align={'center'}
-            justify="start"
-            //  pb="0.4rem"
+            justify="space-between"
           >
-            {industry.map((tag: any, key: any) => {
-              return (
-                <CustomTag color={tag.label} key={key}>
-                  {tag.label}
-                </CustomTag>
-              );
-            })}
-          </Wrap>
+            <Box
+              w="full"
+              flex="4"
+              minWidth="0" // Add minWidth to allow the box to shrink
+              position="relative"
+              _after={{
+                content: '""',
+                position: 'absolute',
+                top: '45%',
+                right: '0%',
+                transform: 'translateY(-50%)',
+                height: '2.2rem',
+                width: '3rem',
+                background: 'linear-gradient(90deg, #0C0D0D00 0%, #0C0D0D 80%)',
+              }}
+            >
+              <HStack
+                overflow="clip"
+                w="full"
+                mt="auto"
+                justify="start"
+                whiteSpace="nowrap" // Set whiteSpace to nowrap
+              >
+                {industry.map((tag: any, key: any) => {
+                  return (
+                    <CustomTag color={tag.label} key={key}>
+                      {tag.label}
+                    </CustomTag>
+                  );
+                })}
+              </HStack>
+            </Box>
+            <Flex
+              justify="end"
+              align={'center'}
+              flex="1"
+              w={'full'}
+              position="relative"
+              zIndex="1"
+            >
+              <AvatarGroup size="xs" max={3}>
+                <Avatar
+                  outline="2px solid #0C0D0D"
+                  name="Ryan Florence"
+                  src="https://bit.ly/ryan-florence"
+                />
+                <Avatar
+                  outline="2px solid #0C0D0D"
+                  name="Segun Adebayo"
+                  src="https://bit.ly/sage-adebayo"
+                />
+                <Avatar
+                  outline="2px solid #0C0D0D"
+                  name="Kent Dodds"
+                  src="https://bit.ly/kent-c-dodds"
+                />
+                <Avatar
+                  name="Prosper Otemuyiwa"
+                  src="https://bit.ly/prosper-baba"
+                />
+                <Avatar
+                  name="Christian Nwamba"
+                  src="https://bit.ly/code-beast"
+                />
+              </AvatarGroup>
+              <Box as="p" color="white" textStyle={'body4'}>
+                +{formatNumberWithK(10)}
+              </Box>
+            </Flex>
+          </HStack>
         </VStack>
       </VStack>
     </Card>
@@ -249,6 +334,8 @@ const ProjectsList = ({
   return (
     <Container maxW="7xl" overflow={'visible'} p="0">
       <Wrap
+        overflow={'visible'}
+        py="8px"
         spacing="1.5rem"
         w="100%"
         margin="0"

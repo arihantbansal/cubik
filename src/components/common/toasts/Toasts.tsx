@@ -70,6 +70,38 @@ const SuccessToast = ({ toast, message }: any) => {
     ),
   });
 };
+const RemoveToast = ({ toast, message }: any) => {
+  return toast({
+    position: 'bottom',
+    duration: 2100,
+
+    render: () => (
+      <Center>
+        <HStack
+          gap="0.1rem"
+          padding="1rem"
+          bg="white"
+          m="1rem"
+          maxW="fit-content"
+          rounded="6px"
+          alignItems={'center'}
+          justify="center"
+        >
+          <Player
+            autoplay
+            keepLastFrame
+            speed={0.7}
+            src={'https://assets10.lottiefiles.com/packages/lf20_bga6c7jv.json'}
+            style={{ height: `22px`, width: `22px` }}
+          />
+          <Text fontSize="sm" color={'black'} fontWeight={'500'}>
+            {message}
+          </Text>
+        </HStack>
+      </Center>
+    ),
+  });
+};
 const FailureToast = ({ toast }: any) => {
   return toast({
     position: 'bottom',
@@ -100,4 +132,4 @@ const FailureToast = ({ toast }: any) => {
   });
 };
 
-export { SuccessToast, FailureToast };
+export { SuccessToast, RemoveToast, FailureToast };

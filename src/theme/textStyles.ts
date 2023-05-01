@@ -52,7 +52,7 @@ export const textStyles = {
     lineHeight: '26px',
   },
   title3: {
-    fontWeight: '500',
+    fontWeight: '600',
     fontSize: '18px',
     lineHeight: '24px',
   },

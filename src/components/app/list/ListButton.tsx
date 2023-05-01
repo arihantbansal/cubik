@@ -19,6 +19,7 @@ import {
   Stack,
   Text,
   useDisclosure,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
@@ -28,9 +29,9 @@ import { TiFlash } from 'react-icons/ti';
 import { ListDonationFormType } from '~/interfaces/donationForm';
 import { tokenGroup } from '~/interfaces/token';
 import useListStore from '~/store/listStore';
-import PaymentModal from '../common/payment-modal/PaymentModal';
-import { ControlledSelect } from '../common/select/ControlledSelect';
-import { tokens } from '../common/tokens/DonationTokens';
+import PaymentModal from '../../common/payment-modal/PaymentModal';
+import { ControlledSelect } from '../../common/select/ControlledSelect';
+import { tokens } from '../../common/tokens/DonationTokens';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { ActionMeta } from 'react-select';
@@ -43,22 +44,14 @@ interface ProjectListCardProps {
   register: UseFormRegister<ListDonationFormType>;
   setValue: UseFormSetValue<ListDonationFormType>;
   onAmountChange: (id: string, value: number) => void;
+  donationData: { [id: string]: number }; // Change the key type to string
 }
 
 const ProjectListCard: React.FC<ProjectListCardProps> = memo(
-  ({ project, register, setValue, onAmountChange }) => {
+  ({ project, register, setValue, onAmountChange, donationData }) => {
     const removeProject = useListStore((state) => state.removeProject);
     return (
-      <MenuItem
-        p="0"
-        key={project.id}
-        textStyle="body3"
-        color="neutral.11"
-        backgroundColor={'transparent'}
-        _hover={{ background: 'transparent' }}
-        _focus={{ background: 'transparent' }}
-        _active={{ background: 'transparent' }}
-      >
+      <Box w="full" p="0" key={project.id}>
         <HStack justify={'space-between'} w="full">
           <HStack justifyItems={'start'} align="center" w="full">
             <Avatar
@@ -71,21 +64,35 @@ const ProjectListCard: React.FC<ProjectListCardProps> = memo(
           </HStack>
           <Stack direction={'row'} alignItems={'end'} alignSelf={'end'}>
             <NumberInput
+              id={`number-input-${project.id}`}
               variant="cubik"
               size="sm"
               w="10rem"
               maxW={20}
-              defaultValue={15}
+              value={donationData[project.id] || 15}
               min={1}
-              onChange={(value) => {
-                const amountValue = parseInt(value);
-                setValue(`amount.${project.id}` as any, amountValue);
-                onAmountChange(project.id, amountValue);
+              onChange={(valueString) => {
+                const amountValue = parseInt(valueString, 10);
+                if (!isNaN(amountValue)) {
+                  setValue(`amount.${project.id}` as any, amountValue);
+                  onAmountChange(project.id, amountValue);
+                }
               }}
             >
               <NumberInputField
                 {...register(`amount.${project.id}` as any, { required: true })}
+                onFocus={(e) => {
+                  e.stopPropagation();
+                  document
+                    .getElementById(`number-input-${project.id}`)
+                    ?.focus();
+                }}
+                onBlur={(e) => {
+                  e.stopPropagation();
+                  document.getElementById(`number-input-${project.id}`)?.blur();
+                }}
               />
+
               <NumberInputStepper>
                 <NumberIncrementStepper fontSize={'12px'} width={'22'} />
                 <NumberDecrementStepper fontSize={'12px'} width={'22'} />
@@ -106,7 +113,7 @@ const ProjectListCard: React.FC<ProjectListCardProps> = memo(
             />
           </Stack>
         </HStack>
-      </MenuItem>
+      </Box>
     );
   }
 );
@@ -120,9 +127,13 @@ const IconButtonBadge = () => {
   const projectList = useListStore((state) => state.projectList);
   const [listItemsCount, setListItemsCount] = useState(count);
   const [totalDonation, setTotalDonation] = useState(0);
-  const [inputAmount, setInputAmount] = useState<number | undefined>();
+  const [message, setMessage] = useState('');
+
+  const [inputAmountValue, setInputAmountValue] = useState<
+    number | undefined
+  >();
   const [selectedToken, setSelectedToken] = useState<string | undefined>();
-  const [donationData, setDonationData] = useState<{ [id: number]: number }>(
+  const [donationData, setDonationData] = useState<{ [id: string]: number }>(
     {}
   );
 
@@ -145,26 +156,41 @@ const IconButtonBadge = () => {
     });
   }, [projectList]);
 
-  const handleDonationChange = useCallback((id: string, value: number) => {
-    setDonationData((prevData) => ({ ...prevData, [id]: value }));
-    const donationAmount = (): number => {
-      const newTotal = Object.values({
-        ...donationData,
-        [id]: value,
-      }).reduce((acc: number, cur: unknown) => acc + (cur as number), 0);
-      return newTotal;
-    };
-    setTotalDonation(donationAmount());
-  }, []);
+  const handleDonationChange = useCallback(
+    (id: string, value: number) => {
+      setDonationData((prevData) => ({ ...prevData, [id]: value }));
+      const donationAmount = (): number => {
+        const newTotal = Object.values({
+          ...donationData,
+          [id]: value,
+        }).reduce((acc: number, cur: unknown) => acc + (cur as number), 0);
+        return newTotal;
+      };
+      setTotalDonation(donationAmount());
+    },
+    [donationData]
+  );
 
   const applyAmountToAll = useCallback(() => {
-    if (inputAmount !== undefined && selectedToken !== undefined) {
+    if (inputAmountValue !== undefined && selectedToken !== undefined) {
+      let newDonationData: { [id: string]: number } = {};
+      let newTotalDonation = 0;
+
       projectList.forEach((project) => {
-        setValue(`amount.${project.id}` as any, inputAmount);
-        handleDonationChange(project.id, inputAmount);
+        setValue(`amount.${project.id}` as any, inputAmountValue);
+        newDonationData[project.id] = inputAmountValue;
+        newTotalDonation += inputAmountValue;
       });
+
+      setDonationData(newDonationData);
+      setTotalDonation(newTotalDonation);
+      setMessage(''); // Clear the message
+    } else {
+      setMessage(
+        'Please enter an amount and select a token before applying to all projects.'
+      );
     }
-  }, [inputAmount, selectedToken, setValue, handleDonationChange]);
+  }, [inputAmountValue, selectedToken, setValue, projectList]);
 
   const onSubmit = (data: ListDonationFormType) => {
     const amounts = Object.entries(data.amount || {}).map(
@@ -189,7 +215,7 @@ const IconButtonBadge = () => {
   return (
     <>
       <PaymentModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
-      <Menu closeOnSelect={false} closeOnBlur={false}>
+      <Menu closeOnSelect={false} closeOnBlur={true}>
         <HStack gap={{ base: '2px', md: '16px' }}>
           <MenuButton
             color={'#A8F0E6'}
@@ -208,34 +234,36 @@ const IconButtonBadge = () => {
             <Badge
               position={'absolute'}
               transform={{
-                base: 'translate(14px, -10px)',
-                md: 'translate(22px, -16px)',
+                base: 'translate(14px, -8px)',
+                md: 'translate(18px, -18px)',
               }}
               rounded="full"
               backgroundColor={'#FFE53D'}
-              minW={{ base: '0.7rem', md: '1rem' }}
-              minH={{ base: '0.7rem', md: '1rem' }}
+              minW={{ base: '1rem', md: '1.2rem' }}
+              minH={{ base: '1rem', md: '1.2rem' }}
               display={'flex'}
               alignItems="center"
               justifyContent={'center'}
               colorScheme="green"
             >
-              <Text fontSize={{ base: '8px', md: '14px' }}>
+              <Text fontSize={{ base: '8px', md: '10px' }}>
                 {listItemsCount}
               </Text>
             </Badge>
           )}
         </HStack>
         <MenuList
+          outline={'none'}
+          border="none"
           height="80vh"
           maxH={'70rem'}
-          w="420px"
+          w="380px"
           gap="24px"
           display={'flex'}
           flexDir="column"
           alignItems={'start'}
           padding="24px"
-          backgroundColor="linear-gradient(322.35deg, #000000 0%, #0F0F0F 100%)"
+          backgroundImage="linear-gradient(322.35deg, #000000 0%, #0F0F0F 100%)"
         >
           <VStack align={'start'}>
             <Box as="p" textStyle="title2" color="neutral.11">
@@ -246,6 +274,7 @@ const IconButtonBadge = () => {
             </Box>
           </VStack>
           <Box w="full" h="1px" background={'#272929'} />
+
           <form
             onSubmit={handleSubmit(onSubmit)}
             style={{
@@ -257,15 +286,7 @@ const IconButtonBadge = () => {
               height: '100%',
             }}
           >
-            <MenuItem
-              p="0"
-              textStyle="body3"
-              color="neutral.11"
-              backgroundColor={'transparent'}
-              _hover={{ background: 'transparent' }}
-              _focus={{ background: 'transparent' }}
-              _active={{ background: 'transparent' }}
-            >
+            <Box p="0">
               {projectList.length > 0 && (
                 <VStack w="full" gap="12px">
                   <HStack justify={'space-between'} w="full" gap="12px">
@@ -273,10 +294,10 @@ const IconButtonBadge = () => {
                       placeholder="Enter Amount"
                       type="number"
                       onChange={(e) => {
-                        console.log('onchange input called - ', e.target.value);
-                        setInputAmount(parseInt(e.target.value));
+                        setInputAmountValue(parseInt(e.target.value));
                       }}
                     />
+
                     <ControlledSelect
                       // @ts-ignore
                       control={control}
@@ -299,9 +320,14 @@ const IconButtonBadge = () => {
                   >
                     Apply to all
                   </Button>
+                  {message && (
+                    <Text color="red.500" fontSize="sm">
+                      {message}
+                    </Text>
+                  )}
                 </VStack>
               )}
-            </MenuItem>
+            </Box>
             <Box w="full" h="1px" background={'#272929'} />
             <VStack w="full" alignItems={'start'} h="100%" gap="24px">
               {projectList.length < 1 ? (
@@ -346,7 +372,8 @@ const IconButtonBadge = () => {
                     project={project}
                     register={register}
                     setValue={setValue}
-                    onAmountChange={handleDonationChange} // Pass the function here
+                    onAmountChange={handleDonationChange}
+                    donationData={donationData} // Pass the donationData state here
                   />
                 ))
               )}
@@ -379,4 +406,6 @@ const IconButtonBadge = () => {
   );
 };
 
-export default IconButtonBadge;
+const MemoizedIconButtonBadge = memo(IconButtonBadge);
+
+export default MemoizedIconButtonBadge;

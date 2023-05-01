@@ -188,7 +188,7 @@ const CreateProfile = () => {
   // }
 
   return (
-    <Container maxW="full" py={{ base: '2rem', md: '4rem' }}>
+    <Container maxW="full" py={{ base: '2rem', md: '4vh' }}>
       <Card
         background={'#080808'}
         borderRadius={'12px'}
