@@ -13,6 +13,7 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
+import { ProjectsModel } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import { Controller, useForm } from 'react-hook-form';
@@ -24,6 +25,7 @@ import { tokens } from '../../../../../common/tokens/DonationTokens';
 import Graph from './Graph';
 
 type ProjectDonationSimulatorProps = {
+  projectDetails: ProjectsModel;
   height: number;
   width: number;
 };
@@ -31,6 +33,7 @@ type ProjectDonationSimulatorProps = {
 export const token: tokenGroup[] = tokens;
 
 export const ProjectDonationSimulator = ({
+  projectDetails,
   height,
   width,
 }: ProjectDonationSimulatorProps) => {

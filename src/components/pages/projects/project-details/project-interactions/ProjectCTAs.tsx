@@ -63,7 +63,7 @@ export const ProjectCTAs = ({
           </ModalHeader>
           <ModalCloseButton top="24px" />
           <ModalBody>
-            <PaymentModalBody />
+            <PaymentModalBody projectDetails={projectDetails} />
           </ModalBody>
         </ModalContent>
       </Modal>

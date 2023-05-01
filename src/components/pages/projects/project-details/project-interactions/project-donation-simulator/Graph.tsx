@@ -39,24 +39,12 @@ const Graph: React.FC<GraphProps> = ({
       calculateProjectMatchingFund(
         maximumDonationValue, // maxDonation
         1, // step
-        a.data?.contribution as number[], // projectContributions
-        a.data?.round as Grant[], // grants
-        a.data?.matchingPool as number
-      ),
-    []
-  );
-  const bonkData = useMemo(
-    () =>
-      calculateProjectMatchingFund(
-        maximumDonationValue, // maxDonation
-        1, // step
         [1, 3, 4, 5], // projectContributions
         [{ funding: [1, 2, 3, 4, 5, 6] }, { funding: [2, 1, 1, 6, 7] }], // grants
-        500 // availableMatch
+        10000 // availableMatch
       ),
     []
   );
-
   console.log('data -', data);
   return (
     <VStack width={'100%'} gap="0">
