@@ -35,7 +35,8 @@ model Session {
   userId       String
   expires      DateTime
   user         UserModel @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+ createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
   @@index([userId])
 }
 
@@ -43,7 +44,8 @@ model VerificationToken {
   identifier String
   token      String   @unique
   expires    DateTime
-
+ createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
   @@unique([identifier, token])
 }
 
@@ -60,7 +62,8 @@ model UserDetailsModel {
   telegramHandle String?
   userModelId    String    @unique
   user           UserModel @relation(fields: [userModelId], references: [id])
-
+ createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
   @@index([userModelId])
 }
 
@@ -88,6 +91,7 @@ model ProjectsModel {
   owner             UserModel           @relation(fields: [owner_publickey], references: [mainWallet])
   Team              Team[]
   Contribution      Contribution[]
+  
 
   @@index([owner_publickey])
 }
@@ -104,7 +108,8 @@ model Team {
   projectsModelId String
   user            UserModel     @relation(fields: [userId], references: [id])
   ProjectsModel   ProjectsModel @relation(fields: [projectsModelId], references: [id])
-
+ createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
   @@index([projectsModelId])
   @@index([userId])
 }
@@ -160,7 +165,8 @@ model Sponsor {
   logo    String @db.VarChar(500)
   roundId String
   Round   Round  @relation(fields: [roundId], references: [id])
-
+   createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
   @@index([roundId])
 }
 
