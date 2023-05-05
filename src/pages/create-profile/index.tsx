@@ -23,8 +23,10 @@ import {
   CardBody,
   CardHeader,
 } from '@chakra-ui/react';
+import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import * as anchor from '@coral-xyz/anchor';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useWallet } from '@solana/wallet-adapter-react';
+import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
 import {
   useWalletModal,
   WalletMultiButton,
@@ -45,6 +47,7 @@ import * as yup from 'yup';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import FramerCarousel from '~/components/pages/connect-wallet/create-profile/FramerNFTCarousel';
 import ProfilePicture from '~/components/pages/connect-wallet/create-profile/ProfilePicture';
+import { createUser, connection } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 
 const onSuccess = () => {
@@ -62,6 +65,7 @@ const CreateProfile = () => {
   const { setVisible } = useWalletModal();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
+  const anchorWallet = useAnchorWallet();
   const [userNameIsAvailable, setUserNameIsAvailable] = useState(false);
   const [pfp, setPFP] = useState<string>(
     `https://source.boringavatars.com/marble/120/${publicKey?.toBase58()}?square&?colors=05299E,5E4AE3,947BD3,F0A7A0,F26CA7,FFFFFF,CAF0F8,CCA43B`
@@ -137,12 +141,25 @@ const CreateProfile = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setCreatingNewProfileLoadingState(true);
+
+    const tx = new anchor.web3.Transaction();
+    const ix = await createUser(anchorWallet as NodeWallet, data.username);
+    const { blockhash } = await connection.getLatestBlockhash();
+    tx.recentBlockhash = blockhash;
+    tx.feePayer = anchorWallet?.publicKey;
+    tx.add(ix);
+    const signTx = await anchorWallet?.signTransaction(tx);
+    if (!signTx) return;
+    const sig = await connection.sendRawTransaction(signTx?.serialize());
+    console.log(sig);
+
+    if (!sig) return;
     //todo: put transaction here
-    await userCreateMutation.mutate({
+    userCreateMutation.mutate({
       username: data.username,
       id: uuidV4(),
       profilePicture: pfp,
-      tx: 'afsdsdad',
+      tx: sig,
       mainWallet: publicKey?.toBase58() as string,
     });
     if (session.status === 'authenticated') {
