@@ -1,4 +1,5 @@
 import {
+  Prisma,
   ProjectJoinRoundStatus,
   ProjectVerifyStatus,
   Team,
@@ -44,7 +45,7 @@ export const projectsRouter = router({
           cause: 'Corrupted session',
         });
       }
-      let team: Team[] = [];
+      let team: Prisma.TeamCreateManyInput[] = [];
       if (input.team.length > 0) {
         team = input.team.map((teamId) => {
           return {
@@ -54,7 +55,7 @@ export const projectsRouter = router({
           };
         });
       }
-      const teamOwner: Team = {
+      const teamOwner: Prisma.TeamCreateManyInput = {
         id: uuid(),
         projectsModelId: input.id,
         userId: ctx.session.user.id,
