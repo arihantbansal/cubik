@@ -47,9 +47,9 @@ export const projectsRouter = router({
           cause: 'Corrupted session',
         });
       }
-      let team: Team[] = [];
-      if (input?.team?.length > 0) {
-        team = input?.team?.map((teamId) => {
+      let team: Prisma.TeamCreateManyInput[] = [];
+      if (input.team.length > 0) {
+        team = input.team.map((teamId) => {
           return {
             id: uuid(),
             projectsModelId: input.id,
