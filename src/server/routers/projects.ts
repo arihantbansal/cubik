@@ -27,6 +27,8 @@ export const projectsRouter = router({
         projectUserCount: z.number(),
         telegram_link: z.string(),
         team: z.array(z.string()),
+        sig: z.string().nonempty(),
+        multiSigAddress: z.string().nonempty(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -45,8 +47,8 @@ export const projectsRouter = router({
         });
       }
       let team: Team[] = [];
-      if (input.team.length > 0) {
-        team = input.team.map((teamId) => {
+      if (input?.team?.length > 0) {
+        team = input?.team?.map((teamId) => {
           return {
             id: uuid(),
             projectsModelId: input.id,
@@ -65,6 +67,7 @@ export const projectsRouter = router({
             id: input.id,
             industry: input.industry,
             logo: input.logo,
+            sig: input.sig,
             long_description: input.long_description,
             name: input.name,
             owner_publickey: ctx.session.user.mainWallet,
@@ -76,6 +79,7 @@ export const projectsRouter = router({
             project_link: input.project_link,
             twitter_handle: input.twitter_handle,
             github_link: input.github_link,
+            mutliSigAddress: input.multiSigAddress,
           },
         });
         await prisma.team.createMany({

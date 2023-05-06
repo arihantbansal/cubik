@@ -150,7 +150,8 @@ const CreateProfile = () => {
     tx.add(ix);
     const signTx = await anchorWallet?.signTransaction(tx);
     if (!signTx) return;
-    const sig = await connection.sendRawTransaction(signTx?.serialize());
+    const serialized_transaction = signTx.serialize();
+    const sig = await connection.sendRawTransaction(serialized_transaction);
     console.log(sig);
 
     if (!sig) return;

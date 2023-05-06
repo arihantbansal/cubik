@@ -1,5 +1,5 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { UserModel } from '@prisma/client';
+import { Prisma, UserModel } from '@prisma/client';
 import { NextApiRequest } from 'next';
 import { type DefaultSession, type NextAuthOptions } from 'next-auth';
 import credentialsProvider from 'next-auth/providers/credentials';
@@ -13,9 +13,15 @@ declare module 'next-auth' {
       mainWallet: string;
       username: string;
       profilePicture: string;
+      count: Prisma.UserModelCountOutputType;
     } & DefaultSession['user'];
   }
 }
+type UserSession = Prisma.UserModelGetPayload<{
+  include: {
+    _count: true;
+  };
+}>;
 
 export const authOptions = (req: NextApiRequest): NextAuthOptions => {
   return {
@@ -26,11 +32,14 @@ export const authOptions = (req: NextApiRequest): NextAuthOptions => {
         return token;
       },
       session: async ({ session, token }) => {
-        const userData = token.user as UserModel;
+        const userData = token.user as UserSession;
+        console.log(userData);
+
         session.user.id = userData.id;
         session.user.mainWallet = userData.mainWallet;
         session.user.username = userData.username;
         session.user.profilePicture = userData.profilePicture;
+        session.user.count = userData._count;
         return session;
       },
     },
@@ -66,7 +75,12 @@ export const authOptions = (req: NextApiRequest): NextAuthOptions => {
             where: {
               mainWallet: user.wallet,
             },
+            include: {
+              _count: true,
+            },
           });
+          console.log(res?._count.project, '0');
+
           if (!res) {
             return null;
           }

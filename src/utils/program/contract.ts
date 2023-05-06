@@ -2,7 +2,8 @@ import * as anchor from '@coral-xyz/anchor';
 import type NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 
 const PROGRAM_ID = 'Wgvt4LxST3JmUxZae5z7AYqzd63vo6EXjnW1aaMVX8L';
-const RPC_URL = 'https://api.devnet.solana.com';
+const RPC_URL =
+  'https://solana-devnet.g.alchemy.com/v2/7v3-1dXGVDSGCem5jHrB1Uyv_WlOsoX-';
 
 import type { ContractType } from './program';
 import { Contract } from './program';
@@ -37,10 +38,10 @@ export const anchorProgram = (wallet: anchor.Wallet) => {
 export const createUser = async (wallet: NodeWallet, username: string) => {
   const program = anchorProgram(wallet);
   let [user_account] = anchor.web3.PublicKey.findProgramAddressSync(
-    [anchor.utils.bytes.utf8.encode(username), wallet.publicKey.toBuffer()],
+    [anchor.utils.bytes.utf8.encode('user'), wallet.publicKey.toBuffer()],
     program.programId
   );
-  const ix = program.methods
+  const ix = await program.methods
     .createUser(username)
     .accounts({
       userAccount: user_account,
@@ -55,7 +56,6 @@ export const createUser = async (wallet: NodeWallet, username: string) => {
 
 export const createProject = async (
   wallet: NodeWallet,
-  username: string,
   counter: number,
   multi_sig: anchor.web3.PublicKey
 ) => {
@@ -66,7 +66,7 @@ export const createProject = async (
     program.programId
   );
   let [user_account] = anchor.web3.PublicKey.findProgramAddressSync(
-    [anchor.utils.bytes.utf8.encode(username), wallet.publicKey.toBuffer()],
+    [anchor.utils.bytes.utf8.encode('user'), wallet.publicKey.toBuffer()],
     program.programId
   );
   let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -86,7 +86,8 @@ export const createProject = async (
       userAccount: user_account,
       rent: anchor.web3.SYSVAR_RENT_PUBKEY,
       systemProgram: anchor.web3.SystemProgram.programId,
-    });
+    })
+    .instruction();
 
   return ix;
 };
@@ -192,4 +193,4 @@ export const createRound = async (
   return ix;
 };
 
-export const updateProjectRoundVerified = () => {};
+export const updateProjectRoundVerified = async (wallet: NodeWallet) => {};
