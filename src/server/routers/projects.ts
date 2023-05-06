@@ -1,4 +1,5 @@
 import {
+  Prisma,
   ProjectJoinRoundStatus,
   ProjectVerifyStatus,
   Team,
@@ -56,7 +57,7 @@ export const projectsRouter = router({
           };
         });
       }
-      const teamOwner: Team = {
+      const teamOwner: Prisma.TeamCreateManyInput = {
         id: uuid(),
         projectsModelId: input.id,
         userId: ctx.session.user.id,

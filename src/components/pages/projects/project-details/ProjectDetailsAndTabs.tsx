@@ -76,7 +76,7 @@ const MobileDrawer = ({
           </HStack>
         </DrawerHeader>
         <DrawerBody>
-          <ProjectDonationSimulator height={80} width={120} />
+          {/* <ProjectDonationSimulator height={80} width={120} projectDetails={proj} /> */}
         </DrawerBody>
       </DrawerContent>
     </Drawer>

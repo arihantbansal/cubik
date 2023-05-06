@@ -9,7 +9,7 @@ export function calculateProjectMatchingFund(
   grants: Grant[],
   availableMatch: number
 ): { donation: number; additionalMatch: number }[] {
-  const dataPoints = [];
+  const dataPoints = []; // the data points for the graph
 
   const isFirstContribution =
     projectContributions.length === 0 &&
