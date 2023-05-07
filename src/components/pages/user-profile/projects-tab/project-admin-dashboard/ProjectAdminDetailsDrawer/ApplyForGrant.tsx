@@ -1,23 +1,24 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { AnimatePresence, motion } from 'framer-motion';
 import {
-  VStack,
-  HStack,
   Box,
-  Heading,
   Button,
-  Checkbox,
-  useToast,
-  UseToastOptions,
-  Stack,
   Center,
+  Checkbox,
+  Heading,
+  HStack,
   Icon,
+  VStack,
 } from '@chakra-ui/react';
-import { trpc } from '~/utils/trpc';
-import { Round } from '@prisma/client';
-import { formatNumberWithK } from '~/utils/formatWithK';
+import * as anchor from '@coral-xyz/anchor';
+import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import { ProjectsModel, Round } from '@prisma/client';
+import { useAnchorWallet } from '@solana/wallet-adapter-react';
+import React, { Dispatch, SetStateAction } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { FiChevronLeft } from 'react-icons/fi';
+import { v4 as uuidV4 } from 'uuid';
+import { formatNumberWithK } from '~/utils/formatWithK';
+import { connection, ProjectJoinRound } from '~/utils/program/contract';
+import { trpc } from '~/utils/trpc';
 import { drawerBodyViewEnum } from '../../ProjectHeader';
 
 type FormData = {
@@ -26,14 +27,48 @@ type FormData = {
 
 const ApplyForGrant: React.FC<{
   setDrawerBodyView: Dispatch<SetStateAction<drawerBodyViewEnum>>;
-}> = ({ setDrawerBodyView }) => {
-  const { data, isLoading, error, isError } = trpc.round.findActive.useQuery();
-
+  project: ProjectsModel;
+}> = ({ setDrawerBodyView, project }) => {
+  const {
+    data: roundData,
+    isLoading,
+    error,
+    isError,
+  } = trpc.round.findActive.useQuery();
+  const joinRoundMutation = trpc.project.joinRound.useMutation();
   const { control, handleSubmit } = useForm<FormData>();
+  const wallet = useAnchorWallet();
   const [selectRoundId, setSelectRoundId] = React.useState<string | null>(null);
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     console.log('selected round - ', selectRoundId);
+    if (!selectRoundId) return;
+    // get round name of selected round id;
+    const round = roundData?.find((round) => round.id === selectRoundId);
+    if (!round) return;
+
+    const tx = new anchor.web3.Transaction();
+
+    const ix = await ProjectJoinRound(
+      wallet as NodeWallet,
+      round.roundName,
+      project.projectUserCount
+    );
+    const { blockhash } = await connection.getLatestBlockhash();
+    tx.recentBlockhash = blockhash;
+    tx.feePayer = wallet?.publicKey;
+    tx.add(ix);
+    const signTx = await wallet?.signTransaction(tx);
+    if (!signTx) return;
+    const serialized_transaction = signTx.serialize();
+    const sig = await connection.sendRawTransaction(serialized_transaction);
+    if (!sig) return;
+    joinRoundMutation.mutate({
+      roundId: selectRoundId,
+      projectId: project.id,
+      tx: sig,
+      id: uuidV4(),
+    });
   };
 
   const Tile: React.FC<{ tileIndex: string; round: Round }> = ({
@@ -107,7 +142,7 @@ const ApplyForGrant: React.FC<{
         Select a Grant
       </Heading>
       <VStack w="full" spacing="24px">
-        {data?.map((round: Round) => {
+        {roundData?.map((round: Round) => {
           return <Tile tileIndex={round.id} round={round} key={round.id} />;
         })}
       </VStack>
