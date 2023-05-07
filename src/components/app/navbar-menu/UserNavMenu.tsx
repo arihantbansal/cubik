@@ -31,6 +31,8 @@ const UserNavMenu = () => {
         signOut({
           redirect: false,
         });
+        // refresh the page to clear the cache
+        localStorage.removeItem('walletName');
       })
       .catch((e) => {
         console.log(e);

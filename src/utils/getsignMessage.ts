@@ -3,7 +3,8 @@ import nacl from 'tweetnacl';
 import * as anchor from '@coral-xyz/anchor';
 
 export const createMessage = async (crsfToken?: string | undefined) => {
-  const message = 'Hello World';
+  const message =
+    'Welcome to Cubik a platform where community helps projects to grow'; //todo: isko change karna hai
   let crsf: string | undefined = await getCsrfToken();
   if (crsfToken) {
     crsf = crsfToken;

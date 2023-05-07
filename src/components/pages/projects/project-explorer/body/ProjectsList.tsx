@@ -30,6 +30,11 @@ type PropsType = {
   project: ProjectsModel;
 };
 
+// In the ProjectsList component
+type ProjectsListProps = {
+  allProjectsData: ProjectsModel[];
+};
+
 const ProjectCard = ({ project }: PropsType) => {
   const router = useRouter();
   const toast = useToast();
@@ -325,12 +330,7 @@ const ProjectCard = ({ project }: PropsType) => {
   );
 };
 
-const ProjectsList = ({
-  allProjectsData,
-}: {
-  allProjectsData: ProjectsModel[];
-}) => {
-  console.log('project data - ', allProjectsData);
+const ProjectsList = ({ allProjectsData }: ProjectsListProps) => {
   return (
     <Container maxW="7xl" overflow={'visible'} p="0">
       <Wrap

@@ -10,8 +10,8 @@ const PaymentModalBody = ({
   return (
     <Stack direction="row">
       <ProjectDonationSimulator
-        height={120}
-        width={120}
+        height={90}
+        width={100}
         projectDetails={projectDetails}
       />
     </Stack>

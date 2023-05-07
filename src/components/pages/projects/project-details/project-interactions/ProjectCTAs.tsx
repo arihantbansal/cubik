@@ -18,6 +18,9 @@ import { MdArrowForward } from 'react-icons/md';
 import { IconProps } from '@chakra-ui/react';
 import { useState } from 'react';
 import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
+import { useSession } from 'next-auth/react';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 
 interface ProjectCTAsProps {
   projectDetails: ProjectsModel;
@@ -44,12 +47,21 @@ export const ProjectCTAs = ({
   projectDetails,
   isLoading,
 }: ProjectCTAsProps) => {
+  const session = useSession();
+  const { setVisible } = useWalletModal();
   const [isHovered, setIsHovered] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const onDonateHandler = () => {
+    if (session.data?.user?.id) {
+      onOpen();
+    } else {
+      setVisible(true);
+    }
+  };
   return (
     <>
-      <Modal variant={'cubik'} size="3xl" isOpen={isOpen} onClose={onClose}>
+      <Modal variant={'cubik'} size="4xl" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent pt="0">
           <ModalHeader
@@ -78,7 +90,7 @@ export const ProjectCTAs = ({
             <Skeleton isLoaded={!isLoading} w="full">
               <Box opacity={isLoading ? '0.6' : '1'}>
                 <Button
-                  onClick={onOpen}
+                  onClick={onDonateHandler}
                   variant="project_button_primary"
                   w="full"
                 >

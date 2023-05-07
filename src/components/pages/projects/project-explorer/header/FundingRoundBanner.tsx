@@ -1,7 +1,9 @@
-import { Box, Center, HStack, Stack, VStack } from '@chakra-ui/react';
+import { Box, Button, Center, HStack, Stack, VStack } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
+import { BiChevronRight } from 'react-icons/bi';
 
 interface CountdownTimerProps {
   finalDate: Date;
@@ -210,81 +212,173 @@ const RoundStatus = () => {
 
 const FundingRoundBanner = () => {
   return (
-    <Stack
-      p={{ base: '2rem', md: '3rem' }}
-      border="2px solid #ffffff10"
-      overflow="hidden"
-      w="full"
-      gap="3rem"
-      rounded="16px"
-      justify={'space-between'}
-      align="start"
-      direction={{ base: 'column', md: 'row' }}
-      position={'relative'}
-      _before={{
-        content: '""',
-        zIndex: '0',
-        position: 'absolute',
-        top: '0',
-        left: '0',
-        transform: 'translate(-50%, -50%)',
-        width: '20vw',
-        maxW: '20rem',
-        minW: '12rem',
-        height: '20vw',
-        maxH: '20rem',
-        minH: '12rem',
-        backgroundColor: '#4ADE80',
-        filter: 'blur(200px)',
-        WebkitFilter: 'blur(200px)',
-        rounded: 'full',
-      }}
-      _after={{
-        content: '""',
-        zIndex: '-1',
-        position: 'absolute',
-        bottom: '0%',
-        right: '0',
-        transform: 'translate(50%, -50%)',
-        width: '20vw',
-        maxW: '20rem',
-        minW: '12rem',
-        height: '20vw',
-        maxH: '20rem',
-        minH: '12rem',
-        backgroundColor: '#4ADE80',
-        filter: 'blur(200px)',
-        WebkitFilter: 'blur(200px)',
-        rounded: 'full',
-      }}
-    >
-      <VStack align={'start'} spacing="1.4rem">
-        <Box
-          color="neutral.11"
-          as="p"
-          textStyle={{ base: 'title1', md: 'headline3' }}
-        >
-          Web3 Open Source Software Round
-        </Box>
-        <HStack
-          bg="#ffffff10"
-          rounded="8px"
-          p={{ base: '0.6rem 1.2rem', md: '0.8rem 1.5rem' }}
-        >
-          <Box
-            color="#B4B0B2"
-            textTransform={'uppercase'}
-            as="p"
-            textStyle={{ base: 'body4', md: 'overline3' }}
+    <Stack w="full" direction={{ base: 'column', md: 'row' }}>
+      <Stack
+        maxW={'4xl'}
+        p={{ base: '16px', md: '32px' }}
+        border="2px solid #ffffff10"
+        overflow="hidden"
+        background={'#080808'}
+        w="full"
+        gap="3rem"
+        rounded="16px"
+        justify={'space-between'}
+        align="start"
+        direction={{ base: 'column', md: 'row' }}
+        position={'relative'}
+        _after={{
+          content: '""',
+          zIndex: '0',
+          position: 'absolute',
+          top: '-10',
+          right: '-20',
+          transform: 'translate(-50%, -50%)',
+          width: '10vw',
+          maxW: '10rem',
+          minW: '6rem',
+          height: 'full',
+          maxH: '12rem',
+          minH: '8rem',
+          backgroundColor: '#FFE53D',
+          filter: 'blur(100px)',
+          WebkitFilter: 'blur(100px)',
+          rounded: 'full',
+        }}
+        _before={{
+          content: '""',
+          zIndex: '0',
+          position: 'absolute',
+          top: '50%',
+          right: '10%',
+          transform: 'translate(50%, -50%)',
+          width: '20vw',
+          maxW: '20rem',
+          minW: '12rem',
+          height: '20vw',
+          maxH: '20rem',
+          minH: '12rem',
+          backgroundColor: '#31F579',
+          filter: 'blur(250px)',
+          WebkitFilter: 'blur(250px)',
+          rounded: 'full',
+        }}
+      >
+        <VStack w="full" align={'start'} spacing="48px">
+          <VStack w="full" align={'start'} spacing="24px">
+            <Center
+              flexDirection="row"
+              p="8px 12px"
+              gap="0.5rem"
+              rounded="full"
+              bg="#31F57920"
+              color="#4ADE80"
+            >
+              <RippleEffect />
+              <Box as="p" textStyle="body5">
+                Round starts in {''}
+                <b>{''}2 days</b>
+              </Box>
+            </Center>
+            <Stack
+              direction={{ base: 'column', md: 'row' }}
+              justify={'space-between'}
+              align="start"
+              gap={{ base: '8px', md: '16px' }}
+              w="full"
+            >
+              <VStack align={'start'} gap="8px">
+                <Box
+                  color="neutral.11"
+                  as="p"
+                  textStyle={{ base: 'title1', md: 'headline3' }}
+                >
+                  Alpha Grant Round
+                </Box>
+                <Box
+                  maxW={{ base: '340px', md: '420px' }}
+                  as="p"
+                  color="neutral.8"
+                  textStyle={{ base: 'body4', md: 'body3' }}
+                >
+                  A quadratic funding grant round for public goods building on
+                  Solana blockchain
+                </Box>
+              </VStack>
+              <HStack
+                bg="#ffffff10"
+                rounded="full"
+                boxShadow={'0px 4px 24px rgba(0, 0, 0, 0.08)'}
+                p={{ base: '0.6rem 1.2rem', md: '0.8rem 1.5rem' }}
+              >
+                <Box
+                  whiteSpace={'nowrap'}
+                  color="neutral.8"
+                  textTransform={'uppercase'}
+                  as="p"
+                  textStyle={{ base: 'body6', md: 'overline4' }}
+                  letterSpacing="2px"
+                >
+                  Matching Pool :
+                </Box>
+                <Box as="p" textStyle={{ base: 'body4', md: 'title3' }}>
+                  $30,000
+                </Box>
+              </HStack>
+            </Stack>
+          </VStack>
+          {/* <Button
+            rightIcon={<BiChevronRight size={20} />}
+            borderRadius="8px"
+            p="12px 32px"
+            backgroundColor="white"
+            colorScheme={'white'}
           >
-            Matching Pool
-          </Box>
-          <Box as="p" textStyle={{ base: 'body4', md: 'title3' }}>
-            : $30,000
-          </Box>
-        </HStack>
-      </VStack>
-      <RoundStatus />
+            Submit Project
+          </Button> */}
+        </VStack>
+        {/* <RoundStatus /> */}
+      </Stack>
+      {/* <Stack
+        maxW={'28rem'}
+        p={{ base: '16px', md: '32px' }}
+        border="2px solid #ffffff10"
+        overflow="hidden"
+        background={'#080808'}
+        w="full"
+        gap="3rem"
+        rounded="16px"
+        justify={'space-between'}
+        align="start"
+        direction={{ base: 'column', md: 'row' }}
+        position={'relative'}
+        _after={{
+          content: '""',
+          zIndex: '0',
+          position: 'absolute',
+          bottom: '-60%',
+          left: '-10%',
+          transform: 'translate(-50%, -50%)',
+          width: '12vw',
+          maxW: '12rem',
+          minW: '8rem',
+          height: 'full',
+          maxH: '14rem',
+          minH: '8rem',
+          backgroundColor: '#31F579',
+          filter: 'blur(120px)',
+          WebkitFilter: 'blur(120px)',
+          rounded: 'full',
+        }}
+      >
+        <Center position={'absolute'} bottom="0" right="0%">
+          <Image
+            src="/images/img.png"
+            alt="glass cube"
+            width={300}
+            height={500}
+          />
+        </Center>
+      </Stack> */}
     </Stack>
   );
 };

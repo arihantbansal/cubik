@@ -14,6 +14,14 @@ export const styles = {
         display: 'none',
       },
     },
+    'td:first-child': {
+      borderTopLeftRadius: '16px',
+      borderBottomLeftRadius: '16px',
+    },
+    'td:last-child': {
+      borderTopRightRadius: '16px',
+      borderBottomRightRadius: '16px',
+    },
     text: {
       marginTop: '0',
     },
@@ -39,7 +47,7 @@ export const styles = {
       backdropFilter: 'blur(10px)',
       padding: '44px 0px 16px 0px',
       gap: '0px',
-      width: {base:'10px', md:'416px'},
+      width: { base: '10px', md: '416px' },
       overflow: 'hidden',
     },
     '.wallet-adapter-modal-wrapper:before': {

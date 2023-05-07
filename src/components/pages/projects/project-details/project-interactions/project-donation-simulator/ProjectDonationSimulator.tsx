@@ -37,7 +37,7 @@ export const ProjectDonationSimulator = ({
   height,
   width,
 }: ProjectDonationSimulatorProps) => {
-  const [donation, setDonation] = useState(200);
+  const [donation, setDonation] = useState(50);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const {
@@ -75,13 +75,14 @@ export const ProjectDonationSimulator = ({
   }
 
   return (
-    <Stack gap="64px" direction={'row'}>
+    <Stack gap="40px" direction={'row'}>
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{
-          width: '40rem',
+          width: '30rem',
           height: '100%',
           display: 'flex',
+          flex: '1',
           flexDirection: 'column',
           justifyContent: 'space-between',
         }}

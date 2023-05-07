@@ -1,10 +1,12 @@
 import { Tooltip } from '@chakra-ui/react';
 import * as d3 from 'd3';
+import FlipNumbers from 'react-flip-numbers';
 
 interface GraphLineProps {
   width: number;
   height: number;
   data: { donation: number; additionalMatch: number }[];
+  availableMatch: number;
   donationAmount: number;
 }
 
@@ -12,6 +14,7 @@ export const BonkLine: React.FC<GraphLineProps> = ({
   width,
   height,
   data,
+  availableMatch,
   donationAmount,
 }) => {
   const margin = {
@@ -21,31 +24,40 @@ export const BonkLine: React.FC<GraphLineProps> = ({
     right: 5,
   };
   const xScale = d3
-    .scaleLinear() // @ts-ignore
-    .domain(d3.extent(data.map((d) => d.donation)))
+    .scalePow()
+    .exponent(2)
+    .domain(
+      (d3.extent(data.map((d) => d.donation)) as [number, number]) ?? [0, 1]
+    )
     .range([margin.left, width - margin.right]);
 
   const markerX = xScale(donationAmount);
 
   const bonkYScale = d3
-    .scaleLinear() // @ts-ignore
-    .domain(d3.extent(data.map((d) => d.additionalMatch)))
+    .scaleLinear()
+    .domain(
+      (d3.extent(data.map((d) => d.additionalMatch)) as [number, number]) ?? [
+        0, 1,
+      ]
+    )
     .range([height - margin.bottom, margin.top]);
 
-  // @ts-ignore
   const bonkLine = d3
     .line() // @ts-ignore
     .x((d) => xScale(d.donation)) // @ts-ignore
     .y((d) => bonkYScale(d.additionalMatch));
-
   // @ts-ignore
   const bonkDPath = bonkLine(data);
 
   const bonkMarkerY = bonkYScale(
-    // @ts-ignore
     data.find((d) => Math.abs(d.donation - donationAmount) < 0.1)
       ?.additionalMatch ?? 0
+  ); // Get the additionalMatch value at the marker point
+
+  const markerData = data.find(
+    (d) => Math.abs(d.donation - donationAmount) < 0.1
   );
+  const markerAdditionalMatch: number = markerData?.additionalMatch ?? 0;
 
   return (
     <>
@@ -58,22 +70,34 @@ export const BonkLine: React.FC<GraphLineProps> = ({
         strokeDasharray="3"
         strokeWidth="0.5"
       />
-      <path d={bonkDPath} fill="none" stroke="#DF9D33" strokeWidth="2" />
+      <path d={bonkDPath} fill="none" stroke="#DF9D33" strokeWidth="1.5" />
       <Tooltip
         isOpen={true}
         background={'transparent'}
-        label={`$${donationAmount}`}
+        label={
+          <FlipNumbers
+            height={16}
+            width={12}
+            color="white"
+            numberStyles={{
+              fontWeight: 'bold',
+              fontSize: '22px',
+            }}
+            play
+            perspective={300}
+            numbers={'$' + markerAdditionalMatch.toFixed(1)}
+          />
+        }
         color="#fff"
         fontWeight={'700'}
         fontSize="16px"
-        //textShadow="0 0 0 #fff"
-        placement="left"
+        placement="right"
       >
         <svg
-          x={markerX - 5}
-          y={bonkMarkerY - 5}
-          width="10"
-          height="10"
+          x={markerX - 4}
+          y={bonkMarkerY - 4}
+          width="8"
+          height="8"
           viewBox="0 0 10 10"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -160,9 +184,6 @@ export const BonkLine: React.FC<GraphLineProps> = ({
               <stop offset="0.0356247" stop-color="#FAFF00" />
               <stop offset="1" stop-color="#E08633" />
             </radialGradient>
-            <clipPath id="clip0_916_11712">
-              <rect width="10" height="10" fill="white" />
-            </clipPath>
           </defs>
         </svg>
       </Tooltip>

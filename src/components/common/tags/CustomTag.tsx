@@ -1,13 +1,16 @@
+import React, { forwardRef } from 'react';
 import { Box, Tag } from '@chakra-ui/react';
-import React from 'react';
 
-const CustomTag = ({
-  color,
-  children,
-}: {
+interface CustomTagProps {
   color?: string;
   children: React.ReactChild;
-}) => {
+  onResize?: () => void;
+  ref?: React.Ref<HTMLDivElement>;
+}
+
+const CustomTag = forwardRef<HTMLDivElement, CustomTagProps>((props, ref) => {
+  const { color, children, onResize } = props;
+
   switch (color) {
     case 'DAO':
       return (
@@ -95,20 +98,36 @@ const CustomTag = ({
           </Box>
         </Tag>
       );
+    case 'filter':
+      return (
+        <Tag rounded="full" px="20px" py="8px" bg="#E0FFFD">
+          <Box
+            as="p"
+            color="#14665B"
+            noOfLines={1}
+            whiteSpace="nowrap"
+            textStyle={'body5'}
+            fontWeight="600"
+          >
+            {children}
+          </Box>
+        </Tag>
+      );
 
     default:
       return (
         <Tag
+          ref={ref}
           rounded="full"
           variant="colorful"
           backgroundColor="#1D1F1E"
           fontSize="xs"
           p="8px 12px"
+          mx={1}
         >
           <Box
             as="p"
-            noOfLines={1}
-            whiteSpace="nowrap"
+            whiteSpace="pre"
             color="#D7E0DF"
             textStyle={{ base: 'body6', md: 'body5' }}
           >
@@ -117,6 +136,8 @@ const CustomTag = ({
         </Tag>
       );
   }
-};
+});
+
+CustomTag.displayName = 'CustomTag';
 
 export default CustomTag;

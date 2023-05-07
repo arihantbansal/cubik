@@ -1,6 +1,7 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { ProjectsModel } from '@prisma/client';
 import { ProjectWithCommentsAndRoundsType } from '~/types/IProjectDetails';
+import ProjectContributors from './project-interactions/project-tabs/ProjectContributors';
 import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
 import Discussions from './ProjectDiscussion';
 import ProjectsDetailedDescriptionSkeleton from './skeletons/ProjectsDetailedDescriptionSkeleton';
@@ -30,7 +31,9 @@ export const ProjectsTabs = ({
           )}
         </TabPanel>
         <TabPanel>{isLoading ? '' : <Discussions />}</TabPanel>
-        <TabPanel>Contributors</TabPanel>
+        <TabPanel>
+          <ProjectContributors />
+        </TabPanel>
       </TabPanels>
     </Tabs>
   );
