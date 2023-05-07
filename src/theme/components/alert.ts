@@ -34,7 +34,7 @@ const cubik = definePartsStyle((props) => {
       border: '2px solid',
       borderColor:
         status === 'error'
-          ? 'red.400'
+          ? '#FF333D'
           : status === 'warning'
           ? 'yellow.400'
           : status === 'info'
@@ -42,16 +42,7 @@ const cubik = definePartsStyle((props) => {
           : status === 'success'
           ? 'green.400'
           : 'gray.400',
-      background:
-        status === 'error'
-          ? 'red.400'
-          : status === 'warning'
-          ? 'yellow.400'
-          : status === 'info'
-          ? '#0C0D0D'
-          : status === 'success'
-          ? 'green.400'
-          : 'gray.400',
+      background: '#0C0D0D',
     },
     icon: {
       mt: '4px',
@@ -59,7 +50,7 @@ const cubik = definePartsStyle((props) => {
       height: '14px',
       color:
         status === 'error'
-          ? 'red.400'
+          ? '#FF333D'
           : status === 'warning'
           ? 'yellow.400'
           : status === 'info'
@@ -71,7 +62,7 @@ const cubik = definePartsStyle((props) => {
     description: {
       color:
         status === 'error'
-          ? 'red.400'
+          ? '#FF333D'
           : status === 'warning'
           ? 'yellow.400'
           : status === 'info'

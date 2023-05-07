@@ -88,21 +88,15 @@ model ProjectsModel {
   status            ProjectVerifyStatus @default(REVIEW)
   failedReason      String?             @default("")
   mutliSigAddress   String?             @default("")
-  comments          Comments[]
-  ProjectJoinRound  ProjectJoinRound[]
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
+  comments          Comments[]
+  ProjectJoinRound  ProjectJoinRound[]
   owner             UserModel           @relation(fields: [owner_publickey], references: [mainWallet])
   Team              Team[]
   Contribution      Contribution[]
 
   @@index([owner_publickey])
-}
-
-enum ProjectVerifyStatus {
-  REVIEW
-  VERIFIED
-  FAILED
 }
 
 model Team {
@@ -133,12 +127,6 @@ model ProjectJoinRound {
   @@index([roundId])
 }
 
-enum ProjectJoinRoundStatus {
-  PENDING
-  APPROVED
-  REJECTED
-}
-
 model Round {
   id                     String             @id @default(uuid()) @map("_id")
   roundName              String
@@ -151,13 +139,13 @@ model Round {
   description            String             @default("") @db.Text
   endtime                DateTime           @default(now())
   startTime              DateTime           @default(now())
+  tx                     String             @db.VarChar(500)
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
   sponsor                Sponsor[]
   User                   UserModel          @relation(fields: [userId], references: [id])
   ProjectJoinRound       ProjectJoinRound[]
   Contribution           Contribution[]
-  tx                     String             @db.VarChar(500)
-  createdAt              DateTime           @default(now())
-  updatedAt              DateTime           @updatedAt
 
   @@index([userId])
 }
@@ -184,11 +172,11 @@ model Contribution {
   roundId         String
   projectId       String
   userId          String
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
   user            UserModel     @relation(fields: [userId], references: [id])
   ProjectsModel   ProjectsModel @relation(fields: [projectId], references: [id])
   Round           Round         @relation(fields: [roundId], references: [id])
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
 
   @@index([projectId])
   @@index([roundId])
@@ -200,11 +188,11 @@ model Comments {
   comment         String        @db.Text
   userId          String
   projectsModelId String
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
   Reply           Reply[]
   user            UserModel     @relation(fields: [userId], references: [id])
   ProjectsModel   ProjectsModel @relation(fields: [projectsModelId], references: [id])
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
 
   @@index([userId])
   @@index([projectsModelId])
@@ -215,11 +203,23 @@ model Reply {
   reply       String     @db.Text
   commentId   String
   replyUserId String
-  comment     Comments?  @relation(fields: [commentId], references: [id])
-  user        UserModel? @relation(fields: [replyUserId], references: [id])
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  comment     Comments?  @relation(fields: [commentId], references: [id])
+  user        UserModel? @relation(fields: [replyUserId], references: [id])
 
   @@index([commentId])
   @@index([replyUserId])
+}
+
+enum ProjectVerifyStatus {
+  REVIEW
+  VERIFIED
+  FAILED
+}
+
+enum ProjectJoinRoundStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
