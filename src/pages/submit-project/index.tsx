@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { ProjectsModel } from '@prisma/client';
+import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
@@ -20,8 +21,16 @@ import { v4 as uuidV4 } from 'uuid';
 import { array, object, string } from 'yup';
 import withAuth from '~/components/HOC/WithAuth';
 import { StepOne, StepThree, StepTwo } from '~/components/pages/create-project';
+import {
+  connection,
+  createProject,
+  updateProjectRoundVerified,
+} from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
+import * as anchor from '@coral-xyz/anchor';
 import { uploadToCloudinary } from '~/utils/upload';
+import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import { createVault, getVault } from '~/utils/vault';
 
 type SubmitProjectProps = {
   onSubmit: (_project: Project) => void;
@@ -51,7 +60,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
   const router = useRouter();
   const [LoadingSubmit, setLoadingSubmit] = useState<boolean>(false);
   const { data: session } = useSession();
-
+  const anchorWallet = useAnchorWallet();
   const createProjectMutation = trpc.project.create.useMutation({
     onSuccess: async (data) => {
       const a = await axios.post('/api/createNotion', {
@@ -133,9 +142,34 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
       );
       const id = uuidV4();
       try {
+        const { ix: valutIx, key } = await createVault(
+          anchorWallet as NodeWallet,
+          getValues().projectName,
+          getValues().tagline,
+          imageUrl
+        );
+        const vaultAuth = await getVault(anchorWallet as NodeWallet, key);
+        const tx = new anchor.web3.Transaction();
+
+        const ix = await createProject(
+          anchorWallet as NodeWallet,
+          session.user.count.project + 1,
+          anchorWallet?.publicKey!
+        );
+        const { blockhash } = await connection.getLatestBlockhash();
+        tx.recentBlockhash = blockhash;
+        tx.feePayer = anchorWallet?.publicKey;
+        tx.add(valutIx);
+        tx.add(ix);
+        const signTx = await anchorWallet?.signTransaction(tx);
+        if (!signTx) return;
+        const serialized_transaction = signTx.serialize();
+        const sig = await connection.sendRawTransaction(serialized_transaction);
+        if (!sig) return;
         createProjectMutation.mutate({
           id: id,
           name: getValues().projectName,
+          sig: sig,
           short_description: getValues().tagline,
           logo: imageUrl,
           long_description: editorData,
@@ -145,17 +179,17 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
           project_link: getValues().projectLink,
           discord_link: getValues().projectLink,
           telegram_link: getValues().telegram,
-          projectUserCount: 0, /// change the length by fetching the user projects and add one more
+          projectUserCount: session.user.count.project + 1,
           team: getValues().team.map((member) => member.value),
+          multiSigAddress: vaultAuth,
         });
+        setProjectid(id);
+        goToNextStep();
       } catch (error) {
         console.log(error, '--error');
-      }
 
-      console.log('projectSubmissionResponse');
-      setProjectid(id);
-      console.log('project submission data - ');
-      goToNextStep();
+        /// add error handling in UI @irffan
+      }
     } catch (e) {
       console.error('There was an error submitting the project:', e);
     } finally {

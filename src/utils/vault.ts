@@ -2,38 +2,45 @@ import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import * as anchor from '@coral-xyz/anchor';
 import Squads from '@sqds/sdk';
 
-export const createValut = async (
+export const createVault = async (
   wallet: NodeWallet,
   name: string,
   description: string,
   image: string
-): Promise<anchor.web3.TransactionInstruction> => {
+) => {
   const squads = Squads.devnet(wallet);
-  const multisigIx = await squads.buildCreateMultisig(
+  const ix = await squads.buildCreateMultisig(
     2,
-    wallet.publicKey,
-    [wallet.publicKey, new anchor.web3.PublicKey('')],
-    name,
+    anchor.web3.Keypair.generate().publicKey,
+    [
+      wallet.publicKey,
+      new anchor.web3.PublicKey('AhFfjBPCoNRDExEDFYuNK2NXCWNa1gi2VUbdA7cF19CD'),
+    ],
+    `Cubik<>${name}`,
     description,
     image
   );
 
-  return multisigIx;
+  return { ix: ix, key: ix.keys[0].pubkey };
 };
-export const payoutVault = async (
+export const getVault = async (
   wallet: NodeWallet,
-  vault: anchor.web3.PublicKey,
-  txPDA: anchor.web3.PublicKey,
-  ix: anchor.web3.TransactionInstruction
-): Promise<anchor.web3.TransactionInstruction> => {
+  mutliSigAccount: anchor.web3.PublicKey
+): Promise<string> => {
   const squads = Squads.devnet(wallet);
 
-  const index = await squads.getNextTransactionIndex(vault);
-  const payoutIx = await squads.buildAddInstruction(vault, txPDA, ix, index);
+  const [authority] = anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      anchor.utils.bytes.utf8.encode('squad'),
+      mutliSigAccount.toBuffer(),
+      new anchor.BN(1).toArrayLike(Buffer, 'le', 4),
+      anchor.utils.bytes.utf8.encode('authority'),
+    ],
+    squads.multisigProgramId
+  );
 
-  return payoutIx;
+  return authority.toBase58();
 };
-
 export const getAllTx = async (
   wallet: NodeWallet,
   vault: anchor.web3.PublicKey

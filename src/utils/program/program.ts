@@ -37,12 +37,17 @@ export type ContractType = {
       name: 'createProject';
       accounts: [
         {
-          name: 'authority';
+          name: 'owners';
           isMut: true;
           isSigner: true;
         },
         {
           name: 'projectAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'adminAccount';
           isMut: true;
           isSigner: false;
         },
@@ -66,6 +71,10 @@ export type ContractType = {
         {
           name: 'counter';
           type: 'string';
+        },
+        {
+          name: 'multiSig';
+          type: 'publicKey';
         }
       ];
     },
@@ -100,11 +109,11 @@ export type ContractType = {
         },
         {
           name: 'matchingPool';
-          type: 'u64';
+          type: 'f64';
         },
         {
           name: 'projectSize';
-          type: 'u64';
+          type: 'f64';
         }
       ];
     },
@@ -278,11 +287,15 @@ export type ContractType = {
         {
           name: 'roundId';
           type: 'string';
+        },
+        {
+          name: 'counter';
+          type: 'string';
         }
       ];
     },
     {
-      name: 'updateProjectStatusVerify';
+      name: 'updateProjectStatusVerified';
       accounts: [
         {
           name: 'authority';
@@ -370,6 +383,178 @@ export type ContractType = {
           type: 'publicKey';
         }
       ];
+    },
+    {
+      name: 'createContributionSpl';
+      accounts: [
+        {
+          name: 'authority';
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: 'tokenMint';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'tokenAtaSender';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'tokenAtaReceiver';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'tokenAtaAdmin';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'adminAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'roundAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'projectAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'contributionAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'systemProgram';
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: 'tokenProgram';
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: 'rent';
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: 'roundId';
+          type: 'string';
+        },
+        {
+          name: 'counter';
+          type: 'string';
+        },
+        {
+          name: 'owner';
+          type: 'publicKey';
+        },
+        {
+          name: 'usdAmount';
+          type: 'f64';
+        },
+        {
+          name: 'total';
+          type: 'f64';
+        },
+        {
+          name: 'split';
+          type: 'f64';
+        }
+      ];
+    },
+    {
+      name: 'createContributionSol';
+      accounts: [
+        {
+          name: 'authority';
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: 'receiverAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'adminAccountInfo';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'adminAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'roundAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'projectAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'contributionAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'systemProgram';
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: 'tokenProgram';
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: 'rent';
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: 'roundId';
+          type: 'string';
+        },
+        {
+          name: 'counter';
+          type: 'string';
+        },
+        {
+          name: 'owner';
+          type: 'publicKey';
+        },
+        {
+          name: 'usdAmount';
+          type: 'f64';
+        },
+        {
+          name: 'total';
+          type: 'f64';
+        },
+        {
+          name: 'split';
+          type: 'f64';
+        }
+      ];
     }
   ];
   accounts: [
@@ -390,12 +575,44 @@ export type ContractType = {
       };
     },
     {
+      name: 'Contribution';
+      type: {
+        kind: 'struct';
+        fields: [
+          {
+            name: 'authority';
+            type: 'publicKey';
+          },
+          {
+            name: 'split';
+            type: 'f64';
+          },
+          {
+            name: 'usdAmount';
+            type: 'f64';
+          },
+          {
+            name: 'total';
+            type: 'f64';
+          },
+          {
+            name: 'bump';
+            type: 'u8';
+          }
+        ];
+      };
+    },
+    {
       name: 'Project';
       type: {
         kind: 'struct';
         fields: [
           {
             name: 'owner';
+            type: 'publicKey';
+          },
+          {
+            name: 'authority';
             type: 'publicKey';
           },
           {
@@ -407,6 +624,10 @@ export type ContractType = {
             type: {
               defined: 'ProjectVerification';
             };
+          },
+          {
+            name: 'multiSig';
+            type: 'publicKey';
           },
           {
             name: 'bump';
@@ -434,11 +655,11 @@ export type ContractType = {
           },
           {
             name: 'poolSize';
-            type: 'u64';
+            type: 'f64';
           },
           {
             name: 'projectSize';
-            type: 'u64';
+            type: 'f64';
           }
         ];
       };
@@ -554,6 +775,11 @@ export type ContractType = {
       code: 6003;
       name: 'InvalidProjectVerification';
       msg: 'project not verified';
+    },
+    {
+      code: 6004;
+      name: 'ContributionSizeExceded';
+      msg: 'contribution size exceded';
     }
   ];
   metadata: {
@@ -600,12 +826,17 @@ export const Contract: ContractType = {
       name: 'createProject',
       accounts: [
         {
-          name: 'authority',
+          name: 'owners',
           isMut: true,
           isSigner: true,
         },
         {
           name: 'projectAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'adminAccount',
           isMut: true,
           isSigner: false,
         },
@@ -629,6 +860,10 @@ export const Contract: ContractType = {
         {
           name: 'counter',
           type: 'string',
+        },
+        {
+          name: 'multiSig',
+          type: 'publicKey',
         },
       ],
     },
@@ -663,11 +898,11 @@ export const Contract: ContractType = {
         },
         {
           name: 'matchingPool',
-          type: 'u64',
+          type: 'f64',
         },
         {
           name: 'projectSize',
-          type: 'u64',
+          type: 'f64',
         },
       ],
     },
@@ -842,10 +1077,14 @@ export const Contract: ContractType = {
           name: 'roundId',
           type: 'string',
         },
+        {
+          name: 'counter',
+          type: 'string',
+        },
       ],
     },
     {
-      name: 'updateProjectStatusVerify',
+      name: 'updateProjectStatusVerified',
       accounts: [
         {
           name: 'authority',
@@ -934,6 +1173,178 @@ export const Contract: ContractType = {
         },
       ],
     },
+    {
+      name: 'createContributionSpl',
+      accounts: [
+        {
+          name: 'authority',
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: 'tokenMint',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'tokenAtaSender',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'tokenAtaReceiver',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'tokenAtaAdmin',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'adminAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'roundAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'projectAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'contributionAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'systemProgram',
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: 'tokenProgram',
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: 'rent',
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: 'roundId',
+          type: 'string',
+        },
+        {
+          name: 'counter',
+          type: 'string',
+        },
+        {
+          name: 'owner',
+          type: 'publicKey',
+        },
+        {
+          name: 'usdAmount',
+          type: 'f64',
+        },
+        {
+          name: 'total',
+          type: 'f64',
+        },
+        {
+          name: 'split',
+          type: 'f64',
+        },
+      ],
+    },
+    {
+      name: 'createContributionSol',
+      accounts: [
+        {
+          name: 'authority',
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: 'receiverAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'adminAccountInfo',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'adminAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'roundAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'projectAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'contributionAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'systemProgram',
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: 'tokenProgram',
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: 'rent',
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: 'roundId',
+          type: 'string',
+        },
+        {
+          name: 'counter',
+          type: 'string',
+        },
+        {
+          name: 'owner',
+          type: 'publicKey',
+        },
+        {
+          name: 'usdAmount',
+          type: 'f64',
+        },
+        {
+          name: 'total',
+          type: 'f64',
+        },
+        {
+          name: 'split',
+          type: 'f64',
+        },
+      ],
+    },
   ],
   accounts: [
     {
@@ -953,12 +1364,44 @@ export const Contract: ContractType = {
       },
     },
     {
+      name: 'Contribution',
+      type: {
+        kind: 'struct',
+        fields: [
+          {
+            name: 'authority',
+            type: 'publicKey',
+          },
+          {
+            name: 'split',
+            type: 'f64',
+          },
+          {
+            name: 'usdAmount',
+            type: 'f64',
+          },
+          {
+            name: 'total',
+            type: 'f64',
+          },
+          {
+            name: 'bump',
+            type: 'u8',
+          },
+        ],
+      },
+    },
+    {
       name: 'Project',
       type: {
         kind: 'struct',
         fields: [
           {
             name: 'owner',
+            type: 'publicKey',
+          },
+          {
+            name: 'authority',
             type: 'publicKey',
           },
           {
@@ -970,6 +1413,10 @@ export const Contract: ContractType = {
             type: {
               defined: 'ProjectVerification',
             },
+          },
+          {
+            name: 'multiSig',
+            type: 'publicKey',
           },
           {
             name: 'bump',
@@ -997,11 +1444,11 @@ export const Contract: ContractType = {
           },
           {
             name: 'poolSize',
-            type: 'u64',
+            type: 'f64',
           },
           {
             name: 'projectSize',
-            type: 'u64',
+            type: 'f64',
           },
         ],
       },
@@ -1117,6 +1564,11 @@ export const Contract: ContractType = {
       code: 6003,
       name: 'InvalidProjectVerification',
       msg: 'project not verified',
+    },
+    {
+      code: 6004,
+      name: 'ContributionSizeExceded',
+      msg: 'contribution size exceded',
     },
   ],
   metadata: {
