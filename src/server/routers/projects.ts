@@ -146,6 +146,28 @@ export const projectsRouter = router({
             },
           },
         },
+        where: {
+          status: 'VERIFIED',
+        },
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }),
+  findManyReview: procedure.query(async () => {
+    try {
+      const res = await prisma.projectsModel.findMany({
+        include: {
+          ProjectJoinRound: {
+            include: {
+              fundingRound: true,
+            },
+          },
+        },
+        where: {
+          status: 'REVIEW',
+        },
       });
       return res;
     } catch (error) {
