@@ -1,13 +1,15 @@
 import * as anchor from '@coral-xyz/anchor';
+import * as spl from '@solana/spl-token';
 import type NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+
+import type { ContractType } from './program';
+import { Contract } from './program';
 
 const PROGRAM_ID = 'Wgvt4LxST3JmUxZae5z7AYqzd63vo6EXjnW1aaMVX8L';
 const RPC_URL =
   'https://solana-devnet.g.alchemy.com/v2/7v3-1dXGVDSGCem5jHrB1Uyv_WlOsoX-';
 
-import type { ContractType } from './program';
-import { Contract } from './program';
-
+const BASE_6 = 1000000;
 export const connection = new anchor.web3.Connection(RPC_URL, 'confirmed');
 
 export const getProvider = (wallet: anchor.Wallet) => {
@@ -194,3 +196,122 @@ export const createRound = async (
 };
 
 export const updateProjectRoundVerified = async (wallet: NodeWallet) => {};
+
+export const contributeSPL = async (
+  wallet: NodeWallet,
+  roundId: string,
+  token: string,
+  projectOwner: string,
+  projectUserCount: number,
+  split: number,
+  total: number,
+  usd: number
+) => {
+  if (split > 100) return;
+  const program = anchorProgram(wallet);
+  const tokenMint = new anchor.web3.PublicKey(token);
+
+  const [adminAccount] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('admin')],
+    program.programId
+  );
+
+  const [round_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('round'), Buffer.from(roundId)],
+    program.programId
+  );
+  let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      anchor.utils.bytes.utf8.encode('project'),
+      new anchor.web3.PublicKey(projectOwner).toBuffer(),
+      Buffer.from(projectUserCount.toString()),
+    ],
+    program.programId
+  );
+  //@ts-ignore
+  const projectInfo = await program.account.project.fetch(project_account);
+  //@ts-ignore
+  const adminInfo = await program.account.admin.fetch(adminAccount);
+
+  const ata_sender = await spl.getAssociatedTokenAddress(
+    tokenMint,
+    wallet.publicKey,
+    false,
+    spl.TOKEN_PROGRAM_ID,
+    spl.ASSOCIATED_TOKEN_PROGRAM_ID
+  );
+  const ata_admin = await spl.getAssociatedTokenAddress(
+    tokenMint,
+    adminInfo.authority,
+    false,
+    spl.TOKEN_PROGRAM_ID,
+    spl.ASSOCIATED_TOKEN_PROGRAM_ID
+  );
+  const ata_reciver = await spl.getAssociatedTokenAddress(
+    tokenMint,
+    projectInfo.multiSig,
+    false,
+    spl.TOKEN_PROGRAM_ID,
+    spl.ASSOCIATED_TOKEN_PROGRAM_ID
+  );
+
+  const [contriAccount] = anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      Buffer.from('contribution'),
+      wallet.publicKey.toBuffer(),
+      round_account.toBuffer(),
+      project_account.toBuffer(),
+    ],
+    program.programId
+  );
+  const info = await connection.getAccountInfo(ata_reciver);
+  let tokenAccountIx;
+  let tokenAccountIx1;
+  if (!info) {
+    console.log('ATA Not found');
+    tokenAccountIx = spl.createAssociatedTokenAccountInstruction(
+      wallet.publicKey,
+      ata_reciver,
+      projectInfo.multiSig,
+      tokenMint
+    );
+    tokenAccountIx1 = spl.createAssociatedTokenAccountInstruction(
+      wallet.publicKey,
+      ata_admin,
+      adminInfo.authority, // TODO: add admin wallet
+      tokenMint
+    );
+  }
+  const ix = await program.methods
+    .createContributionSpl(
+      roundId,
+      projectUserCount.toString(),
+      new anchor.web3.PublicKey(projectOwner),
+      usd,
+      total,
+      split
+    )
+    .accounts({
+      adminAccount: adminAccount,
+      roundAccount: round_account,
+      authority: wallet.publicKey,
+      projectAccount: project_account,
+      tokenMint: tokenMint,
+      contributionAccount: contriAccount,
+      tokenAtaSender: ata_sender,
+      tokenAtaReceiver: ata_reciver,
+      tokenAtaAdmin: ata_admin,
+      tokenProgram: spl.TOKEN_PROGRAM_ID,
+      rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+
+      systemProgram: anchor.web3.SystemProgram.programId,
+    })
+    .instruction();
+
+  const tx = new anchor.web3.Transaction();
+  if (tokenAccountIx && tokenAccountIx1) {
+    tx.add(tokenAccountIx);
+    tx.add(tokenAccountIx1);
+  }
+  tx.add(ix);
+};

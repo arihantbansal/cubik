@@ -701,6 +701,9 @@ export type ContractType = {
       msg: 'contribution size exceded';
     }
   ];
+  metadata: {
+    address: 'Wgvt4LxST3JmUxZae5z7AYqzd63vo6EXjnW1aaMVX8L';
+  };
 };
 
 export const Contract: ContractType = {
@@ -1406,4 +1409,7 @@ export const Contract: ContractType = {
       msg: 'contribution size exceded',
     },
   ],
+  metadata: {
+    address: 'Wgvt4LxST3JmUxZae5z7AYqzd63vo6EXjnW1aaMVX8L',
+  },
 };

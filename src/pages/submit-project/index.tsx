@@ -153,7 +153,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
 
         const ix = await createProject(
           anchorWallet as NodeWallet,
-          session.user.count.project + 2,
+          session.user.count.project + 1,
           anchorWallet?.publicKey!
         );
         const { blockhash } = await connection.getLatestBlockhash();
@@ -183,9 +183,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
           team: getValues().team.map((member) => member.value),
           multiSigAddress: vaultAuth,
         });
-        console.log('projectSubmissionResponse');
         setProjectid(id);
-        console.log('project submission data - ');
         goToNextStep();
       } catch (error) {
         console.log(error, '--error');
