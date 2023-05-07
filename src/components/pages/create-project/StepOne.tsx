@@ -31,8 +31,8 @@ import {
 import { FiChevronRight } from 'react-icons/fi';
 import { RxImage } from 'react-icons/rx';
 import { FormData } from '~/pages/submit-project';
-import { category } from './projectCategories';
 import { trpc } from '~/utils/trpc';
+import { category } from './projectCategories';
 
 type StepOneProps = {
   onSubmit: (data: any) => void;
@@ -129,12 +129,20 @@ const StepOne: React.FC<StepOneProps> = ({
           w="full"
           isInvalid={Boolean(errors.projectName)}
         >
-          <FormLabel pb="0.5rem" htmlFor="projectName">
+          <FormLabel
+            fontSize={{ base: '12px', md: '14px' }}
+            pb="0.5rem"
+            htmlFor="projectName"
+          >
             Project Name
           </FormLabel>
           <Input
             id="projectName"
             placeholder="Enter your project name"
+            _placeholder={{
+              fontSize: { base: '12px', md: '14px' },
+              color: '#3B3D3D',
+            }}
             {...register('projectName', {
               required: true,
               maxLength: { value: 36, message: 'Max length is 36' },
@@ -145,7 +153,11 @@ const StepOne: React.FC<StepOneProps> = ({
           )}
         </FormControl>
         <FormControl isRequired isInvalid={Boolean(errors.tagline)}>
-          <FormLabel pb="0.5rem" htmlFor="tagline">
+          <FormLabel
+            fontSize={{ base: '12px', md: '14px' }}
+            pb="0.5rem"
+            htmlFor="tagline"
+          >
             Tagline
           </FormLabel>
           <Textarea
@@ -153,6 +165,10 @@ const StepOne: React.FC<StepOneProps> = ({
             resize="none"
             id="tagline"
             placeholder="A one sentence description of the project"
+            _placeholder={{
+              fontSize: { base: '12px', md: '14px' },
+              color: '#3B3D3D',
+            }}
             {...register('tagline', {
               required: true,
               maxLength: { value: 240, message: 'Max length is 240' },
@@ -171,7 +187,11 @@ const StepOne: React.FC<StepOneProps> = ({
             fieldState: { error },
           }) => (
             <FormControl isRequired isInvalid={!!error} id="category">
-              <FormLabel pb="0.5rem" htmlFor="category">
+              <FormLabel
+                fontSize={{ base: '12px', md: '14px' }}
+                pb="0.5rem"
+                htmlFor="category"
+              >
                 Choose Categories
               </FormLabel>
               <Select
@@ -299,9 +319,9 @@ const StepOne: React.FC<StepOneProps> = ({
                   placeholder: (provided, state) => ({
                     ...provided,
                     textAlign: 'start',
-                    fontSize: '14px',
+                    fontSize: { base: '12px', md: '14px' },
+                    color: '#3B3D3D',
                     px: '1rem',
-                    color: '#636666',
                   }),
                 }}
               />
@@ -319,7 +339,11 @@ const StepOne: React.FC<StepOneProps> = ({
             fieldState: { error },
           }) => (
             <FormControl isRequired isInvalid={!!error} id="team">
-              <FormLabel pb="0.5rem" htmlFor="team">
+              <FormLabel
+                fontSize={{ base: '12px', md: '14px' }}
+                pb="0.5rem"
+                htmlFor="team"
+              >
                 Search Team
               </FormLabel>
               <Select
@@ -335,8 +359,11 @@ const StepOne: React.FC<StepOneProps> = ({
                     GroupBase<string>
                   >
                 }
-                placeholder="Search Categories..."
-                closeMenuOnSelect={false}
+                menuIsOpen={
+                  !!currentTeammateName && currentTeammateName.length > 0
+                }
+                placeholder="Search Team..."
+                closeMenuOnSelect={true}
                 selectedOptionStyle="check"
                 variant="unstyled"
                 focusBorderColor="transparent"
@@ -391,7 +418,6 @@ const StepOne: React.FC<StepOneProps> = ({
                     boxShadow: 'none',
                     outline: 'none',
                   }),
-
                   clearIndicator: (provided, state) => ({
                     ...provided,
                     display: 'none',
@@ -419,6 +445,7 @@ const StepOne: React.FC<StepOneProps> = ({
                     ...provided,
                     backgroundColor: '#0F0F0F',
                     border: '1px solid #141414',
+                    fontSize: { base: '12px', md: '14px' },
                     borderTop: 'none',
                     borderTopRadius: 'none',
                     boxShadow: 'none',
@@ -427,7 +454,8 @@ const StepOne: React.FC<StepOneProps> = ({
                   option: (provided, state) => ({
                     ...provided,
                     color: 'neutral.11',
-                    fontSize: '14px',
+                    border: '1px solid red',
+                    fontSize: { base: '12px', md: '14px' },
                     fontWeight: '400',
                     backgroundColor: state.isSelected
                       ? '#010F0D'
@@ -455,9 +483,9 @@ const StepOne: React.FC<StepOneProps> = ({
                   placeholder: (provided, state) => ({
                     ...provided,
                     textAlign: 'start',
-                    fontSize: '14px',
                     px: '1rem',
-                    color: '#636666',
+                    fontSize: { base: '12px', md: '14px' },
+                    color: '#3B3D3D',
                   }),
                 }}
               />
@@ -468,7 +496,11 @@ const StepOne: React.FC<StepOneProps> = ({
           )}
         />
         <FormControl>
-          <FormLabel pb="0.5rem" htmlFor="logo">
+          <FormLabel
+            fontSize={{ base: '12px', md: '14px' }}
+            pb="0.5rem"
+            htmlFor="logo"
+          >
             Project Logo
           </FormLabel>
           <HStack h="full" gap="1rem">

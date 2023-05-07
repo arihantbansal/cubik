@@ -1,6 +1,6 @@
 import * as anchor from '@coral-xyz/anchor';
-import * as spl from '@solana/spl-token';
 import type NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import * as spl from '@solana/spl-token';
 
 import type { ContractType } from './program';
 import { Contract } from './program';

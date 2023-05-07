@@ -92,8 +92,8 @@ export const Input: ComponentStyleConfig = {
           rounded: '8px',
         },
         _placeholder: {
-          fontSize: '14px',
-          color: '#636666',
+          fontSize: { base: '12px', md: '14px' },
+          color: '#3B3D3D',
         },
       },
       addon: {
@@ -177,8 +177,8 @@ export const Input: ComponentStyleConfig = {
           rounded: '8px',
         },
         _placeholder: {
-          fontSize: '14px',
-          color: '#636666',
+          fontSize: { base: '12px', md: '14px' },
+          color: '#3B3D3D',
         },
       },
       addon: {
