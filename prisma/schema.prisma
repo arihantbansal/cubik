@@ -35,8 +35,9 @@ model Session {
   userId       String
   expires      DateTime
   user         UserModel @relation(fields: [userId], references: [id], onDelete: Cascade)
- createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
   @@index([userId])
 }
 
@@ -44,8 +45,9 @@ model VerificationToken {
   identifier String
   token      String   @unique
   expires    DateTime
- createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
   @@unique([identifier, token])
 }
 
@@ -62,8 +64,9 @@ model UserDetailsModel {
   telegramHandle String?
   userModelId    String    @unique
   user           UserModel @relation(fields: [userModelId], references: [id])
- createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
   @@index([userModelId])
 }
 
@@ -73,7 +76,7 @@ model ProjectsModel {
   short_description String              @db.VarChar(2000)
   logo              String              @db.VarChar(1000)
   owner_publickey   String
-  sig               String @default("")
+  sig               String              @default("")
   long_description  String              @db.VarChar(5000)
   industry          String
   project_link      String              @default("")
@@ -92,7 +95,6 @@ model ProjectsModel {
   owner             UserModel           @relation(fields: [owner_publickey], references: [mainWallet])
   Team              Team[]
   Contribution      Contribution[]
-  
 
   @@index([owner_publickey])
 }
@@ -109,8 +111,9 @@ model Team {
   projectsModelId String
   user            UserModel     @relation(fields: [userId], references: [id])
   ProjectsModel   ProjectsModel @relation(fields: [projectsModelId], references: [id])
- createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
   @@index([projectsModelId])
   @@index([userId])
 }
@@ -145,7 +148,6 @@ model Round {
   projectCount           Int                @default(0)
   active                 Boolean            @default(true)
   userId                 String
-  token                  String
   description            String             @default("") @db.Text
   endtime                DateTime           @default(now())
   startTime              DateTime           @default(now())
@@ -161,13 +163,14 @@ model Round {
 }
 
 model Sponsor {
-  id      String @id @default(uuid()) @map("_id")
-  name    String
-  logo    String @db.VarChar(500)
-  roundId String
-  Round   Round  @relation(fields: [roundId], references: [id])
-   createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
+  id        String   @id @default(uuid()) @map("_id")
+  name      String
+  logo      String   @db.VarChar(500)
+  roundId   String
+  Round     Round    @relation(fields: [roundId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([roundId])
 }
 
