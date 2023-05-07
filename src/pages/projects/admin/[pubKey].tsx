@@ -11,9 +11,16 @@ import {
   Stack,
   VStack,
 } from '@chakra-ui/react';
-import { useWallet } from '@solana/wallet-adapter-react';
+import * as anchor from '@coral-xyz/anchor';
+import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
 import { useRouter } from 'next/router';
 import GetFormattedLink from '~/components/HOC/GetLink';
+import {
+  connection,
+  markProjectFailed,
+  markProjectVerified,
+} from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 
 const ProjectAuthenticationRoute = () => {
@@ -25,8 +32,13 @@ const ProjectAuthenticationRoute = () => {
   } = trpc.project.findManyReview.useQuery();
   const wallet = useWallet();
   const router = useRouter();
+  const anchorWallet = useAnchorWallet();
 
-  const wallets = ['8Fy7yHo7Sn7anUtG7VANLEDxCWbLjku1oBVa4VouEVVP', '', ''];
+  const wallets = [
+    '8Fy7yHo7Sn7anUtG7VANLEDxCWbLjku1oBVa4VouEVVP',
+    'AhFfjBPCoNRDExEDFYuNK2NXCWNa1gi2VUbdA7cF19CD',
+    '52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ',
+  ];
   const projectUpdateMutation = trpc.project.updateProjectStatus.useMutation();
 
   // check for wallet is connected or not
@@ -56,6 +68,59 @@ const ProjectAuthenticationRoute = () => {
     return <Center w="full">There was an Error</Center>;
   }
 
+  const ApproveProject = async (
+    id: string,
+    username: string,
+    count: number,
+    owner: string
+  ) => {
+    const ix = await markProjectVerified(
+      anchorWallet as NodeWallet,
+      username,
+      count,
+      owner
+    );
+    const { blockhash } = await connection.getLatestBlockhash();
+    const tx = new anchor.web3.Transaction();
+    tx.recentBlockhash = blockhash;
+    tx.feePayer = anchorWallet?.publicKey;
+    tx.add(ix);
+    const signedTx = await anchorWallet?.signTransaction(tx);
+    if (!signedTx) return;
+    const txid = await connection.sendRawTransaction(signedTx.serialize());
+    console.log('txid', txid);
+
+    projectUpdateMutation.mutate({
+      id: id,
+      status: 'VERIFIED',
+    });
+  };
+  const RejectProject = async (
+    id: string,
+    username: string,
+    count: number,
+    owner: string
+  ) => {
+    const ix = await markProjectFailed(
+      anchorWallet as NodeWallet,
+      username,
+      count,
+      owner
+    );
+    const tx = new anchor.web3.Transaction();
+    const { blockhash } = await connection.getLatestBlockhash();
+    tx.recentBlockhash = blockhash;
+    tx.feePayer = anchorWallet?.publicKey;
+    tx.add(ix);
+    const signedTx = await anchorWallet?.signTransaction(tx);
+    if (!signedTx) return;
+    const txid = await connection.sendRawTransaction(signedTx.serialize());
+    console.log('txid', txid);
+    projectUpdateMutation.mutate({
+      id: id,
+      status: 'REVIEW',
+    });
+  };
   console.log('all projects which are yet to be verified - ', projects);
 
   return (
@@ -125,6 +190,14 @@ const ProjectAuthenticationRoute = () => {
                         //@ts-ignore
                         w="full"
                         maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
+                        onClick={() =>
+                          RejectProject(
+                            project.id,
+                            project.owner.username,
+                            project.projectUserCount,
+                            project.owner_publickey
+                          )
+                        }
                       >
                         Reject
                       </Button>
@@ -133,6 +206,14 @@ const ProjectAuthenticationRoute = () => {
                         //@ts-ignore
                         w="full"
                         maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
+                        onClick={() =>
+                          ApproveProject(
+                            project.id,
+                            project.owner.username,
+                            project.projectUserCount,
+                            project.owner_publickey
+                          )
+                        }
                       >
                         Accept
                       </Button>

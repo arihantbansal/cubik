@@ -97,7 +97,8 @@ export const createProject = async (
 export const markProjectVerified = (
   wallet: NodeWallet,
   username: string,
-  counter: number
+  counter: number,
+  owner: string
 ) => {
   const program = anchorProgram(wallet);
 
@@ -105,20 +106,30 @@ export const markProjectVerified = (
     [Buffer.from('admin')],
     program.programId
   );
+  console.log(adminAccount.toBase58());
+
   let [user_account] = anchor.web3.PublicKey.findProgramAddressSync(
-    [anchor.utils.bytes.utf8.encode(username), wallet.publicKey.toBuffer()],
+    [
+      anchor.utils.bytes.utf8.encode('user'),
+      new anchor.web3.PublicKey(owner).toBuffer(),
+    ],
     program.programId
   );
+  console.log(user_account.toBase58(), '--o');
   let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
     [
       anchor.utils.bytes.utf8.encode('project'),
-      wallet.publicKey.toBuffer(),
+      new anchor.web3.PublicKey(owner).toBuffer(),
       Buffer.from(JSON.stringify(counter)),
     ],
     program.programId
   );
+  console.log(project_account.toBase58());
   const ix = program.methods
-    .updateProjectStatusVerified(JSON.stringify(counter), wallet.publicKey)
+    .updateProjectStatusVerified(
+      JSON.stringify(counter),
+      new anchor.web3.PublicKey(owner)
+    )
     .accounts({
       adminAccount: adminAccount,
       authority: wallet.publicKey,
@@ -135,7 +146,8 @@ export const markProjectVerified = (
 export const markProjectFailed = (
   wallet: NodeWallet,
   username: string,
-  counter: number
+  counter: number,
+  owner: string
 ) => {
   const program = anchorProgram(wallet);
 
@@ -144,26 +156,32 @@ export const markProjectFailed = (
     program.programId
   );
   let [user_account] = anchor.web3.PublicKey.findProgramAddressSync(
-    [anchor.utils.bytes.utf8.encode(username), wallet.publicKey.toBuffer()],
+    [
+      anchor.utils.bytes.utf8.encode('user'),
+      new anchor.web3.PublicKey(owner).toBuffer(),
+    ],
     program.programId
   );
   let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
     [
       anchor.utils.bytes.utf8.encode('project'),
-      wallet.publicKey.toBuffer(),
+      new anchor.web3.PublicKey(owner).toBuffer(),
       Buffer.from(JSON.stringify(counter)),
     ],
     program.programId
   );
   const ix = program.methods
-    .updateProjectStatusFailed(JSON.stringify(counter), wallet.publicKey)
+    .updateProjectStatusFailed(
+      JSON.stringify(counter),
+      new anchor.web3.PublicKey(owner)
+    )
     .accounts({
       adminAccount: adminAccount,
       authority: wallet.publicKey,
       projectAccount: project_account,
+      userAccount: user_account,
       rent: anchor.web3.SYSVAR_RENT_PUBKEY,
       systemProgram: anchor.web3.SystemProgram.programId,
-      userAccount: user_account,
     })
     .instruction();
 

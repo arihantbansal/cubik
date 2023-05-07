@@ -47,6 +47,8 @@ const ApplyForGrant: React.FC<{
     const round = roundData?.find((round) => round.id === selectRoundId);
     if (!round) return;
 
+    console.log(project.projectUserCount);
+
     const tx = new anchor.web3.Transaction();
 
     const ix = await ProjectJoinRound(
