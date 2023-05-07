@@ -48,8 +48,8 @@ export const projectsRouter = router({
         });
       }
       let team: Prisma.TeamCreateManyInput[] = [];
-      if (input.team.length > 0) {
-        team = input.team.map((teamId) => {
+      if (input.team.length !== 0) {
+        team = input.team?.map((teamId) => {
           return {
             id: uuid(),
             projectsModelId: input.id,

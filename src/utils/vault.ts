@@ -9,12 +9,14 @@ export const createVault = async (
   image: string
 ) => {
   const squads = Squads.devnet(wallet);
+  console.log(wallet.publicKey.toBase58());
+
   const ix = await squads.buildCreateMultisig(
     2,
     anchor.web3.Keypair.generate().publicKey,
     [
       wallet.publicKey,
-      new anchor.web3.PublicKey('AhFfjBPCoNRDExEDFYuNK2NXCWNa1gi2VUbdA7cF19CD'),
+      new anchor.web3.PublicKey('8hpDP2azqJjTuKnys6ptQ56z4xdqSTHRPpPUYxdpaTJ3'),
     ],
     `Cubik<>${name}`,
     description,

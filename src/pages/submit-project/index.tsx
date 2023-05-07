@@ -180,7 +180,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
           discord_link: getValues().projectLink,
           telegram_link: getValues().telegram,
           projectUserCount: session.user.count.project + 1,
-          team: getValues().team.map((member) => member.value),
+          team: getValues()?.team?.map((member) => member.value) ?? [],
           multiSigAddress: vaultAuth,
         });
         setProjectid(id);

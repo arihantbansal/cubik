@@ -315,3 +315,69 @@ export const contributeSPL = async (
   }
   tx.add(ix);
 };
+
+export const contributeSOL = async (
+  wallet: NodeWallet,
+  roundId: string,
+  projectOwner: string,
+  projectUserCount: number,
+  split: number,
+  total: number,
+  usd: number
+) => {
+  const program = anchorProgram(wallet);
+  const [adminAccount] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('admin')],
+    program.programId
+  );
+  const [round_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('round'), Buffer.from(roundId)],
+    program.programId
+  );
+  let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      anchor.utils.bytes.utf8.encode('project'),
+      wallet.publicKey.toBuffer(),
+      Buffer.from(projectUserCount.toString()),
+    ],
+    program.programId
+  );
+
+  const [contriAccount] = anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      Buffer.from('contribution'),
+      wallet.publicKey.toBuffer(),
+      round_account.toBuffer(),
+      project_account.toBuffer(),
+    ],
+    program.programId
+  );
+  //@ts-ignore
+  const projectAccount = await program.account.project.fetch(project_account);
+  //@ts-ignore
+  const adminAcc = await program.account.admin.fetch(adminAccount);
+  const ix = await program.methods
+    .createContributionSol(
+      roundId,
+      projectUserCount.toString(),
+      projectAccount.owner,
+      usd,
+      total * anchor.web3.LAMPORTS_PER_SOL,
+      split
+    )
+    .accounts({
+      adminAccount: adminAccount,
+      authority: wallet.publicKey,
+      roundAccount: round_account,
+      contributionAccount: contriAccount,
+      projectAccount: project_account,
+      receiverAccount: projectAccount.multiSig,
+      adminAccountInfo: adminAcc.authority,
+      systemProgram: anchor.web3.SystemProgram.programId,
+      rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+      tokenProgram: spl.TOKEN_PROGRAM_ID,
+    })
+    .instruction();
+
+  return ix;
+};
