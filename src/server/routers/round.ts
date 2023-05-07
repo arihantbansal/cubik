@@ -1,8 +1,8 @@
+import { TRPCError } from '@trpc/server';
+import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
 import { procedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
-import { v4 as uuid } from 'uuid';
-import { TRPCError } from '@trpc/server';
 
 export const roundRouter = router({
   create: procedure
@@ -54,6 +54,38 @@ export const roundRouter = router({
     });
     return roundRes;
   }),
+  findInReview: procedure
+    .input(
+      z.object({
+        name: z.string().nonempty(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      if (!ctx.session) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'Session not found',
+          cause: 'User not logged in',
+        });
+      }
+      const roundRes = await prisma.round.findFirst({
+        where: {
+          roundName: input.name,
+        },
+        include: {
+          ProjectJoinRound: {
+            include: {
+              project: {
+                include: {
+                  owner: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      return roundRes;
+    }),
   contribution: procedure
     .input(
       z.object({
