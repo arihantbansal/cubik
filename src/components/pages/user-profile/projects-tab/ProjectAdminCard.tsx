@@ -13,7 +13,6 @@ import { useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import FundingOverview from './project-admin-dashboard/FundingOverview';
 import Vault from './project-admin-dashboard/project-vault/Vault';
-import ProjectInsights from './project-admin-dashboard/ProjectInsights';
 import ProjectHeader from './ProjectHeader';
 import ProjectStatusBanner from './ProjectStatusBanner';
 
@@ -48,7 +47,7 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
               direction={{ base: 'column', lg: 'row' }}
             >
               <FundingOverview />
-              <ProjectInsights />
+              {/* { project. === ProjectJoinRoundStatus.APPROVED && <ProjectInsights />}  */}
             </Stack>
             {showVault && <Vault />}
           </CardBody>

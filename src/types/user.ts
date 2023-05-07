@@ -5,3 +5,17 @@ export type UserWithProjectType = Prisma.UserModelGetPayload<{
     project: true;
   };
 }>;
+
+export type UserWithProjectRoundDetailsType = Prisma.UserModelGetPayload<{
+  include: {
+    project: {
+      include: {
+        ProjectJoinRound: {
+          include: {
+            fundingRound: true;
+          };
+        };
+      };
+    };
+  };
+}>;

@@ -286,7 +286,11 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
         p={{ base: '1rem', md: '0' }}
         my={{ base: '2rem', md: '5rem', lg: '8rem', xl: '10rem' }}
       >
-        <Card maxW={{ base: '28rem', md: '36rem' }} mx="auto">
+        <Card
+          maxW={{ base: '28rem', md: '36rem' }}
+          mx="auto"
+          padding={{ base: '24px', md: '40px' }}
+        >
           {!(step === 4) && (
             <>
               <CardHeader>
