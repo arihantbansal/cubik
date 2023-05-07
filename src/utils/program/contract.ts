@@ -195,7 +195,50 @@ export const createRound = async (
   return ix;
 };
 
-export const updateProjectRoundVerified = async (wallet: NodeWallet) => {};
+export const ProjectJoinRound = async (
+  wallet: NodeWallet,
+  roundId: string,
+  projectCount: number
+) => {
+  const program = anchorProgram(wallet);
+  const [round_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('round'), Buffer.from(roundId)],
+    program.programId
+  );
+
+  let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      anchor.utils.bytes.utf8.encode('project'),
+      wallet.publicKey.toBuffer(),
+      Buffer.from(projectCount.toString()),
+    ],
+    program.programId
+  );
+
+  let [roundVerfication_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      anchor.utils.bytes.utf8.encode('roundjoin'),
+      round_account.toBuffer(),
+      project_account.toBuffer(),
+    ],
+    program.programId
+  );
+  const ix = await program.methods
+    .projectRoundJoin(round_account, project_account)
+    .accounts({
+      authority: wallet.publicKey,
+      roundVerficationAccount: roundVerfication_account,
+      systemProgram: anchor.web3.SystemProgram.programId,
+      rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+    })
+    .instruction();
+
+  return ix;
+};
+
+export const updateProjectRoundVerified = async (wallet: NodeWallet) => {
+  const program = anchorProgram(wallet);
+};
 
 export const contributeSPL = async (
   wallet: NodeWallet,

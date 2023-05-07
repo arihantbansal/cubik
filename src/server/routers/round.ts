@@ -13,7 +13,6 @@ export const roundRouter = router({
         projectCount: z.number().positive(),
         notionPage: z.string().nonempty(),
         matchingPool: z.number().positive(),
-        token: z.string().nonempty(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -28,13 +27,13 @@ export const roundRouter = router({
         data: {
           id: uuid(),
           active: true,
-          userId: ctx.session?.user.id,
-          token: input.token,
+          userId: ctx.session?.user?.id,
           communityContributions: 0,
           matchedPool: input.matchingPool,
           notionPage: input.notionPage,
           projectCount: input.projectCount,
           roundName: input.name,
+          description: '',
           tx: input.tx,
         },
       });
