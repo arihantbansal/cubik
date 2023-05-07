@@ -11,9 +11,9 @@ enum NotionConfig {
 }
 
 const ProjectStatus: any = {
-  review: 'under_review',
-  verified: 'verification_successful',
-  failed: 'verification_failed',
+  REVIEW: 'under_review',
+  VERIFIED: 'verification_successful',
+  FAILED: 'verification_failed',
 };
 
 export default async function handler(
