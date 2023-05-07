@@ -14,17 +14,15 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { ProjectsModel } from '@prisma/client';
-import { Key, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useRef, useState } from 'react';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import { getDomain } from '~/utils/getDomain';
+import { ProjectSocials } from '../../projects/project-details/project-interactions/ProjectInteractions';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
 import { ProjectLink } from '../../projects/project-details/ProjectDetailsHeader';
-import { trpc } from '~/utils/trpc';
-import { ProjectSocials } from '../../projects/project-details/project-interactions/ProjectInteractions';
-import EditProjectDetails from './project-admin-dashboard/ProjectAdminDetailsDrawer/EditProjectDetails';
 import ApplyForGrant from './project-admin-dashboard/ProjectAdminDetailsDrawer/ApplyForGrant';
-import { router } from '~/server/trpc';
-import { useRouter } from 'next/router';
+import EditProjectDetails from './project-admin-dashboard/ProjectAdminDetailsDrawer/EditProjectDetails';
 
 export enum drawerBodyViewEnum {
   PROJECT_DETAILS = 'project_details',
@@ -314,7 +312,10 @@ const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
             />
             <DrawerBody p="2px">
               {drawerBodyView === drawerBodyViewEnum.GRANTS ? (
-                <ApplyForGrant setDrawerBodyView={setDrawerBodyView} />
+                <ApplyForGrant
+                  setDrawerBodyView={setDrawerBodyView}
+                  project={project}
+                />
               ) : drawerBodyView === drawerBodyViewEnum.EDIT ? (
                 <EditProjectDetails />
               ) : (
