@@ -170,7 +170,7 @@ export const markProjectFailed = (
   return ix;
 };
 
-export const createRound = async (
+export const createRoundIx = async (
   wallet: NodeWallet,
   id: string,
   matchingPool: number,
@@ -236,8 +236,111 @@ export const ProjectJoinRound = async (
   return ix;
 };
 
-export const updateProjectRoundVerified = async (wallet: NodeWallet) => {
+export const updateProjectRoundVerified = async (
+  wallet: NodeWallet,
+  roundId: string,
+  counter: number,
+  projectOwner: string
+) => {
   const program = anchorProgram(wallet);
+  const [adminAccount] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('admin')],
+    program.programId
+  );
+  const [round_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('round'), Buffer.from(roundId)],
+    program.programId
+  );
+
+  let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      anchor.utils.bytes.utf8.encode('project'),
+      new anchor.web3.PublicKey(projectOwner).toBuffer(),
+      Buffer.from(counter.toString()),
+    ],
+    program.programId
+  );
+
+  let [roundVerfication_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      anchor.utils.bytes.utf8.encode('roundjoin'),
+      round_account.toBuffer(),
+      project_account.toBuffer(),
+    ],
+    program.programId
+  );
+  const ix = await program.methods
+    .updateApproveRound(
+      roundId,
+      round_account,
+      project_account,
+      counter.toString()
+    )
+    .accounts({
+      roundAccount: round_account,
+      adminAccount: adminAccount,
+      roundVerficationAccount: roundVerfication_account,
+      authority: wallet.publicKey,
+      projectAccount: project_account,
+      rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+      systemProgram: anchor.web3.SystemProgram.programId,
+    })
+    .instruction();
+
+  return ix;
+};
+export const updateProjectRoundFailed = async (
+  wallet: NodeWallet,
+  roundId: string,
+  counter: number,
+  projectOwner: string
+) => {
+  const program = anchorProgram(wallet);
+  const [adminAccount] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('admin')],
+    program.programId
+  );
+  const [round_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('round'), Buffer.from(roundId)],
+    program.programId
+  );
+
+  let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      anchor.utils.bytes.utf8.encode('project'),
+      new anchor.web3.PublicKey(projectOwner).toBuffer(),
+      Buffer.from(counter.toString()),
+    ],
+    program.programId
+  );
+
+  let [roundVerfication_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      anchor.utils.bytes.utf8.encode('roundjoin'),
+      round_account.toBuffer(),
+      project_account.toBuffer(),
+    ],
+    program.programId
+  );
+  const ix = await program.methods
+    .updateRejectRound(
+      round_account,
+      project_account,
+      roundId,
+      counter.toString()
+    )
+    .accounts({
+      roundAccount: round_account,
+      adminAccount: adminAccount,
+      roundVerficationAccount: roundVerfication_account,
+      authority: wallet.publicKey,
+      projectAccount: project_account,
+      rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+      systemProgram: anchor.web3.SystemProgram.programId,
+    })
+    .instruction();
+
+  return ix;
 };
 
 export const contributeSPL = async (
