@@ -135,6 +135,8 @@ model Round {
   communityContributions Float              @default(0)
   short_description      String             @db.VarChar(2000) @default("")
   notionPage             String             @db.VarChar(500)
+  markdownDetails       String             @db.Text @default("")
+
   projectCount           Int                @default(0)
   active                 Boolean            @default(true)
   userId                 String
