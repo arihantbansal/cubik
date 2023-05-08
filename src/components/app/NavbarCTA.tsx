@@ -1,38 +1,38 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  Box,
+  Button,
   Center,
   HStack,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Skeleton,
   Spinner,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   useDisclosure,
-  Button,
-  Box,
-  VStack,
   useToast,
+  VStack,
 } from '@chakra-ui/react';
+import * as anchor from '@coral-xyz/anchor';
 import { useWallet } from '@solana/wallet-adapter-react';
-import {
-  useWalletModal,
-  WalletMultiButton,
-} from '@solana/wallet-adapter-react-ui';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { FC, useEffect, useState } from 'react';
 import { createMessage, verifyMessage } from '~/utils/getsignMessage';
-import UserNavMenu from './navbar-menu/UserNavMenu';
-import * as anchor from '@coral-xyz/anchor';
-import { useRouter } from 'next/router';
-import MemoizedIconButtonBadge from './list/ListButton';
-import { WalletAddress } from '../common/wallet/WalletAdd';
 import { FailureToast, SuccessToast } from '../common/toasts/Toasts';
+import { WalletAddress } from '../common/wallet/WalletAdd';
+import MemoizedIconButtonBadge from './list/ListButton';
+import UserNavMenu from './navbar-menu/UserNavMenu';
 
 const NavbarCTA: FC = () => {
   const [verifying, setVerifying] = useState(false);
+  const [verifyWalletError, setVerifyWalletError] = useState<string | null>();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { publicKey, disconnect, connecting, connected, signMessage } =
     useWallet();
@@ -54,7 +54,6 @@ const NavbarCTA: FC = () => {
           publicKey
         );
         console.log(final, '--client final', publicKey);
-
         const signInResponse = await signIn('credentials', {
           callbackUrl: '/',
           redirect: false,
@@ -71,31 +70,13 @@ const NavbarCTA: FC = () => {
         SuccessToast({ toast, message: 'Wallet Verified' });
       } catch (error) {
         if ((error as Error).message === 'User rejected the request.') {
-          disconnect()
-            .then(() => {
-              signOut({
-                redirect: false,
-              });
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-          // show a banner for reject
           setVerifying(false);
-          onClose();
-          // toast
-          FailureToast({ toast, message: 'Wallet Verification Failed' });
+          // @ts-ignore
+          setVerifyWalletError(`Error: ${error.message}`);
         } else {
           console.log('error while verifying wallet - ', error);
         }
       }
-    } else {
-      console.log(
-        'wallet not connected or signMessage not available or publicKey not available',
-        publicKey,
-        connected,
-        signMessage
-      );
     }
   }
 
@@ -169,10 +150,21 @@ const NavbarCTA: FC = () => {
               </HStack>
             </ModalHeader>
             <ModalBody>
-              <VStack pt="16px" align={'start'} gap="8px">
+              <VStack pt="16px" align={'start'} gap="16px">
                 <Box as="p" textStyle={'body3'} color="white">
                   Verify Wallet to prove ownership. No SOL will be charged
-                </Box>
+                </Box>{' '}
+                {verifyWalletError && (
+                  <Alert status="error" variant="cubik">
+                    <AlertIcon />
+                    <AlertDescription
+                      fontSize={{ base: '10px', md: '11px', xl: '12px' }}
+                      lineHeight={{ base: '14px', md: '14px', xl: '16px' }}
+                    >
+                      {verifyWalletError}
+                    </AlertDescription>
+                  </Alert>
+                )}
               </VStack>
             </ModalBody>
 
@@ -181,9 +173,20 @@ const NavbarCTA: FC = () => {
                 w="8rem"
                 variant="close_modal"
                 onClick={() => {
-                  disconnect();
+                  disconnect()
+                    .then(() => {
+                      signOut({
+                        redirect: false,
+                      });
+                    })
+                    .catch((e) => {
+                      console.log(e);
+                    });
                   onClose();
-                  // refresh the page to clear the cache
+                  FailureToast({
+                    toast,
+                    message: 'Wallet Verification Failed',
+                  });
                   localStorage.removeItem('walletName');
                 }}
               >

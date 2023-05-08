@@ -1,13 +1,5 @@
-import {
-  Box,
-  Button,
-  Center,
-  Container,
-  Heading,
-  Text,
-} from '@chakra-ui/react';
-import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
+import { Box, Center, Container, Heading, Text } from '@chakra-ui/react';
+import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -18,10 +10,6 @@ import AdminView from '~/components/pages/user-profile/AdminView';
 import VisitorView from '~/components/pages/user-profile/VisitorView';
 import { appRouter } from '~/server/routers/_app';
 import { trpc } from '~/utils/trpc';
-import { createVault, getVault } from '~/utils/vault';
-import * as anchor from '@coral-xyz/anchor';
-import { connection } from '~/utils/program/contract';
-import { sendAndConfirmTransaction } from '@solana/web3.js';
 
 const ProfilePage = () => {
   console.log('profile component rendered');
@@ -63,6 +51,8 @@ const ProfilePage = () => {
       </Container>
     );
   }
+
+  console.log('user data - ', user);
   return (
     <>
       <SEO

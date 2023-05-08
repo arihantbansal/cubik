@@ -4,11 +4,11 @@ import {
   ProjectVerifyStatus,
 } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
+import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
+import { Grant } from '~/utils/calculateProjectMatchingFund';
 import { procedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
-import { v4 as uuid } from 'uuid';
-import { Grant } from '~/utils/calculateProjectMatchingFund';
 
 export const projectsRouter = router({
   create: procedure
@@ -163,6 +163,7 @@ export const projectsRouter = router({
               fundingRound: true,
             },
           },
+          owner: true,
         },
         where: {
           status: 'REVIEW',
@@ -210,7 +211,7 @@ export const projectsRouter = router({
     .mutation(async ({ input, ctx }) => {
       if (
         ctx?.session?.user.mainWallet !==
-        '8Fy7yHo7Sn7anUtG7VANLEDxCWbLjku1oBVa4VouEVVP'
+        '52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ'
       ) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
@@ -351,5 +352,25 @@ export const projectsRouter = router({
         round: roundContri,
         matchingPool: round?.matchedPool,
       };
+    }),
+
+  projectAdminDetails: procedure
+    .input(
+      z.object({
+        id: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const response = prisma.projectsModel.findFirst({
+        where: { id: input.id },
+        include: {
+          ProjectJoinRound: {
+            include: {
+              fundingRound: true,
+            },
+          },
+        },
+      });
+      return response;
     }),
 });

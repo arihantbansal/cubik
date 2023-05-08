@@ -1,9 +1,14 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  Avatar as ChakraAvatar,
   Box,
   Button,
   Card,
+  CardBody,
+  CardHeader,
   Center,
-  Checkbox,
   Collapse,
   Container,
   FormControl,
@@ -13,30 +18,21 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spinner,
   useDisclosure,
   VStack,
-  Alert,
-  AlertIcon,
-  AlertDescription,
-  CardBody,
-  CardHeader,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Avatar as ChakraAvatar,
 } from '@chakra-ui/react';
-import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import * as anchor from '@coral-xyz/anchor';
+import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
-import {
-  useWalletModal,
-  WalletMultiButton,
-} from '@solana/wallet-adapter-react-ui';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -56,7 +52,7 @@ import {
 } from '~/components/common/wallet/WalletAdd';
 import FramerCarousel from '~/components/pages/connect-wallet/create-profile/FramerNFTCarousel';
 import ProfilePicture from '~/components/pages/connect-wallet/create-profile/ProfilePicture';
-import { createUser, connection } from '~/utils/program/contract';
+import { connection, createUser } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 
 const onSuccess = () => {
@@ -170,7 +166,7 @@ const CreateProfile = () => {
       return sig;
     } catch (error) {
       // @ts-ignore
-      setTransactionError(`Error: ${error.message}`);
+      setTransactionError(`${error.message}`);
       setSigningTransaction(false);
       return null;
     }
