@@ -9,25 +9,38 @@ import {
   DrawerContent,
   DrawerOverlay,
   HStack,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
   Stack,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
+import { ProjectsModel, ProjectVerifyStatus } from '@prisma/client';
 import { useRouter } from 'next/router';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { AiOutlineEdit, AiOutlineMore } from 'react-icons/ai';
+import { BiMessageSquareDots } from 'react-icons/bi';
+import { MdDeleteOutline } from 'react-icons/md';
+import { VscPreview } from 'react-icons/vsc';
 import GetFormattedLink from '~/components/HOC/GetLink';
+import { ProjectWithRoundDetailsType } from '~/types/project';
 import { getDomain } from '~/utils/getDomain';
 import { ProjectSocials } from '../../projects/project-details/project-interactions/ProjectInteractions';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
 import { ProjectLink } from '../../projects/project-details/ProjectDetailsHeader';
 import ApplyForGrant from './project-admin-dashboard/ProjectAdminDetailsDrawer/ApplyForGrant';
 import EditProjectDetails from './project-admin-dashboard/ProjectAdminDetailsDrawer/EditProjectDetails';
+import ProjectStatusBanner from './ProjectStatusBanner';
 
 export enum drawerBodyViewEnum {
   PROJECT_DETAILS = 'project_details',
   GRANTS = 'apply_for_grant',
   EDIT = 'edit',
+  PREVIEW = 'preview',
 }
 
 export const ProjectHeaderVisitorView = ({
@@ -107,11 +120,25 @@ const ProjectDetails = ({
   project,
   setDrawerBodyView,
 }: {
-  project: ProjectsModel;
+  project: ProjectWithRoundDetailsType;
   setDrawerBodyView: any;
 }) => {
+  const [showApplyToRound, setShowApplyToRound] = useState(false);
+
+  useEffect(() => {
+    if (project.status === ProjectVerifyStatus.VERIFIED) {
+      setShowApplyToRound(true);
+    } else {
+      setShowApplyToRound(false);
+    }
+  }, [project.status]);
+
   return (
-    <VStack gap={{ base: '32px', md: '64px' }} w="full">
+    <VStack
+      padding={{ base: '20px', md: '40px' }}
+      gap={{ base: '32px', md: '64px' }}
+      w="full"
+    >
       <VStack align={'start'} w="full" gap="24px">
         <HStack w="full" justifyContent={'space-between'} align="top">
           <Avatar
@@ -124,24 +151,59 @@ const ProjectDetails = ({
           <Stack
             display={{ base: 'none', md: 'flex' }}
             direction="row"
+            gap="8px"
             h="fit-content"
           >
             <Button
-              variant="secondary"
-              h="38px"
-              maxW="164px"
-              borderRadius={'8px'}
-            >
-              Edit Project
-            </Button>
-            <Button
               variant="apply_for_grant"
+              isDisabled={!showApplyToRound}
               onClick={() => {
                 setDrawerBodyView(drawerBodyViewEnum.GRANTS);
               }}
             >
               Apply For Grant
             </Button>
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                variant="unstyled"
+                rounded="4px"
+                aria-label="Options"
+                icon={<AiOutlineMore size={38} />}
+              />
+              <MenuList background={'#242424'} outline="none" border="none">
+                <MenuItem
+                  isDisabled
+                  _hover={{
+                    backgroundColor: '#141414',
+                  }}
+                  _active={{
+                    backgroundColor: '#141414',
+                  }}
+                  icon={<VscPreview size={22} />}
+                >
+                  <Box as="p" textStyle={'body3'}>
+                    Preview
+                  </Box>
+                </MenuItem>
+                <MenuItem isDisabled icon={<AiOutlineEdit size={22} />}>
+                  <Box as="p" textStyle={'body3'}>
+                    Edit
+                  </Box>
+                </MenuItem>
+                <MenuItem isDisabled icon={<BiMessageSquareDots size={22} />}>
+                  <Box as="p" textStyle={'body3'}>
+                    Contact
+                  </Box>
+                </MenuItem>
+                <MenuDivider color="#00000040" />
+                <MenuItem icon={<MdDeleteOutline size={22} />}>
+                  <Box as="p" textStyle={'body3'}>
+                    Delete Project
+                  </Box>
+                </MenuItem>
+              </MenuList>
+            </Menu>
           </Stack>
         </HStack>
         <VStack gap={{ base: '4px', md: '16px' }} w="full" align="start">
@@ -211,7 +273,11 @@ const ProjectDetails = ({
   );
 };
 
-const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
+const ProjectHeader = ({
+  project,
+}: {
+  project: ProjectWithRoundDetailsType;
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [drawerBodyView, setDrawerBodyView] = useState<drawerBodyViewEnum>(
     drawerBodyViewEnum.PROJECT_DETAILS
@@ -292,12 +358,11 @@ const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
           />
           <DrawerContent
             m="3px"
-            border="1px solid #1D1F1E !important"
+            // border="1px solid #1D1F1E !important"
             borderColor={'#1D1F1E'}
             borderBottom={'none'}
             borderTopRadius={'24px'}
             background="#080808"
-            padding={{ base: '20px', md: '40px' }}
             maxW="80rem !important"
             mx="auto"
           >
@@ -308,7 +373,7 @@ const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
               }}
               rounded="full"
               backgroundColor="#141414"
-              border="1px solid #ffffff10"
+              //  border="1px solid #ffffff10"
             />
             <DrawerBody p="2px">
               {drawerBodyView === drawerBodyViewEnum.GRANTS ? (
@@ -318,11 +383,16 @@ const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
                 />
               ) : drawerBodyView === drawerBodyViewEnum.EDIT ? (
                 <EditProjectDetails />
+              ) : drawerBodyView === drawerBodyViewEnum.PREVIEW ? (
+                <></>
               ) : (
-                <ProjectDetails
-                  project={project}
-                  setDrawerBodyView={setDrawerBodyView}
-                />
+                <>
+                  <ProjectStatusBanner status={project.status} />
+                  <ProjectDetails
+                    project={project}
+                    setDrawerBodyView={setDrawerBodyView}
+                  />
+                </>
               )}
             </DrawerBody>
           </DrawerContent>

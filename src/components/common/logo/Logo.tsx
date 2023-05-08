@@ -1,4 +1,4 @@
-import { Center, HStack, Text } from '@chakra-ui/react';
+import { Box, Center, HStack, Tag, Text } from '@chakra-ui/react';
 
 const Logo = () => {
   return (
@@ -30,6 +30,26 @@ const Logo = () => {
       >
         CUBIK
       </Text>
+      <Tag
+        rounded="full"
+        variant="colorful"
+        backgroundColor="#FFD83D18"
+        boxShadow="0px 4px 20px rgba(0, 0, 0, 0.4)"
+        fontSize="xs"
+        p="8px 12px"
+        mx={1}
+      >
+        <Box
+          as="p"
+          whiteSpace="pre"
+          color="#FFE747"
+          textStyle={{ base: 'body6', md: 'body5' }}
+          fontWeight="700 !important"
+          letterSpacing="1.2px"
+        >
+          TESTNET
+        </Box>
+      </Tag>
     </HStack>
   );
 };

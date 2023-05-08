@@ -1,4 +1,5 @@
 import {
+  Center,
   Flex,
   Tab,
   TabList,
@@ -27,7 +28,11 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
   const { hasError, ErrorBoundaryWrapper } = useErrorBoundary();
 
   if (hasError) {
-    return <p>Custom error message or fallback UI</p>;
+    return (
+      <Center w="full" h="4rem">
+        There was some error
+      </Center>
+    );
   }
 
   if (isLoading) return <AdminViewSkeleton />;

@@ -110,7 +110,7 @@ const FailureToast = ({ toast }: any) => {
       <HStack
         gap="0.1rem"
         padding="1rem"
-        bg="red"
+        bg="white"
         mx="auto"
         rounded="6px"
         width={'15rem'}
@@ -124,7 +124,7 @@ const FailureToast = ({ toast }: any) => {
           src={'https://assets8.lottiefiles.com/packages/lf20_bmtax5uq.json'}
           style={{ height: '32px', width: '32px' }}
         />
-        <Text w="fit-content" fontSize="md" color={'white'} fontWeight={'500'}>
+        <Text w="fit-content" fontSize="md" color={'black'} fontWeight={'500'}>
           There was an error
         </Text>
       </HStack>

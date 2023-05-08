@@ -353,4 +353,24 @@ export const projectsRouter = router({
         matchingPool: round?.matchedPool,
       };
     }),
+
+  projectAdminDetails: procedure
+    .input(
+      z.object({
+        id: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const response = prisma.projectsModel.findFirst({
+        where: { id: input.id },
+        include: {
+          ProjectJoinRound: {
+            include: {
+              fundingRound: true,
+            },
+          },
+        },
+      });
+      return response;
+    }),
 });

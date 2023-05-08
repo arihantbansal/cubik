@@ -210,7 +210,6 @@ export const Button = {
         color: '#031513',
         backgroundColor: '#E0FFFD',
         outline: '1px solid #E0FFFD',
-        shadow: '0px 4px 60px rgba(168, 240, 230, 0.4)',
         transition: 'all 0.6s',
       },
     }),

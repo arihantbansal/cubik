@@ -1,12 +1,22 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Avatar,
   Box,
   Button,
   Card,
-  CardHeader,
+  CardBody,
   Center,
   Container,
   HStack,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spinner,
   Stack,
   VStack,
@@ -15,6 +25,9 @@ import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import CustomTag from '~/components/common/tags/CustomTag';
+import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import {
   connection,
@@ -23,7 +36,26 @@ import {
 } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 
+type ActionType = 'accept' | 'reject';
+
+interface CurrentAction {
+  type: ActionType;
+  id: string;
+  username: string;
+  count: number;
+  owner: string;
+}
+
 const ProjectAuthenticationRoute = () => {
+  const [isActionModalOpen, setIsActionModalOpen] = useState(false);
+  const [transactionLoading, setTransactionLoading] = useState(false);
+  const [currentAction, setCurrentAction] = useState<CurrentAction | null>(
+    null
+  );
+
+  const [transactionSignError, setTransactionSignError] = useState<
+    string | null
+  >();
   const {
     data: projects,
     isLoading,
@@ -41,108 +73,165 @@ const ProjectAuthenticationRoute = () => {
   ];
   const projectUpdateMutation = trpc.project.updateProjectStatus.useMutation();
 
-  // check for wallet is connected or not
-  if (!wallet.publicKey?.toBase58()) {
-    return <>wallet not connected</>;
-  }
-
-  // check if connected wallet matches with the wallet in the url
-  if (wallet.publicKey?.toBase58() !== router.query.pubKey) {
-    return <Center w="full">Access Denied</Center>;
-  }
-
-  // check if the wallet is in the wallets array
-  if (!wallets.includes(wallet.publicKey.toBase58() as string)) {
-    return <Center w="full">wallet is not in wallets array</Center>;
-  }
-
-  if (isLoading) {
-    return (
-      <Center w="full">
-        <Spinner />
-      </Center>
-    );
-  }
-
-  if (isError) {
-    return <Center w="full">There was an Error</Center>;
-  }
-
   const ApproveProject = async (
     id: string,
     username: string,
     count: number,
     owner: string
   ) => {
-    const ix = await markProjectVerified(
-      anchorWallet as NodeWallet,
-      username,
-      count,
-      owner
-    );
-    const { blockhash } = await connection.getLatestBlockhash();
-    const tx = new anchor.web3.Transaction();
-    tx.recentBlockhash = blockhash;
-    tx.feePayer = anchorWallet?.publicKey;
-    tx.add(ix);
-    const signedTx = await anchorWallet?.signTransaction(tx);
-    if (!signedTx) return;
-    const txid = await connection.sendRawTransaction(signedTx.serialize());
-    console.log('txid', txid);
+    try {
+      setTransactionLoading(true);
+      const ix = await markProjectVerified(
+        anchorWallet as NodeWallet,
+        username,
+        count,
+        owner
+      );
+      const { blockhash } = await connection.getLatestBlockhash();
+      const tx = new anchor.web3.Transaction();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = anchorWallet?.publicKey;
+      tx.add(ix);
+      const signedTx = await anchorWallet?.signTransaction(tx);
+      if (!signedTx) throw new Error('Error signing transaction');
+      const txid = await connection.sendRawTransaction(signedTx.serialize());
+      console.log('txid', txid);
 
-    projectUpdateMutation.mutate({
-      id: id,
-      status: 'VERIFIED',
-    });
+      projectUpdateMutation.mutate({
+        id: id,
+        status: 'VERIFIED',
+      });
+    } catch (error: any) {
+      setTransactionSignError(error.message || 'An error occurred');
+    } finally {
+      setTransactionLoading(false);
+    }
   };
+
   const RejectProject = async (
     id: string,
     username: string,
     count: number,
     owner: string
   ) => {
-    const ix = await markProjectFailed(
-      anchorWallet as NodeWallet,
-      username,
-      count,
-      owner
-    );
-    const tx = new anchor.web3.Transaction();
-    const { blockhash } = await connection.getLatestBlockhash();
-    tx.recentBlockhash = blockhash;
-    tx.feePayer = anchorWallet?.publicKey;
-    tx.add(ix);
-    const signedTx = await anchorWallet?.signTransaction(tx);
-    if (!signedTx) return;
-    const txid = await connection.sendRawTransaction(signedTx.serialize());
-    console.log('txid', txid);
-    projectUpdateMutation.mutate({
-      id: id,
-      status: 'REVIEW',
-    });
+    try {
+      setTransactionLoading(true);
+      const ix = await markProjectFailed(
+        anchorWallet as NodeWallet,
+        username,
+        count,
+        owner
+      );
+      const { blockhash } = await connection.getLatestBlockhash();
+      const tx = new anchor.web3.Transaction();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = anchorWallet?.publicKey;
+      tx.add(ix);
+      const signedTx = await anchorWallet?.signTransaction(tx);
+      if (!signedTx) throw new Error('Error signing transaction');
+      const txid = await connection.sendRawTransaction(signedTx.serialize());
+      console.log('txid', txid);
+
+      projectUpdateMutation.mutate({
+        id: id,
+        status: 'REVIEW',
+      });
+    } catch (error: any) {
+      setTransactionSignError(error.message || 'An error occurred');
+    } finally {
+      setTransactionLoading(false);
+    }
   };
-  console.log('all projects which are yet to be verified - ', projects);
+
+  // check for wallet is connected or not
+  if (!wallet.publicKey?.toBase58()) <>wallet not connected</>;
+
+  // check if connected wallet matches with the wallet in the url
+  if (wallet.publicKey?.toBase58() !== router.query.pubKey)
+    <Center w="full" h="10rem">
+      Access Denied
+    </Center>;
+
+  // check if the wallet is in the wallets array
+  if (!wallets.includes(wallet?.publicKey?.toBase58() as string))
+    <Center w="full" h="10rem">
+      wallet is not in wallets array
+    </Center>;
+
+  if (isLoading)
+    <Center w="full" h="10rem">
+      <Spinner />
+    </Center>;
+
+  if (isError)
+    <Center w="full" h="10rem">
+      There was an Error
+    </Center>;
+
+  const onActionModalOpen = () => setIsActionModalOpen(true);
+  const onActionModalClose = () => setIsActionModalOpen(false);
+
+  const handleAction = async (
+    actionType: ActionType,
+    id: string,
+    username: string,
+    count: number,
+    owner: string
+  ) => {
+    setCurrentAction({ type: actionType, id, username, count, owner });
+    onActionModalOpen();
+  };
+
+  const handleSignTransaction = async () => {
+    if (!currentAction) return;
+
+    try {
+      setTransactionLoading(true);
+      if (currentAction.type === 'accept') {
+        await ApproveProject(
+          currentAction.id,
+          currentAction.username,
+          currentAction.count,
+          currentAction.owner
+        );
+      } else if (currentAction.type === 'reject') {
+        await RejectProject(
+          currentAction.id,
+          currentAction.username,
+          currentAction.count,
+          currentAction.owner
+        );
+      }
+      setTransactionSignError(null);
+    } catch (error: any) {
+      setTransactionSignError(error.message || 'An error occurred');
+    } finally {
+      setTransactionLoading(false);
+      onActionModalClose();
+    }
+  };
 
   return (
     <>
-      <Container maxW="7xl">
-        <VStack align="start" py="32px">
-          <Box as="p" textStyle={'heading1'} color="white">
-            Projects to be Reviewed
+      <Container maxW="7xl" py="40px">
+        <HStack w="full" align="start" pb="32px">
+          <Box as="p" textStyle="title2" color="neutral.11">
+            Projects
           </Box>
-        </VStack>
-        <VStack spacing="32px" outline="1px solid red">
+          <CustomTag>Pending Approval</CustomTag>
+        </HStack>
+        <VStack spacing={4}>
           {projects?.map((project) => (
             <>
               <Card
                 key={project.id}
-                px="0px"
+                px="24px"
                 pt={{ base: '16px', sm: '20px', md: '24px' }}
                 pb={{ base: '16px', sm: '20px', md: '24px' }}
                 gap={{ base: '16px', sm: '20px', md: '24px' }}
                 w="100%"
               >
-                <CardHeader>
+                <CardBody>
                   <Stack
                     direction={{ base: 'column', sm: 'row' }}
                     px={''}
@@ -186,12 +275,21 @@ const ProjectAuthenticationRoute = () => {
                     </Stack>
                     <HStack justifyContent={'end'}>
                       <Button
-                        variant={'project_button_secondary'}
-                        //@ts-ignore
+                        variant={'unstyled'}
+                        px="2rem"
+                        h="full"
                         w="full"
+                        backgroundColor="surface.red.1"
+                        border="1px solid transparent"
+                        rounded="8px"
+                        _hover={{
+                          border: '1px solid #FF333D',
+                        }}
+                        color={'surface.red.2'}
                         maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
                         onClick={() =>
-                          RejectProject(
+                          handleAction(
+                            'reject',
                             project.id,
                             project.owner.username,
                             project.projectUserCount,
@@ -202,12 +300,23 @@ const ProjectAuthenticationRoute = () => {
                         Reject
                       </Button>
                       <Button
-                        variant={'project_button_secondary'}
-                        //@ts-ignore
+                        variant={'unstyled'}
+                        px="2rem"
+                        h="full"
                         w="full"
-                        maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
+                        backgroundColor="brand.teal2"
+                        color="brand.teal5"
+                        border="1px solid"
+                        borderColor={'brand.teal2'}
+                        rounded="8px"
+                        _hover={{
+                          border: '1px solid',
+                          borderColor: 'brand.teal5',
+                        }}
+                        maxW={{ base: 'full', sm: '8rem', md: '20rem' }}
                         onClick={() =>
-                          ApproveProject(
+                          handleAction(
+                            'accept',
                             project.id,
                             project.owner.username,
                             project.projectUserCount,
@@ -219,8 +328,206 @@ const ProjectAuthenticationRoute = () => {
                       </Button>
                     </HStack>
                   </Stack>
-                </CardHeader>
+                </CardBody>
               </Card>
+              <Modal
+                variant={'cubik'}
+                isOpen={isActionModalOpen}
+                onClose={onActionModalClose}
+              >
+                <ModalOverlay opacity={'1%'} />
+                <ModalContent
+                  minW={{ base: '24rem', md: '36rem' }}
+                  overflow={'hidden'}
+                  position={'relative'}
+                  gap={{ base: '32px', md: '48px' }}
+                  textAlign={'center'}
+                  _before={{
+                    content: '""',
+                    position: 'absolute',
+                    top: '-10%',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    rounded: '50%',
+                    filter: 'blur(80px)',
+                    width: '6rem',
+                    height: '6rem',
+                    background:
+                      'linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)',
+                    borderRadius: '8px 8px 0px 0px',
+                    zIndex: '-1',
+                  }}
+                >
+                  <ModalHeader>
+                    <VStack
+                      w="full"
+                      spacing="8px"
+                      align={'center'}
+                      justify="center"
+                    >
+                      <Box as="p" textStyle="title1" color="neutral.11">
+                        {currentAction &&
+                          (currentAction.type === 'accept'
+                            ? 'Accept Project'
+                            : 'Reject Project')}
+                      </Box>
+                      <Box as="p" textStyle="body4" color="neutral.9">
+                        Sign transaction to Perform the action
+                      </Box>
+                    </VStack>
+                  </ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <VStack textAlign={'start'} align={'start'} spacing="24px">
+                      <VStack align={'start'} spacing="16px">
+                        <HStack align={'start'} gap="16px">
+                          <Avatar
+                            src={project.logo}
+                            name={project.name}
+                            borderRadius="8px"
+                            width={{ base: '60px', md: '80px' }}
+                            height={{ base: '60px', md: '80px' }}
+                          />
+                          <VStack textAlign={'start'} align={'start'} gap="8px">
+                            <Box
+                              as="p"
+                              textStyle={{ base: 'title3', md: 'title2' }}
+                              color="neutral.11"
+                            >
+                              {project.name}
+                            </Box>
+                            <Box
+                              as="p"
+                              textStyle={{ base: 'title6', md: 'title5' }}
+                              color="neutral.8"
+                            >
+                              {project.short_description}
+                            </Box>
+                          </VStack>
+                        </HStack>
+                      </VStack>
+                      <Stack
+                        justify={'start'}
+                        gap="32px"
+                        direction={{ base: 'column', md: 'row' }}
+                      >
+                        <VStack align={'start'} textAlign="start" spacing="8px">
+                          <Box
+                            as="p"
+                            textStyle={{ base: 'title6', md: 'title5' }}
+                            color="neutral.6"
+                            textTransform={'uppercase'}
+                          >
+                            Email Address
+                          </Box>
+                          <Box
+                            as="p"
+                            textStyle={{ base: 'title6', md: 'title5' }}
+                            color="neutral.11"
+                          >
+                            hashtag.irfan@gmail.com
+                          </Box>
+                        </VStack>
+                        <VStack align={'start'} textAlign="start" spacing="8px">
+                          <Box
+                            as="p"
+                            textStyle={{ base: 'title6', md: 'title5' }}
+                            color="neutral.6"
+                            textTransform={'uppercase'}
+                          >
+                            Creator
+                          </Box>
+                          <Box
+                            as="p"
+                            textStyle={{ base: 'title6', md: 'title5' }}
+                            color="neutral.11"
+                          >
+                            @{project.owner.username}{' '}
+                            <Box px="0.5rem" as="span" color="neutral.6">
+                              {TruncatedAddr({
+                                walletAddress: project.owner_publickey,
+                              })}
+                            </Box>
+                          </Box>
+                        </VStack>
+                      </Stack>
+                      <VStack align={'start'} spacing="32px">
+                        {transactionSignError ? (
+                          <Alert status="error" variant="cubik">
+                            <AlertIcon />
+                            <AlertDescription
+                              fontSize={{
+                                base: '10px',
+                                md: '11px',
+                                xl: '12px',
+                              }}
+                              lineHeight={{
+                                base: '14px',
+                                md: '14px',
+                                xl: '16px',
+                              }}
+                            >
+                              {transactionSignError}
+                            </AlertDescription>
+                          </Alert>
+                        ) : (
+                          <Alert
+                            status={
+                              currentAction?.type === 'accept'
+                                ? 'info'
+                                : 'error'
+                            }
+                            variant="cubik"
+                          >
+                            <AlertIcon />
+                            <AlertDescription
+                              fontSize={{
+                                base: '10px',
+                                md: '11px',
+                                xl: '12px',
+                              }}
+                              lineHeight={{
+                                base: '14px',
+                                md: '14px',
+                                xl: '16px',
+                              }}
+                            >
+                              {currentAction &&
+                                (currentAction.type === 'accept'
+                                  ? 'By signing the transaction, the project will be approved and verified to be listed on cubik. The project will be able to apply for grants and visible to all users'
+                                  : 'By signing the transaction, the project will be rejected which means that there was something wrong with the project and it did not get verified')}
+                            </AlertDescription>
+                          </Alert>
+                        )}
+                      </VStack>
+                    </VStack>
+                  </ModalBody>
+                  <ModalFooter
+                    display="flex"
+                    h={'fit-content'}
+                    justifyContent="space-between"
+                  >
+                    <Button
+                      w="8rem"
+                      variant="close_modal"
+                      onClick={() => {
+                        onActionModalClose();
+                        setTransactionSignError(null);
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      px="32px"
+                      variant="apply_for_grant"
+                      onClick={handleSignTransaction}
+                      isLoading={transactionLoading}
+                    >
+                      Sign Transaction
+                    </Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
             </>
           ))}
         </VStack>
