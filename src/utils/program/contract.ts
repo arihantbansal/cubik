@@ -269,6 +269,7 @@ export const updateProjectRoundVerified = async (
     [Buffer.from('round'), Buffer.from(roundId)],
     program.programId
   );
+  console.log(round_account.toBase58());
 
   let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
     [
@@ -278,7 +279,7 @@ export const updateProjectRoundVerified = async (
     ],
     program.programId
   );
-
+  console.log(project_account.toBase58());
   let [roundVerfication_account] = anchor.web3.PublicKey.findProgramAddressSync(
     [
       anchor.utils.bytes.utf8.encode('roundjoin'),
@@ -287,64 +288,12 @@ export const updateProjectRoundVerified = async (
     ],
     program.programId
   );
+  console.log(roundVerfication_account.toBase58(), counter.toString());
   const ix = await program.methods
     .updateApproveRound(
       roundId,
       round_account,
       project_account,
-      counter.toString()
-    )
-    .accounts({
-      roundAccount: round_account,
-      adminAccount: adminAccount,
-      roundVerficationAccount: roundVerfication_account,
-      authority: wallet.publicKey,
-      projectAccount: project_account,
-      rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-      systemProgram: anchor.web3.SystemProgram.programId,
-    })
-    .instruction();
-
-  return ix;
-};
-export const updateProjectRoundFailed = async (
-  wallet: NodeWallet,
-  roundId: string,
-  counter: number,
-  projectOwner: string
-) => {
-  const program = anchorProgram(wallet);
-  const [adminAccount] = anchor.web3.PublicKey.findProgramAddressSync(
-    [Buffer.from('admin')],
-    program.programId
-  );
-  const [round_account] = anchor.web3.PublicKey.findProgramAddressSync(
-    [Buffer.from('round'), Buffer.from(roundId)],
-    program.programId
-  );
-
-  let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
-    [
-      anchor.utils.bytes.utf8.encode('project'),
-      new anchor.web3.PublicKey(projectOwner).toBuffer(),
-      Buffer.from(counter.toString()),
-    ],
-    program.programId
-  );
-
-  let [roundVerfication_account] = anchor.web3.PublicKey.findProgramAddressSync(
-    [
-      anchor.utils.bytes.utf8.encode('roundjoin'),
-      round_account.toBuffer(),
-      project_account.toBuffer(),
-    ],
-    program.programId
-  );
-  const ix = await program.methods
-    .updateRejectRound(
-      round_account,
-      project_account,
-      roundId,
       counter.toString()
     )
     .accounts({
@@ -370,8 +319,8 @@ export const contributeSPL = async (
   split: number,
   total: number,
   usd: number
-) => {
-  if (split > 100) return;
+): Promise<anchor.web3.Transaction | null> => {
+  if (split > 100) return null;
   const program = anchorProgram(wallet);
   const tokenMint = new anchor.web3.PublicKey(token);
 
@@ -478,6 +427,8 @@ export const contributeSPL = async (
     tx.add(tokenAccountIx1);
   }
   tx.add(ix);
+
+  return tx;
 };
 
 export const contributeSOL = async (

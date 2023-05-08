@@ -214,6 +214,56 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
       setImageUrl(imageUrl);
       setEditorData(editorData);
       onTransactionModalOpen();
+      const id = uuidV4();
+      try {
+        const { ix: valutIx, key } = await createVault(
+          anchorWallet as NodeWallet,
+          getValues().projectName,
+          getValues().tagline,
+          imageUrl
+        );
+        const vaultAuth = await getVault(anchorWallet as NodeWallet, key);
+        const tx = new anchor.web3.Transaction();
+
+        const ix = await createProject(
+          anchorWallet as NodeWallet,
+          (session?.user.count.project as number) + 2,
+          anchorWallet?.publicKey!
+        );
+        const { blockhash } = await connection.getLatestBlockhash();
+        tx.recentBlockhash = blockhash;
+        tx.feePayer = anchorWallet?.publicKey;
+        tx.add(valutIx);
+        tx.add(ix);
+        const signTx = await anchorWallet?.signTransaction(tx);
+        if (!signTx) return;
+        const serialized_transaction = signTx.serialize();
+        const sig = await connection.sendRawTransaction(serialized_transaction);
+        if (!sig) return;
+        createProjectMutation.mutate({
+          id: id,
+          name: getValues().projectName,
+          sig: sig,
+          short_description: getValues().tagline,
+          logo: imageUrl,
+          long_description: editorData,
+          industry: JSON.stringify(getValues().category),
+          github_link: getValues().github,
+          twitter_handle: getValues().twitter,
+          project_link: getValues().projectLink,
+          discord_link: getValues().projectLink,
+          telegram_link: getValues().telegram,
+          projectUserCount: (session?.user.count.project as number) + 2,
+          team: getValues()?.team?.map((member) => member.value) ?? [],
+          multiSigAddress: vaultAuth,
+        });
+        setProjectid(id);
+        goToNextStep();
+      } catch (error) {
+        console.log(error, '--error');
+
+        /// add error handling in UI @irffan
+      }
     } catch (e) {
       console.error('There was an error uploading the image', e);
     } finally {

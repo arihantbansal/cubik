@@ -6,6 +6,7 @@ import {
   CardHeader,
   Center,
   HStack,
+  Input,
   Stack,
   VStack,
 } from '@chakra-ui/react';
@@ -13,11 +14,11 @@ import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import { GetServerSideProps } from 'next';
+import { useForm } from 'react-hook-form';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import {
   connection,
   createRoundIx,
-  updateProjectRoundFailed,
   updateProjectRoundVerified,
 } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
@@ -30,13 +31,21 @@ const RoundAdmin = ({ slug }: { slug: string }) => {
   const projectforRound = trpc.round.findInReview.useQuery({
     name: slug,
   });
+  const {
+    handleSubmit,
+    setValue,
+    getValues,
+    register,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
-  const createRound = async () => {
+  const createRound = async (name: string, pool: number, project: number) => {
     const ix = await createRoundIx(
       anchorWallet as NodeWallet,
-      'Round 1',
-      1000,
-      10
+      name,
+      pool,
+      project
     );
     const { blockhash } = await connection.getLatestBlockhash();
     const tx = new anchor.web3.Transaction();
@@ -51,20 +60,24 @@ const RoundAdmin = ({ slug }: { slug: string }) => {
       throw new Error('txid is null');
     }
     createRoundMutation.mutate({
-      matchingPool: 1000,
-      name: 'Round 1',
+      matchingPool: pool,
+      name: name,
       notionPage: 'https://www.notion.so/round1',
-      projectCount: 10,
+      projectCount: project,
       tx: txid,
     });
   };
 
-  const markVerified = async () => {
+  const markVerified = async (
+    name: string,
+    owner: string,
+    projectCount: number
+  ) => {
     const ix = await updateProjectRoundVerified(
       anchorWallet as NodeWallet,
-      'round Id',
-      1,
-      'owner key'
+      name,
+      projectCount,
+      owner
     );
     const { blockhash } = await connection.getLatestBlockhash();
     const tx = new anchor.web3.Transaction();
@@ -73,7 +86,9 @@ const RoundAdmin = ({ slug }: { slug: string }) => {
     tx.add(ix);
 
     const signed = await anchorWallet?.signTransaction(tx);
-    const txid = await connection.sendRawTransaction(signed!.serialize());
+    const txid = await connection.sendRawTransaction(signed!.serialize(), {
+      skipPreflight: true,
+    });
     console.log('txid', txid);
     if (!txid) {
       throw new Error('txid is null');
@@ -84,12 +99,16 @@ const RoundAdmin = ({ slug }: { slug: string }) => {
     });
   };
 
-  const markUnverified = async () => {
-    const ix = await updateProjectRoundFailed(
+  const markUnverified = async (
+    name: string,
+    owner: string,
+    projectCount: number
+  ) => {
+    const ix = await updateProjectRoundVerified(
       anchorWallet as NodeWallet,
-      'round Id',
-      1,
-      'owner key'
+      name,
+      projectCount,
+      owner
     );
     const { blockhash } = await connection.getLatestBlockhash();
     const tx = new anchor.web3.Transaction();
@@ -108,9 +127,50 @@ const RoundAdmin = ({ slug }: { slug: string }) => {
       status: 'REJECTED',
     });
   };
+  const onSubmit = async (_e: any) => {
+    console.log('e', _e);
+
+    createRound(_e.name, parseInt(_e.pool), parseInt(_e.project));
+  };
   return (
     <>
       <Stack w={'7xl'} mx={'auto'}>
+        <VStack w={'2xl'} mx={'auto'}>
+          <form
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'start',
+              gap: '24px',
+              border: '1px solid red',
+              padding: '20px',
+            }}
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <Input
+              {...register('pool')}
+              placeholder="matching Pool"
+              id="pool"
+              type="number"
+            />
+            <Input
+              {...register('project')}
+              placeholder="Project"
+              id="project"
+              type="number"
+            />
+            <Input
+              {...register('name')}
+              placeholder="name"
+              id="name"
+              type="string"
+            />
+            <Button variant="apply_for_grant" type="submit">
+              Submit
+            </Button>
+          </form>
+        </VStack>
         <VStack spacing="32px" mt={20}>
           {projectforRound.data?.ProjectJoinRound?.map((projectJoin) => (
             <>
@@ -171,7 +231,19 @@ const RoundAdmin = ({ slug }: { slug: string }) => {
                         variant={'project_button_secondary'}
                         //@ts-ignore
                         w="full"
-                        onClick={() => markUnverified()}
+                        onClick={() => {
+                          console.log(
+                            slug,
+                            projectJoin.project.owner_publickey,
+                            projectJoin.project.projectUserCount
+                          );
+
+                          markUnverified(
+                            slug,
+                            projectJoin.project.owner_publickey,
+                            projectJoin.project.projectUserCount
+                          );
+                        }}
                         maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
                       >
                         Reject
@@ -180,7 +252,19 @@ const RoundAdmin = ({ slug }: { slug: string }) => {
                         variant={'project_button_secondary'}
                         //@ts-ignore
                         w="full"
-                        onClick={() => markVerified()}
+                        onClick={() => {
+                          console.log(
+                            slug,
+                            projectJoin.project.owner.mainWallet,
+                            projectJoin.project.projectUserCount
+                          );
+
+                          markVerified(
+                            slug,
+                            projectJoin.project.owner.mainWallet,
+                            projectJoin.project.projectUserCount
+                          );
+                        }}
                         maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
                       >
                         Accept

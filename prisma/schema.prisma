@@ -130,8 +130,10 @@ model ProjectJoinRound {
 model Round {
   id                     String             @id @default(uuid()) @map("_id")
   roundName              String
+  colorScheme            String             @default("teal")
   matchedPool            Float              @default(0)
   communityContributions Float              @default(0)
+  short_description      String             @db.VarChar(2000) @default("")
   notionPage             String             @db.VarChar(500)
   projectCount           Int                @default(0)
   active                 Boolean            @default(true)

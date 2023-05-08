@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Card,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -13,13 +12,15 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
+import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { ProjectsModel } from '@prisma/client';
+import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import { useEffect, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import { Controller, useForm } from 'react-hook-form';
 import { DonationFormType } from '~/interfaces/donationForm';
 import { tokenGroup } from '~/interfaces/token';
-import PaymentModal from '../../../../../common/payment-modal/PaymentModal';
+import { contributeSPL } from '~/utils/program/contract';
 import { ControlledSelect } from '../../../../../common/select/ControlledSelect';
 import { tokens } from '../../../../../common/tokens/DonationTokens';
 import Graph from './Graph';
@@ -39,7 +40,7 @@ export const ProjectDonationSimulator = ({
 }: ProjectDonationSimulatorProps) => {
   const [donation, setDonation] = useState(50);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const anchorWallet = useAnchorWallet();
   const {
     handleSubmit,
     setValue,
@@ -73,6 +74,19 @@ export const ProjectDonationSimulator = ({
   function onSubmit(_values: any) {
     onOpen();
   }
+
+  const donateSPL = async () => {
+    const ix = await contributeSPL(
+      anchorWallet as NodeWallet,
+      'round',
+      'token',
+      'project owner',
+      0, // project count
+      0, // split
+      100, // total
+      1000 // usd value
+    );
+  };
 
   return (
     <Stack gap="40px" direction={'row'}>
