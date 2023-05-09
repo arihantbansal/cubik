@@ -9,7 +9,6 @@ import {
   Input,
   Menu,
   MenuButton,
-  MenuItem,
   MenuList,
   NumberDecrementStepper,
   NumberIncrementStepper,
@@ -19,23 +18,21 @@ import {
   Stack,
   Text,
   useDisclosure,
-  useToast,
   VStack,
 } from '@chakra-ui/react';
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { Player } from '@lottiefiles/react-lottie-player';
+import { ProjectsModel } from '@prisma/client';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { useForm, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { TiFlash } from 'react-icons/ti';
+import { ActionMeta } from 'react-select';
 import { ListDonationFormType } from '~/interfaces/donationForm';
 import { tokenGroup } from '~/interfaces/token';
 import useListStore from '~/store/listStore';
 import PaymentModal from '../../common/payment-modal/PaymentModal';
 import { ControlledSelect } from '../../common/select/ControlledSelect';
 import { tokens } from '../../common/tokens/DonationTokens';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Player } from '@lottiefiles/react-lottie-player';
-import { ActionMeta } from 'react-select';
-import { ProjectsModel } from '@prisma/client';
 
 export const token: tokenGroup[] = tokens;
 
@@ -121,7 +118,6 @@ const ProjectListCard: React.FC<ProjectListCardProps> = memo(
 ProjectListCard.displayName = 'ProjectListCard';
 
 const IconButtonBadge = () => {
-  console.log('list componenet is rerendered');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const count = useListStore((state) => state.count());
   const projectList = useListStore((state) => state.projectList);

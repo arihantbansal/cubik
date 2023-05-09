@@ -16,7 +16,7 @@ import {
   Spinner,
   useDisclosure,
   useToast,
-  VStack,
+  VStack
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import { useWallet } from '@solana/wallet-adapter-react';
@@ -81,7 +81,7 @@ const NavbarCTA: FC = () => {
   }
 
   useEffect(() => {
-    console.log('use effect called - state: ', status);
+    console.log('Use effect called when wallet connected or status changed - status', status  );
     if (status !== 'authenticated') onOpen();
   }, [connecting, status, connected]);
 
@@ -132,13 +132,17 @@ const NavbarCTA: FC = () => {
           <ModalContent>
             <ModalHeader>
               <HStack>
-                <Box gap="8px" as="p" textStyle={'title2'} color="neutral.11">
+                <Box
+                  as="p"
+                  textStyle={{ base: 'title3', md: 'title2' }}
+                  color="neutral.11"
+                >
                   Verify Wallet
                 </Box>
                 {publicKey && (
                   <Center
                     backgroundColor={'neutral.5'}
-                    p="8px 12px"
+                    p={{ base: '6px 10px', md: '8px 12px' }}
                     rounded="8px"
                   >
                     <WalletAddress
@@ -151,7 +155,11 @@ const NavbarCTA: FC = () => {
             </ModalHeader>
             <ModalBody>
               <VStack pt="16px" align={'start'} gap="16px">
-                <Box as="p" textStyle={'body3'} color="white">
+                <Box
+                  as="p"
+                  textStyle={{ base: 'body5', md: 'body3' }}
+                  color="white"
+                >
                   Verify Wallet to prove ownership. No SOL will be charged
                 </Box>{' '}
                 {verifyWalletError && (

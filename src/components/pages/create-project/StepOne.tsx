@@ -149,7 +149,9 @@ const StepOne: React.FC<StepOneProps> = ({
             })}
           />
           {errors.projectName && (
-            <FormErrorMessage>{errors.projectName.message}</FormErrorMessage>
+            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+              {errors.projectName.message}
+            </FormErrorMessage>
           )}
         </FormControl>
         <FormControl isRequired isInvalid={Boolean(errors.tagline)}>
@@ -175,7 +177,9 @@ const StepOne: React.FC<StepOneProps> = ({
             })}
           />
           {errors.tagline && (
-            <FormErrorMessage>{errors.tagline.message}</FormErrorMessage>
+            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+              {errors.tagline.message}
+            </FormErrorMessage>
           )}
         </FormControl>
         <Controller

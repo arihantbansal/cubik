@@ -171,7 +171,7 @@ export const Button = {
     apply_for_grant: (_props: StyleFunctionProps) => ({
       color: '#031513',
       backgroundColor: '#A8F0E6',
-      padding: { base: '8px 20px 10px 20px', md: '8px 20px 10px 20px' },
+      padding: { base: '8px 16px 10px 16px', md: '8px 20px 10px 20px' },
       outline: isMobileSafari ? 'none' : '1px solid rgba(168, 240, 230, 0.6)',
       rounded: '8px',
       fontSize: { base: '12px', md: '14px' },

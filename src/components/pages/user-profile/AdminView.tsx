@@ -7,6 +7,7 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { FC, memo } from 'react';
 
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
@@ -26,6 +27,7 @@ type adminViewType = {
 
 const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
   const { hasError, ErrorBoundaryWrapper } = useErrorBoundary();
+  const router = useRouter();
 
   if (hasError) {
     return (
@@ -45,7 +47,7 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
         gap={{ base: '32px', sm: '40px', md: '56px' }}
       >
         <ProfileHeader user={user} />
-        <Tabs variant={'cubik'}>
+        <Tabs defaultIndex={router.query.project ? 1 : 0} variant={'cubik'}>
           <TabList>
             <Tab>Details</Tab>
             <Tab>Projects</Tab>
@@ -61,7 +63,11 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
               <Flex direction="column" w="full" gap="32px">
                 {user.project.length ? (
                   user.project.map((project, key) => (
-                    <ProjectAdminCard project={project} key={key} />
+                    <ProjectAdminCard
+                      project={project}
+                      activeProject={router?.query?.project as string}
+                      key={key}
+                    />
                   ))
                 ) : (
                   <AdminProjectEmptyState />

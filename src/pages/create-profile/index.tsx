@@ -26,6 +26,7 @@ import {
   ModalOverlay,
   Spinner,
   useDisclosure,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
@@ -46,6 +47,7 @@ import { HiCheck } from 'react-icons/hi';
 
 import { v4 as uuidV4 } from 'uuid';
 import * as yup from 'yup';
+import { SuccessToast } from '~/components/common/toasts/Toasts';
 import {
   TruncatedAddr,
   WalletAddress,
@@ -75,6 +77,7 @@ const CreateProfile = () => {
     onClose: onTransactionModalClose,
   } = useDisclosure();
   const anchorWallet = useAnchorWallet();
+  const toast = useToast();
   const [userNameIsAvailable, setUserNameIsAvailable] = useState(false);
   const [signingTransaction, setSigningTransaction] = useState(false);
   const [transactionError, setTransactionError] = useState<string | null>(null);
@@ -187,9 +190,9 @@ const CreateProfile = () => {
       tx: sig,
       mainWallet: publicKey?.toBase58() as string,
     });
-
+    console.log('session status - ', session.status);
     if (session.status === 'authenticated') {
-      console.log('user is authenticated');
+      SuccessToast({ toast, message: 'Profile Created Succesfully' });
       router.push({
         pathname: '/[username]',
         query: { username: session.data.user.username },

@@ -9,3 +9,9 @@ export type ProjectWithRoundDetailsType = Prisma.ProjectsModelGetPayload<{
     };
   };
 }>;
+
+export type RoundWithFundingType = Prisma.ProjectJoinRoundGetPayload<{
+  include: {
+    fundingRound: true;
+  };
+}>;

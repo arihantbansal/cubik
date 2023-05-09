@@ -1,26 +1,19 @@
-import {
-  Box,
-  Button,
-  Center,
-  Collapse,
-  Stack,
-  Text,
-  useDisclosure,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Stack, Text, useDisclosure, VStack } from '@chakra-ui/react';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
-import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
 
 import { Link, LinkProps } from '@chakra-ui/react';
 
 export const ProjectsDetailedDescription = ({
   description,
   maxH,
+  overflow,
 }: {
   description: string;
   maxH?: string;
+  overflow?: string;
 }) => {
   //const projectDescription = description[0] === '"' ? JSON.parse(description) : description;
   const { isOpen, onToggle } = useDisclosure();
@@ -108,7 +101,12 @@ export const ProjectsDetailedDescription = ({
 
   return (
     <Stack alignSelf={'start'} w="full" direction={'column'} gap="0.5rem">
-      <VStack maxH={maxH} overflow="scroll" align="start" gap="0.5rem">
+      <VStack
+        maxH={maxH}
+        overflow={overflow ? overflow : 'scroll'}
+        align="start"
+        gap="0.5rem"
+      >
         <ReactMarkdown
           components={ChakraUIRenderer(newTheme)}
           rehypePlugins={[rehypeRaw]}

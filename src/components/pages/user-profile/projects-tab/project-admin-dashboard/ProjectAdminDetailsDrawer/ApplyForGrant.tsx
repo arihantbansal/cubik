@@ -8,7 +8,6 @@ import {
   Button,
   Center,
   Checkbox,
-  Heading,
   HStack,
   Icon,
   Modal,
@@ -20,6 +19,7 @@ import {
   ModalOverlay,
   Skeleton,
   SkeletonCircle,
+  SkeletonText,
   Stack,
   useDisclosure,
   VStack,
@@ -30,9 +30,11 @@ import { ProjectsModel, Round } from '@prisma/client';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { AiTwotoneCalendar } from 'react-icons/ai';
 import { FiChevronLeft } from 'react-icons/fi';
 import { v4 as uuidV4 } from 'uuid';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
+import { formatDate } from '~/utils/firnatDate';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { connection, ProjectJoinRound } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
@@ -50,7 +52,6 @@ const ApplyForGrant: React.FC<{
     data: roundData,
     isLoading,
     isError,
-    error,
   } = trpc.round.findActive.useQuery();
   const { hasError, ErrorBoundaryWrapper } = useErrorBoundary();
   const [signTxnLoading, setSignTxnLoading] = useState(false);
@@ -62,7 +63,6 @@ const ApplyForGrant: React.FC<{
   const { control, handleSubmit } = useForm<FormData>();
   const wallet = useAnchorWallet();
   const [selectRoundId, setSelectRoundId] = React.useState<string | null>(null);
-
   const sendTransaction = async (
     roundName: string,
     projectUserCount: number
@@ -141,12 +141,80 @@ const ApplyForGrant: React.FC<{
         p={{ base: '16px', md: '32px' }}
         w="full"
         gap="24px"
-        rounded="16px"
-        justify={'start'}
+        rounded="20px"
+        justify={'space-between'}
         align="center"
         direction={{ base: 'column', md: 'row' }}
         onClick={() => setSelectRoundId(tileIndex)}
+        position="relative"
+        overflow={'hidden'}
+        _after={{
+          content: '""',
+          zIndex: '1',
+          position: 'absolute',
+          bottom: '50%',
+          left: '0%',
+          transform: 'translate(0%, -50%)',
+          width: '8rem',
+          height: '8rem',
+          backgroundColor: isSelected ? '#14665B' : '#ffffff10',
+          filter: 'blur(100px)',
+          borderRadius: 'full',
+        }}
       >
+        <VStack align={'start'} spacing="24px">
+          <VStack align="start" w="full" spacing="12px">
+            <HStack align="start">
+              <Box
+                color="neutral.11"
+                as="p"
+                textStyle={{ base: 'title2', md: 'title1' }}
+              >
+                {round.roundName}
+                {''} Round
+              </Box>
+              <HStack
+                rounded="full"
+                backgroundColor="#1D1F1E"
+                p="8px 12px"
+                spacing="8px"
+                mx={1}
+              >
+                <AiTwotoneCalendar color="white" size={18} />
+                <Box
+                  as="p"
+                  whiteSpace="pre"
+                  color="neutral.11"
+                  textStyle={{ base: 'body6', md: 'body5' }}
+                >
+                  {formatDate(round.startTime)}
+                </Box>
+              </HStack>
+            </HStack>
+            <Box as="p" textStyle={'body4'} color="neutral.9">
+              {round.short_description}
+            </Box>
+          </VStack>
+          <HStack
+            bg="#ffffff08"
+            rounded="8px"
+            shadow="0px 4px 24px rgba(0, 0, 0, 0.08)"
+            outline="1px solid #ffffff16"
+            p={{ base: '0.6rem 1.2rem', md: '0.8rem 1.5rem' }}
+          >
+            <Box
+              color="#B4B0B2"
+              textTransform={'uppercase'}
+              as="p"
+              textStyle={{ base: 'body5', md: 'overline3' }}
+            >
+              Matching Pool
+            </Box>
+            <Box as="p" textStyle={{ base: 'body3', md: 'title4' }}>
+              : {formatNumberWithK(round.matchedPool)} USDC
+            </Box>
+          </HStack>
+        </VStack>{' '}
         <Center
           rounded="full"
           border="3px solid"
@@ -162,32 +230,6 @@ const ApplyForGrant: React.FC<{
             backgroundColor={isSelected ? '#14665B' : ''}
           />
         </Center>
-        <VStack align={'start'} spacing="1.4rem">
-          <Box
-            color="neutral.11"
-            as="p"
-            textStyle={{ base: 'title2', md: 'title1' }}
-          >
-            {round.roundName}
-          </Box>
-          <HStack
-            bg="#ffffff10"
-            rounded="8px"
-            p={{ base: '0.6rem 1.2rem', md: '0.8rem 1.5rem' }}
-          >
-            <Box
-              color="#B4B0B2"
-              textTransform={'uppercase'}
-              as="p"
-              textStyle={{ base: 'body5', md: 'overline3' }}
-            >
-              Matching Pool
-            </Box>
-            <Box as="p" textStyle={{ base: 'body3', md: 'title4' }}>
-              : {formatNumberWithK(round.matchedPool)} USDC
-            </Box>
-          </HStack>
-        </VStack>
       </HStack>
     );
   };
@@ -202,10 +244,17 @@ const ApplyForGrant: React.FC<{
         w="full"
         gap="24px"
         rounded="16px"
-        justify={'start'}
+        justify={'space-between'}
         align="center"
         direction={{ base: 'column', md: 'row' }}
       >
+        <VStack align={'start'} width="full" spacing="24px">
+          <VStack align="start" width="full" spacing="12px">
+            <Skeleton height="2rem" width="10rem" />
+            <SkeletonText noOfLines={2} skeletonHeight={2} width={'full'} />
+          </VStack>
+          <Skeleton py="24px" height="1rem" width="18rem" />
+        </VStack>{' '}
         <SkeletonCircle
           rounded="full"
           border="3px solid"
@@ -213,34 +262,39 @@ const ApplyForGrant: React.FC<{
           h="32px"
           p="4px"
         />
-        <VStack align={'start'} spacing="1.4rem">
-          <Skeleton height="2rem" width="10rem" />
-          <Skeleton height="1.5rem" width="18rem" />
-        </VStack>
       </HStack>
     );
   };
 
   return (
     <ErrorBoundaryWrapper>
-      <VStack p="40px" w="full">
-        <Heading w="full" textAlign={'start'} as="h2" size="lg" mb={5}>
+      <VStack align="start" p="40px" spacing="32px" w="full">
+        <Box as="p" textStyle={'headline2'}>
           Select a Grant
-        </Heading>
-        {isLoading ? (
-          <VStack w="full" spacing="24px">
-            <TileSkeleton />
-            <TileSkeleton />
-            <TileSkeleton />
-          </VStack>
-        ) : (
-          <VStack w="full" spacing="24px">
-            {roundData?.map((round: Round) => {
-              return <Tile tileIndex={round.id} round={round} key={round.id} />;
-            })}
-          </VStack>
-        )}
-        <Center pt="24px" w="full">
+        </Box>
+        <VStack
+          maxH="50vh"
+          overflow="scroll"
+          w="full"
+          align={'start'}
+          spacing="32px"
+        >
+          {isLoading ? (
+            <VStack w="full" spacing="24px">
+              <TileSkeleton />
+              <TileSkeleton />
+            </VStack>
+          ) : (
+            <VStack w="full" spacing="24px">
+              {roundData?.map((round: Round) => {
+                return (
+                  <Tile tileIndex={round.id} round={round} key={round.id} />
+                );
+              })}
+            </VStack>
+          )}
+        </VStack>{' '}
+        <Center w="full">
           <Alert status="info" variant="cubik">
             <AlertIcon />
             <VStack w="full" align={'start'} spacing="8px">

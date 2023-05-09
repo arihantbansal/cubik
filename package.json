@@ -62,7 +62,6 @@
     "cloudinary": "^1.35.0",
     "d3": "^7.8.3",
     "framer-motion": "^10.3.2",
-    "hamburger-react": "^2.5.0",
     "html-react-parser": "^3.0.12",
     "immer": "^9.0.19",
     "next": "13.2.4",

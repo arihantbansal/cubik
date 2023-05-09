@@ -11,9 +11,7 @@ export default function SplineAsset() {
     <Spline scene="https://prod.spline.design/pFJMp0UpB5jxTNqw/scene.splinecode" />
   ) : (
     <Spline
-      onLoad={() => {
-        console.log('spline asset loaded');
-      }}
+      onLoad={() => {}}
       scene="https://prod.spline.design/yf3HawGE1cvYNAxl/scene.splinecode"
     />
   );

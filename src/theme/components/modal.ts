@@ -1,8 +1,5 @@
 import { modalAnatomy as parts } from '@chakra-ui/anatomy';
-import {
-  createMultiStyleConfigHelpers,
-  defineStyle,
-} from '@chakra-ui/styled-system';
+import { createMultiStyleConfigHelpers } from '@chakra-ui/styled-system';
 
 const { definePartsStyle, defineMultiStyleConfig } =
   createMultiStyleConfigHelpers(parts.keys);
@@ -14,13 +11,14 @@ const cubik = definePartsStyle({
   },
   dialog: {
     mt: '18vh',
+    mx: { base: '16px', md: '0px' },
     borderRadius: '20px',
     border: '1px solid #141414',
     bg: `surface.card`,
     boxShadow: '0px 2px 120px #000000',
     backdropFilter: 'blur(10px)',
-    padding: '32px 0px',
-    gap: '24px',
+    padding: { base: '24px 0px', md: '32px 0px' },
+    gap: { base: '16px', md: '24px' },
   },
   dialogContainer: {
     outline: '1px dashed red',
@@ -29,10 +27,10 @@ const cubik = definePartsStyle({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '0px 32px',
-    fontSize: '20px',
+    padding: { base: '0px 24px', md: '0px 32px' },
+    fontSize: { base: '16px', md: '20px' },
     fontWeight: 'bold',
-    lineHeight: '28px',
+    lineHeight: { base: '24px', md: '28px' },
     letterSpacing: '0.02em',
     color: 'white',
   },
@@ -40,22 +38,21 @@ const cubik = definePartsStyle({
     backgroundColor: '#1D1F1E',
     color: 'white',
     rounded: 'full',
-    top: '32px',
-    right: '32px',
+    top: { base: '24px', md: '32px' },
+    right: { base: '24px', md: '32px' },
     height: '30px',
     width: '30px',
     padding: '4px',
   },
   body: {
-    padding: '0px 32px',
+    padding: { base: '0px 24px', md: '0px 32px' },
   },
   footer: {
-    padding: '24px 32px 0px 32px',
+    padding: { base: '26px 24px 0px 24px', md: '24px 32px 0px 32px' },
     borderTop: '1px solid',
     borderColor: 'neutral.3',
   },
 });
-
 
 export const Modal = defineMultiStyleConfig({
   variants: {

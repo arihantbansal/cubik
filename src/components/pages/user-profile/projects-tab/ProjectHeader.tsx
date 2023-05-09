@@ -19,7 +19,13 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { ProjectsModel, ProjectVerifyStatus } from '@prisma/client';
+import {
+  ProjectJoinRoundStatus,
+  ProjectsModel,
+  ProjectVerifyStatus,
+} from '@prisma/client';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { AiOutlineEdit, AiOutlineMore } from 'react-icons/ai';
@@ -29,6 +35,7 @@ import { VscPreview } from 'react-icons/vsc';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import { ProjectWithRoundDetailsType } from '~/types/project';
 import { getDomain } from '~/utils/getDomain';
+import { ProjectStatus } from '~/utils/getProjectStatus';
 import { ProjectSocials } from '../../projects/project-details/project-interactions/ProjectInteractions';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
 import { ProjectLink } from '../../projects/project-details/ProjectDetailsHeader';
@@ -128,14 +135,71 @@ const ProjectDetails = ({
   useEffect(() => {
     if (project.status === ProjectVerifyStatus.VERIFIED) {
       setShowApplyToRound(true);
+    }
+    if (
+      ProjectStatus({ projectData: project as ProjectWithRoundDetailsType })
+        ?.round?.status === ProjectJoinRoundStatus.APPROVED ||
+      ProjectJoinRoundStatus.PENDING
+    ) {
+      setShowApplyToRound(false);
     } else {
       setShowApplyToRound(false);
     }
   }, [project.status]);
 
+  const ProjectOptionsMenu = () => {
+    return (
+      <Menu>
+        <MenuButton
+          as={IconButton}
+          variant="unstyled"
+          rounded="4px"
+          aria-label="Options"
+          icon={<AiOutlineMore size={38} />}
+        />
+        <MenuList background={'#242424'} outline="none" border="none">
+          <MenuItem
+            isDisabled
+            _hover={{
+              backgroundColor: '#141414',
+            }}
+            _active={{
+              backgroundColor: '#141414',
+            }}
+            icon={<VscPreview size={22} />}
+          >
+            <Box as="p" textStyle={'body3'}>
+              Preview
+            </Box>
+          </MenuItem>
+          <MenuItem isDisabled icon={<AiOutlineEdit size={22} />}>
+            <Box as="p" textStyle={'body3'}>
+              Edit
+            </Box>
+          </MenuItem>
+          <MenuItem isDisabled icon={<BiMessageSquareDots size={22} />}>
+            <Box as="p" textStyle={'body3'}>
+              Contact
+            </Box>
+          </MenuItem>
+          <MenuDivider color="#00000040" />
+          <MenuItem icon={<MdDeleteOutline size={22} />}>
+            <Box as="p" textStyle={'body3'}>
+              Delete Project
+            </Box>
+          </MenuItem>
+        </MenuList>
+      </Menu>
+    );
+  };
+
   return (
     <VStack
-      padding={{ base: '20px', md: '40px' }}
+      padding={{
+        base: '100px 20px 20px 20px',
+        sm: '80px 20px 20px 20px',
+        md: '80px 40px 40px 40px',
+      }}
       gap={{ base: '32px', md: '64px' }}
       w="full"
     >
@@ -148,6 +212,9 @@ const ProjectDetails = ({
             width={{ base: '80px', md: '102px' }}
             height={{ base: '80px', md: '102px' }}
           />
+          <Center display={{ base: 'flex', md: 'none' }}>
+            <ProjectOptionsMenu />
+          </Center>
           <Stack
             display={{ base: 'none', md: 'flex' }}
             direction="row"
@@ -163,47 +230,7 @@ const ProjectDetails = ({
             >
               Apply For Grant
             </Button>
-            <Menu>
-              <MenuButton
-                as={IconButton}
-                variant="unstyled"
-                rounded="4px"
-                aria-label="Options"
-                icon={<AiOutlineMore size={38} />}
-              />
-              <MenuList background={'#242424'} outline="none" border="none">
-                <MenuItem
-                  isDisabled
-                  _hover={{
-                    backgroundColor: '#141414',
-                  }}
-                  _active={{
-                    backgroundColor: '#141414',
-                  }}
-                  icon={<VscPreview size={22} />}
-                >
-                  <Box as="p" textStyle={'body3'}>
-                    Preview
-                  </Box>
-                </MenuItem>
-                <MenuItem isDisabled icon={<AiOutlineEdit size={22} />}>
-                  <Box as="p" textStyle={'body3'}>
-                    Edit
-                  </Box>
-                </MenuItem>
-                <MenuItem isDisabled icon={<BiMessageSquareDots size={22} />}>
-                  <Box as="p" textStyle={'body3'}>
-                    Contact
-                  </Box>
-                </MenuItem>
-                <MenuDivider color="#00000040" />
-                <MenuItem icon={<MdDeleteOutline size={22} />}>
-                  <Box as="p" textStyle={'body3'}>
-                    Delete Project
-                  </Box>
-                </MenuItem>
-              </MenuList>
-            </Menu>
+            <ProjectOptionsMenu />
           </Stack>
         </HStack>
         <VStack gap={{ base: '4px', md: '16px' }} w="full" align="start">
@@ -258,15 +285,22 @@ const ProjectDetails = ({
         w="full"
         h="fit-content"
       >
-        <Button variant="secondary" h="38px" maxW="164px" borderRadius={'8px'}>
-          Edit Project
+        <Button
+          variant="connect_wallet"
+          width={'full'}
+          isDisabled={!showApplyToRound}
+          onClick={() => {
+            setDrawerBodyView(drawerBodyViewEnum.GRANTS);
+          }}
+        >
+          Apply For Grant
         </Button>
-        <Button variant="connect_wallet">Apply For Grant</Button>
       </Stack>
       <Center>
         <ProjectsDetailedDescription
           description={project.long_description}
-          maxH="36vh"
+          maxH="full"
+          overflow={'scroll'}
         />
       </Center>
     </VStack>
@@ -274,20 +308,32 @@ const ProjectDetails = ({
 };
 
 const ProjectHeader = ({
+  activeProject,
   project,
 }: {
+  activeProject?: string;
   project: ProjectWithRoundDetailsType;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [drawerBodyView, setDrawerBodyView] = useState<drawerBodyViewEnum>(
     drawerBodyViewEnum.PROJECT_DETAILS
   );
+  const { data } = useSession();
+  const router = useRouter();
   const btnRef = useRef();
   const headerSpacing = {
     base: '16px',
     sm: '20px',
     md: '24px',
   };
+
+  useEffect(() => {
+    if (activeProject === project.id) {
+      onOpen();
+    } else {
+      console.log('this project is not active');
+    }
+  }, [activeProject]);
 
   return (
     <>
@@ -329,16 +375,25 @@ const ProjectHeader = ({
           </VStack>
         </Stack>
         <Center justifyContent={'end'}>
-          <Button
-            variant={'project_button_secondary'}
-            //@ts-ignore
-            ref={btnRef}
-            onClick={onOpen}
-            w="full"
-            maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
+          <Link
+            href={`/${data?.user.username}/?project=${project.id}`}
+            style={{
+              color: '#A8F0E6',
+              backgroundColor: 'transparent',
+              height: 'full',
+              width: 'full',
+              padding: '14px 44px 14px 44px',
+              border: '1px solid #A8F0E6',
+              fontSize: '15px',
+              whiteSpace: 'nowrap',
+              fontWeight: '600',
+              lineHeight: '22px',
+              borderRadius: '12px',
+              transition: 'all 0.6s',
+            }}
           >
             View Details
-          </Button>
+          </Link>
         </Center>
         <Drawer
           w="fit-content"
@@ -357,7 +412,6 @@ const ProjectHeader = ({
             backdropFilter="blur(8px)"
           />
           <DrawerContent
-            m="3px"
             // border="1px solid #1D1F1E !important"
             borderColor={'#1D1F1E'}
             borderBottom={'none'}
@@ -365,17 +419,20 @@ const ProjectHeader = ({
             background="#080808"
             maxW="80rem !important"
             mx="auto"
+            p="0"
           >
             <DrawerCloseButton
-              transform={{
-                base: 'translate(-1rem, 1rem)',
-                md: 'translateY(-3rem)',
-              }}
+              transform={'translateY(-3rem)'}
               rounded="full"
               backgroundColor="#141414"
-              //  border="1px solid #ffffff10"
+              onClick={() => {
+                // router.replace(`/${data?.user.username}`, undefined, {
+                //   shallow: true,
+                // });
+              }}
             />
-            <DrawerBody p="2px">
+
+            <DrawerBody maxH={'90vh'} p="0">
               {drawerBodyView === drawerBodyViewEnum.GRANTS ? (
                 <ApplyForGrant
                   setDrawerBodyView={setDrawerBodyView}
@@ -387,7 +444,25 @@ const ProjectHeader = ({
                 <></>
               ) : (
                 <>
-                  <ProjectStatusBanner status={project.status} />
+                  <Center w="full" position="fixed" zIndex="100">
+                    <ProjectStatusBanner
+                      status={
+                        ProjectStatus({
+                          projectData: project as ProjectWithRoundDetailsType,
+                        })?.status as string
+                      }
+                      roundName={
+                        ProjectStatus({
+                          projectData: project as ProjectWithRoundDetailsType,
+                        })?.round
+                          ? ProjectStatus({
+                              projectData:
+                                project as ProjectWithRoundDetailsType,
+                            })?.round?.fundingRound.roundName
+                          : undefined
+                      }
+                    />
+                  </Center>
                   <ProjectDetails
                     project={project}
                     setDrawerBodyView={setDrawerBodyView}

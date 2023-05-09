@@ -1,21 +1,17 @@
 import { Box, Center, Container, Heading, Text } from '@chakra-ui/react';
-import { useAnchorWallet } from '@solana/wallet-adapter-react';
-import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React from 'react';
 import SEO from 'src/components/SEO';
-import superjson from 'superjson';
 import AdminView from '~/components/pages/user-profile/AdminView';
+import { VisitorViewSkeleton } from '~/components/pages/user-profile/skeletons/ProfileViewSkeletons';
 import VisitorView from '~/components/pages/user-profile/VisitorView';
-import { appRouter } from '~/server/routers/_app';
 import { trpc } from '~/utils/trpc';
 
 const ProfilePage = () => {
   console.log('profile component rendered');
   const { data: session } = useSession();
   const router = useRouter();
-  const anchorWallet = useAnchorWallet();
 
   const user = trpc.user.findOne.useQuery(
     {
@@ -26,7 +22,7 @@ const ProfilePage = () => {
     }
   );
 
-  if (!user.data) {
+  if (user.isError) {
     console.log('user not found - ', user.data);
     return (
       <Container maxW="full">
@@ -51,8 +47,18 @@ const ProfilePage = () => {
       </Container>
     );
   }
+  if (user.isLoading || !user.data) {
+    return (
+      <Container
+        maxW="7xl"
+        w="full"
+        p={{ base: '23px 20px', md: '48px 20px', lg: '80px 20px' }}
+      >
+        <VisitorViewSkeleton />
+      </Container>
+    );
+  }
 
-  console.log('user data - ', user);
   return (
     <>
       <SEO
@@ -76,23 +82,3 @@ const ProfilePage = () => {
 };
 
 export default React.memo(ProfilePage);
-
-export async function getServerSideProps(context: { query: any }) {
-  const ssg = createProxySSGHelpers({
-    router: appRouter,
-    ctx: { session: null },
-    transformer: superjson,
-  });
-  const { query } = context;
-  const { username } = query;
-
-  await ssg.user.findOne.prefetch({
-    username: username as string,
-  });
-
-  return {
-    props: {
-      trpcState: ssg.dehydrate(),
-    },
-  };
-}

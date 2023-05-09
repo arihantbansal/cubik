@@ -101,6 +101,7 @@ const ProfileTabsSkeleton = () => {
     </Tabs>
   );
 };
+
 export const AdminViewSkeleton = () => {
   return (
     <Flex flexDir={'column'} gap="48px">

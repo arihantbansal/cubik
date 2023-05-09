@@ -127,6 +127,11 @@ export const textStyles = {
     fontSize: '10px',
     lineHeight: '12px',
   },
+  body7: {
+    fontWeight: '400',
+    fontSize: '8px',
+    lineHeight: '10px',
+  },
   // you can also use responsive styles
   //  fontSize: ['48px', '72px'],
 };

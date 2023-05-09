@@ -5,7 +5,7 @@ const baseStyle = defineStyle({
   outline: '1px solid #141414',
   border: 'none',
   boxShadow: 'none',
-  fontSize: '14px',
+  fontSize: { base: '12px', md: '14px' },
   borderRadius: '8px',
   height: '40px',
   borderColor: 'transparent',
@@ -40,7 +40,7 @@ const baseStyle = defineStyle({
     outline: '1px solid red',
   },
   _placeholder: {
-    fontSize: '14px',
+    fontSize: { base: '12px', md: '14px' },
     color: '#636666',
   },
 });
