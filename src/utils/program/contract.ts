@@ -294,7 +294,8 @@ export const updateProjectRoundVerified = async (
       roundId,
       round_account,
       project_account,
-      counter.toString()
+      counter.toString(),
+      new anchor.web3.PublicKey(projectOwner)
     )
     .accounts({
       roundAccount: round_account,

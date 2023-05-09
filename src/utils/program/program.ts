@@ -223,16 +223,12 @@ export type ContractType = {
           type: 'string';
         },
         {
-          name: 'roundAccount';
-          type: 'publicKey';
-        },
-        {
-          name: 'projectAccount';
-          type: 'publicKey';
-        },
-        {
           name: 'counter';
           type: 'string';
+        },
+        {
+          name: 'owner';
+          type: 'publicKey';
         }
       ];
     },
@@ -277,20 +273,16 @@ export type ContractType = {
       ];
       args: [
         {
-          name: 'roundAccount';
-          type: 'publicKey';
-        },
-        {
-          name: 'projectAccount';
-          type: 'publicKey';
-        },
-        {
           name: 'roundId';
           type: 'string';
         },
         {
           name: 'counter';
           type: 'string';
+        },
+        {
+          name: 'owner';
+          type: 'publicKey';
         }
       ];
     },
@@ -1012,16 +1004,12 @@ export const Contract: ContractType = {
           type: 'string',
         },
         {
-          name: 'roundAccount',
-          type: 'publicKey',
-        },
-        {
-          name: 'projectAccount',
-          type: 'publicKey',
-        },
-        {
           name: 'counter',
           type: 'string',
+        },
+        {
+          name: 'owner',
+          type: 'publicKey',
         },
       ],
     },
@@ -1066,20 +1054,16 @@ export const Contract: ContractType = {
       ],
       args: [
         {
-          name: 'roundAccount',
-          type: 'publicKey',
-        },
-        {
-          name: 'projectAccount',
-          type: 'publicKey',
-        },
-        {
           name: 'roundId',
           type: 'string',
         },
         {
           name: 'counter',
           type: 'string',
+        },
+        {
+          name: 'owner',
+          type: 'publicKey',
         },
       ],
     },

@@ -366,7 +366,7 @@ export const projectsRouter = router({
         include: {
           ProjectJoinRound: {
             include: {
-              fundingRound: true,
+              fundingRound: {},
             },
           },
         },

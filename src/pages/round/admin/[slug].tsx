@@ -172,7 +172,7 @@ const RoundAdmin = ({ slug }: { slug: string }) => {
           </form>
         </VStack>
         <VStack spacing="32px" mt={20}>
-          {projectforRound.data?.ProjectJoinRound?.map((projectJoin) => (
+          {projectforRound?.data?.ProjectJoinRound?.map((projectJoin) => (
             <>
               <Card
                 key={projectJoin.project.id}
