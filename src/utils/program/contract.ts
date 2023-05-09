@@ -292,8 +292,6 @@ export const updateProjectRoundVerified = async (
   const ix = await program.methods
     .updateApproveRound(
       roundId,
-      round_account,
-      project_account,
       counter.toString(),
       new anchor.web3.PublicKey(projectOwner)
     )
