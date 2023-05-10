@@ -13,6 +13,10 @@ export const roundRouter = router({
         projectCount: z.number().positive(),
         notionPage: z.string().nonempty(),
         matchingPool: z.number().positive(),
+        colorScheme: z.string(),
+        short_description: z.string(),
+        endtime: z.string(),
+        startTime: z.string(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -54,10 +58,11 @@ export const roundRouter = router({
     });
     return roundRes;
   }),
+
   findInReview: procedure
     .input(
       z.object({
-        name: z.string().nonempty(),
+        id: z.string().nonempty(),
       })
     )
     .query(async ({ ctx, input }) => {
@@ -70,7 +75,7 @@ export const roundRouter = router({
       }
       const roundRes = await prisma.round.findFirst({
         where: {
-          roundName: input.name,
+          id: input.id,
         },
         include: {
           ProjectJoinRound: {
@@ -86,6 +91,7 @@ export const roundRouter = router({
       });
       return roundRes;
     }),
+
   contribution: procedure
     .input(
       z.object({

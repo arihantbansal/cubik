@@ -6,67 +6,45 @@ import {
   CardHeader,
   Center,
   HStack,
-  Input,
   Stack,
   VStack,
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
-import { GetServerSideProps } from 'next';
-import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import {
   connection,
-  createRoundIx,
   updateProjectRoundVerified,
 } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 
-const RoundAdmin = ({ slug }: { slug: string }) => {
+const GrantUnderReviewProjects = ({
+  roundId,
+  setProjectsNumberByStatus,
+}: any) => {
   const anchorWallet = useAnchorWallet();
-  const createRoundMutation = trpc.round.create.useMutation();
-
   const updateRound = trpc.round.updateStatus.useMutation();
-  const projectforRound = trpc.round.findInReview.useQuery({
-    name: slug,
-  });
   const {
-    handleSubmit,
-    setValue,
-    getValues,
-    register,
-    watch,
-    formState: { errors, isSubmitting },
-  } = useForm();
+    data: roundData,
+    isLoading,
+    isError,
+  } = trpc.round.findInReview.useQuery({
+    id: roundId as string,
+  });
 
-  const createRound = async (name: string, pool: number, project: number) => {
-    const ix = await createRoundIx(
-      anchorWallet as NodeWallet,
-      name,
-      pool,
-      project
-    );
-    const { blockhash } = await connection.getLatestBlockhash();
-    const tx = new anchor.web3.Transaction();
-    tx.recentBlockhash = blockhash;
-    tx.feePayer = anchorWallet?.publicKey;
-    tx.add(ix as anchor.web3.TransactionInstruction);
-
-    const signed = await anchorWallet?.signTransaction(tx);
-    const txid = await connection.sendRawTransaction(signed!.serialize());
-    console.log('txid', txid);
-    if (!txid) {
-      throw new Error('txid is null');
+  useEffect(() => {
+    if (
+      roundData?.ProjectJoinRound &&
+      typeof roundData?.ProjectJoinRound === 'object'
+    ) {
+      setProjectsNumberByStatus((prev: any) => ({
+        ...prev,
+        review: Object.keys(roundData?.ProjectJoinRound).length, // count the number of keys in the object
+      }));
     }
-    createRoundMutation.mutate({
-      matchingPool: pool,
-      name: name,
-      notionPage: 'https://www.notion.so/round1',
-      projectCount: project,
-      tx: txid,
-    });
-  };
+  }, [roundData?.ProjectJoinRound, setProjectsNumberByStatus]);
 
   const markVerified = async (
     name: string,
@@ -123,52 +101,16 @@ const RoundAdmin = ({ slug }: { slug: string }) => {
       status: 'REJECTED',
     });
   };
-  const onSubmit = async (_e: any) => {
-    console.log('e', _e);
 
-    createRound(_e.name, parseInt(_e.pool), parseInt(_e.project));
-  };
   return (
-    <>
-      <Stack w={'7xl'} mx={'auto'}>
-        <VStack w={'2xl'} mx={'auto'}>
-          <form
-            style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'start',
-              gap: '24px',
-              border: '1px solid red',
-              padding: '20px',
-            }}
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <Input
-              {...register('pool')}
-              placeholder="matching Pool"
-              id="pool"
-              type="number"
-            />
-            <Input
-              {...register('project')}
-              placeholder="Project"
-              id="project"
-              type="number"
-            />
-            <Input
-              {...register('name')}
-              placeholder="name"
-              id="name"
-              type="string"
-            />
-            <Button variant="apply_for_grant" type="submit">
-              Submit
-            </Button>
-          </form>
-        </VStack>
-        <VStack spacing="32px" mt={20}>
-          {projectforRound?.data?.ProjectJoinRound?.map((projectJoin) => (
+    <VStack spacing={4} w="full">
+      {isLoading ? (
+        <>Loading...</>
+      ) : isError ? (
+        <>There is some error</>
+      ) : (
+        <>
+          {roundData?.ProjectJoinRound?.map((projectJoin) => (
             <>
               <Card
                 key={projectJoin.project.id}
@@ -228,14 +170,8 @@ const RoundAdmin = ({ slug }: { slug: string }) => {
                         //@ts-ignore
                         w="full"
                         onClick={() => {
-                          console.log(
-                            slug,
-                            projectJoin.project.owner_publickey,
-                            projectJoin.project.projectUserCount
-                          );
-
                           markUnverified(
-                            slug,
+                            roundData?.roundName as string,
                             projectJoin.project.owner_publickey,
                             projectJoin.project.projectUserCount
                           );
@@ -249,14 +185,8 @@ const RoundAdmin = ({ slug }: { slug: string }) => {
                         //@ts-ignore
                         w="full"
                         onClick={() => {
-                          console.log(
-                            slug,
-                            projectJoin.project.owner.mainWallet,
-                            projectJoin.project.projectUserCount
-                          );
-
                           markVerified(
-                            slug,
+                            roundData?.roundName as string,
                             projectJoin.project.owner.mainWallet,
                             projectJoin.project.projectUserCount
                           );
@@ -271,16 +201,10 @@ const RoundAdmin = ({ slug }: { slug: string }) => {
               </Card>
             </>
           ))}
-        </VStack>
-      </Stack>
-    </>
+        </>
+      )}
+    </VStack>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { slug } = context.query;
-  return {
-    props: { slug },
-  };
-};
-export default RoundAdmin;
+export default GrantUnderReviewProjects;

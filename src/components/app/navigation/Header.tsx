@@ -122,7 +122,11 @@ export const Header = memo(function Header({
 
   const NavbarCTA: React.FC<any> = ({ children }) => {
     return (
-      <Center h={{ base: '1.6rem', md: '2.6rem' }} justifyContent="end">
+      <Center
+        h={{ base: '1.6rem', md: '2.6rem' }}
+        justifyContent="end"
+        zIndex="99"
+      >
         <Center display={{ base: connected ? 'none' : 'flex', md: 'none' }}>
           <WalletMultiButton>Connect Wallet</WalletMultiButton>
         </Center>

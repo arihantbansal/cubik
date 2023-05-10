@@ -34,9 +34,9 @@ model Session {
   sessionToken String    @unique
   userId       String
   expires      DateTime
-  user         UserModel @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
+  user         UserModel @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -63,9 +63,9 @@ model UserDetailsModel {
   linkedinUrl    String?
   telegramHandle String?
   userModelId    String    @unique
-  user           UserModel @relation(fields: [userModelId], references: [id])
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
+  user           UserModel @relation(fields: [userModelId], references: [id])
 
   @@index([userModelId])
 }
@@ -103,10 +103,10 @@ model Team {
   id              String        @id @default(uuid()) @map("_id")
   userId          String
   projectsModelId String
-  user            UserModel     @relation(fields: [userId], references: [id])
-  ProjectsModel   ProjectsModel @relation(fields: [projectsModelId], references: [id])
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
+  user            UserModel     @relation(fields: [userId], references: [id])
+  ProjectsModel   ProjectsModel @relation(fields: [projectsModelId], references: [id])
 
   @@index([projectsModelId])
   @@index([userId])
@@ -130,21 +130,21 @@ model ProjectJoinRound {
 model Round {
   id                     String             @id @default(uuid()) @map("_id")
   roundName              String
-  colorScheme            String             @default("teal")
   matchedPool            Float              @default(0)
   communityContributions Float              @default(0)
-  short_description      String             @db.VarChar(2000) @default("")
   notionPage             String             @db.VarChar(500)
-  markdownDetails       String             @db.Text @default("")
   projectCount           Int                @default(0)
   active                 Boolean            @default(true)
   userId                 String
-  description            String             @default("") @db.Text
+  description            String             @default(dbgenerated("(_utf8mb4\\'\\')")) @db.Text
   endtime                DateTime           @default(now())
   startTime              DateTime           @default(now())
   tx                     String             @db.VarChar(500)
   createdAt              DateTime           @default(now())
   updatedAt              DateTime           @updatedAt
+  colorScheme            String             @default("teal")
+  short_description      String             @default("") @db.VarChar(2000)
+  markdownDetails        String             @default(dbgenerated("(_utf8mb4\\'\\')")) @db.Text
   sponsor                Sponsor[]
   User                   UserModel          @relation(fields: [userId], references: [id])
   ProjectJoinRound       ProjectJoinRound[]
@@ -158,9 +158,9 @@ model Sponsor {
   name      String
   logo      String   @db.VarChar(500)
   roundId   String
-  Round     Round    @relation(fields: [roundId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Round     Round    @relation(fields: [roundId], references: [id])
 
   @@index([roundId])
 }

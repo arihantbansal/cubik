@@ -14,7 +14,6 @@ import {
   VStack,
   Wrap,
 } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { BsPlus } from 'react-icons/bs';
@@ -24,15 +23,17 @@ import CustomTag from '~/components/common/tags/CustomTag';
 import { RemoveToast, SuccessToast } from '~/components/common/toasts/Toasts';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import useListStore from '~/store/listStore';
+import { ProjectWithRoundDetailsType } from '~/types/project';
 import { formatNumberWithK } from '~/utils/formatWithK';
+import { ProjectRound } from '~/utils/ProjectsRound';
 
 type PropsType = {
-  project: ProjectsModel;
+  project: ProjectWithRoundDetailsType;
 };
 
 // In the ProjectsList component
 type ProjectsListProps = {
-  allProjectsData: ProjectsModel[];
+  allProjectsData: ProjectWithRoundDetailsType[];
 };
 
 const ProjectCard = ({ project }: PropsType) => {
@@ -107,7 +108,11 @@ const ProjectCard = ({ project }: PropsType) => {
           <HiCheck size={16} color="#001F1B" />
         </Center>
       )}
-      <Center w="full" bg="#001F1B" borderTopRadius={'16px'}>
+      <Center
+        w="full"
+        bg={`surface.${ProjectRound({ project }).colorScheme}.3`}
+        borderTopRadius={'16px'}
+      >
         <HStack
           w="full"
           gap="8px"
@@ -136,9 +141,9 @@ const ProjectCard = ({ project }: PropsType) => {
             w="fit-content"
             whiteSpace={'nowrap'}
             textStyle={'title5'}
-            color="#A8F0E6"
+            color={`surface.${ProjectRound({ project }).colorScheme}.1`}
           >
-            Alpha Grant Round
+            {ProjectRound({ project }).roundName} Round
           </Box>
         </HStack>
       </Center>
@@ -344,7 +349,10 @@ const ProjectsList = ({ allProjectsData }: ProjectsListProps) => {
         direction={{ base: 'column', sm: 'row', md: 'row' }}
       >
         {allProjectsData.map(
-          (project: ProjectsModel, key: React.Key | null | undefined) => {
+          (
+            project: ProjectWithRoundDetailsType,
+            key: React.Key | null | undefined
+          ) => {
             return <ProjectCard project={project} key={key} />;
           }
         )}

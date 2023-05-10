@@ -1,9 +1,7 @@
-import { Box, Button, Center, HStack, Stack, VStack } from '@chakra-ui/react';
+import { Box, Center, HStack, Stack, VStack } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
-import { BiChevronRight } from 'react-icons/bi';
 
 interface CountdownTimerProps {
   finalDate: Date;
