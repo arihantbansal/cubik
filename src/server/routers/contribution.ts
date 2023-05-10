@@ -33,6 +33,7 @@ export const contributionRouter = router({
             currentusdTotal: contribution.currentusdTotal + input.usd,
             usdTotal: input.usd,
             total: input.totalAmount,
+            count: contribution.count + 1,
             tx: input.tx,
             userId: input.userId,
             projectId: input.projectId,
