@@ -19,7 +19,6 @@ const ProjectStatusBanner = ({
     case ProjectVerifyStatus.REVIEW:
       return (
         <Flex
-          zIndex="99"
           flexDirection={{ base: 'column', sm: 'row' }}
           padding={{ base: '10px 16px', md: '12px 24px' }}
           w="full"
@@ -57,7 +56,7 @@ const ProjectStatusBanner = ({
     case ProjectVerifyStatus.VERIFIED:
       return (
         <Flex
-          zIndex="99"
+          zIndex="9"
           flexDirection={{ base: 'column', sm: 'row' }}
           padding={{ base: '10px 16px', md: '12px 24px' }}
           w="full"
@@ -95,7 +94,7 @@ const ProjectStatusBanner = ({
     case ProjectVerifyStatus.FAILED:
       return (
         <Flex
-          zIndex="99"
+          zIndex="9"
           flexDirection={{ base: 'column', sm: 'row' }}
           padding={{ base: '10px 16px', md: '12px 24px' }}
           w="full"
@@ -132,7 +131,7 @@ const ProjectStatusBanner = ({
     case 'LIVE':
       return (
         <Flex
-          zIndex="99"
+          zIndex="9"
           flexDirection={{ base: 'column', sm: 'row' }}
           padding={{ base: '10px 16px', md: '12px 24px' }}
           w="full"
@@ -191,7 +190,7 @@ const ProjectStatusBanner = ({
     case ProjectJoinRoundStatus.APPROVED:
       return (
         <Flex
-          zIndex="99"
+          zIndex="9"
           flexDirection={{ base: 'column', sm: 'row' }}
           padding={{ base: '10px 16px', md: '12px 24px' }}
           w="full"
@@ -229,7 +228,7 @@ const ProjectStatusBanner = ({
     case ProjectJoinRoundStatus.REJECTED:
       return (
         <Flex
-          zIndex="99"
+          zIndex="9"
           flexDirection={{ base: 'column', sm: 'row' }}
           padding={{ base: '10px 16px', md: '12px 24px' }}
           w="full"
@@ -267,7 +266,7 @@ const ProjectStatusBanner = ({
     case ProjectJoinRoundStatus.PENDING:
       return (
         <Flex
-          zIndex="99"
+          zIndex="9"
           flexDirection={{ base: 'column', sm: 'row' }}
           padding={{ base: '10px 16px', md: '12px 24px' }}
           w="full"

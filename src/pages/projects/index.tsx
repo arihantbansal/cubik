@@ -1,5 +1,5 @@
-import React from 'react';
 import { Container } from '@chakra-ui/react';
+import AdminControls from '~/components/pages/projects/admin/AdminControls';
 import ProjectsExplorer from '~/components/pages/projects/project-explorer/ProjectsExplorer';
 
 type projectsPropsType = {
@@ -16,6 +16,7 @@ const Projects = (_props: projectsPropsType) => {
         maxW="7xl"
         py={{ base: '24px', md: '44px' }}
       >
+        <AdminControls />
         <ProjectsExplorer />
       </Container>
     </main>

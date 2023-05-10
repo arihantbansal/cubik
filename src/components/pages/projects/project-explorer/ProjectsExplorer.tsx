@@ -1,5 +1,5 @@
-import { Box, VStack } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { VStack } from '@chakra-ui/react';
+import { useState } from 'react';
 import { trpc } from '~/utils/trpc';
 import ProjectListLoadingSkeleton from '../skeletons/ProjectListLoadingSkeleton';
 import { ProjectsCategoryFilter } from './body/categories/ProjectsCategoryFilter';
@@ -31,6 +31,7 @@ const ProjectsExplorer = () => {
       JSON.parse(project.industry).includes(category)
     );
   };
+  console.log('projects data - ', projects);
 
   const filteredProjects = handleCategoryFilter(selectedCategory);
   return (

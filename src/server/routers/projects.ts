@@ -134,7 +134,22 @@ export const projectsRouter = router({
       });
       return res;
     }),
-
+  findAll: procedure.query(async () => {
+    try {
+      const res = await prisma.projectsModel.findMany({
+        include: {
+          ProjectJoinRound: {
+            include: {
+              fundingRound: true,
+            },
+          },
+        },
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }),
   findMany: procedure.query(async () => {
     try {
       const res = await prisma.projectsModel.findMany({
@@ -147,6 +162,13 @@ export const projectsRouter = router({
         },
         where: {
           status: 'VERIFIED',
+          AND: {
+            ProjectJoinRound: {
+              every: {
+                status: 'APPROVED',
+              },
+            },
+          },
         },
       });
       return res;
@@ -167,6 +189,46 @@ export const projectsRouter = router({
         },
         where: {
           status: 'REVIEW',
+        },
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }),
+  findManyVerified: procedure.query(async () => {
+    try {
+      const res = await prisma.projectsModel.findMany({
+        include: {
+          ProjectJoinRound: {
+            include: {
+              fundingRound: true,
+            },
+          },
+          owner: true,
+        },
+        where: {
+          status: 'VERIFIED',
+        },
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }),
+  findManyRejected: procedure.query(async () => {
+    try {
+      const res = await prisma.projectsModel.findMany({
+        include: {
+          ProjectJoinRound: {
+            include: {
+              fundingRound: true,
+            },
+          },
+          owner: true,
+        },
+        where: {
+          status: 'FAILED',
         },
       });
       return res;

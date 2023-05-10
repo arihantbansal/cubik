@@ -32,9 +32,15 @@ export const colors = {
       3: '#00213D',
     },
     yellow: {
-      1: '#FEF08A',
-      2: '#FFD83D',
-      3: '#F59E0B',
+      2: '#FEF08A',
+      1: '#FFD83D',
+      3: '#2D2A14',
+      4: '#F59E0B',
+    },
+    teal: {
+      1: '#A8F0E6',
+      2: '#A8F0E6',
+      3: '#001F1B',
     },
   },
   brand: {

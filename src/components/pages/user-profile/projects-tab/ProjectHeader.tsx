@@ -288,7 +288,7 @@ const ProjectDetails = ({
         <Button
           variant="connect_wallet"
           width={'full'}
-          isDisabled={!showApplyToRound}
+          isDisabled={showApplyToRound}
           onClick={() => {
             setDrawerBodyView(drawerBodyViewEnum.GRANTS);
           }}

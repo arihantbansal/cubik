@@ -7,13 +7,49 @@ const { definePartsStyle, defineMultiStyleConfig } =
 const baseStyle = definePartsStyle({
   // define the part you're going to style
   field: {
-    background: 'purple.100',
-    border: '1px dashed',
-    borderColor: 'purple.200',
-    borderRadius: 'full',
+    background: '#0F0F0F',
+    outline: '1px solid #141414',
+    border: '1px solid',
+    borderColor: '#141414',
+    fontSize: '14px',
+    borderRadius: '8px',
+    height: '40px',
+    _focus: {
+      borderColor: '#A8F0E6 !important',
+      background: '#0F0F0F',
+      boxShadow: '0 0 0 1px #A8F0E6 !important',
+      borderRadius: '8px',
+      outlineColor: '#A8F0E6',
+    },
+    _hover: {
+      borderColor: '#A8F0E6',
+      boxShadow: '0 0 0 1px #A8F0E6',
+      borderRadius: '8px',
+      outlineColor: '#A8F0E6',
+    },
+    _active: {
+      borderColor: '#A8F0E6',
+      borderRadius: '8px',
+      boxShadow: '0 0 0 1px #A8F0E6',
+      outlineColor: '#A8F0E6',
+    },
+    _required: {
+      borderColor: '#A8F0E6',
+      borderRadius: '8px',
+      boxShadow: '0 0 0 1px #A8F0E6',
+      outlineColor: '#A8F0E6',
+    },
+    _invalid: {
+      color: '#A8F0E6',
+      rounded: '8px',
+    },
+    _placeholder: {
+      fontSize: { base: '12px', md: '14px' },
+      color: '#3B3D3D',
+    },
   },
   icon: {
-    color: 'purple.400',
+    color: '#3B3D3D',
   },
 });
 
