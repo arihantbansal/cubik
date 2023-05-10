@@ -162,7 +162,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
       const ix = await createProject(
         anchorWallet as NodeWallet,
         session.user.count.project + 1,
-        anchorWallet?.publicKey! /// change to multi sig
+        new anchor.web3.PublicKey(vaultAuth)
       );
       const { blockhash } = await connection.getLatestBlockhash();
       tx.recentBlockhash = blockhash;
