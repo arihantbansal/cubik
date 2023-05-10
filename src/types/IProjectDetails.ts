@@ -12,7 +12,11 @@ export type ProjectWithCommentsAndRoundsType = Prisma.ProjectsModelGetPayload<{
         };
       };
     };
-    ProjectJoinRound: true;
+    ProjectJoinRound: {
+      include: {
+        fundingRound: true;
+      };
+    };
     owner: true;
     Team: {
       include: {

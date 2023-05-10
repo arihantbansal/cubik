@@ -466,8 +466,18 @@ export const contributeSOL = async (
     ],
     program.programId
   );
+  console.log(
+    roundId,
+    projectUserCount.toString(),
+    usd,
+    total * anchor.web3.LAMPORTS_PER_SOL,
+    split
+  );
+
   //@ts-ignore
   const projectAccount = await program.account.project.fetch(project_account);
+  console.log(projectAccount.multiSig.toBase58());
+
   //@ts-ignore
   const adminAcc = await program.account.admin.fetch(adminAccount);
   const ix = await program.methods

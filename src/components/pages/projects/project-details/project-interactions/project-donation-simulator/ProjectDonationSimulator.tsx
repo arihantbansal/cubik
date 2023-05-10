@@ -12,21 +12,26 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
+import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { ProjectsModel } from '@prisma/client';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import { useEffect, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import { Controller, useForm } from 'react-hook-form';
 import { DonationFormType } from '~/interfaces/donationForm';
 import { tokenGroup } from '~/interfaces/token';
-import { contributeSPL } from '~/utils/program/contract';
+import { ProjectWithCommentsAndRoundsType } from '~/types/IProjectDetails';
+import {
+  connection,
+  contributeSOL,
+  contributeSPL,
+} from '~/utils/program/contract';
 import { ControlledSelect } from '../../../../../common/select/ControlledSelect';
 import { tokens } from '../../../../../common/tokens/DonationTokens';
 import Graph from './Graph';
 
 type ProjectDonationSimulatorProps = {
-  projectDetails: ProjectsModel;
+  projectDetails: ProjectWithCommentsAndRoundsType;
   height: number;
   width: number;
 };
@@ -59,7 +64,7 @@ export const ProjectDonationSimulator = ({
   useEffect(() => {
     // use api to convert this and add this
     const token = getValues('token');
-    console.log('selected token - ', token, 'donation - ', donation);
+    // console.log('selected token - ', token, 'donation - ', donation);
     if (token === 'sol') {
       setValue('amount', donation * 22);
     } else if (token === 'usdc') {
@@ -71,21 +76,94 @@ export const ProjectDonationSimulator = ({
     }
   }, [donation, getValues, setValue]);
 
-  function onSubmit(_values: any) {
-    onOpen();
+  async function onSubmit(_values: {
+    amount: number;
+    matchingPoolDonation: number;
+    token: any;
+  }) {
+    // console.log(_values, '-----------');
+
+    if (String(_values.token.value).toLocaleLowerCase() === 'sol') {
+      await donateSOL(
+        projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')
+          ?.fundingRound.roundName as string,
+        projectDetails?.owner_publickey,
+        projectDetails?.projectUserCount,
+        _values.matchingPoolDonation,
+        _values.amount,
+        _values.amount
+      );
+    } else {
+      await donateSPL(
+        projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')
+          ?.fundingRound.roundName as string,
+        '',
+        projectDetails?.owner_publickey,
+        projectDetails?.projectUserCount,
+        _values.matchingPoolDonation,
+        _values.amount,
+        _values.amount
+      );
+    }
+
+    // onOpen();
   }
 
-  const donateSPL = async () => {
+  const donateSPL = async (
+    roundId: string,
+    token: string,
+    owner: string,
+    count: number,
+    split: number,
+    total: number,
+    usd: number
+  ): Promise<string | null> => {
     const ix = await contributeSPL(
       anchorWallet as NodeWallet,
-      'round',
-      'token',
-      'project owner',
-      0, // project count
-      0, // split
-      100, // total
-      1000 // usd value
+      roundId,
+      token,
+      owner,
+      count, // project count
+      split, // split
+      total, // total
+      usd // usd value
     );
+    const tx = new anchor.web3.Transaction();
+    const { blockhash } = await connection.getLatestBlockhash();
+    tx.recentBlockhash = blockhash;
+    tx.feePayer = anchorWallet?.publicKey as anchor.web3.PublicKey;
+    tx.add(ix!);
+    const signed = await anchorWallet?.signTransaction(tx);
+    const txid = await connection.sendRawTransaction(signed!.serialize());
+
+    return txid;
+  };
+  const donateSOL = async (
+    roundId: string,
+    owner: string,
+    count: number,
+    split: number,
+    total: number,
+    usd: number
+  ): Promise<string | null> => {
+    const ix = await contributeSOL(
+      anchorWallet as NodeWallet,
+      roundId,
+      owner,
+      count, // project count
+      split,
+      total,
+      usd
+    );
+    const tx = new anchor.web3.Transaction();
+    const { blockhash } = await connection.getLatestBlockhash();
+    tx.recentBlockhash = blockhash;
+    tx.feePayer = anchorWallet?.publicKey as anchor.web3.PublicKey;
+    tx.add(ix!);
+    const signed = await anchorWallet?.signTransaction(tx);
+    const txid = await connection.sendRawTransaction(signed!.serialize());
+
+    return txid;
   };
 
   return (

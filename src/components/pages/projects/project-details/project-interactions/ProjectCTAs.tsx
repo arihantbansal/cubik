@@ -1,29 +1,27 @@
 import {
   Box,
   Button,
-  VStack,
   Icon,
-  Skeleton,
+  IconProps,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Skeleton,
   useDisclosure,
+  VStack,
 } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
-import { MdArrowForward } from 'react-icons/md';
-import { IconProps } from '@chakra-ui/react';
-import { useState } from 'react';
-import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
-import { useSession } from 'next-auth/react';
-import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+import { useSession } from 'next-auth/react';
+import { useState } from 'react';
+import { MdArrowForward } from 'react-icons/md';
+import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
+import { ProjectWithCommentsAndRoundsType } from '~/types/IProjectDetails';
 
 interface ProjectCTAsProps {
-  projectDetails: ProjectsModel;
+  projectDetails: ProjectWithCommentsAndRoundsType;
   isLoading: boolean;
 }
 

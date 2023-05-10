@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Slider,
   SliderFilledTrack,
   SliderThumb,
@@ -9,15 +8,11 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import GraphProps from '~/types/graphProps';
-import {
-  calculateProjectMatchingFund,
-  Grant,
-} from '~/utils/calculateProjectMatchingFund';
+import { calculateProjectMatchingFund } from '~/utils/calculateProjectMatchingFund';
 import { trpc } from '~/utils/trpc';
-import { BonkLine } from './BonkLine';
 import { GraphLine } from './GraphLines';
 
 const Graph: React.FC<GraphProps> = ({
@@ -69,8 +64,8 @@ const Graph: React.FC<GraphProps> = ({
     setDonationAmount(Math.round(Math.pow(value, exponent)));
   };
 
-  console.log('data -', data);
-  console.log('contribution - ', contributionMutation.data);
+  // console.log('data -', data);
+  // console.log('contribution - ', contributionMutation.data);
   return (
     <VStack flex="1" p="1rem" width={'100%'} gap="0">
       <Box

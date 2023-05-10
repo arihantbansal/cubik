@@ -1,11 +1,11 @@
 import { Stack } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
 import { ProjectDonationSimulator } from '~/components/pages/projects/project-details/project-interactions/project-donation-simulator/ProjectDonationSimulator';
+import { ProjectWithCommentsAndRoundsType } from '~/types/IProjectDetails';
 
 const PaymentModalBody = ({
   projectDetails,
 }: {
-  projectDetails: ProjectsModel;
+  projectDetails: ProjectWithCommentsAndRoundsType;
 }) => {
   return (
     <Stack direction="row">
