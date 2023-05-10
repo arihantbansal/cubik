@@ -14,6 +14,9 @@ export const styles = {
         display: 'none',
       },
     },
+    option: {
+      background: 'red !important',
+    },
     'td:first-child': {
       borderTopLeftRadius: '16px',
       borderBottomLeftRadius: '16px',

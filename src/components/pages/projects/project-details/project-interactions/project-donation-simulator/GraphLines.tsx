@@ -1,6 +1,6 @@
-import React from 'react';
 import { Tooltip } from '@chakra-ui/react';
 import * as d3 from 'd3';
+import React from 'react';
 import FlipNumbers from 'react-flip-numbers';
 
 interface GraphLineProps {
@@ -70,7 +70,7 @@ export const GraphLine: React.FC<GraphLineProps> = ({
         strokeDasharray="2"
         strokeWidth="0.2"
       />
-      <path d={dPath} fill="none" stroke="#2775CA" strokeWidth="1.5" />
+      <path d={dPath} fill="none" stroke="#2775CA" strokeWidth="1.2" />
       <Tooltip
         isOpen={true}
         background={'transparent'}
@@ -83,7 +83,6 @@ export const GraphLine: React.FC<GraphLineProps> = ({
               fontWeight: 'bold',
               fontSize: '22px',
             }}
-            //background="black"
             play
             perspective={300}
             numbers={'$' + markerAdditionalMatch.toFixed(1)}
@@ -92,14 +91,13 @@ export const GraphLine: React.FC<GraphLineProps> = ({
         color="#fff"
         fontWeight={'700'}
         fontSize="16px"
-        //textShadow="0 0 0 #fff"
         placement="right"
       >
         <svg
-          x={markerX - 5}
-          y={markerY - 5}
-          width="10"
-          height="10"
+          x={markerX - 4}
+          y={markerY - 4}
+          width="8"
+          height="8"
           viewBox="0 0 10 10"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

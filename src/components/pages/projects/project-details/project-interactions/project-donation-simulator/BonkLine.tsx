@@ -19,9 +19,9 @@ export const BonkLine: React.FC<GraphLineProps> = ({
 }) => {
   const margin = {
     top: 10,
-    left: 5,
-    bottom: 0,
-    right: 5,
+    left: 10,
+    bottom: -1,
+    right: 10,
   };
   const xScale = d3
     .scalePow()
@@ -31,9 +31,7 @@ export const BonkLine: React.FC<GraphLineProps> = ({
     )
     .range([margin.left, width - margin.right]);
 
-  const markerX = xScale(donationAmount);
-
-  const bonkYScale = d3
+  const yScale = d3
     .scaleLinear()
     .domain(
       (d3.extent(data.map((d) => d.additionalMatch)) as [number, number]) ?? [
@@ -45,11 +43,12 @@ export const BonkLine: React.FC<GraphLineProps> = ({
   const bonkLine = d3
     .line() // @ts-ignore
     .x((d) => xScale(d.donation)) // @ts-ignore
-    .y((d) => bonkYScale(d.additionalMatch));
+    .y((d) => yScale(d.additionalMatch));
   // @ts-ignore
-  const bonkDPath = bonkLine(data);
+  const dPath = bonkLine(data);
 
-  const bonkMarkerY = bonkYScale(
+  const markerX = xScale(donationAmount);
+  const markerY = yScale(
     data.find((d) => Math.abs(d.donation - donationAmount) < 0.1)
       ?.additionalMatch ?? 0
   ); // Get the additionalMatch value at the marker point
@@ -57,20 +56,21 @@ export const BonkLine: React.FC<GraphLineProps> = ({
   const markerData = data.find(
     (d) => Math.abs(d.donation - donationAmount) < 0.1
   );
-  const markerAdditionalMatch: number = markerData?.additionalMatch ?? 0;
 
+  const markerAdditionalMatch: number = markerData?.additionalMatch ?? 0;
+  const markerInputValue: number = markerData?.donation ?? 0;
   return (
     <>
       <line
         x1={markerX}
         x2={markerX}
-        y1={bonkMarkerY}
+        y1={markerY}
         y2={height}
         stroke="#636666"
-        strokeDasharray="3"
-        strokeWidth="0.5"
+        strokeDasharray="2"
+        strokeWidth="0.2"
       />
-      <path d={bonkDPath} fill="none" stroke="#DF9D33" strokeWidth="1.5" />
+      <path d={dPath} fill="none" stroke="#DF9D33" strokeWidth="1.2" />
       <Tooltip
         isOpen={true}
         background={'transparent'}
@@ -95,7 +95,7 @@ export const BonkLine: React.FC<GraphLineProps> = ({
       >
         <svg
           x={markerX - 4}
-          y={bonkMarkerY - 4}
+          y={markerY - 4}
           width="8"
           height="8"
           viewBox="0 0 10 10"

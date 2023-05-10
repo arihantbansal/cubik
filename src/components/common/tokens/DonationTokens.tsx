@@ -2,6 +2,8 @@ export const tokens = [
   {
     label: 'USDC',
     value: 'usdc',
+    devNetAdd: '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU',
+    mainNetAdd: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
     icon: (
       <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0_789_9405)">
@@ -29,6 +31,8 @@ export const tokens = [
   {
     label: 'BONK',
     value: 'bonk',
+    devNetAdd: '',
+    mainNetAdd: 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263',
     icon: (
       <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0_916_11712)">
@@ -123,6 +127,8 @@ export const tokens = [
   {
     label: 'SOL',
     value: 'sol',
+    devNetAdd: '',
+    mainNetAdd: '',
     icon: (
       <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="10" height="10" rx="5" fill="#A169F7" />

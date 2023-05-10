@@ -61,7 +61,7 @@ export const ProjectCTAs = ({
     <>
       <Modal variant={'cubik'} size="4xl" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent pt="0">
+        <ModalContent paddingTop="0 !important">
           <ModalHeader
             bg="black"
             h="full"

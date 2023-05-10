@@ -15,7 +15,6 @@ const baseStyle = definePartsStyle({
   list: {
     p: '8px',
     borderRadius: '16px',
-    
   },
   item: {
     // this will style the MenuItem and MenuItemOption components

@@ -13,6 +13,7 @@ import FlipNumbers from 'react-flip-numbers';
 import GraphProps from '~/types/graphProps';
 import { calculateProjectMatchingFund } from '~/utils/calculateProjectMatchingFund';
 import { trpc } from '~/utils/trpc';
+import { BonkLine } from './BonkLine';
 import { GraphLine } from './GraphLines';
 
 const Graph: React.FC<GraphProps> = ({
@@ -82,13 +83,13 @@ const Graph: React.FC<GraphProps> = ({
           maximumDonationValue={maximumDonationValue}
           donationAmount={donationAmount}
         />
-        {/* <BonkLine
+        <BonkLine
           width={width}
           height={height}
           data={bonkData}
           availableMatch={2000}
           donationAmount={donationAmount}
-        /> */}
+        />
       </Box>
       <Slider
         variant="cubik"
