@@ -389,7 +389,11 @@ export const projectsRouter = router({
             include: {
               project: {
                 include: {
-                  Contribution: true,
+                  Contribution: {
+                    where: {
+                      isLatest: true,
+                    },
+                  },
                 },
               },
             },
@@ -397,13 +401,13 @@ export const projectsRouter = router({
         },
       });
       const contri = res?.Contribution.map((contribution) => {
-        return contribution.usdContribution;
+        return contribution.usdTotal;
       });
       let roundContri: Grant[] = [];
       round?.ProjectJoinRound.forEach((round) => {
         roundContri.push({
           funding: round.project?.Contribution.map((contribution) => {
-            return contribution.usdContribution;
+            return contribution.usdTotal;
           }),
         });
       });

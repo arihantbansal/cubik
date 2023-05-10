@@ -21,7 +21,7 @@ export const qfV1 = (round: RoundAllType) => {
   const projectMapContribution = round.Contribution.map((contribution) => {
     return {
       projectId: contribution.projectId,
-      amount: contribution.usdContribution,
+      amount: contribution.usdTotal,
     };
   });
 

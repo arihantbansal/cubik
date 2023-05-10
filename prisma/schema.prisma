@@ -166,20 +166,24 @@ model Sponsor {
 }
 
 model Contribution {
-  id              String        @id @default(uuid()) @map("_id")
-  tx              String        @db.VarChar(500)
-  totalAmount     Float
-  token           String
-  split           Float
-  usdContribution Float
-  roundId         String
-  projectId       String
-  userId          String
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-  user            UserModel     @relation(fields: [userId], references: [id])
-  ProjectsModel   ProjectsModel @relation(fields: [projectId], references: [id])
-  Round           Round         @relation(fields: [roundId], references: [id])
+  id            String        @id @default(uuid()) @map("_id")
+  tx            String        @db.VarChar(500)
+  total         Float
+  currentTotal  Float
+  usdTotal      Float
+  currentusdTotal    Float
+  split         Float
+  token         String
+  roundId       String
+  projectId     String
+  isLatest      Boolean       @default(true)
+  count         Int           @default(0)
+  userId        String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  user          UserModel     @relation(fields: [userId], references: [id])
+  ProjectsModel ProjectsModel @relation(fields: [projectId], references: [id])
+  Round         Round         @relation(fields: [roundId], references: [id])
 
   @@index([projectId])
   @@index([roundId])
