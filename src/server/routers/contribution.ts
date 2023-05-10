@@ -18,20 +18,55 @@ export const contributionRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const contributionRes = await prisma.contribution.create({
-        data: {
-          id: uuid(),
-          token: input.token,
-          split: input.split,
-          totalAmount: input.totalAmount,
-          tx: input.tx,
-          usdContribution: input.usd,
-          userId: input.userId,
-          projectId: input.projectId,
-          roundId: input.roundId,
+      const contribution = await prisma.contribution.findFirst({
+        where: {
+          isLatest: true,
         },
       });
-
-      return contributionRes;
+      if (contribution) {
+        const contributionRes = await prisma.contribution.create({
+          data: {
+            id: uuid(),
+            token: input.token,
+            split: input.split,
+            currentTotal: contribution.currentTotal + input.totalAmount,
+            currentusdTotal: contribution.currentusdTotal + input.usd,
+            usdTotal: input.usd,
+            total: input.totalAmount,
+            tx: input.tx,
+            userId: input.userId,
+            projectId: input.projectId,
+            roundId: input.roundId,
+            isLatest: true,
+          },
+        });
+        await prisma.contribution.update({
+          where: {
+            id: contribution.id,
+          },
+          data: {
+            isLatest: false,
+          },
+        });
+        return contributionRes;
+      } else {
+        const contributionRes = await prisma.contribution.create({
+          data: {
+            id: uuid(),
+            token: input.token,
+            split: input.split,
+            usdTotal: input.usd,
+            total: input.totalAmount,
+            tx: input.tx,
+            userId: input.userId,
+            projectId: input.projectId,
+            roundId: input.roundId,
+            currentTotal: input.totalAmount,
+            currentusdTotal: input.usd,
+            isLatest: true,
+          },
+        });
+        return contributionRes;
+      }
     }),
 });
