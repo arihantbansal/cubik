@@ -62,8 +62,8 @@ const CreateGrantRound = () => {
 
   const createRound = async (
     name: string,
-    pool: number,
-    project: number,
+    pool: string,
+    project: string,
     colorScheme: string,
     description: string,
     start: moment.Moment | null,
@@ -73,8 +73,8 @@ const CreateGrantRound = () => {
       const ix = await createRoundIx(
         anchorWallet as NodeWallet,
         name,
-        pool,
-        project
+        parseInt(pool),
+        parseInt(project)
       );
       const { blockhash } = await connection.getLatestBlockhash();
       const tx = new anchor.web3.Transaction();
@@ -87,10 +87,10 @@ const CreateGrantRound = () => {
         throw new Error('txid is null');
       }
       const createdRound = createRoundMutation.mutate({
-        matchingPool: pool,
+        matchingPool: parseInt(pool),
         name: name,
         notionPage: 'https://www.notion.so/round1',
-        projectCount: project,
+        projectCount: parseInt(project),
         tx: txid,
         colorScheme: colorScheme,
         short_description: description,
