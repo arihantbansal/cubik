@@ -477,6 +477,8 @@ export const contributeSOL = async (
   total: number,
   usd: number
 ): Promise<anchor.web3.TransactionInstruction> => {
+  console.log(split, total, usd);
+
   const program = anchorProgram(wallet);
   const [adminAccount] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from('admin')],
