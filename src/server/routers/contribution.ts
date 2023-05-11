@@ -21,6 +21,8 @@ export const contributionRouter = router({
       const contribution = await prisma.contribution.findFirst({
         where: {
           isLatest: true,
+          projectId: input.projectId,
+          roundId: input.roundId,
         },
       });
       if (contribution) {

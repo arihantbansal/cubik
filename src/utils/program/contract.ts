@@ -390,9 +390,47 @@ export const contributeSPL = async (
     tokenAccountIx1 = spl.createAssociatedTokenAccountInstruction(
       wallet.publicKey,
       ata_admin,
-      adminInfo.authority, // TODO: add admin wallet
+      adminInfo.authority,
       tokenMint
     );
+  }
+  const accountInfo = await connection.getAccountInfo(contriAccount);
+
+  if (accountInfo !== null && accountInfo.data.length > 0) {
+    const ix = await program.methods
+      .updateContributionSpl(
+        roundId,
+        projectUserCount.toString(),
+        new anchor.web3.PublicKey(projectOwner),
+        usd,
+        total,
+        split
+      )
+      .accounts({
+        adminAccount: adminAccount,
+        roundAccount: round_account,
+        authority: wallet.publicKey,
+        projectAccount: project_account,
+        tokenMint: tokenMint,
+        contributionAccount: contriAccount,
+        tokenAtaSender: ata_sender,
+        tokenAtaReceiver: ata_reciver,
+        tokenAtaAdmin: ata_admin,
+        tokenProgram: spl.TOKEN_PROGRAM_ID,
+        rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+
+        systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .instruction();
+
+    const tx = new anchor.web3.Transaction();
+    if (tokenAccountIx && tokenAccountIx1) {
+      tx.add(tokenAccountIx);
+      tx.add(tokenAccountIx1);
+    }
+    tx.add(ix);
+
+    return tx;
   }
   const ix = await program.methods
     .createContributionSpl(
@@ -438,7 +476,7 @@ export const contributeSOL = async (
   split: number,
   total: number,
   usd: number
-) => {
+): Promise<anchor.web3.TransactionInstruction> => {
   const program = anchorProgram(wallet);
   const [adminAccount] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from('admin')],
@@ -451,7 +489,7 @@ export const contributeSOL = async (
   let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
     [
       anchor.utils.bytes.utf8.encode('project'),
-      wallet.publicKey.toBuffer(),
+      new anchor.web3.PublicKey(projectOwner).toBuffer(),
       Buffer.from(projectUserCount.toString()),
     ],
     program.programId
@@ -466,13 +504,6 @@ export const contributeSOL = async (
     ],
     program.programId
   );
-  console.log(
-    roundId,
-    projectUserCount.toString(),
-    usd,
-    total * anchor.web3.LAMPORTS_PER_SOL,
-    split
-  );
 
   //@ts-ignore
   const projectAccount = await program.account.project.fetch(project_account);
@@ -480,6 +511,35 @@ export const contributeSOL = async (
 
   //@ts-ignore
   const adminAcc = await program.account.admin.fetch(adminAccount);
+
+  const accountInfo = await connection.getAccountInfo(contriAccount);
+
+  if (accountInfo !== null && accountInfo.data.length > 0) {
+    const ix = await program.methods
+      .updateContributionSol(
+        roundId,
+        projectUserCount.toString(),
+        projectAccount.owner,
+        usd,
+        total * anchor.web3.LAMPORTS_PER_SOL,
+        split
+      )
+      .accounts({
+        adminAccount: adminAccount,
+        authority: wallet.publicKey,
+        roundAccount: round_account,
+        contributionAccount: contriAccount,
+        projectAccount: project_account,
+        receiverAccount: projectAccount.multiSig,
+        adminAccountInfo: adminAcc.authority,
+        systemProgram: anchor.web3.SystemProgram.programId,
+        rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+        tokenProgram: spl.TOKEN_PROGRAM_ID,
+      })
+      .instruction();
+
+    return ix;
+  }
   const ix = await program.methods
     .createContributionSol(
       roundId,
