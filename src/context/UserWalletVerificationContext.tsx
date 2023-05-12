@@ -84,28 +84,27 @@ export const UserWalletVerificationProvider: React.FC<
     const checkAndVerifySignature = async () => {
       console.log('1 - check for signature');
       const signature = getSignature(publicKey as PublicKey);
-
-      if (signature !== null) {
-        console.log('3 - context returned signature - ', signature);
-        setSignatureData(signature);
-        const signInResponse = await signIn('credentials', {
-          callbackUrl: '/',
-          redirect: false,
-          wallet: publicKey?.toBase58(),
-          signature: signature?.signature,
-        });
-        console.log(signInResponse);
-
-        return; // todo yhan tak code same ha
-      }
-
       try {
-        console.log(
-          '4 - could not find signature so open modal ',
-          signMessage,
-          publicKey
-        );
         if (signMessage && publicKey) {
+          if (signature) {
+            console.log('3 - context returned signature - ', signature);
+            setSignatureData(signature);
+            const signInResponse = await signIn('credentials', {
+              callbackUrl: '/',
+              redirect: false,
+              wallet: publicKey?.toBase58(),
+              signature: signature?.signature,
+            });
+            console.log(signInResponse);
+
+            return; // todo yhan tak code same ha
+          }
+
+          console.log(
+            '4 - could not find signature so open modal ',
+            signMessage,
+            publicKey
+          );
           onOpen();
           console.log('5 - waiting for modal to sign transaction');
           while (!authenticated) {
