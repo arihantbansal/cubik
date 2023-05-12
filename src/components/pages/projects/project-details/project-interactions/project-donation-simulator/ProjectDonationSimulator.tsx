@@ -16,6 +16,7 @@ import {
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import { Controller, useForm } from 'react-hook-form';
@@ -29,6 +30,7 @@ import {
   contributeSOL,
   contributeSPL,
 } from '~/utils/program/contract';
+import { trpc } from '~/utils/trpc';
 import Graph from './Graph';
 
 type ProjectDonationSimulatorProps = {
@@ -45,7 +47,9 @@ export const ProjectDonationSimulator = ({
   width,
 }: ProjectDonationSimulatorProps) => {
   const [donation, setDonation] = useState<number>(50);
+  const { data } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const createContributionMutation = trpc.contribution.create.useMutation();
   const anchorWallet = useAnchorWallet();
   const {
     handleSubmit,
@@ -76,34 +80,44 @@ export const ProjectDonationSimulator = ({
     }
   }, [donation, getValues, setValue]);
 
-  async function onSubmit(_values: {
-    amount: number;
-    matchingPoolDonation: number;
-    token: any;
-  }) {
+  async function onSubmit(_values: any) {
+    console.log(donation, '-----------');
+    let sig: string | null = null;
     if (String(_values.token.value).toLocaleLowerCase() === 'sol') {
-      await donateSOL(
+      sig = await donateSOL(
         projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')
           ?.fundingRound.roundName as string,
         projectDetails?.owner_publickey,
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
-        _values.amount,
-        _values.amount
+        donation,
+        _values.amount // usd value
       );
     } else {
-      await donateSPL(
+      sig = await donateSPL(
         projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')
           ?.fundingRound.roundName as string,
         '',
         projectDetails?.owner_publickey,
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
-        _values.amount,
-        _values.amount
+        donation,
+        _values.amount // usd value
       );
     }
-
+    if (sig) return; /// tx is stuck in pending
+    createContributionMutation.mutate({
+      projectId: projectDetails.id,
+      roundId: projectDetails?.ProjectJoinRound.find(
+        (e) => e.status === 'APPROVED'
+      )?.fundingRound.id as string,
+      split: _values.matchingPoolDonation,
+      token: _values.token.value,
+      totalAmount: donation,
+      usd: _values.amount,
+      tx: sig as string,
+      userId: data?.user?.id as string,
+    });
     // onOpen();
   }
 
