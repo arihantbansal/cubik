@@ -65,7 +65,6 @@ export const ProjectDonationSimulator = ({
   useEffect(() => {
     // use api to convert this and add this
     const token = getValues('token');
-    console.log('selected token - ', token, 'donation - ', donation);
     if (token === 'sol') {
       setValue('amount', donation * 22);
     } else if (token === 'usdc') {
@@ -82,8 +81,6 @@ export const ProjectDonationSimulator = ({
     matchingPoolDonation: number;
     token: any;
   }) {
-    // console.log(_values, '-----------');
-
     if (String(_values.token.value).toLocaleLowerCase() === 'sol') {
       await donateSOL(
         projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')

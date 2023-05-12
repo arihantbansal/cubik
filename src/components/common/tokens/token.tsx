@@ -11,7 +11,7 @@ export const BONK = ({ size }: { size: number }) => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g clip-path="url(#clip0_1071_14174)">
+          <g clipPath="url(#clip0_1071_14174)">
             <path
               d="M23 46C35.7025 46 46 35.7025 46 23C46 10.2975 35.7025 0 23 0C10.2975 0 0 10.2975 0 23C0 35.7025 10.2975 46 23 46Z"
               fill="url(#paint0_radial_1071_14174)"
@@ -90,8 +90,8 @@ export const BONK = ({ size }: { size: number }) => {
               gradientUnits="userSpaceOnUse"
               gradientTransform="translate(23 23) rotate(90) scale(23)"
             >
-              <stop offset="0.0356247" stop-color="#FAFF00" />
-              <stop offset="1" stop-color="#E08633" />
+              <stop offset="0.0356247" stopColor="#FAFF00" />
+              <stop offset="1" stopColor="#E08633" />
             </radialGradient>
             <clipPath id="clip0_1071_14174">
               <rect width="46" height="46" fill="white" />
@@ -134,7 +134,7 @@ export const USDC = ({ size }: { size: number }) => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g clip-path="url(#clip0_1071_14192)">
+          <g clipPath="url(#clip0_1071_14192)">
             <path
               d="M23 46C35.7459 46 46 35.7459 46 23C46 10.2541 35.7459 0 23 0C10.2541 0 0 10.2541 0 23C0 35.7459 10.2541 46 23 46Z"
               fill="#2775CA"

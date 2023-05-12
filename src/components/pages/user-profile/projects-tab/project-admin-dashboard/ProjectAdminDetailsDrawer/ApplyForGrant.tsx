@@ -91,7 +91,6 @@ const ApplyForGrant: React.FC<{
   };
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    console.log('selected round - ', selectRoundId);
     if (!selectRoundId) return;
     // get round name of selected round id;
     const round = roundData?.find((round) => round.id === selectRoundId);

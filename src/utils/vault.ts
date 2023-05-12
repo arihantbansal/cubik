@@ -1,5 +1,5 @@
-import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import * as anchor from '@coral-xyz/anchor';
+import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import Squads from '@sqds/sdk';
 
 export const createVault = async (
@@ -9,7 +9,6 @@ export const createVault = async (
   image: string
 ) => {
   const squads = Squads.devnet(wallet);
-  console.log(wallet.publicKey.toBase58());
 
   const ix = await squads.buildCreateMultisig(
     2,

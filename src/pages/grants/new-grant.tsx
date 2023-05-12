@@ -97,7 +97,6 @@ const CreateGrantRound = () => {
         startTime: start?.toISOString() as string,
         endtime: end?.toISOString() as string,
       });
-      console.log('created round data - ', createdRound);
       onClose();
     } catch (error: any) {
       setTransactionError(error.message || 'Error while signing transaction');
@@ -113,7 +112,6 @@ const CreateGrantRound = () => {
     try {
       const startMoment = moment(startDate);
       const endMoment = moment(endDate);
-      console.log('get values - ', getValues(), startMoment, endMoment);
       createRound(
         getValues().name,
         getValues().pool,

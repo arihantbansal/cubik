@@ -36,20 +36,12 @@ const ProjectAdminCard = ({
   } = trpc.project.projectAdminDetails.useQuery({
     id: project.id,
   });
-  console.log('project data - ', projectData);
   if (isLoading) {
     return <Card> is Loading</Card>;
   }
   if (isError) {
     return <Center>{error.message}</Center>;
   }
-
-  console.log(
-    'projectStatus - ',
-    ProjectStatus({
-      projectData: projectData as ProjectWithRoundDetailsType,
-    })
-  );
 
   return (
     <Card

@@ -7,7 +7,7 @@ import {
   Spinner,
   Text,
   useMediaQuery,
-  Wrap,
+  Wrap
 } from '@chakra-ui/react';
 import type { WalletName } from '@solana/wallet-adapter-base';
 import { WalletReadyState } from '@solana/wallet-adapter-base';

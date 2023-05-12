@@ -24,7 +24,6 @@ const Round = () => {
     error,
   } = trpc.round.findActive.useQuery();
   const { data } = useSession();
-  console.log('rounds - ', rounds, data);
   return (
     <Container maxW="7xl" py="64px">
       <HStack w="full" align="start" justify="space-between" pb="32px">

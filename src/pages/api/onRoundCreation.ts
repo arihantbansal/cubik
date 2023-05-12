@@ -1,6 +1,5 @@
 import { ProjectsModel } from '@prisma/client';
 import axios from 'axios';
-import { Reorder } from 'framer-motion';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NotionConfig } from '~/server/enums/notion';
 
@@ -52,7 +51,6 @@ export async function createPage(req: NextApiRequest, res: NextApiResponse) {
 
     return res.send(JSON.stringify(response));
   } catch (error) {
-    console.log(error);
     return res.send(null);
   }
 }
@@ -80,7 +78,6 @@ export async function createDatabase(
     // get the id from response and map it with the title if want to find this db
     return res.send(JSON.stringify(response));
   } catch (error) {
-    console.log(error);
     return res.send(null);
   }
 }

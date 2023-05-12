@@ -31,7 +31,6 @@ const ProjectsExplorer = () => {
       JSON.parse(project.industry).includes(category)
     );
   };
-  console.log('projects data - ', projects);
 
   const filteredProjects = handleCategoryFilter(selectedCategory);
   return (

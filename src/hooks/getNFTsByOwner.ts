@@ -1,5 +1,5 @@
-import { useQuery, UseQueryResult } from 'react-query';
 import { PublicKey } from '@solana/web3.js';
+import { useQuery, UseQueryResult } from 'react-query';
 import { metaplexGetByOwner, NFTData } from '~/utils/metaplexGetByOwner';
 
 // Define PromiseFulfilledResult type
@@ -34,21 +34,16 @@ async function getNftDataByOwner(
       const response = await fetch(item);
       return response.json();
     });
-    console.log('1 - getting nfts - ', promises);
 
     const nftsData = await Promise.allSettled(promises);
-    console.log('2 - nft data - ', nftsData);
     const fulfilledNftsData = nftsData.filter(
       (result) => result.status === 'fulfilled'
     ) as PromiseFulfilledResult<any>[];
-    console.log('3 - fulfilledNftsData', fulfilledNftsData);
 
     const nftsDataJson = fulfilledNftsData.map((item) => item.value);
 
-    console.log('4 - nft data - ', nftsDataJson);
     return nftsDataJson;
   } catch (error: any) {
-    console.log('4 - Error fetching NFT data: ', error.message);
     throw new Error('Error fetching NFT data: ' + error.message);
   }
 }

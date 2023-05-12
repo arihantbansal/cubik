@@ -204,7 +204,6 @@ const IconButtonBadge = () => {
       })),
     };
 
-    console.log('Form submitted:', submittedData);
     onOpen();
   };
 

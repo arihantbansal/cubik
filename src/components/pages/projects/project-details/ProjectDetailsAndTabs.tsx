@@ -10,25 +10,17 @@ import {
   DrawerHeader,
   DrawerOverlay,
   HStack,
-  Skeleton,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { Prisma, ProjectsModel } from '@prisma/client';
-import { Key, useRef } from 'react';
+import { useRef } from 'react';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
+import { ProjectWithCommentsAndRoundsType } from '~/types/IProjectDetails';
 import {
-  ProjectCreatorTeamType,
-  ProjectWithCommentsAndRoundsType,
-} from '~/types/IProjectDetails';
-import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
-import {
-  ProjectCreatorTeamMember,
   ProjectFundingData,
   ProjectOwner,
   ProjectSocials,
 } from './project-interactions/ProjectInteractions';
-import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
 import ProjectDetailsHeader from './ProjectDetailsHeader';
 import { ProjectsTabs } from './ProjectTabs';
 import {
@@ -120,8 +112,6 @@ export const ProjectDetailsAndTabs = ({
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
-  console.log(projectDetails);
-  // const industry = loading ? undefined : JSON.parse(projectDetails.industry);
 
   return (
     <Container

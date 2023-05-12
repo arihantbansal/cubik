@@ -28,8 +28,6 @@ const Graph: React.FC<GraphProps> = ({
     id: router.query.projectId as string,
   });
 
-  console.log(a.data?.round, 's');
-
   const contributionMutation = trpc.contribution.create.useMutation();
   const data = useMemo(
     () =>
@@ -65,8 +63,6 @@ const Graph: React.FC<GraphProps> = ({
     setDonationAmount(Math.round(Math.pow(value, exponent)));
   };
 
-  // console.log('data -', data);
-  // console.log('contribution - ', contributionMutation.data);
   return (
     <VStack flex="1" p="1rem" width={'100%'} gap="0">
       <Box

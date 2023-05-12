@@ -18,7 +18,6 @@ export const ProjectStatus = ({
   if (projectData.status === ProjectVerifyStatus.VERIFIED) {
     if (projectData.ProjectJoinRound.length > 0) {
       projectData.ProjectJoinRound.map((projectJoinRound) => {
-        console.log('project join round - ', projectJoinRound);
         if (projectJoinRound.fundingRound.active) {
           projectRoundData = {
             round: projectJoinRound,

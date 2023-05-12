@@ -65,7 +65,6 @@ const GrantUnderReviewProjects = ({
 
     const signed = await anchorWallet?.signTransaction(tx);
     const txid = await connection.sendRawTransaction(signed!.serialize());
-    console.log('txid', txid);
     if (!txid) return;
     updateRound.mutate({
       id: '1',
@@ -92,7 +91,7 @@ const GrantUnderReviewProjects = ({
 
     const signed = await anchorWallet?.signTransaction(tx);
     const txid = await connection.sendRawTransaction(signed!.serialize());
-    console.log('txid', txid);
+
     if (!txid) {
       throw new Error('txid is null');
     }

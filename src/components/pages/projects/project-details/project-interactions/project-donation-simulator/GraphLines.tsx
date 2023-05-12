@@ -102,7 +102,7 @@ export const GraphLine: React.FC<GraphLineProps> = ({
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g clip-path="url(#clip0_789_9405)">
+          <g clipPath="url(#clip0_789_9405)">
             <path
               d="M5 10C7.77085 10 10 7.77085 10 5C10 2.22915 7.77085 0 5 0C2.22915 0 0 2.22915 0 5C0 7.77085 2.22915 10 5 10Z"
               fill="#2775CA"

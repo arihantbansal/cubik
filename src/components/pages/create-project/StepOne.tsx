@@ -82,7 +82,6 @@ const StepOne: React.FC<StepOneProps> = ({
       };
     }) || [];
 
-  console.log('team search ', teamSearch.data);
   // create an arry of random colors
   const colors = [
     'red',

@@ -86,7 +86,6 @@ const StepThree = ({
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       const json = editor.getJSON();
-      console.log('html', html);
       // @ts-ignore
       setHTMLPreviewData(parse(html as string));
       setEditorData(html);

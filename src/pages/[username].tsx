@@ -9,7 +9,6 @@ import VisitorView from '~/components/pages/user-profile/VisitorView';
 import { trpc } from '~/utils/trpc';
 
 const ProfilePage = () => {
-  console.log('profile component rendered');
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -23,7 +22,6 @@ const ProfilePage = () => {
   );
 
   if (user.isError) {
-    console.log('user not found - ', user.data);
     return (
       <Container maxW="full">
         <Center gap="16px" flexDir={'column'} maxW="4xl" mx="auto" py="14rem">

@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { signOut, useSession } from 'next-auth/react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { BiChevronDown, BiUser } from 'react-icons/bi';
 import { MdPowerSettingsNew, MdUpload } from 'react-icons/md';
@@ -33,9 +34,10 @@ const UserNavMenu = () => {
         });
         // refresh the page to clear the cache
         localStorage.removeItem('walletName');
+        localStorage.removeItem('x-sig-solana');
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((e: any) => {
+        throw new Error(e.message || 'Error while signing out');
       });
   }
 
@@ -55,10 +57,6 @@ const UserNavMenu = () => {
           leftIcon={<BiUser size={20} color={'#ADB8B6'} />}
           iconSpacing="8px"
           p={{ base: '12px', md: '8px' }}
-          onClick={() => {
-            console.log('redirect to profile - ', session.user.username);
-            router.push('/' + session.user.username);
-          }}
           sx={{
             width: '-webkit-fill-available',
           }}
@@ -70,7 +68,7 @@ const UserNavMenu = () => {
           }}
         >
           <Box as="p" textStyle={'body4'}>
-            Profile
+            <Link href={'/' + session.user.username}>Profile</Link>
           </Box>
         </Button>
         <Button
@@ -84,10 +82,6 @@ const UserNavMenu = () => {
           leftIcon={<MdUpload size={20} color={'#ADB8B6'} />}
           iconSpacing="8px"
           p={{ base: '12px', md: '8px' }}
-          onClick={() => {
-            console.log('pushing to submit project');
-            router.push('/submit-project');
-          }}
           sx={{
             width: '-webkit-fill-available',
           }}
@@ -99,7 +93,7 @@ const UserNavMenu = () => {
           }}
         >
           <Box as="p" textStyle={'body4'}>
-            Submit Project
+            <Link href={'/submit-project'}>Submit Project</Link>
           </Box>
         </Button>
         <Button

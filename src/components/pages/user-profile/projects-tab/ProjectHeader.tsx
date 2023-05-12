@@ -330,8 +330,6 @@ const ProjectHeader = ({
   useEffect(() => {
     if (activeProject === project.id) {
       onOpen();
-    } else {
-      console.log('this project is not active');
     }
   }, [activeProject]);
 

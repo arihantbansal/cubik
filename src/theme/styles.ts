@@ -17,7 +17,7 @@ export const styles = {
     option: {
       background: 'red !important',
     },
-    'td:first-child': {
+    'td:first-of-type': {
       borderTopLeftRadius: '16px',
       borderBottomLeftRadius: '16px',
     },

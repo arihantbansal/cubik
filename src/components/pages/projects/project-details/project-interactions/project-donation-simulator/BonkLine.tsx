@@ -102,7 +102,7 @@ export const BonkLine: React.FC<GraphLineProps> = ({
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g clip-path="url(#clip0_916_11712)">
+          <g clipPath="url(#clip0_916_11712)">
             <path
               d="M5 10C7.76142 10 10 7.76142 10 5C10 2.23858 7.76142 0 5 0C2.23858 0 0 2.23858 0 5C0 7.76142 2.23858 10 5 10Z"
               fill="url(#paint0_radial_916_11712)"
@@ -181,8 +181,8 @@ export const BonkLine: React.FC<GraphLineProps> = ({
               gradientUnits="userSpaceOnUse"
               gradientTransform="translate(5 5) rotate(90) scale(5)"
             >
-              <stop offset="0.0356247" stop-color="#FAFF00" />
-              <stop offset="1" stop-color="#E08633" />
+              <stop offset="0.0356247" stopColor="#FAFF00" />
+              <stop offset="1" stopColor="#E08633" />
             </radialGradient>
           </defs>
         </svg>

@@ -92,7 +92,6 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
       const signedTx = await anchorWallet?.signTransaction(tx);
       if (!signedTx) throw new Error('Error signing transaction');
       const txid = await connection.sendRawTransaction(signedTx.serialize());
-      console.log('txid', txid);
 
       projectUpdateMutation.mutate({
         id: id,
@@ -127,7 +126,6 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
       const signedTx = await anchorWallet?.signTransaction(tx);
       if (!signedTx) throw new Error('Error signing transaction');
       const txid = await connection.sendRawTransaction(signedTx.serialize());
-      console.log('txid', txid);
 
       projectUpdateMutation.mutate({
         id: id,

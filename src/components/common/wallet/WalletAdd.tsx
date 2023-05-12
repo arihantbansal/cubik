@@ -34,7 +34,6 @@ export const WalletAddress: FC<PropsType> = ({
   let first = addr.slice(0, 4);
   let last = addr.slice(addr.length - 4, addr.length);
   let truncatedAddr = first + '...' + last;
-  //console.log('truncated addy - ', truncatedAddr);
   const fillColor = color ? color : '#A6A6A6';
 
   const propsSize = size ? size : 'md';

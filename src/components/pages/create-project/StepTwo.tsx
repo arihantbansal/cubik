@@ -48,7 +48,6 @@ const StepTwo: React.FC<StepTwoProps> = ({
 }: StepTwoProps) => {
   const handleSubmit = async () => {
     trigger(['projectLink', 'twitter']).then((isValid) => {
-      console.log('here');
       if (isValid) {
         onSubmit;
       }
@@ -183,8 +182,6 @@ const StepTwo: React.FC<StepTwoProps> = ({
             if (isValid) {
               //@ts-ignore
               onSubmit();
-            } else {
-              console.log('trigger is invalid');
             }
           }}
           rightIcon={<Icon as={FiChevronRight} width={5} height={5} />}

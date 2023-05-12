@@ -1,11 +1,11 @@
+import * as anchor from '@coral-xyz/anchor';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { Prisma, UserModel } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { NextApiRequest } from 'next';
 import { type DefaultSession, type NextAuthOptions } from 'next-auth';
 import credentialsProvider from 'next-auth/providers/credentials';
-import { prisma } from './prisma';
 import { verifyMessage } from '~/utils/getsignMessage';
-import * as anchor from '@coral-xyz/anchor';
+import { prisma } from './prisma';
 declare module 'next-auth' {
   interface Session extends DefaultSession {
     user: {
@@ -33,7 +33,6 @@ export const authOptions = (req: NextApiRequest): NextAuthOptions => {
       },
       session: async ({ session, token }) => {
         const userData = token.user as UserSession;
-        console.log(userData);
 
         session.user.id = userData.id;
         session.user.mainWallet = userData.mainWallet;
@@ -79,7 +78,6 @@ export const authOptions = (req: NextApiRequest): NextAuthOptions => {
               _count: true,
             },
           });
-          console.log(res?._count.project, '0');
 
           if (!res) {
             return null;

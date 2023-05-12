@@ -87,7 +87,6 @@ export const projectsRouter = router({
         });
         return res;
       } catch (error) {
-        console.log(error);
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: (error as Error).message,
@@ -146,8 +145,8 @@ export const projectsRouter = router({
         },
       });
       return res;
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      throw new Error(error.message || 'There was some error');
     }
   }),
   findMany: procedure.query(async () => {
@@ -172,8 +171,8 @@ export const projectsRouter = router({
         },
       });
       return res;
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      throw new Error(error.message || 'There was some error');
     }
   }),
   findManyReview: procedure.query(async () => {
@@ -192,8 +191,8 @@ export const projectsRouter = router({
         },
       });
       return res;
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      throw new Error(error.message || 'There was some error');
     }
   }),
   findManyVerified: procedure.query(async () => {
@@ -212,8 +211,8 @@ export const projectsRouter = router({
         },
       });
       return res;
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      throw new Error(error.message || 'There was some error');
     }
   }),
   findManyRejected: procedure.query(async () => {
@@ -232,8 +231,8 @@ export const projectsRouter = router({
         },
       });
       return res;
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      throw new Error(error.message || 'There was some error');
     }
   }),
 
@@ -411,7 +410,6 @@ export const projectsRouter = router({
           }),
         });
       });
-      console.log(roundContri, contri, round?.matchedPool);
 
       return {
         contribution: contri,
