@@ -179,7 +179,7 @@ export const styles = {
     '.wallet-adapter-button-trigger': {
       color: '#031513',
       backgroundColor: '#A8F0E6',
-      padding: { base: '5px 12px', sm: '8px 12px' },
+      padding: { base: '8px 12px', sm: '8px 12px' },
       whiteSpace: 'nowrap',
       border: '1px solid rgba(168, 240, 230, 0.6)',
       rounded: '6px',
@@ -187,7 +187,7 @@ export const styles = {
       fontWeight: '600',
       lineHeight: { base: '18px', md: '22px' },
       height: {
-        base: '30px !important',
+        base: '34px !important',
         sm: '40px !important',
         md: '2.5rem !important',
       },

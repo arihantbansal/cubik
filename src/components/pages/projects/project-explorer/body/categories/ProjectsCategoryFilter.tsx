@@ -5,7 +5,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  VStack
+  VStack,
 } from '@chakra-ui/react';
 import React, { useRef, useState } from 'react';
 import { BiCheck, BiSearch } from 'react-icons/bi';
@@ -58,11 +58,33 @@ export const ProjectsCategoryFilter: React.FC<ProjectsCategoryFilterProps> = ({
       >
         {!selectedCategory && (
           <>
-            <CategoryTag isSelected={true}>All Projects</CategoryTag>
-            <CategoryTag>Defi</CategoryTag>
-            <CategoryTag>Solana InfraStructure</CategoryTag>
-            <CategoryTag>Social</CategoryTag>
-            <CategoryTag>DAO</CategoryTag>
+            <Center
+              as="button"
+              color="#ADB8B6"
+              onClick={() =>
+                handleCategoryClick({
+                  label: 'defi',
+                  value: 'defi',
+                })
+              }
+            >
+              <CategoryTag isSelected={true}>All Projects</CategoryTag>
+            </Center>
+            {['defi', 'Solana Infrastructure', 'Social', 'DAO'].map((cat) => (
+              <Center
+                key={cat}
+                as="button"
+                color="#ADB8B6"
+                onClick={() =>
+                  handleCategoryClick({
+                    label: cat,
+                    value: cat,
+                  })
+                }
+              >
+                <CategoryTag>{cat}</CategoryTag>
+              </Center>
+            ))}
           </>
         )}
         {selectedCategory && (

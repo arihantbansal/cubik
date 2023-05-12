@@ -212,7 +212,7 @@ const FundingRoundBanner = () => {
   return (
     <Stack w="full" direction={{ base: 'column', md: 'row' }}>
       <Stack
-        maxW={'4xl'}
+        maxW={'full'}
         p={{ base: '16px', md: '32px' }}
         border="2px solid #ffffff10"
         overflow="hidden"

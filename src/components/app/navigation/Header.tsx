@@ -123,7 +123,7 @@ export const Header = memo(function Header({
   const NavbarCTA: React.FC<any> = ({ children }) => {
     return (
       <Center
-        h={{ base: '1.6rem', md: '2.6rem' }}
+        h={{ base: '1.9rem', md: '2.6rem' }}
         justifyContent="end"
         zIndex="99"
       >
