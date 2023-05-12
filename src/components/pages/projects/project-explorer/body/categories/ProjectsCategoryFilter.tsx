@@ -1,4 +1,3 @@
-import React, { useState, useRef } from 'react';
 import {
   Box,
   Center,
@@ -6,12 +5,13 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  VStack,
+  VStack
 } from '@chakra-ui/react';
+import React, { useRef, useState } from 'react';
 import { BiCheck, BiSearch } from 'react-icons/bi';
 import { RxCross1 } from 'react-icons/rx';
-import { category } from '~/components/pages/create-project/projectCategories';
 import CategoryTag from '~/components/common/tags/CategoryTags';
+import { category } from '~/components/pages/create-project/projectCategories';
 
 export type CategoryType = {
   label: string;

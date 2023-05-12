@@ -1,12 +1,4 @@
-import {
-  Box,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  VStack,
-} from '@chakra-ui/react';
-import React from 'react';
-import { BiSearch } from 'react-icons/bi';
+import { VStack } from '@chakra-ui/react';
 import FundingRoundBanner from './FundingRoundBanner';
 
 const ExplorePageHeader = () => {

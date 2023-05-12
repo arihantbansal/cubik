@@ -1,5 +1,5 @@
-import React, { forwardRef } from 'react';
 import { Box, Tag } from '@chakra-ui/react';
+import React, { forwardRef } from 'react';
 
 interface CustomTagProps {
   color?: string;

@@ -1,5 +1,5 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Box, Center, HStack } from '@chakra-ui/react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import CustomTag from '~/components/common/tags/CustomTag';
 
 const CustomTagsContainer: React.FC = () => {

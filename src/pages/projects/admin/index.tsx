@@ -9,7 +9,6 @@ import {
   Tabs,
   Tag,
 } from '@chakra-ui/react';
-
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
