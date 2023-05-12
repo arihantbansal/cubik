@@ -54,6 +54,7 @@ export const authOptions = (req: NextApiRequest): NextAuthOptions => {
           if (!credentials) {
             throw new Error('User Cannot be authenticated');
           }
+
           const user = credentials as {
             wallet: string;
             signature: string;
@@ -61,29 +62,35 @@ export const authOptions = (req: NextApiRequest): NextAuthOptions => {
           const availableTokens =
             req.cookies['next-auth.csrf-token']?.split('|');
 
-          const final = await verifyMessage(
-            user.signature,
-            new anchor.web3.PublicKey(user.wallet),
-            availableTokens![0]
-          );
+          try {
+            const final = await verifyMessage(
+              user.signature,
+              new anchor.web3.PublicKey(user.wallet),
+              availableTokens![0]
+            );
 
-          if (!final) {
+            if (!final) {
+              return null;
+            }
+            const res = await prisma.userModel.findUnique({
+              where: {
+                mainWallet: user.wallet,
+              },
+              include: {
+                _count: true,
+              },
+            });
+
+            if (!res) {
+              return null;
+            }
+
+            return res;
+          } catch (error) {
+            console.log(error);
+
             return null;
           }
-          const res = await prisma.userModel.findUnique({
-            where: {
-              mainWallet: user.wallet,
-            },
-            include: {
-              _count: true,
-            },
-          });
-
-          if (!res) {
-            return null;
-          }
-
-          return res;
         },
         credentials: {},
         type: 'credentials',
