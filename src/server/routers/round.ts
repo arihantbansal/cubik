@@ -44,13 +44,6 @@ export const roundRouter = router({
       return roundRes;
     }),
   findActive: procedure.query(async ({ ctx }) => {
-    if (!ctx.session) {
-      throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: 'Session not found',
-        cause: 'User not logged in',
-      });
-    }
     const roundRes = await prisma.round.findMany({
       where: {
         active: true,
