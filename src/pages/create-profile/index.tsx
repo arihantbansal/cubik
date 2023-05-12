@@ -83,7 +83,8 @@ const CreateProfile = () => {
       try {
         const itemStr = localStorage.getItem('x-sig-solana');
         if (itemStr) {
-          const { signature } = JSON.parse(itemStr);
+          const { signature, wallet } = JSON.parse(itemStr);
+          console.log('signature inside login account - ', signature, wallet);
           const signInResponse = await signIn('credentials', {
             signature: signature,
             redirect: false,
