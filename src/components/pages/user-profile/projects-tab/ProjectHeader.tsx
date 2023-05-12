@@ -201,6 +201,7 @@ const ProjectDetails = ({
         md: '80px 40px 40px 40px',
       }}
       gap={{ base: '32px', md: '64px' }}
+      zIndex="9"
       w="full"
     >
       <VStack align={'start'} w="full" gap="24px">
@@ -442,7 +443,12 @@ const ProjectHeader = ({
                 <></>
               ) : (
                 <>
-                  <Center w="full" position="fixed" zIndex="100">
+                  <Center
+                    background="#0C0D0D"
+                    w="full"
+                    position="fixed"
+                    borderTopRadius={'24px'}
+                  >
                     <ProjectStatusBanner
                       status={
                         ProjectStatus({

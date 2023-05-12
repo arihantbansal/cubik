@@ -78,7 +78,20 @@ export const styles = {
       gap: { base: '8px', md: '14px' },
     },
     '.wallet-adapter-collapse': {
-      //  height: 'full !important',
+      _after: {
+        content: '"I dont have a wallet"',
+        position: 'absolute',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        bottom: '20px',
+        color: '#ffffff57',
+        fontSize: { base: '12px', sm: '14px' },
+        fontWeight: '500',
+        lineHeight: { base: '18px', md: '24px' },
+      },
+    },
+    '.wallet-adapter-collapse > li': {
+      display: 'none',
     },
     '.wallet-adapter-modal-list > li, .wallet-adapter-collapse > li': {
       minW: '5.5rem',

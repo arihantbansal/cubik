@@ -18,12 +18,14 @@ import {
   ModalOverlay,
   Spinner,
   Stack,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import { useEffect, useState } from 'react';
+import { SuccessToast } from '~/components/common/toasts/Toasts';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import {
@@ -50,6 +52,7 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
     error,
   } = trpc.project.findManyReview.useQuery();
   const anchorWallet = useAnchorWallet();
+  const toast = useToast();
   const projectUpdateMutation = trpc.project.updateProjectStatus.useMutation();
   const [isActionModalOpen, setIsActionModalOpen] = useState(false);
   const [transactionLoading, setTransactionLoading] = useState(false);
@@ -97,6 +100,7 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
         id: id,
         status: 'VERIFIED',
       });
+      SuccessToast({ toast, message: 'Project Approved' });
     } catch (error: any) {
       setTransactionSignError(error.message || 'An error occurred');
     } finally {
@@ -131,6 +135,7 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
         id: id,
         status: 'REVIEW',
       });
+      SuccessToast({ toast, message: 'Project Rejected Succesfully' });
     } catch (error: any) {
       setTransactionSignError(error.message || 'An error occurred');
     } finally {
@@ -207,7 +212,7 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
               <Stack
                 direction={{ base: 'column', sm: 'row' }}
                 px={''}
-                gap={''}
+                gap={'12px'}
                 w="full"
               >
                 <Stack
@@ -250,6 +255,7 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
                     variant={'unstyled'}
                     px="2rem"
                     h="full"
+                    minH="2.4rem"
                     w="full"
                     backgroundColor="surface.red.1"
                     border="1px solid transparent"
@@ -275,6 +281,7 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
                     variant={'unstyled'}
                     px="2rem"
                     h="full"
+                    minH="2.4rem"
                     w="full"
                     backgroundColor="brand.teal2"
                     color="brand.teal5"

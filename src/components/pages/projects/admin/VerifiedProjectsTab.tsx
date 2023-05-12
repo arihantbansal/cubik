@@ -67,7 +67,7 @@ const VerifiedProjectsTab = ({ setProjectsNumberByStatus }: any) => {
                 sm: '20px',
                 md: '24px',
               }}
-              gap={''}
+              gap={'12px'}
               w="full"
             >
               <Stack
@@ -110,6 +110,7 @@ const VerifiedProjectsTab = ({ setProjectsNumberByStatus }: any) => {
                   variant={'unstyled'}
                   px="2rem"
                   h="full"
+                  minH={'2.4rem'}
                   w="full"
                   backgroundColor="brand.teal2"
                   color="brand.teal5"

@@ -30,6 +30,7 @@ export const colors = {
       1: '#BAE6FD',
       2: '#33ADFF',
       3: '#00213D',
+      4: '#196AE2',
     },
     yellow: {
       2: '#FEF08A',

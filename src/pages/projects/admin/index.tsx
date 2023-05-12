@@ -53,23 +53,40 @@ const ProjectAuthenticationRoute = () => {
     <>
       <Container maxW="7xl" py="40px">
         <HStack w="full" align="start" pb="32px">
-          <Box as="p" textStyle="title2" color="neutral.11">
+          <Box
+            as="p"
+            whiteSpace={'nowrap'}
+            textStyle="title2"
+            color="neutral.11"
+          >
             Projects
           </Box>
           <CustomTag>Admin</CustomTag>
         </HStack>
         <Tabs variant={'cubik'} alignSelf={'start'} w="full">
-          <TabList gap={{ base: '0.5rem', md: '1rem' }}>
-            <Tab gap="8px" display={'flex'}>
-              <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
+          <TabList
+            overflowY={{ base: 'hidden', md: 'inherit' }}
+            overflowX={{ base: 'scroll', md: 'inherit' }}
+            gap={{ base: '0.5rem', md: '1rem' }}
+          >
+            <Tab boxShadow={'none'} gap="8px" display={'flex'}>
+              <Box
+                as="p"
+                whiteSpace={'nowrap'}
+                textStyle={{ base: 'title5', md: 'title4' }}
+              >
                 All Projects
               </Box>
               <Tag rounded="full" variant="colorful">
                 {projectsNumberByStatus.all}
               </Tag>
             </Tab>
-            <Tab gap="8px" display={'flex'}>
-              <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
+            <Tab boxShadow={'none'} gap="8px" display={'flex'}>
+              <Box
+                as="p"
+                whiteSpace={'nowrap'}
+                textStyle={{ base: 'title5', md: 'title4' }}
+              >
                 Under Review
               </Box>
               <Tag
@@ -81,8 +98,12 @@ const ProjectAuthenticationRoute = () => {
                 {projectsNumberByStatus.review}
               </Tag>
             </Tab>
-            <Tab gap="8px" display={'flex'}>
-              <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
+            <Tab boxShadow={'none'} gap="8px" display={'flex'}>
+              <Box
+                as="p"
+                whiteSpace={'nowrap'}
+                textStyle={{ base: 'title5', md: 'title4' }}
+              >
                 Verified
               </Box>
               <Tag
@@ -94,8 +115,12 @@ const ProjectAuthenticationRoute = () => {
                 {projectsNumberByStatus.verified}
               </Tag>
             </Tab>
-            <Tab gap="8px" display={'flex'}>
-              <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
+            <Tab boxShadow={'none'} gap="8px" display={'flex'}>
+              <Box
+                as="p"
+                whiteSpace={'nowrap'}
+                textStyle={{ base: 'title5', md: 'title4' }}
+              >
                 Rejected
               </Box>
               <Tag
@@ -107,8 +132,12 @@ const ProjectAuthenticationRoute = () => {
                 {projectsNumberByStatus.rejected}
               </Tag>
             </Tab>
-            <Tab gap="8px" display={'flex'}>
-              <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
+            <Tab boxShadow={'none'} gap="8px" display={'flex'}>
+              <Box
+                as="p"
+                whiteSpace={'nowrap'}
+                textStyle={{ base: 'title5', md: 'title4' }}
+              >
                 Participating
               </Box>
               <Tag

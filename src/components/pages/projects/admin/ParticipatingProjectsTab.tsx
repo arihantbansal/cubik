@@ -33,8 +33,8 @@ const ParticipatingProjectsTab = ({ setProjectsNumberByStatus }: any) => {
   return (
     <VStack spacing={4} w="full">
       {projects?.map((project) => (
-        <Card key={project.id} border="none" gap="0" p="0" w="100%">
-          <CardBody border="none" gap="0" p="0">
+        <Card key={project.id} border="none" gap="0" p="0" w="100%" h="full">
+          <CardBody h="full" justifyContent={'space-between'} gap="12px" p="0">
             <Center
               w="full"
               bg={`surface.${ProjectRound({ project }).colorScheme}.3`}
@@ -63,7 +63,6 @@ const ParticipatingProjectsTab = ({ setProjectsNumberByStatus }: any) => {
                   Participating In
                 </Box>
                 <Box
-                  display={{ base: 'none', md: 'block' }}
                   as="p"
                   w="fit-content"
                   whiteSpace={'nowrap'}
@@ -79,6 +78,7 @@ const ParticipatingProjectsTab = ({ setProjectsNumberByStatus }: any) => {
               pt="0"
               direction={{ base: 'column', sm: 'row' }}
               w="full"
+              gap="12px"
             >
               <Stack
                 w="full"
@@ -119,6 +119,7 @@ const ParticipatingProjectsTab = ({ setProjectsNumberByStatus }: any) => {
                 <Button
                   variant={'unstyled'}
                   px="2rem"
+                  minH={{ base: '2.2rem' }}
                   h="full"
                   w="full"
                   backgroundColor="brand.teal2"

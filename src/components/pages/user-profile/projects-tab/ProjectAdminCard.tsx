@@ -42,7 +42,7 @@ const ProjectAdminCard = ({
   if (isError) {
     return <Center>{error.message}</Center>;
   }
-
+  console.log('projects', projectData);
   return (
     <Card
       px="0px"

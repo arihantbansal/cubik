@@ -136,11 +136,10 @@ const ProjectCard = ({ project }: PropsType) => {
             Participating In
           </Box>
           <Box
-            display={{ base: 'none', md: 'block' }}
             as="p"
             w="fit-content"
             whiteSpace={'nowrap'}
-            textStyle={'title5'}
+            textStyle={{ base: 'title6', md: 'title5' }}
             color={`surface.${ProjectRound({ project }).colorScheme}.1`}
           >
             {ProjectRound({ project }).roundName} Round

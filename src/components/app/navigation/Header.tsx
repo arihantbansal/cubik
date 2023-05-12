@@ -41,7 +41,7 @@ const MobileNavCollapsible = memo(function MobileNavCollapsible({
         px="24px"
         pt={{ base: '16px', sm: '24px' }}
       >
-        <SearchBar width={{ base: '100%', sm: '', md: '2rem' }} />
+        <SearchBar width={{ base: '100%', sm: '', md: '2rem', lg: '8rem' }} />
       </Center>
       <Flex
         display={{ base: 'flex', lg: 'none' }}

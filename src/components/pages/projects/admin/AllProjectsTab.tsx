@@ -68,7 +68,7 @@ const AllProjectsTab = ({ setProjectsNumberByStatus }: any) => {
                 sm: '20px',
                 md: '24px',
               }}
-              gap={''}
+              gap={'12px'}
               w="full"
             >
               <Stack
@@ -112,6 +112,7 @@ const AllProjectsTab = ({ setProjectsNumberByStatus }: any) => {
                   px="2rem"
                   h="full"
                   w="full"
+                  minH="2.4rem"
                   backgroundColor="brand.teal2"
                   color="brand.teal5"
                   border="1px solid"
