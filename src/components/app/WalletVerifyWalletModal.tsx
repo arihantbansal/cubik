@@ -22,6 +22,7 @@ import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useUserWalletVerification } from '~/context/UserWalletVerificationContext';
+import { useAuthStore } from '~/store/authStore';
 import { createMessage, verifyMessage } from '~/utils/getsignMessage';
 import { FailureToast, SuccessToast } from '../common/toasts/Toasts';
 import { WalletAddress } from '../common/wallet/WalletAdd';
@@ -29,6 +30,7 @@ import { WalletAddress } from '../common/wallet/WalletAdd';
 const WalletVerifyModal = () => {
   const toast = useToast();
   const router = useRouter();
+  const { setAuthenticated } = useAuthStore();
   const [verifying, setVerifying] = useState(false);
   const { publicKey, disconnect, signMessage } = useWallet();
   const { isOpen, onClose, status } = useUserWalletVerification();
@@ -61,6 +63,8 @@ const WalletVerifyModal = () => {
             expiryDate,
           })
         );
+        //
+        setAuthenticated(true);
         if (signInResponse?.status === 401) {
           router.push('/create-profile', undefined, { shallow: true });
         }
