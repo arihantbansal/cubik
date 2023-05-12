@@ -7,7 +7,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
+  ModalOverlay
 } from '@chakra-ui/react';
 import QRCode from 'qrcode.react';
 import { useRef } from 'react';

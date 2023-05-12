@@ -1,26 +1,21 @@
-import React from 'react';
 import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
-  Text,
-  HStack,
-  VStack,
   Avatar,
   Box,
-  AvatarGroup,
   Center,
+  HStack,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  VStack,
 } from '@chakra-ui/react';
-import CustomTag from '~/components/common/tags/CustomTag';
-import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import { BiChevronRight } from 'react-icons/bi';
-import { BONK, USDC, SOL } from '~/components/common/tokens/token';
+import { BONK, SOL, USDC } from '~/components/common/tokens/token';
+import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 const ProjectContributors = () => {
   return (
     <TableContainer w="full">

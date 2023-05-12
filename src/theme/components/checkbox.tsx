@@ -7,16 +7,6 @@ import {
 const { definePartsStyle, defineMultiStyleConfig } =
   createMultiStyleConfigHelpers(parts.keys);
 
-// default base style from the Checkbox theme
-const baseStyle = definePartsStyle({
-  label: {},
-  control: {
-    padding: 3,
-    borderRadius: 0,
-    boxSize: 5,
-  },
-});
-
 const cubik = definePartsStyle({
   control: defineStyle({
     borderRadius: 'md',

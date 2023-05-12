@@ -1,21 +1,18 @@
 import {
+  Avatar,
+  Box,
+  Center,
+  HStack,
   Input,
   InputGroup,
   InputLeftElement,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
-  ModalCloseButton,
+  ModalContent,
+  ModalOverlay,
+  Spinner,
   useDisclosure,
   VStack,
-  Box,
-  Spinner,
-  HStack,
-  Avatar,
-  Center,
 } from '@chakra-ui/react';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
