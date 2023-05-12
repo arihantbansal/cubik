@@ -2,10 +2,10 @@ import { useDisclosure } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import router from 'next/router';
 import { createContext, useContext, useEffect, useState } from 'react';
 import WalletVerifyModal from '~/components/app/WalletVerifyWalletModal';
-import { authEmitter } from '~/utils/authEmitter';
+import { useAuthStore } from '~/store/authStore';
 
 interface SignatureData {
   signature: string;
@@ -40,7 +40,7 @@ export const UserWalletVerificationProvider: React.FC<
   UserWalletVerificationProviderProps
 > = ({ children }) => {
   const { publicKey, signMessage } = useWallet();
-  const router = useRouter();
+  const { authenticated, setAuthenticated } = useAuthStore();
   const { status } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [signatureData, setSignatureData] = useState<SignatureData | undefined>(
@@ -49,11 +49,10 @@ export const UserWalletVerificationProvider: React.FC<
 
   const getSignature = (publicKey: PublicKey): SignatureData | undefined => {
     const itemStr = localStorage.getItem('x-sig-solana');
-
+    console.log('2 - get items from local storage');
     if (!itemStr) {
       return undefined;
     }
-
     const { signature, wallet, expiryDate } = JSON.parse(itemStr);
     const now = new Date().getTime();
     if (publicKey) {
@@ -66,34 +65,40 @@ export const UserWalletVerificationProvider: React.FC<
   };
 
   useEffect(() => {
+    console.log('1 - check if unauthenticated or loading');
     if (status !== 'authenticated' && router.pathname !== 'create-profile') {
       const signature = getSignature(publicKey as PublicKey);
       if (signature?.signature) {
         setSignatureData(signature);
-        return;
+        return; // todo yhan tak code same ha
       } else {
         onOpen();
       }
     } else if (status === 'authenticated') {
-      authEmitter.emit('authenticated'); // Emit event when user is authenticated
+      //authEmitter.emit('authenticated'); // Emit event when user is authenticated
+      setAuthenticated(true);
     }
   }, [status, publicKey]);
 
   useEffect(() => {
     const checkAndVerifySignature = async () => {
+      console.log('1 - check for signature');
       const signature = getSignature(publicKey as PublicKey);
 
       if (signature !== null) {
+        console.log('3 - context returned signature - ', signature);
         setSignatureData(signature);
-        return;
+        return; // todo yhan tak code same ha
       }
 
       try {
+        console.log('4 - could not find signature so open modal');
         if (signMessage && publicKey) {
           onOpen();
-          await new Promise((resolve) =>
-            authEmitter.once('authenticated', resolve)
-          );
+          console.log('5 - waiting for modal to sign transaction');
+          while (!authenticated) {
+            await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second before checking again
+          }
           const newSignatureData = getSignature(publicKey);
           setSignatureData(newSignatureData);
         } else {

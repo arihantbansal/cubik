@@ -17,7 +17,7 @@ const NavbarCTA = () => {
   const router = useRouter();
   const { publicKey, disconnect } = useWallet();
   const { status } = useUserWalletVerification();
-
+  console.log('session status in cta - ', status);
   // If on create-profile page, don't show anything
   if (router.pathname === '/create-profile') {
     return null;

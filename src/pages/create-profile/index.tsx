@@ -89,6 +89,7 @@ const CreateProfile = () => {
             redirect: false,
             wallet: publicKey?.toBase58(),
           });
+          console.log('signing response - ', signInResponse);
           setProfileCreated(true);
           SuccessToast({ toast, message: 'Profile Created Successfully' });
           setSigningTransaction(false);
