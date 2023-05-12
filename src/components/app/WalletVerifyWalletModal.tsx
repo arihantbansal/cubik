@@ -40,6 +40,8 @@ const WalletVerifyModal = () => {
 
   async function VerifyWallet() {
     setVerifying(true);
+    console.log(signMessage && publicKey);
+
     if (signMessage && publicKey) {
       try {
         const msg = await createMessage();
@@ -48,13 +50,17 @@ const WalletVerifyModal = () => {
           anchor.utils.bytes.bs58.encode(sig),
           publicKey
         );
+
+        console.log('final - ', final);
         const signInResponse = await signIn('credentials', {
           callbackUrl: '/',
           redirect: false,
           wallet: publicKey.toBase58(),
           signature: anchor.utils.bytes.bs58.encode(sig),
         });
+        console.log('sign In- ');
         const expiryDate = new Date().getTime() + 3 * 24 * 60 * 60 * 1000; // 3 days in milliseconds
+        console.log('Date- ');
         localStorage.setItem(
           'x-sig-solana',
           JSON.stringify({
@@ -63,11 +69,15 @@ const WalletVerifyModal = () => {
             expiryDate,
           })
         );
+        console.log('local- ');
         //
-        setAuthenticated(true);
         if (signInResponse?.status === 401) {
-          router.push('/create-profile', undefined, { shallow: true });
+          console.log('401');
+          router.push('/create-profile');
+          setVerifying(false);
         }
+        console.log('outside 401');
+        setAuthenticated(true);
         setVerifying(false);
         onClose();
         SuccessToast({ toast, message: 'Wallet Verified' });

@@ -1,7 +1,7 @@
 import { useDisclosure } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
-import { useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import router from 'next/router';
 import { createContext, useContext, useEffect, useState } from 'react';
 import WalletVerifyModal from '~/components/app/WalletVerifyWalletModal';
@@ -88,11 +88,23 @@ export const UserWalletVerificationProvider: React.FC<
       if (signature !== null) {
         console.log('3 - context returned signature - ', signature);
         setSignatureData(signature);
+        const signInResponse = await signIn('credentials', {
+          callbackUrl: '/',
+          redirect: false,
+          wallet: publicKey?.toBase58(),
+          signature: signature?.signature,
+        });
+        console.log(signInResponse);
+
         return; // todo yhan tak code same ha
       }
 
       try {
-        console.log('4 - could not find signature so open modal');
+        console.log(
+          '4 - could not find signature so open modal ',
+          signMessage,
+          publicKey
+        );
         if (signMessage && publicKey) {
           onOpen();
           console.log('5 - waiting for modal to sign transaction');
