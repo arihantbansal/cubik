@@ -42,7 +42,7 @@ export const authOptions = (req: NextApiRequest): NextAuthOptions => {
         return session;
       },
     },
-    secret: process.env.SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
       strategy: 'jwt',
       maxAge: 15 * 24 * 60 * 60,
