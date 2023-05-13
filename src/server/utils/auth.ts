@@ -64,6 +64,7 @@ export const authOptions = (req: NextApiRequest): NextAuthOptions => {
             process.env.NODE_ENV === 'development'
               ? req.cookies['next-auth.csrf-token']?.split('|')
               : req.cookies['__Host-next-auth.csrf-token']?.split('|');
+          console.log(availableTokens, '-- availableTokens');
 
           try {
             const final = await verifyMessage(
