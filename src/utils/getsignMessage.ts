@@ -1,13 +1,18 @@
+import * as anchor from '@coral-xyz/anchor';
 import { getCsrfToken } from 'next-auth/react';
 import nacl from 'tweetnacl';
-import * as anchor from '@coral-xyz/anchor';
 
 export const createMessage = async (crsfToken?: string | undefined) => {
   const message =
     'Welcome to Cubik a platform where community helps projects to grow'; //todo: isko change karna hai
-  let crsf: string | undefined = await getCsrfToken();
+  let crsf: string | undefined = '';
   if (crsfToken) {
+    console.log('fun pass');
+
     crsf = crsfToken;
+  } else {
+    console.log('new called');
+    crsf = await getCsrfToken();
   }
 
   const data = new TextEncoder().encode(message + '-' + crsf);
@@ -26,6 +31,7 @@ export const verifyMessage = async (
     anchor.utils.bytes.bs58.decode(signature),
     publicKey.toBytes()
   );
+  console.log(result, '-- result');
 
   return result;
 };
