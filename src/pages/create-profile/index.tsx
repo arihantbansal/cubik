@@ -54,6 +54,7 @@ import {
 import withAuth from '~/components/HOC/WithAuth';
 import FramerCarousel from '~/components/pages/create-profile/FramerNFTCarousel';
 import ProfilePicture from '~/components/pages/create-profile/ProfilePicture';
+import { useAuthStore } from '~/store/authStore';
 import { connection, createUser } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 
@@ -77,16 +78,14 @@ const CreateProfile = () => {
   );
   const [userName, setUsername] = useState<string>('');
   const [loadingUserName, setLoadingUserName] = useState(false);
+  const { key } = useAuthStore();
 
   const userCreateMutation = trpc.user.create.useMutation({
     onSuccess: async (data: any) => {
       try {
-        const itemStr = localStorage.getItem('x-sig-solana');
-        if (itemStr) {
-          const { signature, wallet } = JSON.parse(itemStr);
-          console.log('signature inside login account - ', signature, wallet);
+        if (key.sig && key.wallet === publicKey?.toBase58()) {
           const signInResponse = await signIn('credentials', {
-            signature: signature,
+            signature: key.sig,
             redirect: false,
             wallet: publicKey?.toBase58(),
           });
@@ -95,7 +94,7 @@ const CreateProfile = () => {
           SuccessToast({ toast, message: 'Profile Created Successfully' });
           setSigningTransaction(false);
         } else {
-          throw new Error('Signature not found');
+          throw new Error('No signature found');
         }
       } catch (error: any) {
         FailureToast({ toast, message: error.message || 'Failed to Sign in' });

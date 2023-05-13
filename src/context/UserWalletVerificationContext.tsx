@@ -40,7 +40,7 @@ export const UserWalletVerificationProvider: React.FC<
   UserWalletVerificationProviderProps
 > = ({ children }) => {
   const { publicKey, signMessage } = useWallet();
-  const { authenticated, setAuthenticated } = useAuthStore();
+  const { authenticated, setAuthenticated, key } = useAuthStore();
   const { status } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [signatureData, setSignatureData] = useState<SignatureData | undefined>(
@@ -48,27 +48,21 @@ export const UserWalletVerificationProvider: React.FC<
   );
 
   const getSignature = (publicKey: PublicKey): SignatureData | undefined => {
-    const itemStr = localStorage.getItem('x-sig-solana');
-    console.log('2 - get items from local storage');
-    if (!itemStr) {
+    if (key.sig === '') {
       return undefined;
     }
-    const { signature, wallet, expiryDate } = JSON.parse(itemStr);
-    const now = new Date().getTime();
-    if (publicKey) {
-      if (now > expiryDate || publicKey?.toBase58() !== wallet) {
-        localStorage.removeItem('x-sig-solana');
-        return undefined;
-      }
-    }
-    return { signature: signature, wallet: wallet };
+
+    return { signature: key.sig, wallet: new PublicKey(key.wallet) };
   };
 
   useEffect(() => {
     console.log('1 - check if unauthenticated or loading');
     if (status !== 'authenticated' && router.pathname !== 'create-profile') {
       const signature = getSignature(publicKey as PublicKey);
-      if (signature?.signature) {
+      if (
+        signature?.signature &&
+        signature.wallet.toBase58() === publicKey?.toBase58()
+      ) {
         setSignatureData(signature);
         return; // todo yhan tak code same ha
       } else {

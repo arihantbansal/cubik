@@ -34,7 +34,6 @@ const UserNavMenu = () => {
         });
         // refresh the page to clear the cache
         localStorage.removeItem('walletName');
-        localStorage.removeItem('x-sig-solana');
       })
       .catch((e: any) => {
         throw new Error(e.message || 'Error while signing out');

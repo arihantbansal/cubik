@@ -30,7 +30,7 @@ import { WalletAddress } from '../common/wallet/WalletAdd';
 const WalletVerifyModal = () => {
   const toast = useToast();
   const router = useRouter();
-  const { setAuthenticated } = useAuthStore();
+  const { setAuthenticated, setKey } = useAuthStore();
   const [verifying, setVerifying] = useState(false);
   const { publicKey, disconnect, signMessage } = useWallet();
   const { isOpen, onClose, status } = useUserWalletVerification();
@@ -58,18 +58,11 @@ const WalletVerifyModal = () => {
           wallet: publicKey.toBase58(),
           signature: anchor.utils.bytes.bs58.encode(sig),
         });
-        console.log('sign In- ');
-        const expiryDate = new Date().getTime() + 3 * 24 * 60 * 60 * 1000; // 3 days in milliseconds
-        console.log('Date- ');
-        localStorage.setItem(
-          'x-sig-solana',
-          JSON.stringify({
-            signature: anchor.utils.bytes.bs58.encode(sig),
-            wallet: publicKey.toBase58(),
-            expiryDate,
-          })
-        );
-        console.log('local- ');
+
+        setKey({
+          sig: anchor.utils.bytes.bs58.encode(sig),
+          wallet: publicKey.toBase58(),
+        });
         //
         if (signInResponse?.status === 401) {
           console.log('401');
