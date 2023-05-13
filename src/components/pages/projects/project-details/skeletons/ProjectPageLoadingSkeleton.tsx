@@ -83,7 +83,7 @@ const ProjectCreatorSkeleton = () => {
   return (
     <VStack gap="16px" align={'start'} w="full">
       <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
-        Projects Owners
+        Project Creators
       </Box>
       <HStack
         border="1px solid"

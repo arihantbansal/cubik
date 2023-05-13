@@ -68,7 +68,7 @@ export const ProjectFundingData = () => {
         <HStack w="full" align={'start'}>
           <VStack align={'start'} gap="8px">
             <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
-              $10.00
+              $690.00
             </Box>{' '}
             <Box as="p" textStyle={'body4'} color={'neutral.8'}>
               Estimated Funds Raised
@@ -164,10 +164,10 @@ export const ProjectFundingData = () => {
         <HStack w="full" align={'start'}>
           <VStack align={'start'} gap="8px">
             <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
-              $10.00
+              120
             </Box>{' '}
             <Box as="p" textStyle={'body4'} color={'neutral.8'}>
-              Estimated Funds Raised
+              Contributors
             </Box>
           </VStack>
           <Center
@@ -290,26 +290,7 @@ export const ProjectCreatorTeamMember = ({
 }: ProjectCreatorTeamMemberProps) => {
   const router = useRouter();
   return (
-    <Card
-      gap="16px"
-      p={{ base: '12px 16px', md: '16px' }}
-      w="full"
-      align={'center'}
-      direction={'row'}
-      justifyContent={'space-between'}
-      onClick={() => {
-        router.push({
-          pathname: '/[username]',
-          query: {
-            username: teamMember.user.username,
-          },
-        });
-      }}
-      _hover={{
-        cursor: 'pointer',
-        bg: '#1A1A1A',
-      }}
-    >
+    <HStack w="full" justify="space-between" px="16px">
       <HStack gap="0.6rem">
         <Avatar
           borderRadius={'8px'}
@@ -325,7 +306,7 @@ export const ProjectCreatorTeamMember = ({
           walletAddress: teamMember.user.mainWallet,
         })}
       </Box>
-    </Card>
+    </HStack>
   );
 };
 
@@ -337,7 +318,7 @@ export const ProjectOwner = ({
   return (
     <VStack gap="16px" align={'start'} w="full">
       <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
-        Projects Owners
+        Project Creators
       </Box>
       {projectDetails.Team.map(
         (teamMember: ProjectCreatorTeamType, key: Key) => (

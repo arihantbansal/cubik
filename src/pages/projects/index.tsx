@@ -12,7 +12,7 @@ const Projects = (_props: projectsPropsType) => {
   return (
     <main>
       <Container
-        px={{ base: '1.5rem', sm: '2rem', md: '2rem', xl: '0px' }}
+        px={{ base: '0.8rem', sm: '1rem', md: '2rem', xl: '0px' }}
         maxW="7xl"
         py={{ base: '24px', md: '44px' }}
       >

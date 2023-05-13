@@ -82,7 +82,7 @@ const ProjectCard = ({ project }: PropsType) => {
       cursor="pointer"
       w="100%"
       maxW={{
-        base: '85vw',
+        base: '92vw',
         sm: '87vw',
         md: '44vw',
         lg: '29.5vw',

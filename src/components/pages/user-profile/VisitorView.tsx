@@ -6,14 +6,15 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react';
+import { ProjectVerifyStatus } from '@prisma/client';
 import { FC, memo } from 'react';
 import { UserWithProjectType } from '~/types/user';
+import Contributions from './contributions-tab/Contributions';
 import UserDetails from './details-tab/UserDetails';
 import { VisitorProjectEmptyState } from './empty-states/ProjectEmptyState';
 import ProfileHeader from './ProfileHeader';
 import ProjectVisitorCard from './projects-tab/ProjectVisitorCard';
 import { VisitorViewSkeleton } from './skeletons/ProfileViewSkeletons';
-import { ProjectVerifyStatus } from '@prisma/client';
 
 type visitorViewType = {
   user: UserWithProjectType;
@@ -55,7 +56,9 @@ const VisitorView: FC<visitorViewType> = ({
               )}
             </Flex>
           </TabPanel>
-          <TabPanel></TabPanel>
+          <TabPanel>
+            <Contributions />
+          </TabPanel>
         </TabPanels>
       </Tabs>
     </Flex>
