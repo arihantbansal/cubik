@@ -96,8 +96,8 @@ export const ProjectDonationSimulator = ({
   const anchorWallet = useAnchorWallet();
 
   async function onSubmit(_values: any) {
-    console.log('values - ', _values);
-    let donation = Number(getValues('amount')); // get value of 'amount' field
+    console.log(_values);
+
     let sig: string | null = null;
     if (String(_values.token.value).toLocaleLowerCase() === 'sol') {
       sig = await donateSOL(
@@ -106,7 +106,7 @@ export const ProjectDonationSimulator = ({
         projectDetails?.owner_publickey,
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
-        donation,
+        _values.amount, //  token value direct because form is not taking near 0 values
         _values.amount // usd value
       );
     } else {
@@ -117,12 +117,12 @@ export const ProjectDonationSimulator = ({
         projectDetails?.owner_publickey,
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
-        donation,
+        _values.amount, // token value direct because form is not taking near 0 values
         _values.amount // usd value
       );
     }
     console.log('donation number - ', donation);
-    if (!sig) return; /// tx is stuck in pending
+    if (!sig) return;
     createContributionMutation.mutate({
       projectId: projectDetails.id,
       roundId: projectDetails?.ProjectJoinRound.find(
@@ -130,7 +130,7 @@ export const ProjectDonationSimulator = ({
       )?.fundingRound.id as string,
       split: _values.matchingPoolDonation,
       token: _values.token.value,
-      totalAmount: Number(donation),
+      totalAmount: _values.amount,
       usd: _values.amount,
       tx: sig as string,
       userId: data?.user?.id as string,
@@ -202,6 +202,8 @@ export const ProjectDonationSimulator = ({
 
       return txid;
     } catch (error: any) {
+      console.log();
+
       setTxnError(error.message || 'There was some error');
       return null;
     }

@@ -100,7 +100,7 @@ export const AmountInput = ({
           )}
         /> */}
         <Input
-          {...register('amount', { required: true })}
+          {...register('amount', { required: true, valueAsNumber: true })}
           type="number"
           step="any"
           color="white"
