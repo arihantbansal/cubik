@@ -14,9 +14,41 @@ import {
   Tr,
   VStack,
 } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { BiChevronRight } from 'react-icons/bi';
-import { BONK, SOL, USDC } from '~/components/common/tokens/token';
+import Pagination from '~/components/common/pagination/Pagination';
+import { SOL, USDC } from '~/components/common/tokens/token';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
+import { timeSince } from '~/utils/gettimeSince';
+import { trpc } from '~/utils/trpc';
+
+type Contributor = {
+  id: string;
+  avatar: string;
+  username: string;
+  walletAddress: string;
+  amount: number;
+  currentusdTotal: number;
+  timestamp: string;
+  token: string;
+};
+
+type ContributorRowProps = {
+  contributor: Contributor;
+};
+
+const formatContributorData = (data: any[]): Contributor[] => {
+  return data.map((contributor) => ({
+    id: contributor.id,
+    avatar: contributor.user.profilePicture,
+    username: contributor.user.username,
+    walletAddress: contributor.user.mainWallet,
+    amount: contributor.currentTotal,
+    currentusdTotal: contributor.currentusdTotal,
+    timestamp: contributor.createdAt,
+    token: contributor.token,
+  }));
+};
 
 const TableLoading = () => {
   return (
@@ -52,7 +84,111 @@ const TableLoading = () => {
     </Tbody>
   );
 };
-const ProjectContributors = ({ isLoading }: { isLoading?: boolean }) => {
+
+const ContributorRow: React.FC<ContributorRowProps> = ({ contributor }) => (
+  <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
+    <Td px="12px">
+      <HStack align={'start'} gap={{ base: '8px', md: '16px' }}>
+        <Avatar
+          width={{ base: '36px', md: '44px' }}
+          height={{ base: '36px', md: '44px' }}
+          src={contributor.avatar}
+        />
+        <VStack
+          align={'start'}
+          justify="center"
+          spacing={{ base: '8px', md: '8px' }}
+        >
+          <Box
+            as="p"
+            textStyle={{ base: 'title6', md: 'title4' }}
+            color="neutral.11"
+          >
+            @{contributor.username}
+          </Box>
+          <Box
+            as="p"
+            textStyle={{ base: 'body6', md: 'body5' }}
+            color="neutral.7"
+          >
+            {TruncatedAddr({
+              walletAddress: contributor.walletAddress,
+            })}
+          </Box>
+        </VStack>
+      </HStack>
+    </Td>
+    <Td px="12px">
+      <HStack gap="8px" align={'center'}>
+        <Center>
+          {contributor.token === 'sol' ? <SOL size={28} /> : <USDC size={28} />}
+        </Center>
+        <VStack justify={'center'} spacing="2px" align={'start'}>
+          <HStack align={'baseline'} color="white">
+            <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
+              {contributor.amount}
+            </Box>
+            <Box as="p" textStyle={{ base: 'title6', md: 'title7' }}>
+              {contributor.token.toUpperCase()}
+            </Box>
+          </HStack>
+          <Box
+            as="p"
+            color="neutral.8"
+            textStyle={{ base: 'body6', md: 'body5' }}
+          >
+            {contributor.currentusdTotal}$
+          </Box>
+        </VStack>
+      </HStack>
+    </Td>
+    <Td px="12px">
+      <Box as="p" textStyle={{ base: 'body5', md: 'body4' }} color="neutral.11">
+        {timeSince(new Date(contributor.timestamp))}
+      </Box>
+    </Td>
+    <Td px="12px">
+      <BiChevronRight size="24" />
+    </Td>
+  </Tr>
+);
+
+const ProjectContributors = ({
+  projectId,
+  isLoading,
+}: {
+  projectId: string;
+  isLoading?: boolean;
+}) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const {
+    data: contributorsData,
+    isLoading: loadingContributors,
+    isError,
+    error,
+  } = trpc.contribution.getProjectContributors.useQuery({ projectId });
+
+  // Assuming 10 contributors per page
+  const pageSize = 5;
+  const siblingCount = 1; // Change this according to your needs
+
+  const totalContributors = contributorsData ? contributorsData.length : 0;
+  const totalPages = Math.ceil(totalContributors / pageSize);
+
+  useEffect(() => {
+    if (currentPage < 1) setCurrentPage(1);
+    if (currentPage > totalPages) setCurrentPage(totalPages);
+  }, [currentPage, totalPages]);
+
+  // Calculate the contributors for the current page
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+
+  const currentContributors = contributorsData
+    ? formatContributorData(contributorsData).slice(startIndex, endIndex)
+    : [];
+
   return (
     <TableContainer w="full">
       <Table variant="unstyled">
@@ -91,293 +227,23 @@ const ProjectContributors = ({ isLoading }: { isLoading?: boolean }) => {
             <Th px="12px"></Th>
           </Tr>
         </Thead>
-        {isLoading ? (
+        {isLoading || loadingContributors ? (
           <TableLoading />
         ) : (
           <Tbody>
-            <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
-              <Td px="12px">
-                <HStack align={'start'} gap={{ base: '8px', md: '16px' }}>
-                  <Avatar
-                    width={{ base: '36px', md: '44px' }}
-                    height={{ base: '36px', md: '44px' }}
-                    src="https://www.thismorningonchain.com/content/images/2022/01/solana-opensea-degenerate-ape.png"
-                  />
-                  <VStack
-                    align={'start'}
-                    justify="center"
-                    spacing={{ base: '8px', md: '8px' }}
-                  >
-                    <Box
-                      as="p"
-                      textStyle={{ base: 'title6', md: 'title4' }}
-                      color="neutral.11"
-                    >
-                      @monkeman
-                    </Box>
-                    <Box
-                      as="p"
-                      textStyle={{ base: 'body6', md: 'body5' }}
-                      color="neutral.7"
-                    >
-                      {TruncatedAddr({
-                        walletAddress:
-                          'CgAK5s4aqQNWqxE3MKvzGLJ6fj7nm83uWDDMuiZQ85ik',
-                      })}
-                    </Box>
-                  </VStack>
-                </HStack>
-              </Td>
-              <Td px="12px">
-                <HStack gap="8px" align={'center'}>
-                  <Center>
-                    <BONK size={28} />
-                  </Center>
-                  <VStack justify={'center'} spacing="2px" align={'start'}>
-                    <HStack align={'baseline'} color="white">
-                      <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
-                        222K
-                      </Box>
-                      <Box as="p" textStyle={{ base: 'title6', md: 'title7' }}>
-                        BONK
-                      </Box>
-                    </HStack>
-                    <Box
-                      as="p"
-                      color="neutral.8"
-                      textStyle={{ base: 'body6', md: 'body5' }}
-                    >
-                      2.06$
-                    </Box>
-                  </VStack>
-                </HStack>
-              </Td>
-              <Td px="12px">
-                <Box
-                  as="p"
-                  textStyle={{ base: 'body5', md: 'body4' }}
-                  color="neutral.11"
-                >
-                  8 hrs ago
-                </Box>
-              </Td>
-              <Td px="12px">
-                <BiChevronRight size="24" />
-              </Td>
-            </Tr>
-            <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
-              <Td px="12px">
-                <HStack align={'start'} gap={{ base: '8px', md: '16px' }}>
-                  <Avatar
-                    width={{ base: '36px', md: '44px' }}
-                    height={{ base: '36px', md: '44px' }}
-                    src="https://global-uploads.webflow.com/6241bcd9e666c1514401461d/6381252415e37a8c091e8eda_claynosaurz%20upcomingnftdrop%20nftmintradar.png"
-                  />
-                  <VStack
-                    align={'start'}
-                    justify="center"
-                    spacing={{ base: '8px', md: '8px' }}
-                  >
-                    <Box
-                      as="p"
-                      textStyle={{ base: 'title6', md: 'title4' }}
-                      color="neutral.11"
-                    >
-                      @claynosaurz
-                    </Box>
-                    <Box
-                      as="p"
-                      textStyle={{ base: 'body6', md: 'body5' }}
-                      color="neutral.7"
-                    >
-                      {TruncatedAddr({
-                        walletAddress:
-                          'CgAK5s4aqQNWqxE3MKvzGLJ6fj7nm83uWDDMuiZQ85ik',
-                      })}
-                    </Box>
-                  </VStack>
-                </HStack>
-              </Td>
-              <Td px="12px">
-                <HStack gap="8px" align={'center'}>
-                  <Center>
-                    <USDC size={28} />
-                  </Center>
-                  <VStack justify={'center'} spacing="2px" align={'start'}>
-                    <HStack align={'baseline'} color="white">
-                      <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
-                        1.0
-                      </Box>
-                      <Box as="p" textStyle={{ base: 'title6', md: 'title7' }}>
-                        USDC
-                      </Box>
-                    </HStack>
-                    <Box
-                      as="p"
-                      color="neutral.8"
-                      textStyle={{ base: 'body6', md: 'body5' }}
-                    >
-                      1.0$
-                    </Box>
-                  </VStack>
-                </HStack>
-              </Td>
-              <Td px="12px">
-                <Box
-                  as="p"
-                  textStyle={{ base: 'body5', md: 'body4' }}
-                  color="neutral.11"
-                >
-                  2 Days ago
-                </Box>
-              </Td>
-              <Td px="12px">
-                <BiChevronRight size="24" />
-              </Td>
-            </Tr>
-            <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
-              <Td px="12px">
-                <HStack align={'start'} gap={{ base: '8px', md: '16px' }}>
-                  <Avatar
-                    width={{ base: '36px', md: '44px' }}
-                    height={{ base: '36px', md: '44px' }}
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG4bEk_34lB67MpG_1YVEbXxOgfqGG3heKXX8JOtoFJV-0U5Ypkxg_Dp4wvNpftZsdIMw&usqp=CAU"
-                  />
-                  <VStack
-                    align={'start'}
-                    justify="center"
-                    spacing={{ base: '8px', md: '8px' }}
-                  >
-                    <Box
-                      as="p"
-                      textStyle={{ base: 'title6', md: 'title4' }}
-                      color="neutral.11"
-                    >
-                      @fff01
-                    </Box>
-                    <Box
-                      as="p"
-                      textStyle={{ base: 'body6', md: 'body5' }}
-                      color="neutral.7"
-                    >
-                      {TruncatedAddr({
-                        walletAddress:
-                          '0kuj5s4aqQNWqxE3MKvzGLJ6fj7nm83uWDDMuiZQ8w45h',
-                      })}
-                    </Box>
-                  </VStack>
-                </HStack>
-              </Td>
-              <Td px="12px">
-                <HStack gap="8px" align={'center'}>
-                  <Center>
-                    <BONK size={28} />
-                  </Center>
-                  <VStack justify={'center'} spacing="2px" align={'start'}>
-                    <HStack align={'baseline'} color="white">
-                      <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
-                        2.0M
-                      </Box>
-                      <Box as="p" textStyle={{ base: 'title6', md: 'title7' }}>
-                        BONK
-                      </Box>
-                    </HStack>
-                    <Box
-                      as="p"
-                      color="neutral.8"
-                      textStyle={{ base: 'body6', md: 'body5' }}
-                    >
-                      500.06$
-                    </Box>
-                  </VStack>
-                </HStack>
-              </Td>
-              <Td px="12px">
-                <Box
-                  as="p"
-                  textStyle={{ base: 'body5', md: 'body4' }}
-                  color="neutral.11"
-                >
-                  7 Days ago
-                </Box>
-              </Td>
-              <Td px="12px">
-                <BiChevronRight size="24" />
-              </Td>
-            </Tr>
-            <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
-              <Td px="12px">
-                <HStack align={'start'} gap={{ base: '8px', md: '16px' }}>
-                  <Avatar
-                    width={{ base: '36px', md: '44px' }}
-                    height={{ base: '36px', md: '44px' }}
-                    src="https://blog.mexc.com/wp-content/uploads/2022/09/DeGods.png"
-                  />
-                  <VStack
-                    align={'start'}
-                    justify="center"
-                    spacing={{ base: '8px', md: '8px' }}
-                  >
-                    <Box
-                      as="p"
-                      textStyle={{ base: 'title6', md: 'title4' }}
-                      color="neutral.11"
-                    >
-                      @frankdegods
-                    </Box>
-                    <Box
-                      as="p"
-                      textStyle={{ base: 'body6', md: 'body5' }}
-                      color="neutral.7"
-                    >
-                      {TruncatedAddr({
-                        walletAddress:
-                          '7i9hkt4aqQNWqxE3MKvzGLJ6fj7nm83uWDDMuiZQ83ebgy',
-                      })}
-                    </Box>
-                  </VStack>
-                </HStack>
-              </Td>
-              <Td px="12px">
-                <HStack gap="8px" align={'center'}>
-                  <Center>
-                    <SOL size={28} />
-                  </Center>
-                  <VStack justify={'center'} spacing="2px" align={'start'}>
-                    <HStack align={'baseline'} color="white">
-                      <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
-                        1.5
-                      </Box>
-                      <Box as="p" textStyle={{ base: 'title6', md: 'title7' }}>
-                        SOL
-                      </Box>
-                    </HStack>
-                    <Box
-                      as="p"
-                      color="neutral.8"
-                      textStyle={{ base: 'body6', md: 'body5' }}
-                    >
-                      33.33$
-                    </Box>
-                  </VStack>
-                </HStack>
-              </Td>
-              <Td px="12px">
-                <Box
-                  as="p"
-                  textStyle={{ base: 'body5', md: 'body4' }}
-                  color="neutral.11"
-                >
-                  10 Days ago
-                </Box>
-              </Td>
-              <Td px="12px">
-                <BiChevronRight size="24" />
-              </Td>
-            </Tr>
+            {currentContributors.map((contributor: Contributor) => (
+              <ContributorRow key={contributor.id} contributor={contributor} />
+            ))}
           </Tbody>
         )}
       </Table>
+      <Pagination
+        currentPage={currentPage}
+        totalCount={totalContributors}
+        siblingCount={siblingCount}
+        pageSize={pageSize}
+        onPageChange={setCurrentPage}
+      />
     </TableContainer>
   );
 };

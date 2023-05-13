@@ -1,0 +1,95 @@
+{
+    "id": "21110b12-b0e6-4df6-b379-22d79d207b73",
+    "name": "Demo App",
+    "short_description": "This is. a demo app",
+    "logo": "https://res.cloudinary.com/demonicirfan/image/upload/v1683452246/ml4zazxqk04vesiuwbx2.png",
+    "owner_publickey": "8Fy7yHo7Sn7anUtG7VANLEDxCWbLjku1oBVa4VouEVVP",
+    "sig": "3hPSmyVJbN8CtmUUfK54SKGwqCy13bFBn7d3rcAsajXHjv6Ne4BEiX2CJZ7w2wigkySHrreCeC5pvSV9GvCeGTAN",
+    "long_description": "<h1 levels=\"1,2\"><strong>Blockchain App: Dummy Description</strong></h1><h2 levels=\"1,2\"><strong>Introduction</strong></h2><p>This blockchain app is designed to provide a secure and decentralized platform for transactions and data storage. It utilizes blockchain technology, which allows for the creation of a distributed ledger that is both tamper-proof and transparent.</p><h2 levels=\"1,2\"><strong>Features</strong></h2><h3 levels=\"1,2\"><strong>Decentralized Network</strong></h3><p>The app utilizes a decentralized network, which means that there is no central authority controlling the transactions and data storage. This allows for a more secure and transparent system, as there is no single point of failure.</p><h3 levels=\"1,2\"><strong>Smart Contracts</strong></h3><p>The app utilizes smart contracts, which are self-executing contracts with the terms of the agreement between buyer and seller being directly written into lines of code. This allows for automated and secure execution of transactions, with no need for intermediaries.</p><h3 levels=\"1,2\"><strong>Data Encryption</strong></h3><p>All data stored on the blockchain is encrypted, ensuring that it cannot be accessed by unauthorized parties. This adds an extra layer of security to the system, making it highly resistant to hacking and data breaches.</p><h3 levels=\"1,2\"><strong>User Authentication</strong></h3><p>To ensure that only authorized users can access the app, user authentication is required. This is done through a secure and multi-factor authentication process, which includes password protection, biometric verification, and two-factor authentication.</p><h3 levels=\"1,2\"><strong>Cryptocurrency Integration</strong></h3><p>The app supports the use of cryptocurrency as a means of payment. This allows for fast and secure transactions, with no need for banks or other financial intermediaries.</p><h2 levels=\"1,2\"><strong>Benefits</strong></h2><h3 levels=\"1,2\"><strong>Increased Security</strong></h3><p>The use of blockchain technology and data encryption ensures that all transactions and data stored on the blockchain are highly secure and tamper-proof.</p><h3 levels=\"1,2\"><strong>Decentralization</strong></h3><p>The decentralized nature of the network ensures that there is no central point of failure, making it more resilient to attacks and failures.</p><h3 levels=\"1,2\"><strong>Transparency</strong></h3><p>The transparent nature of the blockchain allows for all transactions to be easily audited and verified, ensuring that there is no fraud or corruption.</p><h3 levels=\"1,2\"><strong>Efficiency</strong></h3><p>The use of smart contracts and cryptocurrency allows for fast and efficient transactions, with no need for intermediaries.</p><h2 levels=\"1,2\"><strong>Conclusion</strong></h2><p>This blockchain app provides a secure and decentralized platform for transactions and data storage, utilizing the latest blockchain technology to ensure the highest level of security and efficiency.</p>",
+    "industry": "[{\"label\":\"dApp\",\"value\":\"dapp\",\"colorScheme\":\"cyan\"},{\"label\":\"Infrastructure\",\"value\":\"infrastructure\",\"colorScheme\":\"cyan\"},{\"label\":\"Social\",\"value\":\"social\",\"colorScheme\":\"blue\"}]",
+    "project_link": "https://dummyproject.com",
+    "twitter_handle": "twitter.com/candypay",
+    "github_link": "https://gihub.com",
+    "discord_link": "https://dummyproject.com",
+    "telegram_link": "https://discord.com/invite/tCswbSK5W2",
+    "projectUserCount": 1,
+    "status": "VERIFIED",
+    "failedReason": "",
+    "mutliSigAddress": "2rtZjojBS4kcJzAxfRwuHB5F5yw2gZNEg3bYVM41aDNY",
+    "createdAt": "2023-05-07T09:37:35.395Z",
+    "updatedAt": "2023-05-07T15:01:44.950Z",
+    "owner": {
+        "id": "26cd6694-1e31-4266-baec-49ce94fce358",
+        "username": "irffan",
+        "mainWallet": "8Fy7yHo7Sn7anUtG7VANLEDxCWbLjku1oBVa4VouEVVP",
+        "profilePicture": "https://shdw-drive.genesysgo.net/52zh6ZjiUQ5UKCwLBwob2k1BC3KF2qhvsE7V4e8g2pmD/Tarsier%20Viking.png",
+        "tx": "5xBfhdJjtgWKvqVwSMDU6MpqCLyWHDsT6vSKcUedvZ3THgarAwUJEuhkQD3nNB2LAoVEdHxMRfPoXQcF3jgeX4p",
+        "createdAt": "2023-05-07T09:33:54.198Z",
+        "updatedAt": "2023-05-07T09:33:54.198Z"
+    },
+    "Team": [
+        {
+            "id": "54dda11f-51fe-4996-8c90-82ab242659fb",
+            "userId": "5d858d2f-48e0-4adc-8089-eb135b86d677",
+            "projectsModelId": "21110b12-b0e6-4df6-b379-22d79d207b73",
+            "createdAt": "2023-05-07T09:37:36.901Z",
+            "updatedAt": "2023-05-07T09:37:36.901Z",
+            "user": {
+                "id": "5d858d2f-48e0-4adc-8089-eb135b86d677",
+                "username": "dhruv",
+                "mainWallet": "CnjvpG3M5uC7y3nwsVj6qik9nSbXqAoMZRQhRoy9CcfP",
+                "profilePicture": "https://source.boringavatars.com/marble/120/CnjvpG3M5uC7y3nwsVj6qik9nSbXqAoMZRQhRoy9CcfP?square&?colors=05299E,5E4AE3,947BD3,F0A7A0,F26CA7,FFFFFF,CAF0F8,CCA43B",
+                "tx": "PktN57RvazMeMKaipYy7RdQeVNeQJ5Eio4EgM43kJz8yEoQzdwM8WdngTMmbMBvSUwq9Avpbs41ZGMuhvyVRqGc",
+                "createdAt": "2023-05-07T07:25:03.115Z",
+                "updatedAt": "2023-05-07T07:25:03.115Z"
+            }
+        },
+        {
+            "id": "cb963de3-3a55-45f1-ab3e-1271ef5fca8b",
+            "userId": "26cd6694-1e31-4266-baec-49ce94fce358",
+            "projectsModelId": "21110b12-b0e6-4df6-b379-22d79d207b73",
+            "createdAt": "2023-05-07T09:37:36.901Z",
+            "updatedAt": "2023-05-07T09:37:36.901Z",
+            "user": {
+                "id": "26cd6694-1e31-4266-baec-49ce94fce358",
+                "username": "irffan",
+                "mainWallet": "8Fy7yHo7Sn7anUtG7VANLEDxCWbLjku1oBVa4VouEVVP",
+                "profilePicture": "https://shdw-drive.genesysgo.net/52zh6ZjiUQ5UKCwLBwob2k1BC3KF2qhvsE7V4e8g2pmD/Tarsier%20Viking.png",
+                "tx": "5xBfhdJjtgWKvqVwSMDU6MpqCLyWHDsT6vSKcUedvZ3THgarAwUJEuhkQD3nNB2LAoVEdHxMRfPoXQcF3jgeX4p",
+                "createdAt": "2023-05-07T09:33:54.198Z",
+                "updatedAt": "2023-05-07T09:33:54.198Z"
+            }
+        }
+    ],
+    "comments": [],
+    "ProjectJoinRound": [
+        {
+            "id": "214027d5-e914-4cd7-a71a-94576d36d499",
+            "projectId": "21110b12-b0e6-4df6-b379-22d79d207b73",
+            "tx": "2A2pEAVc7HtCyd3HRGTLxy4mFm1MbCgRP3R6anq4mqNxnw6VshpmT8aWPGWvVu2FBrkYy9eRsraMNkfqtDnrLPUp",
+            "roundId": "fdc96762-1237-40dd-aa42-7d4b174054ef",
+            "status": "APPROVED",
+            "createdAt": "2023-05-08T18:16:54.052Z",
+            "updatedAt": "2023-05-09T18:59:11.777Z",
+            "fundingRound": {
+                "id": "fdc96762-1237-40dd-aa42-7d4b174054ef",
+                "roundName": "Infra structure",
+                "matchedPool": 10000,
+                "communityContributions": 0,
+                "notionPage": "https://www.notion.so/round1",
+                "projectCount": 20,
+                "active": true,
+                "userId": "5d858d2f-48e0-4adc-8089-eb135b86d677",
+                "description": "",
+                "endtime": "2023-05-08T18:09:02.202Z",
+                "startTime": "2023-05-08T18:09:02.202Z",
+                "tx": "3aYhPai21ZsfWuaWLwMABGtYjvHhpyDcDX5LYsHT4qN6vcv12c4sLrWsVDTGLrQTXABpmv76jPH1dyn2NW2Edji6",
+                "createdAt": "2023-05-08T18:09:02.202Z",
+                "updatedAt": "2023-05-08T21:32:05.920Z",
+                "colorScheme": "yellow",
+                "short_description": "This grant supports innovative solutions that enhance and extend Solana's ecosystem, fostering a robust and efficient network",
+                "markdownDetails": ""
+            }
+        }
+    ]
+}

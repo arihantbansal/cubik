@@ -72,4 +72,77 @@ export const contributionRouter = router({
         return contributionRes;
       }
     }),
+
+  getProjectContributors: procedure
+    .input(
+      z.object({
+        projectId: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const contributions = await prisma.contribution.findMany({
+        where: {
+          projectId: input.projectId,
+        },
+        include: {
+          user: {
+            include: {
+              userDetailsModel: true,
+            },
+          },
+        },
+      });
+      return contributions;
+    }),
+
+  getUserContributions: procedure
+    .input(
+      z.object({
+        userId: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const contributions = await prisma.contribution.findMany({
+        where: {
+          userId: input.userId,
+        },
+        include: {
+          ProjectsModel: {
+            include: {
+              ProjectJoinRound: {
+                include: {
+                  fundingRound: true,
+                  project: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      return contributions;
+    }),
+
+  getRoundContributions: procedure
+    .input(
+      z.object({
+        roundId: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const contributions = await prisma.contribution.findMany({
+        where: {
+          roundId: input.roundId,
+        },
+        include: {
+          user: {
+            include: {
+              userDetailsModel: true,
+            },
+          },
+          ProjectsModel: true,
+          Round: true,
+        },
+      });
+      return contributions;
+    }),
 });

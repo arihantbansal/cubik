@@ -11,6 +11,7 @@ export const ProjectsTabs = ({
   projectDetails: ProjectWithCommentsAndRoundsType;
   isLoading: boolean;
 }) => {
+  console.log('project details - ', projectDetails);
   return (
     <Tabs variant={'cubik'} alignSelf={'start'} w="full">
       <TabList
@@ -31,7 +32,10 @@ export const ProjectsTabs = ({
           />
         </TabPanel>
         <TabPanel>
-          <ProjectContributors isLoading={isLoading} />
+          <ProjectContributors
+            projectId={projectDetails.id}
+            isLoading={isLoading}
+          />
         </TabPanel>
         <TabPanel>{isLoading ? <></> : <Discussions />}</TabPanel>
       </TabPanels>
