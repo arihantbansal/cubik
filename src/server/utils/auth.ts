@@ -72,10 +72,13 @@ export const authOptions = (req: NextApiRequest): NextAuthOptions => {
               new anchor.web3.PublicKey(user.wallet),
               availableTokens![0]
             );
+            console.log(final, '-- final');
 
             if (!final) {
               return null;
             }
+            console.log('final cross');
+
             const res = await prisma.userModel.findUnique({
               where: {
                 mainWallet: user.wallet,
@@ -84,7 +87,7 @@ export const authOptions = (req: NextApiRequest): NextAuthOptions => {
                 _count: true,
               },
             });
-
+            console.log('user', res);
             if (!res) {
               return null;
             }
