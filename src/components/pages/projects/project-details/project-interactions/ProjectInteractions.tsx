@@ -6,7 +6,6 @@ import {
   HStack,
   IconButton,
   Stack,
-  useMediaQuery,
   VStack,
   Wrap,
 } from '@chakra-ui/react';
@@ -26,6 +25,12 @@ import {
   ProjectCreatorTeamType,
   ProjectWithCommentsAndRoundsType,
 } from '~/types/IProjectDetails';
+import {
+  ProjectCreatorSkeleton,
+  ProjectFundingSkeleton,
+  ProjectSocialsSkeleton,
+  SimilarProjectsSkeleton,
+} from '../skeletons/ProjectPageLoadingSkeleton';
 import { ProjectCTAs } from './ProjectCTAs';
 
 type ProjectCreatorTeamMemberProps = {
@@ -391,21 +396,32 @@ export const ProjectCreatorAndLinks = ({
       justify={'space-between'}
       direction={'column'}
       justifyContent={'start'}
-      display={{ base: 'none', md: 'flex' }}
+      display={{ base: 'none', lg: 'flex' }}
     >
-      <ProjectSocials projectDetails={projectDetails} />
-      <ProjectFundingData />
-      <ProjectOwner projectDetails={projectDetails} />
-      <VStack
-        gap="16px"
-        align={'start'}
-        w={{ base: 'auto', sm: 'auto', md: 'full' }}
-      >
-        <Box as="p" textStyle={'title3'}>
-          Similar Projects
-        </Box>
-        <SimilarProject />
-      </VStack>
+      {isLoading ? (
+        <>
+          <ProjectSocialsSkeleton />
+          <ProjectFundingSkeleton />
+          <ProjectCreatorSkeleton />
+          <SimilarProjectsSkeleton />
+        </>
+      ) : (
+        <>
+          <ProjectSocials projectDetails={projectDetails} />
+          <ProjectFundingData />
+          <ProjectOwner projectDetails={projectDetails} />
+          <VStack
+            gap="16px"
+            align={'start'}
+            w={{ base: 'auto', sm: 'auto', lg: 'full' }}
+          >
+            <Box as="p" textStyle={'title3'} color="white">
+              Similar Projects
+            </Box>
+            <SimilarProject />
+          </VStack>
+        </>
+      )}
     </VStack>
   );
 };
@@ -419,14 +435,11 @@ export const ProjectInteractions = ({
   projectDetails,
   isLoading,
 }: ProjectInteractionsProps) => {
-  const [isSmallerThank768] = useMediaQuery('(min-width: 768px)');
-
   return (
     <Stack
       w="full"
       maxW="26rem"
       flex="1"
-      // position={{ base: 'relative', lg: 'fixed' }}
       gap="48px"
       flexDir="column"
       justifyContent="start"

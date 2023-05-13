@@ -16,38 +16,38 @@ import {
 } from '@chakra-ui/react';
 import ProjectsDetailedDescriptionSkeleton from './ProjectsDetailedDescriptionSkeleton';
 
-const ProjectSocialsSkeleton = () => {
+export const ProjectSocialsSkeleton = () => {
   return (
     <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
       <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
         Socials
       </Box>
-      <Wrap w="full">
+      <Wrap w="full" spacing={{ base: '8px', md: '16px' }}>
         <SkeletonCircle
-          width={{ base: '3rem', md: '3rem' }}
-          height={{ base: '3rem', md: '3rem' }}
+          width={{ base: '2.8rem', md: '2.8rem' }}
+          height={{ base: '2.8rem', md: '2.8rem' }}
           opacity="0.4"
         />
         <SkeletonCircle
-          width={{ base: '3rem', md: '3rem' }}
-          height={{ base: '3rem', md: '3rem' }}
+          width={{ base: '2.8rem', md: '2.8rem' }}
+          height={{ base: '2.8rem', md: '2.8rem' }}
           opacity="0.4"
         />
         <SkeletonCircle
-          width={{ base: '3rem', md: '3rem' }}
-          height={{ base: '3rem', md: '3rem' }}
+          width={{ base: '2.8rem', md: '2.8rem' }}
+          height={{ base: '2.8rem', md: '2.8rem' }}
           opacity="0.4"
         />
         <SkeletonCircle
-          width={{ base: '3rem', md: '3rem' }}
-          height={{ base: '3rem', md: '3rem' }}
+          width={{ base: '2.8rem', md: '2.8rem' }}
+          height={{ base: '2.8rem', md: '2.8rem' }}
           opacity="0.4"
         />
       </Wrap>
     </VStack>
   );
 };
-const ProjectFundingSkeleton = () => {
+export const ProjectFundingSkeleton = () => {
   return (
     <VStack gap="16px" align={'start'} w="full">
       <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
@@ -76,10 +76,33 @@ const ProjectFundingSkeleton = () => {
           </VStack>
         </HStack>
       </VStack>
+      <VStack
+        border="1px solid"
+        borderColor={'#ffffff05'}
+        rounded="16px"
+        backgroundColor={'surface.green.0'}
+        w="full"
+        p="24px 32px"
+        overflow={'hidden'}
+        position={'relative'}
+      >
+        <HStack w="full" align={'start'}>
+          <VStack w="full" align={'start'} gap="8px">
+            <Skeleton w="8rem" height="1.8rem" opacity={'0.4'} />
+            <SkeletonText
+              spacing="3"
+              w={'full'}
+              noOfLines={2}
+              height="28px"
+              opacity={'0.4'}
+            />
+          </VStack>
+        </HStack>
+      </VStack>
     </VStack>
   );
 };
-const ProjectCreatorSkeleton = () => {
+export const ProjectCreatorSkeleton = () => {
   return (
     <VStack gap="16px" align={'start'} w="full">
       <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
@@ -113,7 +136,84 @@ const ProjectCreatorSkeleton = () => {
         </HStack>
         <SkeletonText
           spacing="3"
-          w={'3rem'}
+          w={'2.8rem'}
+          noOfLines={1}
+          height="28px"
+          opacity={'0.4'}
+        />
+      </HStack>
+    </VStack>
+  );
+};
+export const SimilarProjectsSkeleton = () => {
+  return (
+    <VStack gap="16px" align={'start'} w="full">
+      <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
+        Project Creators
+      </Box>
+      <HStack
+        border="1px solid"
+        borderColor={'#ffffff05'}
+        rounded="16px"
+        backgroundColor={'surface.green.0'}
+        w="full"
+        p={{ base: '12px 16px', md: '16px' }}
+        overflow={'hidden'}
+        position={'relative'}
+        gap="4rem"
+        align={'center'}
+      >
+        <HStack gap="0.6rem" w="full">
+          <SkeletonCircle
+            width={{ base: '1rem', md: '10' }}
+            height={{ base: '1rem', md: '8' }}
+            opacity="0.4"
+          />
+          <SkeletonText
+            spacing="3"
+            w={'full'}
+            noOfLines={2}
+            height="28px"
+            opacity={'0.4'}
+          />
+        </HStack>
+        <SkeletonText
+          spacing="3"
+          w={'2.8rem'}
+          noOfLines={1}
+          height="28px"
+          opacity={'0.4'}
+        />
+      </HStack>
+      <HStack
+        border="1px solid"
+        borderColor={'#ffffff05'}
+        rounded="16px"
+        backgroundColor={'surface.green.0'}
+        w="full"
+        p={{ base: '12px 16px', md: '16px' }}
+        overflow={'hidden'}
+        position={'relative'}
+        gap="4rem"
+        align={'center'}
+      >
+        <HStack gap="0.6rem" w="full">
+          <SkeletonCircle
+            width={{ base: '1rem', md: '10' }}
+            height={{ base: '1rem', md: '8' }}
+            opacity="0.4"
+          />
+          <SkeletonText
+            spacing="3"
+            w={'full'}
+            noOfLines={2}
+            height="28px"
+            opacity={'0.4'}
+          />
+        </HStack>
+        <SkeletonText
+          spacing="3"
+          w={'2.8rem'}
           noOfLines={1}
           height="28px"
           opacity={'0.4'}
@@ -128,7 +228,7 @@ export const MobileOnlyViewSkeleton = () => {
     <VStack
       w="full"
       gap={{ base: '24px', md: '64px' }}
-      display={{ base: 'flex', md: 'none' }}
+      display={{ base: 'flex', lg: 'none' }}
     >
       <HStack w="full" gap="8px">
         <Skeleton w="full" h="2.6rem" opacity="0.4" />
@@ -144,7 +244,7 @@ export const MobileOnlyViewSkeleton = () => {
 export const ProjectDetailSkeleton = () => {
   return (
     <Stack
-      direction={{ base: 'row', md: 'row' }}
+      direction={{ base: 'row', lg: 'row' }}
       gap={{ base: '16px', md: '24px' }}
       width={'100%'}
     >

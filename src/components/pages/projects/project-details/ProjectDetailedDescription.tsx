@@ -5,12 +5,15 @@ import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 
 import { Link, LinkProps } from '@chakra-ui/react';
+import ProjectsDetailedDescriptionSkeleton from './skeletons/ProjectsDetailedDescriptionSkeleton';
 
 export const ProjectsDetailedDescription = ({
+  isLoading,
   description,
   maxH,
   overflow,
 }: {
+  isLoading?: boolean;
   description: string;
   maxH?: string;
   overflow?: string;
@@ -99,7 +102,9 @@ export const ProjectsDetailedDescription = ({
     },
   };
 
-  return (
+  return isLoading ? (
+    <ProjectsDetailedDescriptionSkeleton />
+  ) : (
     <Stack alignSelf={'start'} w="full" direction={'column'} gap="0.5rem">
       <VStack
         maxH={maxH}

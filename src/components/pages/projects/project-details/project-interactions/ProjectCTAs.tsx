@@ -59,9 +59,15 @@ export const ProjectCTAs = ({
   };
   return (
     <>
-      <Modal variant={'cubik'} size="4xl" isOpen={isOpen} onClose={onClose}>
+      <Modal
+        closeOnOverlayClick={false}
+        variant={'cubik'}
+        size="4xl"
+        isOpen={isOpen}
+        onClose={onClose}
+      >
         <ModalOverlay />
-        <ModalContent paddingTop="0 !important">
+        <ModalContent width="fit-content" paddingTop="0 !important">
           <ModalHeader
             bg="black"
             h="full"
@@ -69,7 +75,7 @@ export const ProjectCTAs = ({
             pb="24px !important"
             roundedTop={'24px'}
           >
-            Donate
+            Donate to {projectDetails.name}
           </ModalHeader>
           <ModalCloseButton top="24px" />
           <ModalBody>
@@ -77,12 +83,12 @@ export const ProjectCTAs = ({
           </ModalBody>
         </ModalContent>
       </Modal>
-      <Box display={{ base: 'none', md: 'block' }}>
+      <Box display={{ base: 'none', lg: 'block' }}>
         <VStack
           ml="auto"
           right="20rem"
           w={'full'}
-          alignItems={{ base: 'center', md: 'start' }}
+          alignItems={{ base: 'center', lg: 'start' }}
         >
           <VStack gap="16px" align={'end'} spacing="0" w="full" pb="0.5rem">
             <Skeleton isLoaded={!isLoading} w="full">

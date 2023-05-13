@@ -1,10 +1,8 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
 import { ProjectWithCommentsAndRoundsType } from '~/types/IProjectDetails';
 import ProjectContributors from './project-interactions/project-tabs/ProjectContributors';
 import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
 import Discussions from './ProjectDiscussion';
-import ProjectsDetailedDescriptionSkeleton from './skeletons/ProjectsDetailedDescriptionSkeleton';
 
 export const ProjectsTabs = ({
   projectDetails,
@@ -15,25 +13,27 @@ export const ProjectsTabs = ({
 }) => {
   return (
     <Tabs variant={'cubik'} alignSelf={'start'} w="full">
-      <TabList gap={{ base: '0.5rem', md: '1rem' }}>
+      <TabList
+        overflowY={{ base: 'hidden', md: 'inherit' }}
+        overflowX={{ base: 'scroll', md: 'inherit' }}
+        gap={{ base: '24px', md: '32px' }}
+      >
         <Tab>Details</Tab>
-        <Tab>Discussion</Tab>
         <Tab>Contributors</Tab>
+        <Tab isDisabled>Discussion</Tab>
+        <Tab isDisabled>Updates</Tab>
       </TabList>
       <TabPanels p="0">
         <TabPanel>
-          {isLoading ? (
-            <ProjectsDetailedDescriptionSkeleton />
-          ) : (
-            <ProjectsDetailedDescription
-              description={projectDetails.long_description}
-            />
-          )}
+          <ProjectsDetailedDescription
+            isLoading={isLoading}
+            description={projectDetails.long_description}
+          />
         </TabPanel>
-        <TabPanel>{isLoading ? '' : <Discussions />}</TabPanel>
         <TabPanel>
-          <ProjectContributors />
+          <ProjectContributors isLoading={isLoading} />
         </TabPanel>
+        <TabPanel>{isLoading ? <></> : <Discussions />}</TabPanel>
       </TabPanels>
     </Tabs>
   );

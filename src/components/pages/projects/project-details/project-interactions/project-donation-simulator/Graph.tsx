@@ -20,7 +20,7 @@ const Graph: React.FC<GraphProps> = ({
   width,
   height,
   donationAmount,
-  setDonationAmount,
+  setValue,
   maximumDonationValue,
 }) => {
   const router = useRouter();
@@ -60,7 +60,7 @@ const Graph: React.FC<GraphProps> = ({
   const exponent = 2;
 
   const handleSliderChange = (value: number) => {
-    setDonationAmount(Math.round(Math.pow(value, exponent)));
+    //setValue(Math.round(Math.pow(value, exponent)));
   };
 
   return (
@@ -72,6 +72,7 @@ const Graph: React.FC<GraphProps> = ({
         width="100%"
       >
         <GraphLine
+          key={1}
           width={width}
           height={height}
           data={data}
@@ -80,6 +81,7 @@ const Graph: React.FC<GraphProps> = ({
           donationAmount={donationAmount}
         />
         <BonkLine
+          key={2}
           width={width}
           height={height}
           data={bonkData}

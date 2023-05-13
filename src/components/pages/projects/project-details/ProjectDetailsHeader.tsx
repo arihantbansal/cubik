@@ -1,6 +1,18 @@
-import { Avatar, Box, HStack, Stack, VStack } from '@chakra-ui/react';
+import {
+  Avatar,
+  Box,
+  Button,
+  HStack,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Stack,
+  VStack,
+} from '@chakra-ui/react';
 import { ProjectsModel } from '@prisma/client';
 import React from 'react';
+import { BiChevronDown } from 'react-icons/bi';
 import {
   FaDiscord,
   FaGithub,
@@ -9,7 +21,9 @@ import {
   FaYoutube,
 } from 'react-icons/fa';
 import { HiLink } from 'react-icons/hi';
+import { MdReportGmailerrorred } from 'react-icons/md';
 import CustomTag from '~/components/common/tags/CustomTag';
+import { ProjectDetailSkeleton } from './skeletons/ProjectPageLoadingSkeleton';
 
 export const ProjectLink = ({ urlName }: { urlName: string }) => {
   switch (urlName) {
@@ -31,11 +45,15 @@ export const ProjectLink = ({ urlName }: { urlName: string }) => {
 };
 
 const ProjectDetailsHeader = ({
+  isLoading,
   projectDetails,
 }: {
+  isLoading?: boolean;
   projectDetails: ProjectsModel;
 }) => {
-  return (
+  return isLoading ? (
+    <ProjectDetailSkeleton />
+  ) : (
     <Stack
       direction={{ base: 'row', md: 'row' }}
       gap={{ base: '8px', md: '24px' }}
@@ -53,24 +71,51 @@ const ProjectDetailsHeader = ({
         alignItems={'start'}
         justifyContent="center"
       >
-        <Stack gap="24px" direction={'row'}>
-          <Box
-            as="p"
-            minW="6rem"
-            textStyle={{ base: 'title1', md: 'headline3' }}
-            textTransform="capitalize"
-            color="neutral.11"
-            // prevent the name from going into second line
-            noOfLines={1}
-            overflow="hidden"
-            whiteSpace="nowrap"
-            textOverflow="ellipsis"
-          >
-            {projectDetails?.name}
-          </Box>
+        <Stack spacing={{ base: '12px', md: '24px' }} direction={'row'}>
+          <HStack align="center">
+            <Box
+              as="p"
+              minW="6rem"
+              textStyle={{ base: 'title1', md: 'headline3' }}
+              textTransform="capitalize"
+              color="neutral.11"
+              noOfLines={1}
+              overflow="hidden"
+              whiteSpace="nowrap"
+              textOverflow="ellipsis"
+            >
+              {projectDetails?.name}
+            </Box>
+            <Menu>
+              <MenuButton
+                w="4px !important"
+                display="flex"
+                marginInline={'0px'}
+                alignContent={'center'}
+                justifyContent={'center'}
+                m="0 !important"
+                as={Button}
+                variant="unstyled"
+                rightIcon={<BiChevronDown size={26} color="white" />}
+              ></MenuButton>
+              <MenuList p="0" outline="0" border="0">
+                <MenuItem
+                  p="8px 16px"
+                  color="surface.yellow.2"
+                  rounded="4px"
+                  icon={
+                    <MdReportGmailerrorred color="surface.yellow.2" size={22} />
+                  }
+                >
+                  Report
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </HStack>
           <HStack
             overflow={'hidden'}
             flexDirection={'row'}
+            align="center"
             spacing="0.4rem"
             pt="0.5rem"
             display={{ base: 'none', md: 'flex' }}
@@ -90,7 +135,6 @@ const ProjectDetailsHeader = ({
           as="p"
           textStyle={{ base: 'body4', md: 'body2' }}
           color="neutral.9"
-          // prevent the name from going into second line
           noOfLines={2}
           textOverflow="ellipsis"
         >

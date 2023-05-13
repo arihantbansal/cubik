@@ -32,7 +32,7 @@ export const tokens = [
     label: 'BONK',
     value: 'bonk',
     devNetAdd: '',
-    mainNetAdd: 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263',
+    mainNetAdd: 'BYgQgaAcgxmAHh7iAYeyV2V1RVTd9edvesrQbSiAYKET',
     icon: (
       <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0_916_11712)">

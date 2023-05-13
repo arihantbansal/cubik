@@ -1,4 +1,4 @@
-import { Center, Container, Spinner, Stack } from '@chakra-ui/react';
+import { Container, Stack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';
 import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-details/ProjectDetailsAndTabs';
@@ -29,8 +29,8 @@ const ProjectDetails = () => {
           <Stack
             maxW="7xl"
             mx="auto"
-            direction={{ base: 'column', md: 'row' }}
-            gap={{ base: '24px', md: '12px', lg: '80px', xl: '100px' }}
+            direction={{ base: 'column', lg: 'row' }}
+            gap={{ base: '24px', md: '12px', lg: '60px', xl: '100px' }}
             px={{ base: '1rem', sm: '2rem', md: '2rem', xl: '1rem' }}
             alignItems={'start'}
             justifyContent={'start'}

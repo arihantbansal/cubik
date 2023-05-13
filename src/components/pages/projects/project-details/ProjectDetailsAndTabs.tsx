@@ -23,10 +23,7 @@ import {
 } from './project-interactions/ProjectInteractions';
 import ProjectDetailsHeader from './ProjectDetailsHeader';
 import { ProjectsTabs } from './ProjectTabs';
-import {
-  MobileOnlyViewSkeleton,
-  ProjectDetailSkeleton,
-} from './skeletons/ProjectPageLoadingSkeleton';
+import { MobileOnlyViewSkeleton } from './skeletons/ProjectPageLoadingSkeleton';
 
 type MobileDrawerTypes = {
   logo: string;
@@ -77,11 +74,15 @@ const MobileDrawer = ({
 
 const MobileOnlyViews = ({
   projectDetails,
+  isLoading,
 }: {
+  isLoading?: boolean;
   projectDetails: ProjectWithCommentsAndRoundsType;
 }) => {
-  return (
-    <VStack gap="32px" w="full" display={{ base: 'flex', md: 'none' }}>
+  return isLoading ? (
+    <MobileOnlyViewSkeleton />
+  ) : (
+    <VStack gap="32px" w="full" display={{ base: 'flex', lg: 'none' }}>
       <HStack w="full">
         <Button w="full" fontSize={'16px'} variant="connect_wallet">
           Donate
@@ -112,6 +113,7 @@ export const ProjectDetailsAndTabs = ({
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
+  console.log('we are here');
 
   return (
     <Container
@@ -120,24 +122,16 @@ export const ProjectDetailsAndTabs = ({
       maxW="50rem"
       flex="3"
       flexDir="column"
-      alignItems={{ base: 'end', md: 'center' }}
+      alignItems={{ base: 'end', lg: 'center' }}
       justifyContent="start"
-      gap={{ base: '32px', md: '64px' }}
+      gap={{ base: '32px', lg: '64px' }}
       p="0"
     >
-      <>
-        {isLoading ? (
-          <>
-            <ProjectDetailSkeleton />
-            <MobileOnlyViewSkeleton />
-          </>
-        ) : (
-          <>
-            <ProjectDetailsHeader projectDetails={projectDetails} />
-            <MobileOnlyViews projectDetails={projectDetails} />
-          </>
-        )}
-      </>
+      <ProjectDetailsHeader
+        isLoading={isLoading}
+        projectDetails={projectDetails}
+      />
+      <MobileOnlyViews isLoading={isLoading} projectDetails={projectDetails} />
       {/* <MobileDrawer
         logo={projectDetails.logo}
         projectName={projectDetails.name}
@@ -146,7 +140,6 @@ export const ProjectDetailsAndTabs = ({
         onClose={onClose}
         btnRef={btnRef}
       />*/}
-
       <ProjectsTabs projectDetails={projectDetails} isLoading={isLoading} />
     </Container>
   );
