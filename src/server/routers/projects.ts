@@ -163,7 +163,7 @@ export const projectsRouter = router({
           status: 'VERIFIED',
           AND: {
             ProjectJoinRound: {
-              every: {
+              some: {
                 status: 'APPROVED',
               },
             },
