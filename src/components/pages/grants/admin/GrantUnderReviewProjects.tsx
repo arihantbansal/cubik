@@ -38,7 +38,8 @@ type ActionType = 'REJECTED' | 'ACCEPTED';
 
 interface CurrentAction {
   type: ActionType;
-  id: string;
+  roundId: string;
+  projectId: string;
   roundName: string;
   count: number;
   owner: string;
@@ -79,7 +80,8 @@ const GrantUnderReviewProjects = ({
 
   const handleRoundAction = async (
     action: ActionType,
-    id: string,
+    projectId: string,
+    roundId: string,
     roundName: string,
     count: number,
     owner: string
@@ -113,7 +115,8 @@ const GrantUnderReviewProjects = ({
 
       // We'll also update the round status according to the action
       roundUpdateMutation.mutate({
-        id: id,
+        projectId: projectId,
+        roundId: roundId,
         status: action,
       });
 
@@ -131,13 +134,15 @@ const GrantUnderReviewProjects = ({
 
   const markApproved = (
     roundName: string,
+    projectJoinRoundId: string,
     roundId: string,
     owner: string,
     count: number
   ) => {
     setCurrentAction({
       type: 'ACCEPTED',
-      id: roundId,
+      projectId: projectJoinRoundId,
+      roundId: roundId,
       roundName: roundName,
       count,
       owner,
@@ -147,13 +152,15 @@ const GrantUnderReviewProjects = ({
 
   const markRejected = (
     roundName: string,
+    projectJoinRoundId: string,
     roundId: string,
     owner: string,
     count: number
   ) => {
     setCurrentAction({
       type: 'REJECTED',
-      id: roundId,
+      projectId: projectJoinRoundId,
+      roundId: roundId,
       roundName: roundName,
       count,
       owner,
@@ -255,7 +262,8 @@ const GrantUnderReviewProjects = ({
                         onClick={() => {
                           markRejected(
                             roundData?.roundName as string,
-                            roundData?.id as string,
+                            projectJoinRound.id as string,
+                            roundData.id as string,
                             projectJoinRound.project.owner_publickey,
                             projectJoinRound.project.projectUserCount
                           );
@@ -282,8 +290,9 @@ const GrantUnderReviewProjects = ({
                         onClick={() => {
                           markApproved(
                             roundData?.roundName as string,
-                            roundData?.id as string,
-                            projectJoinRound.project.owner.mainWallet,
+                            projectJoinRound.id as string,
+                            roundData.id as string,
+                            projectJoinRound.project.owner_publickey,
                             projectJoinRound.project.projectUserCount
                           );
                         }}
@@ -489,7 +498,8 @@ const GrantUnderReviewProjects = ({
                         if (currentAction) {
                           handleRoundAction(
                             currentAction.type,
-                            currentAction.id,
+                            currentAction.projectId,
+                            currentAction.roundId,
                             currentAction.roundName,
                             currentAction.count,
                             currentAction.owner
