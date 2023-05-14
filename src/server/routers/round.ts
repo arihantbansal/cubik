@@ -72,6 +72,66 @@ export const roundRouter = router({
         },
         include: {
           ProjectJoinRound: {
+            where: {
+              status: 'PENDING',
+            },
+            include: {
+              project: {
+                include: {
+                  owner: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      return roundRes;
+    }),
+
+  findAcceptedGrants: procedure
+    .input(
+      z.object({
+        roundId: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const roundRes = await prisma.round.findMany({
+        where: {
+          id: input.roundId,
+        },
+        include: {
+          ProjectJoinRound: {
+            where: {
+              status: 'APPROVED',
+            },
+            include: {
+              project: {
+                include: {
+                  owner: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      return roundRes;
+    }),
+  findRejectedGrants: procedure
+    .input(
+      z.object({
+        roundId: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const roundRes = await prisma.round.findMany({
+        where: {
+          id: input.roundId,
+        },
+        include: {
+          ProjectJoinRound: {
+            where: {
+              status: 'REJECTED',
+            },
             include: {
               project: {
                 include: {

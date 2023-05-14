@@ -41,7 +41,7 @@ const RoundAdmin = () => {
         {roundData && (
           <HStack w="full" align="start" pb="32px">
             <Box as="p" textStyle="title2" color="neutral.11">
-              {roundData.roundName} Round
+              {roundData.roundName} Grant Round
             </Box>
             <CustomTag>Admin</CustomTag>
           </HStack>
@@ -87,7 +87,7 @@ const RoundAdmin = () => {
             <TabPanel>
               <GrantUnderReviewProjects
                 setProjectsNumberByStatus={setProjectsNumberByStatus}
-                roundId={roundData?.id}
+                roundId={roundData?.id as string}
               />
             </TabPanel>
             <TabPanel></TabPanel>
