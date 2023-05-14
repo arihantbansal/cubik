@@ -1,7 +1,32 @@
 import { Box, Center, VStack } from '@chakra-ui/react';
+import { trpc } from '~/utils/trpc';
 import { FundingChart } from './Charts';
 
-const FundingOverview = () => {
+const FundingOverview = ({ projectId }: { projectId: string }) => {
+  const { data, isError, isLoading } =
+    trpc.contribution.getProjectContributors.useQuery({
+      projectId,
+    });
+
+  if (isLoading) {
+    // handle loading state
+  }
+
+  if (isError) {
+    // handle error state
+  }
+  if (!data) return <></>;
+
+  // assuming the data you get is an array of contributions
+  const totalCommunityDonation = data?.reduce(
+    (acc, curr) => acc + curr.currentTotal,
+    0
+  );
+  const estimatedMatchingAmount = data?.reduce(
+    (acc, curr) => acc + curr.currentusdTotal,
+    0
+  );
+
   return (
     <VStack
       flex={'50%'}
@@ -25,7 +50,7 @@ const FundingOverview = () => {
           textStyle={{ base: 'title4', md: 'title3' }}
           color="neutral.11"
         >
-          $300
+          ${(totalCommunityDonation + estimatedMatchingAmount).toFixed(2)}
         </Box>
       </VStack>
       <Center
@@ -42,7 +67,7 @@ const FundingOverview = () => {
             textStyle={{ base: 'title4', md: 'title3' }}
             color="neutral.11"
           >
-            $300
+            ${totalCommunityDonation.toFixed(2)}
           </Box>
         </VStack>
         <VStack align={'start'} flex="50%" w="full">
@@ -54,11 +79,11 @@ const FundingOverview = () => {
             textStyle={{ base: 'title4', md: 'title3' }}
             color="neutral.11"
           >
-            $1564
+            ${estimatedMatchingAmount.toFixed(2)}
           </Box>
         </VStack>
       </Center>
-      <FundingChart />
+      <FundingChart data={data} />
     </VStack>
   );
 };

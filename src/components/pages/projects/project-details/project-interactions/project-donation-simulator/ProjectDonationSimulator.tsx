@@ -39,6 +39,7 @@ type ProjectDonationSimulatorProps = {
   projectDetails: ProjectWithCommentsAndRoundsType;
   height: number;
   width: number;
+  setDonationSuccessful?: any;
 };
 
 export const token: tokenGroup[] = tokens;
@@ -47,11 +48,11 @@ export const ProjectDonationSimulator = ({
   projectDetails,
   height,
   width,
+  setDonationSuccessful,
 }: ProjectDonationSimulatorProps) => {
   const { data } = useSession();
   const [txnError, setTxnError] = useState<string | null>(null);
   const toast = useToast();
-  const [txnSigned, setTxnSigned] = useState(false);
   const {
     handleSubmit,
     setValue,
@@ -85,6 +86,7 @@ export const ProjectDonationSimulator = ({
   const createContributionMutation = trpc.contribution.create.useMutation({
     onSuccess: async (data: any) => {
       console.log('🤤 success - ', data);
+      setDonationSuccessful(true);
       SuccessToast({ toast, message: 'Donation Successful' });
     },
     onError: (error) => {

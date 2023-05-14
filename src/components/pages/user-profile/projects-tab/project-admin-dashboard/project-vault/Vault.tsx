@@ -10,14 +10,15 @@ import {
 } from '@chakra-ui/react';
 import VaultHeader from './VaultHeader';
 
-const Vault = () => {
+const Vault = ({ projectData }: any) => {
+  console.log('project details - ', projectData);
   return (
     <VStack
       alignItems={'start'}
       px={{ base: '16px', sm: '20px', md: '24px' }}
       gap={{ base: '16px', sm: '20px', md: '24px' }}
     >
-      <VaultHeader />
+      <VaultHeader multiSigAddress={projectData.mutliSigAddress as string} />
       <Box height="1px" width="full" background={'neutral.3'} />
       <Tabs variant={'cubik'}>
         <TabList>

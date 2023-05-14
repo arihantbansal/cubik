@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Center } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
-import React from 'react';
+import React, { useEffect } from 'react';
 const ReactApexChart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
 });
@@ -26,30 +26,17 @@ type propsType = {
   graphColor: string[];
 };
 
-export const FundingChart = () => {
-  const [chartData, setChartData] = React.useState({
-    series: [
-      {
-        name: 'Donations',
-        data: [
-          [new Date('2023-03-01 00:00:01').getTime(), 10],
-          [new Date('2023-03-02 00:00:01').getTime(), 12],
-          [new Date('2023-03-03 00:00:01').getTime(), 13],
-          [new Date('2023-03-04 00:00:01').getTime(), 11],
-          [new Date('2023-03-05 00:00:01').getTime(), 12],
-          [new Date('2023-03-06 00:00:01').getTime(), 17],
-          [new Date('2023-03-07 00:00:01').getTime(), 20],
-          [new Date('2023-03-08 00:00:01').getTime(), 17],
-          [new Date('2023-03-09 00:00:01').getTime(), 18],
-          [new Date('2023-03-10 00:00:01').getTime(), 11],
-          [new Date('2023-03-11 00:00:01').getTime(), 10],
-          [new Date('2023-03-12 00:00:01').getTime(), 12],
-          [new Date('2023-03-13 00:00:01').getTime(), 12],
-          [new Date('2023-03-14 00:00:01').getTime(), 15],
-          [new Date('2023-03-15 00:00:01').getTime(), 16],
-        ],
-      },
-    ],
+type ChartDataType = {
+  series: {
+    name: string;
+    data: number[][];
+  }[];
+  options: any; // replace 'any' with your options type
+};
+
+export const FundingChart = ({ data }: { data: any[] }) => {
+  const [chartData, setChartData] = React.useState<ChartDataType>({
+    series: [],
     options: {
       grid: { show: false },
       chart: {
@@ -200,6 +187,73 @@ export const FundingChart = () => {
       ],
     },
   });
+
+  const generateDateRange = (start: Date, end: Date): Date[] => {
+    let currentDate = start;
+    const dates = [];
+
+    while (currentDate <= end) {
+      dates.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return dates;
+  };
+
+  const distributeData = () => {
+    const contributionsByDate = data.reduce((acc, curr) => {
+      const date = new Date(curr.createdAt);
+      const formattedDate = Date.UTC(
+        date.getUTCFullYear(),
+        date.getUTCMonth(),
+        date.getUTCDate()
+      );
+
+      if (acc[formattedDate]) {
+        acc[formattedDate] += curr.currentTotal;
+      } else {
+        acc[formattedDate] = curr.currentTotal;
+      }
+      return acc;
+    }, {});
+
+    const sortedData = Object.entries(contributionsByDate).map(
+      ([date, total]) => ({
+        date: Number(date),
+        total,
+      })
+    );
+
+    sortedData.sort((a, b) => a.date - b.date);
+
+    const endDate = new Date();
+    endDate.setUTCHours(23, 59, 59, 999); // set the time to end of the day
+    const startDate = new Date();
+    startDate.setUTCDate(endDate.getUTCDate() - 15);
+    const dateRange = generateDateRange(startDate, endDate);
+
+    const dataMap = new Map();
+    sortedData.forEach((item) =>
+      dataMap.set(new Date(item.date).getTime(), item.total)
+    );
+
+    const finalData = dateRange.map((date) => {
+      const time = date.getTime();
+      return [time, dataMap.get(time) || 0];
+    });
+    console.log('final data - ', finalData);
+    setChartData((prevState) => ({
+      ...prevState,
+      series: [{ name: 'Donations', data: finalData }],
+    }));
+  };
+
+  useEffect(() => {
+    if (data) {
+      console.log('date data - ', data);
+      distributeData();
+    }
+  }, [data]);
 
   return (
     <Center w={'full'}>

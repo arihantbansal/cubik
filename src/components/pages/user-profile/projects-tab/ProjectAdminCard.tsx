@@ -42,7 +42,7 @@ const ProjectAdminCard = ({
   if (isError) {
     return <Center>{error.message}</Center>;
   }
-  console.log('projects', projectData);
+
   return (
     <Card
       px="0px"
@@ -87,10 +87,10 @@ const ProjectAdminCard = ({
               padding={{ base: '16px', sm: '20px', md: '24px' }}
               direction={{ base: 'column', lg: 'row' }}
             >
-              <FundingOverview />
-              <ProjectInsights />
+              <FundingOverview projectId={projectData?.id as string} />
+              <ProjectInsights projectId={projectData?.id as string} />
             </Stack>
-            {showVault && <Vault />}
+            {showVault && <Vault projectData={projectData} />}
           </CardBody>
           <CardFooter pb="24px">
             <Center w="full">

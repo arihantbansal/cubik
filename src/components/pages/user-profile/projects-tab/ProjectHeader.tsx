@@ -131,17 +131,27 @@ const ProjectDetails = ({
   setDrawerBodyView: any;
 }) => {
   const [showApplyToRound, setShowApplyToRound] = useState(false);
-
   useEffect(() => {
+    console.log('project.status check');
     if (project.status === ProjectVerifyStatus.VERIFIED) {
-      setShowApplyToRound(true);
-    }
-    if (
-      ProjectStatus({ projectData: project as ProjectWithRoundDetailsType })
-        ?.round?.status === ProjectJoinRoundStatus.APPROVED ||
-      ProjectJoinRoundStatus.PENDING
-    ) {
-      setShowApplyToRound(false);
+      console.log('project is verified so show ApplyRound to true');
+      if (
+        ProjectStatus({ projectData: project as ProjectWithRoundDetailsType })
+          ?.round?.status === ProjectJoinRoundStatus.APPROVED
+      ) {
+        return setShowApplyToRound(false); // project is approved ina a round so don't show apply to round
+      } else if (
+        ProjectStatus({ projectData: project as ProjectWithRoundDetailsType })
+          ?.round?.status === ProjectJoinRoundStatus.REJECTED
+      ) {
+        return setShowApplyToRound(true); // project is rejected so show apply to round
+      } else if (
+        ProjectStatus({ projectData: project as ProjectWithRoundDetailsType })
+          ?.round?.status === ProjectJoinRoundStatus.PENDING
+      ) {
+        return setShowApplyToRound(false); // project is rejected so show apply to round
+      }
+      return setShowApplyToRound(true);
     } else {
       setShowApplyToRound(false);
     }

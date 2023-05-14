@@ -3,8 +3,10 @@ import { ProjectDonationSimulator } from '~/components/pages/projects/project-de
 import { ProjectWithCommentsAndRoundsType } from '~/types/IProjectDetails';
 
 const PaymentModalBody = ({
+  setDonationSuccessful,
   projectDetails,
 }: {
+  setDonationSuccessful?: any;
   projectDetails: ProjectWithCommentsAndRoundsType;
 }) => {
   return (
@@ -12,6 +14,7 @@ const PaymentModalBody = ({
       <ProjectDonationSimulator
         height={90}
         width={100}
+        setDonationSuccessful={setDonationSuccessful}
         projectDetails={projectDetails}
       />
     </Stack>
