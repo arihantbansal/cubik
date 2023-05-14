@@ -127,7 +127,7 @@ const ProjectCard = ({ project }: PropsType) => {
             as="p"
             noOfLines={1}
             whiteSpace={'nowrap'}
-            color="#ADB8B6"
+            color={`surface.${ProjectRound({ project }).colorScheme}.1`}
             textStyle={'overline4'}
             textTransform="uppercase"
             letterSpacing={'0.2em'}

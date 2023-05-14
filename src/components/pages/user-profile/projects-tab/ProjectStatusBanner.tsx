@@ -45,6 +45,7 @@ const ProjectStatusBanner = ({
           <Box
             as="p"
             noOfLines={{ base: 2, md: 1 }}
+            display={{ base: 'none', md: 'block' }}
             whiteSpace={{ base: 'normal', md: 'nowrap' }}
             textStyle={{ base: 'body6', md: 'body5' }}
             color="surface.yellow.1"
@@ -82,6 +83,7 @@ const ProjectStatusBanner = ({
           <Box
             as="p"
             noOfLines={{ base: 2, md: 1 }}
+            display={{ base: 'none', md: 'block' }}
             whiteSpace={{ base: 'normal', md: 'nowrap' }}
             textStyle={{ base: 'body6', md: 'body5' }}
             color="surface.blue.1"
@@ -120,6 +122,7 @@ const ProjectStatusBanner = ({
           <Box
             as="p"
             noOfLines={{ base: 2, md: 1 }}
+            display={{ base: 'none', md: 'block' }}
             whiteSpace={{ base: 'normal', md: 'nowrap' }}
             textStyle={{ base: 'body6', md: 'body5' }}
             color="#FFCAC2"
@@ -164,6 +167,7 @@ const ProjectStatusBanner = ({
           <Box
             as="p"
             noOfLines={{ base: 2, md: 1 }}
+            display={{ base: 'none', md: 'block' }}
             whiteSpace={{ base: 'normal', md: 'nowrap' }}
             textStyle={{ base: 'body6', md: 'body5' }}
             color="neutral.11"
@@ -216,6 +220,7 @@ const ProjectStatusBanner = ({
           <Box
             as="p"
             noOfLines={{ base: 2, md: 1 }}
+            display={{ base: 'none', md: 'block' }}
             whiteSpace={{ base: 'normal', md: 'nowrap' }}
             textStyle={{ base: 'body6', md: 'body5' }}
             color="#E6D6FF"
@@ -254,6 +259,7 @@ const ProjectStatusBanner = ({
           <Box
             as="p"
             noOfLines={{ base: 2, md: 1 }}
+            display={{ base: 'none', md: 'block' }}
             whiteSpace={{ base: 'normal', md: 'nowrap' }}
             textStyle={{ base: 'body6', md: 'body5' }}
             color="surface.red.3"
@@ -292,6 +298,7 @@ const ProjectStatusBanner = ({
           <Box
             as="p"
             noOfLines={{ base: 2, md: 1 }}
+            display={{ base: 'none', md: 'block' }}
             whiteSpace={{ base: 'normal', md: 'nowrap' }}
             textStyle={{ base: 'body6', md: 'body5' }}
             color="#FFCCFF"

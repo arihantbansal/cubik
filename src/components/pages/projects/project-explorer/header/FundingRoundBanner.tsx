@@ -7,6 +7,32 @@ interface CountdownTimerProps {
   finalDate: Date;
 }
 
+const getDateStatus = (startDate: Date, endDate: Date) => {
+  const now = new Date();
+
+  // Convert the dates to timestamps for easier comparison
+  const startTimestamp = startDate.getTime();
+  const endTimestamp = endDate.getTime();
+  const nowTimestamp = now.getTime();
+
+  // Calculate the difference in days
+  const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+  const diffStartDays = Math.round(
+    Math.abs((startTimestamp - nowTimestamp) / oneDay)
+  );
+  const diffEndDays = Math.round(
+    Math.abs((endTimestamp - nowTimestamp) / oneDay)
+  );
+
+  if (nowTimestamp < startTimestamp) {
+    return `Round starts in ${diffStartDays} days`;
+  } else if (nowTimestamp < endTimestamp) {
+    return `Ending in ${diffEndDays} days`;
+  } else {
+    return `Ended ${diffEndDays} days ago`;
+  }
+};
+
 const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
   const getTimeRemaining = (endDate: Date) => {
     const total = endDate.getTime() - new Date().getTime();
@@ -208,7 +234,21 @@ const RoundStatus = () => {
   );
 };
 
-const FundingRoundBanner = () => {
+const FundingRoundBanner = ({
+  startDate,
+  endDate,
+  roundId,
+  roundName,
+  roundDescription,
+  matchingPool,
+}: {
+  startDate: Date;
+  endDate: Date;
+  roundId: string;
+  roundName: string;
+  roundDescription: string;
+  matchingPool: number;
+}) => {
   return (
     <Stack w="full" direction={{ base: 'column', md: 'row' }}>
       <Stack
@@ -273,10 +313,10 @@ const FundingRoundBanner = () => {
             >
               <RippleEffect />
               <Box as="p" textStyle="body5">
-                Round starts in {''}
-                <b>{''}2 days</b>
+                {getDateStatus(startDate, endDate)}
               </Box>
             </Center>
+
             <Stack
               direction={{ base: 'column', md: 'row' }}
               justify={'space-between'}
@@ -290,16 +330,15 @@ const FundingRoundBanner = () => {
                   as="p"
                   textStyle={{ base: 'title1', md: 'headline3' }}
                 >
-                  Alpha Grant Round
+                  {roundName} Round
                 </Box>
                 <Box
-                  maxW={{ base: '340px', md: '420px' }}
+                  maxW={{ base: '340px', md: '500px' }}
                   as="p"
                   color="neutral.8"
                   textStyle={{ base: 'body4', md: 'body3' }}
                 >
-                  A quadratic funding grant round for public goods building on
-                  Solana blockchain
+                  {roundDescription}
                 </Box>
               </VStack>
               <HStack
@@ -319,7 +358,7 @@ const FundingRoundBanner = () => {
                   Matching Pool :
                 </Box>
                 <Box as="p" textStyle={{ base: 'body4', md: 'title3' }}>
-                  $30,000
+                  ${matchingPool}
                 </Box>
               </HStack>
             </Stack>

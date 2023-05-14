@@ -82,18 +82,22 @@ const MobileNavCollapsible = memo(function MobileNavCollapsible({
             justify={'space-between'}
             w="100%"
           >
-            <Box
-              display="flex"
-              alignItems={'start'}
-              w="100%"
-              onClick={() => onClose()}
-              as="button"
-              transition={'all 0.3s ease'}
-              fontSize="15px"
-              fontWeight="400"
-            >
-              Funding Round
-            </Box>
+            <Link href="/grants">
+              <Box
+                display="flex"
+                alignItems={'start'}
+                w="100%"
+                onClick={() => {
+                  onClose();
+                }}
+                as="button"
+                transition={'all 0.3s ease'}
+                fontSize="15px"
+                fontWeight="400"
+              >
+                Grants
+              </Box>
+            </Link>
           </Flex>
         </Link>
       </Flex>

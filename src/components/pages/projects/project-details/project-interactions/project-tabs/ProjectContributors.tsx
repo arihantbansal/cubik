@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { BiChevronRight } from 'react-icons/bi';
+import ContributionsEmptyState from '~/components/common/empty-state/ContributionsEmptyState';
 import Pagination from '~/components/common/pagination/Pagination';
 import { SOL, USDC } from '~/components/common/tokens/token';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
@@ -231,19 +232,30 @@ const ProjectContributors = ({
           <TableLoading />
         ) : (
           <Tbody>
-            {currentContributors.map((contributor: Contributor) => (
-              <ContributorRow key={contributor.id} contributor={contributor} />
-            ))}
+            {currentContributors.length === 0 ? (
+              <></>
+            ) : (
+              currentContributors.map((contributor: Contributor) => (
+                <ContributorRow
+                  key={contributor.id}
+                  contributor={contributor}
+                />
+              ))
+            )}
           </Tbody>
         )}
       </Table>
-      <Pagination
-        currentPage={currentPage}
-        totalCount={totalContributors}
-        siblingCount={siblingCount}
-        pageSize={pageSize}
-        onPageChange={setCurrentPage}
-      />
+      {currentContributors.length === 0 ? (
+        <ContributionsEmptyState />
+      ) : (
+        <Pagination
+          currentPage={currentPage}
+          totalCount={totalContributors}
+          siblingCount={siblingCount}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+        />
+      )}
     </TableContainer>
   );
 };

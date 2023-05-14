@@ -12,7 +12,7 @@ import { FC, memo } from 'react';
 
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import { UserWithProjectType } from '~/types/user';
-import Contributions from './contributions-tab/Contributions';
+import UserContributions from './contributions-tab/UserContributions';
 import UserDetails from './details-tab/UserDetails';
 import { AdminProjectEmptyState } from './empty-states/ProjectEmptyState';
 
@@ -75,7 +75,7 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
               </Flex>
             </TabPanel>
             <TabPanel w="full">
-              <Contributions />
+              <UserContributions />
             </TabPanel>
           </TabPanels>
         </Tabs>
