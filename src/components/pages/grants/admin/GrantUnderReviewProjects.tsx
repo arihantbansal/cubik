@@ -39,7 +39,7 @@ type ActionType = 'REJECTED' | 'ACCEPTED';
 interface CurrentAction {
   type: ActionType;
   id: string;
-  username: string;
+  roundName: string;
   count: number;
   owner: string;
 }
@@ -80,7 +80,7 @@ const GrantUnderReviewProjects = ({
   const handleRoundAction = async (
     action: ActionType,
     id: string,
-    username: string,
+    roundName: string,
     count: number,
     owner: string
   ) => {
@@ -91,13 +91,13 @@ const GrantUnderReviewProjects = ({
         action === 'ACCEPTED'
           ? await updateProjectRoundVerified(
               anchorWallet as NodeWallet,
-              username,
+              roundName,
               count,
               owner
             )
           : await updateProjectRoundVerified(
               anchorWallet as NodeWallet,
-              username,
+              roundName,
               count,
               owner
             );
@@ -128,22 +128,33 @@ const GrantUnderReviewProjects = ({
       setTransactionLoading(false);
     }
   };
-  const markApproved = (roundId: string, owner: string, count: number) => {
+
+  const markApproved = (
+    roundName: string,
+    roundId: string,
+    owner: string,
+    count: number
+  ) => {
     setCurrentAction({
       type: 'ACCEPTED',
       id: roundId,
-      username: owner,
+      roundName: roundName,
       count,
       owner,
     });
     onActionModalOpen();
   };
 
-  const markRejected = (roundId: string, owner: string, count: number) => {
+  const markRejected = (
+    roundName: string,
+    roundId: string,
+    owner: string,
+    count: number
+  ) => {
     setCurrentAction({
       type: 'REJECTED',
       id: roundId,
-      username: owner,
+      roundName: roundName,
       count,
       owner,
     });
@@ -243,6 +254,7 @@ const GrantUnderReviewProjects = ({
                         maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
                         onClick={() => {
                           markRejected(
+                            roundData?.roundName as string,
                             roundData?.id as string,
                             projectJoinRound.project.owner_publickey,
                             projectJoinRound.project.projectUserCount
@@ -269,6 +281,7 @@ const GrantUnderReviewProjects = ({
                         maxW={{ base: 'full', sm: '8rem', md: '20rem' }}
                         onClick={() => {
                           markApproved(
+                            roundData?.roundName as string,
                             roundData?.id as string,
                             projectJoinRound.project.owner.mainWallet,
                             projectJoinRound.project.projectUserCount
@@ -477,7 +490,7 @@ const GrantUnderReviewProjects = ({
                           handleRoundAction(
                             currentAction.type,
                             currentAction.id,
-                            currentAction.username,
+                            currentAction.roundName,
                             currentAction.count,
                             currentAction.owner
                           );
