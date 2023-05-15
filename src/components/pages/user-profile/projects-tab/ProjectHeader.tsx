@@ -33,7 +33,7 @@ import { BiMessageSquareDots } from 'react-icons/bi';
 import { MdDeleteOutline } from 'react-icons/md';
 import { VscPreview } from 'react-icons/vsc';
 import GetFormattedLink from '~/components/HOC/GetLink';
-import { ProjectWithRoundDetailsType } from '~/types/project';
+import { projectWithFundingRoundType } from '~/types/project';
 import { getDomain } from '~/utils/getDomain';
 import { ProjectStatus } from '~/utils/getProjectStatus';
 import { ProjectSocials } from '../../projects/project-details/project-interactions/ProjectInteractions';
@@ -105,13 +105,10 @@ export const ProjectHeaderVisitorView = ({
         <Center justifyContent={'end'}>
           <Button
             variant={'project_button_secondary'}
+            as={Link}
             //@ts-ignore
             ref={btnRef}
-            onClick={() =>
-              router.push({
-                pathname: `/projects/${project.id}`,
-              })
-            }
+            href={`/projects/${project.id}`}
             w="full"
             maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
           >
@@ -127,7 +124,7 @@ const ProjectDetails = ({
   project,
   setDrawerBodyView,
 }: {
-  project: ProjectWithRoundDetailsType;
+  project: projectWithFundingRoundType;
   setDrawerBodyView: any;
 }) => {
   const [showApplyToRound, setShowApplyToRound] = useState(false);
@@ -136,17 +133,17 @@ const ProjectDetails = ({
     if (project.status === ProjectVerifyStatus.VERIFIED) {
       console.log('project is verified so show ApplyRound to true');
       if (
-        ProjectStatus({ projectData: project as ProjectWithRoundDetailsType })
+        ProjectStatus({ projectData: project as projectWithFundingRoundType })
           ?.round?.status === ProjectJoinRoundStatus.APPROVED
       ) {
         return setShowApplyToRound(false); // project is approved ina a round so don't show apply to round
       } else if (
-        ProjectStatus({ projectData: project as ProjectWithRoundDetailsType })
+        ProjectStatus({ projectData: project as projectWithFundingRoundType })
           ?.round?.status === ProjectJoinRoundStatus.REJECTED
       ) {
         return setShowApplyToRound(true); // project is rejected so show apply to round
       } else if (
-        ProjectStatus({ projectData: project as ProjectWithRoundDetailsType })
+        ProjectStatus({ projectData: project as projectWithFundingRoundType })
           ?.round?.status === ProjectJoinRoundStatus.PENDING
       ) {
         return setShowApplyToRound(false); // project is rejected so show apply to round
@@ -323,7 +320,7 @@ const ProjectHeader = ({
   project,
 }: {
   activeProject?: string;
-  project: ProjectWithRoundDetailsType;
+  project: projectWithFundingRoundType;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [drawerBodyView, setDrawerBodyView] = useState<drawerBodyViewEnum>(
@@ -462,16 +459,16 @@ const ProjectHeader = ({
                     <ProjectStatusBanner
                       status={
                         ProjectStatus({
-                          projectData: project as ProjectWithRoundDetailsType,
+                          projectData: project as projectWithFundingRoundType,
                         })?.status as string
                       }
                       roundName={
                         ProjectStatus({
-                          projectData: project as ProjectWithRoundDetailsType,
+                          projectData: project as projectWithFundingRoundType,
                         })?.round
                           ? ProjectStatus({
                               projectData:
-                                project as ProjectWithRoundDetailsType,
+                                project as projectWithFundingRoundType,
                             })?.round?.fundingRound.roundName
                           : undefined
                       }

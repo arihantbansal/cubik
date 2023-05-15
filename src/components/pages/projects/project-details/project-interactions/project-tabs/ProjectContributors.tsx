@@ -1,11 +1,13 @@
 import {
   Avatar,
   Box,
+  Button,
+  ButtonGroup,
   Center,
   HStack,
+  IconButton,
   Skeleton,
   Table,
-  TableContainer,
   Tbody,
   Td,
   Text,
@@ -15,11 +17,12 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { BiChevronRight } from 'react-icons/bi';
+import { BiChevronDown, BiChevronRight, BiChevronUp } from 'react-icons/bi';
 import ContributionsEmptyState from '~/components/common/empty-state/ContributionsEmptyState';
 import Pagination from '~/components/common/pagination/Pagination';
 import { SOL, USDC } from '~/components/common/tokens/token';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
+import { formatNumberWithK } from '~/utils/formatWithK';
 import { timeSince } from '~/utils/gettimeSince';
 import { trpc } from '~/utils/trpc';
 
@@ -32,6 +35,7 @@ type Contributor = {
   currentusdTotal: number;
   timestamp: string;
   token: string;
+  [key: string]: any;
 };
 
 type ContributorRowProps = {
@@ -39,7 +43,7 @@ type ContributorRowProps = {
 };
 
 const formatContributorData = (data: any[]): Contributor[] => {
-  return data.map((contributor) => ({
+  return data?.map((contributor) => ({
     id: contributor.id,
     avatar: contributor.user.profilePicture,
     username: contributor.user.username,
@@ -88,7 +92,7 @@ const TableLoading = () => {
 
 const ContributorRow: React.FC<ContributorRowProps> = ({ contributor }) => (
   <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
-    <Td px="12px">
+    <Td p="18px">
       <HStack align={'start'} gap={{ base: '8px', md: '16px' }}>
         <Avatar
           width={{ base: '36px', md: '44px' }}
@@ -119,7 +123,7 @@ const ContributorRow: React.FC<ContributorRowProps> = ({ contributor }) => (
         </VStack>
       </HStack>
     </Td>
-    <Td px="12px">
+    <Td p="18px">
       <HStack gap="8px" align={'center'}>
         <Center>
           {contributor.token === 'sol' ? <SOL size={28} /> : <USDC size={28} />}
@@ -127,7 +131,7 @@ const ContributorRow: React.FC<ContributorRowProps> = ({ contributor }) => (
         <VStack justify={'center'} spacing="2px" align={'start'}>
           <HStack align={'baseline'} color="white">
             <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
-              {contributor.amount}
+              {formatNumberWithK(contributor.amount)}
             </Box>
             <Box as="p" textStyle={{ base: 'title6', md: 'title7' }}>
               {contributor.token.toUpperCase()}
@@ -138,17 +142,17 @@ const ContributorRow: React.FC<ContributorRowProps> = ({ contributor }) => (
             color="neutral.8"
             textStyle={{ base: 'body6', md: 'body5' }}
           >
-            {contributor.currentusdTotal}$
+            {formatNumberWithK(contributor.currentusdTotal)}$
           </Box>
         </VStack>
       </HStack>
     </Td>
-    <Td px="12px">
+    <Td p="18px">
       <Box as="p" textStyle={{ base: 'body5', md: 'body4' }} color="neutral.11">
         {timeSince(new Date(contributor.timestamp))}
       </Box>
     </Td>
-    <Td px="12px">
+    <Td p="18px">
       <BiChevronRight size="24" />
     </Td>
   </Tr>
@@ -162,6 +166,8 @@ const ProjectContributors = ({
   isLoading?: boolean;
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortField, setSortField] = useState('timestamp');
+  const [sortDirection, setSortDirection] = useState('desc');
 
   const {
     data: contributorsData,
@@ -170,9 +176,8 @@ const ProjectContributors = ({
     error,
   } = trpc.contribution.getProjectContributors.useQuery({ projectId });
 
-  // Assuming 10 contributors per page
-  const pageSize = 5;
-  const siblingCount = 1; // Change this according to your needs
+  const pageSize = 10;
+  const siblingCount = 1;
 
   const totalContributors = contributorsData ? contributorsData.length : 0;
   const totalPages = Math.ceil(totalContributors / pageSize);
@@ -182,81 +187,146 @@ const ProjectContributors = ({
     if (currentPage > totalPages) setCurrentPage(totalPages);
   }, [currentPage, totalPages]);
 
-  // Calculate the contributors for the current page
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
 
-  const currentContributors = contributorsData
-    ? formatContributorData(contributorsData).slice(startIndex, endIndex)
+  const sortedAndFormattedContributors = contributorsData
+    ? formatContributorData(contributorsData).sort((a, b) => {
+        if (a[sortField] < b[sortField]) {
+          return sortDirection === 'asc' ? -1 : 1;
+        }
+        if (a[sortField] > b[sortField]) {
+          return sortDirection === 'asc' ? 1 : -1;
+        }
+        return 0;
+      })
     : [];
 
+  const currentContributors = sortedAndFormattedContributors
+    ? sortedAndFormattedContributors.slice(startIndex, endIndex)
+    : [];
+
+  const handleSortChange = (field: string) => {
+    if (field === sortField) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
+  };
+
   return (
-    <TableContainer w="full">
-      <Table variant="unstyled">
-        <Thead>
-          <Tr>
-            <Th px="12px">
-              <Text
-                color="#ADB8B6"
-                size={{ base: '14px', md: '16px' }}
-                textTransform={'capitalize'}
-                fontWeight="500"
-              >
-                Contributor
-              </Text>
-            </Th>
-            <Th px="12px">
-              <Text
-                color="#ADB8B6"
-                size={{ base: '14px', md: '16px' }}
-                textTransform={'capitalize'}
-                fontWeight="500"
-              >
-                Amount
-              </Text>
-            </Th>
-            <Th px="12px">
-              <Text
-                color="#ADB8B6"
-                size={{ base: '14px', md: '16px' }}
-                textTransform={'capitalize'}
-                fontWeight="500"
-              >
-                Time
-              </Text>
-            </Th>
-            <Th px="12px"></Th>
-          </Tr>
-        </Thead>
-        {isLoading || loadingContributors ? (
-          <TableLoading />
-        ) : (
-          <Tbody>
-            {currentContributors.length === 0 ? (
-              <></>
-            ) : (
-              currentContributors.map((contributor: Contributor) => (
-                <ContributorRow
-                  key={contributor.id}
-                  contributor={contributor}
-                />
-              ))
-            )}
-          </Tbody>
-        )}
-      </Table>
-      {currentContributors.length === 0 ? (
+    <VStack
+      w="full"
+      align={currentContributors?.length === 0 ? 'center' : 'end'}
+    >
+      {currentContributors?.length === 0 ? (
         <ContributionsEmptyState />
       ) : (
-        <Pagination
-          currentPage={currentPage}
-          totalCount={totalContributors}
-          siblingCount={siblingCount}
-          pageSize={pageSize}
-          onPageChange={setCurrentPage}
-        />
+        <>
+          <Table variant="unstyled">
+            <Thead
+              color="neutral.8"
+              fontFamily={'Plus Jakarta Sans, sans-serif'}
+            >
+              <Tr>
+                <Th w={'40%'} p="18px">
+                  <Text
+                    fontSize={{ base: '12px', md: '14px' }}
+                    textTransform={'capitalize'}
+                    fontWeight="500"
+                  >
+                    Contributor
+                  </Text>
+                </Th>
+                <Th w={'25%'} p="18px">
+                  <ButtonGroup
+                    onClick={() => handleSortChange('amount')}
+                    variant="unstyled"
+                    gap="8px"
+                    isAttached
+                  >
+                    <Button
+                      textAlign={'center'}
+                      alignContent={'center'}
+                      variant="unstyled"
+                      fontWeight="500"
+                      fontSize={{ base: '12px', md: '14px' }}
+                      textTransform={'capitalize'}
+                    >
+                      Amount
+                    </Button>
+                    <IconButton
+                      aria-label="Sort by Amount"
+                      icon={
+                        sortField === 'amount' && sortDirection === 'asc' ? (
+                          <BiChevronUp size={20} />
+                        ) : (
+                          <BiChevronDown size={20} />
+                        )
+                      }
+                    />
+                  </ButtonGroup>
+                </Th>
+                <Th w={'25%'} p="18px">
+                  <ButtonGroup
+                    onClick={() => handleSortChange('timestamp')}
+                    variant="unstyled"
+                    gap="8px"
+                    isAttached
+                  >
+                    <Button
+                      textAlign={'center'}
+                      alignContent={'center'}
+                      variant="unstyled"
+                      fontWeight="500"
+                      fontSize={{ base: '12px', md: '14px' }}
+                      textTransform={'capitalize'}
+                    >
+                      Time
+                    </Button>
+                    <IconButton
+                      aria-label="Sort by time"
+                      icon={
+                        sortField === 'timestamp' && sortDirection === 'asc' ? (
+                          <BiChevronDown size={20} />
+                        ) : (
+                          <BiChevronUp size={20} />
+                        )
+                      }
+                    />
+                  </ButtonGroup>
+                </Th>
+                <Th w={'10%'} p="18px"></Th>
+              </Tr>
+            </Thead>
+            {isLoading || loadingContributors ? (
+              <TableLoading />
+            ) : (
+              <Tbody>
+                {currentContributors.length === 0 ? (
+                  <></>
+                ) : (
+                  currentContributors.map((contributor: Contributor) => (
+                    <ContributorRow
+                      key={contributor.id}
+                      contributor={contributor}
+                    />
+                  ))
+                )}
+              </Tbody>
+            )}
+          </Table>
+          <Pagination
+            currentPage={currentPage}
+            totalCount={totalContributors}
+            siblingCount={siblingCount}
+            pageSize={pageSize}
+            onPageChange={setCurrentPage}
+          />
+        </>
       )}
-    </TableContainer>
+    </VStack>
   );
 };
 

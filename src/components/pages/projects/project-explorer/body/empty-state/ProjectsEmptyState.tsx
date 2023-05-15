@@ -1,12 +1,12 @@
-import React from 'react';
-import { Box, Center } from '@chakra-ui/react';
+import EmptyStateHOC from '~/components/HOC/EmptyState';
 
 const EmptyProjectsState = () => (
-  <Center>
-    <Box as="p" textStyle={{ base: 'body6', md: 'body5' }} color="white">
-      No projects found in this category.
-    </Box>
-  </Center>
+  <EmptyStateHOC
+    heading={'No Project Found'}
+    subHeading={
+      'We couldn`t find any projects matching your search. Please try a different query or check back later.'
+    }
+  />
 );
 
 export default EmptyProjectsState;

@@ -14,6 +14,7 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
@@ -74,7 +75,7 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
       });
     }
     if (event.key === 'Enter') {
-      router.push(`/projects/${filteredProjects[selectedProjectIndex].id}`);
+      router.prefetch(`/projects/${filteredProjects[selectedProjectIndex].id}`);
     }
   };
 
@@ -155,7 +156,7 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
                       {filteredProjects.map((project, index) => (
                         <HStack
                           key={project.id}
-                          as="button"
+                          as={Link}
                           gap="8px"
                           rounded="8px"
                           w="full"
@@ -165,7 +166,7 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
                               ? 'neutral.5'
                               : 'transparent'
                           }
-                          onClick={() => router.push(`/project/${project.id}`)}
+                          href={`/project/${project.id}`}
                         >
                           <Avatar
                             src={project.logo}

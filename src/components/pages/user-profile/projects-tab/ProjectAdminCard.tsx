@@ -11,7 +11,7 @@ import {
 import { ProjectJoinRoundStatus, ProjectsModel } from '@prisma/client';
 import { useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
-import { ProjectWithRoundDetailsType } from '~/types/project';
+import { projectWithFundingRoundType } from '~/types/project';
 import { ProjectStatus } from '~/utils/getProjectStatus';
 import { trpc } from '~/utils/trpc';
 import FundingOverview from './project-admin-dashboard/FundingOverview';
@@ -54,15 +54,15 @@ const ProjectAdminCard = ({
       <ProjectStatusBanner
         status={
           ProjectStatus({
-            projectData: projectData as ProjectWithRoundDetailsType,
+            projectData: projectData as projectWithFundingRoundType,
           })?.status as string
         }
         roundName={
           ProjectStatus({
-            projectData: projectData as ProjectWithRoundDetailsType,
+            projectData: projectData as projectWithFundingRoundType,
           })?.round
             ? ProjectStatus({
-                projectData: projectData as ProjectWithRoundDetailsType,
+                projectData: projectData as projectWithFundingRoundType,
               })?.round?.fundingRound.roundName
             : undefined
         }
@@ -70,11 +70,11 @@ const ProjectAdminCard = ({
       <CardHeader>
         <ProjectHeader
           activeProject={activeProject}
-          project={projectData as ProjectWithRoundDetailsType}
+          project={projectData as projectWithFundingRoundType}
         />
       </CardHeader>
       {ProjectStatus({
-        projectData: projectData as ProjectWithRoundDetailsType,
+        projectData: projectData as projectWithFundingRoundType,
       })?.round?.status === ProjectJoinRoundStatus.APPROVED && (
         <>
           <CardBody

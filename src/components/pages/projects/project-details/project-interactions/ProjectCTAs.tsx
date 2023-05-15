@@ -21,10 +21,10 @@ import { useState } from 'react';
 import { BsTwitter } from 'react-icons/bs';
 import { MdArrowForward } from 'react-icons/md';
 import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
-import { ProjectWithCommentsAndRoundsType } from '~/types/IProjectDetails';
+import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 
 interface ProjectCTAsProps {
-  projectDetails: ProjectWithCommentsAndRoundsType;
+  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
   isLoading: boolean;
 }
 

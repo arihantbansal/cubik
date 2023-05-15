@@ -1,9 +1,9 @@
-import { ProjectWithRoundDetailsType } from '~/types/project';
+import { projectWithFundingRoundType } from '~/types/project';
 
 export const ProjectRound = ({
   project,
 }: {
-  project: ProjectWithRoundDetailsType;
+  project: projectWithFundingRoundType;
 }): { roundName: string; colorScheme: string } => {
   const activeRounds = project.ProjectJoinRound.filter(
     (projectRounds) => projectRounds.fundingRound.active

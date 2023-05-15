@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Center,
   Collapse,
   Container,
@@ -164,7 +165,7 @@ export const Header = memo(function Header({
           justifyContent={landingPage ? 'center' : 'flex-start'}
           mx="auto"
         >
-          <Link href="/projects" passHref prefetch>
+          <Button h="full" variant={'unstyled'} as={Link} href="/projects">
             <Box
               as="p"
               textStyle={'title4'}
@@ -173,8 +174,8 @@ export const Header = memo(function Header({
             >
               Projects
             </Box>
-          </Link>
-          <Link href="/grants" passHref prefetch>
+          </Button>
+          <Button h="full" variant={'unstyled'} as={Link} href="/grants">
             <Box
               as="p"
               textStyle={'title4'}
@@ -183,7 +184,7 @@ export const Header = memo(function Header({
             >
               Grants
             </Box>
-          </Link>
+          </Button>
         </HStack>
       </>
     ) : (

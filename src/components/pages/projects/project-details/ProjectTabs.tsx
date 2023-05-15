@@ -1,5 +1,5 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
-import { ProjectWithCommentsAndRoundsType } from '~/types/IProjectDetails';
+import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 import ProjectContributors from './project-interactions/project-tabs/ProjectContributors';
 import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
 import Discussions from './ProjectDiscussion';
@@ -8,7 +8,7 @@ export const ProjectsTabs = ({
   projectDetails,
   isLoading,
 }: {
-  projectDetails: ProjectWithCommentsAndRoundsType;
+  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
   isLoading: boolean;
 }) => {
   console.log('project details - ', projectDetails);

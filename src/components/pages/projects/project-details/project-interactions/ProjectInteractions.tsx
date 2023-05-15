@@ -21,10 +21,8 @@ import {
 } from 'react-icons/fa';
 import { HiLink } from 'react-icons/hi';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
-import {
-  ProjectCreatorTeamType,
-  ProjectWithCommentsAndRoundsType,
-} from '~/types/IProjectDetails';
+import { ProjectCreatorTeamType } from '~/types/IProjectDetails';
+import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 import {
   ProjectCreatorSkeleton,
   ProjectFundingSkeleton,
@@ -224,7 +222,7 @@ export const ProjectSocials = ({
   projectDetails,
 }: {
   hideTitle?: boolean;
-  projectDetails: ProjectWithCommentsAndRoundsType | ProjectsModel;
+  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType | ProjectsModel;
 }) => {
   const socials = [
     {
@@ -318,7 +316,7 @@ export const ProjectCreatorTeamMember = ({
 export const ProjectOwner = ({
   projectDetails,
 }: {
-  projectDetails: ProjectWithCommentsAndRoundsType;
+  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
 }) => {
   return (
     <VStack gap="16px" align={'start'} w="full">
@@ -386,7 +384,7 @@ export const ProjectCreatorAndLinks = ({
   projectDetails,
   isLoading,
 }: {
-  projectDetails: ProjectWithCommentsAndRoundsType;
+  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
   isLoading: boolean;
 }) => {
   return (
@@ -427,7 +425,7 @@ export const ProjectCreatorAndLinks = ({
 };
 
 interface ProjectInteractionsProps {
-  projectDetails: ProjectWithCommentsAndRoundsType;
+  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
   isLoading: boolean;
 }
 

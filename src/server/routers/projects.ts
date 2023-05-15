@@ -95,6 +95,7 @@ export const projectsRouter = router({
       }
     }),
 
+  // @type: ProjectWithRoundDetailsWithOwnerWithTeamType
   findOne: procedure
     .input(
       z.object({
@@ -113,17 +114,6 @@ export const projectsRouter = router({
               user: true,
             },
           },
-          comments: {
-            include: {
-              user: true,
-              Reply: {
-                include: {
-                  comment: true,
-                  user: true,
-                },
-              },
-            },
-          },
           ProjectJoinRound: {
             include: {
               fundingRound: true,
@@ -133,6 +123,7 @@ export const projectsRouter = router({
       });
       return res;
     }),
+
   findAll: procedure.query(async () => {
     try {
       const res = await prisma.projectsModel.findMany({
@@ -149,23 +140,26 @@ export const projectsRouter = router({
       throw new Error(error.message || 'There was some error');
     }
   }),
+
+  // @type: ProjectWithRoundDetailsWithContributionWithUserType
   findMany: procedure.query(async () => {
     try {
       const res = await prisma.projectsModel.findMany({
         include: {
           ProjectJoinRound: {
             include: {
-              fundingRound: true,
-            },
-          },
-        },
-        where: {
-          status: 'VERIFIED',
-          AND: {
-            ProjectJoinRound: {
-              some: {
-                status: 'APPROVED',
+              fundingRound: {
+                include: {
+                  Contribution: {
+                    include: {
+                      user: true,
+                    },
+                  },
+                },
               },
+            },
+            where: {
+              status: ProjectJoinRoundStatus.APPROVED,
             },
           },
         },
@@ -418,6 +412,7 @@ export const projectsRouter = router({
       };
     }),
 
+  // @type projectWithFundingRoundType
   projectAdminDetails: procedure
     .input(
       z.object({

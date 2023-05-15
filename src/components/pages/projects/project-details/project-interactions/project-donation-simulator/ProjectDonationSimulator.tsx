@@ -24,7 +24,7 @@ import { FailureToast, SuccessToast } from '~/components/common/toasts/Toasts';
 import { tokens } from '~/components/common/tokens/DonationTokens';
 import { DonationFormType } from '~/interfaces/donationForm';
 import { tokenGroup } from '~/interfaces/token';
-import { ProjectWithCommentsAndRoundsType } from '~/types/IProjectDetails';
+import { projectWithFundingRoundType } from '~/types/project';
 
 import {
   connection,
@@ -36,7 +36,7 @@ import { AmountInput } from './form/DonationAmountInput';
 import { WalletBalanceError } from './form/WalletBalanceError';
 
 type ProjectDonationSimulatorProps = {
-  projectDetails: ProjectWithCommentsAndRoundsType;
+  projectDetails: projectWithFundingRoundType;
   height: number;
   width: number;
   setDonationSuccessful?: any;
@@ -213,11 +213,18 @@ export const ProjectDonationSimulator = ({
 
   console.log('watch amount', watch('amount'));
   return (
-    <Stack maxW="26rem" gap="40px" h="full" direction={'row'} w="fit-content">
+    <Stack
+      w={{ base: '20rem', sm: '22rem', md: '26rem' }}
+      gap="40px"
+      h="full"
+      direction={'row'}
+      overflow={'hidden'}
+      maxW="90vw"
+    >
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{
-          width: '30rem',
+          width: 'full',
           height: '100%',
           display: 'flex',
           gap: '52px',

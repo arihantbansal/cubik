@@ -15,7 +15,7 @@ import Link from 'next/link';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import { BiPlus } from 'react-icons/bi';
 import { FiChevronRight } from 'react-icons/fi';
-import { formatDate } from '~/utils/firnatDate';
+import { formatDate } from '~/utils/formatDates';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { trpc } from '~/utils/trpc';
 // todo make upcoming live grants separate

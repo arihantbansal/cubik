@@ -5,17 +5,19 @@ import {
   IconButton,
   Input,
   InputGroup,
-  InputLeftElement,
+  InputRightElement,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   Skeleton,
+  Stack,
   VStack,
 } from '@chakra-ui/react';
 import { Round } from '@prisma/client';
 import React, { useMemo, useRef, useState } from 'react';
-import { BiCheck, BiSearch } from 'react-icons/bi';
+import { BiCheck, BiChevronDown } from 'react-icons/bi';
+import { MdClear } from 'react-icons/md';
 import { RiFilter3Fill } from 'react-icons/ri';
 import { RxCross1 } from 'react-icons/rx';
 import CategoryTag from '~/components/common/tags/CategoryTags';
@@ -47,15 +49,14 @@ export type CategoryType = {
 };
 
 export const ProjectListWithFilter: React.FC = () => {
+  const { data: projects, isLoading } = trpc.project.findMany.useQuery();
+  const { data: roundsData, isLoading: roundsLoading } =
+    trpc.round.findActive.useQuery();
+  console.log('projects data - ', projects);
   const [selectedCategory, setSelectedCategory] = useState<
     CategoryType | undefined
   >();
   const [selectedRounds, setSelectedRounds] = useState<Round[] | undefined>();
-
-  const { data: projects, isLoading } = trpc.project.findMany.useQuery();
-  const { data: roundsData, isLoading: roundsLoading } =
-    trpc.round.findActive.useQuery();
-
   React.useEffect(() => {
     if (roundsData) {
       setSelectedRounds(roundsData);
@@ -86,7 +87,7 @@ export const ProjectListWithFilter: React.FC = () => {
     return filteredProjects;
   }, [projects, selectedCategory, selectedRounds]);
 
-  // Make sure to import or define the shuffle function
+  //todo: if the input data is similar do not call the function but return the same order
   const shuffledProjects = useMemo(
     () => shuffle(filteredProjects),
     [filteredProjects]
@@ -129,13 +130,30 @@ export const ProjectListWithFilter: React.FC = () => {
 
   return (
     <>
-      <HStack zIndex={'9'} w="full" justify={'space-between'}>
+      <Stack
+        direction={{ base: 'column-reverse', md: 'row' }}
+        zIndex={'9'}
+        gap={{ base: '16px', md: '' }}
+        w="full"
+        justify={'space-between'}
+      >
         <HStack
           ref={scrollRef}
           overflow="clip"
           w="full"
           justify="start"
           whiteSpace="nowrap"
+          position={'relative'}
+          _after={{
+            content: '""',
+            position: 'absolute',
+            top: '45%',
+            right: '0%',
+            transform: 'translateY(-50%)',
+            height: { base: '2.2rem', md: '3rem' },
+            width: '3rem',
+            background: 'linear-gradient(90deg, #0C0D0D00 0%, #000 80%)',
+          }}
         >
           {selectedCategory ? (
             <>
@@ -183,23 +201,26 @@ export const ProjectListWithFilter: React.FC = () => {
             </>
           )}
         </HStack>
-        <HStack w={{ base: '200px', md: 'fit-content' }}>
+        <HStack w={{ base: 'full', md: 'fit-content' }}>
           <InputGroup
             position={'relative'}
             rounded="12px"
-            w={{ base: '180px', md: '320px' }}
+
+            w={{ base: 'full', md: '320px' }}
           >
-            <InputLeftElement
-              h={{ base: '2rem', md: '2.5rem' }}
-              w="3rem"
+            <InputRightElement
+              h={{ base: '2.2rem', md: '2.5rem' }}
+              w={{ base: '2.2rem', md: '2.5rem' }}
               pointerEvents="none"
               bg="transparent"
             >
-              <BiSearch size={18} color="#75757580" />
-            </InputLeftElement>
+              <BiChevronDown size={18} color="#626665" />
+            </InputRightElement>
             <Input
               rounded="12px"
-              h={{ base: '2rem', md: '2.5rem' }}
+              h={{ base: '2.2rem', md: '2.5rem' }}
+              outline="none"
+              border="none"
               placeholder="Search Categories..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -223,6 +244,10 @@ export const ProjectListWithFilter: React.FC = () => {
                 borderColor: 'none !important',
                 outline: 'none !important',
               }}
+              _placeholder={{
+                fontSize: { base: '12px', md: '14px' },
+                color: '#75757580',
+              }}
             />
             {searchTerm && (
               <VStack w="full" position={'absolute'} top="120%" right="0%">
@@ -232,25 +257,34 @@ export const ProjectListWithFilter: React.FC = () => {
                   zIndex={'100'}
                   maxH="13rem"
                   overflow={'scroll'}
-                  w={{ base: '200px', md: '320px' }}
+                  w={{ base: 'full', md: '320px' }}
                   bg="red"
                   alignItems={'start'}
                   p="0"
                   backgroundColor={'#0C0D0D'}
                 >
-                  <Box
-                    w="100%"
-                    backgroundColor={'#0C0D0D'}
+                  <HStack
                     px="16px"
                     pt="12px"
                     pb="8px"
-                    zIndex="9"
-                    as="p"
-                    textStyle={'body4'}
+                    w="full"
+                    justify={'space-between'}
+                    backgroundColor={'#0C0D0D'}
                     color="neutral.7"
                   >
-                    Categories
-                  </Box>
+                    <Box w="100%" zIndex="9" as="p" textStyle={'body4'}>
+                      Categories
+                    </Box>
+                    <Center
+                      as="button"
+                      onClick={() => {
+                        setSearchTerm('');
+                        setSelectedCategory(undefined);
+                      }}
+                    >
+                      <MdClear />
+                    </Center>
+                  </HStack>
                   {filteredCategories.length === 0 ? (
                     <Center w="full" p="12px" pt="0">
                       <Skeleton w="full" height={'2rem'} opacity="12px" />
@@ -369,7 +403,7 @@ export const ProjectListWithFilter: React.FC = () => {
             </MenuList>
           </Menu>
         </HStack>
-      </HStack>
+      </Stack>
       <VStack w="full" align={'start'} gap="16px">
         {isLoading ? (
           <ProjectListLoadingSkeleton />
