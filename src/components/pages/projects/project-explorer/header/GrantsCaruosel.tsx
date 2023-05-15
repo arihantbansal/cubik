@@ -5,8 +5,10 @@ import Slider from 'react-slick';
 // Settings for the slider
 const settings = {
   dots: true,
+  arrows: false,
   infinite: true,
-  speed: 500,
+  speed: 100,
+  duration: 6000,
   autoplay: true,
   slidesToShow: 1,
   slidesToScroll: 1,

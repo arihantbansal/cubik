@@ -53,7 +53,6 @@ export const ProjectListWithFilter: React.FC = () => {
   const [selectedRounds, setSelectedRounds] = useState<Round[] | undefined>();
 
   const { data: projects, isLoading } = trpc.project.findMany.useQuery();
-
   const { data: roundsData, isLoading: roundsLoading } =
     trpc.round.findActive.useQuery();
 
@@ -130,7 +129,7 @@ export const ProjectListWithFilter: React.FC = () => {
 
   return (
     <>
-      <HStack w="full" justify={'space-between'}>
+      <HStack zIndex={'9'} w="full" justify={'space-between'}>
         <HStack
           ref={scrollRef}
           overflow="clip"
@@ -188,12 +187,11 @@ export const ProjectListWithFilter: React.FC = () => {
           <InputGroup
             position={'relative'}
             rounded="12px"
-            w={{ base: '200px', md: '320px' }}
-            zIndex={'99'}
+            w={{ base: '180px', md: '320px' }}
           >
             <InputLeftElement
+              h={{ base: '2rem', md: '2.5rem' }}
               w="3rem"
-              h="full"
               pointerEvents="none"
               bg="transparent"
             >
@@ -201,6 +199,7 @@ export const ProjectListWithFilter: React.FC = () => {
             </InputLeftElement>
             <Input
               rounded="12px"
+              h={{ base: '2rem', md: '2.5rem' }}
               placeholder="Search Categories..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -294,18 +293,17 @@ export const ProjectListWithFilter: React.FC = () => {
           </InputGroup>
           <Menu closeOnSelect={false}>
             <MenuButton
-              birder="1px solid red"
               as={IconButton}
               aria-label="Options"
               rounded="12px"
-              p="10px"
+              p={{ base: '8px', md: '10px' }}
               height="100%"
               backgroundColor={'neutral.3'}
               _hover={{
                 backgroundColor: 'neutral.4',
                 boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
               }}
-              icon={<RiFilter3Fill size={22} color="#626665" />}
+              icon={<RiFilter3Fill size={18} color="#626665" />}
             />
             <MenuList
               outline="0px"
@@ -373,17 +371,15 @@ export const ProjectListWithFilter: React.FC = () => {
         </HStack>
       </HStack>
       <VStack w="full" align={'start'} gap="16px">
-        <VStack w="full" align={'start'} gap="16px">
-          {isLoading ? (
-            <ProjectListLoadingSkeleton />
-          ) : selectedRounds &&
-            shuffledProjects &&
-            shuffledProjects.length > 0 ? (
-            <ProjectsList allProjectsData={shuffledProjects} />
-          ) : (
-            <EmptyProjectsState />
-          )}
-        </VStack>
+        {isLoading ? (
+          <ProjectListLoadingSkeleton />
+        ) : selectedRounds &&
+          shuffledProjects &&
+          shuffledProjects.length > 0 ? (
+          <ProjectsList allProjectsData={shuffledProjects} />
+        ) : (
+          <EmptyProjectsState />
+        )}
       </VStack>
     </>
   );

@@ -312,7 +312,7 @@ const FundingRoundBanner = ({
               color="#4ADE80"
             >
               <RippleEffect />
-              <Box as="p" textStyle="body5">
+              <Box as="p" textStyle={{ base: 'body6', md: 'body5' }}>
                 {getDateStatus(startDate, endDate)}
               </Box>
             </Center>
@@ -328,7 +328,7 @@ const FundingRoundBanner = ({
                 <Box
                   color="neutral.11"
                   as="p"
-                  textStyle={{ base: 'title1', md: 'headline3' }}
+                  textStyle={{ base: 'title2', md: 'headline3' }}
                 >
                   {roundName} Round
                 </Box>
@@ -336,7 +336,7 @@ const FundingRoundBanner = ({
                   maxW={{ base: '340px', md: '500px' }}
                   as="p"
                   color="neutral.8"
-                  textStyle={{ base: 'body4', md: 'body3' }}
+                  textStyle={{ base: 'body5', md: 'body3' }}
                 >
                   {roundDescription}
                 </Box>
@@ -352,12 +352,12 @@ const FundingRoundBanner = ({
                   color="neutral.8"
                   textTransform={'uppercase'}
                   as="p"
-                  textStyle={{ base: 'body6', md: 'overline4' }}
+                  textStyle={{ base: 'body7', md: 'overline4' }}
                   letterSpacing="2px"
                 >
                   Matching Pool :
                 </Box>
-                <Box as="p" textStyle={{ base: 'body4', md: 'title3' }}>
+                <Box as="p" textStyle={{ base: 'body5', md: 'title3' }}>
                   ${matchingPool}
                 </Box>
               </HStack>

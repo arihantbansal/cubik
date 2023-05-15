@@ -127,7 +127,7 @@ export const Header = memo(function Header({
   const NavbarCTA: React.FC<any> = ({ children }) => {
     return (
       <Center
-        h={{ base: '1.9rem', md: '2.6rem' }}
+        h={{ base: '2rem', md: '2.6rem' }}
         justifyContent="end"
         zIndex="99"
       >
@@ -208,7 +208,7 @@ export const Header = memo(function Header({
     >
       <Flex
         mx="auto"
-        p={{ base: '20px 16px', md: '20px 20px' }}
+        p={{ base: '14px 16px', md: '20px 20px' }}
         maxW="7xl"
         alignItems={'center'}
         justifyContent={'space-between'}
