@@ -210,8 +210,14 @@ export const ProjectDonationSimulator = ({
       return null;
     }
   };
+  const EstimatedAmmount = trpc.pool.findEstimated.useQuery({
+    amount: watch('amount'),
+    projectId: projectDetails.id,
+    roundId: projectDetails?.ProjectJoinRound.find(
+      (e) => e.status === 'APPROVED'
+    )?.fundingRound.id as string,
+  });
 
-  console.log('watch amount', watch('amount'));
   return (
     <Stack maxW="26rem" gap="40px" h="full" direction={'row'} w="fit-content">
       <form
@@ -335,12 +341,10 @@ export const ProjectDonationSimulator = ({
                   play
                   perspective={700}
                   numbers={
-                    '$' +
-                    String(
-                      watch('amount') && !isNaN(Number(watch('amount')))
-                        ? Number(watch('amount')).toFixed(2)
-                        : '0.00'
-                    )
+                    '$' + String(EstimatedAmmount.data ?? 0)
+                    // watch('amount') && !isNaN(Number(watch('amount')))
+                    //   ? Number(watch('amount')).toFixed(2)
+                    //   : '0.00'
                   }
                 />
               </Center>
