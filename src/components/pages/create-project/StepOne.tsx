@@ -183,6 +183,31 @@ const StepOne: React.FC<StepOneProps> = ({
             </FormErrorMessage>
           )}
         </FormControl>
+        <FormControl isRequired w="full" isInvalid={Boolean(errors.email)}>
+          <FormLabel
+            fontSize={{ base: '12px', md: '14px' }}
+            pb="0.5rem"
+            htmlFor="email"
+          >
+            Email
+          </FormLabel>
+          <Input
+            id="email"
+            placeholder="Enter your email"
+            _placeholder={{
+              fontSize: { base: '12px', md: '14px' },
+              color: '#3B3D3D',
+            }}
+            {...register('email', {
+              required: true,
+            })}
+          />
+          {errors.email && (
+            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+              {errors.email.message}
+            </FormErrorMessage>
+          )}
+        </FormControl>
         <Controller
           control={control}
           name="category"
