@@ -211,8 +211,14 @@ export const ProjectDonationSimulator = ({
       return null;
     }
   };
+  const EstimatedAmmount = trpc.pool.findEstimated.useQuery({
+    amount: watch('amount'),
+    projectId: projectDetails.id,
+    roundId: projectDetails?.ProjectJoinRound.find(
+      (e) => e.status === 'APPROVED'
+    )?.fundingRound.id as string,
+  });
 
-  console.log('watch amount', watch('amount'));
   return (
     <Stack
       w={{ base: '20rem', sm: '22rem', md: '26rem' }}
@@ -342,14 +348,7 @@ export const ProjectDonationSimulator = ({
                   color="#A8F0E6"
                   play
                   perspective={700}
-                  numbers={
-                    '$' +
-                    String(
-                      watch('amount') && !isNaN(Number(watch('amount')))
-                        ? Number(watch('amount')).toFixed(2)
-                        : '0.00'
-                    )
-                  }
+                  numbers={'$' + String(EstimatedAmmount.data ?? 0)}
                 />
               </Center>
             </HStack>

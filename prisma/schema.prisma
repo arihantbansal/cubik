@@ -76,6 +76,7 @@ model ProjectsModel {
   short_description String              @db.VarChar(2000)
   logo              String              @db.VarChar(1000)
   owner_publickey   String
+  email            String              @default("")
   sig               String              @default("")
   long_description  String              @db.VarChar(5000)
   industry          String
