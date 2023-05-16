@@ -251,13 +251,13 @@ const GrantUnderReviewProjects = ({
                         h="full"
                         minH="2.4rem"
                         w="full"
-                        backgroundColor="surface.red.1"
+                        backgroundColor="surface.red.3"
                         border="1px solid transparent"
                         rounded="8px"
                         _hover={{
                           border: '1px solid #FF333D',
                         }}
-                        color={'surface.red.2'}
+                        color={'surface.red.1'}
                         maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
                         onClick={() => {
                           markRejected(

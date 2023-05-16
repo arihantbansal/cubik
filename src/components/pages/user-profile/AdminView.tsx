@@ -75,7 +75,7 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
               </Flex>
             </TabPanel>
             <TabPanel w="full">
-              <UserContributions />
+              <UserContributions userId={user.id} />
             </TabPanel>
           </TabPanels>
         </Tabs>

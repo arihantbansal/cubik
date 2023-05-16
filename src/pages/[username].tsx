@@ -61,7 +61,7 @@ const ProfilePage = () => {
     <>
       <SEO
         title={`@${user.data.username}`}
-        description={`${user.data.username} supports public good on Cubik`}
+        description={`${user.data.username}'s profile on Cubik`}
         image={`https://res.cloudinary.com/demonicirfan/image/upload/v1684179451/cubik%20og.png`}
       />
       <Container

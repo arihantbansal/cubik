@@ -176,7 +176,7 @@ const ProjectContributors = ({
     error,
   } = trpc.contribution.getProjectContributors.useQuery({ projectId });
 
-  const pageSize = 10;
+  const pageSize = 15;
   const siblingCount = 1;
 
   const totalContributors = contributorsData ? contributorsData.length : 0;
@@ -321,13 +321,15 @@ const ProjectContributors = ({
               </Tbody>
             )}
           </Table>
-          <Pagination
-            currentPage={currentPage}
-            totalCount={totalContributors}
-            siblingCount={siblingCount}
-            pageSize={pageSize}
-            onPageChange={setCurrentPage}
-          />
+          {currentContributors.length >= pageSize && (
+            <Pagination
+              currentPage={currentPage}
+              totalCount={totalContributors}
+              siblingCount={siblingCount}
+              pageSize={pageSize}
+              onPageChange={setCurrentPage}
+            />
+          )}
         </>
       )}
     </VStack>

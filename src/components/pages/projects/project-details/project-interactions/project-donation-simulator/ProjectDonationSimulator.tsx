@@ -351,7 +351,9 @@ export const ProjectDonationSimulator = ({
                   color="#A8F0E6"
                   play
                   perspective={700}
-                  numbers={'$' + String(EstimatedAmmount.data ?? 0)}
+                  numbers={
+                    '$' + String((EstimatedAmmount.data ?? 0).toFixed(3))
+                  }
                 />
               </Center>
             </HStack>

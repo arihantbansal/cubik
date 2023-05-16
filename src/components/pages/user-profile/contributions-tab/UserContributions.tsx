@@ -1,6 +1,5 @@
 import {
   Avatar,
-  AvatarGroup,
   Box,
   Center,
   HStack,
@@ -14,18 +13,147 @@ import {
   Tr,
   VStack,
 } from '@chakra-ui/react';
+import { Key, ReactChild } from 'react';
 import { BiChevronRight } from 'react-icons/bi';
 import CustomTag from '~/components/common/tags/CustomTag';
 import { BONK, SOL, USDC } from '~/components/common/tokens/token';
-import CustomTagContainer from './CustomTagContainer';
+import { UserContributionsWithProjectOwnerAndProjectRound } from '~/types/contribution';
+import { formatNumberWithK } from '~/utils/formatWithK';
+import { timeSince } from '~/utils/gettimeSince';
+import { trpc } from '~/utils/trpc';
 
-const UserContributions = () => {
+const UserContributionTableRow = ({
+  contribution,
+}: {
+  contribution: UserContributionsWithProjectOwnerAndProjectRound;
+}) => {
+  console.log('contribution - ', contribution);
+
+  // projectLogo
+  // projectName
+  // projectCreator
+  // projectCategory
+  // amount donated by user
+  // project donors data
+  // total amount raised
+  return (
+    <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
+      <Td px="12px">
+        <HStack align={'start'} gap={{ base: '14px', md: '16px' }}>
+          <Avatar
+            borderRadius={'8px'}
+            width={{ base: '36px', md: '52px' }}
+            height={{ base: '36px', md: '52px' }}
+            src={contribution.ProjectsModel.logo}
+          />
+          <VStack
+            align={'start'}
+            justify="center"
+            spacing={{ base: '8px', md: '8px' }}
+          >
+            <Box
+              as="p"
+              textStyle={{ base: 'title5', md: 'title4' }}
+              color="neutral.11"
+            >
+              {contribution.ProjectsModel.name}
+            </Box>
+            <Box
+              as="p"
+              textStyle={{ base: 'body5', md: 'body4' }}
+              color="neutral.7"
+            >
+              by <b>@{contribution.ProjectsModel.owner.username}</b>
+            </Box>
+          </VStack>
+        </HStack>
+      </Td>
+      <Td px="12px">
+        {JSON.parse(contribution.ProjectsModel.industry).map(
+          (industry: { value: Key | null | undefined; label: ReactChild }) => (
+            <CustomTag key={industry.value}>{industry.label}</CustomTag>
+          )
+        )}
+      </Td>
+      <Td px="12px">
+        <HStack gap="8px" align={'center'}>
+          <Center>
+            {contribution.token === 'sol' ? (
+              <SOL size={32} />
+            ) : contribution.token === 'usdc' ? (
+              <USDC size={32} />
+            ) : contribution.token === 'bonk' ? (
+              <BONK size={32} />
+            ) : (
+              '- -'
+            )}
+          </Center>
+          <VStack justify={'center'} spacing="2px" align={'start'}>
+            <HStack align={'baseline'} color="white">
+              <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
+                {formatNumberWithK(contribution.total)}
+              </Box>
+              <Box as="p" textStyle={{ base: 'title8', md: 'title7' }}>
+                {contribution.token.toUpperCase()}
+              </Box>
+            </HStack>
+            <Box
+              as="p"
+              color="neutral.8"
+              textStyle={{ base: 'body6', md: 'body5' }}
+            >
+              {formatNumberWithK(contribution.usdTotal)}$
+            </Box>
+          </VStack>
+        </HStack>
+      </Td>
+      <Td px="12px">
+        <VStack alignItems={'start'} gap="0px" justify="start">
+          <Box
+            as="p"
+            textStyle={{ base: 'title5', md: 'title4' }}
+            color="neutral.11"
+          >
+            {
+              contribution.ProjectsModel.ProjectJoinRound[0].fundingRound
+                .roundName
+            }{' '}
+            Round
+          </Box>
+          <Box
+            as="p"
+            textStyle={{ base: 'body5', md: 'body4' }}
+            color="neutral.7"
+          >
+            {timeSince(new Date(contribution.createdAt))}
+          </Box>
+        </VStack>
+      </Td>
+      <Td px="12px">
+        <Box
+          as="p"
+          textStyle={{ base: 'title4', md: 'title3' }}
+          color="neutral.11"
+        >
+          $12,248.64
+        </Box>
+      </Td>
+      <Td px="12px">
+        <BiChevronRight size="24" />
+      </Td>
+    </Tr>
+  );
+};
+
+const UserContributions = ({ userId }: { userId: string }) => {
+  const { data, isError, isLoading } =
+    trpc.contribution.getUserContributions.useQuery({ userId });
   return (
     <TableContainer w="full">
       <Table variant="unstyled">
         <Thead>
           <Tr>
-            <Th px="12px">
+            <Th w="20%" px="12px">
               <Text
                 color="#ADB8B6"
                 size={{ base: '14px', md: '16px' }}
@@ -35,7 +163,7 @@ const UserContributions = () => {
                 Projects
               </Text>
             </Th>
-            <Th px="12px">
+            <Th w="25%" px="12px">
               <Text
                 color="#ADB8B6"
                 size={{ base: '14px', md: '16px' }}
@@ -45,7 +173,7 @@ const UserContributions = () => {
                 Category
               </Text>
             </Th>
-            <Th px="12px">
+            <Th w="15%" px="12px">
               <Text
                 color="#ADB8B6"
                 size={{ base: '14px', md: '16px' }}
@@ -55,17 +183,17 @@ const UserContributions = () => {
                 Amount Contributed
               </Text>
             </Th>
-            <Th px="12px">
+            <Th w="20%" px="12px">
               <Text
                 color="#ADB8B6"
                 size={{ base: '14px', md: '16px' }}
                 textTransform={'capitalize'}
                 fontWeight="500"
               >
-                Contributors
+                Round
               </Text>
             </Th>
-            <Th px="12px">
+            <Th w="15%" px="12px">
               <Text
                 color="#ADB8B6"
                 size={{ base: '14px', md: '16px' }}
@@ -75,370 +203,17 @@ const UserContributions = () => {
                 Total Amount Raised
               </Text>
             </Th>
-            <Th px="12px"></Th>
+            <Th w="5%" px="12px"></Th>
           </Tr>
         </Thead>
         <Tbody>
-          <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
-            <Td px="12px">
-              <HStack align={'start'} gap={{ base: '14px', md: '16px' }}>
-                <Avatar
-                  width={{ base: '36px', md: '52px' }}
-                  height={{ base: '36px', md: '52px' }}
-                  src="https://img.onesignal.com/permanent/0d9397a8-f8b4-469e-a109-734cce31c12c"
-                />
-                <VStack
-                  align={'start'}
-                  justify="center"
-                  spacing={{ base: '8px', md: '12px' }}
-                >
-                  <Box
-                    as="p"
-                    textStyle={{ base: 'title5', md: 'title4' }}
-                    color="neutral.11"
-                  >
-                    Solsea
-                  </Box>
-                  <Box
-                    as="p"
-                    textStyle={{ base: 'body6', md: 'body5' }}
-                    color="neutral.7"
-                  >
-                    by <b>@dhruvraj</b>
-                  </Box>
-                </VStack>
-              </HStack>
-            </Td>
-            <Td px="12px">
-              <CustomTag>NFTs</CustomTag>
-            </Td>
-            <Td px="12px">
-              <HStack gap="8px" align={'center'}>
-                <Center>
-                  <USDC size={32} />
-                </Center>
-                <VStack justify={'center'} spacing="2px" align={'start'}>
-                  <HStack align={'baseline'} color="white">
-                    <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
-                      1.0
-                    </Box>
-                    <Box as="p" textStyle={{ base: 'title8', md: 'title7' }}>
-                      USDC
-                    </Box>
-                  </HStack>
-                  <Box
-                    as="p"
-                    color="neutral.8"
-                    textStyle={{ base: 'body6', md: 'body5' }}
-                  >
-                    1.0$
-                  </Box>
-                </VStack>
-              </HStack>
-            </Td>
-            <Td px="12px">
-              <HStack gap="0px" align={'center'} justify="start">
-                <AvatarGroup size="sm" max={3} spacing="-4">
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Prosper Otemuyiwa"
-                    src="https://bit.ly/prosper-baba"
-                  />
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Christian Nwamba"
-                    src="https://bit.ly/code-beast"
-                  />
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Segun Adebayo"
-                    src="https://bit.ly/sage-adebayo"
-                  />
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Kent Dodds"
-                    src="https://bit.ly/kent-c-dodds"
-                  />
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Prosper Otemuyiwa"
-                    src="https://bit.ly/prosper-baba"
-                  />
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Christian Nwamba"
-                    src="https://bit.ly/code-beast"
-                  />
-                </AvatarGroup>
-                <Box
-                  as="p"
-                  color="white"
-                  textStyle={{ base: 'body6', md: 'body5' }}
-                >
-                  +50
-                </Box>
-              </HStack>
-            </Td>
-            <Td px="12px">
-              <Box
-                as="p"
-                textStyle={{ base: 'title4', md: 'title3' }}
-                color="neutral.11"
-              >
-                $12,248.64
-              </Box>
-            </Td>
-            <Td px="12px">
-              <BiChevronRight size="24" />
-            </Td>
-          </Tr>
-          <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
-            <Td px="12px">
-              <HStack align={'start'} gap={{ base: '14px', md: '16px' }}>
-                <Avatar
-                  width={{ base: '36px', md: '52px' }}
-                  height={{ base: '36px', md: '52px' }}
-                  src="https://solana.com/_next/image?url=%2Fapi%2Fprojectimg%2Fckx5uuxi6003009latrl4rkbn%3Ftype%3DLOGO&w=1920&q=75"
-                />
-                <VStack
-                  align={'start'}
-                  justify="center"
-                  spacing={{ base: '8px', md: '12px' }}
-                >
-                  <Box
-                    as="p"
-                    textStyle={{ base: 'title5', md: 'title4' }}
-                    color="neutral.11"
-                  >
-                    Digital Eyes Market
-                  </Box>
-                  <Box
-                    as="p"
-                    textStyle={{ base: 'body6', md: 'body5' }}
-                    color="neutral.7"
-                  >
-                    by <b>@irffan</b>
-                  </Box>
-                </VStack>
-              </HStack>
-            </Td>
-            <Td px="12px">
-              <HStack>
-                <CustomTag>Wallet</CustomTag>
-                <CustomTag>NFTs</CustomTag>
-              </HStack>
-            </Td>
-            <Td px="12px">
-              <HStack gap="8px" align={'center'}>
-                <Center>
-                  <BONK size={32} />
-                </Center>
-                <VStack justify={'center'} spacing="2px" align={'start'}>
-                  <HStack align={'baseline'} color="white">
-                    <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
-                      2.0M
-                    </Box>
-                    <Box as="p" textStyle={{ base: 'title8', md: 'title7' }}>
-                      BONK
-                    </Box>
-                  </HStack>
-                  <Box
-                    as="p"
-                    color="neutral.8"
-                    textStyle={{ base: 'body6', md: 'body5' }}
-                  >
-                    500.06$
-                  </Box>
-                </VStack>
-              </HStack>
-            </Td>
-            <Td px="12px">
-              <HStack gap="0px" align={'center'} justify="start">
-                <AvatarGroup size="sm" max={3} spacing="-4">
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Ryan Florence"
-                    src="https://randomuser.me/api/portraits/women/76.jpg"
-                  />
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Segun Adebayo"
-                    src="https://randomuser.me/api/portraits/women/6.jpg"
-                  />
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Christian Nwamba"
-                    src="https://bit.ly/code-beast"
-                  />
-                </AvatarGroup>
-                <Box
-                  as="p"
-                  color="white"
-                  textStyle={{ base: 'body6', md: 'body5' }}
-                >
-                  +20
-                </Box>
-              </HStack>
-            </Td>
-            <Td px="12px">
-              <Box
-                as="p"
-                textStyle={{ base: 'title4', md: 'title3' }}
-                color="neutral.11"
-              >
-                $12,248.64
-              </Box>
-            </Td>
-            <Td px="12px">
-              <BiChevronRight size="24" />
-            </Td>
-          </Tr>
-          <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
-            <Td px="12px">
-              <HStack align={'start'} gap={{ base: '14px', md: '16px' }}>
-                <Avatar
-                  width={{ base: '36px', md: '52px' }}
-                  height={{ base: '36px', md: '52px' }}
-                  src="https://solana.com/_next/image?url=%2Fapi%2Fprojectimg%2Fckwgwh8w830938eysxhy5e8syg%3Ftype%3DLOGO&w=1920&q=75"
-                />
-                <VStack
-                  align={'start'}
-                  justify="center"
-                  spacing={{ base: '8px', md: '12px' }}
-                >
-                  <Box
-                    as="p"
-                    textStyle={{ base: 'title5', md: 'title4' }}
-                    color="neutral.11"
-                  >
-                    Solend
-                  </Box>
-                  <Box
-                    as="p"
-                    textStyle={{ base: 'body6', md: 'body5' }}
-                    color="neutral.7"
-                  >
-                    by <b>@soju</b>
-                  </Box>
-                </VStack>
-              </HStack>
-            </Td>
-            <Td px="12px">
-              <CustomTagContainer />
-            </Td>
-            <Td px="12px">
-              <HStack gap="8px" align={'center'}>
-                <Center>
-                  <SOL size={32} />
-                </Center>
-                <VStack justify={'center'} spacing="2px" align={'start'}>
-                  <HStack align={'baseline'} color="white">
-                    <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
-                      1.5
-                    </Box>
-                    <Box as="p" textStyle={{ base: 'title8', md: 'title7' }}>
-                      SOL
-                    </Box>
-                  </HStack>
-                  <Box
-                    as="p"
-                    color="neutral.8"
-                    textStyle={{ base: 'body6', md: 'body5' }}
-                  >
-                    33.33$
-                  </Box>
-                </VStack>
-              </HStack>
-            </Td>
-            <Td px="12px">
-              <HStack gap="0px" align={'center'} justify="start">
-                <AvatarGroup size="sm" max={3} spacing="-4">
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Ryan Florence"
-                    src="https://randomuser.me/api/portraits/men/79.jpg"
-                  />
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Segun Adebayo"
-                    src="https://randomuser.me/api/portraits/men/35.jpg"
-                  />
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Kent Dodds"
-                    src="https://randomuser.me/api/portraits/men/46.jpg"
-                  />
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Prosper Otemuyiwa"
-                    src="https://bit.ly/prosper-baba"
-                  />
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Christian Nwamba"
-                    src="https://bit.ly/code-beast"
-                  />
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Segun Adebayo"
-                    src="https://bit.ly/sage-adebayo"
-                  />
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Kent Dodds"
-                    src="https://bit.ly/kent-c-dodds"
-                  />
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Prosper Otemuyiwa"
-                    src="https://bit.ly/prosper-baba"
-                  />
-                  <Avatar
-                    width={{ base: '26px', md: '34px' }}
-                    height={{ base: '26px', md: '34px' }}
-                    name="Christian Nwamba"
-                    src="https://bit.ly/code-beast"
-                  />
-                </AvatarGroup>
-                <Box
-                  as="p"
-                  color="white"
-                  textStyle={{ base: 'body6', md: 'body5' }}
-                >
-                  +200
-                </Box>
-              </HStack>
-            </Td>
-            <Td px="12px">
-              <Box
-                as="p"
-                textStyle={{ base: 'title4', md: 'title3' }}
-                color="neutral.11"
-              >
-                $12,248.64
-              </Box>
-            </Td>
-            <Td px="12px">
-              <BiChevronRight size="24" />
-            </Td>
-          </Tr>
+          {data &&
+            data.map((contribution) => (
+              <UserContributionTableRow
+                key={contribution.id}
+                contribution={contribution}
+              />
+            ))}
         </Tbody>
       </Table>
     </TableContainer>

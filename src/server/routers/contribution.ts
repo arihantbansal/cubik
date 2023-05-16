@@ -109,6 +109,7 @@ export const contributionRouter = router({
         include: {
           ProjectsModel: {
             include: {
+              owner: true,
               ProjectJoinRound: {
                 include: {
                   fundingRound: true,
