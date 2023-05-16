@@ -5,7 +5,7 @@ import * as spl from '@solana/spl-token';
 import type { ContractType } from './program';
 import { Contract } from './program';
 
-const PROGRAM_ID = 'Wgvt4LxST3JmUxZae5z7AYqzd63vo6EXjnW1aaMVX8L';
+const PROGRAM_ID = 'FV2bRwhquEWaBigFsmDz6kZpkN3PhvtiUzf1KdBsg3La';
 const RPC_URL =
   'https://solana-devnet.g.alchemy.com/v2/7v3-1dXGVDSGCem5jHrB1Uyv_WlOsoX-';
 
