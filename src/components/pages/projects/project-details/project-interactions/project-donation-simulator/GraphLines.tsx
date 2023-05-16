@@ -79,10 +79,10 @@ export const GraphLine: React.FC<GraphLineProps> = ({
             height={16}
             width={12}
             color="white"
-            numberStyles={{
-              fontWeight: 'bold',
-              fontSize: '22px',
-            }}
+            // numberStyles={{
+            //   fontWeight: 'bold',
+            //   fontSize: '22px',
+            // }}
             play
             perspective={300}
             numbers={'$' + markerAdditionalMatch.toFixed(1)}
