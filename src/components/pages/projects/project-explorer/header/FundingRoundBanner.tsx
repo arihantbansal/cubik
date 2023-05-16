@@ -336,6 +336,7 @@ const FundingRoundBanner = ({
                   maxW={{ base: '340px', md: '500px' }}
                   as="p"
                   color="neutral.8"
+                  height="5rem"
                   textStyle={{ base: 'body5', md: 'body3' }}
                 >
                   {roundDescription}
@@ -371,51 +372,10 @@ const FundingRoundBanner = ({
             colorScheme={'white'}
           >
             Submit Project
-          </Button> */}
+          </Button>*/}
         </VStack>
         {/* <RoundStatus /> */}
       </Stack>
-      {/* <Stack
-        maxW={'28rem'}
-        p={{ base: '16px', md: '32px' }}
-        border="2px solid #ffffff10"
-        overflow="hidden"
-        background={'#080808'}
-        w="full"
-        gap="3rem"
-        rounded="16px"
-        justify={'space-between'}
-        align="start"
-        direction={{ base: 'column', md: 'row' }}
-        position={'relative'}
-        _after={{
-          content: '""',
-          zIndex: '0',
-          position: 'absolute',
-          bottom: '-60%',
-          left: '-10%',
-          transform: 'translate(-50%, -50%)',
-          width: '12vw',
-          maxW: '12rem',
-          minW: '8rem',
-          height: 'full',
-          maxH: '14rem',
-          minH: '8rem',
-          backgroundColor: '#31F579',
-          filter: 'blur(120px)',
-          WebkitFilter: 'blur(120px)',
-          rounded: 'full',
-        }}
-      >
-        <Center position={'absolute'} bottom="0" right="0%">
-          <Image
-            src="/images/img.png"
-            alt="glass cube"
-            width={300}
-            height={500}
-          />
-        </Center>
-      </Stack> */}
     </Stack>
   );
 };

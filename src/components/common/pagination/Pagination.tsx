@@ -45,7 +45,7 @@ const Pagination: React.FC<PaginationProps> = ({
   const DOTS = '...';
   return (
     <HStack
-      p="12px 32px"
+      p={{ base: '0px', md: '12px 32px' }}
       align={'center'}
       justify="end"
       border-="1px solid red"

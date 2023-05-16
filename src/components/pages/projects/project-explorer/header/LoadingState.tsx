@@ -4,23 +4,19 @@ const RoundsCarouselLoadingState = () => {
   return (
     <Stack w="full" direction={{ base: 'column', md: 'row' }}>
       <Stack
-        maxW={'full'}
         p={{ base: '16px', md: '32px' }}
         border="2px solid #ffffff01"
-        overflow="hidden"
         backgroundColor="#0C0D0D"
         w="full"
-        gap="3rem"
         rounded="16px"
         justify={'space-between'}
         align="start"
         direction={{ base: 'column', md: 'row' }}
-        position={'relative'}
       >
-        <VStack w="full" align={'start'} spacing={{ base: '16px', md: '24px' }}>
+        <VStack w="full" align={'start'} gap={{ base: '8px', md: '16px' }}>
           <Skeleton
-            width={'8rem'}
-            height={{ base: '1.6rem', md: '2rem' }}
+            width={'10rem'}
+            height={{ base: '1.6rem', md: '1.9rem' }}
             rounded="full"
             opacity="0.5"
           />
@@ -31,15 +27,25 @@ const RoundsCarouselLoadingState = () => {
             gap={{ base: '8px', md: '16px' }}
             w="full"
           >
-            <VStack align={'start'} gap="8px" w={{ base: 'full', md: '60%' }}>
+            <VStack align={'start'} gap="12px" w={{ base: 'full', md: '60%' }}>
               <Skeleton
                 width="18rem"
-                height={{ base: '1.6rem', md: '2rem' }}
+                height={{ base: '1.8rem', md: '2.2rem' }}
                 opacity="0.7"
               />
-              <SkeletonText noOfLines={2} width="full" opacity={0.5} />
+              <SkeletonText
+                height="4.4rem"
+                noOfLines={2}
+                width="full"
+                opacity={0.5}
+              />
             </VStack>
-            <Skeleton w="12rem" height="2.4rem" rounded="full" opacity={0.5} />
+            <Skeleton
+              w="14rem"
+              height={{ base: '2.4rem', md: '3rem' }}
+              rounded="full"
+              opacity={0.5}
+            />
           </Stack>
         </VStack>
       </Stack>

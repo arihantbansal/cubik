@@ -88,6 +88,7 @@ export const ProjectDonationSimulator = ({
       console.log('🤤 success - ', data);
       setDonationSuccessful(true);
       SuccessToast({ toast, message: 'Donation Successful' });
+      //  trpc.contribution.getProjectContributors.useQueryClient().invalidateQueries({ projectId });
     },
     onError: (error) => {
       console.log('there was some error', error);

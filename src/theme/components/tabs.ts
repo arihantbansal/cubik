@@ -10,6 +10,7 @@ const cubik = definePartsStyle((props) => {
   return {
     tablist: {
       width: '100%',
+      height: '3rem',
       backgroundColor: 'transparent',
       gap: { base: '10px', md: '32px' },
     },
@@ -19,7 +20,8 @@ const cubik = definePartsStyle((props) => {
       fontSize: { base: '16px', md: '18px' },
       lineHeight: { base: '16px', md: '22px' },
       backgroundColor: 'transparent',
-      borderBottom: '1px solid transparent',
+      height: '3rem',
+      borderBottom: '2px solid transparent',
       color: 'neutral.7',
       mb: '-1px',
       _hover: {

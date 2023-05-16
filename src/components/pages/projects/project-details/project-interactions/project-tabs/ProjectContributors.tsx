@@ -218,13 +218,17 @@ const ProjectContributors = ({
   return (
     <VStack
       w="full"
-      align={currentContributors?.length === 0 ? 'center' : 'end'}
+      align={
+        currentContributors?.length === 0
+          ? 'center'
+          : { base: 'start', md: 'end' }
+      }
     >
       {currentContributors?.length === 0 ? (
         <ContributionsEmptyState />
       ) : (
         <>
-          <Table variant="unstyled">
+          <Table w="full" minW="34rem" overflowX="scroll" variant="unstyled">
             <Thead
               color="neutral.8"
               fontFamily={'Plus Jakarta Sans, sans-serif'}

@@ -1,4 +1,4 @@
-import { VStack } from '@chakra-ui/react';
+import { Center, Skeleton, VStack } from '@chakra-ui/react';
 import { trpc } from '~/utils/trpc';
 import FundingRoundBanner from './FundingRoundBanner';
 import GrantsCarousel from './GrantsCaruosel';
@@ -14,7 +14,12 @@ const ExplorePageHeader = () => {
   return (
     <VStack w="full">
       {isLoading ? (
-        <RoundsCarouselLoadingState />
+        <>
+          <RoundsCarouselLoadingState />
+          <Center w="full" py="16px">
+            <Skeleton w="12rem" height="6px" />
+          </Center>
+        </>
       ) : (
         <GrantsCarousel>
           {roundData ? (
@@ -30,7 +35,12 @@ const ExplorePageHeader = () => {
               />
             ))
           ) : (
-            <RoundsCarouselLoadingState />
+            <>
+              <RoundsCarouselLoadingState />
+              <Center w="full" py="16px">
+                <Skeleton w="12rem" height="6px" />
+              </Center>
+            </>
           )}
         </GrantsCarousel>
       )}

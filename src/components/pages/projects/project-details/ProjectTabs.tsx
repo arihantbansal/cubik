@@ -31,7 +31,7 @@ export const ProjectsTabs = ({
             description={projectDetails.long_description}
           />
         </TabPanel>
-        <TabPanel>
+        <TabPanel overflowX="scroll">
           <ProjectContributors
             projectId={projectDetails.id}
             isLoading={isLoading}

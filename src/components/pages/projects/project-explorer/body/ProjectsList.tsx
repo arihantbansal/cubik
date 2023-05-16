@@ -10,7 +10,7 @@ import {
   SlideFade,
   useToast,
   VStack,
-  Wrap
+  Wrap,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -251,6 +251,7 @@ const ProjectCard = ({ project }: PropsType) => {
               </HStack>
             </Box>
             <ProjectsContributorsNumber
+              projectId={project.id}
               projectJoinRound={project.ProjectJoinRound}
             />
           </HStack>
