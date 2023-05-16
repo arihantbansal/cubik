@@ -82,13 +82,16 @@ export const ProjectDonationSimulator = ({
       setValue('amount', 0);
     }
   };
-
+  // In component:
+  const utils = trpc.useContext();
   const createContributionMutation = trpc.contribution.create.useMutation({
     onSuccess: async (data: any) => {
       console.log('🤤 success - ', data);
       setDonationSuccessful(true);
       SuccessToast({ toast, message: 'Donation Successful' });
-      //  trpc.contribution.getProjectContributors.useQueryClient().invalidateQueries({ projectId });
+      utils.contribution.getProjectContributors.invalidate({
+        projectId: projectDetails.id, // check once if the value is right or not for project Id
+      });
     },
     onError: (error) => {
       console.log('there was some error', error);

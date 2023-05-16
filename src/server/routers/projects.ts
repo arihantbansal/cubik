@@ -182,7 +182,7 @@ export const projectsRouter = router({
           owner: true,
         },
         where: {
-          status: 'REVIEW',
+          status: ProjectVerifyStatus.REVIEW,
         },
       });
       return res;
@@ -265,6 +265,8 @@ export const projectsRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
+      console.log(ctx?.session?.user.mainWallet, '------ main wallet');
+
       if (
         ctx?.session?.user.mainWallet !==
         '52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ'
