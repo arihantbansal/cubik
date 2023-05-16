@@ -60,6 +60,7 @@ export type FormData = {
   telegram: string;
   discord: string;
   description: string;
+  email: string;
   team: {
     label: string;
     value: string;
@@ -192,6 +193,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
         projectUserCount: session.user.count.project + 1,
         team: getValues()?.team?.map((member) => member.value) ?? [],
         multiSigAddress: vaultAuth,
+        email: getValues().email,
       });
       setProjectId(id);
       onTransactionModalClose();
@@ -637,7 +639,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
                       textStyle={{ base: 'title6', md: 'title5' }}
                       color="neutral.11"
                     >
-                      hashtag.irfan@gmail.com
+                      {getValues('email')}
                     </Box>
                   </VStack>
                   <VStack align={'start'} textAlign="start" spacing="8px">

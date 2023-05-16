@@ -73,7 +73,6 @@ export const qfEstimated = (
       };
     }
   );
-  console.log(projectMapContributionWithoutEstimate);
 
   const projectMapContribution = [
     ...projectMapContributionWithoutEstimate,
@@ -104,11 +103,6 @@ export const qfEstimated = (
         divisor,
     };
   });
-  // console.log(
-  //   finalMatch,
-  //   finalMatch.filter((e) => e.projectId === projectId)[0].amount,
-  //   beforeMatchingPool.filter((e) => e.projectId === projectId)[0].amount
-  // );
 
   return (
     finalMatch.filter((e) => e.projectId === projectId)[0].amount -

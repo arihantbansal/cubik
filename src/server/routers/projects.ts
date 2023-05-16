@@ -28,6 +28,7 @@ export const projectsRouter = router({
         telegram_link: z.string(),
         team: z.array(z.string()),
         sig: z.string().nonempty(),
+        email: z.string().nonempty(),
         multiSigAddress: z.string().nonempty(),
       })
     )
