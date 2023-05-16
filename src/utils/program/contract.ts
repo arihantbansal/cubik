@@ -5,9 +5,9 @@ import * as spl from '@solana/spl-token';
 import type { ContractType } from './program';
 import { Contract } from './program';
 
-const PROGRAM_ID = 'FV2bRwhquEWaBigFsmDz6kZpkN3PhvtiUzf1KdBsg3La';
+const PROGRAM_ID = 'RTdQqyArv9WHcNvxyDfFi7p4MmGfuP2J8xAoxr4p2GR';
 const RPC_URL =
-  'https://solana-devnet.g.alchemy.com/v2/7v3-1dXGVDSGCem5jHrB1Uyv_WlOsoX-';
+  'https://rpc-devnet.helius.xyz/?api-key=6e7a9f7d-fd4a-4f2b-9c2d-2212248b28bb';
 
 const BASE_6 = 1000000;
 export const connection = new anchor.web3.Connection(RPC_URL, 'confirmed');
