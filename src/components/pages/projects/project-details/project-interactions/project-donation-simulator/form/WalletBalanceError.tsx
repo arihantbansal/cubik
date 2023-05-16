@@ -31,10 +31,10 @@ export const WalletBalanceError = ({
       p="12px"
       rounded="8px"
       width="full"
-      backgroundColor={'surface.red.1'}
+      backgroundColor={'surface.red.3'}
     >
       <BiError size={18} color="#FFCAC2" />
-      <Box as="p" color="surface.red.3" textStyle={'body4'}>
+      <Box as="p" color="surface.red.1" textStyle={'body4'}>
         {error?.message || 'Insufficient wallet balance'}
       </Box>
     </HStack>

@@ -79,7 +79,7 @@ export const Button = {
       outline: isMobileSafari ? '' : '1px solid #A8F0E6',
       height: 'full',
       width: { base: 'full', md: 'full' },
-      padding: { base: '12px 32px 14px 32px', md: '14px 44px 14px 44px' },
+      padding: { base: '10px 22px', md: '12px 34px' },
       fontSize: { base: '14px', md: '16px' },
       letterSpacing: '-1%',
       fontWeight: '600',
@@ -121,7 +121,7 @@ export const Button = {
       padding: { base: '8px 20px 10px 20px', md: '8px 20px 10px 20px' },
       outline:
         isMobileSafari || isSafari
-          ? '1px solid red'
+          ? '1px solid transparent'
           : '1px solid rgba(168, 240, 230, 0.6)',
       rounded: '12px',
       fontSize: { base: '12px', md: '14px' },

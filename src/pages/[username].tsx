@@ -62,7 +62,7 @@ const ProfilePage = () => {
       <SEO
         title={`@${user.data.username}`}
         description={`${user.data.username} supports public good on Cubik`}
-        image={`https://solana.ghost.io/content/images/2022/06/solana-network-upgrades.png`}
+        image={`https://res.cloudinary.com/demonicirfan/image/upload/v1684179451/cubik%20og.png`}
       />
       <Container
         maxW="7xl"

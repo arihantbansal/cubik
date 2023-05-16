@@ -13,9 +13,10 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
-import { ProjectWithCommentsAndRoundsType } from '~/types/IProjectDetails';
+import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
+import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
 import {
   ProjectFundingData,
   ProjectOwner,
@@ -31,7 +32,8 @@ type MobileDrawerTypes = {
   walletAddress: string;
   isOpen: boolean;
   onClose: () => void;
-  btnRef: any;
+  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
+  setDonationSuccessful: any;
 };
 
 const MobileDrawer = ({
@@ -40,18 +42,18 @@ const MobileDrawer = ({
   walletAddress,
   isOpen,
   onClose,
-  btnRef,
+  projectDetails,
+  setDonationSuccessful,
 }: MobileDrawerTypes) => {
   return (
     <Drawer
       isOpen={isOpen}
       placement="bottom"
       onClose={onClose}
-      finalFocusRef={btnRef}
       variant="cubik"
     >
       <DrawerOverlay />
-      <DrawerContent pt="0">
+      <DrawerContent w={{ base: '26rem', md: '30rem' }} mx="auto" pt="0">
         <DrawerCloseButton top="28px" backgroundColor="none" />
         <DrawerHeader p="16px" roundedTop={'16px'} backgroundColor="black">
           <HStack>
@@ -64,8 +66,13 @@ const MobileDrawer = ({
             </VStack>
           </HStack>
         </DrawerHeader>
-        <DrawerBody>
-          {/* <ProjectDonationSimulator height={80} width={120} projectDetails={proj} /> */}
+        <DrawerBody mx="auto">
+          <ProjectDonationSimulator
+            height={80}
+            width={120}
+            projectDetails={projectDetails}
+            setDonationSuccessful={setDonationSuccessful}
+          />
         </DrawerBody>
       </DrawerContent>
     </Drawer>
@@ -77,30 +84,50 @@ const MobileOnlyViews = ({
   isLoading,
 }: {
   isLoading?: boolean;
-  projectDetails: ProjectWithCommentsAndRoundsType;
+  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
 }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [donationSuccessful, setDonationSuccessful] = useState(false);
+
   return isLoading ? (
     <MobileOnlyViewSkeleton />
   ) : (
-    <VStack gap="32px" w="full" display={{ base: 'flex', lg: 'none' }}>
-      <HStack w="full">
-        <Button w="full" fontSize={'16px'} variant="connect_wallet">
-          Donate
-        </Button>
-        <Button
-          w="full"
-          h="40px"
-          borderRadius={'8px'}
-          variant="secondary"
-          fontSize="14px"
-          pb="8px"
-        >
-          Visit Project
-        </Button>
-      </HStack>
-      <ProjectSocials projectDetails={projectDetails} /> <ProjectFundingData />
-      <ProjectOwner projectDetails={projectDetails} />
-    </VStack>
+    <>
+      <VStack gap="32px" w="full" display={{ base: 'flex', lg: 'none' }}>
+        <HStack w="full">
+          <Button
+            w="full"
+            fontSize={'16px'}
+            onClick={onOpen}
+            variant="connect_wallet"
+          >
+            Donate
+          </Button>
+          <Button
+            w="full"
+            h="40px"
+            borderRadius={'8px'}
+            variant="secondary"
+            fontSize="14px"
+            pb="8px"
+          >
+            Visit Project
+          </Button>
+        </HStack>
+        <ProjectSocials projectDetails={projectDetails} />{' '}
+        <ProjectFundingData />
+        <ProjectOwner projectDetails={projectDetails} />
+      </VStack>
+      <MobileDrawer
+        logo={projectDetails.logo}
+        projectName={projectDetails.name}
+        walletAddress={projectDetails.owner_publickey}
+        isOpen={isOpen}
+        onClose={onClose}
+        projectDetails={projectDetails}
+        setDonationSuccessful={setDonationSuccessful}
+      />
+    </>
   );
 };
 
@@ -108,7 +135,7 @@ export const ProjectDetailsAndTabs = ({
   projectDetails,
   isLoading,
 }: {
-  projectDetails: ProjectWithCommentsAndRoundsType;
+  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
   isLoading: boolean;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -132,14 +159,6 @@ export const ProjectDetailsAndTabs = ({
         projectDetails={projectDetails}
       />
       <MobileOnlyViews isLoading={isLoading} projectDetails={projectDetails} />
-      {/* <MobileDrawer
-        logo={projectDetails.logo}
-        projectName={projectDetails.name}
-        walletAddress={projectDetails.owner_publickey}
-        isOpen={isOpen}
-        onClose={onClose}
-        btnRef={btnRef}
-      />*/}
       <ProjectsTabs projectDetails={projectDetails} isLoading={isLoading} />
     </Container>
   );

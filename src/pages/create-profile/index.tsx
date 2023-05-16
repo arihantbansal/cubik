@@ -54,6 +54,7 @@ import {
 import withAuth from '~/components/HOC/WithAuth';
 import FramerCarousel from '~/components/pages/create-profile/FramerNFTCarousel';
 import ProfilePicture from '~/components/pages/create-profile/ProfilePicture';
+import SEO from '~/components/SEO';
 import { useAuthStore } from '~/store/authStore';
 import { connection, createUser } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
@@ -203,6 +204,11 @@ const CreateProfile = () => {
 
   return (
     <>
+      <SEO
+        title={`Create Cubik Profile`}
+        description={`Create a new profile on Cubik`}
+        image={`https://res.cloudinary.com/demonicirfan/image/upload/v1684179451/cubik%20og.png`}
+      />
       <Container maxW="full" py={{ base: '2rem', lg: '2vh' }}>
         <Card
           background={'#080808'}

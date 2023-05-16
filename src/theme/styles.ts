@@ -3,6 +3,9 @@ import '@fontsource/plus-jakarta-sans';
 
 export const styles = {
   global: (props: StyleFunctionProps) => ({
+    '::-webkit-scrollbar': {
+      display: 'none',
+    },
     fonts: {
       heading: `'Plus Jakarta Sans', sans-serif`,
       body: `'Plus Jakarta Sans', sans-serif`,
@@ -10,9 +13,6 @@ export const styles = {
     body: {
       bg: mode('#000000', '#000000')(props),
       color: mode('#E0FFFD', '#E0FFFD')(props),
-      '::-webkit-scrollbar': {
-        display: 'none',
-      },
     },
     option: {
       background: 'red !important',

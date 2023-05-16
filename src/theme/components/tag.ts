@@ -10,7 +10,9 @@ const baseStyle = definePartsStyle({
     bg: 'orange.400',
     color: 'blackAlpha.700',
   },
-  label: {},
+  label: {
+    fontSize: { base: '12px', md: '14px' },
+  },
 });
 const colorful = definePartsStyle({
   // define the part you're going to style

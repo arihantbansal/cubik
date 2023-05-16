@@ -16,15 +16,31 @@ export const colors = {
     cta_stroke: '#D645A660',
     stoke_white: '#FFFFFF12',
     stroke: '#4D5454',
+    pink: {
+      1: '#FFA3FF',
+      2: '#240724',
+      3: '#240724',
+      4: '#0F030F',
+    },
+    lavender: {
+      1: '#E6D6FF',
+      2: '#AE7AFF',
+      3: '#0A001A',
+    },
+    orange: {
+      1: '#FF9347',
+      2: '#140800',
+      3: '#140800',
+    },
     green: {
       1: '#D6FFE5',
       2: '#31F579',
       3: '#091F12',
     },
     red: {
-      1: '#330002',
+      1: '#FFCAC2',
       2: '#FF333D',
-      3: '#FFCAC2',
+      3: '#330002',
     },
     blue: {
       1: '#BAE6FD',
@@ -33,8 +49,8 @@ export const colors = {
       4: '#196AE2',
     },
     yellow: {
-      2: '#FEF08A',
       1: '#FFD83D',
+      2: '#FEF08A',
       3: '#2D2A14',
       4: '#F59E0B',
     },

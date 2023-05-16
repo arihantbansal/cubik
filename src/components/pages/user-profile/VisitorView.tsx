@@ -9,7 +9,7 @@ import {
 import { ProjectVerifyStatus } from '@prisma/client';
 import { FC, memo } from 'react';
 import { UserWithProjectType } from '~/types/user';
-import Contributions from './contributions-tab/Contributions';
+import UserContributions from './contributions-tab/UserContributions';
 import UserDetails from './details-tab/UserDetails';
 import { VisitorProjectEmptyState } from './empty-states/ProjectEmptyState';
 import ProfileHeader from './ProfileHeader';
@@ -57,7 +57,7 @@ const VisitorView: FC<visitorViewType> = ({
             </Flex>
           </TabPanel>
           <TabPanel>
-            <Contributions />
+            <UserContributions />
           </TabPanel>
         </TabPanels>
       </Tabs>

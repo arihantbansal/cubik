@@ -4,18 +4,21 @@ import {
   Center,
   Container,
   HStack,
+  Icon,
   Skeleton,
   SkeletonText,
+  Stack,
   VStack,
 } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import { BiPlus } from 'react-icons/bi';
-import { formatDate } from '~/utils/firnatDate';
+import { FiChevronRight } from 'react-icons/fi';
+import { formatDate } from '~/utils/formatDates';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { trpc } from '~/utils/trpc';
-
+// todo make upcoming live grants separate
 const Round = () => {
   const {
     data: rounds,
@@ -26,19 +29,26 @@ const Round = () => {
   const { data } = useSession();
   return (
     <Container maxW="7xl" py="64px">
-      <HStack w="full" align="start" justify="space-between" pb="32px">
+      <Stack
+        direction={{ base: 'column', md: 'row' }}
+        gap="40px"
+        w="full"
+        align="start"
+        justify="space-between"
+        pb="32px"
+      >
         <VStack align={'start'} gap="8px">
           <Box
             color="neutral.11"
             as="p"
-            textStyle={{ base: 'headline1', md: 'display3' }}
+            textStyle={{ base: 'headline2', md: 'display3' }}
           >
             Grants Help the ecosystem grow.
           </Box>{' '}
           <Box
             color="neutral.9"
             as="p"
-            textStyle={{ base: 'body3', md: 'body3' }}
+            textStyle={{ base: 'body4', md: 'body3' }}
           >
             Apply for a grant or contribute in a grants round
           </Box>
@@ -46,7 +56,7 @@ const Round = () => {
         <Button variant="close_modal" rightIcon={<BiPlus />}>
           <Link href="/grants/new-grant">Create Grant Round</Link>
         </Button>
-      </HStack>
+      </Stack>
       <VStack py="64px" w="full" align="start" spacing="32px">
         <Box
           color="neutral.11"
@@ -104,18 +114,18 @@ const Round = () => {
           </Container>
         ) : (
           rounds?.map((round) => (
-            <HStack
+            <Stack
+              direction={{ base: 'column', md: 'row' }}
+              align={{ base: 'start', md: 'center' }}
+              justify="space-between"
               key={round.id}
               border={'2px solid'}
               borderColor="#ffffff10"
               backgroundColor="#000000"
               p={{ base: '16px', md: '32px' }}
               w="full"
-              gap="24px"
+              gap={{ base: '40px', md: '24px' }}
               rounded="20px"
-              justify={'space-between'}
-              align="center"
-              direction={{ base: 'column', md: 'row' }}
               position="relative"
               overflow={'hidden'}
               _after={{
@@ -134,11 +144,12 @@ const Round = () => {
             >
               <VStack align={'start'} spacing="24px">
                 <VStack align="start" w="full" spacing="12px">
-                  <HStack align="start">
+                  <HStack align="center" gap="16px">
                     <Box
                       color="neutral.11"
                       as="p"
-                      textStyle={{ base: 'title2', md: 'title1' }}
+                      textStyle={{ base: 'title3', md: 'title1' }}
+                      textTransform={'capitalize'}
                     >
                       {round.roundName}
                       {''} Round
@@ -161,7 +172,13 @@ const Round = () => {
                       </Box>
                     </HStack>
                   </HStack>
-                  <Box as="p" textStyle={'body4'} color="neutral.9">
+                  <Box
+                    as="p"
+                    noOfLines={2}
+                    maxW="38rem"
+                    textStyle={{ base: 'body5', md: 'body4' }}
+                    color="neutral.9"
+                  >
                     {round.short_description}
                   </Box>
                 </VStack>
@@ -176,25 +193,48 @@ const Round = () => {
                     color="#B4B0B2"
                     textTransform={'uppercase'}
                     as="p"
-                    textStyle={{ base: 'body5', md: 'overline3' }}
+                    textStyle={{ base: 'body6', md: 'overline3' }}
                   >
                     Matching Pool
                   </Box>
-                  <Box as="p" textStyle={{ base: 'body3', md: 'title4' }}>
+                  <Box as="p" textStyle={{ base: 'body5', md: 'title4' }}>
                     : {formatNumberWithK(round.matchedPool)} USDC
                   </Box>
                 </HStack>
               </VStack>
-              <Center h="full">
-                {data?.user.id === round.userId ? (
-                  <Button variant="close_modal">
-                    <Link href={`/grants/admin/${round.id}`}>Manage Grant</Link>
+              <Stack
+                align={{ base: 'center', md: 'start' }}
+                direction={{ base: 'row', md: 'column' }}
+              >
+                <Center h="full">
+                  {data?.user.id === round.userId ? (
+                    <Button variant="close_modal">
+                      <Link href={`/grants/admin/${round.id}`}>
+                        Manage Grant
+                      </Link>
+                    </Button>
+                  ) : (
+                    <Button variant="apply_for_grant">Apply for Grant</Button>
+                  )}
+                </Center>
+                <Center>
+                  <Button
+                    h="full"
+                    rounded="8px"
+                    fontSize={{ base: '12px', md: '14px' }}
+                    px={{ base: '14px', md: '4px' }}
+                    py={{ base: '14px', md: '18px' }}
+                    variant={'outline'}
+                    onClick={() => {}}
+                    rightIcon={
+                      <Icon as={FiChevronRight} width={4} height={4} />
+                    }
+                  >
+                    Participating Projects
                   </Button>
-                ) : (
-                  <Button variant="apply_for_grant">Apply for Grant</Button>
-                )}
-              </Center>
-            </HStack>
+                </Center>
+              </Stack>
+            </Stack>
           ))
         )}
       </VStack>

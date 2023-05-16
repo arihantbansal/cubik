@@ -65,9 +65,11 @@ const UserNavMenu = () => {
           _active={{
             backgroundColor: '#141414',
           }}
+          as={Link}
+          href={'/' + session.user.username}
         >
           <Box as="p" textStyle={'body4'}>
-            <Link href={'/' + session.user.username}>Profile</Link>
+            Profile
           </Box>
         </Button>
         <Button
@@ -90,9 +92,11 @@ const UserNavMenu = () => {
           _active={{
             backgroundColor: '#141414',
           }}
+          as={Link}
+          href={'/submit-project'}
         >
           <Box as="p" textStyle={'body4'}>
-            <Link href={'/submit-project'}>Submit Project</Link>
+            Submit Project
           </Box>
         </Button>
         <Button

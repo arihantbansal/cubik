@@ -19,7 +19,7 @@ import CustomTag from '~/components/common/tags/CustomTag';
 import { BONK, SOL, USDC } from '~/components/common/tokens/token';
 import CustomTagContainer from './CustomTagContainer';
 
-const Contributions = () => {
+const UserContributions = () => {
   return (
     <TableContainer w="full">
       <Table variant="unstyled">
@@ -445,4 +445,4 @@ const Contributions = () => {
   );
 };
 
-export default Contributions;
+export default UserContributions;

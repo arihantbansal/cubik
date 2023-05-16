@@ -2,16 +2,6 @@ import { Prisma } from '@prisma/client';
 
 export type ProjectWithCommentsAndRoundsType = Prisma.ProjectsModelGetPayload<{
   include: {
-    comments: {
-      include: {
-        user: true;
-        Reply: {
-          include: {
-            user: true;
-          };
-        };
-      };
-    };
     ProjectJoinRound: {
       include: {
         fundingRound: true;

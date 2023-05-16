@@ -37,6 +37,8 @@ export const userRouter = router({
         });
       }
     }),
+
+  // @type userWithProjectsType
   findOne: procedure
     .input(
       z.object({

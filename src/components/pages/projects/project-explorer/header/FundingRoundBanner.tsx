@@ -7,6 +7,32 @@ interface CountdownTimerProps {
   finalDate: Date;
 }
 
+const getDateStatus = (startDate: Date, endDate: Date) => {
+  const now = new Date();
+
+  // Convert the dates to timestamps for easier comparison
+  const startTimestamp = startDate.getTime();
+  const endTimestamp = endDate.getTime();
+  const nowTimestamp = now.getTime();
+
+  // Calculate the difference in days
+  const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+  const diffStartDays = Math.round(
+    Math.abs((startTimestamp - nowTimestamp) / oneDay)
+  );
+  const diffEndDays = Math.round(
+    Math.abs((endTimestamp - nowTimestamp) / oneDay)
+  );
+
+  if (nowTimestamp < startTimestamp) {
+    return `Round starts in ${diffStartDays} days`;
+  } else if (nowTimestamp < endTimestamp) {
+    return `Ending in ${diffEndDays} days`;
+  } else {
+    return `Ended ${diffEndDays} days ago`;
+  }
+};
+
 const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
   const getTimeRemaining = (endDate: Date) => {
     const total = endDate.getTime() - new Date().getTime();
@@ -208,7 +234,21 @@ const RoundStatus = () => {
   );
 };
 
-const FundingRoundBanner = () => {
+const FundingRoundBanner = ({
+  startDate,
+  endDate,
+  roundId,
+  roundName,
+  roundDescription,
+  matchingPool,
+}: {
+  startDate: Date;
+  endDate: Date;
+  roundId: string;
+  roundName: string;
+  roundDescription: string;
+  matchingPool: number;
+}) => {
   return (
     <Stack w="full" direction={{ base: 'column', md: 'row' }}>
       <Stack
@@ -230,16 +270,16 @@ const FundingRoundBanner = () => {
           position: 'absolute',
           top: '-10',
           right: '-20',
-          transform: 'translate(-50%, -50%)',
-          width: '10vw',
-          maxW: '10rem',
-          minW: '6rem',
+          transform: 'translate(-50%, -50%) scale(10)',
+          width: '1vw',
+          maxW: '1rem',
+          minW: '0.6rem',
           height: 'full',
-          maxH: '12rem',
-          minH: '8rem',
+          maxH: '1.2rem',
+          minH: '0.8rem',
           backgroundColor: '#FFE53D',
-          filter: 'blur(100px)',
-          WebkitFilter: 'blur(100px)',
+          filter: 'blur(10px)',
+          WebkitFilter: 'blur(10px)',
           rounded: 'full',
         }}
         _before={{
@@ -248,16 +288,16 @@ const FundingRoundBanner = () => {
           position: 'absolute',
           top: '50%',
           right: '10%',
-          transform: 'translate(50%, -50%)',
-          width: '20vw',
-          maxW: '20rem',
-          minW: '12rem',
-          height: '20vw',
-          maxH: '20rem',
-          minH: '12rem',
+          transform: 'translate(50%, -50%) scale(10)',
+          width: '2vw',
+          maxW: '2rem',
+          minW: '1.2rem',
+          height: '2vw',
+          maxH: '2rem',
+          minH: '1.2rem',
           backgroundColor: '#31F579',
-          filter: 'blur(250px)',
-          WebkitFilter: 'blur(250px)',
+          filter: 'blur(25px)',
+          WebkitFilter: 'blur(25px)',
           rounded: 'full',
         }}
       >
@@ -272,11 +312,11 @@ const FundingRoundBanner = () => {
               color="#4ADE80"
             >
               <RippleEffect />
-              <Box as="p" textStyle="body5">
-                Round starts in {''}
-                <b>{''}2 days</b>
+              <Box as="p" textStyle={{ base: 'body6', md: 'body5' }}>
+                {getDateStatus(startDate, endDate)}
               </Box>
             </Center>
+
             <Stack
               direction={{ base: 'column', md: 'row' }}
               justify={'space-between'}
@@ -288,18 +328,17 @@ const FundingRoundBanner = () => {
                 <Box
                   color="neutral.11"
                   as="p"
-                  textStyle={{ base: 'title1', md: 'headline3' }}
+                  textStyle={{ base: 'title2', md: 'headline3' }}
                 >
-                  Alpha Grant Round
+                  {roundName} Round
                 </Box>
                 <Box
-                  maxW={{ base: '340px', md: '420px' }}
+                  maxW={{ base: '340px', md: '500px' }}
                   as="p"
                   color="neutral.8"
-                  textStyle={{ base: 'body4', md: 'body3' }}
+                  textStyle={{ base: 'body5', md: 'body3' }}
                 >
-                  A quadratic funding grant round for public goods building on
-                  Solana blockchain
+                  {roundDescription}
                 </Box>
               </VStack>
               <HStack
@@ -313,13 +352,13 @@ const FundingRoundBanner = () => {
                   color="neutral.8"
                   textTransform={'uppercase'}
                   as="p"
-                  textStyle={{ base: 'body6', md: 'overline4' }}
+                  textStyle={{ base: 'body7', md: 'overline4' }}
                   letterSpacing="2px"
                 >
                   Matching Pool :
                 </Box>
-                <Box as="p" textStyle={{ base: 'body4', md: 'title3' }}>
-                  $30,000
+                <Box as="p" textStyle={{ base: 'body5', md: 'title3' }}>
+                  ${matchingPool}
                 </Box>
               </HStack>
             </Stack>

@@ -1,19 +1,18 @@
 import {
   Avatar,
-  AvatarGroup,
   Box,
   Button,
   Card,
   Center,
   Container,
-  Flex,
   HStack,
   IconButton,
   SlideFade,
   useToast,
   VStack,
-  Wrap,
+  Wrap
 } from '@chakra-ui/react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { BsPlus } from 'react-icons/bs';
@@ -23,17 +22,18 @@ import CustomTag from '~/components/common/tags/CustomTag';
 import { RemoveToast, SuccessToast } from '~/components/common/toasts/Toasts';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import useListStore from '~/store/listStore';
-import { ProjectWithRoundDetailsType } from '~/types/project';
+import { ProjectWithRoundDetailsWithContributionWithUserType } from '~/types/project';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { ProjectRound } from '~/utils/ProjectsRound';
+import ProjectsContributorsNumber from './ProjectsContributorsNumber';
 
 type PropsType = {
-  project: ProjectWithRoundDetailsType;
+  project: ProjectWithRoundDetailsWithContributionWithUserType;
 };
 
 // In the ProjectsList component
 type ProjectsListProps = {
-  allProjectsData: ProjectWithRoundDetailsType[];
+  allProjectsData: ProjectWithRoundDetailsWithContributionWithUserType[];
 };
 
 const ProjectCard = ({ project }: PropsType) => {
@@ -75,10 +75,10 @@ const ProjectCard = ({ project }: PropsType) => {
 
   return (
     <Card
-      onClick={() => setIsHovered(true)}
-      outline={addedToList ? '2px solid #659C95' : '2px solid transparent'}
+      border={addedToList ? '2px solid #659C95' : '2px solid transparent'}
+      borderRadius="16px"
       p="0"
-      h="23rem"
+      h={{ base: '20rem', md: '23rem' }}
       cursor="pointer"
       w="100%"
       maxW={{
@@ -88,11 +88,11 @@ const ProjectCard = ({ project }: PropsType) => {
         lg: '29.5vw',
         xl: '25.5rem',
       }}
+      onTouchStart={() => setIsHovered((prevState) => !prevState)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       gap="0"
       background={'#0C0D0D'}
-      border="none"
       position={'relative'}
     >
       {addedToList && (
@@ -127,7 +127,7 @@ const ProjectCard = ({ project }: PropsType) => {
             as="p"
             noOfLines={1}
             whiteSpace={'nowrap'}
-            color="#ADB8B6"
+            color={`surface.${ProjectRound({ project }).colorScheme}.1`}
             textStyle={'overline4'}
             textTransform="uppercase"
             letterSpacing={'0.2em'}
@@ -151,9 +151,13 @@ const ProjectCard = ({ project }: PropsType) => {
         alignItems={'start'}
         justifyContent="space-between"
         h="full"
-        gap="0"
       >
-        <VStack p="24px" gap="16px" w="full" alignItems={'start'}>
+        <VStack
+          p="24px"
+          gap={{ base: '12px', md: '16px' }}
+          w="full"
+          alignItems={'start'}
+        >
           <HStack justifyContent={'space-between'}>
             <Avatar
               src={project.logo}
@@ -182,7 +186,7 @@ const ProjectCard = ({ project }: PropsType) => {
               <Box
                 color="neutral8"
                 as="p"
-                textStyle={{ base: 'body5', md: 'body5' }}
+                textStyle={{ base: 'body6', md: 'body5' }}
               >
                 Raised
               </Box>
@@ -191,9 +195,9 @@ const ProjectCard = ({ project }: PropsType) => {
           <Box
             color="neutral8"
             as="p"
-            textStyle={{ base: 'body4', md: 'body4' }}
+            textStyle={{ base: 'body5', md: 'body4' }}
             sx={{
-              noOfLines: '2',
+              noOfLines: '3',
             }}
             alignContent="start"
             alignItems={'start'}
@@ -208,60 +212,16 @@ const ProjectCard = ({ project }: PropsType) => {
           w="full"
           position={'relative'}
         >
-          <SlideFade in={isHovered} offsetY="0px" reverse>
-            <HStack
-              zIndex={'9'}
-              w="full"
-              justifyContent="start"
-              position="absolute"
-              left="0"
-              p="8px 24px 24px 24px"
-              bottom="0px"
-              backgroundColor={'#0C0D0D'}
-              borderRadius="36px"
-              justify={'space-between'}
-            >
-              <Button
-                background={'#1D1F1E'}
-                color="white"
-                fontWeight={'700'}
-                borderColor="transparent"
-                outline="none"
-                w="calc(100% - 2.2rem)"
-                variant="connect_wallet"
-                onClick={() => {
-                  router.push({
-                    pathname: '/projects/[id]',
-                    query: { id: project.id },
-                  });
-                }}
-              >
-                View Details
-              </Button>
-              <IconButton
-                background={'#1D1F1E'}
-                color="white"
-                fontWeight={'700'}
-                borderColor="transparent"
-                outline="none"
-                onClick={handleAddOrRemoveProject}
-                aria-label="link"
-                variant="connect_wallet"
-                icon={
-                  addedToList ? <MdRemove size={26} /> : <BsPlus size={26} />
-                }
-              />
-            </HStack>
-          </SlideFade>
           <HStack
-            overflowX="hidden" // Set overflowX to hidden
+            display={isHovered ? 'none' : 'flex'}
+            overflowX="hidden"
             w="full"
             justify="space-between"
           >
             <Box
               w="full"
               flex="4"
-              minWidth="0" // Add minWidth to allow the box to shrink
+              minWidth="0"
               position="relative"
               _after={{
                 content: '""',
@@ -290,44 +250,51 @@ const ProjectCard = ({ project }: PropsType) => {
                 })}
               </HStack>
             </Box>
-            <Flex
-              justify="end"
-              align={'center'}
-              flex="1"
-              w={'full'}
-              position="relative"
-              zIndex="1"
-            >
-              <AvatarGroup size="xs" max={3}>
-                <Avatar
-                  outline="2px solid #0C0D0D"
-                  name="Ryan Florence"
-                  src="https://bit.ly/ryan-florence"
-                />
-                <Avatar
-                  outline="2px solid #0C0D0D"
-                  name="Segun Adebayo"
-                  src="https://bit.ly/sage-adebayo"
-                />
-                <Avatar
-                  outline="2px solid #0C0D0D"
-                  name="Kent Dodds"
-                  src="https://bit.ly/kent-c-dodds"
-                />
-                <Avatar
-                  name="Prosper Otemuyiwa"
-                  src="https://bit.ly/prosper-baba"
-                />
-                <Avatar
-                  name="Christian Nwamba"
-                  src="https://bit.ly/code-beast"
-                />
-              </AvatarGroup>
-              <Box as="p" color="white" textStyle={'body4'}>
-                +{formatNumberWithK(10)}
-              </Box>
-            </Flex>
+            <ProjectsContributorsNumber
+              projectJoinRound={project.ProjectJoinRound}
+            />
           </HStack>
+          <SlideFade in={isHovered} offsetY="0px" reverse>
+            <HStack
+              zIndex={'9'}
+              w="full"
+              justifyContent="start"
+              position="absolute"
+              left="0"
+              p="8px 24px 24px 24px"
+              bottom="0px"
+              backgroundColor={'#0C0D0D'}
+              borderRadius="36px"
+              justify={'space-between'}
+            >
+              <Button
+                as={Link}
+                href={`/projects/${project.id}`}
+                background={'#1D1F1E'}
+                color="white"
+                fontWeight={'700'}
+                borderColor="transparent"
+                outline="none"
+                w="calc(100% - 2.2rem)"
+                variant="connect_wallet"
+              >
+                View Details
+              </Button>
+              <IconButton
+                background={'#1D1F1E'}
+                color="white"
+                fontWeight={'700'}
+                borderColor="transparent"
+                outline="none"
+                onClick={handleAddOrRemoveProject}
+                aria-label="link"
+                variant="connect_wallet"
+                icon={
+                  addedToList ? <MdRemove size={26} /> : <BsPlus size={26} />
+                }
+              />
+            </HStack>
+          </SlideFade>
         </VStack>
       </VStack>
     </Card>
@@ -349,7 +316,7 @@ const ProjectsList = ({ allProjectsData }: ProjectsListProps) => {
       >
         {allProjectsData.map(
           (
-            project: ProjectWithRoundDetailsType,
+            project: ProjectWithRoundDetailsWithContributionWithUserType,
             key: React.Key | null | undefined
           ) => {
             return <ProjectCard project={project} key={key} />;

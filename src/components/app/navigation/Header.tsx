@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Center,
   Collapse,
   Container,
@@ -82,18 +83,22 @@ const MobileNavCollapsible = memo(function MobileNavCollapsible({
             justify={'space-between'}
             w="100%"
           >
-            <Box
-              display="flex"
-              alignItems={'start'}
-              w="100%"
-              onClick={() => onClose()}
-              as="button"
-              transition={'all 0.3s ease'}
-              fontSize="15px"
-              fontWeight="400"
-            >
-              Funding Round
-            </Box>
+            <Link href="/grants">
+              <Box
+                display="flex"
+                alignItems={'start'}
+                w="100%"
+                onClick={() => {
+                  onClose();
+                }}
+                as="button"
+                transition={'all 0.3s ease'}
+                fontSize="15px"
+                fontWeight="400"
+              >
+                Grants
+              </Box>
+            </Link>
           </Flex>
         </Link>
       </Flex>
@@ -123,7 +128,7 @@ export const Header = memo(function Header({
   const NavbarCTA: React.FC<any> = ({ children }) => {
     return (
       <Center
-        h={{ base: '1.9rem', md: '2.6rem' }}
+        h={{ base: '2rem', md: '2.6rem' }}
         justifyContent="end"
         zIndex="99"
       >
@@ -160,7 +165,7 @@ export const Header = memo(function Header({
           justifyContent={landingPage ? 'center' : 'flex-start'}
           mx="auto"
         >
-          <Link href="/projects" passHref prefetch>
+          <Button h="full" variant={'unstyled'} as={Link} href="/projects">
             <Box
               as="p"
               textStyle={'title4'}
@@ -169,8 +174,8 @@ export const Header = memo(function Header({
             >
               Projects
             </Box>
-          </Link>
-          <Link href="/grants" passHref prefetch>
+          </Button>
+          <Button h="full" variant={'unstyled'} as={Link} href="/grants">
             <Box
               as="p"
               textStyle={'title4'}
@@ -179,7 +184,7 @@ export const Header = memo(function Header({
             >
               Grants
             </Box>
-          </Link>
+          </Button>
         </HStack>
       </>
     ) : (
@@ -204,7 +209,7 @@ export const Header = memo(function Header({
     >
       <Flex
         mx="auto"
-        p={{ base: '20px 16px', md: '20px 20px' }}
+        p={{ base: '14px 16px', md: '20px 20px' }}
         maxW="7xl"
         alignItems={'center'}
         justifyContent={'space-between'}

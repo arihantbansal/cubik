@@ -1,26 +1,39 @@
 import { VStack } from '@chakra-ui/react';
+import { trpc } from '~/utils/trpc';
 import FundingRoundBanner from './FundingRoundBanner';
+import GrantsCarousel from './GrantsCaruosel';
+import RoundsCarouselLoadingState from './LoadingState';
 
 const ExplorePageHeader = () => {
+  const {
+    data: roundData,
+    isLoading,
+    isError,
+  } = trpc.round.findActive.useQuery();
+
   return (
     <VStack w="full">
-      {/* <VStack align={'start'} gap="8px">
-        <Box
-          color="neutral.9"
-          as="p"
-          textStyle={{ base: 'body3', md: 'body2' }}
-        >
-          gm @irfan
-        </Box>
-        <Box
-          color="neutral.11"
-          as="p"
-          textStyle={{ base: 'headline4', md: 'headline4' }}
-        >
-          Help fund public goods and the ecosystem grow!
-        </Box>
-      </VStack> */}
-      <FundingRoundBanner />
+      {isLoading ? (
+        <RoundsCarouselLoadingState />
+      ) : (
+        <GrantsCarousel>
+          {roundData ? (
+            roundData?.map((round) => (
+              <FundingRoundBanner
+                key={round.id}
+                startDate={round.startTime}
+                endDate={round.endtime}
+                roundId={round.id}
+                roundName={round.roundName}
+                roundDescription={round.short_description}
+                matchingPool={round.matchedPool}
+              />
+            ))
+          ) : (
+            <RoundsCarouselLoadingState />
+          )}
+        </GrantsCarousel>
+      )}
     </VStack>
   );
 };

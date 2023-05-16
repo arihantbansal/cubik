@@ -1,17 +1,17 @@
-import { Box, Center, HStack, Tag, Text } from '@chakra-ui/react';
+import { Box, Button, Center, HStack, Tag, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
 const Logo = () => {
   return (
     <HStack spacing="8px" alignItems={'center'} justify="space-between">
-      <Link
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: '12px',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+      <Button
+        as={Link}
+        display="flex"
+        flexDir={'row'}
+        gap="12px"
+        alignContent={'center'}
+        justifyContent={'center'}
+        variant="unstyled"
         href="/"
       >
         <Center
@@ -42,7 +42,7 @@ const Logo = () => {
         >
           CUBIK
         </Text>
-      </Link>
+      </Button>
       <Tag
         rounded="full"
         variant="colorful"

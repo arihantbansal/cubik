@@ -10,7 +10,6 @@ import {
   Stack,
   VStack,
 } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
 import React from 'react';
 import { BiChevronDown } from 'react-icons/bi';
 import {
@@ -23,6 +22,7 @@ import {
 import { HiLink } from 'react-icons/hi';
 import { MdReportGmailerrorred } from 'react-icons/md';
 import CustomTag from '~/components/common/tags/CustomTag';
+import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 import { ProjectDetailSkeleton } from './skeletons/ProjectPageLoadingSkeleton';
 
 export const ProjectLink = ({ urlName }: { urlName: string }) => {
@@ -49,7 +49,7 @@ const ProjectDetailsHeader = ({
   projectDetails,
 }: {
   isLoading?: boolean;
-  projectDetails: ProjectsModel;
+  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
 }) => {
   return isLoading ? (
     <ProjectDetailSkeleton />
@@ -75,7 +75,6 @@ const ProjectDetailsHeader = ({
           <HStack align="center">
             <Box
               as="p"
-              minW="6rem"
               textStyle={{ base: 'title1', md: 'headline3' }}
               textTransform="capitalize"
               color="neutral.11"
@@ -97,7 +96,7 @@ const ProjectDetailsHeader = ({
                 as={Button}
                 variant="unstyled"
                 rightIcon={<BiChevronDown size={26} color="white" />}
-              ></MenuButton>
+              />
               <MenuList p="0" outline="0" border="0">
                 <MenuItem
                   p="8px 16px"

@@ -34,7 +34,7 @@ import { AiTwotoneCalendar } from 'react-icons/ai';
 import { FiChevronLeft } from 'react-icons/fi';
 import { v4 as uuidV4 } from 'uuid';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
-import { formatDate } from '~/utils/firnatDate';
+import { formatDate } from '~/utils/formatDates';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { connection, ProjectJoinRound } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';

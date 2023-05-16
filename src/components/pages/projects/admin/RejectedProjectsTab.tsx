@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import GetFormattedLink from '~/components/HOC/GetLink';
-import { ProjectWithRoundDetailsType } from '~/types/project';
+import { projectWithFundingRoundType } from '~/types/project';
 import { ProjectStatus } from '~/utils/getProjectStatus';
 import { trpc } from '~/utils/trpc';
 import ProjectStatusBanner from '../../user-profile/projects-tab/ProjectStatusBanner';
@@ -46,15 +46,15 @@ const RejectedProjectsTab = ({ setProjectsNumberByStatus }: any) => {
           <ProjectStatusBanner
             status={
               ProjectStatus({
-                projectData: project as ProjectWithRoundDetailsType,
+                projectData: project as projectWithFundingRoundType,
               })?.status as string
             }
             roundName={
               ProjectStatus({
-                projectData: project as ProjectWithRoundDetailsType,
+                projectData: project as projectWithFundingRoundType,
               })?.round
                 ? ProjectStatus({
-                    projectData: project as ProjectWithRoundDetailsType,
+                    projectData: project as projectWithFundingRoundType,
                   })?.round?.fundingRound.roundName
                 : undefined
             }

@@ -8,7 +8,7 @@ const Home: NextPage = () => {
       <SEO
         title={`Cubik`}
         description={`Fund Public Goods Through Community Voting On Solana `}
-        image={`https://solana.ghost.io/content/images/2022/06/solana-network-upgrades.png`}
+        image={`https://res.cloudinary.com/demonicirfan/image/upload/v1684179451/cubik%20og.png`}
       />
 
       <LandingPage />

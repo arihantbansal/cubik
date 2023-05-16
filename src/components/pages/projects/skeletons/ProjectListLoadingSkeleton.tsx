@@ -15,7 +15,7 @@ const ProjectCardSkeleton = () => {
       h="22rem"
       cursor="pointer"
       maxW={{
-        base: '85vw',
+        base: '92vw',
         sm: '87vw',
         md: '44vw',
         lg: '29.5vw',
@@ -65,6 +65,7 @@ const ProjectListLoadingSkeleton = () => {
       spacing="1.5rem"
       w="100%"
       margin="0"
+      p="0"
       justify={'center'}
       align="center"
       direction={{ base: 'column', sm: 'row', md: 'row' }}
