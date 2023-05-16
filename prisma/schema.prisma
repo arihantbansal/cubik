@@ -78,7 +78,7 @@ model ProjectsModel {
   owner_publickey   String
   email            String              @default("")
   sig               String              @default("")
-  long_description  String              @db.VarChar(5000)
+  long_description  String              @db.Text
   industry          String
   project_link      String              @default("")
   twitter_handle    String              @default("")
