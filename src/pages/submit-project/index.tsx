@@ -660,7 +660,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
                         textStyle={{ base: 'title6', md: 'title5' }}
                         color="neutral.11"
                       >
-                        hashtag.irfan@gmail.com
+                        {getValues('email')}
                       </Box>
                     </VStack>
                     <VStack align={'start'} textAlign="start" spacing="8px">
