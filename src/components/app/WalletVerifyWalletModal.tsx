@@ -66,7 +66,7 @@ const WalletVerifyModal = () => {
         //
         if (signInResponse?.status === 401) {
           console.log('401');
-          router.prefetch('/create-profile');
+          router.push('/create-profile');
           setVerifying(false);
         }
         console.log('outside 401');

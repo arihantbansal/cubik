@@ -76,7 +76,6 @@ model ProjectsModel {
   short_description String              @db.VarChar(2000)
   logo              String              @db.VarChar(1000)
   owner_publickey   String
-  email            String              @default("")
   sig               String              @default("")
   long_description  String              @db.Text
   industry          String
@@ -91,6 +90,7 @@ model ProjectsModel {
   mutliSigAddress   String?             @default("")
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
+  email             String              @default("")
   comments          Comments[]
   ProjectJoinRound  ProjectJoinRound[]
   owner             UserModel           @relation(fields: [owner_publickey], references: [mainWallet])
