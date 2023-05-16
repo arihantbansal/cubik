@@ -141,7 +141,9 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
         github: string(),
         telegram: string(),
         discord: string(),
-        description: string().required(),
+        description: string()
+          .required("Description can't be empty")
+          .max(30000, 'Must be at most 3000 characters'),
       })
     ),
     mode: 'onChange',
@@ -307,7 +309,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
         transition="all .25s ease"
         maxW="full"
         p={{ base: '1rem', md: '0' }}
-        my={{ base: '2rem', md: '5rem', lg: '8rem', xl: '10rem' }}
+        my={{ base: '2rem', md: '5rem', lg: '6rem', xl: '8rem' }}
       >
         <Card
           maxW={{ base: '28rem', md: '36rem' }}

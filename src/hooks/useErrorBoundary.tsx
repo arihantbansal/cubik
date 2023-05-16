@@ -1,4 +1,3 @@
-// hooks/useErrorBoundary.ts
 import { useState } from 'react';
 import ErrorBoundary from '~/components/errors/Errorboundary';
 
