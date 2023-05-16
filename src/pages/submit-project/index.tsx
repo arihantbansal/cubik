@@ -575,7 +575,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
                   as={Link}
                   mx="auto"
                   variant={'connect_wallet'}
-                  href={`/${session?.user.username}+'?project=${projectId}`}
+                  href={`/${session?.user.username}?project=${projectId}`}
                 >
                   View Project
                 </Button>
