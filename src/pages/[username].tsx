@@ -57,7 +57,7 @@ const ProfilePage = () => {
         w="full"
         p={{ base: '23px 20px', md: '48px 20px', lg: '80px 20px' }}
       >
-        { session?.user.username === data.username ? (
+        {session?.user.username === data?.username ? (
           <AdminView user={data} isLoading={isLoading} />
         ) : (
           <VisitorView user={data} isLoading={isLoading} />
