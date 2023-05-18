@@ -15,6 +15,7 @@ const cubik = definePartsStyle((props) => {
       gap: { base: '10px', md: '32px' },
     },
     tab: {
+      boxShadow: 'none !important',
       padding: '8px 8px 12px 8px',
       fontWeight: '600',
       fontSize: { base: '16px', md: '18px' },
@@ -25,12 +26,14 @@ const cubik = definePartsStyle((props) => {
       color: 'neutral.7',
       mb: '-1px',
       _hover: {
-        borderBottom: '1px solid transparent',
+        boxShadow: 'none !important',
+        borderBottom: '2px solid transparent',
         color: 'neutral.7',
         mb: '-1px',
       },
       _selected: {
-        borderBottom: '1px solid',
+        boxShadow: 'none !important',
+        borderBottom: '2px solid',
         borderColor: 'brand.teal5',
         color: 'brand.teal6',
         mb: '-1px',

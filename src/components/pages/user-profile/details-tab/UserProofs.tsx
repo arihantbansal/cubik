@@ -7,14 +7,17 @@ import {
   VStack,
   Wrap,
 } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 import CivicIDProof from './proofs/CivicIDProof';
 import DripProof from './proofs/DripProof';
 import LamportDAOProof from './proofs/LamportDAOProof';
 import MonkeDAOProof from './proofs/MonkeDAOProof';
 
+const MotionBox = motion(Box);
+
 const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
   return (
-    <VStack align="start" w="full" gap="24px">
+    <VStack align="start" w="full" gap="12px">
       <HStack gap="8px">
         <Box
           as="p"
@@ -43,6 +46,7 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
         </Skeleton>
       </HStack>
       <Wrap
+        py="12px"
         direction={{ base: 'row', md: 'row' }}
         spacing={{ base: '24px', md: '32px' }}
       >
@@ -52,13 +56,17 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
           opacity={isLoading ? 0.4 : 1}
           rounded="12px"
         >
-          <Card
+          <MotionBox
+            as={Card}
+            cursor="pointer"
             w={{ base: '40vw', md: '17.8rem' }}
             height="fit-content"
             h="full"
+            whileHover={{ y: -8, scale: 1 }}
+            transition={{ duration: 0.3 }}
           >
             <LamportDAOProof />
-          </Card>
+          </MotionBox>
         </Skeleton>
         <Skeleton
           fadeDuration={5}
@@ -66,13 +74,17 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
           opacity={isLoading ? 0.4 : 1}
           rounded="12px"
         >
-          <Card
+          <MotionBox
+            as={Card}
+            cursor="pointer"
             w={{ base: '40vw', md: '17.8rem' }}
             height="fit-content"
             h="full"
+            whileHover={{ y: -8, scale: 1 }}
+            transition={{ duration: 0.3 }}
           >
             <DripProof />
-          </Card>
+          </MotionBox>
         </Skeleton>
         <Skeleton
           fadeDuration={6}
@@ -80,13 +92,17 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
           opacity={isLoading ? 0.4 : 1}
           rounded="12px"
         >
-          <Card
+          <MotionBox
+            as={Card}
+            cursor="pointer"
             w={{ base: '40vw', md: '17.8rem' }}
             height="fit-content"
             h="full"
+            //  whileHover={{ y: -8, scale: 1 }}
+            transition={{ duration: 0.3 }}
           >
             <CivicIDProof />
-          </Card>
+          </MotionBox>
         </Skeleton>
         <Skeleton
           fadeDuration={7}
@@ -94,13 +110,17 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
           opacity={isLoading ? 0.4 : 1}
           rounded="12px"
         >
-          <Card
+          <MotionBox
+            as={Card}
+            cursor="pointer"
             w={{ base: '40vw', md: '17.8rem' }}
             height="fit-content"
             h="full"
+            //  whileHover={{ y: -8, scale: 1 }}
+            transition={{ duration: 0.3 }}
           >
             <MonkeDAOProof />
-          </Card>
+          </MotionBox>
         </Skeleton>
       </Wrap>
     </VStack>

@@ -1,8 +1,8 @@
 import { Center } from '@chakra-ui/react';
 
-const DripHauz = () => {
+const DripHauz = ({ size }: { size: string }) => {
   return (
-    <Center width="60px" height="60px">
+    <Center width={size} height={size}>
       <svg
         width="80"
         height="80"

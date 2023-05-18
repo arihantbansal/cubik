@@ -2,7 +2,6 @@ import { Container, Stack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';
 import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-details/ProjectDetailsAndTabs';
-import ProjectPageLoadingSkeleton from '~/components/pages/projects/project-details/skeletons/ProjectPageLoadingSkeleton';
 import SEO from '~/components/SEO';
 import { trpc } from '~/utils/trpc';
 
@@ -21,13 +20,13 @@ const ProjectDetails = () => {
   return (
     <>
       <SEO
-        title={(data?.name as string) + ' - Cubik' ?? ''}
-        description={(data?.short_description as string) ?? ''}
-        image={(data?.logo as string) ?? ''}
+        title={`${data ? data.name : 'Project'} - Cubik`}
+        description={`${data ? data.short_description : ''}`}
+        image={data ? data?.logo : ''}
       />
       <main style={{ width: 'full' }}>
         <Container maxW={'full'} p="0">
-          {/* <Container pt="32px" maxW="7xl" mx="auto">
+          {/*<Container pt="32px" maxW="7xl" mx="auto">
             <Breadcrumb color="white" fontWeight="bold" fontSize="md">
               <BreadcrumbItem>
                 <BreadcrumbLink as={Link} href="/projects">
@@ -51,20 +50,11 @@ const ProjectDetails = () => {
             alignItems={'start'}
             justifyContent={'start'}
           >
-            {!data ? (
-              <ProjectPageLoadingSkeleton />
-            ) : (
-              <>
-                <ProjectDetailsAndTabs
-                  projectDetails={data}
-                  isLoading={isLoading}
-                />
-                <ProjectInteractions
-                  projectDetails={data}
-                  isLoading={isLoading}
-                />
-              </>
-            )}
+            <ProjectDetailsAndTabs
+              projectDetails={data}
+              isLoading={isLoading}
+            />
+            <ProjectInteractions projectDetails={data} isLoading={isLoading} />
           </Stack>
         </Container>
       </main>

@@ -29,7 +29,7 @@ const ProfileHeader: FC<profileHeaderType> = ({
       w="full"
       align={'center'}
       justify="start"
-      gap={{ base: '6px', sm: '12px', md: '16px' }}
+      gap={{ base: '12px', sm: '14px', md: '16px' }}
     >
       <Center
         width={{ base: '56px', sm: '72px', md: '84px' }}
@@ -38,15 +38,19 @@ const ProfileHeader: FC<profileHeaderType> = ({
         <SkeletonCircle
           fadeDuration={3}
           isLoaded={!isLoading}
+          borderRadius="12px"
           size={{ base: '56px', sm: '72px', md: '84px' }}
         >
           <ChakraAvatar
             ignoreFallback={true}
             loading="lazy"
             showBorder={true}
-            border="3px solid #FFFFFF20"
+            backgroundColor="#FFFFFF30"
+            border="2px solid #FFFFFF10"
             src={user?.profilePicture}
             name={user?.username}
+            rounded="16%"
+            borderRadius="16%"
             width={{ base: '56px', sm: '72px', md: '84px' }}
             height={{ base: '56px', sm: '72px', md: '84px' }}
           />
@@ -54,21 +58,26 @@ const ProfileHeader: FC<profileHeaderType> = ({
       </Center>
       <VStack
         m="0"
-        marginInline={'0'}
+        marginInlineStart={'0 !important'}
         p={{ base: '0px', sm: '6px', md: '8px' }}
-        gap={{ base: '2px', sm: '6px', md: '8px' }}
+        gap={{ base: '12px', md: '16px' }}
         justifyContent={'center'}
-        alignItems={'start'}
+        align={'start'}
       >
         <Skeleton
           fadeDuration={4}
           opacity={isLoading ? '0.6' : '1'}
           isLoaded={!isLoading}
         >
-          <HStack spacing="10px">
+          <HStack
+            marginInline={'0 !important'}
+            margin="0 !important"
+            spacing="10px"
+          >
             <Box
               as="p"
               textStyle={{ base: 'title4', sm: 'title2', md: 'title1' }}
+              lineHeight={{ base: '16px', sm: '24px', md: '28px' }}
               fontWeight="700"
               color={'neutral.11'}
             >
@@ -77,7 +86,7 @@ const ProfileHeader: FC<profileHeaderType> = ({
             <Box as={GoVerified} color="#FFD83D" w={iconSize} h={iconSize} />
           </HStack>
         </Skeleton>
-        <Center>
+        <Center marginInline={'0 !important'} margin="0 !important">
           <Skeleton
             fadeDuration={5}
             opacity={isLoading ? '0.4' : '1'}

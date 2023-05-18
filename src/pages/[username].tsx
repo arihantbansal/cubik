@@ -48,14 +48,14 @@ const ProfilePage = () => {
   return (
     <>
       <SEO
-        title={`@${data ? data.username : 'User'} | Cubik`}
+        title={`@${data ? data.username : 'User'} - Cubik`}
         description={`@${data ? data.username : 'User'}'s profile`}
         image={`https://res.cloudinary.com/demonicirfan/image/upload/v1684179451/cubik%20og.png`}
       />
       <Container
         maxW="7xl"
         w="full"
-        p={{ base: '23px 20px', md: '48px 20px', lg: '80px 20px' }}
+        p={{ base: '23px 20px', sm: '32px', md: '48px', lg: '48px 20px' }}
       >
         {session?.user.username === data?.username ? (
           <AdminView user={data} isLoading={isLoading} />

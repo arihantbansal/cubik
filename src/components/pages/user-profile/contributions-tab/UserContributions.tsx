@@ -152,7 +152,7 @@ const UserContributions = ({
 }) => {
   const { data, isError, isLoading } = userId
     ? trpc.contribution.getUserContributions.useQuery({ userId })
-    : { data: null, isError: false, isLoading: false };
+    : { data: null, isError: false, isLoading: false }; // todo: i have a doubt if it works or not
 
   if (!userId) {
     return <Text>No user ID provided</Text>;

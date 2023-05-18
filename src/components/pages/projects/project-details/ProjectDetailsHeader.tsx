@@ -7,6 +7,9 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
   Stack,
   VStack,
 } from '@chakra-ui/react';
@@ -48,8 +51,11 @@ const ProjectDetailsHeader = ({
   isLoading,
   projectDetails,
 }: {
-  isLoading?: boolean;
-  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
+  isLoading: boolean;
+  projectDetails:
+    | ProjectWithRoundDetailsWithOwnerWithTeamType
+    | null
+    | undefined;
 }) => {
   return isLoading ? (
     <ProjectDetailSkeleton />
@@ -60,11 +66,17 @@ const ProjectDetailsHeader = ({
       width={'100%'}
       alignItems={'center'}
     >
-      <Avatar
-        src={projectDetails?.logo}
-        width={{ base: '4.4rem', md: '6.2rem' }}
-        height={{ base: '4.4rem', md: '6.2rem' }}
-      />
+      <SkeletonCircle
+        isLoaded={!isLoading}
+        fadeDuration={3}
+        opacity={isLoading ? '0.5' : '1'}
+      >
+        <Avatar
+          src={projectDetails?.logo}
+          width={{ base: '4.4rem', md: '6.2rem' }}
+          height={{ base: '4.4rem', md: '6.2rem' }}
+        />
+      </SkeletonCircle>
       <VStack
         justify={'center'}
         gap={{ base: '2px', md: '14px' }}
@@ -73,43 +85,52 @@ const ProjectDetailsHeader = ({
       >
         <Stack spacing={{ base: '12px', md: '24px' }} direction={'row'}>
           <HStack align="center">
-            <Box
-              as="p"
-              textStyle={{ base: 'title1', md: 'headline3' }}
-              textTransform="capitalize"
-              color="neutral.11"
-              noOfLines={1}
-              overflow="hidden"
-              whiteSpace="nowrap"
-              textOverflow="ellipsis"
+            <Skeleton
+              isLoaded={!isLoading}
+              fadeDuration={4}
+              opacity={isLoading ? '0.5' : '1'}
             >
-              {projectDetails?.name}
-            </Box>
-            <Menu>
-              <MenuButton
-                w="4px !important"
-                display="flex"
-                marginInline={'0px'}
-                alignContent={'center'}
-                justifyContent={'center'}
-                m="0 !important"
-                as={Button}
-                variant="unstyled"
-                rightIcon={<BiChevronDown size={26} color="white" />}
-              />
-              <MenuList p="0" outline="0" border="0">
-                <MenuItem
-                  p="8px 16px"
-                  color="surface.yellow.2"
-                  rounded="4px"
-                  icon={
-                    <MdReportGmailerrorred color="surface.yellow.2" size={22} />
-                  }
-                >
-                  Report
-                </MenuItem>
-              </MenuList>
-            </Menu>
+              <Box
+                as="p"
+                textStyle={{ base: 'title1', md: 'headline3' }}
+                textTransform="capitalize"
+                color="neutral.11"
+                noOfLines={1}
+                overflow="hidden"
+                whiteSpace="nowrap"
+                textOverflow="ellipsis"
+              >
+                {projectDetails?.name}
+              </Box>
+              <Menu>
+                <MenuButton
+                  w="4px !important"
+                  display="flex"
+                  marginInline={'0px'}
+                  alignContent={'center'}
+                  justifyContent={'center'}
+                  m="0 !important"
+                  as={Button}
+                  variant="unstyled"
+                  rightIcon={<BiChevronDown size={26} color="white" />}
+                />
+                <MenuList p="0" outline="0" border="0">
+                  <MenuItem
+                    p="8px 16px"
+                    color="surface.yellow.2"
+                    rounded="4px"
+                    icon={
+                      <MdReportGmailerrorred
+                        color="surface.yellow.2"
+                        size={22}
+                      />
+                    }
+                  >
+                    Report
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </Skeleton>
           </HStack>
           <HStack
             overflow={'hidden'}
@@ -119,26 +140,36 @@ const ProjectDetailsHeader = ({
             pt="0.5rem"
             display={{ base: 'none', md: 'flex' }}
           >
-            {JSON.parse(projectDetails.industry)?.map(
-              (tag: any, key: React.Key | null | undefined) => {
-                return (
-                  <CustomTag color={tag.label} key={key}>
-                    {tag.label}
-                  </CustomTag>
-                );
-              }
+            {isLoading ? (
+              <></>
+            ) : (
+              JSON.parse(projectDetails ? projectDetails.industry : '')?.map(
+                (tag: any, key: React.Key | null | undefined) => {
+                  return (
+                    <CustomTag color={tag.label} key={key}>
+                      {tag.label}
+                    </CustomTag>
+                  );
+                }
+              )
             )}
           </HStack>
         </Stack>
-        <Box
-          as="p"
-          textStyle={{ base: 'body4', md: 'body2' }}
-          color="neutral.9"
-          noOfLines={2}
-          textOverflow="ellipsis"
+        <SkeletonText
+          isLoaded={!isLoading}
+          fadeDuration={4}
+          opacity={isLoading ? '0.5' : '1'}
         >
-          {projectDetails?.short_description}
-        </Box>
+          <Box
+            as="p"
+            textStyle={{ base: 'body4', md: 'body2' }}
+            color="neutral.9"
+            noOfLines={2}
+            textOverflow="ellipsis"
+          >
+            {projectDetails?.short_description}
+          </Box>
+        </SkeletonText>
         {/* <HStack>
           <Button
             variant="unstyled"

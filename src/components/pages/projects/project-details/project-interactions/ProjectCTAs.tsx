@@ -24,7 +24,10 @@ import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody
 import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 
 interface ProjectCTAsProps {
-  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
+  projectDetails:
+    | ProjectWithRoundDetailsWithOwnerWithTeamType
+    | null
+    | undefined;
   isLoading: boolean;
 }
 
@@ -302,14 +305,16 @@ export const ProjectCTAs = ({
               pb="24px !important"
               roundedTop={'24px'}
             >
-              Donate to {projectDetails.name}
+              Donate to {projectDetails?.name}
             </ModalHeader>
             <ModalCloseButton top="24px" />
             <ModalBody>
-              <PaymentModalBody
-                setDonationSuccessful={setDonationSuccessful}
-                projectDetails={projectDetails}
-              />
+              {projectDetails && (
+                <PaymentModalBody
+                  setDonationSuccessful={setDonationSuccessful}
+                  projectDetails={projectDetails}
+                />
+              )}
             </ModalBody>
           </ModalContent>
         )}
@@ -322,29 +327,35 @@ export const ProjectCTAs = ({
           alignItems={{ base: 'center', lg: 'start' }}
         >
           <VStack gap="16px" align={'end'} spacing="0" w="full" pb="0.5rem">
-            <Skeleton isLoaded={!isLoading} w="full">
-              <Box opacity={isLoading ? '0.6' : '1'}>
-                <Button
-                  onClick={onDonateHandler}
-                  variant="project_button_primary"
-                  w="full"
-                >
-                  Donate
-                </Button>
-              </Box>
+            <Skeleton
+              opacity={isLoading ? '0.5' : 1}
+              fadeDuration={3}
+              isLoaded={!isLoading}
+              w="full"
+            >
+              <Button
+                onClick={onDonateHandler}
+                variant="project_button_primary"
+                w="full"
+              >
+                Donate
+              </Button>
             </Skeleton>
-            <Skeleton isLoaded={!isLoading} w="full">
-              <Box opacity={isLoading ? '0.4' : '1'}>
-                <Button
-                  rightIcon={<AnimatedArrowIcon animate={isHovered} />}
-                  variant="project_button_secondary"
-                  w="full"
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
-                >
-                  Visit Project
-                </Button>
-              </Box>
+            <Skeleton
+              fadeDuration={4}
+              opacity={isLoading ? '0.4' : 1}
+              isLoaded={!isLoading}
+              w="full"
+            >
+              <Button
+                rightIcon={<AnimatedArrowIcon animate={isHovered} />}
+                variant="project_button_secondary"
+                w="full"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                Visit Project
+              </Button>
             </Skeleton>
           </VStack>
         </VStack>

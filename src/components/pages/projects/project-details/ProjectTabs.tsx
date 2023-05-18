@@ -8,7 +8,10 @@ export const ProjectsTabs = ({
   projectDetails,
   isLoading,
 }: {
-  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
+  projectDetails:
+    | ProjectWithRoundDetailsWithOwnerWithTeamType
+    | null
+    | undefined;
   isLoading: boolean;
 }) => {
   console.log('project details - ', projectDetails);
@@ -28,12 +31,12 @@ export const ProjectsTabs = ({
         <TabPanel>
           <ProjectsDetailedDescription
             isLoading={isLoading}
-            description={projectDetails.long_description}
+            description={projectDetails?.long_description}
           />
         </TabPanel>
         <TabPanel overflowX="scroll">
           <ProjectContributors
-            projectId={projectDetails.id}
+            projectId={projectDetails?.id}
             isLoading={isLoading}
           />
         </TabPanel>

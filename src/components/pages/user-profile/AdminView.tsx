@@ -13,8 +13,11 @@ import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import { UserWithProjectType } from '~/types/user';
 import UserContributions from './contributions-tab/UserContributions';
 import UserDetails from './details-tab/UserDetails';
+import UserProofs from './details-tab/UserProofs';
+import { AdminProjectEmptyState } from './empty-states/ProjectEmptyState';
 
 import ProfileHeader from './ProfileHeader';
+import ProjectAdminCard from './projects-tab/ProjectAdminCard';
 
 type adminViewType = {
   user: UserWithProjectType | null | undefined;
@@ -52,12 +55,13 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
             <TabPanel>
               <Flex maxW={'full'} p="0" flexDir="column" gap="32px">
                 <UserDetails isLoading={isLoading} />
+                <UserProofs isLoading={isLoading} />
               </Flex>
             </TabPanel>
             <TabPanel>
               <Flex direction="column" w="full" gap="32px">
-                {/* {user.project.length ? (
-                  user.project.map((project, key) => (
+                {user?.project.length ? (
+                  user?.project.map((project, key) => (
                     <ProjectAdminCard
                       project={project}
                       activeProject={router?.query?.project as string}
@@ -66,7 +70,7 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
                   ))
                 ) : (
                   <AdminProjectEmptyState />
-                )} */}
+                )}
               </Flex>
             </TabPanel>
             <TabPanel w="full">

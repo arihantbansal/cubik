@@ -8,7 +8,7 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
         textStyle={{ base: 'title4', md: 'title3' }}
         color="neutral.11"
       >
-        Contribution Details
+        Funding
       </Box>
       <Stack
         direction={{ base: 'column', md: 'row' }}
