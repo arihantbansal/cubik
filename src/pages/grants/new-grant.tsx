@@ -30,6 +30,7 @@ import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import { addDays } from 'date-fns';
 import enGB from 'date-fns/locale/en-GB';
 import moment from 'moment';
+import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
@@ -70,6 +71,10 @@ const CreateGrantRound = () => {
     end: moment.Moment | null
   ) => {
     try {
+      const ts = await getSession();
+
+      console.log(ts);
+
       const ix = await createRoundIx(
         anchorWallet as NodeWallet,
         name,
