@@ -145,9 +145,19 @@ const UserContributionTableRow = ({
   );
 };
 
-const UserContributions = ({ userId }: { userId: string }) => {
-  const { data, isError, isLoading } =
-    trpc.contribution.getUserContributions.useQuery({ userId });
+const UserContributions = ({
+  userId,
+}: {
+  userId: string | null | undefined;
+}) => {
+  const { data, isError, isLoading } = userId
+    ? trpc.contribution.getUserContributions.useQuery({ userId })
+    : { data: null, isError: false, isLoading: false }; // todo: i have a doubt if it works or not
+
+  if (!userId) {
+    return <Text>No user ID provided</Text>;
+  }
+
   return (
     <TableContainer w="full">
       <Table variant="unstyled">

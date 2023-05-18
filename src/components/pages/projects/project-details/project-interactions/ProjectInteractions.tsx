@@ -10,7 +10,7 @@ import {
   Wrap,
 } from '@chakra-ui/react';
 import { ProjectsModel } from '@prisma/client';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { Key } from 'react';
 import {
   FaDiscord,
@@ -25,9 +25,7 @@ import { ProjectCreatorTeamType } from '~/types/IProjectDetails';
 import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 import {
   ProjectCreatorSkeleton,
-  ProjectFundingSkeleton,
   ProjectSocialsSkeleton,
-  SimilarProjectsSkeleton,
 } from '../skeletons/ProjectPageLoadingSkeleton';
 import { ProjectCTAs } from './ProjectCTAs';
 
@@ -218,11 +216,17 @@ const SocialLinks = ({ urlName }: { urlName: string }) => {
 };
 
 export const ProjectSocials = ({
+  isLoading,
   hideTitle,
   projectDetails,
 }: {
+  isLoading: boolean;
   hideTitle?: boolean;
-  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType | ProjectsModel;
+  projectDetails:
+    | ProjectWithRoundDetailsWithOwnerWithTeamType
+    | ProjectsModel
+    | null
+    | undefined;
 }) => {
   const socials = [
     {
@@ -257,31 +261,35 @@ export const ProjectSocials = ({
         </Box>
       )}
       <Wrap direction={'row'}>
-        {socials.map(
-          (
-            link: { name: string | undefined; url: string | undefined },
-            key: Key
-          ) =>
-            link.name && (
-              <IconButton
-                aria-label={link.name}
-                variant={'unstyled'}
-                fontSize={{ base: 'lg', md: 'xl' }}
-                display="flex"
-                alignItems={'center'}
-                rounded="full"
-                color="brand.teal6"
-                backgroundColor="brand.teal2"
-                key={key}
-                icon={<SocialLinks urlName={link.name} />}
-                _hover={{
-                  backgroundColor: 'brand.teal3',
-                }}
-                as="a"
-                href={link.url}
-                target="_blank"
-              />
-            )
+        {isLoading ? (
+          <ProjectSocialsSkeleton isLoading={isLoading} />
+        ) : (
+          socials.map(
+            (
+              link: { name: string | undefined; url: string | undefined },
+              key: Key
+            ) =>
+              link.name && (
+                <IconButton
+                  aria-label={link.name}
+                  variant={'unstyled'}
+                  fontSize={{ base: 'lg', md: 'xl' }}
+                  display="flex"
+                  alignItems={'center'}
+                  rounded="full"
+                  color="brand.teal6"
+                  backgroundColor="brand.teal2"
+                  key={key}
+                  icon={<SocialLinks urlName={link.name} />}
+                  _hover={{
+                    backgroundColor: 'brand.teal3',
+                  }}
+                  as="a"
+                  href={link.url}
+                  target="_blank"
+                />
+              )
+          )
         )}
       </Wrap>
     </VStack>
@@ -291,9 +299,15 @@ export const ProjectSocials = ({
 export const ProjectCreatorTeamMember = ({
   teamMember,
 }: ProjectCreatorTeamMemberProps) => {
-  const router = useRouter();
   return (
-    <HStack w="full" justify="space-between" px="16px">
+    <HStack
+      as={Link}
+      cursor="pointer"
+      href={teamMember.user.username}
+      w="full"
+      justify="space-between"
+      px="16px"
+    >
       <HStack gap="0.6rem">
         <Avatar
           borderRadius={'8px'}
@@ -315,17 +329,26 @@ export const ProjectCreatorTeamMember = ({
 
 export const ProjectOwner = ({
   projectDetails,
+  isLoading,
 }: {
-  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
+  projectDetails:
+    | ProjectWithRoundDetailsWithOwnerWithTeamType
+    | null
+    | undefined;
+  isLoading: boolean;
 }) => {
   return (
     <VStack gap="16px" align={'start'} w="full">
       <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
-        Project Creators
+        Creators
       </Box>
-      {projectDetails.Team.map(
-        (teamMember: ProjectCreatorTeamType, key: Key) => (
-          <ProjectCreatorTeamMember teamMember={teamMember} key={key} />
+      {isLoading && !projectDetails ? (
+        <ProjectCreatorSkeleton isLoading={isLoading} />
+      ) : (
+        projectDetails?.Team.map(
+          (teamMember: ProjectCreatorTeamType, key: Key) => (
+            <ProjectCreatorTeamMember teamMember={teamMember} key={key} />
+          )
         )
       )}
     </VStack>
@@ -384,7 +407,10 @@ export const ProjectCreatorAndLinks = ({
   projectDetails,
   isLoading,
 }: {
-  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
+  projectDetails:
+    | ProjectWithRoundDetailsWithOwnerWithTeamType
+    | null
+    | undefined;
   isLoading: boolean;
 }) => {
   return (
@@ -396,36 +422,28 @@ export const ProjectCreatorAndLinks = ({
       justifyContent={'start'}
       display={{ base: 'none', lg: 'flex' }}
     >
-      {isLoading ? (
-        <>
-          <ProjectSocialsSkeleton />
-          <ProjectFundingSkeleton />
-          <ProjectCreatorSkeleton />
-          <SimilarProjectsSkeleton />
-        </>
-      ) : (
-        <>
-          <ProjectSocials projectDetails={projectDetails} />
-          <ProjectFundingData />
-          <ProjectOwner projectDetails={projectDetails} />
-          <VStack
-            gap="16px"
-            align={'start'}
-            w={{ base: 'auto', sm: 'auto', lg: 'full' }}
-          >
-            <Box as="p" textStyle={'title3'} color="white">
-              Similar Projects
-            </Box>
-            <SimilarProject />
-          </VStack>
-        </>
-      )}
+      <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />
+      <ProjectFundingData />
+      <ProjectOwner isLoading={isLoading} projectDetails={projectDetails} />
+      <VStack
+        gap="16px"
+        align={'start'}
+        w={{ base: 'auto', sm: 'auto', lg: 'full' }}
+      >
+        <Box as="p" textStyle={'title3'} color="white">
+          Similar Projects
+        </Box>
+        <SimilarProject />
+      </VStack>
     </VStack>
   );
 };
 
 interface ProjectInteractionsProps {
-  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
+  projectDetails:
+    | ProjectWithRoundDetailsWithOwnerWithTeamType
+    | null
+    | undefined;
   isLoading: boolean;
 }
 

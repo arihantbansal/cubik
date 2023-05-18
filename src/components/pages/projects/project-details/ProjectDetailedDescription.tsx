@@ -1,11 +1,17 @@
-import { Box, Stack, Text, useDisclosure, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  SkeletonText,
+  Stack,
+  Text,
+  useDisclosure,
+  VStack,
+} from '@chakra-ui/react';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 
 import { Link, LinkProps } from '@chakra-ui/react';
-import ProjectsDetailedDescriptionSkeleton from './skeletons/ProjectsDetailedDescriptionSkeleton';
 
 export const ProjectsDetailedDescription = ({
   isLoading,
@@ -13,8 +19,8 @@ export const ProjectsDetailedDescription = ({
   maxH,
   overflow,
 }: {
-  isLoading?: boolean;
-  description: string;
+  isLoading: boolean;
+  description: string | null | undefined;
   maxH?: string;
   overflow?: string;
 }) => {
@@ -102,9 +108,7 @@ export const ProjectsDetailedDescription = ({
     },
   };
 
-  return isLoading ? (
-    <ProjectsDetailedDescriptionSkeleton />
-  ) : (
+  return (
     <Stack alignSelf={'start'} w="full" direction={'column'} gap="0.5rem">
       <VStack
         maxH={maxH}
@@ -112,13 +116,15 @@ export const ProjectsDetailedDescription = ({
         align="start"
         gap="0.5rem"
       >
-        <ReactMarkdown
-          components={ChakraUIRenderer(newTheme)}
-          rehypePlugins={[rehypeRaw]}
-          remarkPlugins={[remarkGfm]}
-        >
-          {description}
-        </ReactMarkdown>
+        <SkeletonText isLoaded={isLoading} fadeDuration={5}>
+          <ReactMarkdown
+            components={ChakraUIRenderer(newTheme)}
+            rehypePlugins={[rehypeRaw]}
+            remarkPlugins={[remarkGfm]}
+          >
+            {description ? description : ''}
+          </ReactMarkdown>
+        </SkeletonText>
       </VStack>
     </Stack>
   );

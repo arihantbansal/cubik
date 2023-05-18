@@ -1,8 +1,12 @@
 import * as anchor from '@coral-xyz/anchor';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { Prisma } from '@prisma/client';
-import { NextApiRequest } from 'next';
-import { type DefaultSession, type NextAuthOptions } from 'next-auth';
+import { GetServerSidePropsContext, NextApiRequest } from 'next';
+import {
+  getServerSession,
+  type DefaultSession,
+  type NextAuthOptions,
+} from 'next-auth';
 import credentialsProvider from 'next-auth/providers/credentials';
 import { verifyMessage } from '~/utils/getsignMessage';
 import { prisma } from './prisma';
@@ -23,7 +27,9 @@ type UserSession = Prisma.UserModelGetPayload<{
   };
 }>;
 
-export const authOptions = (req: NextApiRequest): NextAuthOptions => {
+export const authOptions = (
+  req: NextApiRequest | undefined
+): NextAuthOptions => {
   return {
     callbacks: {
       jwt: async ({ token, user }) => {
@@ -59,11 +65,10 @@ export const authOptions = (req: NextApiRequest): NextAuthOptions => {
             wallet: string;
             signature: string;
           };
-          console.log(req.cookies, '-- cookies', process.env.NODE_ENV);
           const availableTokens =
             process.env.NODE_ENV === 'development'
-              ? req.cookies['next-auth.csrf-token']?.split('|')
-              : req.cookies['__Host-next-auth.csrf-token']?.split('|');
+              ? req?.cookies['next-auth.csrf-token']?.split('|')
+              : req?.cookies['__Host-next-auth.csrf-token']?.split('|');
           console.log(availableTokens, '-- availableTokens');
 
           try {
@@ -112,9 +117,9 @@ export const authOptions = (req: NextApiRequest): NextAuthOptions => {
     },
   };
 };
-// export const getServerAuthSession = (ctx: {
-//   req: GetServerSidePropsContext['req'];
-//   res: GetServerSidePropsContext['res'];
-// }) => {
-//   return getServerSession(ctx.req, ctx.res, authOptions(ctx.req));
-// };
+export const getServerAuthSession = (ctx: {
+  req: GetServerSidePropsContext['req'];
+  res: GetServerSidePropsContext['res'];
+}) => {
+  return getServerSession(ctx.req, ctx.res, authOptions(undefined));
+};

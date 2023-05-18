@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import SEO from 'src/components/SEO';
 import AdminView from '~/components/pages/user-profile/AdminView';
-import { VisitorViewSkeleton } from '~/components/pages/user-profile/skeletons/ProfileViewSkeletons';
 import VisitorView from '~/components/pages/user-profile/VisitorView';
 import { trpc } from '~/utils/trpc';
 
@@ -12,7 +11,7 @@ const ProfilePage = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  const user = trpc.user.findOne.useQuery(
+  const { data, isError, isLoading } = trpc.user.findOne.useQuery(
     {
       username: router.query.username as string,
     },
@@ -21,7 +20,7 @@ const ProfilePage = () => {
     }
   );
 
-  if (user.isError) {
+  if (isError) {
     return (
       <Container maxW="full">
         <Center gap="16px" flexDir={'column'} maxW="4xl" mx="auto" py="14rem">
@@ -45,34 +44,23 @@ const ProfilePage = () => {
       </Container>
     );
   }
-  if (user.isLoading || !user.data) {
-    return (
-      <Container
-        maxW="7xl"
-        w="full"
-        p={{ base: '23px 20px', md: '48px 20px', lg: '80px 20px' }}
-      >
-        <VisitorViewSkeleton />
-      </Container>
-    );
-  }
 
   return (
     <>
       <SEO
-        title={`@${user.data.username}`}
-        description={`${user.data.username}'s profile on Cubik`}
+        title={`@${data ? data.username : 'User'} - Cubik`}
+        description={`@${data ? data.username : 'User'}'s profile`}
         image={`https://res.cloudinary.com/demonicirfan/image/upload/v1684179451/cubik%20og.png`}
       />
       <Container
         maxW="7xl"
         w="full"
-        p={{ base: '23px 20px', md: '48px 20px', lg: '80px 20px' }}
+        p={{ base: '23px 20px', sm: '32px', md: '48px', lg: '48px 20px' }}
       >
-        {session?.user.username === user.data.username ? (
-          <AdminView user={user.data} isLoading={user.isLoading} />
+        {session?.user.username === data?.username ? (
+          <AdminView user={data} isLoading={isLoading} />
         ) : (
-          <VisitorView user={user.data} isLoading={user.isLoading} />
+          <VisitorView user={data} isLoading={isLoading} />
         )}
       </Container>
     </>

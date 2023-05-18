@@ -1,5 +1,4 @@
 import {
-  Center,
   Flex,
   Tab,
   TabList,
@@ -8,36 +7,35 @@ import {
   Tabs,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { FC, memo } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import { UserWithProjectType } from '~/types/user';
 import UserContributions from './contributions-tab/UserContributions';
 import UserDetails from './details-tab/UserDetails';
+import UserProofs from './details-tab/UserProofs';
 import { AdminProjectEmptyState } from './empty-states/ProjectEmptyState';
 
 import ProfileHeader from './ProfileHeader';
 import ProjectAdminCard from './projects-tab/ProjectAdminCard';
-import { AdminViewSkeleton } from './skeletons/ProfileViewSkeletons';
 
 type adminViewType = {
-  user: UserWithProjectType;
+  user: UserWithProjectType | null | undefined;
   isLoading: boolean;
 };
 
 const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
-  const { hasError, ErrorBoundaryWrapper } = useErrorBoundary();
+  const { ErrorBoundaryWrapper } = useErrorBoundary();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
-  if (hasError) {
-    return (
-      <Center w="full" h="4rem">
-        There was some error
-      </Center>
-    );
-  }
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(true);
+    }, 5000);
+  }, []);
 
-  if (isLoading) return <AdminViewSkeleton />;
+  //if (isLoading) return <AdminViewSkeleton />;
 
   return (
     <ErrorBoundaryWrapper>
@@ -46,7 +44,7 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
         flexDir={'column'}
         gap={{ base: '32px', sm: '40px', md: '56px' }}
       >
-        <ProfileHeader user={user} />
+        <ProfileHeader isLoading={isLoading} user={user} />
         <Tabs defaultIndex={router.query.project ? 1 : 0} variant={'cubik'}>
           <TabList>
             <Tab>Details</Tab>
@@ -56,13 +54,14 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
           <TabPanels p={'0'}>
             <TabPanel>
               <Flex maxW={'full'} p="0" flexDir="column" gap="32px">
-                <UserDetails />
+                <UserDetails isLoading={isLoading} />
+                <UserProofs isLoading={isLoading} />
               </Flex>
             </TabPanel>
             <TabPanel>
               <Flex direction="column" w="full" gap="32px">
-                {user.project.length ? (
-                  user.project.map((project, key) => (
+                {user?.project.length ? (
+                  user?.project.map((project, key) => (
                     <ProjectAdminCard
                       project={project}
                       activeProject={router?.query?.project as string}
@@ -75,7 +74,7 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
               </Flex>
             </TabPanel>
             <TabPanel w="full">
-              <UserContributions userId={user.id} />
+              <UserContributions userId={user?.id} />
             </TabPanel>
           </TabPanels>
         </Tabs>

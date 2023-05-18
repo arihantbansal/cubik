@@ -10,6 +10,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   HStack,
+  Skeleton,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
@@ -24,7 +25,6 @@ import {
 } from './project-interactions/ProjectInteractions';
 import ProjectDetailsHeader from './ProjectDetailsHeader';
 import { ProjectsTabs } from './ProjectTabs';
-import { MobileOnlyViewSkeleton } from './skeletons/ProjectPageLoadingSkeleton';
 
 type MobileDrawerTypes = {
   logo: string;
@@ -83,50 +83,67 @@ const MobileOnlyViews = ({
   projectDetails,
   isLoading,
 }: {
-  isLoading?: boolean;
-  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
+  isLoading: boolean;
+  projectDetails:
+    | ProjectWithRoundDetailsWithOwnerWithTeamType
+    | null
+    | undefined;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [donationSuccessful, setDonationSuccessful] = useState(false);
 
-  return isLoading ? (
-    <MobileOnlyViewSkeleton />
-  ) : (
+  return (
     <>
       <VStack gap="32px" w="full" display={{ base: 'flex', lg: 'none' }}>
         <HStack w="full">
-          <Button
+          <Skeleton
+            isLoaded={!isLoading}
+            opacity={isLoading ? 0.6 : 1}
+            fadeDuration={3}
             w="full"
-            fontSize={'16px'}
-            onClick={onOpen}
-            variant="connect_wallet"
           >
-            Donate
-          </Button>
-          <Button
+            <Button
+              w="full"
+              fontSize={'16px'}
+              onClick={onOpen}
+              variant="connect_wallet"
+            >
+              Donate
+            </Button>
+          </Skeleton>
+          <Skeleton
+            isLoaded={!isLoading}
+            opacity={isLoading ? 0.6 : 1}
+            fadeDuration={3}
             w="full"
-            h="40px"
-            borderRadius={'8px'}
-            variant="secondary"
-            fontSize="14px"
-            pb="8px"
           >
-            Visit Project
-          </Button>
+            <Button
+              w="full"
+              h="40px"
+              borderRadius={'8px'}
+              variant="secondary"
+              fontSize="14px"
+              pb="8px"
+            >
+              Visit Project
+            </Button>
+          </Skeleton>
         </HStack>
-        <ProjectSocials projectDetails={projectDetails} />{' '}
+        <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />{' '}
         <ProjectFundingData />
-        <ProjectOwner projectDetails={projectDetails} />
+        <ProjectOwner isLoading={isLoading} projectDetails={projectDetails} />
       </VStack>
-      <MobileDrawer
-        logo={projectDetails.logo}
-        projectName={projectDetails.name}
-        walletAddress={projectDetails.owner_publickey}
-        isOpen={isOpen}
-        onClose={onClose}
-        projectDetails={projectDetails}
-        setDonationSuccessful={setDonationSuccessful}
-      />
+      {projectDetails && (
+        <MobileDrawer
+          logo={projectDetails.logo}
+          projectName={projectDetails.name}
+          walletAddress={projectDetails.owner_publickey}
+          isOpen={isOpen}
+          onClose={onClose}
+          projectDetails={projectDetails}
+          setDonationSuccessful={setDonationSuccessful}
+        />
+      )}
     </>
   );
 };
@@ -135,7 +152,10 @@ export const ProjectDetailsAndTabs = ({
   projectDetails,
   isLoading,
 }: {
-  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
+  projectDetails:
+    | ProjectWithRoundDetailsWithOwnerWithTeamType
+    | null
+    | undefined;
   isLoading: boolean;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();

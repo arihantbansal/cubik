@@ -20,6 +20,8 @@ export const roundRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
+      console.log(ctx, '---ctx');
+
       if (!ctx.session) {
         throw new TRPCError({
           code: 'FORBIDDEN',

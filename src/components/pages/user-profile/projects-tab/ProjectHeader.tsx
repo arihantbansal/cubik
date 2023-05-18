@@ -121,9 +121,11 @@ export const ProjectHeaderVisitorView = ({
 };
 
 const ProjectDetails = ({
+  isLoading,
   project,
   setDrawerBodyView,
 }: {
+  isLoading: boolean;
   project: projectWithFundingRoundType;
   setDrawerBodyView: any;
 }) => {
@@ -282,7 +284,11 @@ const ProjectDetails = ({
                   {getDomain(project.project_link)}
                 </Box>
               </Button>
-              <ProjectSocials hideTitle={true} projectDetails={project} />
+              <ProjectSocials
+                isLoading={isLoading}
+                hideTitle={true}
+                projectDetails={project}
+              />
             </HStack>
           </HStack>
         </VStack>
@@ -309,6 +315,7 @@ const ProjectDetails = ({
           description={project.long_description}
           maxH="full"
           overflow={'scroll'}
+          isLoading={false}
         />
       </Center>
     </VStack>
@@ -475,6 +482,7 @@ const ProjectHeader = ({
                     />
                   </Center>
                   <ProjectDetails
+                    isLoading={false}
                     project={project}
                     setDrawerBodyView={setDrawerBodyView}
                   />
