@@ -46,7 +46,7 @@ const ProjectDetails = () => {
             direction={{ base: 'column', lg: 'row' }}
             gap={{ base: '24px', md: '12px', lg: '60px', xl: '100px' }}
             px={{ base: '1rem', sm: '2rem', md: '2rem', xl: '1rem' }}
-            py={{ base: '24px', md: '40px' }}
+            py={{ base: '24px', md: '64px' }}
             alignItems={'start'}
             justifyContent={'start'}
           >

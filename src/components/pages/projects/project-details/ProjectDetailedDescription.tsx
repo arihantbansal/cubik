@@ -100,20 +100,20 @@ export const ProjectsDetailedDescription = ({
 
   return (
     <Stack alignSelf={'start'} w="full" direction={'column'} gap="0.5rem">
-      <VStack
-        maxH={maxH}
-        overflow={overflow ? overflow : 'scroll'}
-        align="start"
-        gap="0.5rem"
+      <SkeletonText
+        isLoaded={!isLoading}
+        w="full"
+        fadeDuration={5}
+        noOfLines={5}
+        opacity={isLoading ? '0.4' : '1'}
+        skeletonHeight="16px"
+        spacing="4"
       >
-        <SkeletonText
-          isLoaded={!isLoading}
-          w="full"
-          fadeDuration={5}
-          noOfLines={5}
-          opacity={isLoading ? '0.4' : '1'}
-          skeletonHeight="16px"
-          spacing="4"
+        <VStack
+          maxH={maxH}
+          overflow={overflow ? overflow : 'scroll'}
+          align="start"
+          gap="0.5rem"
         >
           <ReactMarkdown
             components={ChakraUIRenderer(newTheme)}
@@ -122,8 +122,8 @@ export const ProjectsDetailedDescription = ({
           >
             {description ? description : ''}
           </ReactMarkdown>
-        </SkeletonText>
-      </VStack>
+        </VStack>{' '}
+      </SkeletonText>
     </Stack>
   );
 };

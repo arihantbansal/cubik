@@ -321,6 +321,7 @@ export const Button = {
     cubikOutlined: (_props: StyleFunctionProps) => ({
       color: '#A8F0E6',
       backgroundColor: 'transparent',
+      borderRadius: '10px',
       outline: isMobileSafari ? '' : '1px solid #A8F0E6',
       border: isMobileSafari ? '1px solid #A8F0E6' : '',
       _hover: {
@@ -345,6 +346,7 @@ export const Button = {
     cubikDanger: (_props: StyleFunctionProps) => ({
       color: '#250003',
       backgroundColor: '#FCBDB5',
+      borderRadius: '10px',
       _hover: {
         color: '#F6142E',
         backgroundColor: '#250003',
@@ -361,6 +363,7 @@ export const Button = {
     cubikWarning: (_props: StyleFunctionProps) => ({
       color: '#212010',
       backgroundColor: '#FFEC71',
+      borderRadius: '10px',
       _hover: {
         color: '#FFEC71',
         backgroundColor: '#212010',
@@ -377,6 +380,7 @@ export const Button = {
     cubikText: (_props: StyleFunctionProps) => ({
       color: '#A8F0E6',
       px: '16px !important',
+      borderRadius: '10px',
       _hover: {
         color: '#A8F0E6',
         backgroundColor: '#161616',

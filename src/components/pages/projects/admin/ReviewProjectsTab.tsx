@@ -55,7 +55,11 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
   const anchorWallet = useAnchorWallet();
   const { data } = useSession();
   const toast = useToast();
-  const projectUpdateMutation = trpc.project.updateProjectStatus.useMutation();
+  const projectUpdateMutation = trpc.project.updateProjectStatus.useMutation({
+    onSuccess: () => {
+      SuccessToast({ toast, message: 'Project Updated' });
+    },
+  });
   const [isActionModalOpen, setIsActionModalOpen] = useState(false);
   const [transactionLoading, setTransactionLoading] = useState(false);
   const [currentAction, setCurrentAction] = useState<CurrentAction | null>(
@@ -102,7 +106,7 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
         id: id,
         status: 'VERIFIED',
       });
-      SuccessToast({ toast, message: 'Project Approved' });
+      setIsActionModalOpen(false);
     } catch (error: any) {
       setTransactionSignError(error.message || 'An error occurred');
     } finally {
@@ -137,7 +141,7 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
         id: id,
         status: 'REVIEW',
       });
-      SuccessToast({ toast, message: 'Project Rejected Succesfully' });
+      setIsActionModalOpen(false);
     } catch (error: any) {
       setTransactionSignError(error.message || 'An error occurred');
     } finally {
@@ -254,19 +258,11 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
                 </Stack>
                 <HStack justifyContent={'end'}>
                   <Button
-                    variant={'unstyled'}
-                    px="2rem"
-                    h="full"
-                    minH="2.4rem"
-                    w="full"
-                    backgroundColor="surface.red.1"
-                    border="1px solid transparent"
-                    rounded="8px"
-                    _hover={{
-                      border: '1px solid #FF333D',
-                    }}
-                    color={'surface.red.2'}
-                    maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
+                    size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+                    variant={'cubikDanger'}
+                    h={{ base: '2.6rem', md: 'full' }}
+                    minH={'3rem'}
+                    w={{ base: 'full', sm: '7rem', md: '9rem' }}
                     onClick={() =>
                       handleAction(
                         'reject',
@@ -280,21 +276,11 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
                     Reject
                   </Button>
                   <Button
-                    variant={'unstyled'}
-                    px="2rem"
-                    h="full"
-                    minH="2.4rem"
-                    w="full"
-                    backgroundColor="brand.teal2"
-                    color="brand.teal5"
-                    border="1px solid"
-                    borderColor={'brand.teal2'}
-                    rounded="8px"
-                    _hover={{
-                      border: '1px solid',
-                      borderColor: 'brand.teal5',
-                    }}
-                    maxW={{ base: 'full', sm: '8rem', md: '20rem' }}
+                    size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+                    variant={'cubikFilled'}
+                    h={{ base: '2.6rem', md: 'full' }}
+                    minH={'3rem'}
+                    w={{ base: 'full', sm: '7rem', md: '9rem' }}
                     onClick={() =>
                       handleAction(
                         'accept',
@@ -487,7 +473,8 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
               >
                 <Button
                   w="8rem"
-                  variant="close_modal"
+                  size={{ base: 'cubikMini', md: 'cubikSmall' }}
+                  variant={'cubikOutlined'}
                   onClick={() => {
                     onActionModalClose();
                     setTransactionSignError(null);
@@ -497,7 +484,9 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
                 </Button>
                 <Button
                   px="32px"
-                  variant="apply_for_grant"
+                  size={{ base: 'cubikMini', md: 'cubikSmall' }}
+                  variant={'cubikFilled'}
+                  loadingText="Confirming"
                   onClick={handleSignTransaction}
                   isLoading={transactionLoading}
                 >

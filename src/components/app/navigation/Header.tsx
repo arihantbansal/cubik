@@ -182,10 +182,10 @@ export const Header = memo(function Header({
       <>
         <SearchBar
           display={landingPage ? 'none' : 'flex'}
-          width={{ base: 'full', sm: 'full', md: '8rem', lg: '16rem' }}
+          width={{ base: 'full', sm: 'full', md: '8rem', lg: '14rem' }}
         />
         <HStack
-          gap={{ base: '28px', lg: '40px' }}
+          gap={{ base: '28px', lg: '32px' }}
           alignItems={'center'}
           justifyContent={landingPage ? 'center' : 'flex-start'}
           mx="auto"
@@ -250,7 +250,7 @@ export const Header = memo(function Header({
         justifyContent={'space-between'}
         gap={'24px'}
       >
-        <HStack w="full" gap={{ base: '28px', lg: '40px' }}>
+        <HStack w="full" gap={{ base: '28px', lg: '32px' }}>
           <Logo />
           <DeskNavbarItems />
         </HStack>

@@ -142,121 +142,126 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
 
   return (
     <>
-      <Modal
-        initialFocusRef={initialRef}
-        //variant={'cubik'}
-        isOpen={isOpen}
-        size="lg"
-        onClose={handleClose}
-      >
-        <ModalOverlay backdropFilter="blur(10px)" bg="rgba(0, 0, 0, 0.40)" />
-        <ModalContent h="0" rounded="8px" w={'full'} p="0" px="1rem">
-          <ModalBody w={'full'} rounded="8px" border="1px solid #1B181A" p="0">
-            <VStack rounded="8px" gap="0" spacing="0" background={'#0F0F0F'}>
-              <InputGroup
-                rounded="8px"
-                display={display}
-                h="3.2rem"
-                background={'transparent'}
-                w={'full'}
-                zIndex="1"
-                onClick={onOpen}
-              >
-                <InputLeftElement
-                  w="3.2rem"
-                  h="full"
-                  pointerEvents="none"
-                  bg="transparent"
-                >
-                  <BiSearch size={22} color="#75757530" />
-                </InputLeftElement>
-                <Input
-                  variant={'unstyled'}
-                  pl="3.2rem"
+      {!projectsIsError && (
+        <Modal
+          initialFocusRef={initialRef}
+          //variant={'cubik'}
+          isOpen={isOpen}
+          size="lg"
+          onClose={handleClose}
+        >
+          <ModalOverlay backdropFilter="blur(10px)" bg="rgba(0, 0, 0, 0.40)" />
+          <ModalContent h="0" rounded="8px" w={'full'} p="0" px="1rem">
+            <ModalBody
+              w={'full'}
+              rounded="8px"
+              border="1px solid #1B181A"
+              p="0"
+            >
+              <VStack rounded="8px" gap="0" spacing="0" background={'#0F0F0F'}>
+                <InputGroup
+                  rounded="8px"
+                  display={display}
                   h="3.2rem"
-                  fontSize={'sm'}
-                  background="#05060F"
-                  bg="transparent"
-                  placeholder="Search Projects, Grants, Hackathons & People... "
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  _placeholder={{
-                    color: '#75757550',
-                    fontSize: 'sm',
-                    fontWeight: '400',
-                  }}
-                  _focus={{
-                    outline: 'none',
-                    boxShadow: 'none',
-                    rounded: '8px',
-                  }}
-                />
-              </InputGroup>
-              <VStack p="12px" pt="0px" w="full" rounded="8px">
-                <Box w="full" h="1px" bg="neutral.4" />
-                {/* Call to actions */}
-                {/* Projects */}
-                {projectsLoading ? (
-                  <Spinner color="purple.500" size="xl" />
-                ) : projectsIsError ? (
-                  <Box p="16px">
-                    Error: {projectsError?.message || 'Something went wrong.'}
-                  </Box>
-                ) : filteredProjects.length === 0 &&
-                  searchInput.trim() !== '' ? (
-                  <Box p="16px">No results found for {searchInput}.</Box>
-                ) : (
-                  <VStack align="start" w="full" spacing="8px">
-                    <Box as="p" textStyle={'body5'} color="neutral.8">
-                      Projects
-                    </Box>
-                    {filteredProjects.map((project, index) => (
-                      <HStack
-                        key={project.id}
-                        as={Link}
-                        gap="8px"
-                        rounded="8px"
-                        w="full"
-                        p="8px"
-                        bg={
-                          index === selectedProjectIndex
-                            ? 'neutral.5'
-                            : 'transparent'
-                        }
-                        href={`/project/${project.id}`}
-                      >
-                        <Avatar
-                          src={project.logo}
-                          name={project.name}
-                          width={{ base: '20px', md: '28px' }}
-                          height={{ base: '20px', md: '28px' }}
-                          rounded="full"
-                        />
-                        <HStack justify={'start'} gap="0" align={'center'}>
-                          <Box as="p" color="white" textStyle="title5">
-                            {project.name}
-                          </Box>
-                          <Box
-                            as="p"
-                            color="neutral.8"
-                            fontSize={'11px'}
-                            lineHeight="12px"
-                          >
-                            by @irffan
-                          </Box>
+                  background={'transparent'}
+                  w={'full'}
+                  zIndex="1"
+                  onClick={onOpen}
+                >
+                  <InputLeftElement
+                    w="3.2rem"
+                    h="full"
+                    pointerEvents="none"
+                    bg="transparent"
+                  >
+                    <BiSearch size={22} color="#75757530" />
+                  </InputLeftElement>
+                  <Input
+                    variant={'unstyled'}
+                    pl="3.2rem"
+                    h="3.2rem"
+                    fontSize={'sm'}
+                    background="#05060F"
+                    bg="transparent"
+                    placeholder="Search Projects, Grants, Hackathons & People... "
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    _placeholder={{
+                      color: '#75757550',
+                      fontSize: 'sm',
+                      fontWeight: '400',
+                    }}
+                    _focus={{
+                      outline: 'none',
+                      boxShadow: 'none',
+                      rounded: '8px',
+                    }}
+                  />
+                </InputGroup>
+                <VStack p="12px" pt="0px" w="full" rounded="8px">
+                  <Box w="full" h="1px" bg="neutral.4" />
+                  {/* Call to actions */}
+                  {/* Projects */}
+                  {projectsLoading ? (
+                    <Spinner color="purple.500" size="xl" />
+                  ) : projectsIsError ? (
+                    <Box p="16px">Error: {'Something went wrong.'}</Box>
+                  ) : filteredProjects.length === 0 &&
+                    searchInput.trim() !== '' ? (
+                    <Box p="16px">No results found for {searchInput}.</Box>
+                  ) : (
+                    <VStack align="start" w="full" spacing="8px">
+                      <Box as="p" textStyle={'body5'} color="neutral.8">
+                        Projects
+                      </Box>
+                      {filteredProjects.map((project, index) => (
+                        <HStack
+                          key={project.id}
+                          as={Link}
+                          gap="8px"
+                          rounded="8px"
+                          w="full"
+                          p="8px"
+                          bg={
+                            index === selectedProjectIndex
+                              ? 'neutral.5'
+                              : 'transparent'
+                          }
+                          href={`/project/${project.id}`}
+                        >
+                          <Avatar
+                            src={project.logo}
+                            name={project.name}
+                            width={{ base: '20px', md: '28px' }}
+                            height={{ base: '20px', md: '28px' }}
+                            rounded="full"
+                          />
+                          <HStack justify={'start'} gap="0" align={'center'}>
+                            <Box as="p" color="white" textStyle="title5">
+                              {project.name}
+                            </Box>
+                            <Box
+                              as="p"
+                              color="neutral.8"
+                              fontSize={'11px'}
+                              lineHeight="12px"
+                            >
+                              by @irffan
+                            </Box>
+                          </HStack>
                         </HStack>
-                      </HStack>
-                    ))}
-                  </VStack>
-                )}
-                {/* Grants */}
-                {/* Hackathons */}
-                {/* People */}
+                      ))}
+                    </VStack>
+                  )}
+                  {/* Grants */}
+                  {/* Hackathons */}
+                  {/* People */}
+                </VStack>
               </VStack>
-            </VStack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      )}
       <InputGroup
         display={display}
         rounded="8px"

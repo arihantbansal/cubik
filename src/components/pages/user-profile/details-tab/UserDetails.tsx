@@ -45,7 +45,7 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
                 color="neutral.11"
                 textStyle={{ base: 'title3', sm: 'title2', md: 'title1' }}
               >
-                $178
+                $00
               </Box>
             </Skeleton>
             <Skeleton
@@ -61,7 +61,7 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
                 p="0.4rem 0.8rem"
                 textStyle={{ base: 'body5', md: 'body4' }}
               >
-                + $100
+                + $00
               </Box>
             </Skeleton>
           </VStack>
@@ -79,7 +79,7 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
                 Last Donation
               </Box>
               <Box as="p" color="neutral.11" textStyle="title4">
-                $10
+                $00
               </Box>
             </HStack>
           </Skeleton>
@@ -114,7 +114,7 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
                 color="neutral.11"
                 textStyle={{ base: 'title3', sm: 'title2', md: 'title1' }}
               >
-                $120,00
+                $00
               </Box>
             </Skeleton>
             <Skeleton
@@ -130,7 +130,7 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
                 p="0.4rem 0.8rem"
                 textStyle={{ base: 'body5', md: 'body4' }}
               >
-                + $100
+                + $00
               </Box>
             </Skeleton>
           </VStack>
@@ -153,7 +153,7 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
                   Grants
                 </Box>
                 <Box as="p" color="neutral.11" textStyle="title4">
-                  $1,200
+                  -
                 </Box>
               </HStack>
             </Skeleton>
@@ -175,7 +175,7 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
                   Community
                 </Box>
                 <Box as="p" color="neutral.11" textStyle="title4">
-                  $236
+                  -
                 </Box>
               </HStack>
             </Skeleton>

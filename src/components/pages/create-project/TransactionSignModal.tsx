@@ -99,6 +99,13 @@ const CreateProjectTransactionModal: React.FC<
     if (!session) return;
     const id = uuidV4();
     try {
+      console.log(
+        'vault - ',
+        anchorWallet as NodeWallet,
+        getValues().projectName,
+        getValues().tagline,
+        imageUrl as string
+      );
       const { ix: valutIx, key } = await createVault(
         anchorWallet as NodeWallet,
         getValues().projectName,
@@ -107,7 +114,6 @@ const CreateProjectTransactionModal: React.FC<
       );
       const vaultAuth = await getVault(anchorWallet as NodeWallet, key);
       const tx = new anchor.web3.Transaction();
-
       const ix = await createProject(
         anchorWallet as NodeWallet,
         session.user.count.project + 1,
@@ -147,6 +153,7 @@ const CreateProjectTransactionModal: React.FC<
       setTransactionError(
         error.message || 'There was an error while signing the transaction'
       );
+      console.log('error message - ', error);
       setTransactionLoading(false);
     }
   };
@@ -182,7 +189,12 @@ const CreateProjectTransactionModal: React.FC<
         >
           {projectSubmitted ? (
             <>
-              <ModalHeader w="full">
+              <ModalHeader
+                display={'flex'}
+                flexDirection="column"
+                gap="24px"
+                w="full"
+              >
                 <Center>
                   <svg
                     width="96"
@@ -328,17 +340,26 @@ const CreateProjectTransactionModal: React.FC<
                     </defs>
                   </svg>
                 </Center>
-                <Box as="p" textStyle={{ base: 'title3', md: 'headline4' }}>
-                  Project Submitted Successfully!{' '}
-                </Box>
-                <Box as="p" textStyle={'body3'} color="neutral.8">
-                  Your project is under review and you will be notified soon.
-                </Box>
+                <VStack gap="6px">
+                  <Box as="p" textStyle={{ base: 'title3', md: 'headline4' }}>
+                    Project Submitted Successfully!
+                  </Box>
+                  <Box
+                    maxW="22rem"
+                    as="p"
+                    textStyle={'body3'}
+                    color="neutral.8"
+                  >
+                    Your project is under review and you will be notified soon.
+                  </Box>
+                </VStack>
                 <Button
                   as={Link}
-                  mx="auto"
-                  variant={'connect_wallet'}
                   href={`/${session?.user.username}?project=${projectId}`}
+                  mx="auto"
+                  variant="cubikFilled"
+                  size={{ based: 'cubikMini', md: 'cubikSmall' }}
+                  w="12rem"
                 >
                   View Project
                 </Button>
@@ -484,7 +505,8 @@ const CreateProjectTransactionModal: React.FC<
               >
                 <Button
                   w="8rem"
-                  variant="close_modal"
+                  size={{ base: 'cubikMini', md: 'cubikSmall' }}
+                  variant="cubikOutlined"
                   onClick={() => {
                     onTransactionModalClose();
                   }}
@@ -493,8 +515,9 @@ const CreateProjectTransactionModal: React.FC<
                 </Button>
                 <Button
                   px="32px"
-                  variant="apply_for_grant"
-                  onClick={HandleTransactionSign}
+                  size={{ base: 'cubikMini', md: 'cubikSmall' }}
+                  variant="cubikFilled"
+                  onClick={() => HandleTransactionSign()}
                   loadingText="Confirming"
                   isLoading={transactionLoading}
                 >

@@ -77,7 +77,7 @@ export const ProjectFundingData = ({ isLoading }: { isLoading: boolean }) => {
           <HStack w="full" align={'start'}>
             <VStack align={'start'} gap="8px">
               <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
-                $690.00
+                $0.0
               </Box>
 
               <Box as="p" textStyle={'body4'} color={'neutral.8'}>
@@ -182,7 +182,7 @@ export const ProjectFundingData = ({ isLoading }: { isLoading: boolean }) => {
           <HStack w="full" align={'start'}>
             <VStack align={'start'} gap="8px">
               <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
-                120
+                -
               </Box>
               <Box as="p" textStyle={'body4'} color={'neutral.8'}>
                 Contributors

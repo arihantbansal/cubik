@@ -1,5 +1,14 @@
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import {
+  Box,
+  Stack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from '@chakra-ui/react';
 import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
+import { formatDate } from '~/utils/formatDates';
 import ProjectContributors from './project-interactions/project-tabs/ProjectContributors';
 import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
 import Discussions from './ProjectDiscussion';
@@ -33,6 +42,14 @@ export const ProjectsTabs = ({
             isLoading={isLoading}
             description={projectDetails?.long_description}
           />
+          {projectDetails && (
+            <Stack direction={{ base: 'row', md: 'row' }}>
+              <Box as="p" textStyle="body4" color="neutral.7">
+                Created: {formatDate(projectDetails?.createdAt)}
+                {''} by @{projectDetails?.owner?.username}
+              </Box>
+            </Stack>
+          )}
         </TabPanel>
         <TabPanel overflowX="scroll">
           {projectDetails?.id && (

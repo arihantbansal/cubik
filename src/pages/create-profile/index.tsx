@@ -607,9 +607,9 @@ const CreateProfile = () => {
                 <Button
                   as={Link}
                   href={`${userName}`}
-                  w="10rem"
-                  h={'3rem'}
-                  variant="close_modal"
+                  size={{ base: 'sm', md: 'md' }}
+                  w="12rem"
+                  variant="cubikOutlined"
                 >
                   Go to profile
                 </Button>
@@ -677,7 +677,8 @@ const CreateProfile = () => {
               >
                 <Button
                   w="8rem"
-                  variant="close_modal"
+                  size={{ base: 'sm', md: 'md' }}
+                  variant="cubikOutlined"
                   onClick={() => {
                     onTransactionModalClose();
                     setTransactionError(null);
@@ -686,8 +687,10 @@ const CreateProfile = () => {
                   Cancel
                 </Button>
                 <Button
+                  size={{ base: 'sm', md: 'md' }}
+                  variant="cubikFilled"
                   px="32px"
-                  variant="apply_for_grant"
+                  loadingText="Confirming"
                   onClick={() =>
                     handleTransactionSign({ data: { username: userName } })
                   }

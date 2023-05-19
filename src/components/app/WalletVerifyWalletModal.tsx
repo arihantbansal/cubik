@@ -136,8 +136,7 @@ const WalletVerifyModal = () => {
 
         <ModalFooter display="flex" justifyContent="space-between">
           <Button
-            w="8rem"
-            variant="close_modal"
+            variant={'cubikOutlined'}
             onClick={() => {
               disconnect()
                 .then(() => {
@@ -157,8 +156,8 @@ const WalletVerifyModal = () => {
             Cancel
           </Button>
           <Button
-            px="32px"
-            variant="apply_for_grant"
+            variant={'cubikFilled'}
+            loadingText="Verifying"
             onClick={VerifyWallet}
             isLoading={verifying}
           >

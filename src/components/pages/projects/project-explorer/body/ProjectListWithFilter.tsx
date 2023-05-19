@@ -128,6 +128,8 @@ export const ProjectListWithFilter: React.FC = () => {
     cat.label.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  console.log('projects data - ', projects);
+
   return (
     <>
       <Stack
@@ -205,7 +207,6 @@ export const ProjectListWithFilter: React.FC = () => {
           <InputGroup
             position={'relative'}
             rounded="12px"
-
             w={{ base: 'full', md: '320px' }}
           >
             <InputRightElement

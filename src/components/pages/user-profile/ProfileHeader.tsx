@@ -9,7 +9,6 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { FC, memo } from 'react';
-import { GoVerified } from 'react-icons/go';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import { UserWithProjectType } from '~/types/user';
 
@@ -83,12 +82,12 @@ const ProfileHeader: FC<profileHeaderType> = ({
             >
               @{user?.username}
             </Box>
-            <Box
+            {/* <Box
               as={GoVerified}
               color="#FFD83D"
               w={iconSize || '17px'}
               h={iconSize}
-            />
+            /> */}
           </HStack>
         </Skeleton>
         <Center marginInline={'0 !important'} margin="0 !important">
