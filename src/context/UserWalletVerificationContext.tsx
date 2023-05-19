@@ -39,7 +39,7 @@ export const UserWalletVerificationContext =
 export const UserWalletVerificationProvider: React.FC<
   UserWalletVerificationProviderProps
 > = ({ children }) => {
-  const { publicKey, signMessage } = useWallet();
+  const { publicKey, signMessage, connected } = useWallet();
   const { authenticated, setAuthenticated, key } = useAuthStore();
   const { status } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -53,6 +53,10 @@ export const UserWalletVerificationProvider: React.FC<
     }
     return { signature: key.sig, wallet: new PublicKey(key.wallet) };
   };
+
+  useEffect(() => {
+    console.log('wallet state - ', connected, ' session state - ', status);
+  }, []);
 
   useEffect(() => {
     console.log('1 - check if unauthenticated or loading');
