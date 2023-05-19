@@ -83,13 +83,18 @@ const ProfileHeader: FC<profileHeaderType> = ({
             >
               @{user?.username}
             </Box>
-            <Box as={GoVerified} color="#FFD83D" w={iconSize} h={iconSize} />
+            <Box
+              as={GoVerified}
+              color="#FFD83D"
+              w={iconSize || '17px'}
+              h={iconSize}
+            />
           </HStack>
         </Skeleton>
         <Center marginInline={'0 !important'} margin="0 !important">
           <Skeleton
             fadeDuration={5}
-            opacity={isLoading ? '0.4' : '1'}
+            opacity={isLoading ? '0.5' : '1'}
             isLoaded={!isLoading}
           >
             <WalletAddress walletAddress={user?.mainWallet || ''} size="sm" />

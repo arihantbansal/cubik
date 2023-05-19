@@ -3,26 +3,38 @@ import { Box, Card, HStack, Skeleton, Stack, VStack } from '@chakra-ui/react';
 const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
   return (
     <VStack align="start" w="full" gap="24px">
-      <Box
-        as="p"
-        textStyle={{ base: 'title4', md: 'title3' }}
-        color="neutral.11"
+      <Skeleton
+        isLoaded={!isLoading}
+        opacity={isLoading ? '0.5' : 1}
+        fadeDuration={3}
       >
-        Funding
-      </Box>
+        <Box
+          as="p"
+          textStyle={{ base: 'title4', md: 'title3' }}
+          color="neutral.11"
+        >
+          Funding
+        </Box>
+      </Skeleton>
       <Stack
         direction={{ base: 'column', md: 'row' }}
         gap={{ base: '24px', md: '32px' }}
       >
         <Card p={{ base: '16px', md: '24px' }}>
           <VStack align={'start'} gap="8px">
-            <Box
-              as="p"
-              color="neutral.8"
-              textStyle={{ base: 'body5', md: 'body4' }}
+            <Skeleton
+              isLoaded={!isLoading}
+              opacity={isLoading ? '0.3' : 1}
+              fadeDuration={3}
             >
-              Donations
-            </Box>
+              <Box
+                as="p"
+                color="neutral.8"
+                textStyle={{ base: 'body5', md: 'body4' }}
+              >
+                Donations
+              </Box>
+            </Skeleton>
             <Skeleton
               isLoaded={!isLoading}
               opacity={isLoading ? '0.3' : 1}
@@ -79,13 +91,19 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
           w={{ base: '100%', md: 'auto' }}
         >
           <VStack align={'start'} gap="8px">
-            <Box
-              as="p"
-              color="neutral.8"
-              textStyle={{ base: 'body5', md: 'body4' }}
+            <Skeleton
+              isLoaded={!isLoading}
+              opacity={isLoading ? '0.3' : 1}
+              fadeDuration={3}
             >
-              Funds Raised
-            </Box>
+              <Box
+                as="p"
+                color="neutral.8"
+                textStyle={{ base: 'body5', md: 'body4' }}
+              >
+                Funds Raised
+              </Box>
+            </Skeleton>
             <Skeleton
               isLoaded={!isLoading}
               opacity={isLoading ? '0.3' : 1}
@@ -132,7 +150,7 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
                   color="neutral.8"
                   textStyle={{ base: 'body6', md: 'body5' }}
                 >
-                  From Matching
+                  Grants
                 </Box>
                 <Box as="p" color="neutral.11" textStyle="title4">
                   $1,200
@@ -154,7 +172,7 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
                   color="neutral.8"
                   textStyle={{ base: 'body6', md: 'body5' }}
                 >
-                  From Community
+                  Community
                 </Box>
                 <Box as="p" color="neutral.11" textStyle="title4">
                   $236
@@ -176,7 +194,7 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
                   color="neutral.8"
                   textStyle={{ base: 'body6', md: 'body5' }}
                 >
-                  Tip
+                  Tipping
                 </Box>
                 <Box as="p" color="neutral.11" textStyle="title4">
                   -

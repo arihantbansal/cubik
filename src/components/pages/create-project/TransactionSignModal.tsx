@@ -495,6 +495,7 @@ const CreateProjectTransactionModal: React.FC<
                   px="32px"
                   variant="apply_for_grant"
                   onClick={HandleTransactionSign}
+                  loadingText="Confirming"
                   isLoading={transactionLoading}
                 >
                   Sign Transaction

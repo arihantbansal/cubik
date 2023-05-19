@@ -604,8 +604,14 @@ const CreateProfile = () => {
                     You are all set to help your favorite projects.
                   </Box>
                 </VStack>
-                <Button w="10rem" h={'3rem'} variant="close_modal">
-                  <Link href={`${userName}`}>Go to profile</Link>
+                <Button
+                  as={Link}
+                  href={`${userName}`}
+                  w="10rem"
+                  h={'3rem'}
+                  variant="close_modal"
+                >
+                  Go to profile
                 </Button>
               </VStack>
             ) : (

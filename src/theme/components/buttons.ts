@@ -2,44 +2,32 @@ import { StyleFunctionProps } from '@chakra-ui/theme-tools';
 import { isMobileSafari, isSafari } from 'react-device-detect';
 
 export const Button = {
-  baseStyles: {
-    color: '#031513',
-    backgroundColor: '#A8F0E6',
-    outline: isMobileSafari ? '' : '1px solid #A8F0E6',
-    height: 'full',
-    width: { base: 'full', md: 'full' },
-    padding: { base: '12px 32px 14px 32px', md: '14px 44px 14px 44px' },
-    fontSize: { base: '14px', md: '16px' },
-    letterSpacing: '-1%',
-    fontWeight: '600',
-    lineHeight: '22px',
-    borderRadius: '12px',
-    transition: 'all 0.6s',
-    _hover: {
-      color: '#14665B',
-      backgroundColor: '#E0FFFD',
-      outline: isMobileSafari ? '' : '1px solid #E0FFFD',
-      shadow: '0px 4px 60px rgba(168, 240, 230, 0.4)',
-      transition: 'all 0.6s',
-    },
-    _disabled: {
-      color: '#031513',
-      backgroundColor: '#A8F0E6',
-    },
-  },
+  // baseStyles: {
+  //   color: '#031513',
+  //   backgroundColor: '#A8F0E6',
+  //   outline: isMobileSafari ? '' : '1px solid #A8F0E6',
+  //   height: 'full',
+  //   width: { base: 'full', md: 'full' },
+  //   padding: { base: '12px 32px 14px 32px', md: '14px 44px 14px 44px' },
+  //   fontSize: { base: '14px', md: '16px' },
+  //   letterSpacing: '-1%',
+  //   fontWeight: '600',
+  //   lineHeight: '22px',
+  //   borderRadius: '12px',
+  //   transition: 'all 0.6s',
+  //   _hover: {
+  //     color: '#14665B',
+  //     backgroundColor: '#E0FFFD',
+  //     outline: isMobileSafari ? '' : '1px solid #E0FFFD',
+  //     shadow: '0px 4px 60px rgba(168, 240, 230, 0.4)',
+  //     transition: 'all 0.6s',
+  //   },
+  //   _disabled: {
+  //     color: '#031513',
+  //     backgroundColor: '#A8F0E6',
+  //   },
+  // },
   variants: {
-    solid: (_props: StyleFunctionProps) => ({
-      rounded: '12px',
-      padding: '12px 22px',
-      backgroundColor: 'red',
-      borderColor: '1px dashed #0386CF  ',
-      color: 'black',
-      lineHeight: '10px',
-      fontWeight: '500',
-      transition: 'all 0.6s',
-      fontSize: '14px',
-      height: 'fit-content',
-    }),
     outline: (_props: StyleFunctionProps) => ({
       rounded: '12px',
       padding: '8px 16px',
@@ -310,16 +298,118 @@ export const Button = {
         transition: 'all 0.6s',
       },
     }),
+
+    // custom cubik buttons
+    cubikFilled: (_props: StyleFunctionProps) => ({
+      color: '#031513',
+      backgroundColor: '#A8F0E6',
+      borderRadius: '10px',
+      _hover: {
+        color: '#14665B',
+        backgroundColor: '#E0FFFD',
+      },
+      _disabled: {
+        color: '#9E9E9E',
+        backgroundColor: '#5F5F5F !important',
+        // on disable hover
+        _hover: {
+          color: '#9E9E9E',
+          backgroundColor: '#5F5F5F !important',
+        },
+      },
+    }),
+    cubikOutlined: (_props: StyleFunctionProps) => ({
+      color: '#A8F0E6',
+      backgroundColor: 'transparent',
+      outline: isMobileSafari ? '' : '1px solid #A8F0E6',
+      border: isMobileSafari ? '1px solid #A8F0E6' : '',
+      _hover: {
+        color: '#031513',
+        backgroundColor: '#E0FFFD',
+        outline: '1px solid #E0FFFD',
+      },
+      _disabled: {
+        color: '#9E9E9E',
+        backgroundColor: 'transparent !important',
+        border: '1px solid #9E9E9E',
+        outline: 'none',
+        _hover: {
+          color: '#9E9E9E',
+          backgroundColor: 'transparent !important',
+          border: '1px slid #9E9E9E',
+          shadow: 'none',
+          outline: 'none',
+        },
+      },
+    }),
+    cubikDanger: (_props: StyleFunctionProps) => ({
+      color: '#250003',
+      backgroundColor: '#FCBDB5',
+      _hover: {
+        color: '#F6142E',
+        backgroundColor: '#250003',
+      },
+      _disabled: {
+        color: '#F6142E',
+        backgroundColor: '#62010C',
+        _hover: {
+          color: '#F6142E',
+          backgroundColor: '#62010C',
+        },
+      },
+    }),
+    cubikWarning: (_props: StyleFunctionProps) => ({
+      color: '#212010',
+      backgroundColor: '#FFEC71',
+      _hover: {
+        color: '#FFEC71',
+        backgroundColor: '#212010',
+      },
+      _disabled: {
+        color: '#FFEC71',
+        backgroundColor: '#212010',
+        _hover: {
+          color: '#FFEC71',
+          backgroundColor: '#212010',
+        },
+      },
+    }),
+    cubikText: (_props: StyleFunctionProps) => ({
+      color: '#A8F0E6',
+      _hover: {
+        color: '#A8F0E6',
+        backgroundColor: '#161616',
+        outline: 'none',
+      },
+      _disabled: {
+        color: '#9E9E9E',
+        backgroundColor: 'transparent !important',
+        outline: 'none',
+        _hover: {
+          color: '#9E9E9E',
+          border: 'none',
+          shadow: 'none',
+          outline: 'none',
+        },
+      },
+    }),
   },
   sizes: {
-    md: {
-      fontSize: '14px',
-      //height: '3rem',
-    },
-    sm: {
+    cubikMini: {
       fontSize: '12px',
-      height: '2.5rem',
-      padding: '0.5rem 1rem',
+      padding: '10px 24px',
+    },
+    cubikSmall: {
+      fontSize: '14px',
+      padding: '12px 24px',
+    },
+    cubikMedium: {
+      fontSize: '16px',
+      padding: '14px 40px',
+    },
+    cubikLarge: {
+      fontSize: '18px',
+      padding: '16px 54px',
     },
   },
 };

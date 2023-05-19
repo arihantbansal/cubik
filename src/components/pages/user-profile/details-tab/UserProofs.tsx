@@ -19,13 +19,19 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
   return (
     <VStack align="start" w="full" gap="12px">
       <HStack gap="8px">
-        <Box
-          as="p"
-          textStyle={{ base: 'title4', md: 'title3' }}
-          color="neutral.11"
+        <Skeleton
+          isLoaded={!isLoading}
+          opacity={isLoading ? '0.6' : 1}
+          fadeDuration={3}
         >
-          Proofs
-        </Box>
+          <Box
+            as="p"
+            textStyle={{ base: 'title4', md: 'title3' }}
+            color="neutral.11"
+          >
+            Proofs
+          </Box>
+        </Skeleton>
         <Skeleton
           fadeDuration={3}
           isLoaded={!isLoading}

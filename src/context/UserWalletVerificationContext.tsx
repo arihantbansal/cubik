@@ -48,10 +48,10 @@ export const UserWalletVerificationProvider: React.FC<
   );
 
   const getSignature = (publicKey: PublicKey): SignatureData | undefined => {
+    console.log('2 - get signature from local storage');
     if (key.sig === '') {
       return undefined;
     }
-
     return { signature: key.sig, wallet: new PublicKey(key.wallet) };
   };
 

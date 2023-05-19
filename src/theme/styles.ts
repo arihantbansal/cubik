@@ -6,6 +6,10 @@ export const styles = {
     '::-webkit-scrollbar': {
       display: 'none',
     },
+    ':host,:root': {
+      '--chakra-ui-focus-ring-color': '#3B3D3D',
+      '--chakra-shadows-outline': '0 0 0 3px var(--chakra-ui-focus-ring-color)',
+    },
     fonts: {
       heading: `'Plus Jakarta Sans', sans-serif`,
       body: `'Plus Jakarta Sans', sans-serif`,

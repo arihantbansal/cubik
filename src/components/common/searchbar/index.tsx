@@ -29,14 +29,40 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     data: projects,
-    isLoading,
-    isError,
-    error,
+    isLoading: projectsLoading,
+    isError: projectsIsError,
+    error: projectsError,
   } = trpc.project.findMany.useQuery();
+  const {
+    data: people,
+    isLoading: peopleLoading,
+    isError: peopleIsError,
+    error: peopleError,
+  } = trpc.user.searchUser.useQuery({ username: '' });
+  const {
+    data: grants,
+    isLoading: grantsLoading,
+    isError: grantsIsError,
+    error: grantsError,
+  } = trpc.round.findActive.useQuery();
+  const {
+    data: hackathons,
+    isLoading: hackathonsLoading,
+    isError: hackathonsIsError,
+    error: hackathonsError,
+  } = {
+    data: undefined,
+    isLoading: undefined,
+    isError: undefined,
+    error: undefined,
+  };
   const initialRef = useRef(null);
 
   const [searchInput, setSearchInput] = useState('');
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
+  const [selectedGrantIndex, setSelectedGrantIndex] = useState(0);
+  const [selectedHackathonIndex, setSelectedHackathonIndex] = useState(0);
+  const [setPeopleIndex, setSetPeopleIndex] = useState(0);
 
   const filteredProjects = useMemo(() => {
     if (!projects || searchInput.trim() === '') {
@@ -54,6 +80,36 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
     return matchingProjects;
   }, [projects, searchInput]);
 
+  const filteredPeople = useMemo(() => {
+    if (!people || searchInput.trim() === '') {
+      return [];
+    }
+    // Adjust this depending on the fields you want to search in
+    return people.filter((person) =>
+      person.username.toLowerCase().includes(searchInput.toLowerCase())
+    );
+  }, [people, searchInput]);
+
+  const filterGrants = useMemo(() => {
+    if (!people || searchInput.trim() === '') {
+      return [];
+    }
+    // Adjust this depending on the fields you want to search in
+    return people.filter((person) =>
+      person.username.toLowerCase().includes(searchInput.toLowerCase())
+    );
+  }, [people, searchInput]);
+
+  const filterHackathons = useMemo(() => {
+    if (!people || searchInput.trim() === '') {
+      return [];
+    }
+    // Adjust this depending on the fields you want to search in
+    return people.filter((person) =>
+      person.username.toLowerCase().includes(searchInput.toLowerCase())
+    );
+  }, [people, searchInput]);
+
   useEffect(() => {
     if (!isOpen) {
       setSearchInput('');
@@ -67,15 +123,30 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Tab') {
       event.preventDefault();
-      setSelectedProjectIndex((prevIndex) => {
-        if (prevIndex === filteredProjects.length - 1) {
-          return 0;
-        }
-        return prevIndex + 1;
-      });
+
+      // Loop through each type
+      // if (filteredProjects.length > 0) {
+      //   setSelectedProjectIndex(prevIndex => prevIndex + 1 >= filteredProjects.length ? 0 : prevIndex + 1);
+      // } else if (filteredPeople.length > 0) {
+      //   setSelectedPeopleIndex(prevIndex => prevIndex + 1 >= filteredPeople.length ? 0 : prevIndex + 1);
+      // } else if (filteredGrants.length > 0) {
+      //   setSelectedGrantIndex(prevIndex => prevIndex + 1 >= filteredGrants.length ? 0 : prevIndex + 1);
+      // } else if (filteredHackathons.length > 0) {
+      //   setSelectedHackathonIndex(prevIndex => prevIndex + 1 >= filteredHackathons.length ? 0 : prevIndex + 1);
+      // }
     }
+
     if (event.key === 'Enter') {
-      router.prefetch(`/projects/${filteredProjects[selectedProjectIndex].id}`);
+      // Modify this part to handle navigation to different routes depending on the selected type
+      // if (filteredProjects.length > 0) {
+      //   router.prefetch(`/projects/${filteredProjects[selectedProjectIndex].id}`);
+      // } else if (filteredPeople.length > 0) {
+      //   router.prefetch(`/people/${filteredPeople[selectedPeopleIndex].id}`);
+      // } else if (filteredGrants.length > 0) {
+      //   router.prefetch(`/grants/${filteredGrants[selectedGrantIndex].id}`);
+      // } else if (filteredHackathons.length > 0) {
+      //   router.prefetch(`/hackathons/${filteredHackathons[selectedHackathonIndex].id}`);
+      // }
     }
   };
 
@@ -121,7 +192,7 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
                   fontSize={'sm'}
                   background="#05060F"
                   bg="transparent"
-                  placeholder="Search Projects and People... "
+                  placeholder="Search Projects, Grants, Hackathons & People... "
                   onChange={(e) => setSearchInput(e.target.value)}
                   onKeyDown={handleKeyDown}
                   _placeholder={{
@@ -136,64 +207,85 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
                   }}
                 />
               </InputGroup>
-              {searchInput.length > 0 && (
-                <VStack p="12px" pt="0px" w="full" rounded="8px">
-                  <Box w="full" h="1px" bg="neutral.4" />
-                  {isLoading ? (
-                    <Spinner color="purple.500" size="xl" />
-                  ) : isError ? (
-                    <Box p="16px">
-                      Error: {error?.message || 'Something went wrong.'}
+              <VStack p="12px" pt="0px" w="full" rounded="8px">
+                <Box w="full" h="1px" bg="neutral.4" />
+                {/* Call to actions */}
+                {/* Projects */}
+                {projectsLoading ? (
+                  <Spinner color="purple.500" size="xl" />
+                ) : projectsIsError ? (
+                  <Box p="16px">
+                    Error: {projectsError?.message || 'Something went wrong.'}
+                  </Box>
+                ) : filteredProjects.length === 0 &&
+                  searchInput.trim() !== '' ? (
+                  <Box p="16px">No results found for {searchInput}.</Box>
+                ) : (
+                  <VStack align="start" w="full" spacing="8px">
+                    <Box as="p" textStyle={'body5'} color="neutral.8">
+                      Projects
                     </Box>
-                  ) : filteredProjects.length === 0 &&
-                    searchInput.trim() !== '' ? (
-                    <Box p="16px">No results found for {searchInput}.</Box>
-                  ) : (
-                    <VStack align="start" w="full" spacing="8px">
-                      <Box as="p" textStyle={'body5'} color="neutral.8">
-                        Projects
-                      </Box>
-                      {filteredProjects.map((project, index) => (
-                        <HStack
-                          key={project.id}
-                          as={Link}
-                          gap="8px"
-                          rounded="8px"
-                          w="full"
-                          p="8px"
-                          bg={
-                            index === selectedProjectIndex
-                              ? 'neutral.5'
-                              : 'transparent'
-                          }
-                          href={`/project/${project.id}`}
-                        >
-                          <Avatar
-                            src={project.logo}
-                            name={project.name}
-                            width={{ base: '20px', md: '28px' }}
-                            height={{ base: '20px', md: '28px' }}
-                            rounded="full"
-                          />
-                          <HStack justify={'start'} gap="0" align={'center'}>
-                            <Box as="p" color="white" textStyle="title5">
-                              {project.name}
-                            </Box>
-                            <Box
-                              as="p"
-                              color="neutral.8"
-                              fontSize={'11px'}
-                              lineHeight="12px"
-                            >
-                              by @irffan
-                            </Box>
-                          </HStack>
+                    {filteredProjects.map((project, index) => (
+                      <HStack
+                        key={project.id}
+                        as={Link}
+                        gap="8px"
+                        rounded="8px"
+                        w="full"
+                        p="8px"
+                        bg={
+                          index === selectedProjectIndex
+                            ? 'neutral.5'
+                            : 'transparent'
+                        }
+                        href={`/project/${project.id}`}
+                      >
+                        <Avatar
+                          src={project.logo}
+                          name={project.name}
+                          width={{ base: '20px', md: '28px' }}
+                          height={{ base: '20px', md: '28px' }}
+                          rounded="full"
+                        />
+                        <HStack justify={'start'} gap="0" align={'center'}>
+                          <Box as="p" color="white" textStyle="title5">
+                            {project.name}
+                          </Box>
+                          <Box
+                            as="p"
+                            color="neutral.8"
+                            fontSize={'11px'}
+                            lineHeight="12px"
+                          >
+                            by @irffan
+                          </Box>
                         </HStack>
-                      ))}
-                    </VStack>
-                  )}
-                </VStack>
-              )}
+                      </HStack>
+                    ))}
+                  </VStack>
+                )}
+                {/* Grants */}
+                {/* Hackathons */}
+                {/* People */}
+                {peopleLoading ? (
+                  <Spinner color="purple.500" size="xl" />
+                ) : peopleIsError ? (
+                  <Box p="16px">
+                    Error: {peopleError?.message || 'Something went wrong.'}
+                  </Box>
+                ) : filteredPeople.length === 0 && searchInput.trim() !== '' ? (
+                  <Box p="16px">No results found for {searchInput}.</Box>
+                ) : (
+                  <VStack align="start" w="full" spacing="8px">
+                    <Box as="p" textStyle={'body5'} color="neutral.8">
+                      People
+                    </Box>
+                    {/* {filteredPeople.map((person, index) => (
+                    // Display each person...
+                  ))} */}
+                  </VStack>
+                )}
+              </VStack>
             </VStack>
           </ModalBody>
         </ModalContent>

@@ -6,16 +6,15 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react';
+import { ProjectsModel } from '@prisma/client';
 import { useRouter } from 'next/router';
-import { FC, memo, useEffect, useState } from 'react';
-
+import { FC, Key, memo, useEffect, useState } from 'react';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import { UserWithProjectType } from '~/types/user';
 import UserContributions from './contributions-tab/UserContributions';
 import UserDetails from './details-tab/UserDetails';
 import UserProofs from './details-tab/UserProofs';
 import { AdminProjectEmptyState } from './empty-states/ProjectEmptyState';
-
 import ProfileHeader from './ProfileHeader';
 import ProjectAdminCard from './projects-tab/ProjectAdminCard';
 
@@ -61,13 +60,15 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
             <TabPanel>
               <Flex direction="column" w="full" gap="32px">
                 {user?.project.length ? (
-                  user?.project.map((project, key) => (
-                    <ProjectAdminCard
-                      project={project}
-                      activeProject={router?.query?.project as string}
-                      key={key}
-                    />
-                  ))
+                  user?.project.map(
+                    (project: ProjectsModel, key: Key | null | undefined) => (
+                      <ProjectAdminCard
+                        project={project}
+                        activeProject={router?.query?.project as string}
+                        key={key}
+                      />
+                    )
+                  )
                 ) : (
                   <AdminProjectEmptyState />
                 )}
