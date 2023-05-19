@@ -1,6 +1,7 @@
-import { Box, Button, Center, Flex, HStack, Link } from '@chakra-ui/react';
+import { Box, Button, Center, Flex, HStack } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 import { TbLockAccess } from 'react-icons/tb';
 const AdminWallet = ['52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ'];
 
@@ -54,6 +55,8 @@ const AdminControls = () => {
       </HStack>
       <HStack w="fit-content" p="6px 10px">
         <Button
+          as={Link}
+          href={`/projects/admin?pubKey=${publicKey?.toBase58()}`}
           variant="connect_wallet"
           background={'surface.blue.4'}
           fontWeight="600"
@@ -70,9 +73,7 @@ const AdminControls = () => {
           textStyle={{ base: 'body6', md: 'body5' }}
           color="white"
         >
-          <Link href={`/projects/admin?pubKey=${publicKey?.toBase58()}`}>
-            Manage Projects
-          </Link>
+          Manage Projects
         </Button>{' '}
       </HStack>
     </Flex>
