@@ -8,7 +8,7 @@ import { trpc } from '~/utils/trpc';
 const ProjectDetails = () => {
   const router = useRouter();
 
-  const { data, isLoading, isError, error } = trpc.project.findOne.useQuery({
+  const { data, isError, isLoading, error } = trpc.project.findOne.useQuery({
     id: router.query.projectId as string,
   });
 

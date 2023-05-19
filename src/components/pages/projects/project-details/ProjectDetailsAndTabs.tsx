@@ -14,7 +14,7 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
@@ -130,7 +130,7 @@ const MobileOnlyViews = ({
           </Skeleton>
         </HStack>
         <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />{' '}
-        <ProjectFundingData />
+        <ProjectFundingData isLoading={isLoading} />
         <ProjectOwner isLoading={isLoading} projectDetails={projectDetails} />
       </VStack>
       {projectDetails && (
@@ -158,10 +158,6 @@ export const ProjectDetailsAndTabs = ({
     | undefined;
   isLoading: boolean;
 }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
-  console.log('we are here');
-
   return (
     <Container
       display={'flex'}

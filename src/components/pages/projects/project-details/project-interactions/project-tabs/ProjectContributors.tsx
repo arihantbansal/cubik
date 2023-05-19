@@ -162,7 +162,7 @@ const ProjectContributors = ({
   projectId,
   isLoading,
 }: {
-  projectId: string | null | undefined;
+  projectId: string;
   isLoading?: boolean;
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -174,9 +174,7 @@ const ProjectContributors = ({
     isLoading: loadingContributors,
     isError,
     error,
-  } = projectId
-    ? trpc.contribution.getProjectContributors.useQuery({ projectId })
-    : { data: undefined, isLoading: false, isError: false, error: undefined }; // todo: fix this do check if it works or not and remove the if statement
+  } = trpc.contribution.getProjectContributors.useQuery({ projectId });
 
   const pageSize = 15;
   const siblingCount = 1;

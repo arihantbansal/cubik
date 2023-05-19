@@ -35,10 +35,12 @@ export const ProjectsTabs = ({
           />
         </TabPanel>
         <TabPanel overflowX="scroll">
-          <ProjectContributors
-            projectId={projectDetails?.id}
-            isLoading={isLoading}
-          />
+          {projectDetails?.id && (
+            <ProjectContributors
+              projectId={projectDetails?.id}
+              isLoading={isLoading}
+            />
+          )}
         </TabPanel>
         <TabPanel>{isLoading ? <></> : <Discussions />}</TabPanel>
       </TabPanels>

@@ -1,11 +1,4 @@
-import {
-  Box,
-  SkeletonText,
-  Stack,
-  Text,
-  useDisclosure,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, SkeletonText, Stack, Text, VStack } from '@chakra-ui/react';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -24,9 +17,6 @@ export const ProjectsDetailedDescription = ({
   maxH?: string;
   overflow?: string;
 }) => {
-  //const projectDescription = description[0] === '"' ? JSON.parse(description) : description;
-  const { isOpen, onToggle } = useDisclosure();
-
   const newTheme = {
     a: (props: LinkProps) => {
       const { children } = props;
@@ -116,7 +106,15 @@ export const ProjectsDetailedDescription = ({
         align="start"
         gap="0.5rem"
       >
-        <SkeletonText isLoaded={isLoading} fadeDuration={5}>
+        <SkeletonText
+          isLoaded={!isLoading}
+          w="full"
+          fadeDuration={5}
+          noOfLines={5}
+          opacity={isLoading ? '0.4' : '1'}
+          skeletonHeight="16px"
+          spacing="4"
+        >
           <ReactMarkdown
             components={ChakraUIRenderer(newTheme)}
             rehypePlugins={[rehypeRaw]}

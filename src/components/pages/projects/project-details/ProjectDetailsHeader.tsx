@@ -26,7 +26,6 @@ import { HiLink } from 'react-icons/hi';
 import { MdReportGmailerrorred } from 'react-icons/md';
 import CustomTag from '~/components/common/tags/CustomTag';
 import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
-import { ProjectDetailSkeleton } from './skeletons/ProjectPageLoadingSkeleton';
 
 export const ProjectLink = ({ urlName }: { urlName: string }) => {
   switch (urlName) {
@@ -57,21 +56,22 @@ const ProjectDetailsHeader = ({
     | null
     | undefined;
 }) => {
-  return isLoading ? (
-    <ProjectDetailSkeleton />
-  ) : (
+  return (
     <Stack
       direction={{ base: 'row', md: 'row' }}
       gap={{ base: '8px', md: '24px' }}
-      width={'100%'}
+      width={'full'}
       alignItems={'center'}
     >
       <SkeletonCircle
         isLoaded={!isLoading}
         fadeDuration={3}
-        opacity={isLoading ? '0.5' : '1'}
+        opacity={isLoading ? '0.6' : '1'}
+        width={{ base: '4.4rem', md: '6.2rem' }}
+        height={{ base: '4.4rem', md: '6.2rem' }}
       >
         <Avatar
+          backgroundColor={'#1C1C1C'}
           src={projectDetails?.logo}
           width={{ base: '4.4rem', md: '6.2rem' }}
           height={{ base: '4.4rem', md: '6.2rem' }}
@@ -82,14 +82,15 @@ const ProjectDetailsHeader = ({
         gap={{ base: '2px', md: '14px' }}
         alignItems={'start'}
         justifyContent="center"
+        w="full"
       >
         <Stack spacing={{ base: '12px', md: '24px' }} direction={'row'}>
-          <HStack align="center">
-            <Skeleton
-              isLoaded={!isLoading}
-              fadeDuration={4}
-              opacity={isLoading ? '0.5' : '1'}
-            >
+          <Skeleton
+            isLoaded={!isLoading}
+            fadeDuration={4}
+            opacity={isLoading ? '0.6' : '1'}
+          >
+            <HStack align="center">
               <Box
                 as="p"
                 textStyle={{ base: 'title1', md: 'headline3' }}
@@ -130,35 +131,42 @@ const ProjectDetailsHeader = ({
                   </MenuItem>
                 </MenuList>
               </Menu>
-            </Skeleton>
-          </HStack>
-          <HStack
-            overflow={'hidden'}
-            flexDirection={'row'}
-            align="center"
-            spacing="0.4rem"
-            pt="0.5rem"
-            display={{ base: 'none', md: 'flex' }}
+            </HStack>
+          </Skeleton>
+          <Skeleton
+            isLoaded={!isLoading}
+            fadeDuration={4}
+            opacity={isLoading ? '0.4' : '1'}
           >
-            {isLoading ? (
-              <></>
-            ) : (
-              JSON.parse(projectDetails ? projectDetails.industry : '')?.map(
-                (tag: any, key: React.Key | null | undefined) => {
-                  return (
-                    <CustomTag color={tag.label} key={key}>
-                      {tag.label}
-                    </CustomTag>
-                  );
-                }
-              )
-            )}
-          </HStack>
+            <HStack
+              overflow={'hidden'}
+              flexDirection={'row'}
+              align="center"
+              spacing="0.4rem"
+              pt="0.5rem"
+              display={{ base: 'none', md: 'flex' }}
+            >
+              {projectDetails &&
+                JSON.parse(projectDetails.industry)?.map(
+                  (tag: any, key: React.Key) => {
+                    return (
+                      <CustomTag color={tag?.label} key={key}>
+                        {tag?.label}
+                      </CustomTag>
+                    );
+                  }
+                )}
+            </HStack>
+          </Skeleton>
         </Stack>
         <SkeletonText
           isLoaded={!isLoading}
-          fadeDuration={4}
+          w="full"
+          fadeDuration={5}
+          noOfLines={2}
           opacity={isLoading ? '0.5' : '1'}
+          skeletonHeight="16px"
+          spacing="4"
         >
           <Box
             as="p"

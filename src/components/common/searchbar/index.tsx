@@ -33,27 +33,38 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
     isError: projectsIsError,
     error: projectsError,
   } = trpc.project.findMany.useQuery();
+
   const {
     data: people,
     isLoading: peopleLoading,
     isError: peopleIsError,
     error: peopleError,
-  } = trpc.user.searchUser.useQuery({ username: '' });
+  } = {
+    data: [],
+    isLoading: false,
+    isError: false,
+    error: undefined,
+  };
   const {
     data: grants,
     isLoading: grantsLoading,
     isError: grantsIsError,
     error: grantsError,
-  } = trpc.round.findActive.useQuery();
+  } = {
+    data: [],
+    isLoading: false,
+    isError: false,
+    error: undefined,
+  };
   const {
     data: hackathons,
     isLoading: hackathonsLoading,
     isError: hackathonsIsError,
     error: hackathonsError,
   } = {
-    data: undefined,
-    isLoading: undefined,
-    isError: undefined,
+    data: [],
+    isLoading: false,
+    isError: false,
     error: undefined,
   };
   const initialRef = useRef(null);
@@ -80,36 +91,6 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
     return matchingProjects;
   }, [projects, searchInput]);
 
-  const filteredPeople = useMemo(() => {
-    if (!people || searchInput.trim() === '') {
-      return [];
-    }
-    // Adjust this depending on the fields you want to search in
-    return people.filter((person) =>
-      person.username.toLowerCase().includes(searchInput.toLowerCase())
-    );
-  }, [people, searchInput]);
-
-  const filterGrants = useMemo(() => {
-    if (!people || searchInput.trim() === '') {
-      return [];
-    }
-    // Adjust this depending on the fields you want to search in
-    return people.filter((person) =>
-      person.username.toLowerCase().includes(searchInput.toLowerCase())
-    );
-  }, [people, searchInput]);
-
-  const filterHackathons = useMemo(() => {
-    if (!people || searchInput.trim() === '') {
-      return [];
-    }
-    // Adjust this depending on the fields you want to search in
-    return people.filter((person) =>
-      person.username.toLowerCase().includes(searchInput.toLowerCase())
-    );
-  }, [people, searchInput]);
-
   useEffect(() => {
     if (!isOpen) {
       setSearchInput('');
@@ -125,9 +106,11 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
       event.preventDefault();
 
       // Loop through each type
-      // if (filteredProjects.length > 0) {
-      //   setSelectedProjectIndex(prevIndex => prevIndex + 1 >= filteredProjects.length ? 0 : prevIndex + 1);
-      // } else if (filteredPeople.length > 0) {
+      if (filteredProjects.length > 0) {
+        setSelectedProjectIndex((prevIndex) =>
+          prevIndex + 1 >= filteredProjects.length ? 0 : prevIndex + 1
+        );
+      } //  else if (filteredPeople.length > 0) {
       //   setSelectedPeopleIndex(prevIndex => prevIndex + 1 >= filteredPeople.length ? 0 : prevIndex + 1);
       // } else if (filteredGrants.length > 0) {
       //   setSelectedGrantIndex(prevIndex => prevIndex + 1 >= filteredGrants.length ? 0 : prevIndex + 1);
@@ -138,9 +121,11 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
 
     if (event.key === 'Enter') {
       // Modify this part to handle navigation to different routes depending on the selected type
-      // if (filteredProjects.length > 0) {
-      //   router.prefetch(`/projects/${filteredProjects[selectedProjectIndex].id}`);
-      // } else if (filteredPeople.length > 0) {
+      if (filteredProjects.length > 0) {
+        router.prefetch(
+          `/projects/${filteredProjects[selectedProjectIndex].id}`
+        );
+      } // else if (filteredPeople.length > 0) {
       //   router.prefetch(`/people/${filteredPeople[selectedPeopleIndex].id}`);
       // } else if (filteredGrants.length > 0) {
       //   router.prefetch(`/grants/${filteredGrants[selectedGrantIndex].id}`);
@@ -267,24 +252,6 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
                 {/* Grants */}
                 {/* Hackathons */}
                 {/* People */}
-                {peopleLoading ? (
-                  <Spinner color="purple.500" size="xl" />
-                ) : peopleIsError ? (
-                  <Box p="16px">
-                    Error: {peopleError?.message || 'Something went wrong.'}
-                  </Box>
-                ) : filteredPeople.length === 0 && searchInput.trim() !== '' ? (
-                  <Box p="16px">No results found for {searchInput}.</Box>
-                ) : (
-                  <VStack align="start" w="full" spacing="8px">
-                    <Box as="p" textStyle={'body5'} color="neutral.8">
-                      People
-                    </Box>
-                    {/* {filteredPeople.map((person, index) => (
-                    // Display each person...
-                  ))} */}
-                  </VStack>
-                )}
               </VStack>
             </VStack>
           </ModalBody>

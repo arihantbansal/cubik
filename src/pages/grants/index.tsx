@@ -208,24 +208,21 @@ const Round = () => {
               >
                 <Center h="full">
                   {data?.user.id === round.userId ? (
-                    <Button variant="close_modal">
+                    <Button variant={'cubikFilled'} size={'cubikMedium'}>
                       <Link href={`/grants/admin/${round.id}`}>
                         Manage Grant
                       </Link>
                     </Button>
                   ) : (
-                    <Button variant="apply_for_grant">Apply for Grant</Button>
+                    <Button variant={'cubikFilled'} size={'cubikMedium'}>
+                      Apply for Grant
+                    </Button>
                   )}
                 </Center>
                 <Center>
                   <Button
-                    h="full"
-                    rounded="8px"
-                    fontSize={{ base: '12px', md: '14px' }}
-                    px={{ base: '14px', md: '4px' }}
-                    py={{ base: '14px', md: '18px' }}
-                    variant={'outline'}
-                    onClick={() => {}}
+                    variant={'cubikText'}
+                    size={'cubikMedium'}
                     rightIcon={
                       <Icon as={FiChevronRight} width={4} height={4} />
                     }

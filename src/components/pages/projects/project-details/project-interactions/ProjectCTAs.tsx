@@ -335,7 +335,8 @@ export const ProjectCTAs = ({
             >
               <Button
                 onClick={onDonateHandler}
-                variant="project_button_primary"
+                variant="cubikFilled"
+                size="md"
                 w="full"
               >
                 Donate
@@ -348,9 +349,18 @@ export const ProjectCTAs = ({
               w="full"
             >
               <Button
-                rightIcon={<AnimatedArrowIcon animate={isHovered} />}
-                variant="project_button_secondary"
+                rightIcon={
+                  <AnimatedArrowIcon
+                    animate={isHovered}
+                    width={18}
+                    height={18}
+                  />
+                }
+                variant="cubikOutlined"
                 w="full"
+                as="a"
+                href={projectDetails?.project_link}
+                target="_blank"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >

@@ -21,9 +21,10 @@ export const ProjectSocialsSkeleton = ({
           key={item}
           opacity="0.3"
           fadeDuration={item}
-          isLoaded={isLoading}
-          width={{ base: '2.8rem', md: '2.8rem' }}
-          height={{ base: '2.8rem', md: '2.8rem' }}
+          isLoaded={!isLoading}
+          rounded="full"
+          width={{ base: '2.8rem', md: '3.4rem' }}
+          height={{ base: '2.8rem', md: '3.4rem' }}
         />
       ))}
     </Wrap>
@@ -105,15 +106,15 @@ export const ProjectCreatorSkeleton = ({
       align={'center'}
     >
       <HStack gap="0.6rem" w="full">
-        <SkeletonCircle
-          isLoaded={isLoading}
+        <Skeleton
+          isLoaded={!isLoading}
           fadeDuration={5}
           width={{ base: '1rem', md: '10' }}
           height={{ base: '1rem', md: '8' }}
           opacity="0.4"
         />
         <SkeletonText
-          isLoaded={isLoading}
+          isLoaded={!isLoading}
           fadeDuration={6}
           spacing="3"
           w={'full'}
@@ -123,7 +124,7 @@ export const ProjectCreatorSkeleton = ({
         />
       </HStack>
       <SkeletonText
-        isLoaded={isLoading}
+        isLoaded={!isLoading}
         fadeDuration={7}
         spacing="3"
         w={'2.8rem'}

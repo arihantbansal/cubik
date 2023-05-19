@@ -376,6 +376,7 @@ export const Button = {
     }),
     cubikText: (_props: StyleFunctionProps) => ({
       color: '#A8F0E6',
+      px: '16px !important',
       _hover: {
         color: '#A8F0E6',
         backgroundColor: '#161616',
