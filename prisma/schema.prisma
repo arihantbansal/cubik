@@ -10,7 +10,7 @@ datasource db {
 }
 
 model UserModel {
-  id               String            @id @default(uuid()) @map("_id")
+  id               String           @id @default(uuid()) @map("_id")
   username         String            @unique
   mainWallet       String            @unique
   profilePicture   String            @db.VarChar(500)
@@ -25,6 +25,8 @@ model UserModel {
   Comments         Comments[]
   Contribution     Contribution[]
   Round            Round[]
+  isActive       Boolean           @default(true)
+  isArchive       Boolean           @default(false)
 
   @@fulltext([username])
 }
@@ -65,6 +67,8 @@ model UserDetailsModel {
   userModelId    String    @unique
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
+    isActive       Boolean           @default(true)
+  isArchive       Boolean           @default(false)
   user           UserModel @relation(fields: [userModelId], references: [id])
 
   @@index([userModelId])
@@ -91,6 +95,8 @@ model ProjectsModel {
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   email             String              @default("")
+    isActive       Boolean           @default(true)
+  isArchive       Boolean           @default(false)
   comments          Comments[]
   ProjectJoinRound  ProjectJoinRound[]
   owner             UserModel           @relation(fields: [owner_publickey], references: [mainWallet])
@@ -106,6 +112,8 @@ model Team {
   projectsModelId String
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
+    isActive       Boolean           @default(true)
+  isArchive       Boolean           @default(false)
   user            UserModel     @relation(fields: [userId], references: [id])
   ProjectsModel   ProjectsModel @relation(fields: [projectsModelId], references: [id])
 
@@ -123,7 +131,8 @@ model ProjectJoinRound {
   updatedAt    DateTime               @updatedAt
   project      ProjectsModel          @relation(fields: [projectId], references: [id])
   fundingRound Round                  @relation(fields: [roundId], references: [id])
-
+  isActive       Boolean           @default(true)
+  isArchive       Boolean           @default(false)
   @@index([projectId])
   @@index([roundId])
 }
@@ -150,6 +159,8 @@ model Round {
   User                   UserModel          @relation(fields: [userId], references: [id])
   ProjectJoinRound       ProjectJoinRound[]
   Contribution           Contribution[]
+    isActive       Boolean           @default(true)
+  isArchive       Boolean           @default(false)
 
   @@index([userId])
 }
@@ -162,7 +173,8 @@ model Sponsor {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Round     Round    @relation(fields: [roundId], references: [id])
-
+  isActive       Boolean           @default(true)
+  isArchive       Boolean           @default(false)
   @@index([roundId])
 }
 
@@ -185,7 +197,8 @@ model Contribution {
   user            UserModel     @relation(fields: [userId], references: [id])
   ProjectsModel   ProjectsModel @relation(fields: [projectId], references: [id])
   Round           Round         @relation(fields: [roundId], references: [id])
-
+  isActive       Boolean           @default(true)
+  isArchive       Boolean           @default(false)
   @@index([projectId])
   @@index([roundId])
   @@index([userId])
@@ -201,7 +214,8 @@ model Comments {
   Reply           Reply[]
   user            UserModel     @relation(fields: [userId], references: [id])
   ProjectsModel   ProjectsModel @relation(fields: [projectsModelId], references: [id])
-
+  isActive       Boolean           @default(true)
+  isArchive       Boolean           @default(false)
   @@index([userId])
   @@index([projectsModelId])
 }
@@ -215,7 +229,8 @@ model Reply {
   updatedAt   DateTime   @updatedAt
   comment     Comments?  @relation(fields: [commentId], references: [id])
   user        UserModel? @relation(fields: [replyUserId], references: [id])
-
+  isActive       Boolean           @default(true)
+  isArchive       Boolean           @default(false)
   @@index([commentId])
   @@index([replyUserId])
 }

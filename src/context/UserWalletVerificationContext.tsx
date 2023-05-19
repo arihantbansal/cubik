@@ -47,8 +47,7 @@ export const UserWalletVerificationProvider: React.FC<
     undefined
   );
 
-  const getSignature = (publicKey: PublicKey): SignatureData | undefined => {
-    console.log('2 - get signature from local storage');
+  const getSignature = (): SignatureData | undefined => {
     if (key.sig === '') {
       return undefined;
     }
@@ -58,7 +57,7 @@ export const UserWalletVerificationProvider: React.FC<
   useEffect(() => {
     console.log('1 - check if unauthenticated or loading');
     if (status !== 'authenticated' && router.pathname !== 'create-profile') {
-      const signature = getSignature(publicKey as PublicKey);
+      const signature = getSignature();
       if (
         signature?.signature &&
         signature.wallet.toBase58() === publicKey?.toBase58()
@@ -77,7 +76,7 @@ export const UserWalletVerificationProvider: React.FC<
   useEffect(() => {
     const checkAndVerifySignature = async () => {
       console.log('1 - check for signature');
-      const signature = getSignature(publicKey as PublicKey);
+      const signature = getSignature();
       try {
         if (signMessage && publicKey) {
           if (signature) {
@@ -95,16 +94,16 @@ export const UserWalletVerificationProvider: React.FC<
           }
 
           console.log(
-            '4 - could not find signature so open modal ',
+            '4 - could not find signature so open modal',
             signMessage,
             publicKey
           );
           onOpen();
-          console.log('5 - waiting for modal to sign transaction');
+          console.log('5 - waiting for modal to sign transactions');
           while (!authenticated) {
             await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second before checking again
           }
-          const newSignatureData = getSignature(publicKey);
+          const newSignatureData = getSignature();
           setSignatureData(newSignatureData);
         } else {
           throw new Error(
