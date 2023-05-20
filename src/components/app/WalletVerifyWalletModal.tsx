@@ -85,7 +85,25 @@ const WalletVerifyModal = () => {
   }
 
   return publicKey ? (
-    <Modal variant="cubik" isOpen={isOpen} onClose={onClose}>
+    <Modal
+      variant="cubik"
+      isOpen={isOpen}
+      onClose={() => {
+        disconnect()
+          .then(() => {
+            signOut({ redirect: false });
+          })
+          .catch((e: any) => {
+            new Error(e.message || 'there was an error');
+          });
+        onClose();
+        FailureToast({
+          toast,
+          message: 'Wallet Verification Failed',
+        });
+        localStorage.removeItem('walletName');
+      }}
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>

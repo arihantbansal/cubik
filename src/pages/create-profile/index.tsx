@@ -60,7 +60,7 @@ import { connection, createUser } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 
 const CreateProfile = () => {
-  const { publicKey } = useWallet();
+  const { publicKey, connected } = useWallet();
   const { setVisible } = useWalletModal();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const {
@@ -84,7 +84,12 @@ const CreateProfile = () => {
   const userCreateMutation = trpc.user.create.useMutation({
     onSuccess: async (data: any) => {
       try {
-        if (key.sig && key.wallet === publicKey?.toBase58()) {
+        if (
+          key.sig &&
+          key.wallet === publicKey?.toBase58() &&
+          publicKey &&
+          connected
+        ) {
           const signInResponse = await signIn('credentials', {
             signature: key.sig,
             redirect: false,
