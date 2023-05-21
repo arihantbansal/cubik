@@ -40,6 +40,7 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
 }
+
 const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
   const toast = useToast();
   const router = useRouter();
@@ -92,7 +93,6 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
         setAuthenticated(true);
         console.log('outside 401');
         setVerified(true);
-        setAuthenticated(true);
         setVerifying(false);
         setAuthenticated(true);
         onClose();
