@@ -1,11 +1,11 @@
 import { TRPCError } from '@trpc/server';
 import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
-import { procedure, router } from '../trpc';
+import { procedure, protectedProcedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
 
 export const roundRouter = router({
-  create: procedure
+  create: protectedProcedure
     .input(
       z.object({
         name: z.string().nonempty(),
@@ -22,13 +22,6 @@ export const roundRouter = router({
     .mutation(async ({ input, ctx }) => {
       console.log(ctx, '---ctx');
 
-      if (!ctx.session) {
-        throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: 'Session not found',
-          cause: 'User not logged in',
-        });
-      }
       const roundRes = await prisma.round.create({
         data: {
           id: uuid(),
