@@ -13,7 +13,11 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ['d1yweukyu067aq.cloudfront.net'],
+    domains: [
+      'd1yweukyu067aq.cloudfront.net',
+      'www.sandstormhackathon.com',
+      'media-fastly.hackerearth.com',
+    ],
   },
 };
 
