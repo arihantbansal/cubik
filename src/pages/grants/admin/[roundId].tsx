@@ -49,38 +49,50 @@ const RoundAdmin = () => {
         <Tabs variant={'cubik'} alignSelf={'start'} w="full">
           <TabList gap={{ base: '0.5rem', md: '1rem' }}>
             <Tab gap="8px" display={'flex'}>
-              <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
+              <Box
+                whiteSpace={'nowrap'}
+                as="p"
+                textStyle={{ base: 'title5', md: 'title4' }}
+              >
                 Under Review
               </Box>
               <Tag rounded="full" variant="colorful">
-                {projectsNumberByStatus.review}
+                {projectsNumberByStatus.review && projectsNumberByStatus.review}
               </Tag>
             </Tab>
             <Tab gap="8px" display={'flex'}>
               <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
                 Accepted
               </Box>
-              <Tag
-                rounded="full"
-                variant="colorful"
-                color="#FFF066"
-                bg="#2D2A14"
-              >
-                {projectsNumberByStatus.accepted}
-              </Tag>
+              {projectsNumberByStatus.accepted ? (
+                <Tag
+                  rounded="full"
+                  variant="colorful"
+                  color="#FFF066"
+                  bg="#2D2A14"
+                >
+                  {projectsNumberByStatus.accepted}
+                </Tag>
+              ) : (
+                ''
+              )}
             </Tab>
             <Tab gap="8px" display={'flex'}>
               <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
                 Rejected
               </Box>
-              <Tag
-                rounded="full"
-                variant="colorful"
-                color="#FF1F1F"
-                bg="#3b1515"
-              >
-                {projectsNumberByStatus.rejected}
-              </Tag>
+              {projectsNumberByStatus.rejected ? (
+                <Tag
+                  rounded="full"
+                  variant="colorful"
+                  color="#FF1F1F"
+                  bg="#3b1515"
+                >
+                  {projectsNumberByStatus.rejected}
+                </Tag>
+              ) : (
+                ''
+              )}
             </Tab>
           </TabList>
           <TabPanels p="0">
