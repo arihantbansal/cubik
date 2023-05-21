@@ -115,6 +115,10 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
         disconnect()
           .then(() => {
             signOut({ redirect: false });
+            setKey({
+              sig: '',
+              wallet: '',
+            });
           })
           .catch((e: any) => {
             new Error(e.message || 'there was an error');
@@ -182,6 +186,10 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
               disconnect()
                 .then(() => {
                   signOut({ redirect: false });
+                  setKey({
+                    sig: '',
+                    wallet: '',
+                  });
                 })
                 .catch((e: any) => {
                   new Error(e.message || 'there was an error');

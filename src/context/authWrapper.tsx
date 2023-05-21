@@ -17,7 +17,7 @@ interface Props {
 
 export const AuthWrapper: React.FC<Props> = ({ children }) => {
   const { publicKey, signMessage } = useWallet();
-  const { key } = useAuthStore();
+  const { key, setKey } = useAuthStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const { data: session } = useSession();
@@ -61,6 +61,10 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
         if (session?.user.id) {
           await signOut({
             redirect: false,
+          });
+          setKey({
+            sig: '',
+            wallet: '',
           });
         }
         router.push('/create-profile');

@@ -85,7 +85,7 @@ const GrantUnderReviewProjects = ({
   ) => {
     const ix = await updateProjectRoundVerified(
       anchorWallet as NodeWallet,
-      roundId,
+      roundData?.roundName as string,
       projectCount,
       walletAddress
     );
@@ -112,7 +112,7 @@ const GrantUnderReviewProjects = ({
   ) => {
     const ix = await updateProjectRoundVerified(
       anchorWallet as NodeWallet,
-      roundId,
+      roundData?.roundName as string,
       projectCount,
       walletAddress
     );
