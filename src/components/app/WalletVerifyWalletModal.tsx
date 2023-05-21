@@ -18,22 +18,25 @@ import {
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { signIn, signOut } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useUserWalletVerification } from '~/context/UserWalletVerificationContext';
 import { useAuthStore } from '~/store/authStore';
 import { createMessage, verifyMessage } from '~/utils/getsignMessage';
 import { FailureToast, SuccessToast } from '../common/toasts/Toasts';
 import { WalletAddress } from '../common/wallet/WalletAdd';
 
-const WalletVerifyModal = () => {
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+}
+const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
   const toast = useToast();
   const router = useRouter();
   const { setAuthenticated, setKey } = useAuthStore();
   const [verifying, setVerifying] = useState(false);
+  const { status, data: session } = useSession();
   const { publicKey, disconnect, signMessage } = useWallet();
-  const { isOpen, onClose, status } = useUserWalletVerification();
   const [verifyWalletError, setVerifyWalletError] = useState<string | null>(
     null
   );
@@ -63,13 +66,18 @@ const WalletVerifyModal = () => {
           sig: anchor.utils.bytes.bs58.encode(sig),
           wallet: publicKey.toBase58(),
         });
-        //
+
         if (signInResponse?.status === 401) {
           console.log('401');
+          if (session?.user.id) {
+            await signOut({
+              redirect: false,
+            });
+          }
           router.push('/create-profile');
+
           setVerifying(false);
         }
-        console.log('outside 401');
         setAuthenticated(true);
         setVerifying(false);
         onClose();

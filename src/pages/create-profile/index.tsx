@@ -82,7 +82,7 @@ const CreateProfile = () => {
   const { key } = useAuthStore();
 
   const userCreateMutation = trpc.user.create.useMutation({
-    onSuccess: async (data: any) => {
+    onSuccess: async () => {
       try {
         if (
           key.sig &&
