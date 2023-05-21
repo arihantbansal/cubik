@@ -8,12 +8,9 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import GraphProps from '~/types/graphProps';
-import { calculateProjectMatchingFund } from '~/utils/calculateProjectMatchingFund';
 import { trpc } from '~/utils/trpc';
-import { BonkLine } from './BonkLine';
 import { GraphLine } from './GraphLines';
 
 const Graph: React.FC<GraphProps> = ({
@@ -22,6 +19,7 @@ const Graph: React.FC<GraphProps> = ({
   donationAmount,
   setValue,
   maximumDonationValue,
+  projectId,
 }) => {
   const router = useRouter();
   const a = trpc.project.projectGraph.useQuery({
@@ -29,38 +27,12 @@ const Graph: React.FC<GraphProps> = ({
   });
 
   const contributionMutation = trpc.contribution.create.useMutation();
-  const data = useMemo(
-    () =>
-      calculateProjectMatchingFund(
-        maximumDonationValue, // maxDonation
-        1, // step
-        [1, 1, 10], // projectContributions
-        [
-          { funding: [10, 10, 1] },
-          { funding: [10, 10, 1] },
-          //{ funding: [4, 100, 1, 1, 1, 1, 6] },
-          //{ funding: [2, 1, 1, 6, 7] },
-        ], // grants
-        40000 // availableMatch
-      ),
-    []
-  );
-  const bonkData = useMemo(
-    () =>
-      calculateProjectMatchingFund(
-        maximumDonationValue, // maxDonation
-        1, // step
-        [1, 1], // projectContributions
-        [{ funding: [6, 7] }, { funding: [2, 1, 1, 6, 7] }], // grants
-        20000 // availableMatch
-      ),
-    []
-  );
+  const data: { donation: number; additionalMatch: number }[] = [];
 
   const exponent = 2;
 
   const handleSliderChange = (value: number) => {
-    //setValue(Math.round(Math.pow(value, exponent)));
+    // setValue(Math.round(value));
   };
 
   return (
@@ -80,14 +52,14 @@ const Graph: React.FC<GraphProps> = ({
           maximumDonationValue={maximumDonationValue}
           donationAmount={donationAmount}
         />
-        <BonkLine
+        {/* <BonkLine
           key={2}
           width={width}
           height={height}
           data={bonkData}
           availableMatch={2000}
           donationAmount={donationAmount}
-        />
+        /> */}
       </Box>
       <Slider
         variant="cubik"

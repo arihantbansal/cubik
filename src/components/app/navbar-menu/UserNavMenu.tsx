@@ -17,12 +17,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { BiChevronDown, BiUser } from 'react-icons/bi';
 import { MdPowerSettingsNew, MdUpload } from 'react-icons/md';
+import { useAuthStore } from '~/store/authStore';
 import ProfileDetails from './ProfileDetails';
 import WalletBalance from './WalletBalance';
 
 const UserNavMenu = () => {
   const { disconnect } = useWallet();
   const { data: session } = useSession();
+  const { setKey } = useAuthStore();
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -31,6 +33,10 @@ const UserNavMenu = () => {
       .then(() => {
         signOut({
           redirect: false,
+        });
+        setKey({
+          sig: '',
+          wallet: '',
         });
         // refresh the page to clear the cache
         localStorage.removeItem('walletName');

@@ -1,6 +1,7 @@
 import { produce } from 'immer';
 import { mountStoreDevtool } from 'simple-zustand-devtools';
 import { create } from 'zustand';
+import { env } from '~/env.mjs';
 
 type IUserStore = {
   user: any;
@@ -17,6 +18,6 @@ export const useUserStore = create<IUserStore>((set, _get) => ({
   },
 }));
 
-if (process.env.NODE_ENV === 'development') {
+if (env.NODE_ENV === 'development') {
   mountStoreDevtool('profileStore', useUserStore);
 }

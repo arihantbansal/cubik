@@ -1,8 +1,8 @@
-import axios from 'axios';
-import { NotionConfig, ProjectStatus, NotionTable } from '../enums/notion';
 import { ProjectsModel } from '@prisma/client';
-
-const token = `${process.env.NEXT_PUBLIC_NOTION_TOKEN}` as string;
+import axios from 'axios';
+import { env } from '~/env.mjs';
+import { NotionConfig, NotionTable, ProjectStatus } from '../enums/notion';
+const token = `${env.NEXT_PUBLIC_NOTION_TOKEN}` as string;
 
 export async function createTable() {
   const table = await axios.post(
@@ -37,7 +37,7 @@ async function createNotionPayload(data: ProjectsModel) {
   // https://developers.notion.com/reference/property-value-object
   const record = {
     parent: {
-      database_id: process.env.NEXT_PUBLIC_NOTION_DATABASEID,
+      database_id: env.NEXT_PUBLIC_NOTION_DATABASEID,
     },
     properties: {
       'Project Name': {

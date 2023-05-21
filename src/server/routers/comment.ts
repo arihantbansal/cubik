@@ -1,10 +1,9 @@
 import { z } from 'zod';
-import { procedure, router } from '../trpc';
+import { procedure, protectedProcedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
-import { TRPCError } from '@trpc/server';
 
 export const commentRouter = router({
-  createComment: procedure
+  createComment: protectedProcedure
     .input(
       z.object({
         id: z.string().uuid(),
@@ -15,20 +14,6 @@ export const commentRouter = router({
     .mutation(async ({ input, ctx }) => {
       const { session } = ctx;
 
-      if (!ctx.session) {
-        throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: 'Session not found',
-          cause: 'User not logged in',
-        });
-      }
-      if (!ctx.session.user.id) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'User id not found',
-          cause: 'Corrupted session',
-        });
-      }
       const res = await prisma.comments.create({
         data: {
           comment: input.comment,
@@ -64,7 +49,7 @@ export const commentRouter = router({
       return res;
     }),
 
-  createReply: procedure
+  createReply: protectedProcedure
     .input(
       z.object({
         id: z.string().uuid(),
@@ -73,20 +58,6 @@ export const commentRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      if (!ctx.session) {
-        throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: 'Session not found',
-          cause: 'User not logged in',
-        });
-      }
-      if (!ctx.session.user.id) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'User id not found',
-          cause: 'Corrupted session',
-        });
-      }
       const res = await prisma.reply.create({
         data: {
           id: input.id,

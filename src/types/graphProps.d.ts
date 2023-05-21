@@ -7,6 +7,7 @@ interface GraphProps {
   donationAmount: number;
   setValue: UseFormSetValue<DonationFormType>;
   maximumDonationValue: number;
+  projectId: string;
 }
 
 export default GraphProps;

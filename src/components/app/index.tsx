@@ -1,7 +1,7 @@
 import { Container } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
-import { UserWalletVerificationProvider } from '~/context/UserWalletVerificationContext';
+import { AuthWrapper } from '~/context/authWrapper';
 import NavbarCTA from './NavbarCTA';
 import { Header } from './navigation/Header';
 
@@ -14,7 +14,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   console.log('pathname - ', router.pathname.split('/')[1]);
   return (
     <Container maxW="full" p="0">
-      <UserWalletVerificationProvider>
+      <AuthWrapper>
         <Header>
           <NavbarCTA />
         </Header>
@@ -30,7 +30,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         >
           {children}
         </Container>
-      </UserWalletVerificationProvider>
+      </AuthWrapper>
     </Container>
   );
 };

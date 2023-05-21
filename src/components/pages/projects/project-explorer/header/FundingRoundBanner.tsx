@@ -8,6 +8,12 @@ interface CountdownTimerProps {
 }
 
 const getDateStatus = (startDate: Date, endDate: Date) => {
+  console.log(
+    'start date is',
+    startDate.toISOString(),
+    ' end date is - ',
+    endDate.toISOString()
+  );
   const now = new Date();
 
   // Convert the dates to timestamps for easier comparison
@@ -17,19 +23,15 @@ const getDateStatus = (startDate: Date, endDate: Date) => {
 
   // Calculate the difference in days
   const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-  const diffStartDays = Math.round(
-    Math.abs((startTimestamp - nowTimestamp) / oneDay)
-  );
-  const diffEndDays = Math.round(
-    Math.abs((endTimestamp - nowTimestamp) / oneDay)
-  );
+  const diffStartDays = Math.ceil((startTimestamp - nowTimestamp) / oneDay);
+  const diffEndDays = Math.ceil((endTimestamp - nowTimestamp) / oneDay);
 
-  if (nowTimestamp < startTimestamp) {
+  if (nowTimestamp <= startTimestamp) {
     return `Round starts in ${diffStartDays} days`;
-  } else if (nowTimestamp < endTimestamp) {
+  } else if (nowTimestamp <= endTimestamp) {
     return `Ending in ${diffEndDays} days`;
   } else {
-    return `Ended ${diffEndDays} days ago`;
+    return `Ended ${-diffEndDays} days ago`;
   }
 };
 
@@ -336,8 +338,9 @@ const FundingRoundBanner = ({
                   maxW={{ base: '340px', md: '500px' }}
                   as="p"
                   color="neutral.8"
-                  height="5rem"
+                  h="2.5rem"
                   textStyle={{ base: 'body5', md: 'body3' }}
+                  noOfLines={2}
                 >
                   {roundDescription}
                 </Box>

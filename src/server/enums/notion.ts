@@ -1,3 +1,5 @@
+import { env } from '~/env.mjs';
+
 export enum NotionConfig {
   API_URL = 'https://api.notion.com/v1',
   NOTION_VERSION = '2022-06-28',
@@ -12,7 +14,7 @@ export const ProjectStatus: any = {
 export const NotionTable = {
   parent: {
     type: 'page_id',
-    page_id: process.env.NEXT_PUBLIC_NOTION_PAGEID,
+    page_id: env.NEXT_PUBLIC_NOTION_PAGEID,
   },
   title: [
     {

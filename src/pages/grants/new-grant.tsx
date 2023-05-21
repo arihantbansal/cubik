@@ -5,21 +5,14 @@ import {
   Box,
   Button,
   Card,
-  CardHeader,
   Container,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
   HStack,
-  Input,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Select,
-  Textarea,
   useDisclosure,
   useToast,
   VStack,
@@ -33,10 +26,10 @@ import moment from 'moment';
 import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import DatePicker, { registerLocale } from 'react-datepicker';
+import { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useForm } from 'react-hook-form';
-import DatePickerInput from '~/components/common/inputs/DatePickerInput';
+import GrantStepOne from '~/components/pages/grants/create-grant/GrantStepOne';
 import { connection, createRoundIx } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 
@@ -91,7 +84,7 @@ const CreateGrantRound = () => {
       if (!txid) {
         throw new Error('txid is null');
       }
-      const createdRound = createRoundMutation.mutate({
+      createRoundMutation.mutate({
         matchingPool: parseInt(pool),
         name: name,
         notionPage: 'https://www.notion.so/round1',
@@ -137,222 +130,21 @@ const CreateGrantRound = () => {
     <Container
       transition="all .25s ease"
       maxW="full"
-      p={{ base: '1rem', md: '0' }}
-      my={{ base: '2rem', md: '5rem', lg: '8rem', xl: '10rem' }}
+      px={{ base: '1rem', sm: '1rem', md: '1rem', lg: '1rem' }}
+      py={{ base: '2rem', md: '3rem' }}
     >
       <Card
-        maxW={{ base: '28rem', md: '36rem' }}
+        maxW="7xl"
+        align="start"
         mx="auto"
         padding={{ base: '24px', md: '40px' }}
       >
-        <CardHeader>
-          <Box
-            as="h1"
-            color="neutral.11"
-            textStyle={{ base: 'title2', md: 'title1' }}
-          >
-            Create Grant Round
-          </Box>
-          <Box
-            as="p"
-            textStyle={{ base: 'body5', md: 'body4' }}
-            color="neutral.9"
-          >
-            Help projects in the community sustain by providing them grants
-            through quadratic funding and community voting
-          </Box>
-        </CardHeader>
-        <form
-          style={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'start',
-            gap: '24px',
-          }}
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <FormControl
-            isRequired
-            w="full"
-            isInvalid={Boolean(errors.projectName)}
-          >
-            <FormLabel
-              fontSize={{ base: '12px', md: '14px' }}
-              pb="0.5rem"
-              htmlFor="name"
-            >
-              Round Name
-            </FormLabel>
-            <Input
-              id="name"
-              placeholder="Enter your rounds name"
-              _placeholder={{
-                fontSize: { base: '12px', md: '14px' },
-                color: '#3B3D3D',
-              }}
-              {...register('name', {
-                required: true,
-                maxLength: { value: 36, message: 'Max length is 36' },
-              })}
-            />
-            {errors.name && (
-              <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
-                <>{errors.name.message}</>
-              </FormErrorMessage>
-            )}
-          </FormControl>
-          <FormControl
-            isRequired
-            w="full"
-            isInvalid={Boolean(errors.projectName)}
-          >
-            <FormLabel
-              fontSize={{ base: '12px', md: '14px' }}
-              pb="0.5rem"
-              htmlFor="pool"
-            >
-              Matching Pool Amount
-            </FormLabel>
-            <Input
-              id="pool"
-              placeholder="Matching Pool"
-              type="number"
-              _placeholder={{
-                fontSize: { base: '12px', md: '14px' },
-                color: '#3B3D3D',
-              }}
-              {...register('pool', {
-                required: true,
-              })}
-            />
-            {errors.pool && (
-              <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
-                <>{errors.pool.message}</>
-              </FormErrorMessage>
-            )}
-          </FormControl>
-          <FormControl
-            isRequired
-            w="full"
-            isInvalid={Boolean(errors.projectName)}
-          >
-            <FormLabel
-              fontSize={{ base: '12px', md: '14px' }}
-              pb="0.5rem"
-              htmlFor="projects"
-            >
-              Maximum Number of Participating Projects
-            </FormLabel>
-            <Input
-              id="projects"
-              placeholder="Participating Projects"
-              type="number"
-              _placeholder={{
-                fontSize: { base: '12px', md: '14px' },
-                color: '#3B3D3D',
-              }}
-              {...register('projects', {
-                required: true,
-              })}
-            />
-            {errors.projects && (
-              <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
-                <>{errors.projects.message}</>
-              </FormErrorMessage>
-            )}
-          </FormControl>
-          <HStack w="full" gap="24px">
-            <FormControl variant="withAddOn" isRequired w="full">
-              <FormLabel fontSize={{ base: '12px', md: '14px' }} pb="0.5rem">
-                Start Date
-              </FormLabel>
-              <DatePicker
-                selected={startDate}
-                onChange={(date: Date) => setStartDate(date)}
-                customInput={<DatePickerInput />}
-                locale="en-gb"
-                minDate={tomorrow} // restrict past and today's date selection
-              />
-            </FormControl>
-            <FormControl variant="withAddOn" isRequired w="full">
-              <FormLabel fontSize={{ base: '12px', md: '14px' }} pb="0.5rem">
-                End Date
-              </FormLabel>
-              <DatePicker
-                selected={endDate}
-                onChange={(date: Date) => setEndDate(date)}
-                customInput={<DatePickerInput />}
-                locale="en-gb"
-                minDate={tomorrow} // restrict past and today's date selection
-              />
-            </FormControl>
-          </HStack>
-          <FormControl isRequired isInvalid={Boolean(errors.tagline)}>
-            <FormLabel
-              fontSize={{ base: '12px', md: '14px' }}
-              pb="0.5rem"
-              htmlFor="short_description"
-            >
-              Description
-            </FormLabel>
-            <Textarea
-              height={'100px'}
-              resize="none"
-              id="short_description"
-              placeholder="A one sentence description of the Round"
-              _placeholder={{
-                fontSize: { base: '12px', md: '14px' },
-                color: '#3B3D3D',
-              }}
-              {...register('short_description', {
-                required: true,
-              })}
-            />
-            {errors.short_description && (
-              <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
-                <>{errors.short_description.message}</>
-              </FormErrorMessage>
-            )}
-          </FormControl>
-          <FormControl w="full" isInvalid={Boolean(errors.colorScheme)}>
-            <FormLabel
-              fontSize={{ base: '12px', md: '14px' }}
-              pb="0.5rem"
-              htmlFor="colorScheme"
-            >
-              Color Scheme
-            </FormLabel>
-            <Select
-              borderColor="#141414"
-              defaultValue={1}
-              id="colorScheme"
-              placeholder="Select color scheme"
-              _placeholder={{
-                fontSize: { base: '12px', md: '14px' },
-                color: '#3B3D3D',
-              }}
-              {...register('colorScheme')}
-            >
-              <option value="light">Teal</option>
-              <option value="dark">Yellow</option>
-              <option value="dark">Blue</option>
-              <option value="dark">Green</option>
-              <option value="dark">Purple</option>
-            </Select>
-            {errors.colorScheme && (
-              <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
-                <>{errors.colorScheme.message}</>
-              </FormErrorMessage>
-            )}
-          </FormControl>
-          <HStack w="full" pt="24px" justify={'space-between'}>
-            <Button variant={'outline'}>Cancel</Button>
-            <Button variant="apply_for_grant" type="submit">
-              Submit Grant
-            </Button>
-          </HStack>
-        </form>
+        <GrantStepOne
+          onSubmit={onSubmit}
+          errors={errors}
+          handleSubmit={handleSubmit}
+          register={register}
+        />
       </Card>
       <Modal variant={'cubik'} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

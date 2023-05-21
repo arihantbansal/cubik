@@ -5,7 +5,7 @@ import * as spl from '@solana/spl-token';
 import type { ContractType } from './program';
 import { Contract } from './program';
 
-const PROGRAM_ID = 'RTdQqyArv9WHcNvxyDfFi7p4MmGfuP2J8xAoxr4p2GR';
+const PROGRAM_ID = '218G51eHYC8uBd7mPp8FsXQKSekCYdfnVTdeCAqE3yfj';
 const RPC_URL =
   'https://rpc-devnet.helius.xyz/?api-key=6e7a9f7d-fd4a-4f2b-9c2d-2212248b28bb';
 
@@ -258,7 +258,7 @@ export const updateProjectRoundVerified = async (
   wallet: NodeWallet,
   roundId: string,
   counter: number,
-  projectOwner: string
+  projectOwnerAddress: string
 ) => {
   const program = anchorProgram(wallet);
   const [adminAccount] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -274,7 +274,7 @@ export const updateProjectRoundVerified = async (
   let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
     [
       anchor.utils.bytes.utf8.encode('project'),
-      new anchor.web3.PublicKey(projectOwner).toBuffer(),
+      new anchor.web3.PublicKey(projectOwnerAddress).toBuffer(),
       Buffer.from(counter.toString()),
     ],
     program.programId
@@ -293,7 +293,7 @@ export const updateProjectRoundVerified = async (
     .updateApproveRound(
       roundId,
       counter.toString(),
-      new anchor.web3.PublicKey(projectOwner)
+      new anchor.web3.PublicKey(projectOwnerAddress)
     )
     .accounts({
       roundAccount: round_account,

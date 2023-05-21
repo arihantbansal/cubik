@@ -7,6 +7,7 @@ import {
   Button,
   Center,
   HStack,
+  keyframes,
   Modal,
   ModalBody,
   ModalContent,
@@ -18,22 +19,36 @@ import {
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { signIn, signOut } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useUserWalletVerification } from '~/context/UserWalletVerificationContext';
 import { useAuthStore } from '~/store/authStore';
 import { createMessage, verifyMessage } from '~/utils/getsignMessage';
 import { FailureToast, SuccessToast } from '../common/toasts/Toasts';
 import { WalletAddress } from '../common/wallet/WalletAdd';
 
-const WalletVerifyModal = () => {
+const scaleIn = keyframes`
+0% {
+  transform: scale(0);
+}
+100% {
+  transform: scale(1);
+}
+`;
+
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
   const toast = useToast();
   const router = useRouter();
   const { setAuthenticated, setKey } = useAuthStore();
   const [verifying, setVerifying] = useState(false);
+  const { status, data: session } = useSession();
+  const [verified, setVerified] = useState(false);
   const { publicKey, disconnect, signMessage } = useWallet();
-  const { isOpen, onClose, status } = useUserWalletVerification();
   const [verifyWalletError, setVerifyWalletError] = useState<string | null>(
     null
   );
@@ -63,15 +78,23 @@ const WalletVerifyModal = () => {
           sig: anchor.utils.bytes.bs58.encode(sig),
           wallet: publicKey.toBase58(),
         });
-        //
+
         if (signInResponse?.status === 401) {
           console.log('401');
+          if (session?.user.id) {
+            await signOut({
+              redirect: false,
+            });
+          }
           router.push('/create-profile');
+
           setVerifying(false);
         }
-        console.log('outside 401');
         setAuthenticated(true);
+        console.log('outside 401');
+        setVerified(true);
         setVerifying(false);
+        setAuthenticated(true);
         onClose();
         SuccessToast({ toast, message: 'Wallet Verified' });
       } catch (error: any) {
@@ -85,7 +108,29 @@ const WalletVerifyModal = () => {
   }
 
   return publicKey ? (
-    <Modal variant="cubik" isOpen={isOpen} onClose={onClose}>
+    <Modal
+      variant="cubik"
+      isOpen={isOpen}
+      onClose={() => {
+        disconnect()
+          .then(() => {
+            signOut({ redirect: false });
+            setKey({
+              sig: '',
+              wallet: '',
+            });
+          })
+          .catch((e: any) => {
+            new Error(e.message || 'there was an error');
+          });
+        onClose();
+        FailureToast({
+          toast,
+          message: 'Wallet Verification Failed',
+        });
+        localStorage.removeItem('walletName');
+      }}
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
@@ -141,6 +186,10 @@ const WalletVerifyModal = () => {
               disconnect()
                 .then(() => {
                   signOut({ redirect: false });
+                  setKey({
+                    sig: '',
+                    wallet: '',
+                  });
                 })
                 .catch((e: any) => {
                   new Error(e.message || 'there was an error');
@@ -161,7 +210,7 @@ const WalletVerifyModal = () => {
             onClick={VerifyWallet}
             isLoading={verifying}
           >
-            Verify Wallet
+            {verified ? 'Verified' : 'Verify Wallet'}
           </Button>
         </ModalFooter>
       </ModalContent>

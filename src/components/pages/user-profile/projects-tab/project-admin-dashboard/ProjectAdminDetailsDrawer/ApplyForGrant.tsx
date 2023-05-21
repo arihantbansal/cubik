@@ -22,6 +22,7 @@ import {
   SkeletonText,
   Stack,
   useDisclosure,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
@@ -33,6 +34,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import { FiChevronLeft } from 'react-icons/fi';
 import { v4 as uuidV4 } from 'uuid';
+import { SuccessToast } from '~/components/common/toasts/Toasts';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import { formatDate } from '~/utils/formatDates';
 import { formatNumberWithK } from '~/utils/formatWithK';
@@ -62,6 +64,7 @@ const ApplyForGrant: React.FC<{
   const joinRoundMutation = trpc.project.joinRound.useMutation();
   const { control, handleSubmit } = useForm<FormData>();
   const wallet = useAnchorWallet();
+  const toast = useToast();
   const [selectRoundId, setSelectRoundId] = React.useState<string | null>(null);
   const sendTransaction = async (
     roundName: string,
@@ -91,7 +94,6 @@ const ApplyForGrant: React.FC<{
   };
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    if (!selectRoundId) return;
     // get round name of selected round id;
     const round = roundData?.find((round) => round.id === selectRoundId);
     if (!round) return;
@@ -115,6 +117,7 @@ const ApplyForGrant: React.FC<{
       id: uuidV4(),
     });
     setSignTxnLoading(false);
+    SuccessToast({ toast, message: 'Submission Successful' });
     onClose();
   };
 
@@ -292,7 +295,7 @@ const ApplyForGrant: React.FC<{
               })}
             </VStack>
           )}
-        </VStack>{' '}
+        </VStack>
         <Center w="full">
           <Alert status="info" variant="cubik">
             <AlertIcon />
@@ -336,9 +339,9 @@ const ApplyForGrant: React.FC<{
             w="full"
           >
             <Button
-              variant={'outline'}
+              variant={'cubikText'}
+              size={'cubikSmall'}
               w="8rem"
-              py="8px"
               onClick={() =>
                 setDrawerBodyView(drawerBodyViewEnum.PROJECT_DETAILS)
               }
@@ -347,12 +350,13 @@ const ApplyForGrant: React.FC<{
               Back
             </Button>
             <Button
-              isDisabled={isLoading || isError}
+              variant={'cubikFilled'}
+              size={'cubikSmall'}
               w="8rem"
-              variant={'apply_for_grant'}
               type="submit"
+              isDisabled={isLoading || isError || selectRoundId === null}
             >
-              Next
+              Apply
             </Button>
           </HStack>
         </form>
@@ -442,7 +446,8 @@ const ApplyForGrant: React.FC<{
                     {
                       roundData?.find((round) => round.id === selectRoundId)
                         ?.roundName
-                    }
+                    }{' '}
+                    Round
                   </Box>
                 </VStack>
               </Stack>
@@ -474,13 +479,20 @@ const ApplyForGrant: React.FC<{
             h={'fit-content'}
             justifyContent="space-between"
           >
-            <Button w="8rem" variant="close_modal" onClick={onClose}>
+            <Button
+              w="8rem"
+              variant="cubikOutlined"
+              size="cubikSmall"
+              onClick={onClose}
+            >
               Cancel
             </Button>
             <Button
               px="32px"
-              variant="apply_for_grant"
+              variant="cubikFilled"
+              size="cubikSmall"
               onClick={onSignTransactionHandler}
+              loadingText="Verifying"
               isLoading={signTxnLoading}
             >
               Sign Transaction

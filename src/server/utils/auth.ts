@@ -8,6 +8,7 @@ import {
   type NextAuthOptions,
 } from 'next-auth';
 import credentialsProvider from 'next-auth/providers/credentials';
+import { env } from '~/env.mjs';
 import { verifyMessage } from '~/utils/getsignMessage';
 import { prisma } from './prisma';
 declare module 'next-auth' {
@@ -48,7 +49,7 @@ export const authOptions = (
         return session;
       },
     },
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: env.NEXTAUTH_SECRET,
     session: {
       strategy: 'jwt',
       maxAge: 15 * 24 * 60 * 60,
@@ -66,7 +67,7 @@ export const authOptions = (
             signature: string;
           };
           const availableTokens =
-            process.env.NODE_ENV === 'development'
+            env.NODE_ENV === 'development'
               ? req?.cookies['next-auth.csrf-token']?.split('|')
               : req?.cookies['__Host-next-auth.csrf-token']?.split('|');
           console.log(availableTokens, '-- availableTokens');
