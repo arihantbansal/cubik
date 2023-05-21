@@ -27,10 +27,6 @@ import { createMessage, verifyMessage } from '~/utils/getsignMessage';
 import { FailureToast, SuccessToast } from '../common/toasts/Toasts';
 import { WalletAddress } from '../common/wallet/WalletAdd';
 
-interface Props {
-  isOpen: boolean;
-  onClose: () => void;
-}
 const scaleIn = keyframes`
 0% {
   transform: scale(0);
@@ -40,6 +36,10 @@ const scaleIn = keyframes`
 }
 `;
 
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+}
 const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
   const toast = useToast();
   const router = useRouter();
@@ -92,6 +92,7 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
         setAuthenticated(true);
         console.log('outside 401');
         setVerified(true);
+        setAuthenticated(true);
         setVerifying(false);
         setAuthenticated(true);
         onClose();
