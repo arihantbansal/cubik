@@ -1,6 +1,6 @@
 import { Container } from '@chakra-ui/react';
 import { ReactNode } from 'react';
-import { UserWalletVerificationProvider } from '~/context/UserWalletVerificationContext';
+import { AuthWrapper } from '~/context/authWrapper';
 import NavbarCTA from './NavbarCTA';
 import { Header } from './navigation/Header';
 
@@ -11,7 +11,7 @@ interface AppLayoutProps {
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   return (
     <Container maxW="full" p="0">
-      <UserWalletVerificationProvider>
+      <AuthWrapper>
         <Header>
           <NavbarCTA />
         </Header>
@@ -23,7 +23,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         >
           {children}
         </Container>
-      </UserWalletVerificationProvider>
+      </AuthWrapper>
     </Container>
   );
 };

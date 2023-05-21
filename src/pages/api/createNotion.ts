@@ -2,8 +2,8 @@
 import { ProjectsModel } from '@prisma/client';
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-const token = `${process.env.NEXT_PUBLIC_NOTION_TOKEN}` as string;
+import { env } from '~/env.mjs';
+const token = `${env.NEXT_PUBLIC_NOTION_TOKEN}` as string;
 
 enum NotionConfig {
   API_URL = 'https://api.notion.com/v1',
@@ -24,7 +24,7 @@ export default async function handler(
 
   const record = {
     parent: {
-      database_id: process.env.NEXT_PUBLIC_NOTION_DATABASEID,
+      database_id: env.NEXT_PUBLIC_NOTION_DATABASEID,
     },
     properties: {
       'Project Name': {

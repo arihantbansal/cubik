@@ -1,10 +1,10 @@
 import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
-import { procedure, router } from '../trpc';
+import { procedure, protectedProcedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
 
 export const contributionRouter = router({
-  create: procedure
+  create: protectedProcedure
     .input(
       z.object({
         userId: z.string().nonempty(),

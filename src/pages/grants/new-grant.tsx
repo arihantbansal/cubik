@@ -84,7 +84,7 @@ const CreateGrantRound = () => {
       if (!txid) {
         throw new Error('txid is null');
       }
-      const createdRound = createRoundMutation.mutate({
+      createRoundMutation.mutate({
         matchingPool: parseInt(pool),
         name: name,
         notionPage: 'https://www.notion.so/round1',

@@ -7,11 +7,11 @@ import { TRPCError } from '@trpc/server';
 import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
 import { Grant } from '~/utils/calculateProjectMatchingFund';
-import { procedure, router } from '../trpc';
+import { procedure, protectedProcedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
 
 export const projectsRouter = router({
-  create: procedure
+  create: protectedProcedure
     .input(
       z.object({
         id: z.string().nonempty(),
@@ -33,20 +33,6 @@ export const projectsRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      if (!ctx.session) {
-        throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: 'Session not found',
-          cause: 'User not logged in',
-        });
-      }
-      if (!ctx.session.user.mainWallet) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'User wallet not found',
-          cause: 'Corrupted session',
-        });
-      }
       let team: Prisma.TeamCreateManyInput[] = [];
       if (input.team.length !== 0) {
         team = input.team?.map((teamId) => {
@@ -289,7 +275,7 @@ export const projectsRouter = router({
       return res;
     }),
 
-  joinRound: procedure
+  joinRound: protectedProcedure
     .input(
       z.object({
         id: z.string().nonempty(),
@@ -417,7 +403,7 @@ export const projectsRouter = router({
     }),
 
   // @type projectWithFundingRoundType
-  projectAdminDetails: procedure
+  projectAdminDetails: protectedProcedure
     .input(
       z.object({
         id: z.string().nonempty(),

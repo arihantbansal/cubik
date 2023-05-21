@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useQuery, UseQueryResult } from 'react-query';
-
+import { env } from '~/env.mjs';
 interface TokenData {
   tokenAccount: string;
   amount: number;
@@ -16,7 +16,7 @@ async function fetchTokenBalance(
       tokens: TokenData[];
       nativeBalance: number;
     }>(
-      `https://api.helius.xyz/v0/addresses/${walletAddress}/balances?api-key=${process.env.NEXT_PUBLIC_HELIUS_API_KEY}`
+      `https://api.helius.xyz/v0/addresses/${walletAddress}/balances?api-key=${env.NEXT_PUBLIC_HELIUS_API_KEY}`
     );
     if (tokenAddress === '') {
       // todo: add solana add here
