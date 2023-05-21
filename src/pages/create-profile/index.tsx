@@ -73,6 +73,7 @@ const CreateProfile = () => {
   const [userNameIsAvailable, setUserNameIsAvailable] = useState(false);
   const [profileCreated, setProfileCreated] = useState(false);
   const [signingTransaction, setSigningTransaction] = useState(false);
+
   const [transactionError, setTransactionError] = useState<string | null>(null);
   const [pfp, setPFP] = useState<string>(
     `https://source.boringavatars.com/marble/120/${publicKey?.toBase58()}?square&?colors=05299E,5E4AE3,947BD3,F0A7A0,F26CA7,FFFFFF,CAF0F8,CCA43B`

@@ -148,7 +148,6 @@ const CreateProjectTransactionModal: React.FC<
         email: getValues().email,
       });
       setProjectId(id);
-      setTransactionLoading(false);
     } catch (error: any) {
       setTransactionError(
         error.message || 'There was an error while signing the transaction'

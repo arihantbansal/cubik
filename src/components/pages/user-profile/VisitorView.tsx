@@ -9,7 +9,6 @@ import {
 import { FC, memo } from 'react';
 import { UserWithProjectType } from '~/types/user';
 import UserDetails from './details-tab/UserDetails';
-import UserProofs from './details-tab/UserProofs';
 import { VisitorProjectEmptyState } from './empty-states/ProjectEmptyState';
 import ProfileHeader from './ProfileHeader';
 import ProjectVisitorCard from './projects-tab/ProjectVisitorCard';
@@ -36,7 +35,6 @@ const VisitorView: FC<visitorViewType> = ({
           <TabPanel p="0">
             <Flex maxW={'full'} p="0" flexDir="column" gap="40px" py="40px">
               <UserDetails isLoading={isLoading} />
-              <UserProofs isLoading={isLoading} />
             </Flex>
           </TabPanel>
           <TabPanel>

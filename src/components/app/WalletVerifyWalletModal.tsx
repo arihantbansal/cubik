@@ -7,6 +7,7 @@ import {
   Button,
   Center,
   HStack,
+  keyframes,
   Modal,
   ModalBody,
   ModalContent,
@@ -27,11 +28,21 @@ import { createMessage, verifyMessage } from '~/utils/getsignMessage';
 import { FailureToast, SuccessToast } from '../common/toasts/Toasts';
 import { WalletAddress } from '../common/wallet/WalletAdd';
 
+const scaleIn = keyframes`
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
+
 const WalletVerifyModal = () => {
   const toast = useToast();
   const router = useRouter();
   const { setAuthenticated, setKey } = useAuthStore();
   const [verifying, setVerifying] = useState(false);
+  const [verified, setVerified] = useState(false);
   const { publicKey, disconnect, signMessage } = useWallet();
   const { isOpen, onClose, status } = useUserWalletVerification();
   const [verifyWalletError, setVerifyWalletError] = useState<string | null>(
@@ -70,8 +81,9 @@ const WalletVerifyModal = () => {
           setVerifying(false);
         }
         console.log('outside 401');
-        setAuthenticated(true);
+        setVerified(true);
         setVerifying(false);
+        setAuthenticated(true);
         onClose();
         SuccessToast({ toast, message: 'Wallet Verified' });
       } catch (error: any) {
@@ -179,7 +191,7 @@ const WalletVerifyModal = () => {
             onClick={VerifyWallet}
             isLoading={verifying}
           >
-            Verify Wallet
+            {verified ? 'Verified' : 'Verify Wallet'}
           </Button>
         </ModalFooter>
       </ModalContent>

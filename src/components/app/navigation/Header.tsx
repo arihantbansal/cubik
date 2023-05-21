@@ -101,31 +101,6 @@ const MobileNavCollapsible = memo(function MobileNavCollapsible({
             </Link>
           </Flex>
         </Link>
-        <Link href="/rounds" style={{ width: '100%' }} passHref>
-          <Flex
-            direction={'row'}
-            alignItems="center"
-            justify={'space-between'}
-            w="100%"
-          >
-            <Link href="/hackathons">
-              <Box
-                display="flex"
-                alignItems={'start'}
-                w="100%"
-                onClick={() => {
-                  onClose();
-                }}
-                as="button"
-                transition={'all 0.3s ease'}
-                fontSize="15px"
-                fontWeight="400"
-              >
-                Hackathons
-              </Box>
-            </Link>
-          </Flex>
-        </Link>
       </Flex>
     </Collapse>
   );
@@ -208,16 +183,6 @@ export const Header = memo(function Header({
               cursor={'pointer'}
             >
               Grants
-            </Box>
-          </Button>
-          <Button h="full" variant={'unstyled'} as={Link} href="/hackathons">
-            <Box
-              as="p"
-              textStyle={'title4'}
-              color={isActiveRoute('/grants') ? 'brand.teal5' : 'neutral.8'}
-              cursor={'pointer'}
-            >
-              Hackathons
             </Box>
           </Button>
         </HStack>

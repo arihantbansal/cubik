@@ -80,6 +80,7 @@ export const ProjectHeaderVisitorView = ({
             <Avatar
               src={project.logo}
               name={project.name}
+              background="neutral.6"
               width={{ base: '36px', sm: '48px', md: '52px' }}
               height={{ base: '36px', sm: '48px', md: '52px' }}
             />
@@ -104,12 +105,11 @@ export const ProjectHeaderVisitorView = ({
         </Stack>
         <Center justifyContent={'end'}>
           <Button
-            variant={'project_button_secondary'}
+            variant={'cubikFilled'}
             as={Link}
             //@ts-ignore
             ref={btnRef}
             href={`/projects/${project.id}`}
-            w="full"
             maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
           >
             View Project
@@ -232,7 +232,8 @@ const ProjectDetails = ({
             h="fit-content"
           >
             <Button
-              variant="apply_for_grant"
+              variant="cubikFilled"
+              size="cubikSmall"
               isDisabled={!showApplyToRound}
               onClick={() => {
                 setDrawerBodyView(drawerBodyViewEnum.GRANTS);
@@ -300,7 +301,8 @@ const ProjectDetails = ({
         h="fit-content"
       >
         <Button
-          variant="connect_wallet"
+          variant="cubikFilled"
+          size={'cubikSmall'}
           width={'full'}
           isDisabled={showApplyToRound}
           onClick={() => {
@@ -409,7 +411,6 @@ const ProjectHeader = ({
           </Link>
         </Center>
         <Drawer
-          w="fit-content"
           maxW="40rem"
           isOpen={isOpen}
           placement="bottom"
@@ -425,7 +426,6 @@ const ProjectHeader = ({
             backdropFilter="blur(8px)"
           />
           <DrawerContent
-            // border="1px solid #1D1F1E !important"
             borderColor={'#1D1F1E'}
             borderBottom={'none'}
             borderTopRadius={'24px'}
@@ -438,11 +438,6 @@ const ProjectHeader = ({
               transform={'translateY(-3rem)'}
               rounded="full"
               backgroundColor="#141414"
-              onClick={() => {
-                // router.replace(`/${data?.user.username}`, undefined, {
-                //   shallow: true,
-                // });
-              }}
             />
 
             <DrawerBody maxH={'90vh'} p="0">
