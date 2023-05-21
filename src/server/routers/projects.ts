@@ -259,8 +259,8 @@ export const projectsRouter = router({
       ) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
-          cause: `User doesn't have permission to access Rounds create`,
-          message: 'Invalid User Session trying to access Round creation',
+          cause: `User doesn't have permission to access Project Update`,
+          message: 'Invalid User Session trying to access Project Update',
         });
       }
       const res = await prisma.projectsModel.update({
