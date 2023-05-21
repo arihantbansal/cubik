@@ -1,9 +1,10 @@
 import { ProjectsModel } from '@prisma/client';
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { env } from '~/env.mjs';
 import { NotionConfig } from '~/server/enums/notion';
 
-const token = `${process.env.NEXT_PUBLIC_NOTION_TOKEN}` as string;
+const token = `${env.NEXT_PUBLIC_NOTION_TOKEN}` as string;
 // create subpage in existing page
 export async function createPage(req: NextApiRequest, res: NextApiResponse) {
   const {
@@ -15,7 +16,7 @@ export async function createPage(req: NextApiRequest, res: NextApiResponse) {
   const page = {
     parent: {
       type: 'page_id',
-      page_id: process.env.NEXT_PUBLIC_NOTION_PAGEID,
+      page_id: env.NEXT_PUBLIC_NOTION_PAGEID,
     },
     properties: {
       title: [
@@ -88,7 +89,7 @@ async function createNotionSchema(title: string) {
   const record = {
     parent: {
       type: 'page_id',
-      page_id: process.env.NEXT_PUBLIC_NOTION_PAGEID,
+      page_id: env.NEXT_PUBLIC_NOTION_PAGEID,
     },
     title: [
       {

@@ -4,6 +4,7 @@ import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useQuery } from 'react-query';
+import { env } from '~/env.mjs';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { BONK, SOL, USDC } from '../../common/tokens/token';
 
@@ -30,7 +31,7 @@ const filterTokens = (tokens: TokenInfo[]) => {
 
 const getBalances = async (address: string) => {
   const { data } = await axios.get(
-    `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${process.env.NEXT_PUBLIC_HELIUS_API_KEY}`
+    `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${env.NEXT_PUBLIC_HELIUS_API_KEY}`
   );
   return data;
 };

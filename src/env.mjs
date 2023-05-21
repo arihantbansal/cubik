@@ -21,6 +21,7 @@ export const env = createEnv({
     NEXT_PUBLIC_CLOUDINARY: z.string().min(1),
     NEXT_PUBLIC_NOTION_TOKEN: z.string().min(1),
     NEXT_PUBLIC_NOTION_DATABASEID: z.string().min(1),
+    NEXT_PUBLIC_NOTION_PAGEID: z.string().min(1),
   },
   runtimeEnv: {
     PROD_DATABASE_URL: process.env.PROD_DATABASE_URL,
@@ -33,5 +34,6 @@ export const env = createEnv({
     NEXT_PUBLIC_HELIUS_API_KEY: process.env.NEXT_PUBLIC_HELIUS_API_KEY,
     NEXT_PUBLIC_NOTION_DATABASEID: process.env.NEXT_PUBLIC_NOTION_DATABASEID,
     NEXT_PUBLIC_NOTION_TOKEN: process.env.NEXT_PUBLIC_NOTION_TOKEN,
+    NEXT_PUBLIC_NOTION_PAGEID: process.env.NEXT_PUBLIC_NOTION_PAGEID,
   },
 });

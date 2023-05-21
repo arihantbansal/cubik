@@ -1,11 +1,12 @@
 import { Metaplex } from '@metaplex-foundation/js';
 import { Connection, PublicKey } from '@solana/web3.js';
+import { env } from '~/env.mjs';
 
 export type NFTData = {
   image: string;
 };
 
-const connection = new Connection(process.env.NEXT_PUBLIC_RPC_URL as string);
+const connection = new Connection(env.NEXT_PUBLIC_RPC_URL as string);
 const metaplex = Metaplex.make(connection);
 
 export const metaplexGetByOwner = (
