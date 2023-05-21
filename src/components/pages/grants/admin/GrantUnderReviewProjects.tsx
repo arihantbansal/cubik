@@ -82,7 +82,7 @@ const GrantUnderReviewProjects = ({
   }, [roundData?.ProjectJoinRound, setProjectsNumberByStatus]);
 
   const markVerified = async (
-    projectId: string,
+    projectJoinRoundId: string,
     walletAddress: string,
     projectCount: number
   ) => {
@@ -103,13 +103,13 @@ const GrantUnderReviewProjects = ({
     if (!txid) return;
     updateRound.mutate({
       roundId: roundId,
-      projectId: projectId,
+      projectJoinRoundId: projectJoinRoundId,
       status: 'ACCEPTED',
     });
   };
 
   const markUnverified = async (
-    projectId: string,
+    projectJoinRoundId: string,
     walletAddress: string,
     projectCount: number
   ) => {
@@ -133,7 +133,7 @@ const GrantUnderReviewProjects = ({
     }
     updateRound.mutate({
       roundId,
-      projectId,
+      projectJoinRoundId,
       status: 'REJECTED',
     });
   };
@@ -350,7 +350,9 @@ const GrantUnderReviewProjects = ({
                     size={{ bae: 'cubikMini', md: 'cubikSmall' }}
                     onClick={() =>
                       markVerified(
-                        projectToBeAccepted?.id,
+                        roundData?.ProjectJoinRound.find(
+                          (e) => e.projectId === projectToBeAccepted.id
+                        )?.id ?? '',
                         projectToBeAccepted?.owner_publickey,
                         projectToBeAccepted?.projectUserCount
                       )
@@ -550,7 +552,9 @@ const GrantUnderReviewProjects = ({
                     size={'cubikSmall'}
                     onClick={() =>
                       markUnverified(
-                        projectToBeRejected?.id,
+                        roundData?.ProjectJoinRound.find(
+                          (e) => e.projectId === projectToBeRejected.id
+                        )?.id ?? '',
                         projectToBeRejected?.owner_publickey,
                         projectToBeRejected?.projectUserCount
                       )

@@ -173,7 +173,7 @@ export const roundRouter = router({
     .input(
       z.object({
         roundId: z.string().nonempty(),
-        projectId: z.string().nonempty(),
+        projectJoinRoundId: z.string().nonempty(),
         status: z.enum(['ACCEPTED', 'REJECTED']),
       })
     )
@@ -202,7 +202,7 @@ export const roundRouter = router({
       if (input.status === 'REJECTED') {
         const roundRes = await prisma.projectJoinRound.update({
           where: {
-            id: input.projectId,
+            id: input.projectJoinRoundId,
           },
           data: {
             status: 'REJECTED',
@@ -212,7 +212,7 @@ export const roundRouter = router({
       } else {
         const roundRes = await prisma.projectJoinRound.update({
           where: {
-            id: input.projectId,
+            id: input.projectJoinRoundId,
           },
           data: {
             status: 'APPROVED',
