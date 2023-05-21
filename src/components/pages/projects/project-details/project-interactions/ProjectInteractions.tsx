@@ -321,7 +321,7 @@ export const ProjectCreatorTeamMember = ({
     <HStack
       as={Link}
       cursor="pointer"
-      href={teamMember.user.username}
+      href={`https://cubik.so/${teamMember.user.username}`}
       w="full"
       justify="space-between"
       px="16px"

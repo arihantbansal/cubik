@@ -1,7 +1,7 @@
 import { Box, Center, Container, Heading, Text } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import SEO from 'src/components/SEO';
 import AdminView from '~/components/pages/user-profile/AdminView';
 import VisitorView from '~/components/pages/user-profile/VisitorView';
@@ -9,10 +9,9 @@ import { trpc } from '~/utils/trpc';
 
 const ProfilePage = () => {
   const { data: session } = useSession();
-  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  const { data, isError } = trpc.user.findOne.useQuery(
+  const { data, isError, isLoading } = trpc.user.findOne.useQuery(
     {
       username: router.query.username as string,
     },
@@ -20,12 +19,6 @@ const ProfilePage = () => {
       refetchOnWindowFocus: false,
     }
   );
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 4000);
-  }, []);
 
   if (isError) {
     return (

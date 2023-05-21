@@ -5,14 +5,16 @@ const EmptyStateHOC = ({
   heading,
   subHeading,
   children,
+  margin,
 }: {
   heading: string;
   subHeading: string;
   children?: React.ReactNode;
+  margin?: string;
 }) => {
   return (
     <VStack
-      my="6rem"
+      my={margin ? margin : '6rem'}
       alignContent={'center'}
       mx="auto"
       p="24px"

@@ -34,6 +34,7 @@ import {
 import { trpc } from '~/utils/trpc';
 import { AmountInput } from './form/DonationAmountInput';
 import { WalletBalanceError } from './form/WalletBalanceError';
+import Graph from './Graph';
 
 type ProjectDonationSimulatorProps = {
   projectDetails: projectWithFundingRoundType;
@@ -224,7 +225,7 @@ export const ProjectDonationSimulator = ({
 
   return (
     <Stack
-      w={{ base: '20rem', sm: '22rem', md: '26rem' }}
+      w={{ base: '20rem', sm: '22rem', md: 'full' }}
       gap="40px"
       h="full"
       direction={'row'}
@@ -404,13 +405,14 @@ export const ProjectDonationSimulator = ({
           </Button>
         </VStack>
       </form>
-      {/* <Graph
+      <Graph
         width={width}
         height={height}
         maximumDonationValue={1000}
         donationAmount={donation}
         setValue={setValue}
-      /> */}
+        projectId={projectDetails.id}
+      />
     </Stack>
   );
 };

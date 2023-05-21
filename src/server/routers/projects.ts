@@ -387,10 +387,11 @@ export const projectsRouter = router({
       });
       let roundContri: Grant[] = [];
       round?.ProjectJoinRound.forEach((round) => {
-        roundContri.push({
+        return roundContri.push({
           funding: round.project?.Contribution.map((contribution) => {
             return contribution.usdTotal;
           }),
+          projectId: '', // @todo add project id here i have added it because it was showing some bug
         });
       });
 

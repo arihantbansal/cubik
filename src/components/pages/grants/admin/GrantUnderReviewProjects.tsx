@@ -11,13 +11,13 @@ import {
   HStack,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
   Spinner,
   Stack,
+  useDisclosure,
   useToast,
   VStack,
 } from '@chakra-ui/react';
@@ -25,7 +25,7 @@ import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import { useEffect, useState } from 'react';
-import { SuccessToast } from '~/components/common/toasts/Toasts';
+import { FailureToast, SuccessToast } from '~/components/common/toasts/Toasts';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import {
@@ -33,17 +33,6 @@ import {
   updateProjectRoundVerified,
 } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
-
-type ActionType = 'REJECTED' | 'ACCEPTED';
-
-interface CurrentAction {
-  type: ActionType;
-  roundId: string;
-  projectId: string;
-  roundName: string;
-  count: number;
-  owner: string;
-}
 
 const GrantUnderReviewProjects = ({
   roundId,
@@ -55,16 +44,27 @@ const GrantUnderReviewProjects = ({
     isError,
     error,
   } = trpc.round.findInReview.useQuery({ id: roundId });
-  console.log('round id - ', roundId);
   const toast = useToast();
   const anchorWallet = useAnchorWallet();
-  const roundUpdateMutation = trpc.round.updateStatus.useMutation();
-  const [isActionModalOpen, setIsActionModalOpen] = useState(false);
+  const updateRound = trpc.round.updateStatus.useMutation({
+    onSuccess: () => {
+      SuccessToast({ toast, message: 'Project Accepted in Round' });
+    },
+    onError: (error) => {
+      FailureToast({ toast, message: 'Something went wrong!' });
+    },
+  });
   const [transactionLoading, setTransactionLoading] = useState(false);
-  const [currentAction, setCurrentAction] = useState<CurrentAction | null>(
-    null
-  );
-
+  const {
+    isOpen: isRejectModalOpen,
+    onOpen: onRejectModelOpen,
+    onClose: onRejectModelClose,
+  } = useDisclosure();
+  const {
+    isOpen: isAcceptModalOpen,
+    onOpen: onAcceptModalOpen,
+    onClose: onAcceptModelClose,
+  } = useDisclosure();
   const [transactionSignError, setTransactionSignError] = useState<
     string | null
   >();
@@ -78,115 +78,71 @@ const GrantUnderReviewProjects = ({
     }
   }, [roundData?.ProjectJoinRound, setProjectsNumberByStatus]);
 
-  const handleRoundAction = async (
-    action: ActionType,
+  const markVerified = async (
     projectId: string,
-    roundId: string,
-    roundName: string,
-    count: number,
-    owner: string
+    walletAddress: string,
+    projectCount: number
   ) => {
-    try {
-      setTransactionLoading(true);
-      // Depending on the action, we'll call a different function
-      const ix =
-        action === 'ACCEPTED'
-          ? await updateProjectRoundVerified(
-              anchorWallet as NodeWallet,
-              roundName,
-              count,
-              owner
-            )
-          : await updateProjectRoundVerified(
-              anchorWallet as NodeWallet,
-              roundName,
-              count,
-              owner
-            );
+    const ix = await updateProjectRoundVerified(
+      anchorWallet as NodeWallet,
+      roundId,
+      projectCount,
+      walletAddress
+    );
+    const { blockhash } = await connection.getLatestBlockhash();
+    const tx = new anchor.web3.Transaction();
+    tx.recentBlockhash = blockhash;
+    tx.feePayer = anchorWallet?.publicKey;
+    tx.add(ix);
 
-      const { blockhash } = await connection.getLatestBlockhash();
-      const tx = new anchor.web3.Transaction();
-      tx.recentBlockhash = blockhash;
-      tx.feePayer = anchorWallet?.publicKey;
-      tx.add(ix);
-      const signedTx = await anchorWallet?.signTransaction(tx);
-      if (!signedTx) throw new Error('Error signing transaction');
-      const txid = await connection.sendRawTransaction(signedTx.serialize());
+    const signed = await anchorWallet?.signTransaction(tx);
+    const txid = await connection.sendRawTransaction(signed!.serialize());
+    if (!txid) return;
+    updateRound.mutate({
+      roundId: roundId,
+      projectId: projectId,
+      status: 'ACCEPTED',
+    });
+  };
 
-      // We'll also update the round status according to the action
-      roundUpdateMutation.mutate({
-        projectId: projectId,
-        roundId: roundId,
-        status: action,
-      });
+  const markUnverified = async (
+    projectId: string,
+    walletAddress: string,
+    projectCount: number
+  ) => {
+    const ix = await updateProjectRoundVerified(
+      anchorWallet as NodeWallet,
+      roundId,
+      projectCount,
+      walletAddress
+    );
+    const { blockhash } = await connection.getLatestBlockhash();
+    const tx = new anchor.web3.Transaction();
+    tx.recentBlockhash = blockhash;
+    tx.feePayer = anchorWallet?.publicKey;
+    tx.add(ix);
 
-      const toastMessage =
-        action === 'ACCEPTED'
-          ? 'Round Accepted'
-          : 'Round Rejected Successfully';
-      SuccessToast({ toast, message: toastMessage });
-    } catch (error: any) {
-      setTransactionSignError(error.message || 'An error occurred');
-    } finally {
-      setTransactionLoading(false);
+    const signed = await anchorWallet?.signTransaction(tx);
+    const txid = await connection.sendRawTransaction(signed!.serialize());
+
+    if (!txid) {
+      throw new Error('txid is null');
     }
-  };
-
-  const markApproved = (
-    roundName: string,
-    projectJoinRoundId: string,
-    roundId: string,
-    owner: string,
-    count: number
-  ) => {
-    setCurrentAction({
-      type: 'ACCEPTED',
-      projectId: projectJoinRoundId,
-      roundId: roundId,
-      roundName: roundName,
-      count,
-      owner,
+    updateRound.mutate({
+      roundId,
+      projectId,
+      status: 'REJECTED',
     });
-    onActionModalOpen();
   };
 
-  const markRejected = (
-    roundName: string,
-    projectJoinRoundId: string,
-    roundId: string,
-    owner: string,
-    count: number
-  ) => {
-    setCurrentAction({
-      type: 'REJECTED',
-      projectId: projectJoinRoundId,
-      roundId: roundId,
-      roundName: roundName,
-      count,
-      owner,
-    });
-    onActionModalOpen();
-  };
-
-  const onActionModalOpen = () => setIsActionModalOpen(true);
-  const onActionModalClose = () => setIsActionModalOpen(false);
-
-  if (isLoading)
-    <Center w="full" h="10rem">
-      <Spinner />
-    </Center>;
-
-  if (isError)
-    <Center w="full" h="10rem">
-      There was an Error {error?.message}
-    </Center>;
+  console.log('projects under review - ', roundData);
 
   return (
     <VStack spacing={4} w="full">
       {isLoading ? (
-        <>Loading...</>
+        <Spinner />
       ) : isError ? (
-        <>There is some error</>
+        <>There is some error - {error.message}</>
       ) : (
         <>
           {roundData?.ProjectJoinRound.map((projectJoinRound) => (
@@ -246,56 +202,16 @@ const GrantUnderReviewProjects = ({
                     </Stack>
                     <HStack justifyContent={'end'}>
                       <Button
-                        variant={'unstyled'}
-                        px="2rem"
-                        h="full"
-                        minH="2.4rem"
-                        w="full"
-                        backgroundColor="surface.red.3"
-                        border="1px solid transparent"
-                        rounded="8px"
-                        _hover={{
-                          border: '1px solid #FF333D',
-                        }}
-                        color={'surface.red.1'}
+                        variant={'cubikDanger'}
                         maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
-                        onClick={() => {
-                          markRejected(
-                            roundData?.roundName as string,
-                            projectJoinRound.id as string,
-                            roundData.id as string,
-                            projectJoinRound.project.owner_publickey,
-                            projectJoinRound.project.projectUserCount
-                          );
-                        }}
+                        onClick={onRejectModelOpen}
                       >
                         Reject
                       </Button>
                       <Button
-                        variant={'unstyled'}
-                        px="2rem"
-                        h="full"
-                        minH="2.4rem"
-                        w="full"
-                        backgroundColor="brand.teal2"
-                        color="brand.teal5"
-                        border="1px solid"
-                        borderColor={'brand.teal2'}
-                        rounded="8px"
-                        _hover={{
-                          border: '1px solid',
-                          borderColor: 'brand.teal5',
-                        }}
+                        variant={'cubikFilled'}
                         maxW={{ base: 'full', sm: '8rem', md: '20rem' }}
-                        onClick={() => {
-                          markApproved(
-                            roundData?.roundName as string,
-                            projectJoinRound.id as string,
-                            roundData.id as string,
-                            projectJoinRound.project.owner_publickey,
-                            projectJoinRound.project.projectUserCount
-                          );
-                        }}
+                        onClick={onAcceptModalOpen}
                       >
                         Accept
                       </Button>
@@ -303,10 +219,16 @@ const GrantUnderReviewProjects = ({
                   </Stack>
                 </CardBody>
               </Card>
+              {/* Accept Model */}
               <Modal
+                key={'accept' + projectJoinRound.project.id}
                 variant={'cubik'}
-                isOpen={isActionModalOpen}
-                onClose={onActionModalClose}
+                isOpen={isAcceptModalOpen}
+                onClose={() => {
+                  onAcceptModalOpen();
+                  setTransactionLoading(false);
+                  setTransactionSignError(null);
+                }}
               >
                 <ModalOverlay opacity={'1%'} />
                 <ModalContent
@@ -339,17 +261,13 @@ const GrantUnderReviewProjects = ({
                       justify="center"
                     >
                       <Box as="p" textStyle="title1" color="neutral.11">
-                        {currentAction &&
-                          (currentAction.type === 'ACCEPTED'
-                            ? 'Accept Project'
-                            : 'Reject Project')}
+                        Accept Project
                       </Box>
                       <Box as="p" textStyle="body4" color="neutral.9">
                         Sign transaction to Perform the action
                       </Box>
                     </VStack>
                   </ModalHeader>
-                  <ModalCloseButton />
                   <ModalBody>
                     <VStack textAlign={'start'} align={'start'} spacing="24px">
                       <VStack align={'start'} spacing="16px">
@@ -398,7 +316,7 @@ const GrantUnderReviewProjects = ({
                             textStyle={{ base: 'title6', md: 'title5' }}
                             color="neutral.11"
                           >
-                            hashtag.irfan@gmail.com
+                            {projectJoinRound.project.email}
                           </Box>
                         </VStack>
                         <VStack align={'start'} textAlign="start" spacing="8px">
@@ -425,9 +343,9 @@ const GrantUnderReviewProjects = ({
                           </Box>
                         </VStack>
                       </Stack>
-                      <VStack align={'start'} spacing="32px">
+                      <VStack w="full" align={'start'} spacing="32px">
                         {transactionSignError ? (
-                          <Alert status="error" variant="cubik">
+                          <Alert w="full" status="error" variant="cubik">
                             <AlertIcon />
                             <AlertDescription
                               fontSize={{
@@ -445,14 +363,7 @@ const GrantUnderReviewProjects = ({
                             </AlertDescription>
                           </Alert>
                         ) : (
-                          <Alert
-                            status={
-                              currentAction?.type === 'ACCEPTED'
-                                ? 'info'
-                                : 'error'
-                            }
-                            variant="cubik"
-                          >
+                          <Alert status={'info'} variant="cubik">
                             <AlertIcon />
                             <AlertDescription
                               fontSize={{
@@ -466,10 +377,9 @@ const GrantUnderReviewProjects = ({
                                 xl: '16px',
                               }}
                             >
-                              {currentAction &&
-                                (currentAction.type === 'ACCEPTED'
-                                  ? 'By signing the transaction, the project will be approved and verified to be listed on cubik. The project will be able to apply for grants and visible to all users'
-                                  : 'By signing the transaction, the project will be rejected which means that there was something wrong with the project and it did not get verified')}
+                              By signing the transaction, the project will be
+                              approved and verified to for participating in this
+                              grant round
                             </AlertDescription>
                           </Alert>
                         )}
@@ -483,9 +393,11 @@ const GrantUnderReviewProjects = ({
                   >
                     <Button
                       w="8rem"
-                      variant="close_modal"
+                      variant="cubikOutlined"
+                      size={'cubikSmall'}
                       onClick={() => {
-                        onActionModalClose();
+                        onAcceptModelClose();
+                        setTransactionLoading(false);
                         setTransactionSignError(null);
                       }}
                     >
@@ -493,19 +405,218 @@ const GrantUnderReviewProjects = ({
                     </Button>
                     <Button
                       px="32px"
-                      variant="apply_for_grant"
+                      variant="cubikFilled"
+                      loadingText="Signing"
+                      size={'cubikSmall'}
+                      onClick={() =>
+                        markVerified(
+                          projectJoinRound.project.id,
+                          projectJoinRound.project.owner_publickey,
+                          projectJoinRound.project.projectUserCount
+                        )
+                      }
+                      isLoading={transactionLoading}
+                    >
+                      Sign Transaction
+                    </Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+              {/* Reject Model */}
+              <Modal
+                key={'reject' + projectJoinRound.project.id}
+                variant={'cubik'}
+                isOpen={isRejectModalOpen}
+                onClose={() => {
+                  onRejectModelClose();
+                  setTransactionLoading(false);
+                  setTransactionSignError(null);
+                }}
+              >
+                <ModalOverlay opacity={'1%'} />
+                <ModalContent
+                  minW={{ base: '24rem', md: '36rem' }}
+                  overflow={'hidden'}
+                  position={'relative'}
+                  gap={{ base: '32px', md: '48px' }}
+                  textAlign={'center'}
+                  _before={{
+                    content: '""',
+                    position: 'absolute',
+                    top: '-10%',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    rounded: '50%',
+                    filter: 'blur(80px)',
+                    width: '6rem',
+                    height: '6rem',
+                    background:
+                      'linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)',
+                    borderRadius: '8px 8px 0px 0px',
+                    zIndex: '-1',
+                  }}
+                >
+                  <ModalHeader>
+                    <VStack
+                      w="full"
+                      spacing="8px"
+                      align={'center'}
+                      justify="center"
+                    >
+                      <Box as="p" textStyle="title1" color="neutral.11">
+                        Reject Project
+                      </Box>
+                      <Box as="p" textStyle="body4" color="neutral.9">
+                        Sign transaction to Perform the action
+                      </Box>
+                    </VStack>
+                  </ModalHeader>
+                  <ModalBody>
+                    <VStack textAlign={'start'} align={'start'} spacing="24px">
+                      <VStack align={'start'} spacing="16px">
+                        <HStack align={'start'} gap="16px">
+                          <Avatar
+                            src={projectJoinRound.project.logo}
+                            name={projectJoinRound.project.name}
+                            borderRadius="8px"
+                            width={{ base: '60px', md: '80px' }}
+                            height={{ base: '60px', md: '80px' }}
+                          />
+                          <VStack textAlign={'start'} align={'start'} gap="8px">
+                            <Box
+                              as="p"
+                              textStyle={{ base: 'title3', md: 'title2' }}
+                              color="neutral.11"
+                            >
+                              {projectJoinRound.project.name}
+                            </Box>
+                            <Box
+                              as="p"
+                              textStyle={{ base: 'title6', md: 'title5' }}
+                              color="neutral.8"
+                            >
+                              {projectJoinRound.project.short_description}
+                            </Box>
+                          </VStack>
+                        </HStack>
+                      </VStack>
+                      <Stack
+                        justify={'start'}
+                        gap="32px"
+                        direction={{ base: 'column', md: 'row' }}
+                      >
+                        <VStack align={'start'} textAlign="start" spacing="8px">
+                          <Box
+                            as="p"
+                            textStyle={{ base: 'title6', md: 'title5' }}
+                            color="neutral.6"
+                            textTransform={'uppercase'}
+                          >
+                            Email Address
+                          </Box>
+                          <Box
+                            as="p"
+                            textStyle={{ base: 'title6', md: 'title5' }}
+                            color="neutral.11"
+                          >
+                            {projectJoinRound.project.email}
+                          </Box>
+                        </VStack>
+                        <VStack align={'start'} textAlign="start" spacing="8px">
+                          <Box
+                            as="p"
+                            textStyle={{ base: 'title6', md: 'title5' }}
+                            color="neutral.6"
+                            textTransform={'uppercase'}
+                          >
+                            Creator
+                          </Box>
+                          <Box
+                            as="p"
+                            textStyle={{ base: 'title6', md: 'title5' }}
+                            color="neutral.11"
+                          >
+                            @{projectJoinRound.project.owner.username}{' '}
+                            <Box px="0.5rem" as="span" color="neutral.6">
+                              {TruncatedAddr({
+                                walletAddress:
+                                  projectJoinRound.project.owner_publickey,
+                              })}
+                            </Box>
+                          </Box>
+                        </VStack>
+                      </Stack>
+                      <VStack w="full" align={'start'} spacing="32px">
+                        {transactionSignError ? (
+                          <Alert w="full" status="error" variant="cubik">
+                            <AlertIcon />
+                            <AlertDescription
+                              fontSize={{
+                                base: '10px',
+                                md: '11px',
+                                xl: '12px',
+                              }}
+                              lineHeight={{
+                                base: '14px',
+                                md: '14px',
+                                xl: '16px',
+                              }}
+                            >
+                              {transactionSignError}
+                            </AlertDescription>
+                          </Alert>
+                        ) : (
+                          <Alert status={'error'} variant="cubik">
+                            <AlertIcon />
+                            <AlertDescription
+                              fontSize={{
+                                base: '10px',
+                                md: '11px',
+                                xl: '12px',
+                              }}
+                              lineHeight={{
+                                base: '14px',
+                                md: '14px',
+                                xl: '16px',
+                              }}
+                            >
+                              By signing the transaction, the project will be
+                              rejected from this round.
+                            </AlertDescription>
+                          </Alert>
+                        )}
+                      </VStack>
+                    </VStack>
+                  </ModalBody>
+                  <ModalFooter
+                    display="flex"
+                    h={'fit-content'}
+                    justifyContent="space-between"
+                  >
+                    <Button
+                      w="8rem"
+                      variant="cubikOutlined"
+                      size={'cubikSmall'}
                       onClick={() => {
-                        if (currentAction) {
-                          handleRoundAction(
-                            currentAction.type,
-                            currentAction.projectId,
-                            currentAction.roundId,
-                            currentAction.roundName,
-                            currentAction.count,
-                            currentAction.owner
-                          );
-                        }
+                        onRejectModelClose();
+                        setTransactionLoading(false);
+                        setTransactionSignError(null);
                       }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      px="32px"
+                      variant="cubikFilled"
+                      loadingText="Signing"
+                      size={'cubikSmall'}
+                      onClick={() =>
+                        markUnverified(
+                          projectJoinRound.project.id,
+                          projectJoinRound.project.owner_publickey,
+                          projectJoinRound.project.projectUserCount
+                        )
+                      }
                       isLoading={transactionLoading}
                     >
                       Sign Transaction

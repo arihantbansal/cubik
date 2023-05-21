@@ -7,6 +7,7 @@ import {
   Button,
   Center,
   HStack,
+  keyframes,
   Modal,
   ModalBody,
   ModalContent,
@@ -30,12 +31,22 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
 }
+const scaleIn = keyframes`
+0% {
+  transform: scale(0);
+}
+100% {
+  transform: scale(1);
+}
+`;
+
 const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
   const toast = useToast();
   const router = useRouter();
   const { setAuthenticated, setKey } = useAuthStore();
   const [verifying, setVerifying] = useState(false);
   const { status, data: session } = useSession();
+  const [verified, setVerified] = useState(false);
   const { publicKey, disconnect, signMessage } = useWallet();
   const [verifyWalletError, setVerifyWalletError] = useState<string | null>(
     null
@@ -79,7 +90,10 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
           setVerifying(false);
         }
         setAuthenticated(true);
+        console.log('outside 401');
+        setVerified(true);
         setVerifying(false);
+        setAuthenticated(true);
         onClose();
         SuccessToast({ toast, message: 'Wallet Verified' });
       } catch (error: any) {
@@ -187,7 +201,7 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
             onClick={VerifyWallet}
             isLoading={verifying}
           >
-            Verify Wallet
+            {verified ? 'Verified' : 'Verify Wallet'}
           </Button>
         </ModalFooter>
       </ModalContent>

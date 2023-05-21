@@ -17,20 +17,18 @@ import {
   NumberInputStepper,
   Stack,
   Text,
-  useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { Player } from '@lottiefiles/react-lottie-player';
 import { ProjectsModel } from '@prisma/client';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useForm, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { TiFlash } from 'react-icons/ti';
 import { ActionMeta } from 'react-select';
+import EmptyStateHOC from '~/components/HOC/EmptyState';
 import { ListDonationFormType } from '~/interfaces/donationForm';
 import { tokenGroup } from '~/interfaces/token';
 import useListStore from '~/store/listStore';
-import PaymentModal from '../../common/payment-modal/PaymentModal';
 import { ControlledSelect } from '../../common/select/ControlledSelect';
 import { tokens } from '../../common/tokens/DonationTokens';
 
@@ -53,6 +51,7 @@ const ProjectListCard: React.FC<ProjectListCardProps> = memo(
           <HStack justifyItems={'start'} align="center" w="full">
             <Avatar
               src={project.logo}
+              backgroundColor={'neutral.7'}
               name="anchor"
               borderRadius={'8px'}
               size="sm"
@@ -118,7 +117,6 @@ const ProjectListCard: React.FC<ProjectListCardProps> = memo(
 ProjectListCard.displayName = 'ProjectListCard';
 
 const IconButtonBadge = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const count = useListStore((state) => state.count());
   const projectList = useListStore((state) => state.projectList);
   const [listItemsCount, setListItemsCount] = useState(count);
@@ -204,12 +202,11 @@ const IconButtonBadge = () => {
       })),
     };
 
-    onOpen();
+    // todo: add transaction here for multiple projects
   };
 
   return (
     <>
-      <PaymentModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
       <Menu closeOnSelect={false} closeOnBlur={true}>
         <HStack gap={{ base: '2px', md: '16px' }}>
           <MenuButton
@@ -326,39 +323,13 @@ const IconButtonBadge = () => {
             <Box w="full" h="1px" background={'#272929'} />
             <VStack w="full" alignItems={'start'} h="100%" gap="24px">
               {projectList.length < 1 ? (
-                <Center p="60px 4vh" w="full" minH="18vh" rounded="12px">
-                  <VStack gap="16px">
-                    <VStack>
-                      <Box>
-                        <Player
-                          autoplay
-                          loop
-                          speed={1}
-                          src={
-                            'https://lottie.host/be917fc4-0f7a-44f9-bcaa-e5e7c510a0ae/Kqn7bSMJkY.json'
-                          }
-                          style={{ height: '150px', width: '200px' }}
-                        />
-                      </Box>
-                      <Box
-                        color="white"
-                        as="p"
-                        textStyle={{ base: 'title3', md: 'title1' }}
-                      >
-                        List is Empty
-                      </Box>
-                      <Box
-                        maxW="22rem"
-                        textAlign={'center'}
-                        as="p"
-                        color="neutral.8"
-                        textStyle={{ base: 'body5', md: 'body4' }}
-                      >
-                        Looks like you have not added any projects to your
-                        contribution list.
-                      </Box>
-                    </VStack>
-                  </VStack>
+                <Center w="full" minH="18vh" rounded="12px">
+                  <EmptyStateHOC
+                    heading={'List is Empty'}
+                    subHeading={
+                      'Looks like you have not added any projects to your list'
+                    }
+                  />
                 </Center>
               ) : (
                 projectList.map((project) => (
@@ -386,7 +357,9 @@ const IconButtonBadge = () => {
               <VStack justify={'bottom'} w="full">
                 <Button
                   onClick={handleSubmit(onSubmit)}
-                  variant="connect_wallet"
+                  variant="cubikFilled"
+                  loadingText="Confirming"
+                  isLoading={isSubmitting}
                   w="full"
                   type="submit"
                 >

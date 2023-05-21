@@ -258,7 +258,7 @@ export const updateProjectRoundVerified = async (
   wallet: NodeWallet,
   roundId: string,
   counter: number,
-  projectOwner: string
+  projectOwnerAddress: string
 ) => {
   const program = anchorProgram(wallet);
   const [adminAccount] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -274,7 +274,7 @@ export const updateProjectRoundVerified = async (
   let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
     [
       anchor.utils.bytes.utf8.encode('project'),
-      new anchor.web3.PublicKey(projectOwner).toBuffer(),
+      new anchor.web3.PublicKey(projectOwnerAddress).toBuffer(),
       Buffer.from(counter.toString()),
     ],
     program.programId
@@ -293,7 +293,7 @@ export const updateProjectRoundVerified = async (
     .updateApproveRound(
       roundId,
       counter.toString(),
-      new anchor.web3.PublicKey(projectOwner)
+      new anchor.web3.PublicKey(projectOwnerAddress)
     )
     .accounts({
       roundAccount: round_account,
