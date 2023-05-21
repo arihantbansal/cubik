@@ -9,27 +9,45 @@ import {
   DrawerContent,
   DrawerOverlay,
   HStack,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
   Stack,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
-import { Key, useRef, useState } from 'react';
+import {
+  ProjectJoinRoundStatus,
+  ProjectsModel,
+  ProjectVerifyStatus,
+} from '@prisma/client';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
+import { AiOutlineEdit, AiOutlineMore } from 'react-icons/ai';
+import { BiMessageSquareDots } from 'react-icons/bi';
+import { MdDeleteOutline } from 'react-icons/md';
+import { VscPreview } from 'react-icons/vsc';
 import GetFormattedLink from '~/components/HOC/GetLink';
+import { projectWithFundingRoundType } from '~/types/project';
 import { getDomain } from '~/utils/getDomain';
+import { ProjectStatus } from '~/utils/getProjectStatus';
+import { ProjectSocials } from '../../projects/project-details/project-interactions/ProjectInteractions';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
 import { ProjectLink } from '../../projects/project-details/ProjectDetailsHeader';
-import { trpc } from '~/utils/trpc';
-import { ProjectSocials } from '../../projects/project-details/project-interactions/ProjectInteractions';
-import EditProjectDetails from './project-admin-dashboard/ProjectAdminDetailsDrawer/EditProjectDetails';
 import ApplyForGrant from './project-admin-dashboard/ProjectAdminDetailsDrawer/ApplyForGrant';
-import { router } from '~/server/trpc';
-import { useRouter } from 'next/router';
+import EditProjectDetails from './project-admin-dashboard/ProjectAdminDetailsDrawer/EditProjectDetails';
+import ProjectStatusBanner from './ProjectStatusBanner';
 
 export enum drawerBodyViewEnum {
   PROJECT_DETAILS = 'project_details',
   GRANTS = 'apply_for_grant',
   EDIT = 'edit',
+  PREVIEW = 'preview',
 }
 
 export const ProjectHeaderVisitorView = ({
@@ -62,6 +80,7 @@ export const ProjectHeaderVisitorView = ({
             <Avatar
               src={project.logo}
               name={project.name}
+              background="neutral.6"
               width={{ base: '36px', sm: '48px', md: '52px' }}
               height={{ base: '36px', sm: '48px', md: '52px' }}
             />
@@ -86,15 +105,11 @@ export const ProjectHeaderVisitorView = ({
         </Stack>
         <Center justifyContent={'end'}>
           <Button
-            variant={'project_button_secondary'}
+            variant={'cubikFilled'}
+            as={Link}
             //@ts-ignore
             ref={btnRef}
-            onClick={() =>
-              router.push({
-                pathname: `/projects/${project.id}`,
-              })
-            }
-            w="full"
+            href={`/projects/${project.id}`}
             maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
           >
             View Project
@@ -106,14 +121,98 @@ export const ProjectHeaderVisitorView = ({
 };
 
 const ProjectDetails = ({
+  isLoading,
   project,
   setDrawerBodyView,
 }: {
-  project: ProjectsModel;
+  isLoading: boolean;
+  project: projectWithFundingRoundType;
   setDrawerBodyView: any;
 }) => {
+  const [showApplyToRound, setShowApplyToRound] = useState(false);
+  useEffect(() => {
+    console.log('project.status check');
+    if (project.status === ProjectVerifyStatus.VERIFIED) {
+      console.log('project is verified so show ApplyRound to true');
+      if (
+        ProjectStatus({ projectData: project as projectWithFundingRoundType })
+          ?.round?.status === ProjectJoinRoundStatus.APPROVED
+      ) {
+        return setShowApplyToRound(false); // project is approved ina a round so don't show apply to round
+      } else if (
+        ProjectStatus({ projectData: project as projectWithFundingRoundType })
+          ?.round?.status === ProjectJoinRoundStatus.REJECTED
+      ) {
+        return setShowApplyToRound(true); // project is rejected so show apply to round
+      } else if (
+        ProjectStatus({ projectData: project as projectWithFundingRoundType })
+          ?.round?.status === ProjectJoinRoundStatus.PENDING
+      ) {
+        return setShowApplyToRound(false); // project is rejected so show apply to round
+      }
+      return setShowApplyToRound(true);
+    } else {
+      setShowApplyToRound(false);
+    }
+  }, [project.status]);
+
+  const ProjectOptionsMenu = () => {
+    return (
+      <Menu>
+        <MenuButton
+          as={IconButton}
+          variant="unstyled"
+          rounded="4px"
+          aria-label="Options"
+          icon={<AiOutlineMore size={38} />}
+        />
+        <MenuList background={'#242424'} outline="none" border="none">
+          <MenuItem
+            isDisabled
+            _hover={{
+              backgroundColor: '#141414',
+            }}
+            _active={{
+              backgroundColor: '#141414',
+            }}
+            icon={<VscPreview size={22} />}
+          >
+            <Box as="p" textStyle={'body3'}>
+              Preview
+            </Box>
+          </MenuItem>
+          <MenuItem isDisabled icon={<AiOutlineEdit size={22} />}>
+            <Box as="p" textStyle={'body3'}>
+              Edit
+            </Box>
+          </MenuItem>
+          <MenuItem isDisabled icon={<BiMessageSquareDots size={22} />}>
+            <Box as="p" textStyle={'body3'}>
+              Contact
+            </Box>
+          </MenuItem>
+          <MenuDivider color="#00000040" />
+          <MenuItem icon={<MdDeleteOutline size={22} />}>
+            <Box as="p" textStyle={'body3'}>
+              Delete Project
+            </Box>
+          </MenuItem>
+        </MenuList>
+      </Menu>
+    );
+  };
+
   return (
-    <VStack gap={{ base: '32px', md: '64px' }} w="full">
+    <VStack
+      padding={{
+        base: '100px 20px 20px 20px',
+        sm: '80px 20px 20px 20px',
+        md: '80px 40px 40px 40px',
+      }}
+      gap={{ base: '32px', md: '64px' }}
+      zIndex="9"
+      w="full"
+    >
       <VStack align={'start'} w="full" gap="24px">
         <HStack w="full" justifyContent={'space-between'} align="top">
           <Avatar
@@ -123,27 +222,26 @@ const ProjectDetails = ({
             width={{ base: '80px', md: '102px' }}
             height={{ base: '80px', md: '102px' }}
           />
+          <Center display={{ base: 'flex', md: 'none' }}>
+            <ProjectOptionsMenu />
+          </Center>
           <Stack
             display={{ base: 'none', md: 'flex' }}
             direction="row"
+            gap="8px"
             h="fit-content"
           >
             <Button
-              variant="secondary"
-              h="38px"
-              maxW="164px"
-              borderRadius={'8px'}
-            >
-              Edit Project
-            </Button>
-            <Button
-              variant="apply_for_grant"
+              variant="cubikFilled"
+              size="cubikSmall"
+              isDisabled={!showApplyToRound}
               onClick={() => {
                 setDrawerBodyView(drawerBodyViewEnum.GRANTS);
               }}
             >
               Apply For Grant
             </Button>
+            <ProjectOptionsMenu />
           </Stack>
         </HStack>
         <VStack gap={{ base: '4px', md: '16px' }} w="full" align="start">
@@ -187,7 +285,11 @@ const ProjectDetails = ({
                   {getDomain(project.project_link)}
                 </Box>
               </Button>
-              <ProjectSocials hideTitle={true} projectDetails={project} />
+              <ProjectSocials
+                isLoading={isLoading}
+                hideTitle={true}
+                projectDetails={project}
+              />
             </HStack>
           </HStack>
         </VStack>
@@ -198,32 +300,55 @@ const ProjectDetails = ({
         w="full"
         h="fit-content"
       >
-        <Button variant="secondary" h="38px" maxW="164px" borderRadius={'8px'}>
-          Edit Project
+        <Button
+          variant="cubikFilled"
+          size={'cubikSmall'}
+          width={'full'}
+          isDisabled={showApplyToRound}
+          onClick={() => {
+            setDrawerBodyView(drawerBodyViewEnum.GRANTS);
+          }}
+        >
+          Apply For Grant
         </Button>
-        <Button variant="connect_wallet">Apply For Grant</Button>
       </Stack>
       <Center>
         <ProjectsDetailedDescription
           description={project.long_description}
-          maxH="36vh"
+          maxH="full"
+          overflow={'scroll'}
+          isLoading={false}
         />
       </Center>
     </VStack>
   );
 };
 
-const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
+const ProjectHeader = ({
+  activeProject,
+  project,
+}: {
+  activeProject?: string;
+  project: projectWithFundingRoundType;
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [drawerBodyView, setDrawerBodyView] = useState<drawerBodyViewEnum>(
     drawerBodyViewEnum.PROJECT_DETAILS
   );
+  const { data } = useSession();
+  const router = useRouter();
   const btnRef = useRef();
   const headerSpacing = {
     base: '16px',
     sm: '20px',
     md: '24px',
   };
+
+  useEffect(() => {
+    if (activeProject === project.id) {
+      onOpen();
+    }
+  }, [activeProject]);
 
   return (
     <>
@@ -265,19 +390,27 @@ const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
           </VStack>
         </Stack>
         <Center justifyContent={'end'}>
-          <Button
-            variant={'project_button_secondary'}
-            //@ts-ignore
-            ref={btnRef}
-            onClick={onOpen}
-            w="full"
-            maxW={{ base: 'full', sm: '8rem', md: '10rem' }}
+          <Link
+            href={`/${data?.user.username}/?project=${project.id}`}
+            style={{
+              color: '#A8F0E6',
+              backgroundColor: 'transparent',
+              height: 'full',
+              width: 'full',
+              padding: '14px 44px 14px 44px',
+              border: '1px solid #A8F0E6',
+              fontSize: '15px',
+              whiteSpace: 'nowrap',
+              fontWeight: '600',
+              lineHeight: '22px',
+              borderRadius: '12px',
+              transition: 'all 0.6s',
+            }}
           >
             View Details
-          </Button>
+          </Link>
         </Center>
         <Drawer
-          w="fit-content"
           maxW="40rem"
           isOpen={isOpen}
           placement="bottom"
@@ -293,35 +426,62 @@ const ProjectHeader = ({ project }: { project: ProjectsModel }) => {
             backdropFilter="blur(8px)"
           />
           <DrawerContent
-            m="3px"
-            border="1px solid #1D1F1E !important"
             borderColor={'#1D1F1E'}
             borderBottom={'none'}
             borderTopRadius={'24px'}
             background="#080808"
-            padding={{ base: '20px', md: '40px' }}
             maxW="80rem !important"
             mx="auto"
+            p="0"
           >
             <DrawerCloseButton
-              transform={{
-                base: 'translate(-1rem, 1rem)',
-                md: 'translateY(-3rem)',
-              }}
+              transform={'translateY(-3rem)'}
               rounded="full"
               backgroundColor="#141414"
-              border="1px solid #ffffff10"
             />
-            <DrawerBody p="2px">
+
+            <DrawerBody maxH={'90vh'} p="0">
               {drawerBodyView === drawerBodyViewEnum.GRANTS ? (
-                <ApplyForGrant setDrawerBodyView={setDrawerBodyView} />
+                <ApplyForGrant
+                  setDrawerBodyView={setDrawerBodyView}
+                  project={project}
+                />
               ) : drawerBodyView === drawerBodyViewEnum.EDIT ? (
                 <EditProjectDetails />
+              ) : drawerBodyView === drawerBodyViewEnum.PREVIEW ? (
+                <></>
               ) : (
-                <ProjectDetails
-                  project={project}
-                  setDrawerBodyView={setDrawerBodyView}
-                />
+                <>
+                  <Center
+                    background="#0C0D0D"
+                    w="full"
+                    position="fixed"
+                    borderTopRadius={'24px'}
+                  >
+                    <ProjectStatusBanner
+                      status={
+                        ProjectStatus({
+                          projectData: project as projectWithFundingRoundType,
+                        })?.status as string
+                      }
+                      roundName={
+                        ProjectStatus({
+                          projectData: project as projectWithFundingRoundType,
+                        })?.round
+                          ? ProjectStatus({
+                              projectData:
+                                project as projectWithFundingRoundType,
+                            })?.round?.fundingRound.roundName
+                          : undefined
+                      }
+                    />
+                  </Center>
+                  <ProjectDetails
+                    isLoading={false}
+                    project={project}
+                    setDrawerBodyView={setDrawerBodyView}
+                  />
+                </>
               )}
             </DrawerBody>
           </DrawerContent>

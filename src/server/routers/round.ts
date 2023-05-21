@@ -1,8 +1,8 @@
+import { TRPCError } from '@trpc/server';
+import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
 import { procedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
-import { v4 as uuid } from 'uuid';
-import { TRPCError } from '@trpc/server';
 
 export const roundRouter = router({
   create: procedure
@@ -13,9 +13,15 @@ export const roundRouter = router({
         projectCount: z.number().positive(),
         notionPage: z.string().nonempty(),
         matchingPool: z.number().positive(),
+        colorScheme: z.string(),
+        short_description: z.string(),
+        endtime: z.string(),
+        startTime: z.string(),
       })
     )
     .mutation(async ({ input, ctx }) => {
+      console.log(ctx, '---ctx');
+
       if (!ctx.session) {
         throw new TRPCError({
           code: 'FORBIDDEN',
@@ -40,13 +46,6 @@ export const roundRouter = router({
       return roundRes;
     }),
   findActive: procedure.query(async ({ ctx }) => {
-    if (!ctx.session) {
-      throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: 'Session not found',
-        cause: 'User not logged in',
-      });
-    }
     const roundRes = await prisma.round.findMany({
       where: {
         active: true,
@@ -54,6 +53,100 @@ export const roundRouter = router({
     });
     return roundRes;
   }),
+
+  findInReview: procedure
+    .input(
+      z.object({
+        id: z.string().nonempty(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      if (!ctx.session) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'Session not found',
+          cause: 'User not logged in',
+        });
+      }
+      const roundRes = await prisma.round.findFirst({
+        where: {
+          id: input.id,
+        },
+        include: {
+          ProjectJoinRound: {
+            where: {
+              status: 'PENDING',
+            },
+            include: {
+              project: {
+                include: {
+                  owner: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      return roundRes;
+    }),
+
+  findAcceptedGrants: procedure
+    .input(
+      z.object({
+        roundId: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const roundRes = await prisma.round.findMany({
+        where: {
+          id: input.roundId,
+        },
+        include: {
+          ProjectJoinRound: {
+            where: {
+              status: 'APPROVED',
+            },
+            include: {
+              project: {
+                include: {
+                  owner: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      return roundRes;
+    }),
+  findRejectedGrants: procedure
+    .input(
+      z.object({
+        roundId: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const roundRes = await prisma.round.findMany({
+        where: {
+          id: input.roundId,
+        },
+        include: {
+          ProjectJoinRound: {
+            where: {
+              status: 'REJECTED',
+            },
+            include: {
+              project: {
+                include: {
+                  owner: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      return roundRes;
+    }),
+
   contribution: procedure
     .input(
       z.object({
@@ -79,14 +172,15 @@ export const roundRouter = router({
   updateStatus: procedure
     .input(
       z.object({
-        id: z.string().nonempty(),
+        roundId: z.string().nonempty(),
+        projectId: z.string().nonempty(),
         status: z.enum(['ACCEPTED', 'REJECTED']),
       })
     )
     .mutation(async ({ input, ctx }) => {
       const roundInfo = await prisma.round.findUnique({
         where: {
-          id: input.id,
+          id: input.roundId,
         },
       });
       if (!roundInfo) {
@@ -108,7 +202,7 @@ export const roundRouter = router({
       if (input.status === 'REJECTED') {
         const roundRes = await prisma.projectJoinRound.update({
           where: {
-            id: input.id,
+            id: input.projectId,
           },
           data: {
             status: 'REJECTED',
@@ -118,7 +212,7 @@ export const roundRouter = router({
       } else {
         const roundRes = await prisma.projectJoinRound.update({
           where: {
-            id: input.id,
+            id: input.projectId,
           },
           data: {
             status: 'APPROVED',

@@ -1,8 +1,9 @@
 import { Box, Button, Center, Container, Flex, VStack } from '@chakra-ui/react';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { motion } from 'framer-motion';
-import { getCsrfToken } from 'next-auth/react';
 import Image from 'next/legacy/image';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import {
   MouseParallaxChild,
   MouseParallaxContainer,
@@ -56,8 +57,8 @@ const BackgroundImageWrapper = ({
 };
 
 const LandingPage = () => {
-  const router = useRouter();
-
+  const { setVisible } = useWalletModal();
+  const wallet = useWallet();
   return (
     <Container background="black" maxW="full" px="0">
       <MouseParallaxContainer globalFactorX={0.1} globalFactorY={0.1}>
@@ -206,21 +207,18 @@ const LandingPage = () => {
                 }}
               >
                 <Button
-                  onClick={() => {
-                    router.push('/projects');
-                  }}
+                  as={Link}
+                  href="/projects"
                   variant="primary"
+                  maxW="18rem"
                 >
                   Explore Projects
                 </Button>
-                <Button
-                  onClick={async () => {
-                    router.push('/connect-wallet');
-                  }}
-                  variant="secondary"
-                >
-                  Get Started
-                </Button>
+                {!wallet.connected && (
+                  <Button onClick={() => setVisible(true)} variant="secondary">
+                    Get Started
+                  </Button>
+                )}
               </MotionBox>
               <Center
                 transform={{

@@ -71,6 +71,16 @@ export const textStyles = {
     fontSize: '12px',
     lineHeight: '16px',
   },
+  title7: {
+    fontWeight: '500',
+    fontSize: '11px',
+    lineHeight: '14px',
+  },
+  title8: {
+    fontWeight: '500',
+    fontSize: '10px',
+    lineHeight: '12px',
+  },
   overline1: {
     fontWeight: '700',
     fontSize: '16px',
@@ -121,6 +131,11 @@ export const textStyles = {
     fontWeight: '400',
     fontSize: '10px',
     lineHeight: '12px',
+  },
+  body7: {
+    fontWeight: '400',
+    fontSize: '8px',
+    lineHeight: '10px',
   },
   // you can also use responsive styles
   //  fontSize: ['48px', '72px'],

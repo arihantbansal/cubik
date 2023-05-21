@@ -1,30 +1,22 @@
-import {
-  Box,
-  Button,
-  Center,
-  Collapse,
-  Stack,
-  Text,
-  useDisclosure,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, SkeletonText, Stack, Text, VStack } from '@chakra-ui/react';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
-import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
 
 import { Link, LinkProps } from '@chakra-ui/react';
 
 export const ProjectsDetailedDescription = ({
+  isLoading,
   description,
   maxH,
+  overflow,
 }: {
-  description: string;
+  isLoading: boolean;
+  description: string | null | undefined;
   maxH?: string;
+  overflow?: string;
 }) => {
-  //const projectDescription = description[0] === '"' ? JSON.parse(description) : description;
-  const { isOpen, onToggle } = useDisclosure();
-
   const newTheme = {
     a: (props: LinkProps) => {
       const { children } = props;
@@ -108,15 +100,30 @@ export const ProjectsDetailedDescription = ({
 
   return (
     <Stack alignSelf={'start'} w="full" direction={'column'} gap="0.5rem">
-      <VStack maxH={maxH} overflow="scroll" align="start" gap="0.5rem">
-        <ReactMarkdown
-          components={ChakraUIRenderer(newTheme)}
-          rehypePlugins={[rehypeRaw]}
-          remarkPlugins={[remarkGfm]}
+      <SkeletonText
+        isLoaded={!isLoading}
+        w="full"
+        fadeDuration={5}
+        noOfLines={5}
+        opacity={isLoading ? '0.4' : '1'}
+        skeletonHeight="16px"
+        spacing="4"
+      >
+        <VStack
+          maxH={maxH}
+          overflow={overflow ? overflow : 'scroll'}
+          align="start"
+          gap="0.5rem"
         >
-          {description}
-        </ReactMarkdown>
-      </VStack>
+          <ReactMarkdown
+            components={ChakraUIRenderer(newTheme)}
+            rehypePlugins={[rehypeRaw]}
+            remarkPlugins={[remarkGfm]}
+          >
+            {description ? description : ''}
+          </ReactMarkdown>
+        </VStack>{' '}
+      </SkeletonText>
     </Stack>
   );
 };

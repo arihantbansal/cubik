@@ -1,59 +1,58 @@
 export interface Grant {
   funding: number[];
+  projectId: string;
 }
 
 export function calculateProjectMatchingFund(
-  maxDonation: number, // the maximum donation a user can make
-  step: number, // number of precision steps for the graph
-  projectContributions: number[],
+  projectId: string,
+  maxDonation: number,
+  step: number,
+  projectContributions: { projectId: string; amount: number }[],
   grants: Grant[],
   availableMatch: number
 ): { donation: number; additionalMatch: number }[] {
-  const dataPoints = []; // the data points for the graph
-
-  const isFirstContribution =
-    projectContributions.length === 0 &&
-    grants.every((grant) => grant.funding.length === 0);
+  const dataPoints = [];
 
   for (let donation = 0; donation <= maxDonation; donation += step) {
-    if (isFirstContribution) {
-      dataPoints.push({ donation, additionalMatch: availableMatch });
-    } else {
-      let summed = 0;
+    let summed = 0;
+    const arrOfMatch: { projectId: string; sum: number }[] = [];
 
-      let projectSumAmount = projectContributions.reduce(
-        (sum, contribution) => sum + Math.sqrt(contribution),
-        0
-      );
+    const projectMapContribution = [
+      ...projectContributions,
+      { projectId, amount: donation },
+    ];
 
-      let projectSumAmountWithDonation = projectSumAmount + Math.sqrt(donation);
+    grants.forEach((grant) => {
+      let sumAmount = 0;
+      projectMapContribution
+        .filter((project) => project.projectId === grant.projectId)
+        .forEach((project) => {
+          sumAmount += Math.sqrt(project.amount);
+        });
 
-      let projectTotal = projectSumAmount * projectSumAmount;
-      let projectTotalWithDonation =
-        projectSumAmountWithDonation * projectSumAmountWithDonation;
+      sumAmount *= sumAmount;
+      summed += sumAmount;
+      arrOfMatch.push({
+        projectId: grant.projectId,
+        sum: sumAmount,
+      });
+    });
 
-      for (const grant of grants) {
-        let grantSumAmount = grant.funding.reduce(
-          (sum, contribution) => sum + Math.sqrt(contribution),
-          0
-        );
+    let divisor = availableMatch / summed;
 
-        let grantTotal = grantSumAmount * grantSumAmount;
-        summed += grantTotal;
-      }
+    const finalMatch = grants.map((grant) => {
+      return {
+        projectId: grant.projectId,
+        amount:
+          arrOfMatch.filter((e) => e.projectId === grant.projectId)[0].sum *
+          divisor,
+      };
+    });
 
-      summed += projectTotal;
+    const donationImpact =
+      finalMatch.filter((e) => e.projectId === projectId)[0]?.amount || 0;
 
-      let divisor =
-        availableMatch / (summed - projectTotal + projectTotalWithDonation);
-
-      let matchedAmount = projectTotal * divisor;
-      let matchedAmountWithDonation = projectTotalWithDonation * divisor;
-
-      let donationImpact = matchedAmountWithDonation - matchedAmount;
-
-      dataPoints.push({ donation, additionalMatch: donationImpact });
-    }
+    dataPoints.push({ donation, additionalMatch: donationImpact });
   }
 
   return dataPoints;

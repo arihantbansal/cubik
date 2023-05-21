@@ -18,8 +18,8 @@ const ProfileHeaderSkeleton = () => {
     <HStack w="full" align={'center'} justify="start" gap={'16px'}>
       <Center>
         <SkeletonCircle
-          width={{ base: '80px', md: '84px' }}
-          height={{ base: '80px', md: '84px' }}
+          width={{ base: '50px', md: '78px' }}
+          height={{ base: '50px', md: '78px' }}
         />
       </Center>
       <VStack
@@ -101,6 +101,7 @@ const ProfileTabsSkeleton = () => {
     </Tabs>
   );
 };
+
 export const AdminViewSkeleton = () => {
   return (
     <Flex flexDir={'column'} gap="48px">

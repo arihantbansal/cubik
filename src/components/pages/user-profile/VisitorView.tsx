@@ -12,11 +12,9 @@ import UserDetails from './details-tab/UserDetails';
 import { VisitorProjectEmptyState } from './empty-states/ProjectEmptyState';
 import ProfileHeader from './ProfileHeader';
 import ProjectVisitorCard from './projects-tab/ProjectVisitorCard';
-import { VisitorViewSkeleton } from './skeletons/ProfileViewSkeletons';
-import { ProjectVerifyStatus } from '@prisma/client';
 
 type visitorViewType = {
-  user: UserWithProjectType;
+  user: UserWithProjectType | null | undefined;
   isLoading: boolean;
 };
 
@@ -24,14 +22,9 @@ const VisitorView: FC<visitorViewType> = ({
   user,
   isLoading,
 }: visitorViewType) => {
-  if (isLoading) return <VisitorViewSkeleton />;
-  // filter projects by status and remove the project with ProjectVerifyStatus.REVIEW
-  const filteredProjects = user.project.filter(
-    (project) => project.status !== ProjectVerifyStatus.REVIEW
-  );
   return (
     <Flex flexDir={'column'} gap="48px">
-      <ProfileHeader user={user} />
+      <ProfileHeader isLoading={isLoading} user={user} />
       <Tabs variant={'cubik'} isLazy>
         <TabList>
           <Tab>Details</Tab>
@@ -39,15 +32,15 @@ const VisitorView: FC<visitorViewType> = ({
           <Tab>Contributions</Tab>
         </TabList>
         <TabPanels p={'0'}>
-          <TabPanel>
-            <Flex maxW={'full'} p="0" flexDir="column" gap="32px">
-              <UserDetails />
+          <TabPanel p="0">
+            <Flex maxW={'full'} p="0" flexDir="column" gap="40px" py="40px">
+              <UserDetails isLoading={isLoading} />
             </Flex>
           </TabPanel>
           <TabPanel>
             <Flex direction="column" w="full" gap="32px">
-              {filteredProjects.length ? (
-                filteredProjects.map((project, key) => (
+              {user && user.project.length ? (
+                user.project.map((project, key) => (
                   <ProjectVisitorCard project={project} key={key} />
                 ))
               ) : (
@@ -55,7 +48,7 @@ const VisitorView: FC<visitorViewType> = ({
               )}
             </Flex>
           </TabPanel>
-          <TabPanel></TabPanel>
+          <TabPanel>{/* <UserContributions userId={user.id} /> */}</TabPanel>
         </TabPanels>
       </Tabs>
     </Flex>

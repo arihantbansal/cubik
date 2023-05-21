@@ -45,7 +45,7 @@ const variants = {
     container: {
       backgroundColor: 'surface.card',
       color: 'neutral.11',
-      padding: '40px',
+      //padding: { base: '24px', md: '40px' },
       border: '1px solid #FFFFFF10',
       rounded: '16px',
       gap: '2.2rem',

@@ -1,5 +1,5 @@
-import produce, { Draft } from 'immer';
-import {create} from 'zustand';
+import { Draft, produce } from 'immer';
+import { create } from 'zustand';
 
 type loadingStoreState = {
   isLoading: boolean;

@@ -1,7 +1,7 @@
+import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { procedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
-import { TRPCError } from '@trpc/server';
 
 export const userRouter = router({
   create: procedure
@@ -30,7 +30,6 @@ export const userRouter = router({
         });
         return res;
       } catch (error) {
-        console.log(error);
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: (error as Error).message,
@@ -38,6 +37,8 @@ export const userRouter = router({
         });
       }
     }),
+
+  // @type userWithProjectsType
   findOne: procedure
     .input(
       z.object({
@@ -53,7 +54,6 @@ export const userRouter = router({
           project: true,
         },
       });
-      console.log('response find one - ', res);
       return res;
     }),
 
@@ -84,7 +84,6 @@ export const userRouter = router({
           username: input.username,
         },
       });
-      console.log(res, input.username);
 
       if (!res) {
         return false;

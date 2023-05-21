@@ -3,7 +3,7 @@ export enum NotionConfig {
   NOTION_VERSION = '2022-06-28',
 }
 
-export const ProjectStatus:any = {
+export const ProjectStatus: any = {
   review: 'under_review',
   verified: 'verification_successful',
   failed: 'verification_failed',

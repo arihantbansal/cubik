@@ -1,7 +1,12 @@
 import { Box, Center, VStack } from '@chakra-ui/react';
+import { trpc } from '~/utils/trpc';
 import { VisitorsChart } from './Charts';
 
-const ProjectInsights = () => {
+const ProjectInsights = ({ projectId }: { projectId: string }) => {
+  const { data, isError, isLoading } =
+    trpc.contribution.getProjectContributors.useQuery({
+      projectId,
+    });
   return (
     <VStack
       flex={'50%'}

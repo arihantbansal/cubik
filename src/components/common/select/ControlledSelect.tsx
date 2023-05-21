@@ -1,5 +1,11 @@
 import { Box, Center } from '@chakra-ui/react';
-import { components, Props, Select } from 'chakra-react-select';
+import {
+  components,
+  OptionProps,
+  Props,
+  Select,
+  SingleValueProps,
+} from 'chakra-react-select';
 import { useEffect } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
 import {
@@ -18,29 +24,38 @@ type ControlledSelectProps = UseControllerProps<
     label: string;
   };
 
+interface SelectOption {
+  label: string;
+  value: string;
+  icon: JSX.Element; // or React.ReactNode if you prefer
+}
+
 const customComponents = {
-  Option: ({ children, ...props }: { children: any; props: any }) => (
-    // @ts-ignore
+  Option: ({ children, ...props }: OptionProps<SelectOption, false>) => (
     <components.Option {...props}>
       <Box
-        w="full"
+        minW="6rem !important"
         fontWeight={'700'}
-        m="0"
+        margin="-8px -12px"
+        padding="8px 12px"
+        backgroundColor={props.isSelected ? '#14665B' : '#001F1B'}
         display="flex"
         alignItems="center"
         justifyContent={'center'}
         textColor={'white'}
+        _hover={{
+          backgroundColor: '#A8F0E6',
+          color: 'black',
+        }}
       >
         <Center w="20px" height="20px" mr="5px">
-          {/* @ts-ignore */}
-          {props?.data?.icon}
+          {props.data.icon}
         </Center>
         {children}
       </Box>
     </components.Option>
   ),
-  SingleValue: ({ children, ...props }: { children: any; props: any }) => (
-    // @ts-ignore
+  SingleValue: ({ children, ...props }: SingleValueProps<SelectOption>) => (
     <components.SingleValue {...props}>
       <Box
         w="100%"
@@ -52,14 +67,14 @@ const customComponents = {
         textColor={'white'}
       >
         <Center w="20px" height="20px" mr="5px">
-          {/* @ts-ignore */}
-          {props?.data?.icon}
+          {props.data.icon}
         </Center>
         {children}
       </Box>
     </components.SingleValue>
   ),
 };
+
 export const ControlledSelect = ({
   control,
   name,
@@ -71,13 +86,13 @@ export const ControlledSelect = ({
   } = useController<DonationFormType | ListDonationFormType>({
     name,
     control,
-    rules,
-    defaultValue: token[0].value,
+    rules, // @ts-ignore
+    defaultValue: token[1],
   });
 
   useEffect(() => {
-    onChange(token[0].value);
-  }, []);
+    onChange(token[1]);
+  }, [onChange]);
 
   return (
     <Select
@@ -85,14 +100,23 @@ export const ControlledSelect = ({
       name={name}
       ref={ref}
       onChange={onChange}
+      defaultValue={token[1]}
       onBlur={onBlur}
       value={value}
-      selectedOptionColorScheme="purple"
       // @ts-ignore
       components={customComponents}
       placeholder="Token"
+      variant="unstyled"
       colorScheme="none"
       chakraStyles={{
+        option: (provided, state) => ({
+          ...provided,
+          border: '1px solid red',
+          bg: state.isSelected ? 'red.500' : 'green.500',
+          _hover: {
+            bg: 'pink.500',
+          },
+        }),
         container: (provided) => ({
           ...provided,
           w: '130px !important',
@@ -109,8 +133,9 @@ export const ControlledSelect = ({
           fontWeight: '600',
           backgroundColor: '#001F1B !important',
           background: '#001F1B !important',
+          border: '1px solid red',
         }),
-        valueContainer: (provided, state) => ({
+        valueContainer: (provided) => ({
           ...provided,
           paddingStart: '10px',
           color: '#fff',
@@ -187,6 +212,7 @@ export const ControlledSelect = ({
         menu: (provided) => ({
           ...provided,
           my: 0,
+          padding: '0',
           backgroundColor: '#001F1B',
           fontSize: 'sm',
           borderTopLeftRadius: 0,
@@ -195,7 +221,6 @@ export const ControlledSelect = ({
           borderWidth: '1px',
           borderRadius: '8px',
           borderColor: '#E0FFFD16',
-          // set selected state
         }),
         menuList: (provided, state) => ({
           //...provided,

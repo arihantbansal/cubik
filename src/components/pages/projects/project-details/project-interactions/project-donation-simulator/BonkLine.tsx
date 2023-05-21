@@ -1,10 +1,12 @@
 import { Tooltip } from '@chakra-ui/react';
 import * as d3 from 'd3';
+import FlipNumbers from 'react-flip-numbers';
 
 interface GraphLineProps {
   width: number;
   height: number;
   data: { donation: number; additionalMatch: number }[];
+  availableMatch: number;
   donationAmount: number;
 }
 
@@ -12,73 +14,95 @@ export const BonkLine: React.FC<GraphLineProps> = ({
   width,
   height,
   data,
+  availableMatch,
   donationAmount,
 }) => {
   const margin = {
     top: 10,
-    left: 5,
-    bottom: 0,
-    right: 5,
+    left: 10,
+    bottom: -1,
+    right: 10,
   };
   const xScale = d3
-    .scaleLinear() // @ts-ignore
-    .domain(d3.extent(data.map((d) => d.donation)))
+    .scalePow()
+    .exponent(2)
+    .domain(
+      (d3.extent(data.map((d) => d.donation)) as [number, number]) ?? [0, 1]
+    )
     .range([margin.left, width - margin.right]);
 
-  const markerX = xScale(donationAmount);
-
-  const bonkYScale = d3
-    .scaleLinear() // @ts-ignore
-    .domain(d3.extent(data.map((d) => d.additionalMatch)))
+  const yScale = d3
+    .scaleLinear()
+    .domain(
+      (d3.extent(data.map((d) => d.additionalMatch)) as [number, number]) ?? [
+        0, 1,
+      ]
+    )
     .range([height - margin.bottom, margin.top]);
 
-  // @ts-ignore
   const bonkLine = d3
     .line() // @ts-ignore
     .x((d) => xScale(d.donation)) // @ts-ignore
-    .y((d) => bonkYScale(d.additionalMatch));
-
+    .y((d) => yScale(d.additionalMatch));
   // @ts-ignore
-  const bonkDPath = bonkLine(data);
+  const dPath = bonkLine(data);
 
-  const bonkMarkerY = bonkYScale(
-    // @ts-ignore
+  const markerX = xScale(donationAmount);
+  const markerY = yScale(
     data.find((d) => Math.abs(d.donation - donationAmount) < 0.1)
       ?.additionalMatch ?? 0
+  ); // Get the additionalMatch value at the marker point
+
+  const markerData = data.find(
+    (d) => Math.abs(d.donation - donationAmount) < 0.1
   );
 
+  const markerAdditionalMatch: number = markerData?.additionalMatch ?? 0;
+  const markerInputValue: number = markerData?.donation ?? 0;
   return (
     <>
       <line
         x1={markerX}
         x2={markerX}
-        y1={bonkMarkerY}
+        y1={markerY}
         y2={height}
         stroke="#636666"
-        strokeDasharray="3"
-        strokeWidth="0.5"
+        strokeDasharray="2"
+        strokeWidth="0.2"
       />
-      <path d={bonkDPath} fill="none" stroke="#DF9D33" strokeWidth="2" />
+      <path d={dPath} fill="none" stroke="#DF9D33" strokeWidth="1.2" />
       <Tooltip
         isOpen={true}
         background={'transparent'}
-        label={`$${donationAmount}`}
+        label={
+          <FlipNumbers
+            height={16}
+            width={12}
+            color="white"
+            // numberStyles={{
+            //   fontWeight: 'bold',
+            //   fontSize: '22px',
+            // }}
+            play
+            perspective={300}
+            numbers={'$' + markerAdditionalMatch.toFixed(1)}
+          />
+        }
         color="#fff"
         fontWeight={'700'}
         fontSize="16px"
-        //textShadow="0 0 0 #fff"
-        placement="left"
+        placement="right"
       >
         <svg
-          x={markerX - 5}
-          y={bonkMarkerY - 5}
-          width="10"
-          height="10"
+          x={markerX - 4}
+          y={markerY - 4}
+          width="8"
+          height="8"
           viewBox="0 0 10 10"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g clip-path="url(#clip0_916_11712)">
+          <g clipPath="url(#clip0_916_11712)">
             <path
               d="M5 10C7.76142 10 10 7.76142 10 5C10 2.23858 7.76142 0 5 0C2.23858 0 0 2.23858 0 5C0 7.76142 2.23858 10 5 10Z"
               fill="url(#paint0_radial_916_11712)"
@@ -157,12 +181,9 @@ export const BonkLine: React.FC<GraphLineProps> = ({
               gradientUnits="userSpaceOnUse"
               gradientTransform="translate(5 5) rotate(90) scale(5)"
             >
-              <stop offset="0.0356247" stop-color="#FAFF00" />
-              <stop offset="1" stop-color="#E08633" />
+              <stop offset="0.0356247" stopColor="#FAFF00" />
+              <stop offset="1" stopColor="#E08633" />
             </radialGradient>
-            <clipPath id="clip0_916_11712">
-              <rect width="10" height="10" fill="white" />
-            </clipPath>
           </defs>
         </svg>
       </Tooltip>

@@ -14,8 +14,6 @@ const WalletContext: any = dynamic(() => import('../context/wallet-context'), {
   ssr: false,
 });
 
-// Show a progress bar for page transitions
-// Create a new QueryClient instance
 const queryClient = new QueryClient();
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,

@@ -1,33 +1,46 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Box,
   Button,
-  Card,
+  Center,
   FormControl,
   FormErrorMessage,
   FormLabel,
   HStack,
-  Input,
-  InputGroup,
-  InputRightAddon,
   Stack,
-  useDisclosure,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
-import { useEffect, useState } from 'react';
+import * as anchor from '@coral-xyz/anchor';
+import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import { useAnchorWallet } from '@solana/wallet-adapter-react';
+import { useSession } from 'next-auth/react';
+import { useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { FailureToast, SuccessToast } from '~/components/common/toasts/Toasts';
+import { tokens } from '~/components/common/tokens/DonationTokens';
 import { DonationFormType } from '~/interfaces/donationForm';
 import { tokenGroup } from '~/interfaces/token';
-import PaymentModal from '../../../../../common/payment-modal/PaymentModal';
-import { ControlledSelect } from '../../../../../common/select/ControlledSelect';
-import { tokens } from '../../../../../common/tokens/DonationTokens';
+import { projectWithFundingRoundType } from '~/types/project';
+
+import {
+  connection,
+  contributeSOL,
+  contributeSPL,
+} from '~/utils/program/contract';
+import { trpc } from '~/utils/trpc';
+import { AmountInput } from './form/DonationAmountInput';
+import { WalletBalanceError } from './form/WalletBalanceError';
 import Graph from './Graph';
 
 type ProjectDonationSimulatorProps = {
-  projectDetails: ProjectsModel;
+  projectDetails: projectWithFundingRoundType;
   height: number;
   width: number;
+  setDonationSuccessful?: any;
 };
 
 export const token: tokenGroup[] = tokens;
@@ -36,170 +49,237 @@ export const ProjectDonationSimulator = ({
   projectDetails,
   height,
   width,
+  setDonationSuccessful,
 }: ProjectDonationSimulatorProps) => {
-  const [donation, setDonation] = useState(200);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const { data } = useSession();
+  const [txnError, setTxnError] = useState<string | null>(null);
+  const toast = useToast();
   const {
     handleSubmit,
     setValue,
     getValues,
     control,
     watch,
+    register,
     formState: { errors, isSubmitting },
   } = useForm<DonationFormType>({
     defaultValues: {
-      amount: donation,
-      token: token[0].value,
-      matchingPoolDonation: 15,
+      amount: 50,
+      token: token[0],
+      matchingPoolDonation: 10,
     },
   });
+  const donation: number = watch('amount');
+  const selectedToken: tokenGroup = watch('token');
 
-  useEffect(() => {
-    // use api to convert this and add this
-    const token = getValues('token');
-    console.log('selected token - ', token, 'donation - ', donation);
-    if (token === 'sol') {
+  const setDonationAndAmount = (donation: number) => {
+    if (selectedToken.label === 'sol') {
       setValue('amount', donation * 22);
-    } else if (token === 'usdc') {
+    } else if (selectedToken.label === 'usdc') {
       setValue('amount', donation);
-    } else if (token === 'bonk') {
-      setValue('amount', donation * 0.0000005);
+    } else if (selectedToken.label === 'bonk') {
+      setValue('amount', donation * 0.00000005);
     } else {
       setValue('amount', 0);
     }
-  }, [donation, getValues, setValue]);
+  };
+  // In component:
+  const utils = trpc.useContext();
+  const createContributionMutation = trpc.contribution.create.useMutation({
+    onSuccess: async (data: any) => {
+      console.log('🤤 success - ', data);
+      setDonationSuccessful(true);
+      SuccessToast({ toast, message: 'Donation Successful' });
+      utils.contribution.getProjectContributors.invalidate({
+        projectId: projectDetails.id, // check once if the value is right or not for project Id
+      });
+    },
+    onError: (error) => {
+      console.log('there was some error', error);
+      setTxnError('Trpc returned an error');
+      FailureToast({ toast, message: 'Donation Failed' });
+    },
+  });
+  const anchorWallet = useAnchorWallet();
 
-  function onSubmit(_values: any) {
-    onOpen();
+  async function onSubmit(_values: any) {
+    console.log(_values);
+
+    let sig: string | null = null;
+    if (String(_values.token.value).toLocaleLowerCase() === 'sol') {
+      sig = await donateSOL(
+        projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')
+          ?.fundingRound.roundName as string,
+        projectDetails?.owner_publickey,
+        projectDetails?.projectUserCount,
+        _values.matchingPoolDonation,
+        _values.amount, //  token value direct because form is not taking near 0 values
+        _values.amount // usd value
+      );
+    } else {
+      sig = await donateSPL(
+        projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')
+          ?.fundingRound.roundName as string,
+        '',
+        projectDetails?.owner_publickey,
+        projectDetails?.projectUserCount,
+        _values.matchingPoolDonation,
+        _values.amount, // token value direct because form is not taking near 0 values
+        _values.amount // usd value
+      );
+    }
+    console.log('donation number - ', donation);
+    if (!sig) return;
+    createContributionMutation.mutate({
+      projectId: projectDetails.id,
+      roundId: projectDetails?.ProjectJoinRound.find(
+        (e) => e.status === 'APPROVED'
+      )?.fundingRound.id as string,
+      split: _values.matchingPoolDonation,
+      token: _values.token.value,
+      totalAmount: _values.amount,
+      usd: _values.amount,
+      tx: sig as string,
+      userId: data?.user?.id as string,
+    });
+    console.log('donation successful', sig);
+    // onOpen();
   }
 
+  const donateSPL = async (
+    roundId: string,
+    token: string,
+    owner: string,
+    count: number,
+    split: number,
+    total: number,
+    usd: number
+  ): Promise<string | null> => {
+    try {
+      const ix = await contributeSPL(
+        anchorWallet as NodeWallet,
+        roundId,
+        token,
+        owner,
+        count, // project count
+        split, // split
+        total, // total
+        usd // usd value
+      );
+      const tx = new anchor.web3.Transaction();
+      const { blockhash } = await connection.getLatestBlockhash();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = anchorWallet?.publicKey as anchor.web3.PublicKey;
+      tx.add(ix!);
+      const signed = await anchorWallet?.signTransaction(tx);
+      const txid = await connection.sendRawTransaction(signed!.serialize());
+
+      return txid;
+    } catch (error: any) {
+      setTxnError(error.message || 'There was some error');
+      return null;
+    }
+  };
+
+  const donateSOL = async (
+    roundId: string,
+    owner: string,
+    count: number,
+    split: number,
+    total: number,
+    usd: number
+  ): Promise<string | null> => {
+    try {
+      const ix = await contributeSOL(
+        anchorWallet as NodeWallet,
+        roundId,
+        owner,
+        count, // project count
+        split,
+        total,
+        usd
+      );
+      const tx = new anchor.web3.Transaction();
+      const { blockhash } = await connection.getLatestBlockhash();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = anchorWallet?.publicKey as anchor.web3.PublicKey;
+      tx.add(ix!);
+      const signed = await anchorWallet?.signTransaction(tx);
+      const txid = await connection.sendRawTransaction(signed!.serialize());
+
+      return txid;
+    } catch (error: any) {
+      console.log();
+
+      setTxnError(error.message || 'There was some error');
+      return null;
+    }
+  };
+  const EstimatedAmmount = trpc.pool.findEstimated.useQuery({
+    amount: watch('amount'),
+    projectId: projectDetails.id,
+    roundId: projectDetails?.ProjectJoinRound.find(
+      (e) => e.status === 'APPROVED'
+    )?.fundingRound.id as string,
+  });
+
   return (
-    <Stack gap="64px" direction={'row'}>
+    <Stack
+      w={{ base: '20rem', sm: '22rem', md: 'full' }}
+      gap="40px"
+      h="full"
+      direction={'row'}
+      overflow={'hidden'}
+      maxW="90vw"
+    >
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{
-          width: '40rem',
+          width: 'full',
           height: '100%',
           display: 'flex',
+          gap: '52px',
+          flex: '1',
           flexDirection: 'column',
           justifyContent: 'space-between',
         }}
       >
-        <VStack w="full" gap="16px">
-          <FormControl
-            gap="16px"
-            paddingTop={{ base: '3.5rem', md: '1.5rem' }}
-            //@ts-ignore
-            isInvalid={errors.donation_amount}
-          >
-            <FormLabel htmlFor="name" textStyle={'title4'} color="neutral.11">
-              Donation Amount
+        <VStack w="full" gap="32px">
+          <FormControl isInvalid={Boolean(errors.amount)}>
+            <FormLabel
+              pb="12px"
+              htmlFor="name"
+              textStyle={{ base: 'title5', md: 'title4' }}
+              color="neutral.11"
+            >
+              Enter Donation Amount
             </FormLabel>
             <HStack>
-              <InputGroup border="1px solid #141414" rounded={'8px'}>
-                <Controller
-                  name="amount"
-                  control={control}
-                  defaultValue={donation}
-                  rules={{
-                    required: true,
-                  }}
-                  render={({ field: { onChange, onBlur, ...field } }) => (
-                    <Input
-                      type="number"
-                      step="any"
-                      color="white"
-                      fontWeight="600"
-                      border="1px solid #141414"
-                      px="0.7rem"
-                      boxShadow={'none'}
-                      borderRight={'none'}
-                      _hover={{
-                        outline: 'none',
-                        boxShadow: 'none',
-                        border: '1px solid #141414',
-                        borderRight: 'none',
-                      }}
-                      _active={{
-                        outline: 'none',
-                        boxShadow: 'none',
-                        border: '1px solid #141414',
-                        borderRight: 'none',
-                      }}
-                      _focus={{
-                        outline: 'none',
-                        boxShadow: 'none',
-                        border: '1px solid #141414',
-                        borderRight: 'none',
-                      }}
-                      _focusVisible={{
-                        outline: 'none',
-                        boxShadow: 'none',
-                        border: '1px solid #141414',
-                        borderRight: 'none',
-                      }}
-                      _visited={{
-                        outline: 'none',
-                        boxShadow: 'none',
-                        border: '1px solid #141414',
-                        borderRight: 'none',
-                      }}
-                      _placeholder={{
-                        fontWeight: '500',
-                        color: '#636666',
-                      }}
-                      id="amount"
-                      placeholder="Amount"
-                      onChange={onChange}
-                      onBlur={({ target: { value } }) => {
-                        setDonation(parseInt(value));
-                      }}
-                      {...field}
-                    />
-                  )}
-                />
-                <InputRightAddon
-                  textAlign={'end'}
-                  justifyContent={'end'}
-                  borderLeft={'none'}
-                  outline="none"
-                  minWidth="1.5rem"
-                >
-                  $
-                  <FlipNumbers
-                    height={15}
-                    width={10}
-                    color="#636666"
-                    //background="black"
-                    play
-                    perspective={700}
-                    numbers={String(donation)}
-                  />
-                </InputRightAddon>
-              </InputGroup>
-              <ControlledSelect
+              <AmountInput
+                donation={donation}
+                setDonation={setDonationAndAmount}
+                register={register}
+                errors={errors}
+                token={tokens}
                 control={control}
-                name="token"
-                id="token"
-                options={token}
-                label={'Token'}
               />
             </HStack>
-            <FormErrorMessage>
-              {errors.amount && errors.amount.message}
+            <FormErrorMessage textStyle={{ base: 'body5', md: 'body4' }}>
+              <>{errors.amount && errors.amount.message}</>
             </FormErrorMessage>
+            <WalletBalanceError selectedToken={selectedToken} data={data} />
           </FormControl>
-          <FormControl pb="1.5rem">
+          <FormControl>
             <FormLabel
-              textStyle={'body5'}
+              textStyle={{ base: 'title6', md: 'title5' }}
               color="neutral.8"
               htmlFor="donation_to_matching_pool"
+              pb="12px"
             >
-              Donate to Cubik Matching pool.
+              Donate to Cubik Matching Pool.
             </FormLabel>
             <HStack gap="0.1rem">
-              {Array.from([0, 5, 10, 25, 30]).map((percentage, key) => {
+              {Array.from([0, 10, 15, 30]).map((percentage, key) => {
                 return (
                   <VStack
                     cursor="pointer"
@@ -216,7 +296,7 @@ export const ProjectDonationSimulator = ({
                         : '1px solid #242424'
                     }
                     rounded="8px"
-                    w="3.5rem"
+                    w="full"
                     h="2.5rem"
                     align={'center'}
                     justify="center"
@@ -224,14 +304,28 @@ export const ProjectDonationSimulator = ({
                       setValue('matchingPoolDonation', percentage);
                     }}
                   >
-                    <Box
-                      as="p"
-                      fontSize="sm"
-                      fontWeight={'500'}
-                      color="#E0FFFD"
-                    >
+                    <Box as="p" textStyle={'body4'} color="#E0FFFD">
                       {percentage}%
                     </Box>
+                    {percentage === 10 ? (
+                      <Box
+                        position={'absolute'}
+                        bottom="-15%"
+                        bg="red"
+                        rounded="full"
+                        as="p"
+                        fontSize="10px"
+                        p="2px 8px"
+                        fontWeight={'500'}
+                        color="#14665B"
+                        background="#E0FFFD"
+                        textTransform={'uppercase'}
+                      >
+                        Popular
+                      </Box>
+                    ) : (
+                      ''
+                    )}
                   </VStack>
                 );
               })}
@@ -246,23 +340,68 @@ export const ProjectDonationSimulator = ({
           </FormControl>
         </VStack>
         <VStack w="full" gap="16px">
-          <HStack w="full" justify={'space-between'}>
-            <Box as="p" textStyle={'body5'}>
-              Matching pool contribution
-            </Box>
-            <Box as="p" textStyle={'title5'}>
-              $250.50
-            </Box>
-          </HStack>
+          <VStack w="full" align="center" gap="8px">
+            <HStack w="full" justify={'space-between'}>
+              <Box as="p" textStyle={'body4'}>
+                Estimated Match
+              </Box>
+              <Center color="#A8F0E6" fontWeight="700">
+                <FlipNumbers
+                  height={20}
+                  width={13}
+                  color="#A8F0E6"
+                  play
+                  perspective={700}
+                  numbers={
+                    '$' + String((EstimatedAmmount.data ?? 0).toFixed(3))
+                  }
+                />
+              </Center>
+            </HStack>
+            <HStack w="full" justify={'space-between'}>
+              <Box as="p" textStyle={'body5'} color="neutral.8">
+                Matching pool contribution
+              </Box>
+              <Center color="#ADB8B6">
+                <FlipNumbers
+                  height={14}
+                  width={10}
+                  color="#ADB8B6"
+                  play
+                  perspective={700}
+                  numbers={
+                    '$' +
+                    String(
+                      watch('matchingPoolDonation') === 0
+                        ? '0.0'
+                        : (donation / watch('matchingPoolDonation')).toFixed(1)
+                    )
+                  }
+                />
+              </Center>
+            </HStack>
+          </VStack>
+          {txnError && (
+            <Alert status="error" variant="cubik">
+              <AlertIcon />
+              <AlertDescription
+                fontSize={{ base: '10px', md: '11px', xl: '12px' }}
+                lineHeight={{ base: '14px', md: '14px', xl: '16px' }}
+              >
+                {txnError}
+              </AlertDescription>
+            </Alert>
+          )}
           <Button
             variant={'connect_wallet'}
             w="full"
+            height="44px"
             mt={4}
             colorScheme="teal"
             isLoading={isSubmitting}
             type="submit"
           >
-            Donate
+            Donate with wallet
           </Button>
         </VStack>
       </form>
@@ -271,7 +410,8 @@ export const ProjectDonationSimulator = ({
         height={height}
         maximumDonationValue={1000}
         donationAmount={donation}
-        setDonationAmount={setDonation}
+        setValue={setValue}
+        projectId={projectDetails.id}
       />
     </Stack>
   );

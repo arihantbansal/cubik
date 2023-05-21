@@ -91,7 +91,7 @@ const WalletBalance = () => {
 
         return token.tokenAccount ==
           'BYgQgaAcgxmAHh7iAYeyV2V1RVTd9edvesrQbSiAYKET' ? (
-          <HStack p="0px 2px" gap="8px" w="full">
+          <HStack p="0px 2px" gap="8px" w="full" key={token.tokenAccount}>
             <BONK size={20} />
             <Box as="p" textStyle={'body5'} color="neutral.11">
               BONK
@@ -112,7 +112,7 @@ const WalletBalance = () => {
           </HStack>
         ) : token.tokenAccount ==
           'CG8TA4H9dysAaXS9hTAnhgWXUcJmoHZYK4oKDJqYcFSE' ? (
-          <HStack p="0px 2px" gap="8px" w="full">
+          <HStack p="0px 2px" gap="8px" w="full" key={token.tokenAccount}>
             <USDC size={20} />
             <Box as="p" textStyle={'body5'} color="neutral.11">
               USDC

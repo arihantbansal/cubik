@@ -86,7 +86,6 @@ const StepThree = ({
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       const json = editor.getJSON();
-      console.log('html', html);
       // @ts-ignore
       setHTMLPreviewData(parse(html as string));
       setEditorData(html);
@@ -310,14 +309,17 @@ const StepThree = ({
       </CardBody>
       <CardFooter>
         <Button
-          variant={'outline'}
+          size={{ base: 'cubikMini', md: 'cubikSmall' }}
+          variant={'cubikText'}
           onClick={onPrevious}
           leftIcon={<Icon as={FiChevronLeft} width={5} height={5} />}
         >
           Previous
         </Button>
         <Button
-          variant={'connect_wallet'}
+          size={{ base: 'cubikMini', md: 'cubikSmall' }}
+          variant="cubikFilled"
+          loadingText="Submitting"
           isLoading={LoadingSubmit}
           onClick={() => {
             setLoadingSubmit(true);

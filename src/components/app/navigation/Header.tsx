@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Center,
   Collapse,
   Container,
@@ -10,25 +11,12 @@ import {
 } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import { Turn as Hamburger } from 'hamburger-react';
 import Link from 'next/link';
-import { Router, useRouter } from 'next/router';
-import NProgress from 'nprogress';
-import React, { memo, useEffect, useState } from 'react';
-import Loader from '~/components/common/loader/Loading';
+import { useRouter } from 'next/router';
+import React, { memo } from 'react';
+import { RxDotsVertical } from 'react-icons/rx';
 import Logo from '~/components/common/logo/Logo';
 import { SearchBar } from '~/components/common/searchbar';
-
-NProgress.configure({ showSpinner: false });
-Router.events.on('routeChangeStart', () => {
-  NProgress.start();
-});
-Router.events.on('routeChangeComplete', () => {
-  NProgress.done();
-});
-Router.events.on('routeChangeError', () => {
-  NProgress.done();
-});
 
 const MobileNavCollapsible = memo(function MobileNavCollapsible({
   isOpen,
@@ -39,7 +27,7 @@ const MobileNavCollapsible = memo(function MobileNavCollapsible({
   isOpen: boolean;
   onToggle: () => void;
   onClose: () => void;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) {
   const router = useRouter();
   let landingPage: boolean = false;
@@ -48,16 +36,23 @@ const MobileNavCollapsible = memo(function MobileNavCollapsible({
   }
   return (
     <Collapse in={isOpen} animateOpacity>
-      <Center display={landingPage ? 'none' : 'flex'} w="full" px="1.2rem">
-        <SearchBar width={{ base: '100%' }} />
+      <Center
+        display={landingPage ? 'none' : 'flex'}
+        w="full"
+        px="24px"
+        pt={{ base: '16px', sm: '24px' }}
+      >
+        <SearchBar width={{ base: '100%', sm: '', md: '2rem', lg: '8rem' }} />
       </Center>
       <Flex
         display={{ base: 'flex', lg: 'none' }}
         flexDirection="column"
         alignItems="start"
         fontSize="18px"
-        p="1rem 2.5rem 2rem 2.5rem"
-        gap="1.4rem"
+        fontWeight={'700'}
+        p="24px"
+        pt="0px"
+        gap={{ base: '16px', sm: '24px' }}
       >
         <Center w="full">{children}</Center>
         <Link href="/projects" style={{ width: '100%' }} passHref>
@@ -88,26 +83,28 @@ const MobileNavCollapsible = memo(function MobileNavCollapsible({
             justify={'space-between'}
             w="100%"
           >
-            <Box
-              display="flex"
-              alignItems={'start'}
-              w="100%"
-              onClick={() => onClose()}
-              as="button"
-              transition={'all 0.3s ease'}
-              fontSize="15px"
-              fontWeight="400"
-            >
-              Funding Round
-            </Box>
+            <Link href="/grants">
+              <Box
+                display="flex"
+                alignItems={'start'}
+                w="100%"
+                onClick={() => {
+                  onClose();
+                }}
+                as="button"
+                transition={'all 0.3s ease'}
+                fontSize="15px"
+                fontWeight="400"
+              >
+                Grants
+              </Box>
+            </Link>
           </Flex>
         </Link>
       </Flex>
     </Collapse>
   );
 });
-
-const LOADER_PAGES = ['/submit-project', '/projects'];
 
 export const Header = memo(function Header({
   children,
@@ -118,9 +115,6 @@ export const Header = memo(function Header({
   const { connected } = useWallet();
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [isDesktop] = useMediaQuery('(min-width: 768px)');
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [currentRoute, setCurrentRoute] = useState('');
 
   const isActiveRoute = (route: string): boolean => {
     return router.pathname === route;
@@ -131,29 +125,72 @@ export const Header = memo(function Header({
     landingPage = true;
   }
 
-  useEffect(() => {
-    const handleRouteChangeStart = () => {
-      setIsLoading(true);
-    };
-    const handleRouteChangeComplete = () => {
-      setIsLoading(false);
-    };
-
-    router.events.on('routeChangeStart', handleRouteChangeStart);
-    router.events.on('routeChangeComplete', handleRouteChangeComplete);
-
-    return () => {
-      router.events.off('routeChangeStart', handleRouteChangeStart);
-      router.events.off('routeChangeComplete', handleRouteChangeComplete);
-    };
-  }, [router, setIsLoading]);
-
-  useEffect(() => {
-    setCurrentRoute(router.asPath);
-  }, [router]);
-
-  const shouldShowLoader = LOADER_PAGES.includes(currentRoute);
-
+  const NavbarCTA: React.FC<any> = ({ children }) => {
+    return (
+      <Center
+        h={{ base: '2rem', md: '2.6rem' }}
+        justifyContent="end"
+        zIndex="99"
+      >
+        <Center display={{ base: connected ? 'none' : 'flex', md: 'none' }}>
+          <WalletMultiButton>Connect Wallet</WalletMultiButton>
+        </Center>
+        {isDesktop ? (
+          <Center w="fit-content">{children}</Center>
+        ) : (
+          <HStack gap="0">
+            {connected ? (
+              <Center w={'100%'} display={{ base: 'flex', md: 'none' }} gap="0">
+                {children}
+              </Center>
+            ) : (
+              ''
+            )}
+            <RxDotsVertical size={24} color="white" onClick={onToggle} />
+          </HStack>
+        )}
+      </Center>
+    );
+  };
+  const DeskNavbarItems = () => {
+    return isDesktop && router.pathname != '/create-profile' ? (
+      <>
+        <SearchBar
+          display={landingPage ? 'none' : 'flex'}
+          width={{ base: 'full', sm: 'full', md: '8rem', lg: '14rem' }}
+        />
+        <HStack
+          gap={{ base: '28px', lg: '32px' }}
+          alignItems={'center'}
+          justifyContent={landingPage ? 'center' : 'flex-start'}
+          mx="auto"
+        >
+          <Button h="full" variant={'unstyled'} as={Link} href="/projects">
+            <Box
+              as="p"
+              textStyle={'title4'}
+              color={isActiveRoute('/projects') ? 'brand.teal5' : 'neutral.8'}
+              cursor={'pointer'}
+            >
+              Projects
+            </Box>
+          </Button>
+          <Button h="full" variant={'unstyled'} as={Link} href="/grants">
+            <Box
+              as="p"
+              textStyle={'title4'}
+              color={isActiveRoute('/grants') ? 'brand.teal5' : 'neutral.8'}
+              cursor={'pointer'}
+            >
+              Grants
+            </Box>
+          </Button>
+        </HStack>
+      </>
+    ) : (
+      <></>
+    );
+  };
   return (
     <Container
       w="full"
@@ -170,96 +207,25 @@ export const Header = memo(function Header({
         marginTop: '0px !important',
       }}
     >
-      {shouldShowLoader && <Loader />}
       <Flex
         mx="auto"
-        p={{ base: '20px 16px', md: '20px 20px' }}
+        p={{ base: '14px 16px', md: '20px 20px' }}
         maxW="7xl"
         alignItems={'center'}
         justifyContent={'space-between'}
+        gap={'24px'}
       >
-        <HStack w="full" gap="40px">
-          <Box as="button" fontSize={'5xl'} onClick={() => router.push('/')}>
-            <Logo />
-          </Box>
-          {isDesktop && router.pathname != '/create-profile' && (
-            <>
-              <SearchBar
-                display={landingPage ? 'none' : 'flex'}
-                width={{ base: '12rem', sm: '13rem', md: '20rem', lg: '30rem' }}
-              />
-              <HStack
-                gap="40px"
-                //   mx={landingPage ? 'auto' : ''}
-                w="full"
-                alignItems={'center'}
-                justifyContent={landingPage ? 'center' : 'flex-start'}
-                mx="auto"
-              >
-                <Link href="/projects" passHref prefetch>
-                  <Box
-                    as="p"
-                    textStyle={'title4'}
-                    color={
-                      isActiveRoute('/projects') ? 'brand.teal5' : 'neutral.8'
-                    }
-                    cursor={'pointer'}
-                  >
-                    Projects
-                  </Box>
-                </Link>
-                <Link href="/grants" passHref prefetch>
-                  <Box
-                    as="p"
-                    textStyle={'title4'}
-                    color={
-                      isActiveRoute('/grants') ? 'brand.teal5' : 'neutral.8'
-                    }
-                    cursor={'pointer'}
-                  >
-                    Grants
-                  </Box>
-                </Link>
-              </HStack>
-            </>
-          )}
+        <HStack w="full" gap={{ base: '28px', lg: '32px' }}>
+          <Logo />
+          <DeskNavbarItems />
         </HStack>
-        <Center h={{ base: '1.6rem', md: '2.6rem' }} justifyContent="end">
-          {isDesktop ? (
-            <Center w="fit-content">{children}</Center>
-          ) : (
-            <HStack gap="0">
-              {connected ? (
-                <Center
-                  w={'100%'}
-                  display={{ base: 'flex', md: 'none' }}
-                  gap="0"
-                >
-                  {children}
-                </Center>
-              ) : (
-                ''
-              )}
-              <Hamburger
-                toggled={isOpen}
-                toggle={onToggle}
-                size={24}
-                duration={0.4}
-                color="#A8F0E6"
-                hideOutline
-                rounded
-              />
-            </HStack>
-          )}
-        </Center>
+        <NavbarCTA>{children}</NavbarCTA>
       </Flex>
       <MobileNavCollapsible
         onClose={onClose}
         isOpen={isOpen}
         onToggle={onToggle}
-      >
-        {connected ? '' : <WalletMultiButton />}
-      </MobileNavCollapsible>
+      />
     </Container>
   );
 });

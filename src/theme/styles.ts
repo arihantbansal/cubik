@@ -3,6 +3,13 @@ import '@fontsource/plus-jakarta-sans';
 
 export const styles = {
   global: (props: StyleFunctionProps) => ({
+    '::-webkit-scrollbar': {
+      display: 'none',
+    },
+    ':host,:root': {
+      '--chakra-ui-focus-ring-color': '#3B3D3D',
+      '--chakra-shadows-outline': '0 0 0 3px var(--chakra-ui-focus-ring-color)',
+    },
     fonts: {
       heading: `'Plus Jakarta Sans', sans-serif`,
       body: `'Plus Jakarta Sans', sans-serif`,
@@ -10,9 +17,17 @@ export const styles = {
     body: {
       bg: mode('#000000', '#000000')(props),
       color: mode('#E0FFFD', '#E0FFFD')(props),
-      '::-webkit-scrollbar': {
-        display: 'none',
-      },
+    },
+    option: {
+      background: 'red !important',
+    },
+    'td:first-of-type': {
+      borderTopLeftRadius: '16px',
+      borderBottomLeftRadius: '16px',
+    },
+    'td:last-child': {
+      borderTopRightRadius: '16px',
+      borderBottomRightRadius: '16px',
     },
     text: {
       marginTop: '0',
@@ -39,7 +54,7 @@ export const styles = {
       backdropFilter: 'blur(10px)',
       padding: '44px 0px 16px 0px',
       gap: '0px',
-      width: {base:'10px', md:'416px'},
+      width: { base: '10px', md: '416px' },
       overflow: 'hidden',
     },
     '.wallet-adapter-modal-wrapper:before': {
@@ -67,7 +82,20 @@ export const styles = {
       gap: { base: '8px', md: '14px' },
     },
     '.wallet-adapter-collapse': {
-      //  height: 'full !important',
+      _after: {
+        content: '"I dont have a wallet"',
+        position: 'absolute',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        bottom: '20px',
+        color: '#ffffff57',
+        fontSize: { base: '12px', sm: '14px' },
+        fontWeight: '500',
+        lineHeight: { base: '18px', md: '24px' },
+      },
+    },
+    '.wallet-adapter-collapse > li': {
+      display: 'none',
     },
     '.wallet-adapter-modal-list > li, .wallet-adapter-collapse > li': {
       minW: '5.5rem',
@@ -168,13 +196,18 @@ export const styles = {
     '.wallet-adapter-button-trigger': {
       color: '#031513',
       backgroundColor: '#A8F0E6',
-      //padding: { base: '8px 20px 10px 20px', md: '8px 20px 10px 20px' },
+      padding: { base: '8px 12px', sm: '8px 12px' },
+      whiteSpace: 'nowrap',
       border: '1px solid rgba(168, 240, 230, 0.6)',
       rounded: '6px',
-      fontSize: { base: '12px', md: '14px' },
+      fontSize: { base: '12px', sm: '14px' },
       fontWeight: '600',
       lineHeight: { base: '18px', md: '22px' },
-      height: { base: '2.3rem !important', md: '2.5rem !important' },
+      height: {
+        base: '34px !important',
+        sm: '40px !important',
+        md: '2.5rem !important',
+      },
       width: '100%',
       display: 'flex',
       alignItems: 'center',
@@ -184,6 +217,23 @@ export const styles = {
       _hover: {
         color: '#14665B',
         backgroundColor: '#E0FFFD !important',
+      },
+      _disabled: {
+        position: 'relative',
+        _after: {
+          content: '"Connecting..."',
+          position: 'absolute',
+          left: '0',
+          right: '0',
+          color: '#031513',
+          backgroundColor: '#A8F0E6',
+          padding: { base: '5px 12px', sm: '8px 12px' },
+          borderColor: 'rgba(168, 240, 230, 0.6)',
+          rounded: '6px',
+          fontSize: { base: '12px', sm: '14px' },
+          fontWeight: '600',
+          lineHeight: { base: '18px', md: '24px' },
+        },
       },
       _active: {
         color: '#031513',

@@ -3,11 +3,12 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": true,
-    "source.organizeImports": false
+    "source.organizeImports": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "workbench.colorCustomizations": {},
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "cSpell.words": ["Gmailerrorred"]
 }

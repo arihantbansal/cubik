@@ -8,34 +8,74 @@ import {
   Center,
   Stack,
 } from '@chakra-ui/react';
-import { ProjectsModel, ProjectVerifyStatus } from '@prisma/client';
+import { ProjectJoinRoundStatus, ProjectsModel } from '@prisma/client';
 import { useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
+import { projectWithFundingRoundType } from '~/types/project';
+import { ProjectStatus } from '~/utils/getProjectStatus';
+import { trpc } from '~/utils/trpc';
 import FundingOverview from './project-admin-dashboard/FundingOverview';
 import Vault from './project-admin-dashboard/project-vault/Vault';
 import ProjectInsights from './project-admin-dashboard/ProjectInsights';
 import ProjectHeader from './ProjectHeader';
 import ProjectStatusBanner from './ProjectStatusBanner';
 
-const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
+const ProjectAdminCard = ({
+  activeProject,
+  project,
+}: {
+  project: ProjectsModel;
+  activeProject?: string;
+}) => {
   const [showVault, setShowVault] = useState(false);
+  const {
+    data: projectData,
+    isLoading,
+    isError,
+    error,
+  } = trpc.project.projectAdminDetails.useQuery({
+    id: project.id,
+  });
+  if (isLoading) {
+    return <Card> is Loading</Card>;
+  }
+  if (isError) {
+    return <Center>{error.message}</Center>;
+  }
 
   return (
     <Card
       px="0px"
-      pt={
-        status === 'inactive' ? { base: '16px', sm: '20px', md: '24px' } : '0px'
-      }
       pb={{ base: '16px', sm: '20px', md: '24px' }}
       gap={{ base: '16px', sm: '20px', md: '24px' }}
       w="100%"
       border={'none'}
     >
-      <ProjectStatusBanner status={project.status} />
+      <ProjectStatusBanner
+        status={
+          ProjectStatus({
+            projectData: projectData as projectWithFundingRoundType,
+          })?.status as string
+        }
+        roundName={
+          ProjectStatus({
+            projectData: projectData as projectWithFundingRoundType,
+          })?.round
+            ? ProjectStatus({
+                projectData: projectData as projectWithFundingRoundType,
+              })?.round?.fundingRound.roundName
+            : undefined
+        }
+      />
       <CardHeader>
-        <ProjectHeader project={project} />
+        <ProjectHeader
+          activeProject={activeProject}
+          project={projectData as projectWithFundingRoundType}
+        />
       </CardHeader>
-      {project.status === ProjectVerifyStatus.VERIFIED && (
+      {ProjectStatus({
+        projectData: projectData as projectWithFundingRoundType,
+      })?.round?.status === ProjectJoinRoundStatus.APPROVED && (
         <>
           <CardBody
             gap={{ base: '64px', sm: '72px', md: '24px' }}
@@ -47,10 +87,10 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
               padding={{ base: '16px', sm: '20px', md: '24px' }}
               direction={{ base: 'column', lg: 'row' }}
             >
-              <FundingOverview />
-              <ProjectInsights />
+              <FundingOverview projectId={projectData?.id as string} />
+              <ProjectInsights projectId={projectData?.id as string} />
             </Stack>
-            {showVault && <Vault />}
+            {showVault && <Vault projectData={projectData} />}
           </CardBody>
           <CardFooter pb="24px">
             <Center w="full">

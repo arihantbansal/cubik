@@ -1,6 +1,20 @@
-import { Avatar, Box, HStack, Stack, VStack } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
+import {
+  Avatar,
+  Box,
+  Button,
+  HStack,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
+  Stack,
+  VStack,
+} from '@chakra-ui/react';
 import React from 'react';
+import { BiChevronDown } from 'react-icons/bi';
 import {
   FaDiscord,
   FaGithub,
@@ -9,7 +23,9 @@ import {
   FaYoutube,
 } from 'react-icons/fa';
 import { HiLink } from 'react-icons/hi';
+import { MdReportGmailerrorred } from 'react-icons/md';
 import CustomTag from '~/components/common/tags/CustomTag';
+import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 
 export const ProjectLink = ({ urlName }: { urlName: string }) => {
   switch (urlName) {
@@ -31,71 +47,137 @@ export const ProjectLink = ({ urlName }: { urlName: string }) => {
 };
 
 const ProjectDetailsHeader = ({
+  isLoading,
   projectDetails,
 }: {
-  projectDetails: ProjectsModel;
+  isLoading: boolean;
+  projectDetails:
+    | ProjectWithRoundDetailsWithOwnerWithTeamType
+    | null
+    | undefined;
 }) => {
   return (
     <Stack
       direction={{ base: 'row', md: 'row' }}
       gap={{ base: '8px', md: '24px' }}
-      width={'100%'}
+      width={'full'}
       alignItems={'center'}
     >
-      <Avatar
-        src={projectDetails?.logo}
+      <SkeletonCircle
+        isLoaded={!isLoading}
+        fadeDuration={3}
+        opacity={isLoading ? '0.6' : '1'}
         width={{ base: '4.4rem', md: '6.2rem' }}
         height={{ base: '4.4rem', md: '6.2rem' }}
-      />
+      >
+        <Avatar
+          backgroundColor={'#1C1C1C'}
+          src={projectDetails?.logo}
+          width={{ base: '4.4rem', md: '6.2rem' }}
+          height={{ base: '4.4rem', md: '6.2rem' }}
+        />
+      </SkeletonCircle>
       <VStack
         justify={'center'}
         gap={{ base: '2px', md: '14px' }}
         alignItems={'start'}
         justifyContent="center"
+        w="full"
       >
-        <Stack gap="24px" direction={'row'}>
+        <Stack spacing={{ base: '12px', md: '24px' }} direction={'row'}>
+          <Skeleton
+            isLoaded={!isLoading}
+            fadeDuration={4}
+            opacity={isLoading ? '0.6' : '1'}
+          >
+            <HStack align="center">
+              <Box
+                as="p"
+                textStyle={{ base: 'title1', md: 'headline3' }}
+                textTransform="capitalize"
+                color="neutral.11"
+                noOfLines={1}
+                overflow="hidden"
+                whiteSpace="nowrap"
+                textOverflow="ellipsis"
+              >
+                {projectDetails?.name}
+              </Box>
+              <Menu>
+                <MenuButton
+                  w="4px !important"
+                  display="flex"
+                  marginInline={'0px'}
+                  alignContent={'center'}
+                  justifyContent={'center'}
+                  m="0 !important"
+                  as={Button}
+                  variant="unstyled"
+                  rightIcon={<BiChevronDown size={26} color="white" />}
+                />
+                <MenuList p="0" outline="0" border="0">
+                  <MenuItem
+                    p="8px 16px"
+                    color="surface.yellow.2"
+                    rounded="4px"
+                    icon={
+                      <MdReportGmailerrorred
+                        color="surface.yellow.2"
+                        size={22}
+                      />
+                    }
+                  >
+                    Report
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </HStack>
+          </Skeleton>
+          <Skeleton
+            isLoaded={!isLoading}
+            fadeDuration={4}
+            opacity={isLoading ? '0.4' : '1'}
+          >
+            <HStack
+              overflow={'hidden'}
+              flexDirection={'row'}
+              align="center"
+              spacing="0.4rem"
+              pt="0.5rem"
+              display={{ base: 'none', md: 'flex' }}
+            >
+              {projectDetails &&
+                JSON.parse(projectDetails.industry)?.map(
+                  (tag: any, key: React.Key) => {
+                    return (
+                      <CustomTag color={tag?.label} key={key}>
+                        {tag?.label}
+                      </CustomTag>
+                    );
+                  }
+                )}
+            </HStack>
+          </Skeleton>
+        </Stack>
+        <SkeletonText
+          isLoaded={!isLoading}
+          w="full"
+          fadeDuration={5}
+          noOfLines={2}
+          opacity={isLoading ? '0.5' : '1'}
+          skeletonHeight="16px"
+          spacing="4"
+        >
           <Box
             as="p"
-            minW="6rem"
-            textStyle={{ base: 'title1', md: 'headline3' }}
-            textTransform="capitalize"
-            color="neutral.11"
-            // prevent the name from going into second line
-            noOfLines={1}
-            overflow="hidden"
-            whiteSpace="nowrap"
+            textStyle={{ base: 'body4', md: 'body2' }}
+            color="neutral.9"
+            noOfLines={2}
             textOverflow="ellipsis"
           >
-            {projectDetails?.name}
+            {projectDetails?.short_description}
           </Box>
-          <HStack
-            overflow={'hidden'}
-            flexDirection={'row'}
-            spacing="0.4rem"
-            pt="0.5rem"
-            display={{ base: 'none', md: 'flex' }}
-          >
-            {JSON.parse(projectDetails.industry)?.map(
-              (tag: any, key: React.Key | null | undefined) => {
-                return (
-                  <CustomTag color={tag.label} key={key}>
-                    {tag.label}
-                  </CustomTag>
-                );
-              }
-            )}
-          </HStack>
-        </Stack>
-        <Box
-          as="p"
-          textStyle={{ base: 'body4', md: 'body2' }}
-          color="neutral.9"
-          // prevent the name from going into second line
-          noOfLines={2}
-          textOverflow="ellipsis"
-        >
-          {projectDetails?.short_description}
-        </Box>
+        </SkeletonText>
         {/* <HStack>
           <Button
             variant="unstyled"

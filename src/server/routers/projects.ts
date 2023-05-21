@@ -2,14 +2,13 @@ import {
   Prisma,
   ProjectJoinRoundStatus,
   ProjectVerifyStatus,
-  Team,
 } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
+import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
+import { Grant } from '~/utils/calculateProjectMatchingFund';
 import { procedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
-import { v4 as uuid } from 'uuid';
-import { Grant } from '~/utils/calculateProjectMatchingFund';
 
 export const projectsRouter = router({
   create: procedure
@@ -29,6 +28,7 @@ export const projectsRouter = router({
         telegram_link: z.string(),
         team: z.array(z.string()),
         sig: z.string().nonempty(),
+        email: z.string().nonempty(),
         multiSigAddress: z.string().nonempty(),
       })
     )
@@ -88,7 +88,6 @@ export const projectsRouter = router({
         });
         return res;
       } catch (error) {
-        console.log(error);
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: (error as Error).message,
@@ -97,6 +96,7 @@ export const projectsRouter = router({
       }
     }),
 
+  // @type: ProjectWithRoundDetailsWithOwnerWithTeamType
   findOne: procedure
     .input(
       z.object({
@@ -115,17 +115,6 @@ export const projectsRouter = router({
               user: true,
             },
           },
-          comments: {
-            include: {
-              user: true,
-              Reply: {
-                include: {
-                  comment: true,
-                  user: true,
-                },
-              },
-            },
-          },
           ProjectJoinRound: {
             include: {
               fundingRound: true,
@@ -136,7 +125,7 @@ export const projectsRouter = router({
       return res;
     }),
 
-  findMany: procedure.query(async () => {
+  findAll: procedure.query(async () => {
     try {
       const res = await prisma.projectsModel.findMany({
         include: {
@@ -148,8 +137,97 @@ export const projectsRouter = router({
         },
       });
       return res;
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      throw new Error(error.message || 'There was some error');
+    }
+  }),
+
+  // @type: ProjectWithRoundDetailsWithContributionWithUserType
+  findMany: procedure.query(async () => {
+    try {
+      const res = await prisma.projectsModel.findMany({
+        include: {
+          ProjectJoinRound: {
+            include: {
+              fundingRound: {
+                include: {
+                  Contribution: {
+                    include: {
+                      user: true,
+                    },
+                  },
+                },
+              },
+            },
+            where: {
+              status: ProjectJoinRoundStatus.APPROVED,
+            },
+          },
+        },
+      });
+      return res;
+    } catch (error: any) {
+      throw new Error(error.message || 'There was some error');
+    }
+  }),
+  findManyReview: procedure.query(async () => {
+    try {
+      const res = await prisma.projectsModel.findMany({
+        include: {
+          ProjectJoinRound: {
+            include: {
+              fundingRound: true,
+            },
+          },
+          owner: true,
+        },
+        where: {
+          status: ProjectVerifyStatus.REVIEW,
+        },
+      });
+      return res;
+    } catch (error: any) {
+      throw new Error(error.message || 'There was some error');
+    }
+  }),
+  findManyVerified: procedure.query(async () => {
+    try {
+      const res = await prisma.projectsModel.findMany({
+        include: {
+          ProjectJoinRound: {
+            include: {
+              fundingRound: true,
+            },
+          },
+          owner: true,
+        },
+        where: {
+          status: 'VERIFIED',
+        },
+      });
+      return res;
+    } catch (error: any) {
+      throw new Error(error.message || 'There was some error');
+    }
+  }),
+  findManyRejected: procedure.query(async () => {
+    try {
+      const res = await prisma.projectsModel.findMany({
+        include: {
+          ProjectJoinRound: {
+            include: {
+              fundingRound: true,
+            },
+          },
+          owner: true,
+        },
+        where: {
+          status: 'FAILED',
+        },
+      });
+      return res;
+    } catch (error: any) {
+      throw new Error(error.message || 'There was some error');
     }
   }),
 
@@ -187,9 +265,11 @@ export const projectsRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
+      console.log(ctx?.session?.user.mainWallet, '------ main wallet');
+
       if (
         ctx?.session?.user.mainWallet !==
-        '8Fy7yHo7Sn7anUtG7VANLEDxCWbLjku1oBVa4VouEVVP'
+        '52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ'
       ) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
@@ -305,7 +385,11 @@ export const projectsRouter = router({
             include: {
               project: {
                 include: {
-                  Contribution: true,
+                  Contribution: {
+                    where: {
+                      isLatest: true,
+                    },
+                  },
                 },
               },
             },
@@ -313,22 +397,43 @@ export const projectsRouter = router({
         },
       });
       const contri = res?.Contribution.map((contribution) => {
-        return contribution.usdContribution;
+        return contribution.usdTotal;
       });
       let roundContri: Grant[] = [];
       round?.ProjectJoinRound.forEach((round) => {
-        roundContri.push({
+        return roundContri.push({
           funding: round.project?.Contribution.map((contribution) => {
-            return contribution.usdContribution;
+            return contribution.usdTotal;
           }),
+          projectId: '', // @todo add project id here i have added it because it was showing some bug
         });
       });
-      console.log(roundContri, contri, round?.matchedPool);
 
       return {
         contribution: contri,
         round: roundContri,
         matchingPool: round?.matchedPool,
       };
+    }),
+
+  // @type projectWithFundingRoundType
+  projectAdminDetails: procedure
+    .input(
+      z.object({
+        id: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const response = prisma.projectsModel.findFirst({
+        where: { id: input.id },
+        include: {
+          ProjectJoinRound: {
+            include: {
+              fundingRound: {},
+            },
+          },
+        },
+      });
+      return response;
     }),
 });

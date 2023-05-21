@@ -1,113 +1,59 @@
 import { Center, HStack, Skeleton, Spinner } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import { signIn, signOut, useSession } from 'next-auth/react';
-import { FC, useEffect } from 'react';
-import { createMessage, verifyMessage } from '~/utils/getsignMessage';
-import IconButtonBadge from './list/ListButton';
-import UserNavMenu from './navbar-menu/UserNavMenu';
-import * as anchor from '@coral-xyz/anchor';
 import { useRouter } from 'next/router';
+import { useUserWalletVerification } from '~/context/UserWalletVerificationContext';
 import MemoizedIconButtonBadge from './list/ListButton';
+import UserNavMenu from './navbar-menu/UserNavMenu';
 
-const NavbarCTA: FC = () => {
-  const { publicKey, disconnect, connecting, connected, signMessage } =
-    useWallet();
+export interface UserContextProps {
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+  status: string;
+}
+
+const NavbarCTA = () => {
   const router = useRouter();
-  const { status } = useSession();
-
-  let CTA;
-
-  useEffect(() => {
-    const check = async () => {
-      if (connected && signMessage && publicKey) {
-        try {
-          const msg = await createMessage();
-          const sig = await signMessage(msg);
-          console.log(publicKey);
-
-          const final = await verifyMessage(
-            anchor.utils.bytes.bs58.encode(sig),
-            publicKey
-          );
-          console.log(final, '--client final', publicKey);
-
-          const signInResponse = await signIn('credentials', {
-            callbackUrl: '/',
-            redirect: false,
-            wallet: publicKey.toBase58(),
-            signature: anchor.utils.bytes.bs58.encode(sig),
-          });
-          if (signInResponse?.status === 401) {
-            console.log('now redirect to create-profile which is prefetched');
-            router.push('/create-profile');
-          }
-        } catch (error) {
-          if ((error as Error).message === 'User rejected the request.') {
-            disconnect()
-              .then(() => {
-                signOut({
-                  redirect: false,
-                });
-              })
-              .catch((e) => {
-                console.log(e);
-              });
-            // show a banner for reject
-          } else {
-            // some error
-          }
-        }
-      }
-    };
-    check();
-  }, [connecting]);
-
-  switch (status) {
-    case 'loading':
-      CTA = (
-        <Skeleton
-          isLoaded
-          fadeDuration={1}
-          rounded={'md'}
-          w="8rem"
-          height="full"
-          startColor="#121219"
-          endColor="#37383E"
-        />
-      );
-      break;
-    case 'authenticated':
-      CTA = (
-        <HStack gap={{ base: '2px', md: '16px' }}>
-          <>
-            <MemoizedIconButtonBadge />
-            <UserNavMenu />
-          </>
-        </HStack>
-      );
-      break;
-    default:
-      CTA = publicKey ? (
-        <Center
-          as="button"
-          onClick={disconnect}
-          w={{ base: '4rem', md: '6rem' }}
-        >
-          {router.pathname === '/create-profile' ? '' : <Spinner size="sm" />}
-        </Center>
-      ) : (
-        <Center w="10rem">
-          <WalletMultiButton
-            onClick={(e) => {
-              console.log(e, 'dfd');
-            }}
-          />
-        </Center>
-      );
+  const { publicKey, disconnect } = useWallet();
+  const { status } = useUserWalletVerification();
+  console.log('session status in cta - ', status);
+  // If on create-profile page, don't show anything
+  if (router.pathname === '/create-profile') {
+    return null;
   }
 
-  return <>{CTA}</>;
+  // Based on status, render appropriate component
+  if (status === 'loading') {
+    return (
+      <Skeleton
+        isLoaded
+        fadeDuration={1}
+        startColor="#121219"
+        endColor="#37383E"
+      />
+    );
+  }
+
+  if (status === 'authenticated') {
+    return (
+      <HStack gap={{ base: '2px', md: '16px' }}>
+        <MemoizedIconButtonBadge />
+        <UserNavMenu />
+      </HStack>
+    );
+  }
+
+  // Default case
+  return publicKey ? (
+    <Center as="button" onClick={disconnect}>
+      <Spinner size="sm" color="teal" />
+    </Center>
+  ) : (
+    <Center>
+      <WalletMultiButton>Connect Wallet</WalletMultiButton>
+    </Center>
+  );
 };
 
 export default NavbarCTA;

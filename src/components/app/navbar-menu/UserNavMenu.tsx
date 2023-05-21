@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { signOut, useSession } from 'next-auth/react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { BiChevronDown, BiUser } from 'react-icons/bi';
 import { MdPowerSettingsNew, MdUpload } from 'react-icons/md';
@@ -31,9 +32,11 @@ const UserNavMenu = () => {
         signOut({
           redirect: false,
         });
+        // refresh the page to clear the cache
+        localStorage.removeItem('walletName');
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((e: any) => {
+        throw new Error(e.message || 'Error while signing out');
       });
   }
 
@@ -53,10 +56,6 @@ const UserNavMenu = () => {
           leftIcon={<BiUser size={20} color={'#ADB8B6'} />}
           iconSpacing="8px"
           p={{ base: '12px', md: '8px' }}
-          onClick={() => {
-            console.log('redirect to profile - ', session.user.username);
-            router.push('/' + session.user.username);
-          }}
           sx={{
             width: '-webkit-fill-available',
           }}
@@ -66,6 +65,8 @@ const UserNavMenu = () => {
           _active={{
             backgroundColor: '#141414',
           }}
+          as={Link}
+          href={'/' + session.user.username}
         >
           <Box as="p" textStyle={'body4'}>
             Profile
@@ -82,10 +83,6 @@ const UserNavMenu = () => {
           leftIcon={<MdUpload size={20} color={'#ADB8B6'} />}
           iconSpacing="8px"
           p={{ base: '12px', md: '8px' }}
-          onClick={() => {
-            console.log('pushing to submit project');
-            router.push('/submit-project');
-          }}
           sx={{
             width: '-webkit-fill-available',
           }}
@@ -95,6 +92,8 @@ const UserNavMenu = () => {
           _active={{
             backgroundColor: '#141414',
           }}
+          as={Link}
+          href={'/submit-project'}
         >
           <Box as="p" textStyle={'body4'}>
             Submit Project

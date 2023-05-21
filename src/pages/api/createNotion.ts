@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next';
-import axios from 'axios';
 import { ProjectsModel } from '@prisma/client';
+import axios from 'axios';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 const token = `${process.env.NEXT_PUBLIC_NOTION_TOKEN}` as string;
 
@@ -11,9 +11,9 @@ enum NotionConfig {
 }
 
 const ProjectStatus: any = {
-  review: 'under_review',
-  verified: 'verification_successful',
-  failed: 'verification_failed',
+  REVIEW: 'under_review',
+  VERIFIED: 'verification_successful',
+  FAILED: 'verification_failed',
 };
 
 export default async function handler(
@@ -161,8 +161,6 @@ export default async function handler(
 
     return res.send(JSON.stringify(response));
   } catch (error) {
-    console.log(error);
-
     return res.send(null);
   }
 }

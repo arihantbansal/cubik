@@ -1,6 +1,6 @@
- import { ProjectsModel } from '@prisma/client';
-import produce from 'immer';
-import {create} from 'zustand';
+import { ProjectsModel } from '@prisma/client';
+import { produce } from 'immer';
+import { create } from 'zustand';
 
 type Store = {
   projectList: ProjectsModel[];

@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Slider,
   SliderFilledTrack,
   SliderThumb,
@@ -9,13 +8,8 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import GraphProps from '~/types/graphProps';
-import {
-  calculateProjectMatchingFund,
-  Grant,
-} from '~/utils/calculateProjectMatchingFund';
 import { trpc } from '~/utils/trpc';
 import { GraphLine } from './GraphLines';
 
@@ -23,58 +17,47 @@ const Graph: React.FC<GraphProps> = ({
   width,
   height,
   donationAmount,
-  setDonationAmount,
+  setValue,
   maximumDonationValue,
+  projectId,
 }) => {
   const router = useRouter();
   const a = trpc.project.projectGraph.useQuery({
     id: router.query.projectId as string,
   });
 
-  console.log(a.data?.round, 's');
-
   const contributionMutation = trpc.contribution.create.useMutation();
-  const data = useMemo(
-    () =>
-      calculateProjectMatchingFund(
-        maximumDonationValue, // maxDonation
-        1, // step
-        [1, 3, 4, 5], // projectContributions
-        [{ funding: [1, 2, 3, 4, 5, 6] }, { funding: [2, 1, 1, 6, 7] }], // grants
-        10000 // availableMatch
-      ),
-    []
-  );
-  console.log('data -', data);
+  const data: { donation: number; additionalMatch: number }[] = [];
+
+  const exponent = 2;
+
+  const handleSliderChange = (value: number) => {
+    // setValue(Math.round(value));
+  };
+
   return (
-    <VStack width={'100%'} gap="0">
-      <Button
-        onClick={() => {
-          contributionMutation.mutate({
-            projectId: router.query.projectId as string,
-            roundId: 'e663f5b7-aa00-4856-8ee2-263498a4bc9a',
-            split: 0,
-            totalAmount: 33,
-            token: 'da',
-            tx: 'wd',
-            usd: 33,
-            userId: '6fbb8e94-440d-4506-85f5-ae87dce9c2e2',
-          });
-        }}
+    <VStack flex="1" p="1rem" width={'100%'} gap="0">
+      <Box
+        ml="0.8rem"
+        as="svg"
+        viewBox={`-5 0 ${width} ${height}`}
+        width="100%"
       >
-        sdf
-      </Button>
-      <Box as="svg" viewBox={`0 0 ${width} ${height}`} width="100%">
         <GraphLine
+          key={1}
           width={width}
           height={height}
           data={data}
+          availableMatch={1000}
+          maximumDonationValue={maximumDonationValue}
           donationAmount={donationAmount}
         />
         {/* <BonkLine
+          key={2}
           width={width}
           height={height}
           data={bonkData}
+          availableMatch={2000}
           donationAmount={donationAmount}
         /> */}
       </Box>
@@ -83,16 +66,14 @@ const Graph: React.FC<GraphProps> = ({
         aria-label="donation-amount"
         defaultValue={donationAmount}
         min={0}
-        max={maximumDonationValue}
+        max={Math.pow(maximumDonationValue, 1 / exponent)}
         step={1}
-        onChange={(value) => {
-          setDonationAmount(value);
-        }}
+        onChange={(value) => handleSliderChange(value)}
         w={'94%'}
         mt="-5px !important"
-        mx={10}
+        transform={'translateX(18px)'}
         py="0"
-        value={donationAmount} // Add this line to sync the Slider with the donationAmount
+        value={Math.round(Math.pow(donationAmount, 1 / exponent))}
       >
         {/* <SliderMark
           fontSize={'sm'}

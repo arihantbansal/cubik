@@ -1,11 +1,14 @@
 import { Tooltip } from '@chakra-ui/react';
 import * as d3 from 'd3';
+import React from 'react';
 import FlipNumbers from 'react-flip-numbers';
 
 interface GraphLineProps {
   width: number;
   height: number;
   data: { donation: number; additionalMatch: number }[];
+  availableMatch: number;
+  maximumDonationValue: number;
   donationAmount: number;
 }
 
@@ -13,44 +16,49 @@ export const GraphLine: React.FC<GraphLineProps> = ({
   width,
   height,
   data,
+  availableMatch,
+  maximumDonationValue,
   donationAmount,
 }) => {
   const margin = {
     top: 10,
-    left: 5,
-    bottom: 0,
-    right: 5,
+    left: 10,
+    bottom: -1,
+    right: 10,
   };
+
+  const exponent = 2;
   const xScale = d3
-    .scaleLinear() // @ts-ignore
-    .domain(d3.extent(data.map((d) => d.donation)))
-    .range([margin.left, width - margin.right]);
+    .scaleLinear()
+    .domain([0, Math.pow(maximumDonationValue, exponent)])
+    .range([0, width - margin.left - margin.right]);
 
   const yScale = d3
-    .scaleLinear() // @ts-ignore
-    .domain(d3.extent(data.map((d) => d.additionalMatch)))
+    .scaleLinear()
+    .domain(
+      (d3.extent(data, (d) => d.additionalMatch) as [number, number]) || [0, 1] // Change here
+    )
     .range([height - margin.bottom, margin.top]);
 
   const line = d3
-    .line() // @ts-ignore
-    .x((d) => xScale(d.donation)) // @ts-ignore
+    .line<{ donation: number; additionalMatch: number }>()
+    .x((d) => xScale(Math.pow(d.donation, exponent)))
     .y((d) => yScale(d.additionalMatch));
 
-  // @ts-ignore
-  const dPath = line(data);
+  const dPath = line(data) as string | undefined;
 
-  const markerX = xScale(donationAmount);
+  const markerX = xScale(Math.round(Math.pow(donationAmount, exponent)));
   const markerY = yScale(
-    // @ts-ignore
     data.find((d) => Math.abs(d.donation - donationAmount) < 0.1)
-      .additionalMatch
+      ?.additionalMatch ?? 0
   ); // Get the additionalMatch value at the marker point
+
   const markerData = data.find(
     (d) => Math.abs(d.donation - donationAmount) < 0.1
   );
-  const markerAdditionalMatch: number = markerData
-    ? markerData.additionalMatch
-    : 0;
+  const markerAdditionalMatch: number = markerData?.additionalMatch ?? 0;
+  const markerInputValue: number = markerData?.donation ?? 0;
+
   return (
     <>
       <line
@@ -59,10 +67,10 @@ export const GraphLine: React.FC<GraphLineProps> = ({
         y1={markerY}
         y2={height}
         stroke="#636666"
-        strokeDasharray="3"
-        strokeWidth="0.5"
+        strokeDasharray="2"
+        strokeWidth="0.2"
       />
-      <path d={dPath} fill="none" stroke="#2775CA" strokeWidth="2" />
+      <path d={dPath} fill="none" stroke="#2775CA" strokeWidth="1.2" />
       <Tooltip
         isOpen={true}
         background={'transparent'}
@@ -71,11 +79,10 @@ export const GraphLine: React.FC<GraphLineProps> = ({
             height={16}
             width={12}
             color="white"
-            numberStyles={{
-              fontWeight: 'bold',
-              fontSize: '22px',
-            }}
-            //background="black"
+            // numberStyles={{
+            //   fontWeight: 'bold',
+            //   fontSize: '22px',
+            // }}
             play
             perspective={300}
             numbers={'$' + markerAdditionalMatch.toFixed(1)}
@@ -84,19 +91,18 @@ export const GraphLine: React.FC<GraphLineProps> = ({
         color="#fff"
         fontWeight={'700'}
         fontSize="16px"
-        //textShadow="0 0 0 #fff"
         placement="right"
       >
         <svg
-          x={markerX - 5}
-          y={markerY - 5}
-          width="10"
-          height="10"
+          x={markerX - 4}
+          y={markerY - 4}
+          width="8"
+          height="8"
           viewBox="0 0 10 10"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g clip-path="url(#clip0_789_9405)">
+          <g clipPath="url(#clip0_789_9405)">
             <path
               d="M5 10C7.77085 10 10 7.77085 10 5C10 2.22915 7.77085 0 5 0C2.22915 0 0 2.22915 0 5C0 7.77085 2.22915 10 5 10Z"
               fill="#2775CA"

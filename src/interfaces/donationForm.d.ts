@@ -1,8 +1,9 @@
 import { ProjectsModel } from '@prisma/client';
+import { tokenGroup } from './token';
 
 export interface DonationFormType {
   amount: number;
-  token: string;
+  token: tokenGroup;
   matchingPoolDonation: number;
 }
 
