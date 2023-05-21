@@ -7,11 +7,11 @@ const { definePartsStyle, defineMultiStyleConfig } =
 const baseStyle = definePartsStyle({
   // define the part you're going to style
   container: {
-    bg: 'orange.400',
-    color: 'blackAlpha.700',
+    bg: '#222222',
+    color: '#B1A9A9',
   },
   label: {
-    fontSize: { base: '12px', md: '14px' },
+    fontSize: { base: '8px', md: '10px' },
   },
 });
 const colorful = definePartsStyle({
@@ -20,9 +20,16 @@ const colorful = definePartsStyle({
     bg: '#5CFF8710',
     color: '#5CFF87',
     rounded: '8px',
-    padding: '0.3rem 1rem',
+    padding: '0.4rem',
+    minH: '1.75rem',
+    minW: '1.75rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  label: {},
+  label: {
+    fontSize: { base: '9px', md: '10px' },
+  },
 });
 
 export const Tag = defineMultiStyleConfig({
