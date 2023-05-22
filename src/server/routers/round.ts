@@ -38,6 +38,39 @@ export const roundRouter = router({
       });
       return roundRes;
     }),
+  // type
+  details: procedure
+    .input(
+      z.object({
+        id: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const roundRes = await prisma.round.findFirst({
+        where: {
+          id: input.id,
+        },
+        include: {
+          ProjectJoinRound: {
+            include: {
+              project: {
+                include: {
+                  owner: true,
+                },
+              },
+            },
+          },
+          Contribution: {
+            include: {
+              ProjectsModel: true,
+              user: true,
+            },
+          },
+        },
+      });
+      return roundRes;
+    }),
+
   findActive: procedure.query(async ({ ctx }) => {
     const roundRes = await prisma.round.findMany({
       where: {

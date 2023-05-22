@@ -11,7 +11,7 @@ const baseStyle = definePartsStyle({
     outline: '1px solid #141414',
     border: '1px solid',
     borderColor: '#141414',
-    fontSize: '14px',
+    fontSize: { base: '8px', md: '10px' },
     borderRadius: '8px',
     height: '40px',
     _focus: {
@@ -44,7 +44,7 @@ const baseStyle = definePartsStyle({
       rounded: '8px',
     },
     _placeholder: {
-      fontSize: { base: '12px', md: '14px' },
+      fontSize: { base: '8px', md: '10px' },
       color: '#3B3D3D',
     },
   },

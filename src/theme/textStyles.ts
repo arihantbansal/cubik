@@ -102,6 +102,20 @@ export const textStyles = {
     letterSpacing: '0.16em',
     textTransform: 'uppercase',
   },
+  overline4: {
+    fontWeight: '600',
+    fontSize: '9px',
+    lineHeight: '11px',
+    letterSpacing: '0.15em',
+    textTransform: 'uppercase',
+  },
+  overline5: {
+    fontWeight: '600',
+    fontSize: '8px',
+    lineHeight: '10px',
+    letterSpacing: '0.14em',
+    textTransform: 'uppercase',
+  },
   body1: {
     fontWeight: '400',
     fontSize: '24px',

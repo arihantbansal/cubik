@@ -1,39 +1,11 @@
-import { Box, Center, HStack, Stack, VStack } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { Box, HStack, Stack, VStack } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
+import RoundStatus from '~/components/common/dates/Status';
 
 interface CountdownTimerProps {
   finalDate: Date;
 }
-
-const getDateStatus = (startDate: Date, endDate: Date) => {
-  console.log(
-    'start date is',
-    startDate.toISOString(),
-    ' end date is - ',
-    endDate.toISOString()
-  );
-  const now = new Date();
-
-  // Convert the dates to timestamps for easier comparison
-  const startTimestamp = startDate.getTime();
-  const endTimestamp = endDate.getTime();
-  const nowTimestamp = now.getTime();
-
-  // Calculate the difference in days
-  const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-  const diffStartDays = Math.ceil((startTimestamp - nowTimestamp) / oneDay);
-  const diffEndDays = Math.ceil((endTimestamp - nowTimestamp) / oneDay);
-
-  if (nowTimestamp <= startTimestamp) {
-    return `Round starts in ${diffStartDays} days`;
-  } else if (nowTimestamp <= endTimestamp) {
-    return `Ending in ${diffEndDays} days`;
-  } else {
-    return `Ended ${-diffEndDays} days ago`;
-  }
-};
 
 const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
   const getTimeRemaining = (endDate: Date) => {
@@ -150,92 +122,6 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
   );
 };
 
-interface Ripple {
-  x: number;
-  y: number;
-  size: number;
-}
-
-function RippleEffect() {
-  const rippleRef = useRef<Ripple[]>([]);
-
-  const addRipple = (event: React.MouseEvent<HTMLDivElement>) => {
-    const newRipple: Ripple = {
-      x: event.clientX,
-      y: event.clientY,
-      size: 0,
-    };
-    rippleRef.current.push(newRipple);
-  };
-
-  return (
-    <Center
-      onClick={addRipple}
-      rounded={'full'}
-      p="0.25rem"
-      background="#4ADE8020"
-    >
-      {rippleRef.current.map((ripple, index) => (
-        <motion.div
-          key={index}
-          style={{
-            position: 'absolute',
-            left: ripple.x,
-            top: ripple.y,
-            transform: 'translate(-50%, -50%)',
-            borderRadius: '50%',
-            background: '#4ADE80',
-          }}
-          initial={{ width: 0, height: 0, opacity: 1, scale: 1 }}
-          animate={{
-            width: 2 * ripple.size,
-            height: 2 * ripple.size,
-            opacity: 0,
-            scale: 2,
-          }}
-          transition={{ duration: 0.5, ease: 'easeInOut' }}
-          onAnimationComplete={() => {
-            rippleRef.current.splice(index, 1);
-          }}
-        />
-      ))}
-      <Center
-        rounded="full"
-        w="0.5rem"
-        h="0.5rem"
-        background="#4ADE80"
-        boxShadow={`0px 0px ${rippleRef.current.length * 10}px #4ADE80`}
-      />
-    </Center>
-  );
-}
-
-const RoundStatus = () => {
-  const finalDate = new Date('2023-05-02T00:00:00');
-
-  return (
-    <VStack
-      gap={{ base: '0.7rem', md: '1rem' }}
-      align={{ base: 'start', md: 'center' }}
-    >
-      <Center
-        flexDirection="row"
-        p="0.4rem 0.8rem"
-        gap="0.5rem"
-        rounded="full"
-        bg="#091414"
-        color="#4ADE80"
-      >
-        <RippleEffect />
-        <Box as="p" textStyle="overline3" textTransform="uppercase">
-          On going round ends in
-        </Box>
-      </Center>
-      <CountdownTimer finalDate={finalDate} />
-    </VStack>
-  );
-};
-
 const FundingRoundBanner = ({
   startDate,
   endDate,
@@ -305,20 +191,7 @@ const FundingRoundBanner = ({
       >
         <VStack w="full" align={'start'} spacing="48px">
           <VStack w="full" align={'start'} spacing="24px">
-            <Center
-              flexDirection="row"
-              p="8px 12px"
-              gap="0.5rem"
-              rounded="full"
-              bg="#31F57920"
-              color="#4ADE80"
-            >
-              <RippleEffect />
-              <Box as="p" textStyle={{ base: 'body6', md: 'body5' }}>
-                {getDateStatus(startDate, endDate)}
-              </Box>
-            </Center>
-
+            <RoundStatus startDate={startDate} endDate={endDate} />
             <Stack
               direction={{ base: 'column', md: 'row' }}
               justify={'space-between'}

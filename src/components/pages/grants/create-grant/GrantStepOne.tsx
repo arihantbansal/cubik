@@ -1,55 +1,50 @@
 import {
   Box,
-  Button,
+  CardBody,
   FormControl,
   FormErrorMessage,
   FormLabel,
   HStack,
   Input,
   Select,
+  Stack,
   Textarea,
   VStack,
 } from '@chakra-ui/react';
 import { addDays } from 'date-fns';
 import enGB from 'date-fns/locale/en-GB';
-import { useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import {
-  FieldErrors,
-  FieldValues,
-  UseFormHandleSubmit,
-  UseFormRegister,
-} from 'react-hook-form';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import DatePickerInput from '~/components/common/inputs/DatePickerInput';
+import { FormData } from '~/pages/grants/new-grant';
 
 registerLocale('en-gb', enGB);
 
 type GrantsStepOneProps = {
-  onSubmit: (_grant: any) => void;
-  errors: FieldErrors<FieldValues>;
-  handleSubmit: UseFormHandleSubmit<FieldValues>;
-  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors<FormData>;
+  register: UseFormRegister<FormData>;
+  startDate: Date;
+  setStartDate: (_date: Date) => void;
+  endDate: Date;
+  setEndDate: (_date: Date) => void;
 };
 
 const GrantStepOne = ({
-  onSubmit,
   errors,
-  handleSubmit,
   register,
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
 }: GrantsStepOneProps) => {
   const tomorrow = addDays(new Date(), 1);
-  const [endDate, setEndDate] = useState(tomorrow);
-  const [startDate, setStartDate] = useState(tomorrow);
+
   return (
-    <form
-      style={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'start',
-        gap: '24px',
-      }}
-      onSubmit={handleSubmit(onSubmit)}
+    <CardBody
+      rounded={'8px'}
+      gap="40px"
+      backgroundColor={'transparent'}
+      minH="70vh"
     >
       <VStack alignItems={'start'}>
         <Box
@@ -69,85 +64,122 @@ const GrantStepOne = ({
           through quadratic funding and community voting
         </Box>
       </VStack>
-      <FormControl isRequired w="full" isInvalid={Boolean(errors.projectName)}>
-        <FormLabel
-          fontSize={{ base: '12px', md: '14px' }}
-          pb="0.5rem"
-          htmlFor="name"
-        >
-          Round Name
-        </FormLabel>
-        <Input
-          id="name"
-          placeholder="Enter your rounds name"
-          _placeholder={{
-            fontSize: { base: '12px', md: '14px' },
-            color: '#3B3D3D',
-          }}
-          {...register('name', {
-            required: true,
-            maxLength: { value: 36, message: 'Max length is 36' },
-          })}
-        />
-        {errors.name && (
-          <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
-            <>{errors.name.message}</>
-          </FormErrorMessage>
-        )}
-      </FormControl>
-      <FormControl isRequired w="full" isInvalid={Boolean(errors.projectName)}>
-        <FormLabel
-          fontSize={{ base: '12px', md: '14px' }}
-          pb="0.5rem"
-          htmlFor="pool"
-        >
-          Matching Pool Amount
-        </FormLabel>
-        <Input
-          id="pool"
-          placeholder="Matching Pool"
-          type="number"
-          _placeholder={{
-            fontSize: { base: '12px', md: '14px' },
-            color: '#3B3D3D',
-          }}
-          {...register('pool', {
-            required: true,
-          })}
-        />
-        {errors.pool && (
-          <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
-            <>{errors.pool.message}</>
-          </FormErrorMessage>
-        )}
-      </FormControl>
-      <FormControl isRequired w="full" isInvalid={Boolean(errors.projectName)}>
-        <FormLabel
-          fontSize={{ base: '12px', md: '14px' }}
-          pb="0.5rem"
-          htmlFor="projects"
-        >
-          Maximum Number of Participating Projects
-        </FormLabel>
-        <Input
-          id="projects"
-          placeholder="Participating Projects"
-          type="number"
-          _placeholder={{
-            fontSize: { base: '12px', md: '14px' },
-            color: '#3B3D3D',
-          }}
-          {...register('projects', {
-            required: true,
-          })}
-        />
-        {errors.projects && (
-          <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
-            <>{errors.projects.message}</>
-          </FormErrorMessage>
-        )}
-      </FormControl>
-      <HStack w="full" gap="24px">
+      <Stack
+        w="full"
+        gap={{ base: '32px', md: '32px' }}
+        direction={{ base: 'column', md: 'row' }}
+      >
+        <FormControl isRequired w="full" isInvalid={Boolean(errors.name)}>
+          <FormLabel
+            fontSize={{ base: '12px', md: '14px' }}
+            pb="0.5rem"
+            htmlFor="name"
+          >
+            Round Name
+          </FormLabel>
+          <Input
+            id="name"
+            placeholder="Enter your rounds name"
+            _placeholder={{
+              fontSize: { base: '12px', md: '14px' },
+              color: '#3B3D3D',
+            }}
+            {...register('name', {
+              required: true,
+              maxLength: { value: 36, message: 'Max length is 36' },
+            })}
+          />
+          {errors.name && (
+            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+              <>{errors.name.message}</>
+            </FormErrorMessage>
+          )}
+        </FormControl>
+        <FormControl w="full">
+          <FormLabel
+            fontSize={{ base: '12px', md: '14px' }}
+            pb="0.5rem"
+            htmlFor="name"
+          >
+            Round managers
+          </FormLabel>
+          <Input
+            id="round_managers"
+            placeholder="Search Username"
+            _placeholder={{
+              fontSize: { base: '12px', md: '14px' },
+              color: '#3B3D3D',
+            }}
+            {...register('round_managers', {
+              required: false,
+            })}
+          />
+          {errors.name && (
+            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+              <>{errors.name.message}</>
+            </FormErrorMessage>
+          )}
+        </FormControl>
+      </Stack>
+      <Stack
+        w="full"
+        gap={{ base: '24px', md: '32px' }}
+        direction={{ base: 'row', md: 'row' }}
+      >
+        <FormControl isRequired w="full" isInvalid={Boolean(errors.pool)}>
+          <FormLabel
+            fontSize={{ base: '12px', md: '14px' }}
+            pb="0.5rem"
+            htmlFor="pool"
+          >
+            Matching Pool Amount
+          </FormLabel>
+          <Input
+            id="pool"
+            placeholder="Matching Pool"
+            type="number"
+            _placeholder={{
+              fontSize: { base: '12px', md: '14px' },
+              color: '#3B3D3D',
+            }}
+            {...register('pool', {
+              required: true,
+            })}
+          />
+          {errors.pool && (
+            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+              <>{errors.pool.message}</>
+            </FormErrorMessage>
+          )}
+        </FormControl>
+        <FormControl isRequired w="full" isInvalid={Boolean(errors.projects)}>
+          <FormLabel
+            fontSize={{ base: '12px', md: '14px' }}
+            pb="0.5rem"
+            htmlFor="projects"
+          >
+            Number of Projects
+          </FormLabel>
+          <Input
+            id="projects"
+            placeholder="Participating Projects"
+            type="number"
+            _placeholder={{
+              fontSize: { base: '12px', md: '14px' },
+              color: '#3B3D3D',
+            }}
+            {...register('projects', {
+              required: true,
+            })}
+          />
+          {errors.projects && (
+            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+              <>{errors.projects.message}</>
+            </FormErrorMessage>
+          )}
+        </FormControl>
+      </Stack>
+      <HStack w="full" gap={{ base: '24px', md: '32px' }}>
         <FormControl variant="withAddOn" isRequired w="full">
           <FormLabel fontSize={{ base: '12px', md: '14px' }} pb="0.5rem">
             Start Date
@@ -173,13 +205,13 @@ const GrantStepOne = ({
           />
         </FormControl>
       </HStack>
-      <FormControl isRequired isInvalid={Boolean(errors.tagline)}>
+      <FormControl isRequired isInvalid={Boolean(errors.short_description)}>
         <FormLabel
           fontSize={{ base: '12px', md: '14px' }}
           pb="0.5rem"
           htmlFor="short_description"
         >
-          Description
+          Tagline
         </FormLabel>
         <Textarea
           height={'100px'}
@@ -214,7 +246,7 @@ const GrantStepOne = ({
           id="colorScheme"
           placeholder="Select color scheme"
           _placeholder={{
-            fontSize: { base: '12px', md: '14px' },
+            fontSize: { base: '10px', md: '12px' },
             color: '#3B3D3D',
           }}
           {...register('colorScheme')}
@@ -231,13 +263,7 @@ const GrantStepOne = ({
           </FormErrorMessage>
         )}
       </FormControl>
-      <HStack w="full" pt="24px" justify={'space-between'}>
-        <Button variant={'outline'}>Cancel</Button>
-        <Button variant="apply_for_grant" type="submit">
-          Submit Grant
-        </Button>
-      </HStack>
-    </form>
+    </CardBody>
   );
 };
 
