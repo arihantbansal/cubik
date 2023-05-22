@@ -127,6 +127,7 @@ model ProjectJoinRound {
   tx           String                 @db.VarChar(500)
   roundId      String
   amountRaise  Float?                 @default(0)
+  contributions Int              @default(0)
   status       ProjectJoinRoundStatus @default(PENDING)
   createdAt    DateTime               @default(now())
   updatedAt    DateTime               @updatedAt
@@ -141,7 +142,6 @@ model Round {
   id                     String             @id @default(uuid()) @map("_id")
   roundName              String
   matchedPool            Float              @default(0)
-  communityContributions Float              @default(0)
   notionPage             String             @db.VarChar(500)
   projectCount           Int                @default(0)
   active                 Boolean            @default(true)

@@ -33,8 +33,17 @@ import { ProjectCTAs } from './ProjectCTAs';
 type ProjectCreatorTeamMemberProps = {
   teamMember: ProjectCreatorTeamType;
 };
+interface Props {
+  isLoading: boolean;
+  funding: number;
+  contributers: number;
+}
 
-export const ProjectFundingData = ({ isLoading }: { isLoading: boolean }) => {
+export const ProjectFundingData = ({
+  isLoading,
+  funding,
+  contributers,
+}: Props) => {
   return (
     <VStack gap="16px" align={'start'} w="full">
       <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
@@ -77,7 +86,7 @@ export const ProjectFundingData = ({ isLoading }: { isLoading: boolean }) => {
           <HStack w="full" align={'start'}>
             <VStack align={'start'} gap="8px">
               <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
-                $0.0
+                ${funding}
               </Box>
 
               <Box as="p" textStyle={'body4'} color={'neutral.8'}>
@@ -182,7 +191,7 @@ export const ProjectFundingData = ({ isLoading }: { isLoading: boolean }) => {
           <HStack w="full" align={'start'}>
             <VStack align={'start'} gap="8px">
               <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
-                -
+                {contributers}
               </Box>
               <Box as="p" textStyle={'body4'} color={'neutral.8'}>
                 Contributors
@@ -441,7 +450,17 @@ export const ProjectCreatorAndLinks = ({
       display={{ base: 'none', lg: 'flex' }}
     >
       <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />
-      <ProjectFundingData isLoading={isLoading} />
+      <ProjectFundingData
+        isLoading={isLoading}
+        contributers={
+          projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')
+            ?.contributions ?? 0
+        }
+        funding={
+          projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')
+            ?.amountRaise ?? 0
+        }
+      />
       <ProjectOwner isLoading={isLoading} projectDetails={projectDetails} />
       <VStack
         gap="16px"
