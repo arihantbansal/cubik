@@ -52,6 +52,7 @@ export const ProjectListWithFilter: React.FC = () => {
   const { data: projects, isLoading } = trpc.project.findMany.useQuery();
   const { data: roundsData, isLoading: roundsLoading } =
     trpc.round.findActive.useQuery();
+
   console.log('projects data - ', projects);
   const [selectedCategory, setSelectedCategory] = useState<
     CategoryType | undefined

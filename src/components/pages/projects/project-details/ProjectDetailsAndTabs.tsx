@@ -130,7 +130,19 @@ const MobileOnlyViews = ({
           </Skeleton>
         </HStack>
         <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />{' '}
-        <ProjectFundingData isLoading={isLoading} />
+        <ProjectFundingData
+          isLoading={isLoading}
+          contributers={
+            projectDetails?.ProjectJoinRound.find(
+              (e) => e.status === 'APPROVED'
+            )?.contributions ?? 0
+          }
+          funding={
+            projectDetails?.ProjectJoinRound.find(
+              (e) => e.status === 'APPROVED'
+            )?.amountRaise ?? 0
+          }
+        />
         <ProjectOwner isLoading={isLoading} projectDetails={projectDetails} />
       </VStack>
       {projectDetails && (

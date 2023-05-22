@@ -19,7 +19,7 @@ export interface FundingRound {
   roundNumber?: number;
   roundDetails?: any; // round details will go here
   totalRaised: number;
-  communityContributions: number;
+  contributions: number;
   matchedAmount?: number;
   estimatedTotalRaised?: number;
   estimatedMatchingPool?: number;
