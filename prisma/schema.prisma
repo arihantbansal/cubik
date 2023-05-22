@@ -126,6 +126,7 @@ model ProjectJoinRound {
   projectId    String
   tx           String                 @db.VarChar(500)
   roundId      String
+  amountRaise  Float?                 @default(0)
   status       ProjectJoinRoundStatus @default(PENDING)
   createdAt    DateTime               @default(now())
   updatedAt    DateTime               @updatedAt

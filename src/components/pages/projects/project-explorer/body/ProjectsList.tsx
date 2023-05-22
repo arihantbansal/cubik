@@ -176,7 +176,11 @@ const ProjectCard = ({ project }: PropsType) => {
                 color="#A8F0E6"
                 textStyle={{ base: 'title4', md: 'title3' }}
               >
-                ${formatNumberWithK(10)}
+                $
+                {formatNumberWithK(
+                  project.ProjectJoinRound.find((e) => e.status === 'APPROVED')
+                    ?.amountRaise ?? 0
+                )}
               </Box>
             </HStack>
             <HStack w="full" justify="space-between">
