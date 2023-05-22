@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';
 import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-details/ProjectDetailsAndTabs';
 import SEO from '~/components/SEO';
+import { Mixpanel } from '~/utils/mixpanel';
 import { trpc } from '~/utils/trpc';
 
 const ProjectDetails = () => {
@@ -11,7 +12,9 @@ const ProjectDetails = () => {
   const { data, isError, isLoading, error } = trpc.project.findOne.useQuery({
     id: router.query.projectId as string,
   });
-
+  Mixpanel.track('project_page_load', {
+    id: router.query.projectId,
+  });
   if (isError) {
     return <>{error.message}</>;
   }

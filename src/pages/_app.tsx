@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import AppLayout from '~/components/app';
 import theme from '~/config/chakra.config';
+import { Mixpanel } from '~/utils/mixpanel';
 import { trpc } from '../utils/trpc';
 require('@solana/wallet-adapter-react-ui/styles.css');
 
@@ -19,6 +20,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) => {
+  Mixpanel.track('root_load');
   return (
     <QueryClientProvider client={queryClient}>
       <WalletContext>

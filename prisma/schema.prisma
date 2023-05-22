@@ -122,44 +122,44 @@ model Team {
 }
 
 model ProjectJoinRound {
-  id           String                 @id @default(uuid()) @map("_id")
-  projectId    String
-  tx           String                 @db.VarChar(500)
-  roundId      String
-  amountRaise  Float?                 @default(0)
-  contributions Int              @default(0)
-  status       ProjectJoinRoundStatus @default(PENDING)
-  createdAt    DateTime               @default(now())
-  updatedAt    DateTime               @updatedAt
-  project      ProjectsModel          @relation(fields: [projectId], references: [id])
-  fundingRound Round                  @relation(fields: [roundId], references: [id])
+  id            String                 @id @default(uuid()) @map("_id")
+  projectId     String
+  tx            String                 @db.VarChar(500)
+  roundId       String
+  amountRaise   Float?                 @default(0)
+  contributions Int                    @default(0)
+  status        ProjectJoinRoundStatus @default(PENDING)
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+  project       ProjectsModel          @relation(fields: [projectId], references: [id])
+  fundingRound  Round                  @relation(fields: [roundId], references: [id])
 
   @@index([projectId])
   @@index([roundId])
 }
 
 model Round {
-  id                     String             @id @default(uuid()) @map("_id")
-  roundName              String
-  matchedPool            Float              @default(0)
-  notionPage             String             @db.VarChar(500)
-  projectCount           Int                @default(0)
-  active                 Boolean            @default(true)
-  userId                 String
-  description            String             @default(dbgenerated("(_utf8mb4\\'\\')")) @db.Text
-  endtime                DateTime           @default(now())
-  contributions Float @default(0)
-  startTime              DateTime           @default(now())
-  tx                     String             @db.VarChar(500)
-  createdAt              DateTime           @default(now())
-  updatedAt              DateTime           @updatedAt
-  colorScheme            String             @default("teal")
-  short_description      String             @default("") @db.VarChar(2000)
-  markdownDetails        String             @default(dbgenerated("(_utf8mb4\\'\\')")) @db.Text
-  sponsor                Sponsor[]
-  User                   UserModel          @relation(fields: [userId], references: [id])
-  ProjectJoinRound       ProjectJoinRound[]
-  Contribution           Contribution[]
+  id                String             @id @default(uuid()) @map("_id")
+  roundName         String
+  matchedPool       Float              @default(0)
+  notionPage        String             @db.VarChar(500)
+  projectCount      Int                @default(0)
+  active            Boolean            @default(true)
+  userId            String
+  description       String             @default(dbgenerated("(_utf8mb4\\'\\')")) @db.Text
+  endtime           DateTime           @default(now())
+  contributions     Float              @default(0)
+  startTime         DateTime           @default(now())
+  tx                String             @db.VarChar(500)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  colorScheme       String             @default("teal")
+  short_description String             @default("") @db.VarChar(2000)
+  markdownDetails   String             @default(dbgenerated("(_utf8mb4\\'\\')")) @db.Text
+  sponsor           Sponsor[]
+  User              UserModel          @relation(fields: [userId], references: [id])
+  ProjectJoinRound  ProjectJoinRound[]
+  Contribution      Contribution[]
 
   @@index([userId])
 }

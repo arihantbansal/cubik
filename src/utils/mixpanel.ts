@@ -1,6 +1,7 @@
 import type { Dict, Query } from 'mixpanel-browser';
 import mixpanel from 'mixpanel-browser';
-mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL as string);
+import { env } from '~/env.mjs';
+mixpanel.init(env.NEXT_PUBLIC_MIXPANEL as string);
 
 export const Mixpanel = {
   identify: (id: string) => {
