@@ -143,6 +143,7 @@ model Round {
   roundName         String
   matchedPool       Float              @default(0)
   notionPage        String             @db.VarChar(500)
+  manager     String @default("")
   projectCount      Int                @default(0)
   active            Boolean            @default(true)
   userId            String
@@ -155,7 +156,6 @@ model Round {
   updatedAt         DateTime           @updatedAt
   colorScheme       String             @default("teal")
   short_description String             @default("") @db.VarChar(2000)
-  markdownDetails   String             @default(dbgenerated("(_utf8mb4\\'\\')")) @db.Text
   sponsor           Sponsor[]
   User              UserModel          @relation(fields: [userId], references: [id])
   ProjectJoinRound  ProjectJoinRound[]

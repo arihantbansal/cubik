@@ -17,6 +17,8 @@ export const roundRouter = router({
         short_description: z.string(),
         endtime: z.string(),
         startTime: z.string(),
+        description: z.string(),
+        manager: z.string(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -32,8 +34,13 @@ export const roundRouter = router({
           notionPage: input.notionPage,
           projectCount: input.projectCount,
           roundName: input.name,
-          description: '',
+          description: input.description,
           tx: input.tx,
+          colorScheme: input.colorScheme,
+          endtime: input.endtime,
+          startTime: input.startTime,
+          manager: input.manager,
+          short_description: input.short_description,
         },
       });
       return roundRes;
