@@ -6,6 +6,7 @@ import {
   CardFooter,
   CardHeader,
   Center,
+  Skeleton,
   Stack,
 } from '@chakra-ui/react';
 import { ProjectJoinRoundStatus, ProjectsModel } from '@prisma/client';
@@ -14,11 +15,11 @@ import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import { projectWithFundingRoundType } from '~/types/project';
 import { ProjectStatus } from '~/utils/getProjectStatus';
 import { trpc } from '~/utils/trpc';
-import FundingOverview from './project-admin-dashboard/FundingOverview';
-import Vault from './project-admin-dashboard/project-vault/Vault';
-import ProjectInsights from './project-admin-dashboard/ProjectInsights';
 import ProjectHeader from './ProjectHeader';
 import ProjectStatusBanner from './ProjectStatusBanner';
+import FundingOverview from './project-admin-dashboard/FundingOverview';
+import ProjectInsights from './project-admin-dashboard/ProjectInsights';
+import Vault from './project-admin-dashboard/project-vault/Vault';
 
 const ProjectAdminCard = ({
   activeProject,
@@ -36,13 +37,12 @@ const ProjectAdminCard = ({
   } = trpc.project.projectAdminDetails.useQuery({
     id: project.id,
   });
-  if (isLoading) {
-    return <Card> is Loading</Card>;
-  }
+
   if (isError) {
     return <Center>{error.message}</Center>;
   }
 
+  console.log('Project Data', projectData);
   return (
     <Card
       px="0px"
@@ -51,26 +51,43 @@ const ProjectAdminCard = ({
       w="100%"
       border={'none'}
     >
-      <ProjectStatusBanner
-        status={
-          ProjectStatus({
-            projectData: projectData as projectWithFundingRoundType,
-          })?.status as string
-        }
-        roundName={
-          ProjectStatus({
-            projectData: projectData as projectWithFundingRoundType,
-          })?.round
-            ? ProjectStatus({
-                projectData: projectData as projectWithFundingRoundType,
-              })?.round?.fundingRound.roundName
-            : undefined
-        }
-      />
+      <Skeleton
+        isLoaded={!isLoading}
+        fadeDuration={2}
+        opacity={isLoading ? 0.5 : 1}
+      >
+        <ProjectStatusBanner
+          startTime={
+            ProjectStatus({
+              projectData: projectData as projectWithFundingRoundType,
+            })?.startTime || undefined
+          }
+          endtime={
+            ProjectStatus({
+              projectData: projectData as projectWithFundingRoundType,
+            })?.endtime || undefined
+          }
+          status={
+            ProjectStatus({
+              projectData: projectData as projectWithFundingRoundType,
+            })?.status as string
+          }
+          roundName={
+            ProjectStatus({
+              projectData: projectData as projectWithFundingRoundType,
+            })?.round
+              ? ProjectStatus({
+                  projectData: projectData as projectWithFundingRoundType,
+                })?.round?.fundingRound.roundName
+              : undefined
+          }
+        />
+      </Skeleton>
       <CardHeader>
         <ProjectHeader
+          isLoading={isLoading}
           activeProject={activeProject}
-          project={projectData as projectWithFundingRoundType}
+          project={projectData}
         />
       </CardHeader>
       {ProjectStatus({

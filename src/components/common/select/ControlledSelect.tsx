@@ -1,13 +1,13 @@
 import { Box, Center } from '@chakra-ui/react';
 import {
-  components,
   OptionProps,
   Props,
   Select,
   SingleValueProps,
+  components,
 } from 'chakra-react-select';
 import { useEffect } from 'react';
-import { useController, UseControllerProps } from 'react-hook-form';
+import { UseControllerProps, useController } from 'react-hook-form';
 import {
   DonationFormType,
   ListDonationFormType,
@@ -111,7 +111,6 @@ export const ControlledSelect = ({
       chakraStyles={{
         option: (provided, state) => ({
           ...provided,
-          border: '1px solid red',
           bg: state.isSelected ? 'red.500' : 'green.500',
           _hover: {
             bg: 'pink.500',
@@ -133,7 +132,6 @@ export const ControlledSelect = ({
           fontWeight: '600',
           backgroundColor: '#001F1B !important',
           background: '#001F1B !important',
-          border: '1px solid red',
         }),
         valueContainer: (provided) => ({
           ...provided,

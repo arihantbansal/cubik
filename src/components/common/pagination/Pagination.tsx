@@ -44,12 +44,7 @@ const Pagination: React.FC<PaginationProps> = ({
   let lastPage = paginationRange[paginationRange.length - 1];
   const DOTS = '...';
   return (
-    <HStack
-      p={{ base: '0px', md: '12px 32px' }}
-      align={'center'}
-      justify="end"
-      border-="1px solid red"
-    >
+    <HStack p={{ base: '0px', md: '12px 32px' }} align={'center'} justify="end">
       <UnorderedList>
         <IconButton
           variant={'unstyled'}

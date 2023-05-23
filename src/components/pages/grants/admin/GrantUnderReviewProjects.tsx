@@ -329,7 +329,6 @@ const GrantUnderReviewProjects = ({
                   display="flex"
                   h={'fit-content'}
                   justifyContent="space-between"
-                  border="1px solid red"
                 >
                   <Button
                     w={{ base: 'full', md: '8rem' }}

@@ -37,7 +37,6 @@ const baseStyle = defineStyle({
   _invalid: {
     color: '#A8F0E6',
     rounded: '8px',
-    outline: '1px solid red',
   },
   _placeholder: {
     fontSize: { base: '12px', md: '14px' },

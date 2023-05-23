@@ -15,14 +15,16 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  Skeleton,
+  SkeletonCircle,
   Stack,
-  useDisclosure,
   VStack,
+  useDisclosure,
 } from '@chakra-ui/react';
 import {
   ProjectJoinRoundStatus,
-  ProjectsModel,
   ProjectVerifyStatus,
+  ProjectsModel,
 } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -36,12 +38,12 @@ import GetFormattedLink from '~/components/HOC/GetLink';
 import { projectWithFundingRoundType } from '~/types/project';
 import { getDomain } from '~/utils/getDomain';
 import { ProjectStatus } from '~/utils/getProjectStatus';
-import { ProjectSocials } from '../../projects/project-details/project-interactions/ProjectInteractions';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
 import { ProjectLink } from '../../projects/project-details/ProjectDetailsHeader';
+import { ProjectSocials } from '../../projects/project-details/project-interactions/ProjectInteractions';
+import ProjectStatusBanner from './ProjectStatusBanner';
 import ApplyForGrant from './project-admin-dashboard/ProjectAdminDetailsDrawer/ApplyForGrant';
 import EditProjectDetails from './project-admin-dashboard/ProjectAdminDetailsDrawer/EditProjectDetails';
-import ProjectStatusBanner from './ProjectStatusBanner';
 
 export enum drawerBodyViewEnum {
   PROJECT_DETAILS = 'project_details',
@@ -130,6 +132,7 @@ const ProjectDetails = ({
   setDrawerBodyView: any;
 }) => {
   const [showApplyToRound, setShowApplyToRound] = useState(false);
+
   useEffect(() => {
     console.log('project.status check');
     if (project.status === ProjectVerifyStatus.VERIFIED) {
@@ -154,7 +157,7 @@ const ProjectDetails = ({
     } else {
       setShowApplyToRound(false);
     }
-  }, [project.status]);
+  }, [project?.status]);
 
   const ProjectOptionsMenu = () => {
     return (
@@ -216,8 +219,8 @@ const ProjectDetails = ({
       <VStack align={'start'} w="full" gap="24px">
         <HStack w="full" justifyContent={'space-between'} align="top">
           <Avatar
-            src={project.logo}
-            name={project.name}
+            src={project?.logo}
+            name={project?.name}
             borderRadius="8px"
             width={{ base: '80px', md: '102px' }}
             height={{ base: '80px', md: '102px' }}
@@ -251,11 +254,11 @@ const ProjectDetails = ({
               textStyle={{ base: 'headline4', md: 'headline3' }}
               color="neutral.11"
             >
-              {project.name}
+              {project?.name}
             </Box>
           </HStack>
           <Box as="p" textStyle={'body9'} color="neutral.9">
-            {project.short_description}
+            {project?.short_description}
           </Box>
           <HStack w="full">
             <HStack w="full">
@@ -273,7 +276,7 @@ const ProjectDetails = ({
                   backgroundColor: 'brand.teal3',
                 }}
                 as="a"
-                href={project.project_link}
+                href={project?.project_link}
                 target="_blank"
               >
                 <Box
@@ -282,7 +285,7 @@ const ProjectDetails = ({
                   color="brand.teal.6"
                   pb="0.1rem"
                 >
-                  {getDomain(project.project_link)}
+                  {getDomain(project?.project_link)}
                 </Box>
               </Button>
               <ProjectSocials
@@ -314,7 +317,7 @@ const ProjectDetails = ({
       </Stack>
       <Center>
         <ProjectsDetailedDescription
-          description={project.long_description}
+          description={project?.long_description}
           maxH="full"
           overflow={'scroll'}
           isLoading={false}
@@ -325,27 +328,28 @@ const ProjectDetails = ({
 };
 
 const ProjectHeader = ({
+  isLoading,
   activeProject,
   project,
 }: {
+  isLoading: boolean;
   activeProject?: string;
-  project: projectWithFundingRoundType;
+  project: projectWithFundingRoundType | null | undefined;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [drawerBodyView, setDrawerBodyView] = useState<drawerBodyViewEnum>(
     drawerBodyViewEnum.PROJECT_DETAILS
   );
   const { data } = useSession();
-  const router = useRouter();
   const btnRef = useRef();
   const headerSpacing = {
     base: '16px',
     sm: '20px',
     md: '24px',
   };
-
+  let isLoding = true;
   useEffect(() => {
-    if (activeProject === project.id) {
+    if (activeProject === project?.id) {
       onOpen();
     }
   }, [activeProject]);
@@ -363,129 +367,164 @@ const ProjectHeader = ({
           direction="row"
           gap={{ base: '8px', sm: '12px', md: '16px' }}
         >
-          <Center>
-            <Avatar
-              src={project.logo}
-              name={project.name}
-              width={{ base: '36px', sm: '48px', md: '52px' }}
-              height={{ base: '36px', sm: '48px', md: '52px' }}
-            />
-          </Center>
+          <SkeletonCircle
+            isLoaded={!isLoading}
+            fadeDuration={2}
+            opacity={isLoading ? '0.5' : '1'}
+            width={{ base: '36px', sm: '48px', md: '60px' }}
+            height={{ base: '36px', sm: '48px', md: '60px' }}
+          >
+            <Center>
+              <Avatar
+                src={project?.logo}
+                name={project?.name}
+                width={{ base: '36px', sm: '48px', md: '52px' }}
+                height={{ base: '36px', sm: '48px', md: '52px' }}
+              />
+            </Center>{' '}
+          </SkeletonCircle>
           <VStack
             alignItems={'start'}
             align={'center'}
             justify="center"
             spacing={{ base: '2px', sm: '4px', md: '6px' }}
           >
-            <Box
-              as="p"
-              textStyle={{ base: 'title4', sm: 'title3', md: 'title2' }}
-              noOfLines={1}
-              textAlign="left"
-              color="white"
+            <Skeleton
+              isLoaded={!isLoading}
+              fadeDuration={3}
+              opacity={isLoading ? '0.5' : '1'}
+              w={'8rem'}
             >
-              {project.name}
-            </Box>
-            <GetFormattedLink link={project.project_link} />
+              <Box
+                as="p"
+                textStyle={{ base: 'title4', sm: 'title3', md: 'title2' }}
+                noOfLines={1}
+                textAlign="left"
+                color="white"
+              >
+                {project?.name}
+              </Box>
+            </Skeleton>
+            {isLoading ? (
+              <Skeleton w="8rem" h="1rem" opacity={0.4} />
+            ) : (
+              <GetFormattedLink
+                isLoading={isLoading}
+                link={project?.project_link}
+              />
+            )}
           </VStack>
         </Stack>
-        <Center justifyContent={'end'}>
-          <Link
-            href={`/${data?.user.username}/?project=${project.id}`}
-            style={{
-              color: '#A8F0E6',
-              backgroundColor: 'transparent',
-              height: 'full',
-              width: 'full',
-              padding: '14px 44px 14px 44px',
-              border: '1px solid #A8F0E6',
-              fontSize: '15px',
-              whiteSpace: 'nowrap',
-              fontWeight: '600',
-              lineHeight: '22px',
-              borderRadius: '12px',
-              transition: 'all 0.6s',
-            }}
-          >
-            View Details
-          </Link>
-        </Center>
-        <Drawer
-          maxW="40rem"
-          isOpen={isOpen}
-          placement="bottom"
-          onClose={() => {
-            setDrawerBodyView(drawerBodyViewEnum.PROJECT_DETAILS);
-            onClose();
-          }}
-          //@ts-ignore
-          finalFocusRef={btnRef}
-        >
-          <DrawerOverlay
-            color="rgba(0, 0, 0, 0.72)"
-            backdropFilter="blur(8px)"
-          />
-          <DrawerContent
-            borderColor={'#1D1F1E'}
-            borderBottom={'none'}
-            borderTopRadius={'24px'}
-            background="#080808"
-            maxW="80rem !important"
-            mx="auto"
-            p="0"
-          >
-            <DrawerCloseButton
-              transform={'translateY(-3rem)'}
-              rounded="full"
-              backgroundColor="#141414"
-            />
-
-            <DrawerBody maxH={'90vh'} p="0">
-              {drawerBodyView === drawerBodyViewEnum.GRANTS ? (
-                <ApplyForGrant
-                  setDrawerBodyView={setDrawerBodyView}
-                  project={project}
+        {project && (
+          <>
+            <Center justifyContent={'end'}>
+              <Skeleton
+                isLoaded={!isLoading}
+                fadeDuration={3}
+                opacity={isLoading ? '0.3' : '1'}
+              >
+                <Button
+                  variant={'cubikOutlined'}
+                  size="cubikMedium"
+                  as={Link}
+                  href={`/${data?.user.username}/?project=${project?.id}`}
+                >
+                  View Details
+                </Button>
+              </Skeleton>
+            </Center>
+            <Drawer
+              maxW="40rem"
+              isOpen={isOpen}
+              placement="bottom"
+              onClose={() => {
+                setDrawerBodyView(drawerBodyViewEnum.PROJECT_DETAILS);
+                onClose();
+              }}
+              //@ts-ignore
+              finalFocusRef={btnRef}
+            >
+              <DrawerOverlay
+                color="rgba(0, 0, 0, 0.72)"
+                backdropFilter="blur(8px)"
+              />
+              <DrawerContent
+                borderColor={'#1D1F1E'}
+                borderBottom={'none'}
+                borderTopRadius={'24px'}
+                background="#080808"
+                maxW="80rem !important"
+                mx="auto"
+                p="0"
+              >
+                <DrawerCloseButton
+                  transform={'translateY(-3rem)'}
+                  rounded="full"
+                  backgroundColor="#141414"
                 />
-              ) : drawerBodyView === drawerBodyViewEnum.EDIT ? (
-                <EditProjectDetails />
-              ) : drawerBodyView === drawerBodyViewEnum.PREVIEW ? (
-                <></>
-              ) : (
-                <>
-                  <Center
-                    background="#0C0D0D"
-                    w="full"
-                    position="fixed"
-                    borderTopRadius={'24px'}
-                  >
-                    <ProjectStatusBanner
-                      status={
-                        ProjectStatus({
-                          projectData: project as projectWithFundingRoundType,
-                        })?.status as string
-                      }
-                      roundName={
-                        ProjectStatus({
-                          projectData: project as projectWithFundingRoundType,
-                        })?.round
-                          ? ProjectStatus({
+
+                <DrawerBody maxH={'90vh'} p="0">
+                  {drawerBodyView === drawerBodyViewEnum.GRANTS ? (
+                    <ApplyForGrant
+                      setDrawerBodyView={setDrawerBodyView}
+                      project={project}
+                    />
+                  ) : drawerBodyView === drawerBodyViewEnum.EDIT ? (
+                    <EditProjectDetails />
+                  ) : drawerBodyView === drawerBodyViewEnum.PREVIEW ? (
+                    <></>
+                  ) : (
+                    <>
+                      <Center
+                        background="#0C0D0D"
+                        w="full"
+                        position="fixed"
+                        borderTopRadius={'24px'}
+                      >
+                        <ProjectStatusBanner
+                          startTime={
+                            ProjectStatus({
                               projectData:
                                 project as projectWithFundingRoundType,
-                            })?.round?.fundingRound.roundName
-                          : undefined
-                      }
-                    />
-                  </Center>
-                  <ProjectDetails
-                    isLoading={false}
-                    project={project}
-                    setDrawerBodyView={setDrawerBodyView}
-                  />
-                </>
-              )}
-            </DrawerBody>
-          </DrawerContent>
-        </Drawer>
+                            })?.startTime
+                          }
+                          endtime={
+                            ProjectStatus({
+                              projectData:
+                                project as projectWithFundingRoundType,
+                            })?.endtime
+                          }
+                          status={
+                            ProjectStatus({
+                              projectData:
+                                project as projectWithFundingRoundType,
+                            })?.status as string
+                          }
+                          roundName={
+                            ProjectStatus({
+                              projectData:
+                                project as projectWithFundingRoundType,
+                            })?.round
+                              ? ProjectStatus({
+                                  projectData:
+                                    project as projectWithFundingRoundType,
+                                })?.round?.fundingRound.roundName
+                              : undefined
+                          }
+                        />
+                      </Center>
+                      <ProjectDetails
+                        isLoading={false}
+                        project={project}
+                        setDrawerBodyView={setDrawerBodyView}
+                      />
+                    </>
+                  )}
+                </DrawerBody>
+              </DrawerContent>
+            </Drawer>
+          </>
+        )}
       </Stack>
     </>
   );

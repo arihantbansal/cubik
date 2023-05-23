@@ -11,7 +11,6 @@ interface AppLayoutProps {
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const router = useRouter();
-  console.log('pathname - ', router.pathname.split('/')[1]);
   return (
     <Container maxW="full" p="0">
       <AuthWrapper>
