@@ -28,7 +28,6 @@ import {
 } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { AiOutlineEdit, AiOutlineMore } from 'react-icons/ai';
 import { BiMessageSquareDots } from 'react-icons/bi';
@@ -57,7 +56,6 @@ export const ProjectHeaderVisitorView = ({
 }: {
   project: ProjectsModel;
 }) => {
-  const router = useRouter();
   const btnRef = useRef();
   const headerSpacing = {
     base: '16px',

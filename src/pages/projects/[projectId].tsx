@@ -1,5 +1,4 @@
 import { Container, Stack } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
 import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';
 import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-details/ProjectDetailsAndTabs';
 import SEO from '~/components/SEO';
@@ -7,14 +6,17 @@ import { Mixpanel } from '~/utils/mixpanel';
 import { trpc } from '~/utils/trpc';
 
 const ProjectDetails = () => {
-  const router = useRouter();
+  const params = new URLSearchParams(window.location.search);
+  const projectId = params.get('projectId');
 
   const { data, isError, isLoading, error } = trpc.project.findOne.useQuery({
-    id: router.query.projectId as string,
+    id: projectId as string,
   });
+
   Mixpanel.track('project_page_load', {
-    id: router.query.projectId,
+    id: projectId,
   });
+
   if (isError) {
     return <>{error.message}</>;
   }
@@ -29,20 +31,6 @@ const ProjectDetails = () => {
       />
       <main style={{ width: 'full' }}>
         <Container maxW={'full'} p="0">
-          {/*<Container pt="32px" maxW="7xl" mx="auto">
-            <Breadcrumb color="white" fontWeight="bold" fontSize="md">
-              <BreadcrumbItem>
-                <BreadcrumbLink as={Link} href="/projects">
-                  Projects
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbItem>
-                <BreadcrumbLink as={Link} href={'/projects/' + data?.id}>
-                  {data?.name}
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-            </Breadcrumb>
-          </Container> */}
           <Stack
             maxW="7xl"
             mx="auto"

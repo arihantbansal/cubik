@@ -1,19 +1,18 @@
-import { Box, Center, Container, Heading, Text } from '@chakra-ui/react';
+import { Box, Center, Container, Heading } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import React from 'react';
 import SEO from 'src/components/SEO';
 import AdminView from '~/components/pages/user-profile/AdminView';
 import VisitorView from '~/components/pages/user-profile/VisitorView';
 import { trpc } from '~/utils/trpc';
 
-const ProfilePage = () => {
+const ProfilePage = ({ username }: { username: string }) => {
   const { data: session } = useSession();
-  const router = useRouter();
 
   const { data, isError, isLoading } = trpc.user.findOne.useQuery(
     {
-      username: router.query.username as string,
+      username: username as string,
     },
     {
       refetchOnWindowFocus: false,
@@ -30,15 +29,14 @@ const ProfilePage = () => {
           </Box>
           <Box textAlign={'center'} maxW="22rem" as="p" textStyle={'body2'}>
             The page you are looking for does not exist. Go back{' '}
-            <Text
-              as="span"
+            <Box
+              as={Link}
               color="brand.teal5"
               textDecoration={'underline'}
-              onClick={() => router.push('/')}
-              cursor="pointer"
+              href="/"
             >
               home
-            </Text>
+            </Box>
           </Box>
         </Center>
       </Container>
@@ -66,5 +64,17 @@ const ProfilePage = () => {
     </>
   );
 };
+
+export async function getServerSideProps(context: {
+  query: { username: string };
+}) {
+  const username = context.query.username;
+
+  return {
+    props: {
+      username,
+    },
+  };
+}
 
 export default React.memo(ProfilePage);

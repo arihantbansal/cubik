@@ -23,7 +23,6 @@ import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import { addDays } from 'date-fns';
 import enGB from 'date-fns/locale/en-GB';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -116,7 +115,6 @@ const CardFooterData = ({ step }: { step: number }) => {
 
 const CreateGrantRound = () => {
   const toast = useToast();
-  const router = useRouter();
   const tomorrow = addDays(new Date(), 1);
   const anchorWallet = useAnchorWallet();
   const [step, setStep] = useState(0);
@@ -290,8 +288,8 @@ const CreateGrantRound = () => {
                   setSignTransactionLoading,
                   setTransactionError,
                   anchorWallet,
-                  createRoundMutation as any,
-                  router
+                  onClose,
+                  createRoundMutation as any
                 )
               }
               isLoading={signTransactionLoading}

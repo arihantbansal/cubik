@@ -1,6 +1,5 @@
 import { Box, Button, Center, VStack } from '@chakra-ui/react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 export const AdminProjectEmptyState = () => {
   return (
@@ -101,7 +100,6 @@ export const AdminProjectEmptyState = () => {
   );
 };
 export const VisitorProjectEmptyState = () => {
-  const router = useRouter();
   return (
     <Center p="60px 4vh" w="full" minH="18vh" rounded="12px">
       <VStack gap="16px">

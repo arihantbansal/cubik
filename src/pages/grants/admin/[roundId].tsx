@@ -10,7 +10,6 @@ import {
   Tag,
 } from '@chakra-ui/react';
 import { Round } from '@prisma/client';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import CustomTag from '~/components/common/tags/CustomTag';
 import GrantUnderReviewProjects from '~/components/pages/grants/admin/GrantUnderReviewProjects';
@@ -23,17 +22,18 @@ const RoundAdmin = () => {
     accepted: 0,
     rejected: 0,
   });
-  const router = useRouter();
+
+  const params = new URLSearchParams(window.location.search);
+  const roundId = params.get('roundId');
+
   const { data } = trpc.round.findActive.useQuery();
 
   useEffect(() => {
     if (data) {
-      const adminRound = data.find(
-        (round) => round.id === router.query.roundId
-      );
+      const adminRound = data.find((round) => round.id === roundId);
       setRoundData(adminRound);
     }
-  }, [data, router.query.roundId]);
+  }, [data, roundId]);
 
   return (
     <>

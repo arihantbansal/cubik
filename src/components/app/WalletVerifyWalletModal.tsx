@@ -20,7 +20,6 @@ import {
 import * as anchor from '@coral-xyz/anchor';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { signIn, signOut, useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useAuthStore } from '~/store/authStore';
 import { createMessage, verifyMessage } from '~/utils/getsignMessage';
@@ -43,7 +42,6 @@ interface Props {
 
 const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
   const toast = useToast();
-  const router = useRouter();
   const { setAuthenticated, setKey } = useAuthStore();
   const [verifying, setVerifying] = useState(false);
   const { status, data: session } = useSession();
@@ -86,7 +84,9 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
               redirect: false,
             });
           }
-          router.push('/create-profile');
+          if (typeof window !== 'undefined') {
+            window.location.href = '/create-profile';
+          }
 
           setVerifying(false);
         }

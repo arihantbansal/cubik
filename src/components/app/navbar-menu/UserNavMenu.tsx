@@ -8,13 +8,12 @@ import {
   DrawerContent,
   DrawerOverlay,
   MenuDivider,
-  useDisclosure,
   VStack,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { BiChevronDown, BiUser } from 'react-icons/bi';
 import { MdPowerSettingsNew, MdUpload } from 'react-icons/md';
 import { useAuthStore } from '~/store/authStore';
@@ -25,7 +24,6 @@ const UserNavMenu = () => {
   const { disconnect } = useWallet();
   const { data: session } = useSession();
   const { setKey } = useAuthStore();
-  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   function handleSignOut() {

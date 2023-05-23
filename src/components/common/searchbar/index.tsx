@@ -71,9 +71,6 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
 
   const [searchInput, setSearchInput] = useState('');
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
-  const [selectedGrantIndex, setSelectedGrantIndex] = useState(0);
-  const [selectedHackathonIndex, setSelectedHackathonIndex] = useState(0);
-  const [setPeopleIndex, setSetPeopleIndex] = useState(0);
 
   const filteredProjects = useMemo(() => {
     if (!projects || searchInput.trim() === '') {

@@ -1,16 +1,17 @@
 import { Container } from '@chakra-ui/react';
-//import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
 import SEO from '~/components/SEO';
 import GrantDetailsBody from '~/components/pages/grants/details/GrantDetailsBody';
 import GrantDetailsHeader from '~/components/pages/grants/details/GrantDetailsHeader';
 import { trpc } from '~/utils/trpc';
 
-const GrantDetails = () => {
-  const router = useRouter();
-  const { grantId } = router.query;
+interface GrantDetailsProps {
+  grantId: string;
+}
+
+const GrantDetails: React.FC<GrantDetailsProps> = ({ grantId }) => {
   const { data, error, isLoading } = trpc.round.details.useQuery({
-    id: grantId as string,
+    id: grantId,
   });
 
   return (
@@ -25,26 +26,20 @@ const GrantDetails = () => {
           flexDir={'column'}
           gap="80px"
         >
-          {/* <Container border="1px solid red" p="0" maxW="7xl" w="full">
-            <Breadcrumb color="white" fontWeight="bold" fontSize="md">
-              <BreadcrumbItem>
-                <BreadcrumbLink as={Link} href="/grants">
-                  Grants
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbItem>
-                <BreadcrumbLink as={Link} href={'/grants/' + data?.id}>
-                  {data?.roundName}
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-            </Breadcrumb>
-          </Container> */}
           <GrantDetailsHeader data={data} isLoading={isLoading} />
           <GrantDetailsBody data={data} isLoading={isLoading} />
         </Container>
       </main>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const grantId = context.query.grantId as string;
+
+  return {
+    props: { grantId }, // will be passed to the page component as props
+  };
 };
 
 export default GrantDetails;

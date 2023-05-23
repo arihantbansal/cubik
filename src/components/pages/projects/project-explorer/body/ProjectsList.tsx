@@ -13,7 +13,6 @@ import {
   Wrap,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { BsPlus } from 'react-icons/bs';
 import { HiCheck } from 'react-icons/hi';
@@ -37,7 +36,6 @@ type ProjectsListProps = {
 };
 
 const ProjectCard = ({ project }: PropsType) => {
-  const router = useRouter();
   const toast = useToast();
   const addProject = useListStore((state) => state.addProject);
   const removeProject = useListStore((state) => state.removeProject);

@@ -20,7 +20,7 @@ const withAuth = (
       if (!session && !publicKey) {
         router.replace(redirect);
       }
-    }, [session, publicKey, router, redirect]);
+    }, [session, publicKey, redirect]);
 
     return <WrappedComponent {...props} />;
   };

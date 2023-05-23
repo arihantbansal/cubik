@@ -11,7 +11,6 @@ import {
 } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import CustomTag from '~/components/common/tags/CustomTag';
 import AllProjectsTab from '~/components/pages/projects/admin/AllProjectsTab';
@@ -25,7 +24,6 @@ const AdminWallet = ['52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ'];
 const ProjectAuthenticationRoute = () => {
   const { publicKey, connected } = useWallet();
   const { data } = useSession();
-  const router = useRouter();
   const [projectsNumberByStatus, setProjectsNumberByStatus] = useState({
     all: 0,
     review: 0,

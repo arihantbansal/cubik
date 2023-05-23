@@ -12,7 +12,6 @@ import {
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { memo } from 'react';
 import { RxDotsVertical } from 'react-icons/rx';
 import Logo from '~/components/common/logo/Logo';
@@ -29,11 +28,9 @@ const MobileNavCollapsible = memo(function MobileNavCollapsible({
   onClose: () => void;
   children?: React.ReactNode;
 }) {
-  const router = useRouter();
-  let landingPage: boolean = false;
-  if (router.pathname === '/') {
-    landingPage = true;
-  }
+  const landingPage =
+    typeof window !== 'undefined' && window.location.pathname === '/';
+
   return (
     <Collapse in={isOpen} animateOpacity>
       <Center
@@ -111,19 +108,19 @@ export const Header = memo(function Header({
 }: {
   children?: React.ReactNode;
 }) {
-  const router = useRouter();
   const { connected } = useWallet();
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [isDesktop] = useMediaQuery('(min-width: 768px)');
+  const isCreateProfilePage =
+    typeof window !== 'undefined' &&
+    window.location.pathname !== '/create-profile';
 
   const isActiveRoute = (route: string): boolean => {
-    return router.pathname === route;
+    return typeof window !== 'undefined' && window.location.pathname === route;
   };
 
-  let landingPage: boolean = false;
-  if (router.pathname === '/') {
-    landingPage = true;
-  }
+  const landingPage =
+    typeof window !== 'undefined' && window.location.pathname === '/';
 
   const NavbarCTA: React.FC<any> = ({ children }) => {
     return (
@@ -153,7 +150,7 @@ export const Header = memo(function Header({
     );
   };
   const DeskNavbarItems = () => {
-    return isDesktop && router.pathname != '/create-profile' ? (
+    return isDesktop && isCreateProfilePage ? (
       <>
         <SearchBar
           display={landingPage ? 'none' : 'flex'}
@@ -175,7 +172,7 @@ export const Header = memo(function Header({
               Projects
             </Box>
           </Button>
-          <Button h="full" variant={'unstyled'} as={Link} href="/grants">
+          <Button as={Link} href="/grants" h="full" variant={'unstyled'}>
             <Box
               as="p"
               textStyle={'title4'}

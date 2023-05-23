@@ -7,7 +7,6 @@ import {
   Tabs,
 } from '@chakra-ui/react';
 import { ProjectsModel } from '@prisma/client';
-import { useRouter } from 'next/router';
 import { FC, Key, memo, useEffect, useState } from 'react';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import { UserWithProjectType } from '~/types/user';
@@ -25,8 +24,8 @@ type adminViewType = {
 
 const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
   const { ErrorBoundaryWrapper } = useErrorBoundary();
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [tabIndex, setTabIndex] = useState(0); // New state variable
 
   useEffect(() => {
     setTimeout(() => {
@@ -44,7 +43,7 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
         gap={{ base: '32px', sm: '40px', md: '56px' }}
       >
         <ProfileHeader isLoading={isLoading} user={user} />
-        <Tabs defaultIndex={router.query.project ? 1 : 0} variant={'cubik'}>
+        <Tabs index={tabIndex} onChange={setTabIndex} variant={'cubik'}>
           <TabList>
             <Tab>Details</Tab>
             <Tab>Projects</Tab>
@@ -64,7 +63,7 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
                     (project: ProjectsModel, key: Key | null | undefined) => (
                       <ProjectAdminCard
                         project={project}
-                        activeProject={router?.query?.project as string}
+                        activeProject={tabIndex === 1 ? 'active' : ''}
                         key={key}
                       />
                     )

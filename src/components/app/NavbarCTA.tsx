@@ -2,7 +2,7 @@ import { Center, HStack, Skeleton, Spinner } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import MemoizedIconButtonBadge from './list/ListButton';
 import UserNavMenu from './navbar-menu/UserNavMenu';
 
@@ -14,12 +14,19 @@ export interface UserContextProps {
 }
 
 const NavbarCTA = () => {
-  const router = useRouter();
+  const [currentPath, setCurrentPath] = useState('');
   const { publicKey, disconnect } = useWallet();
   const { status } = useSession();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentPath(window.location.pathname);
+    }
+  }, []);
+
   console.log('session status in cta - ', status);
   // If on create-profile page, don't show anything
-  if (router.pathname === '/create-profile') {
+  if (currentPath === '/create-profile') {
     return null;
   }
 
