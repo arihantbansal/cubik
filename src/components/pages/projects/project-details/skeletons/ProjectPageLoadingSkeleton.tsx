@@ -140,7 +140,7 @@ export const SimilarProjectsSkeleton = () => {
   return (
     <VStack gap="16px" align={'start'} w="full">
       <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
-        Project Creators
+        Creators
       </Box>
       <HStack
         border="1px solid"

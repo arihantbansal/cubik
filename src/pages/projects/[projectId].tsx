@@ -2,6 +2,7 @@ import { Container, Stack } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';
 import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-details/ProjectDetailsAndTabs';
+import ProjectDetailsLiveRoundStatus from '~/components/pages/projects/project-details/ProjectDetailsLiveRoundStatus';
 import SEO from '~/components/SEO';
 import { Mixpanel } from '~/utils/mixpanel';
 import { trpc } from '~/utils/trpc';
@@ -29,6 +30,7 @@ const ProjectDetails = ({ projectId }: { projectId: string }) => {
       />
       <main style={{ width: 'full' }}>
         <Container maxW={'full'} p="0">
+          <ProjectDetailsLiveRoundStatus projectDetails={data} />
           <Stack
             maxW="7xl"
             mx="auto"

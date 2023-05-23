@@ -9,9 +9,9 @@ import {
 } from '@chakra-ui/react';
 import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 import { formatDate } from '~/utils/formatDates';
-import ProjectContributors from './project-interactions/project-tabs/ProjectContributors';
 import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
 import Discussions from './ProjectDiscussion';
+import ProjectContributors from './project-interactions/project-tabs/ProjectContributors';
 
 export const ProjectsTabs = ({
   projectDetails,

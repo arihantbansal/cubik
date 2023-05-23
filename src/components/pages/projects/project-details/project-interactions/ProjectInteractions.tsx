@@ -86,7 +86,7 @@ export const ProjectFundingData = ({
           <HStack w="full" align={'start'}>
             <VStack align={'start'} gap="8px">
               <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
-                ${funding}
+                ${funding.toFixed(2)}
               </Box>
 
               <Box as="p" textStyle={'body4'} color={'neutral.8'}>
@@ -330,7 +330,7 @@ export const ProjectCreatorTeamMember = ({
     <HStack
       as={Link}
       cursor="pointer"
-      href={`https://cubik.so/${teamMember.user.username}`}
+      href={`/${teamMember.user.username}`}
       w="full"
       justify="space-between"
       px="16px"
