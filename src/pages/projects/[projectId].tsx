@@ -1,14 +1,12 @@
 import { Container, Stack } from '@chakra-ui/react';
+import { GetServerSideProps } from 'next';
 import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';
 import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-details/ProjectDetailsAndTabs';
 import SEO from '~/components/SEO';
 import { Mixpanel } from '~/utils/mixpanel';
 import { trpc } from '~/utils/trpc';
 
-const ProjectDetails = () => {
-  const params = new URLSearchParams(window.location.search);
-  const projectId = params.get('projectId');
-
+const ProjectDetails = ({ projectId }: { projectId: string }) => {
   const { data, isError, isLoading, error } = trpc.project.findOne.useQuery({
     id: projectId as string,
   });
@@ -51,6 +49,13 @@ const ProjectDetails = () => {
       </main>
     </>
   );
+};
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const projectId = context.query.projectId as string;
+
+  return {
+    props: { projectId },
+  };
 };
 
 export default ProjectDetails;

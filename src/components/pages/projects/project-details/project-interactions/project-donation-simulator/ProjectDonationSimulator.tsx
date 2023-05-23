@@ -63,8 +63,8 @@ export const ProjectDonationSimulator = ({
     formState: { errors, isSubmitting },
   } = useForm<DonationFormType>({
     defaultValues: {
-      amount: 50,
-      token: token[0],
+      amount: 1,
+      token: token[2],
       matchingPoolDonation: 10,
     },
   });
