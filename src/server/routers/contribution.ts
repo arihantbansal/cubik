@@ -1,7 +1,9 @@
+import { Prisma, ProjectJoinRound } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
 import { procedure, protectedProcedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
+import { qfV1 } from '../utils/qf';
 
 export const contributionRouter = router({
   create: protectedProcedure
@@ -71,6 +73,55 @@ export const contributionRouter = router({
         });
         return contributionRes;
       }
+    }),
+
+  updateProjectRaise: protectedProcedure
+    .input(
+      z.object({
+        projectJoinRoundId: z.string().nonempty(),
+        roundId: z.string().nonempty(),
+        projectId: z.string().nonempty(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const res = await prisma.round.findUnique({
+        where: {
+          id: input.roundId,
+        },
+        include: {
+          Contribution: {
+            include: {
+              ProjectsModel: true,
+            },
+          },
+          ProjectJoinRound: true,
+        },
+      });
+      if (!res) return null;
+      const qf = qfV1(res);
+
+      const allProjects = await prisma.projectJoinRound.findMany({
+        where: {
+          roundId: input.roundId,
+        },
+      });
+      const updatePromise: Prisma.Prisma__ProjectJoinRoundClient<
+        ProjectJoinRound,
+        never
+      >[] = [];
+      allProjects.forEach(async (e) => {
+        const a = prisma.projectJoinRound.update({
+          where: {
+            id: e.id,
+          },
+          data: {
+            amountRaise:
+              qf.find((el) => el.projectId === e.projectId)?.amount ?? 0,
+          },
+        });
+        updatePromise.push(a);
+      });
+      return await Promise.all(updatePromise);
     }),
 
   getProjectContributors: procedure

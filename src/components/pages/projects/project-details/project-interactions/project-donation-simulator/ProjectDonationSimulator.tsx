@@ -84,11 +84,23 @@ export const ProjectDonationSimulator = ({
   };
   // In component:
   const utils = trpc.useContext();
+  const updateProjectRaise = trpc.contribution.updateProjectRaise.useMutation();
+
   const createContributionMutation = trpc.contribution.create.useMutation({
     onSuccess: async (data: any) => {
       console.log('🤤 success - ', data);
       setDonationSuccessful(true);
+
       SuccessToast({ toast, message: 'Donation Successful' });
+      updateProjectRaise.mutate({
+        projectId: projectDetails.id,
+        projectJoinRoundId:
+          projectDetails.ProjectJoinRound.find((e) => e.status === 'APPROVED')
+            ?.id ?? '',
+        roundId:
+          projectDetails.ProjectJoinRound.find((e) => e.status === 'APPROVED')
+            ?.roundId ?? '',
+      });
       utils.contribution.getProjectContributors.invalidate({
         projectId: projectDetails.id, // check once if the value is right or not for project Id
       });
@@ -141,7 +153,6 @@ export const ProjectDonationSimulator = ({
       tx: sig as string,
       userId: data?.user?.id as string,
     });
-    console.log('donation successful', sig);
     // onOpen();
   }
 
