@@ -16,6 +16,7 @@ import {
   Tr,
   VStack,
 } from '@chakra-ui/react';
+import { Contribution, UserModel } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import { BiChevronDown, BiChevronRight, BiChevronUp } from 'react-icons/bi';
 import ContributionsEmptyState from '~/components/common/empty-state/ContributionsEmptyState';
@@ -24,25 +25,15 @@ import { SOL, USDC } from '~/components/common/tokens/token';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { timeSince } from '~/utils/gettimeSince';
-import { trpc } from '~/utils/trpc';
 
-type Contributor = {
-  id: string;
+type ExtendedContribution = Contribution & {
   avatar: string;
   username: string;
   walletAddress: string;
-  amount: number;
   currentusdTotal: number;
-  timestamp: string;
-  token: string;
-  [key: string]: any;
 };
 
-type ContributorRowProps = {
-  contributor: Contributor;
-};
-
-const formatContributorData = (data: any[]): Contributor[] => {
+const formatContributorData = (data: any[]): ExtendedContribution[] => {
   return data?.map((contributor) => ({
     id: contributor.id,
     avatar: contributor.user.profilePicture,
@@ -52,6 +43,19 @@ const formatContributorData = (data: any[]): Contributor[] => {
     currentusdTotal: contributor.currentusdTotal,
     timestamp: contributor.createdAt,
     token: contributor.token,
+    tx: contributor.tx,
+    split: contributor.split,
+    roundId: contributor.roundId,
+    projectId: contributor.projectId,
+    user: contributor.user,
+    userId: contributor.userId,
+    createdAt: contributor.createdAt,
+    updatedAt: contributor.updatedAt,
+    count: contributor.count,
+    currentTotal: contributor.currentTotal,
+    isLatest: contributor.isLatest,
+    total: contributor.total,
+    usdTotal: contributor.usdTotal,
   }));
 };
 
@@ -90,93 +94,101 @@ export const TableLoading = () => {
   );
 };
 
-export const ContributorRow: React.FC<ContributorRowProps> = ({
-  contributor,
-}) => (
-  <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
-    <Td p="18px">
-      <HStack align={'start'} gap={{ base: '8px', md: '16px' }}>
-        <Avatar
-          width={{ base: '36px', md: '44px' }}
-          height={{ base: '36px', md: '44px' }}
-          src={contributor.avatar}
-        />
-        <VStack
-          align={'start'}
-          justify="center"
-          spacing={{ base: '8px', md: '8px' }}
-        >
-          <Box
-            as="p"
-            textStyle={{ base: 'title6', md: 'title4' }}
-            color="neutral.11"
-          >
-            @{contributor.username}
-          </Box>
-          <Box
-            as="p"
-            textStyle={{ base: 'body6', md: 'body5' }}
-            color="neutral.7"
-          >
-            {TruncatedAddr({
-              walletAddress: contributor.walletAddress,
-            })}
-          </Box>
-        </VStack>
-      </HStack>
-    </Td>
-    <Td p="18px">
-      <HStack gap="8px" align={'center'}>
-        <Center>
-          {contributor.token === 'sol' ? <SOL size={28} /> : <USDC size={28} />}
-        </Center>
-        <VStack justify={'center'} spacing="2px" align={'start'}>
-          <HStack align={'baseline'} color="white">
-            <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
-              {formatNumberWithK(contributor.amount)}
-            </Box>
-            <Box as="p" textStyle={{ base: 'title6', md: 'title7' }}>
-              {contributor.token.toUpperCase()}
-            </Box>
-          </HStack>
-          <Box
-            as="p"
-            color="neutral.8"
-            textStyle={{ base: 'body6', md: 'body5' }}
-          >
-            {formatNumberWithK(contributor.currentusdTotal)}$
-          </Box>
-        </VStack>
-      </HStack>
-    </Td>
-    <Td p="18px">
-      <Box as="p" textStyle={{ base: 'body5', md: 'body4' }} color="neutral.11">
-        {timeSince(new Date(contributor.timestamp))}
-      </Box>
-    </Td>
-    <Td p="18px">
-      <BiChevronRight size="24" />
-    </Td>
-  </Tr>
-);
+type ContributorRowProps = Contribution & { user: UserModel };
 
-const ProjectContributors = ({
-  projectId,
+export const ContributorRow: React.FC<ContributorRowProps> = ({
+  user,
+  ...contribution
+}) => {
+  return (
+    <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
+      <Td p="18px">
+        <HStack align={'start'} gap={{ base: '8px', md: '16px' }}>
+          <Avatar
+            width={{ base: '36px', md: '44px' }}
+            height={{ base: '36px', md: '44px' }}
+            src={user.profilePicture}
+          />
+          <VStack
+            align={'start'}
+            justify="center"
+            spacing={{ base: '8px', md: '8px' }}
+          >
+            <Box
+              as="p"
+              textStyle={{ base: 'title6', md: 'title4' }}
+              color="neutral.11"
+            >
+              @{user.username}
+            </Box>
+            <Box
+              as="p"
+              textStyle={{ base: 'body6', md: 'body5' }}
+              color="neutral.7"
+            >
+              {TruncatedAddr({
+                walletAddress: user.mainWallet,
+              })}
+            </Box>
+          </VStack>
+        </HStack>
+      </Td>
+      <Td p="18px">
+        <HStack gap="8px" align={'center'}>
+          <Center>
+            {contribution.token === 'sol' ? (
+              <SOL size={28} />
+            ) : (
+              <USDC size={28} />
+            )}
+          </Center>
+          <VStack justify={'center'} spacing="2px" align={'start'}>
+            <HStack align={'baseline'} color="white">
+              <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
+                {formatNumberWithK(contribution.total)}
+              </Box>
+              <Box as="p" textStyle={{ base: 'title6', md: 'title7' }}>
+                {contribution.token.toLocaleUpperCase()}
+              </Box>
+            </HStack>
+            <Box
+              as="p"
+              color="neutral.8"
+              textStyle={{ base: 'body6', md: 'body5' }}
+            >
+              {formatNumberWithK(contribution.currentusdTotal)}$
+            </Box>
+          </VStack>
+        </HStack>
+      </Td>
+      <Td p="18px">
+        <Box
+          as="p"
+          textStyle={{ base: 'body5', md: 'body4' }}
+          color="neutral.11"
+        >
+          {timeSince(new Date(contribution.createdAt))}
+        </Box>
+      </Td>
+      <Td p="18px">
+        <BiChevronRight size="24" />
+      </Td>
+    </Tr>
+  );
+};
+
+const ProjectContributorsAdminView = ({
+  contributorsData,
   isLoading,
 }: {
-  projectId: string;
+  contributorsData: (Contribution & {
+    user: UserModel;
+  })[];
   isLoading?: boolean;
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortField, setSortField] = useState('timestamp');
   const [sortDirection, setSortDirection] = useState('desc');
-
-  const {
-    data: contributorsData,
-    isLoading: loadingContributors,
-    isError,
-    error,
-  } = trpc.contribution.getProjectContributors.useQuery({ projectId });
 
   const pageSize = 15;
   const siblingCount = 1;
@@ -194,10 +206,11 @@ const ProjectContributors = ({
 
   const sortedAndFormattedContributors = contributorsData
     ? formatContributorData(contributorsData).sort((a, b) => {
-        if (a[sortField] < b[sortField]) {
+        const key = sortField as keyof ExtendedContribution;
+        if (a[key] < b[key]) {
           return sortDirection === 'asc' ? -1 : 1;
         }
-        if (a[sortField] > b[sortField]) {
+        if (a[key] > b[key]) {
           return sortDirection === 'asc' ? 1 : -1;
         }
         return 0;
@@ -306,18 +319,15 @@ const ProjectContributors = ({
                 <Th w={'10%'} p="18px"></Th>
               </Tr>
             </Thead>
-            {isLoading || loadingContributors ? (
+            {isLoading ? (
               <TableLoading />
             ) : (
               <Tbody>
-                {currentContributors.length === 0 ? (
+                {contributorsData.length === 0 ? (
                   <></>
                 ) : (
-                  currentContributors.map((contributor: Contributor) => (
-                    <ContributorRow
-                      key={contributor.id}
-                      contributor={contributor}
-                    />
+                  contributorsData.map((contributor) => (
+                    <ContributorRow key={contributor.id} {...contributor} />
                   ))
                 )}
               </Tbody>
@@ -338,4 +348,4 @@ const ProjectContributors = ({
   );
 };
 
-export default ProjectContributors;
+export default ProjectContributorsAdminView;

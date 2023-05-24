@@ -1,18 +1,26 @@
-import { ProjectJoinRoundStatus, ProjectVerifyStatus } from '@prisma/client';
-import { isFuture, isPast } from 'date-fns';
 import {
-  ProjectJoinRoundWithFundingType,
-  projectWithFundingRoundType,
-} from '~/types/project';
+  ProjectJoinRound,
+  ProjectJoinRoundStatus,
+  ProjectVerifyStatus,
+  Round,
+} from '@prisma/client';
+import { isFuture, isPast } from 'date-fns';
+import { projectWithFundingRoundType } from '~/types/project';
 
 type projectRoundAndVerifyType = {
-  round?: ProjectJoinRoundWithFundingType;
+  round?:
+    | (ProjectJoinRound & {
+        fundingRound: Round;
+      })
+    | null
+    | undefined;
   status:
     | ProjectJoinRoundStatus
     | ProjectVerifyStatus
     | 'LIVE'
     | 'ENDED'
-    | undefined;
+    | undefined
+    | null;
   startTime?: Date;
   endtime?: Date;
 };
@@ -21,13 +29,20 @@ export const ProjectStatus = ({
   projectData,
 }: {
   projectData: projectWithFundingRoundType | undefined | null;
-}): projectRoundAndVerifyType | null => {
-  let projectRoundData: projectRoundAndVerifyType | null = null;
+}): projectRoundAndVerifyType => {
+  let projectRoundData: projectRoundAndVerifyType = {
+    status: undefined,
+  };
+
   if (projectData?.status === ProjectVerifyStatus?.VERIFIED) {
     // verified project now only check round status
     if (projectData?.ProjectJoinRound.length > 0) {
       projectData?.ProjectJoinRound.map(
-        (projectJoinRound: ProjectJoinRoundWithFundingType) => {
+        (
+          projectJoinRound: ProjectJoinRound & {
+            fundingRound: Round;
+          }
+        ) => {
           if (projectJoinRound?.fundingRound.active) {
             // now check the project round status
             if (projectJoinRound?.status === ProjectJoinRoundStatus.APPROVED) {

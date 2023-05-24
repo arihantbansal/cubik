@@ -46,6 +46,22 @@ export type projectWithFundingRoundType = Prisma.ProjectsModelGetPayload<{
   };
 }>;
 
+export type projectWithFundingRoundWithContributorsType =
+  Prisma.ProjectsModelGetPayload<{
+    include: {
+      ProjectJoinRound: {
+        include: {
+          fundingRound: true;
+        };
+      };
+      Contribution: {
+        include: {
+          user: true;
+        };
+      };
+    };
+  }>;
+
 export type RoundWithFundingType = Prisma.ProjectJoinRoundGetPayload<{
   include: {
     fundingRound: true;
@@ -64,12 +80,6 @@ export type ProjectJoinRoundWithContributionsType =
           };
         };
       };
-    };
-  }>;
-export type ProjectJoinRoundWithFundingType =
-  Prisma.ProjectJoinRoundGetPayload<{
-    include: {
-      fundingRound: true;
     };
   }>;
 

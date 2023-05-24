@@ -61,11 +61,7 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
                 {user?.project.length ? (
                   user?.project.map(
                     (project: ProjectsModel, key: Key | null | undefined) => (
-                      <ProjectAdminCard
-                        project={project}
-                        activeProject={tabIndex === 1 ? 'active' : ''}
-                        key={key}
-                      />
+                      <ProjectAdminCard project={project} key={key} />
                     )
                   )
                 ) : (

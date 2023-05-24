@@ -1,4 +1,5 @@
 import {
+  Accordion,
   Box,
   Button,
   Card,
@@ -12,23 +13,20 @@ import {
 import { ProjectJoinRoundStatus, ProjectsModel } from '@prisma/client';
 import { useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { projectWithFundingRoundType } from '~/types/project';
 import { ProjectStatus } from '~/utils/getProjectStatus';
 import { trpc } from '~/utils/trpc';
+import AdminProjectRoundCard from './AdminProjectRoundCard';
 import ProjectHeader from './ProjectHeader';
 import ProjectStatusBanner from './ProjectStatusBanner';
 import FundingOverview from './project-admin-dashboard/FundingOverview';
 import ProjectInsights from './project-admin-dashboard/ProjectInsights';
 import Vault from './project-admin-dashboard/project-vault/Vault';
 
-const ProjectAdminCard = ({
-  activeProject,
-  project,
-}: {
-  project: ProjectsModel;
-  activeProject?: string;
-}) => {
+const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
   const [showVault, setShowVault] = useState(false);
+  console.log('projectid - ', project.id);
   const {
     data: projectData,
     isLoading,
@@ -38,11 +36,24 @@ const ProjectAdminCard = ({
     id: project.id,
   });
 
+  const { startTime, endtime, status, round } = ProjectStatus({
+    projectData: projectData as projectWithFundingRoundType,
+  });
+
   if (isError) {
-    return <Center>{error.message}</Center>;
+    return (
+      <Card
+        p={{ base: '16px', sm: '20px', md: '24px' }}
+        gap={{ base: '16px', sm: '20px', md: '24px' }}
+        w="100%"
+        border={'none'}
+      >
+        <ComponentErrors error={error} />
+      </Card>
+    );
   }
 
-  console.log('Project Data', projectData);
+  console.log('projectData in user profile - ', projectData);
   return (
     <Card
       px="0px"
@@ -57,48 +68,34 @@ const ProjectAdminCard = ({
         opacity={isLoading ? 0.5 : 1}
       >
         <ProjectStatusBanner
-          startTime={
-            ProjectStatus({
-              projectData: projectData as projectWithFundingRoundType,
-            })?.startTime || undefined
-          }
-          endtime={
-            ProjectStatus({
-              projectData: projectData as projectWithFundingRoundType,
-            })?.endtime || undefined
-          }
-          status={
-            ProjectStatus({
-              projectData: projectData as projectWithFundingRoundType,
-            })?.status as string
-          }
-          roundName={
-            ProjectStatus({
-              projectData: projectData as projectWithFundingRoundType,
-            })?.round
-              ? ProjectStatus({
-                  projectData: projectData as projectWithFundingRoundType,
-                })?.round?.fundingRound.roundName
-              : undefined
-          }
+          startTime={startTime as Date}
+          endtime={endtime as Date}
+          status={status as string}
+          roundName={round?.fundingRound.roundName as string}
         />
       </Skeleton>
       <CardHeader>
-        <ProjectHeader
-          isLoading={isLoading}
-          activeProject={activeProject}
-          project={projectData}
-        />
+        <ProjectHeader isLoading={isLoading} project={projectData} />
       </CardHeader>
-      {ProjectStatus({
-        projectData: projectData as projectWithFundingRoundType,
-      })?.round?.status === ProjectJoinRoundStatus.APPROVED && (
-        <>
-          <CardBody
-            gap={{ base: '64px', sm: '72px', md: '24px' }}
-            borderTop={'1px solid'}
-            borderColor="neutral.3"
-          >
+      <CardBody
+        gap={{ base: '64px', sm: '72px', md: '24px' }}
+        borderTop={'1px solid'}
+        borderColor="neutral.3"
+      >
+        <Accordion
+          px="16px"
+          w="full"
+          allowMultiple
+          allowToggle
+          variant={'unstyled'}
+          gap={{ base: '64px', sm: '72px', md: '24px' }}
+        >
+          {projectData?.ProjectJoinRound.map((round) => (
+            <AdminProjectRoundCard key={round.id} round={round} />
+          ))}
+        </Accordion>
+        {round?.status === ProjectJoinRoundStatus.APPROVED && (
+          <>
             <Stack
               gap={{ base: '64px', sm: '72px', md: '80px' }}
               padding={{ base: '16px', sm: '20px', md: '24px' }}
@@ -108,8 +105,6 @@ const ProjectAdminCard = ({
               <ProjectInsights projectId={projectData?.id as string} />
             </Stack>
             {showVault && <Vault projectData={projectData} />}
-          </CardBody>
-          <CardFooter pb="24px">
             <Center w="full">
               <Button
                 onClick={() => setShowVault(!showVault)}
@@ -133,9 +128,10 @@ const ProjectAdminCard = ({
                 </Box>
               </Button>
             </Center>
-          </CardFooter>
-        </>
-      )}
+          </>
+        )}
+      </CardBody>
+      <CardFooter display="none" />
     </Card>
   );
 };

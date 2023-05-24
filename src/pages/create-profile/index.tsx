@@ -2,13 +2,13 @@ import {
   Alert,
   AlertDescription,
   AlertIcon,
-  Avatar as ChakraAvatar,
   Box,
   Button,
   Card,
   CardBody,
   CardHeader,
   Center,
+  Avatar as ChakraAvatar,
   Collapse,
   Container,
   FormControl,
@@ -51,7 +51,6 @@ import {
   TruncatedAddr,
   WalletAddress,
 } from '~/components/common/wallet/WalletAdd';
-import withAuth from '~/components/HOC/WithAuth';
 import FramerCarousel from '~/components/pages/create-profile/FramerNFTCarousel';
 import ProfilePicture from '~/components/pages/create-profile/ProfilePicture';
 import SEO from '~/components/SEO';
@@ -204,7 +203,6 @@ const CreateProfile = () => {
     if (!isValid) {
       return;
     }
-
     onTransactionModalOpen();
   };
 
@@ -713,4 +711,4 @@ const CreateProfile = () => {
   );
 };
 
-export default withAuth(CreateProfile, { redirect: '/' });
+export default CreateProfile;

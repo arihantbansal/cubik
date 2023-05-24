@@ -32,7 +32,6 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
     const signatureStore = getSignature();
 
     if (!publicKey) {
-      // check for available wallet
       return;
     }
 

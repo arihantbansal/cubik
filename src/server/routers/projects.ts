@@ -415,7 +415,18 @@ export const projectsRouter = router({
         include: {
           ProjectJoinRound: {
             include: {
-              fundingRound: {},
+              fundingRound: {
+                include: {
+                  Contribution: {
+                    include: {
+                      user: true,
+                    },
+                    where: {
+                      projectId: input.id,
+                    },
+                  },
+                },
+              },
             },
           },
         },

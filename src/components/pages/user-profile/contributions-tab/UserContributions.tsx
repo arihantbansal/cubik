@@ -32,7 +32,7 @@ const UserContributionTableRow = ({
   // projectLogo
   // projectName
   // projectCreator
-  // projectCategory
+  // projectin
   // amount donated by user
   // project donors data
   // total amount raised
@@ -69,11 +69,16 @@ const UserContributionTableRow = ({
         </HStack>
       </Td>
       <Td px="12px">
-        {JSON.parse(contribution.ProjectsModel.industry).map(
-          (industry: { value: Key | null | undefined; label: ReactChild }) => (
-            <CustomTag key={industry.value}>{industry.label}</CustomTag>
-          )
-        )}
+        <HStack>
+          {JSON.parse(contribution.ProjectsModel.industry).map(
+            (industry: {
+              value: Key | null | undefined;
+              label: ReactChild;
+            }) => (
+              <CustomTag key={industry.value}>{industry.label}</CustomTag>
+            )
+          )}
+        </HStack>
       </Td>
       <Td px="12px">
         <HStack gap="8px" align={'center'}>
@@ -118,7 +123,6 @@ const UserContributionTableRow = ({
               contribution.ProjectsModel.ProjectJoinRound[0].fundingRound
                 .roundName
             }{' '}
-            Round
           </Box>
           <Box
             as="p"

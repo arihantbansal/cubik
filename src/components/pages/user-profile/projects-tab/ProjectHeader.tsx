@@ -26,7 +26,6 @@ import {
   ProjectVerifyStatus,
   ProjectsModel,
 } from '@prisma/client';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { AiOutlineEdit, AiOutlineMore } from 'react-icons/ai';
@@ -40,7 +39,6 @@ import { ProjectStatus } from '~/utils/getProjectStatus';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
 import { ProjectLink } from '../../projects/project-details/ProjectDetailsHeader';
 import { ProjectSocials } from '../../projects/project-details/project-interactions/ProjectInteractions';
-import ProjectStatusBanner from './ProjectStatusBanner';
 import ApplyForGrant from './project-admin-dashboard/ProjectAdminDetailsDrawer/ApplyForGrant';
 import EditProjectDetails from './project-admin-dashboard/ProjectAdminDetailsDrawer/EditProjectDetails';
 
@@ -327,30 +325,21 @@ const ProjectDetails = ({
 
 const ProjectHeader = ({
   isLoading,
-  activeProject,
   project,
 }: {
   isLoading: boolean;
-  activeProject?: string;
   project: projectWithFundingRoundType | null | undefined;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [drawerBodyView, setDrawerBodyView] = useState<drawerBodyViewEnum>(
     drawerBodyViewEnum.PROJECT_DETAILS
   );
-  const { data } = useSession();
   const btnRef = useRef();
   const headerSpacing = {
     base: '16px',
     sm: '20px',
     md: '24px',
   };
-  let isLoding = true;
-  useEffect(() => {
-    if (activeProject === project?.id) {
-      onOpen();
-    }
-  }, [activeProject]);
 
   return (
     <>
@@ -424,8 +413,7 @@ const ProjectHeader = ({
                 <Button
                   variant={'cubikOutlined'}
                   size="cubikMedium"
-                  as={Link}
-                  href={`/${data?.user.username}/?project=${project?.id}`}
+                  onClick={onOpen}
                 >
                   View Details
                 </Button>
@@ -473,44 +461,6 @@ const ProjectHeader = ({
                     <></>
                   ) : (
                     <>
-                      <Center
-                        background="#0C0D0D"
-                        w="full"
-                        position="fixed"
-                        borderTopRadius={'24px'}
-                      >
-                        <ProjectStatusBanner
-                          startTime={
-                            ProjectStatus({
-                              projectData:
-                                project as projectWithFundingRoundType,
-                            })?.startTime
-                          }
-                          endtime={
-                            ProjectStatus({
-                              projectData:
-                                project as projectWithFundingRoundType,
-                            })?.endtime
-                          }
-                          status={
-                            ProjectStatus({
-                              projectData:
-                                project as projectWithFundingRoundType,
-                            })?.status as string
-                          }
-                          roundName={
-                            ProjectStatus({
-                              projectData:
-                                project as projectWithFundingRoundType,
-                            })?.round
-                              ? ProjectStatus({
-                                  projectData:
-                                    project as projectWithFundingRoundType,
-                                })?.round?.fundingRound.roundName
-                              : undefined
-                          }
-                        />
-                      </Center>
                       <ProjectDetails
                         isLoading={false}
                         project={project}

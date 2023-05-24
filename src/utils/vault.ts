@@ -3,6 +3,7 @@ import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import Squads from '@sqds/sdk';
 
 export const createVault = async (
+  username: string,
   wallet: NodeWallet,
   name: string,
   description: string,
@@ -17,8 +18,8 @@ export const createVault = async (
       wallet.publicKey,
       new anchor.web3.PublicKey('8hpDP2azqJjTuKnys6ptQ56z4xdqSTHRPpPUYxdpaTJ3'),
     ],
-    `Cubik<>${name}`,
-    description,
+    `Cubik Vault`,
+    `This treasured holds the funds raised on cubik by @${username} for @${name}`,
     image
   );
 

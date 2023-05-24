@@ -68,7 +68,6 @@ const CreateProjectTransactionModal: React.FC<
   editorData,
 }) => {
   const toast = useToast();
-  const { data } = useSession();
   const [transactionError, setTransactionError] = useState<string | null>(null);
   const [projectId, setProjectId] = useState<string | undefined>();
   const [transactionLoading, setTransactionLoading] = useState(false);
@@ -107,6 +106,7 @@ const CreateProjectTransactionModal: React.FC<
         imageUrl as string
       );
       const { ix: valutIx, key } = await createVault(
+        session.user.username as string,
         anchorWallet as NodeWallet,
         getValues().projectName,
         getValues().tagline,
@@ -354,7 +354,7 @@ const CreateProjectTransactionModal: React.FC<
                 </VStack>
                 <Button
                   as={Link}
-                  href={`/${session?.user.username}?project=${projectId}`}
+                  href={`/${session?.user.username}?project`}
                   mx="auto"
                   variant="cubikFilled"
                   size={{ based: 'cubikMini', md: 'cubikSmall' }}
@@ -465,7 +465,7 @@ const CreateProjectTransactionModal: React.FC<
                         <WalletAddress
                           size="sm"
                           color="#fff"
-                          walletAddress={data?.user.mainWallet as string}
+                          walletAddress={session?.user.mainWallet as string}
                         />
                       </Box>
                     </VStack>
