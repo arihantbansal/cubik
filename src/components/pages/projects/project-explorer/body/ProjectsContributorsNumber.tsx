@@ -1,28 +1,36 @@
 import { Avatar, AvatarGroup, Box, Flex } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
 import {
-  ContributionsWithUserType,
-  ProjectJoinRoundWithContributionsType,
-} from '~/types/project';
+  Contribution,
+  ProjectJoinRound,
+  ProjectsModel,
+  Round,
+  UserModel,
+} from '@prisma/client';
+import { useEffect, useState } from 'react';
+import { ContributionsWithUserType } from '~/types/project';
 
 const ProjectsContributorsNumber = ({
   projectId,
   projectJoinRound,
 }: {
   projectId: string;
-  projectJoinRound: ProjectJoinRoundWithContributionsType[];
+  projectJoinRound: ProjectJoinRound & {
+    project: ProjectsModel;
+    fundingRound: Round & {
+      Contribution: (Contribution & {
+        user: UserModel;
+      })[];
+    };
+  };
 }) => {
   const [contributors, setContributors] = useState<
     ContributionsWithUserType[] | null
   >(null);
-
+  // @irfan check if this works once just to be safe
   useEffect(() => {
-    let contributorsData = projectJoinRound.reduce((all, joinedRound) => {
-      return all.concat(joinedRound.fundingRound.Contribution);
-    }, [] as ContributionsWithUserType[]);
-
+    let contributorsData = [] as ContributionsWithUserType[];
     // filter contributors to match contribution.projectId to the projectId
-    contributorsData = contributorsData.filter(
+    contributorsData = projectJoinRound.fundingRound.Contribution.filter(
       (contribution) => contribution.projectId === projectId
     );
 

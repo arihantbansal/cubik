@@ -49,11 +49,12 @@ export type CategoryType = {
 };
 
 export const ProjectListWithFilter: React.FC = () => {
-  const { data: projects, isLoading } = trpc.project.findMany.useQuery();
+  const { data: projectsJoinRound, isLoading } =
+    trpc.project.findMany.useQuery();
   const { data: roundsData, isLoading: roundsLoading } =
     trpc.round.findActive.useQuery();
 
-  console.log('projects data - ', projects);
+  // console.log('projects data - ', projects);
   const [selectedCategory, setSelectedCategory] = useState<
     CategoryType | undefined
   >();
@@ -65,11 +66,13 @@ export const ProjectListWithFilter: React.FC = () => {
   }, [roundsData]);
 
   const filteredProjects = useMemo(() => {
-    let filteredProjects = projects;
+    let filteredProjects = projectsJoinRound;
 
     if (selectedCategory) {
       filteredProjects = filteredProjects?.filter((project) => {
-        const projectIndustry: CategoryType[] = JSON.parse(project.industry);
+        const projectIndustry: CategoryType[] = JSON.parse(
+          project.project.industry
+        );
         return projectIndustry.some(
           (industry) => industry.value === selectedCategory.value
         );
@@ -79,14 +82,14 @@ export const ProjectListWithFilter: React.FC = () => {
     if (selectedRounds && selectedRounds.length > 0) {
       const selectedRoundId = selectedRounds.map((round) => round.id);
       filteredProjects = filteredProjects?.filter((project) => {
-        return project.ProjectJoinRound.some((projectRound) =>
-          selectedRoundId.includes(projectRound.fundingRound.id as string)
-        );
+        // return project.ProjectJoinRound.some((projectRound) =>
+        //   selectedRoundId.includes(projectRound.fundingRound.id as string)
+        // );
       });
     }
 
     return filteredProjects;
-  }, [projects, selectedCategory, selectedRounds]);
+  }, [projectsJoinRound, selectedCategory, selectedRounds]);
 
   //todo: if the input data is similar do not call the function but return the same order
   const shuffledProjects = useMemo(
@@ -129,7 +132,7 @@ export const ProjectListWithFilter: React.FC = () => {
     cat.label.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  console.log('projects data - ', projects);
+  // console.log('projects data - ', projects);
 
   return (
     <>

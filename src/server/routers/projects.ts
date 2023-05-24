@@ -87,28 +87,54 @@ export const projectsRouter = router({
     .input(
       z.object({
         id: z.string().nonempty(),
+        projectJoinId: z.string().nullable(),
       })
     )
     .query(async ({ input }) => {
-      const res = await prisma.projectsModel.findUnique({
-        where: {
-          id: input.id,
-        },
-        include: {
-          owner: true,
-          Team: {
-            include: {
-              user: true,
+      if (input.projectJoinId) {
+        const res = await prisma.projectsModel.findUnique({
+          where: {
+            id: input.id,
+          },
+          include: {
+            owner: true,
+            Team: {
+              include: {
+                user: true,
+              },
+            },
+            ProjectJoinRound: {
+              where: {
+                id: input.projectJoinId,
+              },
+              include: {
+                fundingRound: true,
+              },
             },
           },
-          ProjectJoinRound: {
-            include: {
-              fundingRound: true,
+        });
+        return res;
+      } else {
+        const res = await prisma.projectsModel.findUnique({
+          where: {
+            id: input.id,
+          },
+          include: {
+            owner: true,
+            Team: {
+              include: {
+                user: true,
+              },
+            },
+            ProjectJoinRound: {
+              include: {
+                fundingRound: true,
+              },
             },
           },
-        },
-      });
-      return res;
+        });
+        return res;
+      }
     }),
 
   findAll: procedure.query(async () => {
@@ -131,24 +157,41 @@ export const projectsRouter = router({
   // @type: ProjectWithRoundDetailsWithContributionWithUserType
   findMany: procedure.query(async () => {
     try {
-      const res = await prisma.projectsModel.findMany({
+      // await prisma.projectsModel.findMany({
+      //   include: {
+      //     ProjectJoinRound: {
+      //       include: {
+      //         fundingRound: {
+      //           include: {
+      //             Contribution: {
+      //               include: {
+      //                 user: true,
+      //               },
+      //             },
+      //           },
+      //         },
+      //       },
+      //       where: {
+      //         status: ProjectJoinRoundStatus.APPROVED,
+      //       },
+      //     },
+      //   },
+      // });
+      const res = await prisma.projectJoinRound.findMany({
+        where: {
+          status: ProjectJoinRoundStatus.APPROVED,
+        },
         include: {
-          ProjectJoinRound: {
+          fundingRound: {
             include: {
-              fundingRound: {
+              Contribution: {
                 include: {
-                  Contribution: {
-                    include: {
-                      user: true,
-                    },
-                  },
+                  user: true,
                 },
               },
             },
-            where: {
-              status: ProjectJoinRoundStatus.APPROVED,
-            },
           },
+          project: true,
         },
       });
       return res;

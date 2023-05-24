@@ -10,6 +10,7 @@ import { trpc } from '~/utils/trpc';
 const ProjectDetails = ({ projectId }: { projectId: string }) => {
   const { data, isError, isLoading, error } = trpc.project.findOne.useQuery({
     id: projectId as string,
+    projectJoinId: null,
   });
 
   Mixpanel.track('project_page_load', {

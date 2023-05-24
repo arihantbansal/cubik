@@ -11,33 +11,39 @@ import {
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import GetFormattedLink from '~/components/HOC/GetLink';
-import { ProjectRound } from '~/utils/ProjectsRound';
 import { trpc } from '~/utils/trpc';
 
 const ParticipatingProjectsTab = ({ setProjectsNumberByStatus }: any) => {
   const {
-    data: projects,
+    data: projectJoinRound,
     isLoading,
     isError,
     error,
   } = trpc.project.findMany.useQuery();
 
   useEffect(() => {
-    if (projects) {
+    if (projectJoinRound) {
       setProjectsNumberByStatus((prev: any) => ({
         ...prev,
-        participating: projects.length,
+        participating: projectJoinRound.length,
       }));
     }
-  }, [projects, setProjectsNumberByStatus]);
+  }, [projectJoinRound, setProjectsNumberByStatus]);
   return (
     <VStack spacing={4} w="full">
-      {projects?.map((project) => (
-        <Card key={project.id} border="none" gap="0" p="0" w="100%" h="full">
+      {projectJoinRound?.map((projectjoinround) => (
+        <Card
+          key={projectjoinround.project.id}
+          border="none"
+          gap="0"
+          p="0"
+          w="100%"
+          h="full"
+        >
           <CardBody h="full" justifyContent={'space-between'} gap="12px" p="0">
             <Center
               w="full"
-              bg={`surface.${ProjectRound({ project }).colorScheme}.3`}
+              bg={`surface.${projectjoinround.fundingRound.colorScheme}.3`}
               borderTopRadius={'16px'}
             >
               <HStack
@@ -67,9 +73,9 @@ const ParticipatingProjectsTab = ({ setProjectsNumberByStatus }: any) => {
                   w="fit-content"
                   whiteSpace={'nowrap'}
                   textStyle={'title5'}
-                  color={`surface.${ProjectRound({ project }).colorScheme}.1`}
+                  color={`surface.${projectjoinround.fundingRound.colorScheme}.1`}
                 >
-                  {ProjectRound({ project }).roundName} Round
+                  {projectjoinround.fundingRound.roundName} Round
                 </Box>
               </HStack>
             </Center>
@@ -87,8 +93,8 @@ const ParticipatingProjectsTab = ({ setProjectsNumberByStatus }: any) => {
               >
                 <Center>
                   <Avatar
-                    src={project.logo}
-                    name={project.name}
+                    src={projectjoinround.project.logo}
+                    name={projectjoinround.project.name}
                     width={{ base: '36px', sm: '48px', md: '52px' }}
                     height={{ base: '36px', sm: '48px', md: '52px' }}
                   />
@@ -110,9 +116,11 @@ const ParticipatingProjectsTab = ({ setProjectsNumberByStatus }: any) => {
                     textAlign="left"
                     color="white"
                   >
-                    {project.name}
+                    {projectjoinround.project.name}
                   </Box>
-                  <GetFormattedLink link={project.project_link} />
+                  <GetFormattedLink
+                    link={projectjoinround.project.project_link}
+                  />
                 </VStack>
               </Stack>
               <HStack justifyContent={'end'}>
