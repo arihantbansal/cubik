@@ -17,6 +17,7 @@ const nextConfig = {
       'd1yweukyu067aq.cloudfront.net',
       'www.sandstormhackathon.com',
       'media-fastly.hackerearth.com',
+      'res.cloudinary.com',
     ],
   },
 };

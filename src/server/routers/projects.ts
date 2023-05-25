@@ -476,4 +476,24 @@ export const projectsRouter = router({
       });
       return response;
     }),
+
+  projectVisitorsDetail: procedure
+    .input(
+      z.object({
+        id: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const response = prisma.projectsModel.findFirst({
+        where: { id: input.id },
+        include: {
+          ProjectJoinRound: {
+            include: {
+              fundingRound: true,
+            },
+          },
+        },
+      });
+      return response;
+    }),
 });

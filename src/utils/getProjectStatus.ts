@@ -92,3 +92,15 @@ export const ProjectStatus = ({
   }
   return projectRoundData;
 };
+
+export const ProjectStatusV2 = ({
+  projectData,
+}: {
+  projectData: projectWithFundingRoundType | undefined | null;
+}): projectRoundAndVerifyType => {
+  let projectRoundData: projectRoundAndVerifyType = {
+    status: undefined,
+  };
+
+  return projectRoundData;
+};

@@ -8,9 +8,9 @@ import {
 } from '@chakra-ui/react';
 import { FC, memo } from 'react';
 import { UserWithProjectType } from '~/types/user';
+import ProfileHeader from './ProfileHeader';
 import UserDetails from './details-tab/UserDetails';
 import { VisitorProjectEmptyState } from './empty-states/ProjectEmptyState';
-import ProfileHeader from './ProfileHeader';
 import ProjectVisitorCard from './projects-tab/ProjectVisitorCard';
 
 type visitorViewType = {
@@ -41,7 +41,11 @@ const VisitorView: FC<visitorViewType> = ({
             <Flex direction="column" w="full" gap="32px">
               {user && user.project.length ? (
                 user.project.map((project, key) => (
-                  <ProjectVisitorCard project={project} key={key} />
+                  <ProjectVisitorCard
+                    project={project}
+                    isLoading={isLoading}
+                    key={key}
+                  />
                 ))
               ) : (
                 <VisitorProjectEmptyState />

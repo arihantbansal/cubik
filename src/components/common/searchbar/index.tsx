@@ -267,10 +267,15 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
         display={display}
         rounded="8px"
         h="fit-content"
-        background={'#0F0F0F'}
-        border="1px solid #1B181A"
+        background={'#FFFFFF10'}
+        border="1px solid #1B181A10"
         w={width}
         zIndex="1"
+        sx={{
+          backdropFilter: 'blur(120px)',
+          margin: '0px !important',
+          marginTop: '0px !important',
+        }}
         onClick={() => {
           onOpen();
         }}
@@ -281,7 +286,11 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
           pointerEvents="none"
           bg="transparent"
         >
-          <BiSearch size="1.4rem" color="#75757530" />
+          <Box
+            as={BiSearch}
+            boxSize={{ base: '1.2rem', md: '1.4rem' }}
+            color="#ffffff50"
+          />
         </InputLeftElement>
 
         <Center alignItems="center" h="2.5rem">
@@ -291,8 +300,8 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
             fontSize={'md'}
             background="#05060F"
             bg="transparent"
-            color="#757575"
-            opacity="0.3"
+            color="#ffffff50"
+            //opacity="0.3"
             fontWeight="400"
             pb={'3px'}
           >

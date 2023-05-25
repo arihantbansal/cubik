@@ -38,6 +38,7 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
   return (
     <ErrorBoundaryWrapper>
       <Flex
+        overflow={'none'}
         w={'full'}
         flexDir={'column'}
         gap={{ base: '32px', sm: '40px', md: '56px' }}
