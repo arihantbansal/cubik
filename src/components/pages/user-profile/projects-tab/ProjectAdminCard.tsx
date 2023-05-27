@@ -80,7 +80,7 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
       {projectData && projectData?.ProjectJoinRound.length > 0 && (
         <>
           <Box w="full" h={'1px'} backgroundColor="neutral.3" />
-          <CardBody border="2px solid red" gap={{ base: '16px', md: '24px' }}>
+          <CardBody gap={{ base: '16px', md: '24px' }}>
             <Accordion
               px={{ base: '12px', md: '16px' }}
               w="full"

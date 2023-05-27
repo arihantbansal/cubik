@@ -52,6 +52,7 @@ type ProjectsListProps = {
       })[];
     };
   })[];
+  owner?: UserModel;
 };
 
 const ProjectCard = ({ projectJoinRound }: PropsType) => {
@@ -65,7 +66,7 @@ const ProjectCard = ({ projectJoinRound }: PropsType) => {
     !!projectList.find((item) => item.id === projectJoinRound.project.id)
   );
 
-  const industry = JSON.parse(projectJoinRound.project.industry);
+  const industry = JSON.parse(projectJoinRound.project?.industry);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
