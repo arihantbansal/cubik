@@ -107,6 +107,9 @@ const VisitorProjectRoundCard = ({
     | undefined;
   isLoading: boolean;
 }) => {
+  const router = window.location.pathname.split('/');
+  const username = router[1];
+
   return (
     <Skeleton
       isLoaded={!isLoading}
@@ -116,7 +119,10 @@ const VisitorProjectRoundCard = ({
     >
       <Card
         as={Link}
-        href={`/projects/${round?.projectId}/rounds/${round?.id}`}
+        href={{
+          pathname: `/${username}/${round?.projectId}`,
+          query: { round: round?.id },
+        }}
         p="16px"
         backgroundColor={'neutral.2'}
         _hover={{

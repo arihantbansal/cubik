@@ -15,18 +15,15 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { Round } from '@prisma/client';
-import React, { useMemo, useRef, useState } from 'react';
-import { BiCheck, BiChevronDown } from 'react-icons/bi';
+import React, { useRef } from 'react';
+import { BiCheck, BiSearch } from 'react-icons/bi';
 import { MdClear } from 'react-icons/md';
 import { RiFilter3Fill } from 'react-icons/ri';
 import { RxCross1 } from 'react-icons/rx';
 import CategoryTag from '~/components/common/tags/CategoryTags';
-import { category } from '~/components/pages/create-project/projectCategories';
-import { shuffle } from '~/utils/shuffle';
-import { trpc } from '~/utils/trpc';
+import { useFilteredProjects } from '~/hooks/projects/useFilteredProjects';
 import ProjectListLoadingSkeleton from '../../skeletons/ProjectListLoadingSkeleton';
 import EmptyProjectsState from './empty-state/ProjectsEmptyState';
-import ProjectsList from './ProjectsList';
 
 const showCasedCategories = [
   { value: 'defi', label: 'defi' },
@@ -49,90 +46,23 @@ export type CategoryType = {
 };
 
 export const ProjectListWithFilter: React.FC = () => {
-  const { data: projectsJoinRound, isLoading } =
-    trpc.project.findMany.useQuery();
-  const { data: roundsData, isLoading: roundsLoading } =
-    trpc.round.findActive.useQuery();
-
-  // console.log('projects data - ', projects);
-  const [selectedCategory, setSelectedCategory] = useState<
-    CategoryType | undefined
-  >();
-  const [selectedRounds, setSelectedRounds] = useState<Round[] | undefined>();
-  React.useEffect(() => {
-    if (roundsData) {
-      setSelectedRounds(roundsData);
-    }
-  }, [roundsData]);
-
-  const filteredProjects = useMemo(() => {
-    let filteredProjects = projectsJoinRound;
-
-    if (selectedCategory) {
-      filteredProjects = filteredProjects?.filter((project) => {
-        const projectIndustry: CategoryType[] = JSON.parse(
-          project.project.industry
-        );
-        return projectIndustry.some(
-          (industry) => industry.value === selectedCategory.value
-        );
-      });
-    }
-
-    if (selectedRounds && selectedRounds.length > 0) {
-      const selectedRoundId = selectedRounds.map((round) => round.id);
-      filteredProjects = filteredProjects?.filter((project) => {
-        // return project.ProjectJoinRound.some((projectRound) =>
-        //   selectedRoundId.includes(projectRound.fundingRound.id as string)
-        // );
-      });
-    }
-
-    return filteredProjects;
-  }, [projectsJoinRound, selectedCategory, selectedRounds]);
-
-  //todo: if the input data is similar do not call the function but return the same order
-  const shuffledProjects = useMemo(
-    () => shuffle(filteredProjects),
-    [filteredProjects]
-  );
-
-  const [searchTerm, setSearchTerm] = useState<string>('');
-
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  const handleCategoryClick = (category?: CategoryType) => {
-    // @ts-ignore
-    if (isCategorySelected(category)) {
-      setSelectedCategory(undefined);
-      return;
-    }
-    setSelectedCategory(category);
-  };
-
-  const handleRoundClick = (round: Round) => {
-    setSelectedRounds((prevRounds) => {
-      let newRounds;
-      // if prev round contains the round, remove it
-      if (prevRounds?.includes(round)) {
-        newRounds = prevRounds.filter((r) => r !== round);
-      } else {
-        newRounds = [...(prevRounds ?? []), round];
-      }
-      return newRounds;
-    });
-  };
-
-  const isCategorySelected = (category: CategoryType) =>
-    selectedCategory?.value === category.value;
-
-  const isRoundSelected = (round: Round) => selectedRounds?.includes(round);
-
-  const filteredCategories = category.filter((cat) =>
-    cat.label.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  // console.log('projects data - ', projects);
+  const {
+    isLoading,
+    roundsData,
+    roundsLoading,
+    selectedCategory,
+    setSelectedCategory,
+    selectedRounds,
+    filteredCategories,
+    shuffledProjects,
+    searchTerm,
+    setSearchTerm,
+    handleCategoryClick,
+    handleRoundClick,
+    isCategorySelected,
+    isRoundSelected,
+  } = useFilteredProjects();
 
   return (
     <>
@@ -179,7 +109,11 @@ export const ProjectListWithFilter: React.FC = () => {
                   setSearchTerm('');
                 }}
               >
-                <RxCross1 />
+                <Box
+                  as={RxCross1}
+                  boxSize={['12px', '14px', '18px']}
+                  color="#626665"
+                />
               </Center>
               <CategoryTag isSelected={true}>
                 {selectedCategory.label}
@@ -219,13 +153,16 @@ export const ProjectListWithFilter: React.FC = () => {
               pointerEvents="none"
               bg="transparent"
             >
-              <BiChevronDown size={18} color="#626665" />
+              <Box
+                as={BiSearch}
+                boxSize={['14px', '16px', '18px']}
+                color="#626665"
+              />
             </InputRightElement>
             <Input
               rounded="12px"
               h={{ base: '2.2rem', md: '2.5rem' }}
               outline="none"
-              border="none"
               placeholder="Search Categories..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -251,6 +188,7 @@ export const ProjectListWithFilter: React.FC = () => {
               }}
               _placeholder={{
                 fontSize: { base: '12px', md: '14px' },
+                lineHeight: { base: '18px', md: '20px' },
                 color: '#75757580',
               }}
             />
@@ -280,22 +218,21 @@ export const ProjectListWithFilter: React.FC = () => {
                     <Box w="100%" zIndex="9" as="p" textStyle={'body4'}>
                       Categories
                     </Box>
-                    <Center
-                      as="button"
+                    <Box
                       onClick={() => {
                         setSearchTerm('');
                         setSelectedCategory(undefined);
                       }}
-                    >
-                      <MdClear />
-                    </Center>
+                      as={MdClear}
+                      boxSize={['10px', '12px', '14px']}
+                    />
                   </HStack>
-                  {filteredCategories.length === 0 ? (
+                  {filteredCategories?.length === 0 ? (
                     <Center w="full" p="12px" pt="0">
                       <Skeleton w="full" height={'2rem'} opacity="12px" />
                     </Center>
                   ) : (
-                    filteredCategories.map((cat) => (
+                    filteredCategories?.map((cat) => (
                       <HStack
                         px="24px"
                         py="6px"
@@ -313,7 +250,11 @@ export const ProjectListWithFilter: React.FC = () => {
                           }
                         >
                           {isCategorySelected(cat) && (
-                            <BiCheck size="1rem" color="#0C0D0D" />
+                            <Box
+                              as={BiCheck}
+                              boxSize={['10px', '12px', '16px']}
+                              color="#0C0D0D"
+                            />
                           )}
                         </Center>
                         <Box
@@ -342,7 +283,9 @@ export const ProjectListWithFilter: React.FC = () => {
                 backgroundColor: 'neutral.4',
                 boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
               }}
-              icon={<RiFilter3Fill size={18} color="#626665" />}
+              icon={
+                <Box as={RiFilter3Fill} boxSize={['20px']} color="#626665" />
+              }
             />
             <MenuList
               outline="0px"
@@ -358,7 +301,12 @@ export const ProjectListWithFilter: React.FC = () => {
               p="16px"
               backgroundColor={'#0C0D0D'}
             >
-              <Box pb="12px" as="p" textStyle={'body4'} color="neutral.7">
+              <Box
+                pb="12px"
+                as="p"
+                textStyle={{ base: 'body5', md: 'body4' }}
+                color="neutral.7"
+              >
                 Ongoing Rounds
               </Box>
               {isLoading ? (
@@ -415,7 +363,8 @@ export const ProjectListWithFilter: React.FC = () => {
         ) : selectedRounds &&
           shuffledProjects &&
           shuffledProjects.length > 0 ? (
-          <ProjectsList allProjectsData={shuffledProjects} />
+          // projectModal & Project join round & owner
+          <></>
         ) : (
           <EmptyProjectsState />
         )}

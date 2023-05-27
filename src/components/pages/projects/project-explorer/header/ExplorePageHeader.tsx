@@ -9,7 +9,7 @@ const ExplorePageHeader = () => {
     data: roundData,
     isLoading,
     isError,
-  } = trpc.round.findActive.useQuery();
+  } = trpc.round.findActivePresentAndFutureRounds.useQuery();
   console.log('roundData', roundData);
   return (
     <VStack w="full">

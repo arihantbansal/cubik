@@ -30,7 +30,7 @@ const ProjectsContributorsNumber = ({
   useEffect(() => {
     let contributorsData = [] as ContributionsWithUserType[];
     // filter contributors to match contribution.projectId to the projectId
-    contributorsData = projectJoinRound.fundingRound.Contribution.filter(
+    contributorsData = projectJoinRound.fundingRound?.Contribution.filter(
       (contribution) => contribution.projectId === projectId
     );
 

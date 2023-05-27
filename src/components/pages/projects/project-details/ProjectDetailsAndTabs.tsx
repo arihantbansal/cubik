@@ -82,12 +82,14 @@ const MobileDrawer = ({
 const MobileOnlyViews = ({
   projectDetails,
   isLoading,
+  children,
 }: {
   isLoading: boolean;
   projectDetails:
     | ProjectWithRoundDetailsWithOwnerWithTeamType
     | null
     | undefined;
+  children?: React.ReactNode;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [donationSuccessful, setDonationSuccessful] = useState(false);
@@ -163,12 +165,14 @@ const MobileOnlyViews = ({
 export const ProjectDetailsAndTabs = ({
   projectDetails,
   isLoading,
+  children,
 }: {
   projectDetails:
     | ProjectWithRoundDetailsWithOwnerWithTeamType
     | null
     | undefined;
   isLoading: boolean;
+  children?: React.ReactNode;
 }) => {
   return (
     <Container
@@ -186,7 +190,9 @@ export const ProjectDetailsAndTabs = ({
         isLoading={isLoading}
         projectDetails={projectDetails}
       />
-      <MobileOnlyViews isLoading={isLoading} projectDetails={projectDetails} />
+      <MobileOnlyViews isLoading={isLoading} projectDetails={projectDetails}>
+        {children}
+      </MobileOnlyViews>
       <ProjectsTabs projectDetails={projectDetails} isLoading={isLoading} />
     </Container>
   );
