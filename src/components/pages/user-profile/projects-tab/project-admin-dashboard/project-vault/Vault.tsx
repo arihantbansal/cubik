@@ -15,7 +15,7 @@ const Vault = ({ projectData }: any) => {
   return (
     <VStack
       alignItems={'start'}
-      px={{ base: '16px', sm: '20px', md: '24px' }}
+      px={{ base: '12px', sm: '16px', md: '24px' }}
       gap={{ base: '16px', sm: '20px', md: '24px' }}
     >
       <VaultHeader multiSigAddress={projectData.mutliSigAddress as string} />

@@ -33,7 +33,11 @@ const ProjectStatusBanner = ({
           boxShadow="0px 4px 20px rgba(0, 0, 0, 0.4)"
         >
           <HStack w="fit-content" rounded="full" p="6px 10px" bg="#110F0A">
-            <TbListSearch size={14} color="#FFE747" />
+            <Box
+              as={TbListSearch}
+              color="#FFE747"
+              boxSize={['10px', '12px', '13px', '14px']}
+            />
             <Box
               as="p"
               noOfLines={1}
@@ -71,7 +75,11 @@ const ProjectStatusBanner = ({
           backgroundColor={'#1C7CEB08'}
         >
           <HStack w="fit-content" rounded="full" p="6px 10px" bg="#1C7CEB">
-            <MdVerified size={14} color="#fff" />
+            <Box
+              as={MdVerified}
+              color="#fff"
+              boxSize={['10px', '12px', '13px', '14px']}
+            />
             <Box
               as="p"
               noOfLines={1}
@@ -110,7 +118,11 @@ const ProjectStatusBanner = ({
           backgroundColor={'#140001'}
         >
           <HStack w="fit-content" rounded="full" p="6px 10px" bg="#660005">
-            <AiOutlineWarning size={14} color="#FFCAC2" />
+            <Box
+              as={AiOutlineWarning}
+              color="#FFCAC2"
+              boxSize={['10px', '12px', '13px', '14px']}
+            />
             <Box
               as="p"
               noOfLines={1}

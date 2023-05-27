@@ -4,13 +4,12 @@ import HackathonDetails from '~/components/pages/hackathons/hackathonDetails/Hac
 
 const HackathonDetail = () => {
   return (
-    <Container p="0" maxW={'full'}>
+    <Container p={'0'} maxW={'full'}>
       <VStack>
         <Center
           alignItems={'end'}
-          justifyContent={'end'}
           w="100vw"
-          h={{ base: '10rem', md: '12rem', lg: '16rem' }}
+          h={{ base: '16rem', md: '20rem', lg: '24rem' }}
           position={'relative'}
           overflow={'hidden'}
           _before={{
@@ -19,7 +18,7 @@ const HackathonDetail = () => {
             bottom: 0,
             left: 0,
             right: 0,
-            height: { base: '10rem', md: '12rem', lg: '16rem' },
+            height: { base: '16rem', md: '20rem', lg: '24rem' },
             background:
               'linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)',
             zIndex: 1,
@@ -27,11 +26,12 @@ const HackathonDetail = () => {
         >
           <Image
             src={
-              'https://media-fastly.hackerearth.com/media/hackathon/grizzlython-a-global-online-solana-hackathon/images/f77e67b4b8-hackerearth---2700x600.png'
+              'https://res.cloudinary.com/demonicirfan/image/upload/v1685007351/Frame_127_bdguyz.png'
             }
-            width={8000}
-            height={8000}
             alt={'hackathon'}
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center"
           />
         </Center>
         <HackathonDetails />

@@ -101,8 +101,8 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
   ...contribution
 }) => {
   return (
-    <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
-      <Td p="18px">
+    <Tr>
+      <Td p={{ base: '10px', md: '16px' }}>
         <HStack align={'start'} gap={{ base: '8px', md: '16px' }}>
           <Avatar
             width={{ base: '36px', md: '44px' }}
@@ -133,7 +133,7 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
           </VStack>
         </HStack>
       </Td>
-      <Td p="18px">
+      <Td p={{ base: '10px', md: '16px' }}>
         <HStack gap="8px" align={'center'}>
           <Center>
             {contribution.token === 'sol' ? (
@@ -161,7 +161,7 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
           </VStack>
         </HStack>
       </Td>
-      <Td p="18px">
+      <Td p={{ base: '10px', md: '16px' }}>
         <Box
           as="p"
           textStyle={{ base: 'body5', md: 'body4' }}
@@ -170,7 +170,7 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
           {timeSince(new Date(contribution.createdAt))}
         </Box>
       </Td>
-      <Td p="18px">
+      <Td p={{ base: '10px', md: '16px' }}>
         <BiChevronRight size="24" />
       </Td>
     </Tr>
@@ -190,7 +190,7 @@ const ProjectContributorsAdminView = ({
   const [sortField, setSortField] = useState('timestamp');
   const [sortDirection, setSortDirection] = useState('desc');
 
-  const pageSize = 15;
+  const pageSize = 8;
   const siblingCount = 1;
 
   const totalContributors = contributorsData ? contributorsData.length : 0;
@@ -233,6 +233,7 @@ const ProjectContributorsAdminView = ({
   return (
     <VStack
       w="full"
+      py="0px"
       align={
         currentContributors?.length === 0
           ? 'center'
@@ -243,13 +244,21 @@ const ProjectContributorsAdminView = ({
         <ContributionsEmptyState />
       ) : (
         <>
-          <Table w="full" minW="34rem" overflowX="scroll" variant="unstyled">
+          <Table
+            w="full"
+            minW={{ base: '28rem', md: '34rem' }}
+            overflowX="scroll"
+            variant="unstyled"
+            mt="16px"
+          >
             <Thead
+              bg="neutral.4"
+              h="1rem"
               color="neutral.8"
               fontFamily={'Plus Jakarta Sans, sans-serif'}
             >
               <Tr>
-                <Th w={'40%'} p="18px">
+                <Th w={'40%'} p={{ base: '10px', md: '4px 16px' }}>
                   <Text
                     fontSize={{ base: '12px', md: '14px' }}
                     textTransform={'capitalize'}
@@ -258,7 +267,7 @@ const ProjectContributorsAdminView = ({
                     Contributor
                   </Text>
                 </Th>
-                <Th w={'25%'} p="18px">
+                <Th w={'25%'} p={{ base: '10px', md: '4px 16px' }}>
                   <ButtonGroup
                     onClick={() => handleSortChange('amount')}
                     variant="unstyled"
@@ -287,7 +296,7 @@ const ProjectContributorsAdminView = ({
                     />
                   </ButtonGroup>
                 </Th>
-                <Th w={'25%'} p="18px">
+                <Th w={'25%'} p={{ base: '10px', md: '4px 16px' }}>
                   <ButtonGroup
                     onClick={() => handleSortChange('timestamp')}
                     variant="unstyled"
@@ -316,7 +325,7 @@ const ProjectContributorsAdminView = ({
                     />
                   </ButtonGroup>
                 </Th>
-                <Th w={'10%'} p="18px"></Th>
+                <Th w={'10%'} p={{ base: '10px', md: '4px 16px' }}></Th>
               </Tr>
             </Thead>
             {isLoading ? (

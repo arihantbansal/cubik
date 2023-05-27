@@ -1,23 +1,22 @@
-import { Box, Center, VStack } from '@chakra-ui/react';
+import { Box, Center, HStack, Spinner, VStack } from '@chakra-ui/react';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { trpc } from '~/utils/trpc';
 import { FundingChart } from './Charts';
 
 const FundingOverview = ({ projectId }: { projectId: string }) => {
-  const { data, isError, isLoading } =
+  const { data, isError, isLoading, error } =
     trpc.contribution.getProjectContributors.useQuery({
       projectId,
     });
 
   if (isLoading) {
-    // handle loading state
+    return <Spinner />;
   }
 
   if (isError) {
-    // handle error state
+    return <ComponentErrors error={error} />;
   }
-  if (!data) return <></>;
 
-  // assuming the data you get is an array of contributions
   const totalCommunityDonation = data?.reduce(
     (acc, curr) => acc + curr.currentTotal,
     0
@@ -26,6 +25,8 @@ const FundingOverview = ({ projectId }: { projectId: string }) => {
     (acc, curr) => acc + curr.currentusdTotal,
     0
   );
+
+  console.log('project contributors data - ', data);
 
   return (
     <VStack
@@ -42,9 +43,11 @@ const FundingOverview = ({ projectId }: { projectId: string }) => {
         Funding Overview
       </Box>
       <VStack align={'start'} w="full">
-        <Box as="p" textStyle="body5" color={'neutral.8'}>
-          Estimated Amount Raised
-        </Box>
+        <HStack>
+          <Box as="p" textStyle="body5" color={'neutral.8'}>
+            Amount Raised
+          </Box>
+        </HStack>
         <Box
           as="p"
           textStyle={{ base: 'title4', md: 'title3' }}

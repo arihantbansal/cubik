@@ -1,5 +1,6 @@
 // components/ErrorBoundary.tsx
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
+import ComponentErrors from './ComponenetErrors';
 
 interface Props {
   children: ReactNode;
@@ -28,7 +29,7 @@ class ErrorBoundary extends Component<Props, State> {
 
   public render() {
     if (this.state.hasError) {
-      return <p>Something went wrong. Please try again later.</p>;
+      return <ComponentErrors />;
     }
 
     return this.props.children;

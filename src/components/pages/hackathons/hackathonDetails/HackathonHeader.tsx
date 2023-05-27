@@ -23,7 +23,7 @@ const HackathonHeader = ({ isLoading }: { isLoading: boolean }) => {
           borderRadius="12px"
           backgroundColor={'#1C1C1C'}
           src={
-            'https://ik.imagekit.io/blockster/7e08488b-ff77-4c92-b81d-b506249ed630.gif?tr=w-600,h-450'
+            'https://res.cloudinary.com/demonicirfan/image/upload/v1685007355/Frame_126_itzdri.png'
           }
           width={{ base: '5.5rem', md: '7rem' }}
           height={{ base: '5.5rem', md: '7rem' }}
@@ -46,7 +46,7 @@ const HackathonHeader = ({ isLoading }: { isLoading: boolean }) => {
             whiteSpace="nowrap"
             textOverflow="ellipsis"
           >
-            Sandstorm Hackathon
+            Solana Speedrun
           </Box>
           <SkeletonText
             isLoaded={!isLoading}
