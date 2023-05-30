@@ -35,27 +35,7 @@ type ExtendedContribution = Contribution & {
 
 const formatContributorData = (data: any[]): ExtendedContribution[] => {
   return data?.map((contributor) => ({
-    id: contributor.id,
-    avatar: contributor.user.profilePicture,
-    username: contributor.user.username,
-    walletAddress: contributor.user.mainWallet,
-    amount: contributor.currentTotal,
-    currentusdTotal: contributor.currentusdTotal,
-    timestamp: contributor.createdAt,
-    token: contributor.token,
-    tx: contributor.tx,
-    split: contributor.split,
-    roundId: contributor.roundId,
-    projectId: contributor.projectId,
-    user: contributor.user,
-    userId: contributor.userId,
-    createdAt: contributor.createdAt,
-    updatedAt: contributor.updatedAt,
-    count: contributor.count,
-    currentTotal: contributor.currentTotal,
-    isLatest: contributor.isLatest,
-    total: contributor.total,
-    usdTotal: contributor.usdTotal,
+    ...contributor,
   }));
 };
 
@@ -207,10 +187,10 @@ const ProjectContributorsAdminView = ({
   const sortedAndFormattedContributors = contributorsData
     ? formatContributorData(contributorsData).sort((a, b) => {
         const key = sortField as keyof ExtendedContribution;
-        if (a[key] < b[key]) {
+        if (a[key]! < b[key]!) {
           return sortDirection === 'asc' ? -1 : 1;
-        }
-        if (a[key] > b[key]) {
+        } // todo: check types here
+        if (a[key]! > b[key]!) {
           return sortDirection === 'asc' ? 1 : -1;
         }
         return 0;

@@ -1,39 +1,25 @@
 import { Avatar, AvatarGroup, Box, Flex } from '@chakra-ui/react';
-import {
-  Contribution,
-  ProjectJoinRound,
-  ProjectsModel,
-  Round,
-  UserModel,
-} from '@prisma/client';
 import { useEffect, useState } from 'react';
 import { ContributionsWithUserType } from '~/types/project';
 
 const ProjectsContributorsNumber = ({
   projectId,
-  projectJoinRound,
+  contributorsList,
 }: {
   projectId: string;
-  projectJoinRound: ProjectJoinRound & {
-    project: ProjectsModel & {
-      owner: UserModel;
-    };
-    contributors: (Contribution & {
-      user: UserModel;
-    })[];
-    fundingRound: Round;
-  };
+  contributorsList: ContributionsWithUserType[];
 }) => {
+  console.log('contributorsList', contributorsList);
   const [contributors, setContributors] = useState<
-    ContributionsWithUserType[] | null
-  >(null);
+    ContributionsWithUserType[] | undefined
+  >();
   // @irfan check if this works once just to be safe
   useEffect(() => {
     let contributorsData = [] as ContributionsWithUserType[];
 
     // filter out duplicate donations from the same user
     const userNames: { [key: string]: boolean } = {};
-    contributorsData = projectJoinRound.contributors.filter((contribution) => {
+    contributorsData = contributorsList.filter((contribution) => {
       if (userNames[contribution.user.username]) {
         // This user has already made a donation, skip this donation
         return false;
@@ -45,8 +31,9 @@ const ProjectsContributorsNumber = ({
     });
 
     setContributors(contributorsData);
-  }, [projectJoinRound]);
+  }, [contributorsList]);
 
+  console.log('contribution - ', contributors);
   return (
     <>
       {contributors ? (
@@ -84,8 +71,7 @@ const ProjectsContributorsNumber = ({
           textStyle={{ base: 'body6', md: 'body5' }}
           fontWeight="600"
         >
-          {' '}
-          - -{' '}
+          - -
         </Box>
       )}
     </>

@@ -28,12 +28,21 @@ export const verifiedProjects = publicProcedure
 
     // when both filter are working
     if (input.filter && input.round && input.round?.length > 0) {
-      console.log('Inside the both');
+      console.log('Inside the both - filter and round', input);
       const active = res.filter((e) => {
-        e.project.industry.includes(input.filter as string) &&
-          input.round?.includes(e.fundingRound.id);
-      });
+        const industry = JSON.parse(e.project.industry) as {
+          label: string;
+          value: string;
+          colorScheme: string;
+        }[];
 
+        if (
+          industry.some((e) => e.value === input.filter) &&
+          input.round?.includes(e.fundingRound.id)
+        ) {
+          return e;
+        }
+      });
       return active;
     }
 
@@ -46,14 +55,14 @@ export const verifiedProjects = publicProcedure
       return active;
     }
     // returns all projects with the round
-    if (input.round && input.round.length > 0 && input.filter) {
-      console.log('Inside the filter');
+    if (input.round && input.round.length > 0 && !input.filter) {
+      console.log('Inside the round');
       const active = res.filter((e) => {
-        input.round?.includes(e.fundingRound.id);
+        if (input.round?.includes(e.fundingRound.id)) {
+          return e;
+        }
       });
 
       return active;
     }
-
-    return res;
   });
