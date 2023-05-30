@@ -126,11 +126,12 @@ model ProjectJoinRound {
   projectId     String
   tx            String                 @db.VarChar(500)
   roundId       String
-  amountRaise   Float?                 @default(0)
-  contributions Int                    @default(0)
   status        ProjectJoinRoundStatus @default(PENDING)
   createdAt     DateTime               @default(now())
   updatedAt     DateTime               @updatedAt
+  amountRaise   Float?                 @default(0)
+  contributions Int                    @default(0)
+  contributors  Contribution[]
   project       ProjectsModel          @relation(fields: [projectId], references: [id])
   fundingRound  Round                  @relation(fields: [roundId], references: [id])
 
@@ -143,19 +144,19 @@ model Round {
   roundName         String
   matchedPool       Float              @default(0)
   notionPage        String             @db.VarChar(500)
-  manager     String @default("")
   projectCount      Int                @default(0)
   active            Boolean            @default(true)
   userId            String
   description       String             @default(dbgenerated("(_utf8mb4\\'\\')")) @db.Text
   endtime           DateTime           @default(now())
-  contributions     Float              @default(0)
   startTime         DateTime           @default(now())
   tx                String             @db.VarChar(500)
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
   colorScheme       String             @default("teal")
   short_description String             @default("") @db.VarChar(2000)
+  contributions     Float              @default(0)
+  manager           String             @default("")
   sponsor           Sponsor[]
   User              UserModel          @relation(fields: [userId], references: [id])
   ProjectJoinRound  ProjectJoinRound[]
@@ -177,28 +178,31 @@ model Sponsor {
 }
 
 model Contribution {
-  id              String        @id @default(uuid()) @map("_id")
-  tx              String        @db.VarChar(500)
-  token           String
-  split           Float
-  roundId         String
-  projectId       String
-  userId          String
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-  count           Int           @default(0)
-  currentTotal    Float
-  currentusdTotal Float
-  isLatest        Boolean       @default(true)
-  total           Float
-  usdTotal        Float
-  user            UserModel     @relation(fields: [userId], references: [id])
-  ProjectsModel   ProjectsModel @relation(fields: [projectId], references: [id])
-  Round           Round         @relation(fields: [roundId], references: [id])
+  id                 String            @id @default(uuid()) @map("_id")
+  tx                 String            @db.VarChar(500)
+  token              String
+  split              Float
+  roundId            String
+  projectId          String
+  userId             String
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  count              Int               @default(0)
+  currentTotal       Float
+  currentusdTotal    Float
+  isLatest           Boolean           @default(true)
+  total              Float
+  usdTotal           Float
+  user               UserModel         @relation(fields: [userId], references: [id])
+  ProjectsModel      ProjectsModel     @relation(fields: [projectId], references: [id])
+  Round              Round             @relation(fields: [roundId], references: [id])
+  ProjectJoinRound   ProjectJoinRound? @relation(fields: [projectJoinRoundId], references: [id])
+  projectJoinRoundId String?
 
   @@index([projectId])
   @@index([roundId])
   @@index([userId])
+  @@index([projectJoinRoundId])
 }
 
 model Comments {

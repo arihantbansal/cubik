@@ -4,7 +4,15 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  Center,
+  Flex,
   HStack,
+  Stack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
 } from '@chakra-ui/react';
 import {
   Contribution,
@@ -18,12 +26,18 @@ import { HiBan } from 'react-icons/hi';
 import { ImCheckboxChecked } from 'react-icons/im';
 import RoundStatus from '~/components/common/dates/Status';
 import ProjectContributorsAdminView from '../../projects/project-details/project-interactions/project-tabs/ProjectContributorsAdminView';
+import FundingOverview from './project-admin-dashboard/FundingOverview';
+import ProjectInsights from './project-admin-dashboard/ProjectInsights';
 
 const FundingRoundStatus = ({ status }: { status: string }) => {
   if (status === ProjectJoinRoundStatus.PENDING) {
     return (
-      <HStack w="fit-content" rounded="full" p="6px 10px" bg="#470E47">
-        <FiClock size={14} color="#FFCCFF" />
+      <HStack w="fit-content" rounded="full" bg="#470E47" p="6px 10px">
+        <Box
+          as={FiClock}
+          color="#FFCCFF"
+          boxSize={['10px', '11px', '12px', '14px']}
+        />
         <Box
           as="p"
           noOfLines={1}
@@ -38,7 +52,11 @@ const FundingRoundStatus = ({ status }: { status: string }) => {
   } else if (status === ProjectJoinRoundStatus.APPROVED) {
     return (
       <HStack w="fit-content" rounded="full" p="6px 10px" bg="#6D28D9">
-        <ImCheckboxChecked size={14} color="#E6D6FF" />
+        <Box
+          as={ImCheckboxChecked}
+          color="#E6D6FF"
+          boxSize={['10px', '11px', '12px', '14px']}
+        />
         <Box
           as="p"
           noOfLines={1}
@@ -87,7 +105,7 @@ const AdminProjectRoundCard = ({
 }) => {
   console.log('round - ', round);
   return (
-    <AccordionItem w="full" mt="24px" outline="none" border="none">
+    <AccordionItem overflow={'scroll'} w="full" outline="none" border="none">
       <AccordionButton
         borderRadius="12px"
         backgroundColor={'neutral.2'}
@@ -104,18 +122,24 @@ const AdminProjectRoundCard = ({
       >
         <HStack justify={'space-between'} w="full">
           <HStack justify={'space-between'} w="full">
-            <HStack gap="8px">
+            <HStack gap={{ base: '6px', md: '8px' }}>
               <FundingRoundStatus status={round.status} />
-              <Box as="p" textStyle="title4" color="neutral.11">
+              <Box
+                as="p"
+                textStyle={{ base: 'title6', md: 'title4' }}
+                color="neutral.11"
+              >
                 {round.fundingRound.roundName} Round
               </Box>
             </HStack>
-            <RoundStatus
-              startDate={round.fundingRound.startTime}
-              endDate={round.fundingRound.endtime}
-            />
+            <HStack>
+              <RoundStatus
+                startDate={round.fundingRound.startTime}
+                endDate={round.fundingRound.endtime}
+              />
+            </HStack>
           </HStack>
-          <AccordionIcon />
+          <AccordionIcon display={{ base: 'none', md: 'block' }} />
         </HStack>
       </AccordionButton>
       <AccordionPanel
@@ -123,10 +147,71 @@ const AdminProjectRoundCard = ({
         borderBottomRightRadius={'12px'}
         borderBottomLeftRadius={'12px'}
       >
-        {round.status === ProjectJoinRoundStatus.APPROVED && (
-          <ProjectContributorsAdminView
-            contributorsData={round.fundingRound.Contribution}
-          />
+        {round.status === ProjectJoinRoundStatus.APPROVED ? (
+          <Tabs variant={'cubik'}>
+            <TabList>
+              <Tab>Details</Tab>
+              <Tab>Contributors</Tab>
+            </TabList>
+            <TabPanels p={'0'}>
+              <TabPanel>
+                {round.fundingRound.Contribution.length > 0 && (
+                  <Stack
+                    gap={{ base: '64px', sm: '72px', md: '80px' }}
+                    padding={{
+                      base: '0px',
+                      sm: '0px',
+                      md: '0px 16px',
+                    }}
+                    direction={{ base: 'column', lg: 'row' }}
+                  >
+                    <FundingOverview
+                      projectId={
+                        round.fundingRound.Contribution[0].projectId as string
+                      }
+                    />
+                    <ProjectInsights
+                      projectId={
+                        round.fundingRound.Contribution[0].projectId as string
+                      }
+                    />
+                  </Stack>
+                )}
+              </TabPanel>
+              <TabPanel p="0">
+                <Flex
+                  direction="column"
+                  w="full"
+                  gap="32px"
+                  overflow={'scroll'}
+                >
+                  <ProjectContributorsAdminView
+                    contributorsData={round.fundingRound.Contribution}
+                  />
+                </Flex>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        ) : round.status === ProjectJoinRoundStatus.PENDING ? (
+          <Center w="full" h="2rem">
+            <Box
+              as="p"
+              textStyle={{ base: 'body5', md: 'body4' }}
+              color={'neutral.8'}
+            >
+              No results to show here!
+            </Box>
+          </Center>
+        ) : (
+          <Center w="full" h="2rem">
+            <Box
+              as="p"
+              textStyle={{ base: 'body5', md: 'body4' }}
+              color={'neutral.8'}
+            >
+              No results to show here!
+            </Box>
+          </Center>
         )}
       </AccordionPanel>
     </AccordionItem>

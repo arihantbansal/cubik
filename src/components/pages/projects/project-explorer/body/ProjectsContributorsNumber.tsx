@@ -1,34 +1,25 @@
 import { Avatar, AvatarGroup, Box, Flex } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import {
-  ContributionsWithUserType,
-  ProjectJoinRoundWithContributionsType,
-} from '~/types/project';
+import { ContributionsWithUserType } from '~/types/project';
 
 const ProjectsContributorsNumber = ({
   projectId,
-  projectJoinRound,
+  contributorsList,
 }: {
   projectId: string;
-  projectJoinRound: ProjectJoinRoundWithContributionsType[];
+  contributorsList: ContributionsWithUserType[];
 }) => {
+  console.log('contributorsList', contributorsList);
   const [contributors, setContributors] = useState<
-    ContributionsWithUserType[] | null
-  >(null);
-
+    ContributionsWithUserType[] | undefined
+  >();
+  // @irfan check if this works once just to be safe
   useEffect(() => {
-    let contributorsData = projectJoinRound.reduce((all, joinedRound) => {
-      return all.concat(joinedRound.fundingRound.Contribution);
-    }, [] as ContributionsWithUserType[]);
-
-    // filter contributors to match contribution.projectId to the projectId
-    contributorsData = contributorsData.filter(
-      (contribution) => contribution.projectId === projectId
-    );
+    let contributorsData = [] as ContributionsWithUserType[];
 
     // filter out duplicate donations from the same user
     const userNames: { [key: string]: boolean } = {};
-    contributorsData = contributorsData.filter((contribution) => {
+    contributorsData = contributorsList.filter((contribution) => {
       if (userNames[contribution.user.username]) {
         // This user has already made a donation, skip this donation
         return false;
@@ -40,8 +31,9 @@ const ProjectsContributorsNumber = ({
     });
 
     setContributors(contributorsData);
-  }, [projectJoinRound]);
+  }, [contributorsList]);
 
+  console.log('contribution - ', contributors);
   return (
     <>
       {contributors ? (
@@ -79,8 +71,7 @@ const ProjectsContributorsNumber = ({
           textStyle={{ base: 'body6', md: 'body5' }}
           fontWeight="600"
         >
-          {' '}
-          - -{' '}
+          - -
         </Box>
       )}
     </>

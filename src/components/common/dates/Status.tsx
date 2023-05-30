@@ -3,6 +3,8 @@ import { differenceInDays, isFuture, isPast } from 'date-fns';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import { BiInfoCircle } from 'react-icons/bi';
 
+const random = () => Math.floor(Math.random() * 10);
+
 const ripple = keyframes`
   0% {
     box-shadow: 0 0 0em 0 rgba(49, 245, 121,0.4),
@@ -21,10 +23,10 @@ const ripple = keyframes`
 const CircleRipple = chakra(Box, {
   baseStyle: {
     backgroundColor: '#31F579',
-    width: '1em',
-    height: '1em',
+    width: { base: '0.8em', md: '1em' },
+    height: { base: '0.8em', md: '1em' },
     rounded: 'full',
-    animation: `${ripple} 1.5s linear infinite`,
+    animation: `${ripple} 1.${random()}s linear infinite`,
   },
 });
 
@@ -60,13 +62,14 @@ const RoundStatus = ({
   } else if (isFuture(endDate)) {
     return (
       <HStack
-        rounded="full"
+        rounded={'full'}
         backgroundColor="#071A0F"
         mx={1}
         spacing="0"
         overflow={'hidden'}
+        w={'fit-content'}
       >
-        <Center rounded="full" p="8px">
+        <Center rounded="full" p={{ base: '6px', md: '8px' }}>
           <CircleRipple />
         </Center>
         <Box
@@ -77,8 +80,9 @@ const RoundStatus = ({
           whiteSpace="pre"
           color="neutral.11"
           textStyle={{ base: 'body6', md: 'overline3' }}
+          display={{ base: 'none', md: 'block' }}
         >
-          Ongoing - ends in {daysToEnd} days
+          Live - ends in {daysToEnd} days
         </Box>
       </HStack>
     );
@@ -97,6 +101,7 @@ const RoundStatus = ({
           whiteSpace="pre"
           color="neutral.11"
           textStyle={{ base: 'body6', md: 'body5' }}
+          display={{ base: 'none', md: 'block' }}
         >
           Round ended {daysSinceEnd} days ago
         </Box>

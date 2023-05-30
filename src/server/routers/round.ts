@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
 import { procedure, protectedProcedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
+import { activeRounds } from './rounds';
 
 export const roundRouter = router({
   create: protectedProcedure
@@ -82,11 +83,28 @@ export const roundRouter = router({
     const roundRes = await prisma.round.findMany({
       where: {
         active: true,
+        endtime: {
+          gte: new Date(),
+        },
       },
     });
     return roundRes;
   }),
-
+  findActivePresentAndFutureRounds: procedure.query(async ({ ctx }) => {
+    const roundRes = await prisma.round.findMany({
+      where: {
+        active: true,
+        endtime: {
+          gte: new Date(),
+        },
+        startTime: {
+          lte: new Date(),
+        },
+      },
+    });
+    return roundRes;
+  }),
+  findOngoingRounds: activeRounds,
   findInReview: procedure
     .input(
       z.object({
@@ -202,6 +220,7 @@ export const roundRouter = router({
       });
       return roundRes;
     }),
+
   updateStatus: procedure
     .input(
       z.object({

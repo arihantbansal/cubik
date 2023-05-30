@@ -1,5 +1,6 @@
 import { Container, Stack } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';
 import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-details/ProjectDetailsAndTabs';
 import ProjectDetailsLiveRoundStatus from '~/components/pages/projects/project-details/ProjectDetailsLiveRoundStatus';
@@ -10,6 +11,7 @@ import { trpc } from '~/utils/trpc';
 const ProjectDetails = ({ projectId }: { projectId: string }) => {
   const { data, isError, isLoading, error } = trpc.project.findOne.useQuery({
     id: projectId as string,
+    projectJoinId: null,
   });
 
   Mixpanel.track('project_page_load', {
@@ -17,10 +19,16 @@ const ProjectDetails = ({ projectId }: { projectId: string }) => {
   });
 
   if (isError) {
-    return <>{error.message}</>;
+    return <ComponentErrors error={error} />;
   }
 
-  console.log('project details', data);
+  if (typeof window !== 'undefined') {
+    const url = new URL(window.location.href);
+    const round = url.searchParams.get('round');
+    const prev = url.searchParams.get('prev');
+    console.log('round, prev - ', round, prev);
+  }
+
   return (
     <>
       <SEO

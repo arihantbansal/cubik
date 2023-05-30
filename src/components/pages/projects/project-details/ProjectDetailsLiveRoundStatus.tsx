@@ -1,5 +1,13 @@
 import { Box, Center, Container, Flex, HStack } from '@chakra-ui/react';
-import { ProjectJoinRoundStatus, ProjectVerifyStatus } from '@prisma/client';
+import {
+  ProjectJoinRound,
+  ProjectJoinRoundStatus,
+  ProjectsModel,
+  ProjectVerifyStatus,
+  Round,
+  Team,
+  UserModel,
+} from '@prisma/client';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { FiClock } from 'react-icons/fi';
 import { HiBan } from 'react-icons/hi';
@@ -7,14 +15,28 @@ import { ImCheckboxChecked } from 'react-icons/im';
 import { MdVerified } from 'react-icons/md';
 import { TbListSearch } from 'react-icons/tb';
 import RoundStatus from '~/components/common/dates/Status';
-import { projectWithFundingRoundType } from '~/types/project';
 import { ProjectStatus } from '~/utils/getProjectStatus';
 
-const ProjectDetailsLiveRoundStatus = ({ projectDetails }: any) => {
+interface Props {
+  projectDetails:
+    | (ProjectsModel & {
+        ProjectJoinRound: (ProjectJoinRound & {
+          fundingRound: Round;
+        })[];
+        Team: (Team & {
+          user: UserModel;
+        })[];
+        owner: UserModel;
+      })
+    | null
+    | undefined;
+}
+
+const ProjectDetailsLiveRoundStatus = ({ projectDetails }: Props) => {
   // todo fix this
   const { startTime, endtime, status, round } =
     ProjectStatus({
-      projectData: projectDetails as projectWithFundingRoundType,
+      projectData: projectDetails,
     }) || {};
   switch (status) {
     case ProjectVerifyStatus.REVIEW:

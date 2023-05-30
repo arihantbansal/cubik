@@ -28,7 +28,7 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
-    data: projects,
+    data: projectJoinRound,
     isLoading: projectsLoading,
     isError: projectsIsError,
     error: projectsError,
@@ -73,20 +73,24 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
 
   const filteredProjects = useMemo(() => {
-    if (!projects || searchInput.trim() === '') {
+    if (!projectJoinRound || searchInput.trim() === '') {
       return [];
     }
-    const matchingProjects = projects
-      .filter((project) =>
-        project.name.toLowerCase().includes(searchInput.toLowerCase())
+    const matchingProjects = projectJoinRound
+      .filter((projectjoinRound) =>
+        projectjoinRound.project.name
+          .toLowerCase()
+          .includes(searchInput.toLowerCase())
       )
       .sort((a, b) => {
-        if (a.name.toLowerCase() === searchInput.toLowerCase()) return -1;
-        if (b.name.toLowerCase() === searchInput.toLowerCase()) return 1;
-        return a.name.localeCompare(b.name);
+        if (a.project.name.toLowerCase() === searchInput.toLowerCase())
+          return -1;
+        if (b.project.name.toLowerCase() === searchInput.toLowerCase())
+          return 1;
+        return a.project.name.localeCompare(b.project.name);
       });
     return matchingProjects;
-  }, [projects, searchInput]);
+  }, [projectJoinRound, searchInput]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -211,9 +215,9 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
                       <Box as="p" textStyle={'body5'} color="neutral.8">
                         Projects
                       </Box>
-                      {filteredProjects.map((project, index) => (
+                      {filteredProjects.map((projectjoinround, index) => (
                         <HStack
-                          key={project.id}
+                          key={projectjoinround?.id}
                           as={Link}
                           gap="8px"
                           rounded="8px"
@@ -224,18 +228,18 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
                               ? 'neutral.5'
                               : 'transparent'
                           }
-                          href={`/project/${project.id}`}
+                          href={`/project/${projectjoinround.project?.id}`} // @irfan check if the route is correct once
                         >
                           <Avatar
-                            src={project.logo}
-                            name={project.name}
+                            src={projectjoinround.project.logo}
+                            name={projectjoinround.project.name}
                             width={{ base: '20px', md: '28px' }}
                             height={{ base: '20px', md: '28px' }}
                             rounded="full"
                           />
                           <HStack justify={'start'} gap="0" align={'center'}>
                             <Box as="p" color="white" textStyle="title5">
-                              {project.name}
+                              {projectjoinround.project.name}
                             </Box>
                             <Box
                               as="p"
@@ -263,10 +267,15 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
         display={display}
         rounded="8px"
         h="fit-content"
-        background={'#0F0F0F'}
-        border="1px solid #1B181A"
+        background={'#FFFFFF10'}
+        border="1px solid #1B181A10"
         w={width}
         zIndex="1"
+        sx={{
+          backdropFilter: 'blur(120px)',
+          margin: '0px !important',
+          marginTop: '0px !important',
+        }}
         onClick={() => {
           onOpen();
         }}
@@ -277,7 +286,11 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
           pointerEvents="none"
           bg="transparent"
         >
-          <BiSearch size="1.4rem" color="#75757530" />
+          <Box
+            as={BiSearch}
+            boxSize={{ base: '1.2rem', md: '1.4rem' }}
+            color="#ffffff50"
+          />
         </InputLeftElement>
 
         <Center alignItems="center" h="2.5rem">
@@ -287,8 +300,8 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
             fontSize={'md'}
             background="#05060F"
             bg="transparent"
-            color="#757575"
-            opacity="0.3"
+            color="#ffffff50"
+            //opacity="0.3"
             fontWeight="400"
             pb={'3px'}
           >

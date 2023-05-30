@@ -8,6 +8,7 @@ import { Input } from './input';
 import { Menu } from './menu';
 import { Modal } from './modal';
 import { NumberInput } from './numberInput';
+import { Popover } from './popover';
 import { Select } from './select';
 import { Skeleton } from './skeleton';
 import { Slider } from './slider';
@@ -28,6 +29,7 @@ export const components = {
   Avatar,
   Select,
   Button,
+  Popover,
   Checkbox,
   Textarea,
   Skeleton,

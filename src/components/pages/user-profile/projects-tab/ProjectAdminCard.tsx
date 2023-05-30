@@ -8,9 +8,8 @@ import {
   CardHeader,
   Center,
   Skeleton,
-  Stack,
 } from '@chakra-ui/react';
-import { ProjectJoinRoundStatus, ProjectsModel } from '@prisma/client';
+import { ProjectsModel } from '@prisma/client';
 import { useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import ComponentErrors from '~/components/errors/ComponenetErrors';
@@ -19,9 +18,7 @@ import { ProjectStatus } from '~/utils/getProjectStatus';
 import { trpc } from '~/utils/trpc';
 import AdminProjectRoundCard from './AdminProjectRoundCard';
 import ProjectHeader from './ProjectHeader';
-import ProjectStatusBanner from './ProjectStatusBanner';
-import FundingOverview from './project-admin-dashboard/FundingOverview';
-import ProjectInsights from './project-admin-dashboard/ProjectInsights';
+import ProjectVerificationStatusBanner from './ProjectVerificationStatusBanner';
 import Vault from './project-admin-dashboard/project-vault/Vault';
 
 const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
@@ -66,71 +63,61 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
         isLoaded={!isLoading}
         fadeDuration={2}
         opacity={isLoading ? 0.5 : 1}
+        w="full"
       >
-        <ProjectStatusBanner
-          startTime={startTime as Date}
-          endtime={endtime as Date}
-          status={status as string}
-          roundName={round?.fundingRound.roundName as string}
+        <ProjectVerificationStatusBanner
+          status={projectData?.status}
+          projectJoinRoundStatus={
+            projectData && projectData?.ProjectJoinRound?.length > 0
+              ? true
+              : false
+          }
         />
       </Skeleton>
       <CardHeader>
         <ProjectHeader isLoading={isLoading} project={projectData} />
       </CardHeader>
-      <CardBody
-        gap={{ base: '64px', sm: '72px', md: '24px' }}
-        borderTop={'1px solid'}
-        borderColor="neutral.3"
-      >
-        <Accordion
-          px="16px"
-          w="full"
-          allowMultiple
-          allowToggle
-          variant={'unstyled'}
-          gap={{ base: '64px', sm: '72px', md: '24px' }}
-        >
-          {projectData?.ProjectJoinRound.map((round) => (
-            <AdminProjectRoundCard key={round.id} round={round} />
-          ))}
-        </Accordion>
-        {round?.status === ProjectJoinRoundStatus.APPROVED && (
-          <>
-            <Stack
-              gap={{ base: '64px', sm: '72px', md: '80px' }}
-              padding={{ base: '16px', sm: '20px', md: '24px' }}
-              direction={{ base: 'column', lg: 'row' }}
+      {projectData && projectData?.ProjectJoinRound.length > 0 && (
+        <>
+          <Box w="full" h={'1px'} backgroundColor="neutral.3" />
+          <CardBody gap={{ base: '16px', md: '24px' }}>
+            <Accordion
+              px={{ base: '12px', md: '16px' }}
+              w="full"
+              display={'flex'}
+              flexDir={'column'}
+              gap={{ base: '16px', md: '24px' }}
+              allowMultiple
+              allowToggle
+              variant={'unstyled'}
             >
-              <FundingOverview projectId={projectData?.id as string} />
-              <ProjectInsights projectId={projectData?.id as string} />
-            </Stack>
+              {projectData?.ProjectJoinRound.map((round) => (
+                <AdminProjectRoundCard key={round.id} round={round} />
+              ))}
+            </Accordion>
             {showVault && <Vault projectData={projectData} />}
             <Center w="full">
               <Button
                 onClick={() => setShowVault(!showVault)}
-                py="1rem"
-                variant="outline"
-                //ml={'auto'}
+                variant="cubikText"
+                size={{ base: 'cubikMini', md: 'cubikSmall' }}
                 rightIcon={
                   showVault ? (
-                    <BiChevronUp size={20} />
+                    <Box as={BiChevronUp} boxSize={['14px', '16px', '18px']} />
                   ) : (
-                    <BiChevronDown size={20} />
+                    <Box
+                      as={BiChevronDown}
+                      boxSize={['14px', '16px', '18px']}
+                    />
                   )
                 }
               >
-                <Box
-                  textStyle={{ base: 'xs', md: 'sm' }}
-                  ml={2}
-                  fontWeight={600}
-                >
-                  {showVault ? 'Hide' : 'Show'} Vault Details
-                </Box>
+                {showVault ? 'Hide' : 'Show'} Vault Details
               </Button>
             </Center>
-          </>
-        )}
-      </CardBody>
+          </CardBody>
+        </>
+      )}
       <CardFooter display="none" />
     </Card>
   );

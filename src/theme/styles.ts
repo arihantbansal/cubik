@@ -3,6 +3,9 @@ import '@fontsource/plus-jakarta-sans';
 
 export const styles = {
   global: (props: StyleFunctionProps) => ({
+    '*': {
+      //  outline: '1px dashed white',
+    },
     '::-webkit-scrollbar': {
       display: 'none',
     },
@@ -26,6 +29,14 @@ export const styles = {
       borderBottomLeftRadius: '16px',
     },
     'td:last-child': {
+      borderTopRightRadius: '16px',
+      borderBottomRightRadius: '16px',
+    },
+    'th:first-of-type': {
+      borderTopLeftRadius: '16px',
+      borderBottomLeftRadius: '16px',
+    },
+    'th:last-child': {
       borderTopRightRadius: '16px',
       borderBottomRightRadius: '16px',
     },
