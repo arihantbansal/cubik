@@ -220,6 +220,7 @@ export const roundRouter = router({
       });
       return roundRes;
     }),
+
   updateStatus: procedure
     .input(
       z.object({
