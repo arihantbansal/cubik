@@ -20,7 +20,7 @@ import {
   UserModel,
 } from '@prisma/client';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BsPlus } from 'react-icons/bs';
 import { HiCheck } from 'react-icons/hi';
 import { MdRemove } from 'react-icons/md';
@@ -45,17 +45,30 @@ type PropsType = {
 // In the ProjectsList component
 type ProjectsListProps = {
   allProjectsData: (ProjectJoinRound & {
-    project: ProjectsModel;
-    fundingRound: Round & {
-      Contribution: (Contribution & {
-        user: UserModel;
-      })[];
+    project: ProjectsModel & {
+      owner: UserModel;
     };
+    contributors: (Contribution & {
+      user: UserModel;
+    })[];
+    fundingRound: Round;
   })[];
   owner?: UserModel;
 };
 
-const ProjectCard = ({ projectJoinRound }: PropsType) => {
+type ProjectCardProps = {
+  projectJoinRound: ProjectJoinRound & {
+    project: ProjectsModel & {
+      owner: UserModel;
+    };
+    contributors: (Contribution & {
+      user: UserModel;
+    })[];
+    fundingRound: Round;
+  };
+};
+
+const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
   const toast = useToast();
   const addProject = useListStore((state) => state.addProject);
   const removeProject = useListStore((state) => state.removeProject);
@@ -89,7 +102,7 @@ const ProjectCard = ({ projectJoinRound }: PropsType) => {
 
   useEffect(() => {
     setAddedToList(
-      !!projectList.find((item) => item.id === projectJoinRound.project.id)
+      !!projectList.find((item) => item.id === projectJoinRound.projectId)
     );
   }, [projectList]);
 
@@ -115,6 +128,7 @@ const ProjectCard = ({ projectJoinRound }: PropsType) => {
       background={'#0C0D0D'}
       position={'relative'}
     >
+      {/* card outline */}
       {addedToList && (
         <Center
           position={'absolute'}
@@ -128,44 +142,45 @@ const ProjectCard = ({ projectJoinRound }: PropsType) => {
           <HiCheck size={16} color="#001F1B" />
         </Center>
       )}
-      <Center
-        w="full"
-        bg={`surface.${projectJoinRound.fundingRound.colorScheme}.3`}
-        borderTopRadius={'16px'}
-      >
-        <HStack
-          w="full"
-          gap="8px"
-          borderColor="red"
-          borderBottom={'red'}
-          padding={'12px 24px'}
-          borderTopRadius={'16px'}
-          justifyContent="space-between"
-        >
-          <Box
+      {/* card Header */}
+      {
+        // if project is participating in a round then make it visible else don't show it
+        <Center w="full" bg={`surface.blue.3`} borderTopRadius={'16px'}>
+          <HStack
             w="full"
-            as="p"
-            noOfLines={1}
-            whiteSpace={'nowrap'}
-            color={`surface.${projectJoinRound.fundingRound.colorScheme}.1`}
-            textStyle={'overline4'}
-            textTransform="uppercase"
-            letterSpacing={'0.2em'}
-            fontSize={{ base: '8px', md: '10px' }}
+            gap="8px"
+            borderColor="red"
+            borderBottom={'red'}
+            padding={'12px 24px'}
+            borderTopRadius={'16px'}
+            justifyContent="space-between"
           >
-            Participating In
-          </Box>
-          <Box
-            as="p"
-            w="fit-content"
-            whiteSpace={'nowrap'}
-            textStyle={{ base: 'title6', md: 'title5' }}
-            color={`surface.${projectJoinRound.fundingRound.colorScheme}.1`}
-          >
-            {projectJoinRound.fundingRound.roundName} Round
-          </Box>
-        </HStack>
-      </Center>
+            <Box
+              w="full"
+              as="p"
+              noOfLines={1}
+              whiteSpace={'nowrap'}
+              color={`surface.red.1`}
+              textStyle={'overline4'}
+              textTransform="uppercase"
+              letterSpacing={'0.2em'}
+              fontSize={{ base: '8px', md: '10px' }}
+            >
+              Participating In
+            </Box>
+            <Box
+              as="p"
+              w="fit-content"
+              whiteSpace={'nowrap'}
+              textStyle={{ base: 'title6', md: 'title5' }}
+              color={`surface.red.1`}
+            >
+              --- Round
+            </Box>
+          </HStack>
+        </Center>
+      }
+      {/* cards footer */}
       <VStack
         w="full"
         alignItems={'start'}
@@ -196,7 +211,7 @@ const ProjectCard = ({ projectJoinRound }: PropsType) => {
                 color="#A8F0E6"
                 textStyle={{ base: 'title4', md: 'title3' }}
               >
-                ${formatNumberWithK(projectJoinRound.amountRaise ?? 0)}
+                ${formatNumberWithK(0)}
               </Box>
             </HStack>
             <HStack w="full" justify="space-between">
@@ -228,6 +243,7 @@ const ProjectCard = ({ projectJoinRound }: PropsType) => {
             {projectJoinRound.project.short_description}
           </Box>
         </VStack>
+        {/* card footer */}
         <VStack
           marginTop={'0px !important'}
           p="8px 24px 24px 24px"
@@ -325,6 +341,7 @@ const ProjectCard = ({ projectJoinRound }: PropsType) => {
 };
 
 const ProjectsList = ({ allProjectsData }: ProjectsListProps) => {
+  console.log(allProjectsData, ' ----');
   return (
     <Container maxW="7xl" overflow={'visible'} p="0">
       <Wrap
@@ -337,9 +354,16 @@ const ProjectsList = ({ allProjectsData }: ProjectsListProps) => {
         align="center"
         direction={{ base: 'column', sm: 'row', md: 'row' }}
       >
-        {allProjectsData.map((project, key: React.Key | null | undefined) => {
-          return <ProjectCard projectJoinRound={project} key={key} />;
-        })}
+        {allProjectsData.map(
+          (projectJoinRound, key: React.Key | null | undefined) => {
+            console.log('====================================');
+            console.log(projectJoinRound);
+            console.log('====================================');
+            return (
+              <ProjectCard key={key} projectJoinRound={projectJoinRound} />
+            );
+          }
+        )}
       </Wrap>
     </Container>
   );

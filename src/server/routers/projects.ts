@@ -9,6 +9,7 @@ import { z } from 'zod';
 import { Grant } from '~/utils/calculateProjectMatchingFund';
 import { procedure, protectedProcedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
+import { verifiedProjects } from './projects/index';
 
 export const projectsRouter = router({
   create: protectedProcedure
@@ -267,7 +268,7 @@ export const projectsRouter = router({
       throw new Error(error.message || 'There was some error');
     }
   }),
-
+  verifiedProjects: verifiedProjects,
   findPubkey: procedure
     .input(
       z.object({
