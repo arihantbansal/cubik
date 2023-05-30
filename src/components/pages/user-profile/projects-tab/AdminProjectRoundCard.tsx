@@ -122,7 +122,7 @@ const AdminProjectRoundCard = ({
       >
         <HStack justify={'space-between'} w="full">
           <HStack justify={'space-between'} w="full">
-            <HStack border="1px solid red" gap={{ base: '6px', md: '8px' }}>
+            <HStack gap={{ base: '6px', md: '8px' }}>
               <FundingRoundStatus status={round.status} />
               <Box
                 as="p"

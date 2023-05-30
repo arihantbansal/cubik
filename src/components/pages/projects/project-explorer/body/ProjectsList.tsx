@@ -144,7 +144,11 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
       {/* card Header */}
       {
         // if project is participating in a round then make it visible else don't show it
-        <Center w="full" bg={`surface.blue.3`} borderTopRadius={'16px'}>
+        <Center
+          w="full"
+          bg={`surface.${projectJoinRound.fundingRound.colorScheme}.3`}
+          borderTopRadius={'16px'}
+        >
           <HStack
             w="full"
             gap="8px"
@@ -159,7 +163,7 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
               as="p"
               noOfLines={1}
               whiteSpace={'nowrap'}
-              color={`surface.red.1`}
+              color={`surface.${projectJoinRound.fundingRound.colorScheme}.1`}
               textStyle={'overline4'}
               textTransform="uppercase"
               letterSpacing={'0.2em'}
@@ -172,9 +176,9 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
               w="fit-content"
               whiteSpace={'nowrap'}
               textStyle={{ base: 'title6', md: 'title5' }}
-              color={`surface.red.1`}
+              color={`surface.${projectJoinRound.fundingRound.colorScheme}.1`}
             >
-              --- Round
+              {projectJoinRound.fundingRound.roundName} Round
             </Box>
           </HStack>
         </Center>
@@ -289,7 +293,7 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
             </Box>
             <ProjectsContributorsNumber
               projectId={projectJoinRound.project.id}
-              projectJoinRound={projectJoinRound}
+              contributorsList={projectJoinRound.contributors}
             />
           </HStack>
           <SlideFade in={isHovered} offsetY="0px" reverse>
@@ -307,7 +311,7 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
             >
               <Button
                 as={Link}
-                href={`/projects/${projectJoinRound.project.id}/join/${projectJoinRound.id}`}
+                href={`/${projectJoinRound.project.owner.username}/${projectJoinRound.project.id}?round=${projectJoinRound.id}`}
                 background={'#1D1F1E'}
                 color="white"
                 fontWeight={'700'}
@@ -340,7 +344,6 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
 };
 
 const ProjectsList = ({ allProjectsData }: ProjectsListProps) => {
-  console.log(allProjectsData, ' ----');
   return (
     <Container maxW="7xl" overflow={'visible'} p="0">
       <Wrap
@@ -355,9 +358,6 @@ const ProjectsList = ({ allProjectsData }: ProjectsListProps) => {
       >
         {allProjectsData.map(
           (projectJoinRound, key: React.Key | null | undefined) => {
-            console.log('====================================');
-            console.log(projectJoinRound);
-            console.log('====================================');
             return (
               <ProjectCard key={key} projectJoinRound={projectJoinRound} />
             );
