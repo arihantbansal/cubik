@@ -131,6 +131,7 @@ model ProjectJoinRound {
   updatedAt     DateTime               @updatedAt
   amountRaise   Float?                 @default(0)
   contributions Int                    @default(0)
+  contributors  Contribution[]
   project       ProjectsModel          @relation(fields: [projectId], references: [id])
   fundingRound  Round                  @relation(fields: [roundId], references: [id])
 
@@ -177,24 +178,26 @@ model Sponsor {
 }
 
 model Contribution {
-  id              String        @id @default(uuid()) @map("_id")
-  tx              String        @db.VarChar(500)
-  token           String
-  split           Float
-  roundId         String
-  projectId       String
-  userId          String
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-  count           Int           @default(0)
-  currentTotal    Float
-  currentusdTotal Float
-  isLatest        Boolean       @default(true)
-  total           Float
-  usdTotal        Float
-  user            UserModel     @relation(fields: [userId], references: [id])
-  ProjectsModel   ProjectsModel @relation(fields: [projectId], references: [id])
-  Round           Round         @relation(fields: [roundId], references: [id])
+  id                 String            @id @default(uuid()) @map("_id")
+  tx                 String            @db.VarChar(500)
+  token              String
+  split              Float
+  roundId            String
+  projectId          String
+  userId             String
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  count              Int               @default(0)
+  currentTotal       Float
+  currentusdTotal    Float
+  isLatest           Boolean           @default(true)
+  total              Float
+  usdTotal           Float
+  user               UserModel         @relation(fields: [userId], references: [id])
+  ProjectsModel      ProjectsModel     @relation(fields: [projectId], references: [id])
+  Round              Round             @relation(fields: [roundId], references: [id])
+  ProjectJoinRound   ProjectJoinRound? @relation(fields: [projectJoinRoundId], references: [id])
+  projectJoinRoundId String?
 
   @@index([projectId])
   @@index([roundId])

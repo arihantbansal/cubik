@@ -23,6 +23,7 @@ import { RxCross1 } from 'react-icons/rx';
 import CategoryTag from '~/components/common/tags/CategoryTags';
 import { useFilteredProjects } from '~/hooks/projects/useFilteredProjects';
 import ProjectListLoadingSkeleton from '../../skeletons/ProjectListLoadingSkeleton';
+import ProjectsList from './ProjectsList';
 import EmptyProjectsState from './empty-state/ProjectsEmptyState';
 
 const showCasedCategories = [
@@ -48,19 +49,18 @@ export type CategoryType = {
 export const ProjectListWithFilter: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const {
-    isLoading,
+    filteredProjectsLoading,
     roundsData,
-    roundsLoading,
     selectedCategory,
     setSelectedCategory,
     selectedRounds,
-    filteredCategories,
-    shuffledProjects,
+    filteredProjectsFromServer,
     searchTerm,
     setSearchTerm,
     handleCategoryClick,
     handleRoundClick,
     isCategorySelected,
+    filteredCategories,
     isRoundSelected,
   } = useFilteredProjects();
 
@@ -309,7 +309,7 @@ export const ProjectListWithFilter: React.FC = () => {
               >
                 Ongoing Rounds
               </Box>
-              {isLoading ? (
+              {filteredProjectsLoading ? (
                 <VStack w="full" gap="8px">
                   <Skeleton width="full" height="1.4rem" opacity="0.5" />
                   <Skeleton width="full" height="1.4rem" opacity="0.5" />
@@ -358,13 +358,12 @@ export const ProjectListWithFilter: React.FC = () => {
         </HStack>
       </Stack>
       <VStack w="full" align={'start'} gap="16px">
-        {isLoading ? (
+        {filteredProjectsLoading ? (
           <ProjectListLoadingSkeleton />
         ) : selectedRounds &&
-          shuffledProjects &&
-          shuffledProjects.length > 0 ? (
-          // projectModal & Project join round & owner
-          <></>
+          filteredProjectsFromServer &&
+          filteredProjectsFromServer.length > 0 ? (
+          <ProjectsList allProjectsData={filteredProjectsFromServer} />
         ) : (
           <EmptyProjectsState />
         )}
