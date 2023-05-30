@@ -54,7 +54,7 @@ const ApplyForGrant: React.FC<{
     data: roundData,
     isLoading,
     isError,
-  } = trpc.round.findActive.useQuery();
+  } = trpc.round.findActivePresentAndFutureRounds.useQuery();
   const { hasError, ErrorBoundaryWrapper } = useErrorBoundary();
   const [signTxnLoading, setSignTxnLoading] = useState(false);
   const [transactionSignError, setTransactionSignError] = useState<

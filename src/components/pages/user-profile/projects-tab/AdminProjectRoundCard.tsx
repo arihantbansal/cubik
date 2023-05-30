@@ -122,9 +122,8 @@ const AdminProjectRoundCard = ({
       >
         <HStack justify={'space-between'} w="full">
           <HStack justify={'space-between'} w="full">
-            <HStack gap={{ base: '6px', md: '8px' }}>
+            <HStack border="1px solid red" gap={{ base: '6px', md: '8px' }}>
               <FundingRoundStatus status={round.status} />
-
               <Box
                 as="p"
                 textStyle={{ base: 'title6', md: 'title4' }}
@@ -133,10 +132,12 @@ const AdminProjectRoundCard = ({
                 {round.fundingRound.roundName} Round
               </Box>
             </HStack>
-            <RoundStatus
-              startDate={round.fundingRound.startTime}
-              endDate={round.fundingRound.endtime}
-            />
+            <HStack>
+              <RoundStatus
+                startDate={round.fundingRound.startTime}
+                endDate={round.fundingRound.endtime}
+              />
+            </HStack>
           </HStack>
           <AccordionIcon display={{ base: 'none', md: 'block' }} />
         </HStack>

@@ -27,7 +27,12 @@ const ProjectDetails = ({
     return <>{error.message}</>;
   }
 
-  console.log('project details', data);
+  // get query params value
+  const urlParams = new URLSearchParams(window.location.search);
+  const roundId = urlParams.get('roundId');
+  console.log(roundId);
+
+  console.log('project round id form params - ', roundId);
   return (
     <>
       <SEO

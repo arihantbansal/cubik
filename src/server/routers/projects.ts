@@ -9,6 +9,7 @@ import { z } from 'zod';
 import { Grant } from '~/utils/calculateProjectMatchingFund';
 import { procedure, protectedProcedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
+import { verifiedProjects } from './projects/index';
 
 export const projectsRouter = router({
   create: protectedProcedure
@@ -157,26 +158,6 @@ export const projectsRouter = router({
   // @type: ProjectWithRoundDetailsWithContributionWithUserType
   findMany: procedure.query(async () => {
     try {
-      // await prisma.projectsModel.findMany({
-      //   include: {
-      //     ProjectJoinRound: {
-      //       include: {
-      //         fundingRound: {
-      //           include: {
-      //             Contribution: {
-      //               include: {
-      //                 user: true,
-      //               },
-      //             },
-      //           },
-      //         },
-      //       },
-      //       where: {
-      //         status: ProjectJoinRoundStatus.APPROVED,
-      //       },
-      //     },
-      //   },
-      // });
       const res = await prisma.projectJoinRound.findMany({
         where: {
           status: ProjectJoinRoundStatus.APPROVED,
@@ -192,6 +173,34 @@ export const projectsRouter = router({
             },
           },
           project: true,
+        },
+      });
+      return res;
+    } catch (error: any) {
+      throw new Error(error.message || 'There was some error in trpc call');
+    }
+  }),
+  findManyVerifiedWithContributions: procedure.query(async () => {
+    try {
+      const res = await prisma.projectsModel.findMany({
+        include: {
+          ProjectJoinRound: {
+            include: {
+              fundingRound: {
+                include: {
+                  Contribution: {
+                    include: {
+                      user: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          owner: true,
+        },
+        where: {
+          status: 'VERIFIED',
         },
       });
       return res;
@@ -216,7 +225,7 @@ export const projectsRouter = router({
       });
       return res;
     } catch (error: any) {
-      throw new Error(error.message || 'There was some error');
+      throw new Error(error.message || 'There was some error in trpc call');
     }
   }),
   findManyVerified: procedure.query(async () => {
@@ -259,7 +268,7 @@ export const projectsRouter = router({
       throw new Error(error.message || 'There was some error');
     }
   }),
-
+  verifiedProjects: verifiedProjects,
   findPubkey: procedure
     .input(
       z.object({

@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BsTwitter } from 'react-icons/bs';
 import { MdArrowForward } from 'react-icons/md';
 import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
@@ -56,6 +56,7 @@ export const ProjectCTAs = ({
   const [isHovered, setIsHovered] = useState(false);
   const [donationSuccessful, setDonationSuccessful] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [showDonation, setShowDonation] = useState(false);
 
   const onDonateHandler = () => {
     if (session.data?.user?.id) {
@@ -64,6 +65,23 @@ export const ProjectCTAs = ({
       setVisible(true);
     }
   };
+
+  useEffect(() => {
+    {
+      if (typeof window !== 'undefined') {
+        const url = new URL(window.location.href);
+        const round = url.searchParams.get('round');
+        const prev = url.searchParams.get('prev');
+
+        if (prev) {
+          return;
+        } else if (round) {
+          setShowDonation(true);
+        }
+      }
+    }
+  }, []);
+
   return (
     <>
       <Modal
@@ -327,21 +345,25 @@ export const ProjectCTAs = ({
           alignItems={{ base: 'center', lg: 'start' }}
         >
           <VStack gap="16px" align={'end'} spacing="0" w="full" pb="0.5rem">
-            <Skeleton
-              opacity={isLoading ? '0.5' : 1}
-              fadeDuration={3}
-              isLoaded={!isLoading}
-              w="full"
-            >
-              <Button
-                onClick={onDonateHandler}
-                variant="cubikFilled"
-                size="md"
+            {showDonation ? (
+              <Skeleton
+                opacity={isLoading ? '0.5' : 1}
+                fadeDuration={3}
+                isLoaded={!isLoading}
                 w="full"
               >
-                Donate
-              </Button>
-            </Skeleton>
+                <Button
+                  onClick={onDonateHandler}
+                  variant="cubikFilled"
+                  size="md"
+                  w="full"
+                >
+                  Donate
+                </Button>
+              </Skeleton>
+            ) : (
+              <></>
+            )}
             <Skeleton
               fadeDuration={4}
               opacity={isLoading ? '0.4' : 1}

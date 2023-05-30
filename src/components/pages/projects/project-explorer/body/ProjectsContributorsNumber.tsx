@@ -15,12 +15,13 @@ const ProjectsContributorsNumber = ({
 }: {
   projectId: string;
   projectJoinRound: ProjectJoinRound & {
-    project: ProjectsModel;
-    fundingRound: Round & {
-      Contribution: (Contribution & {
-        user: UserModel;
-      })[];
+    project: ProjectsModel & {
+      owner: UserModel;
     };
+    contributors: (Contribution & {
+      user: UserModel;
+    })[];
+    fundingRound: Round;
   };
 }) => {
   const [contributors, setContributors] = useState<
@@ -29,14 +30,10 @@ const ProjectsContributorsNumber = ({
   // @irfan check if this works once just to be safe
   useEffect(() => {
     let contributorsData = [] as ContributionsWithUserType[];
-    // filter contributors to match contribution.projectId to the projectId
-    contributorsData = projectJoinRound.fundingRound.Contribution.filter(
-      (contribution) => contribution.projectId === projectId
-    );
 
     // filter out duplicate donations from the same user
     const userNames: { [key: string]: boolean } = {};
-    contributorsData = contributorsData.filter((contribution) => {
+    contributorsData = projectJoinRound.contributors.filter((contribution) => {
       if (userNames[contribution.user.username]) {
         // This user has already made a donation, skip this donation
         return false;
