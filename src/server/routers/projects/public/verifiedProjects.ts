@@ -47,8 +47,7 @@ export const verifiedProjects = publicProcedure
     }
 
     // only round working
-    if (input.round?.length === 0 && input.filter) {
-      console.log('Inside the filter');
+    if (input.round && input.round.length > 0 && !input.filter) {
       const active = res.filter((e) => {
         e.project.industry.includes(input.filter as string);
       });
