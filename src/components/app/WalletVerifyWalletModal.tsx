@@ -20,6 +20,7 @@ import {
 import * as anchor from '@coral-xyz/anchor';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useAuthStore } from '~/store/authStore';
 import { createMessage, verifyMessage } from '~/utils/getsignMessage';
@@ -50,7 +51,7 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
   const [verifyWalletError, setVerifyWalletError] = useState<string | null>(
     null
   );
-
+  const router = useRouter();
   async function VerifyWallet() {
     setVerifying(true);
     console.log(signMessage && publicKey);
@@ -66,7 +67,6 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
 
         console.log('final - ', final);
         const signInResponse = await signIn('credentials', {
-          callbackUrl: '/',
           redirect: false,
           wallet: publicKey.toBase58(),
           signature: anchor.utils.bytes.bs58.encode(sig),
@@ -84,9 +84,7 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
               redirect: false,
             });
           }
-          if (typeof window !== 'undefined') {
-            window.location.href = '/create-profile';
-          }
+          router.push('/create-profile', undefined, { shallow: true });
 
           setVerifying(false);
         }

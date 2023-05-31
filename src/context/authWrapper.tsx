@@ -49,7 +49,6 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
     try {
       // Try Login
       const signInResponse = await signIn('credentials', {
-        callbackUrl: '/',
         redirect: false,
         wallet: publicKey?.toBase58(),
         signature: signatureStore?.signature,
@@ -66,7 +65,9 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
             wallet: '',
           });
         }
-        router.push('/create-profile');
+        console.log('redirecting to create profile');
+
+        router.push('/create-profile', undefined, { shallow: true });
         return;
       }
 
