@@ -1,4 +1,5 @@
 import { Avatar, AvatarGroup, Box, Flex } from '@chakra-ui/react';
+import { Contribution, UserModel } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import { ContributionsWithUserType } from '~/types/project';
 
@@ -7,7 +8,9 @@ const ProjectsContributorsNumber = ({
   contributorsList,
 }: {
   projectId: string;
-  contributorsList: ContributionsWithUserType[];
+  contributorsList: (Contribution & {
+    user: UserModel;
+  })[];
 }) => {
   const [contributors, setContributors] = useState<
     ContributionsWithUserType[] | undefined
@@ -15,6 +18,7 @@ const ProjectsContributorsNumber = ({
   // @irfan check if this works once just to be safe
   useEffect(() => {
     let contributorsData = [] as ContributionsWithUserType[];
+    console.log(contributorsList);
 
     // filter out duplicate donations from the same user
     const userNames: { [key: string]: boolean } = {};

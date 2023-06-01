@@ -47,11 +47,11 @@ type PropsType = {
 type ProjectsListProps = {
   allProjectsData: (ProjectJoinRound & {
     project: ProjectsModel & {
+      Contribution: (Contribution & {
+        user: UserModel;
+      })[];
       owner: UserModel;
     };
-    contributors: (Contribution & {
-      user: UserModel;
-    })[];
     fundingRound: Round;
   })[];
   owner?: UserModel;
@@ -60,11 +60,11 @@ type ProjectsListProps = {
 type ProjectCardProps = {
   projectJoinRound: ProjectJoinRound & {
     project: ProjectsModel & {
+      Contribution: (Contribution & {
+        user: UserModel;
+      })[];
       owner: UserModel;
     };
-    contributors: (Contribution & {
-      user: UserModel;
-    })[];
     fundingRound: Round;
   };
 };
@@ -221,7 +221,12 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
                 color="#A8F0E6"
                 textStyle={{ base: 'title4', md: 'title3' }}
               >
-                ${formatNumberWithK(0)}
+                $
+                {formatNumberWithK(
+                  (parseInt(
+                    projectJoinRound.amountRaise?.toFixed(2) as string
+                  ) as number) ?? 0
+                )}
               </Box>
             </HStack>
             <HStack w="full" justify="space-between">
@@ -298,9 +303,16 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
                 })}
               </HStack>
             </Box>
+
             <ProjectsContributorsNumber
               projectId={projectJoinRound.project.id}
-              contributorsList={projectJoinRound.contributors}
+              contributorsList={projectJoinRound.project.Contribution.filter(
+                (e, index) => {
+                  if (e.roundId === projectJoinRound.roundId) {
+                    return projectJoinRound.project.Contribution[index];
+                  }
+                }
+              )}
             />
           </HStack>
           <SlideFade in={isHovered} offsetY="0px" reverse>
@@ -370,7 +382,7 @@ const ProjectsList = ({ allProjectsData }: ProjectsListProps) => {
         direction={{ base: 'column', sm: 'row', md: 'row' }}
       >
         {allProjectsData.map(
-          (projectJoinRound, key: React.Key | null | undefined) => {
+          (projectJoinRound: any, key: React.Key | null | undefined) => {
             return (
               <ProjectCard key={key} projectJoinRound={projectJoinRound} />
             );

@@ -23,8 +23,6 @@ const UserDetails = ({
     ? data[(data?.length as number) - 1]?.usdTotal
     : 0;
 
-  console.log('usercontribution', userTotalContributionsAmount);
-
   return (
     <VStack align="start" w="full" gap={{ base: '16px', md: '24px' }}>
       <Skeleton
@@ -74,7 +72,7 @@ const UserDetails = ({
                 color="neutral.11"
                 textStyle={{ base: 'title3', sm: 'title2', md: 'title1' }}
               >
-                ${userTotalContributionsAmount}
+                ${userTotalContributionsAmount?.toFixed(2)}
               </Box>
             </Skeleton>
           </VStack>

@@ -203,6 +203,7 @@ model Contribution {
   @@index([projectId])
   @@index([roundId])
   @@index([userId])
+  @@index([projectJoinRoundId])
 }
 
 model Comments {

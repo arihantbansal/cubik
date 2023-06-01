@@ -16,11 +16,11 @@ export const verifiedProjects = publicProcedure
         project: {
           include: {
             owner: true,
-          },
-        },
-        contributors: {
-          include: {
-            user: true,
+            Contribution: {
+              include: {
+                user: true,
+              },
+            },
           },
         },
       },

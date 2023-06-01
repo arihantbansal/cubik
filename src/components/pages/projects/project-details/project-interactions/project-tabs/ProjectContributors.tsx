@@ -25,6 +25,7 @@ import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { timeSince } from '~/utils/gettimeSince';
 import { trpc } from '~/utils/trpc';
+import { Contribution, UserDetailsModel, UserModel } from '@prisma/client';
 
 type Contributor = {
   id: string;
@@ -42,17 +43,23 @@ type ContributorRowProps = {
   contributor: Contributor;
 };
 
-const formatContributorData = (data: any[]): Contributor[] => {
-  return data?.map((contributor) => ({
-    id: contributor.id,
-    avatar: contributor.user.profilePicture,
-    username: contributor.user.username,
-    walletAddress: contributor.user.mainWallet,
-    amount: contributor.currentTotal,
-    currentusdTotal: contributor.currentusdTotal,
-    timestamp: contributor.createdAt,
-    token: contributor.token,
-  }));
+const formatContributorData = (data: any): Contributor[] => {
+  const finalData: Contributor[] = [];
+
+  data?.forEach((contributor: any) => {
+    finalData.push({
+      id: contributor.id,
+      avatar: contributor.user.profilePicture,
+      username: contributor.user.username,
+      walletAddress: contributor.user.mainWallet,
+      amount: contributor.total,
+      currentusdTotal: contributor.usdTotal,
+      timestamp: contributor.createdAt,
+      token: contributor.token,
+    });
+  });
+
+  return finalData;
 };
 
 export const TableLoading = () => {
