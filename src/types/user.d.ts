@@ -1,4 +1,5 @@
 import { Prisma } from '@prisma/client';
+import { ProofType } from '~/utils/program/contract';
 
 export type UserWithProjectType = Prisma.UserModelGetPayload<{
   include: {
@@ -19,3 +20,9 @@ export type UserWithProjectRoundDetailsType = Prisma.UserModelGetPayload<{
     };
   };
 }>;
+
+export type UserProof = {
+  name: ProofType;
+  timestamp: Date;
+  tx: string;
+};

@@ -9,6 +9,7 @@ import {
 } from 'next-auth';
 import credentialsProvider from 'next-auth/providers/credentials';
 import { env } from '~/env.mjs';
+import { UserProof } from '~/types/user';
 import { verifyMessage } from '~/utils/getsignMessage';
 import { prisma } from './prisma';
 declare module 'next-auth' {
@@ -19,6 +20,7 @@ declare module 'next-auth' {
       username: string;
       profilePicture: string;
       count: Prisma.UserModelCountOutputType;
+      proof: UserProof[];
     } & DefaultSession['user'];
   }
 }
@@ -46,6 +48,7 @@ export const authOptions = (
         session.user.username = userData.username;
         session.user.profilePicture = userData.profilePicture;
         session.user.count = userData._count;
+        session.user.proof = userData.proof as unknown as UserProof[];
         return session;
       },
     },
@@ -78,12 +81,10 @@ export const authOptions = (
               new anchor.web3.PublicKey(user.wallet),
               availableTokens![0]
             );
-            console.log(final, '-- final');
 
             if (!final) {
               return null;
             }
-            console.log('final cross');
 
             const res = await prisma.userModel.findUnique({
               where: {
@@ -93,7 +94,6 @@ export const authOptions = (
                 _count: true,
               },
             });
-            console.log('user', res);
             if (!res) {
               return null;
             }

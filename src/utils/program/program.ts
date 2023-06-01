@@ -1,4 +1,4 @@
-export type ContractType = {
+export type CubikContractV2 = {
   version: '0.1.0';
   name: 'cubik_contract_v2';
   instructions: [
@@ -719,11 +719,119 @@ export type ContractType = {
           type: 'f64';
         }
       ];
+    },
+    {
+      name: 'addProof';
+      accounts: [
+        {
+          name: 'authority';
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: 'userAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'admin';
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: 'adminProofAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'systemProgram';
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: 'rent';
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: 'proof';
+          type: 'string';
+        }
+      ];
+    },
+    {
+      name: 'removeProof';
+      accounts: [
+        {
+          name: 'authority';
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: 'userAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'admin';
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: 'adminProofAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'systemProgram';
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: 'rent';
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: 'proof';
+          type: 'string';
+        }
+      ];
+    },
+    {
+      name: 'adminProof';
+      accounts: [
+        {
+          name: 'authority';
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: 'adminProofAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'systemProgram';
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: 'rent';
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [];
     }
   ];
   accounts: [
     {
-      name: 'Admin';
+      name: 'admin';
       type: {
         kind: 'struct';
         fields: [
@@ -739,7 +847,7 @@ export type ContractType = {
       };
     },
     {
-      name: 'Contribution';
+      name: 'contribution';
       type: {
         kind: 'struct';
         fields: [
@@ -763,7 +871,7 @@ export type ContractType = {
       };
     },
     {
-      name: 'Project';
+      name: 'project';
       type: {
         kind: 'struct';
         fields: [
@@ -797,7 +905,7 @@ export type ContractType = {
       };
     },
     {
-      name: 'Round';
+      name: 'round';
       type: {
         kind: 'struct';
         fields: [
@@ -825,7 +933,7 @@ export type ContractType = {
       };
     },
     {
-      name: 'RoundJoin';
+      name: 'roundJoin';
       type: {
         kind: 'struct';
         fields: [
@@ -855,7 +963,7 @@ export type ContractType = {
       };
     },
     {
-      name: 'User';
+      name: 'user';
       type: {
         kind: 'struct';
         fields: [
@@ -864,12 +972,16 @@ export type ContractType = {
             type: 'publicKey';
           },
           {
-            name: 'username';
-            type: 'string';
-          },
-          {
             name: 'project';
             type: 'u64';
+          },
+          {
+            name: 'proof';
+            type: {
+              vec: {
+                defined: 'PROOF';
+              };
+            };
           },
           {
             name: 'bump';
@@ -913,6 +1025,32 @@ export type ContractType = {
           }
         ];
       };
+    },
+    {
+      name: 'PROOF';
+      type: {
+        kind: 'enum';
+        variants: [
+          {
+            name: 'LAMPORT';
+          },
+          {
+            name: 'SUPERTEAM';
+          },
+          {
+            name: 'MONKEYDAO';
+          },
+          {
+            name: 'CIVIC';
+          },
+          {
+            name: 'SOCIAL';
+          },
+          {
+            name: 'DROPS01';
+          }
+        ];
+      };
     }
   ];
   events: [
@@ -950,6 +1088,21 @@ export type ContractType = {
           index: false;
         }
       ];
+    },
+    {
+      name: 'NewUser';
+      fields: [
+        {
+          name: 'authority';
+          type: 'publicKey';
+          index: false;
+        },
+        {
+          name: 'username';
+          type: 'string';
+          index: false;
+        }
+      ];
     }
   ];
   errors: [
@@ -977,14 +1130,26 @@ export type ContractType = {
       code: 6004;
       name: 'ContributionSizeExceded';
       msg: 'contribution size exceded';
+    },
+    {
+      code: 6005;
+      name: 'ProofAlreadyExists';
+      msg: 'Proof Already Exists';
+    },
+    {
+      code: 6006;
+      name: 'ProofDoesNotExists';
+      msg: 'Proof Does Not Exists';
+    },
+    {
+      code: 6007;
+      name: 'InvalidProofType';
+      msg: 'Invalid Proof type';
     }
   ];
-  metadata: {
-    address: 'Wgvt4LxST3JmUxZae5z7AYqzd63vo6EXjnW1aaMVX8L';
-  };
 };
 
-export const Contract: ContractType = {
+export const IDL: CubikContractV2 = {
   version: '0.1.0',
   name: 'cubik_contract_v2',
   instructions: [
@@ -1706,10 +1871,118 @@ export const Contract: ContractType = {
         },
       ],
     },
+    {
+      name: 'addProof',
+      accounts: [
+        {
+          name: 'authority',
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: 'userAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'admin',
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: 'adminProofAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'systemProgram',
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: 'rent',
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: 'proof',
+          type: 'string',
+        },
+      ],
+    },
+    {
+      name: 'removeProof',
+      accounts: [
+        {
+          name: 'authority',
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: 'userAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'admin',
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: 'adminProofAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'systemProgram',
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: 'rent',
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: 'proof',
+          type: 'string',
+        },
+      ],
+    },
+    {
+      name: 'adminProof',
+      accounts: [
+        {
+          name: 'authority',
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: 'adminProofAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'systemProgram',
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: 'rent',
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [],
+    },
   ],
   accounts: [
     {
-      name: 'Admin',
+      name: 'admin',
       type: {
         kind: 'struct',
         fields: [
@@ -1725,7 +1998,7 @@ export const Contract: ContractType = {
       },
     },
     {
-      name: 'Contribution',
+      name: 'contribution',
       type: {
         kind: 'struct',
         fields: [
@@ -1749,7 +2022,7 @@ export const Contract: ContractType = {
       },
     },
     {
-      name: 'Project',
+      name: 'project',
       type: {
         kind: 'struct',
         fields: [
@@ -1783,7 +2056,7 @@ export const Contract: ContractType = {
       },
     },
     {
-      name: 'Round',
+      name: 'round',
       type: {
         kind: 'struct',
         fields: [
@@ -1811,7 +2084,7 @@ export const Contract: ContractType = {
       },
     },
     {
-      name: 'RoundJoin',
+      name: 'roundJoin',
       type: {
         kind: 'struct',
         fields: [
@@ -1841,7 +2114,7 @@ export const Contract: ContractType = {
       },
     },
     {
-      name: 'User',
+      name: 'user',
       type: {
         kind: 'struct',
         fields: [
@@ -1850,12 +2123,16 @@ export const Contract: ContractType = {
             type: 'publicKey',
           },
           {
-            name: 'username',
-            type: 'string',
-          },
-          {
             name: 'project',
             type: 'u64',
+          },
+          {
+            name: 'proof',
+            type: {
+              vec: {
+                defined: 'PROOF',
+              },
+            },
           },
           {
             name: 'bump',
@@ -1900,6 +2177,32 @@ export const Contract: ContractType = {
         ],
       },
     },
+    {
+      name: 'PROOF',
+      type: {
+        kind: 'enum',
+        variants: [
+          {
+            name: 'LAMPORT',
+          },
+          {
+            name: 'SUPERTEAM',
+          },
+          {
+            name: 'MONKEYDAO',
+          },
+          {
+            name: 'CIVIC',
+          },
+          {
+            name: 'SOCIAL',
+          },
+          {
+            name: 'DROPS01',
+          },
+        ],
+      },
+    },
   ],
   events: [
     {
@@ -1937,6 +2240,21 @@ export const Contract: ContractType = {
         },
       ],
     },
+    {
+      name: 'NewUser',
+      fields: [
+        {
+          name: 'authority',
+          type: 'publicKey',
+          index: false,
+        },
+        {
+          name: 'username',
+          type: 'string',
+          index: false,
+        },
+      ],
+    },
   ],
   errors: [
     {
@@ -1964,8 +2282,20 @@ export const Contract: ContractType = {
       name: 'ContributionSizeExceded',
       msg: 'contribution size exceded',
     },
+    {
+      code: 6005,
+      name: 'ProofAlreadyExists',
+      msg: 'Proof Already Exists',
+    },
+    {
+      code: 6006,
+      name: 'ProofDoesNotExists',
+      msg: 'Proof Does Not Exists',
+    },
+    {
+      code: 6007,
+      name: 'InvalidProofType',
+      msg: 'Invalid Proof type',
+    },
   ],
-  metadata: {
-    address: 'Wgvt4LxST3JmUxZae5z7AYqzd63vo6EXjnW1aaMVX8L',
-  },
 };
