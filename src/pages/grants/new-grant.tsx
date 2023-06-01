@@ -123,7 +123,7 @@ const CreateGrantRound = () => {
   const [editorData, setEditorData] = useState();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const createRoundMutation = trpc.round.create.useMutation();
+
   const [transactionError, setTransactionError] = useState<string | null>(null);
   const [signTransactionLoading, setSignTransactionLoading] = useState(false);
 
@@ -287,8 +287,7 @@ const CreateGrantRound = () => {
                   setSignTransactionLoading,
                   setTransactionError,
                   anchorWallet,
-                  onClose,
-                  createRoundMutation as any
+                  onClose
                 )
               }
               isLoading={signTransactionLoading}

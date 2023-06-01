@@ -1,7 +1,13 @@
-import { initTRPC, TRPCError } from '@trpc/server';
+import {
+  inferRouterInputs,
+  inferRouterOutputs,
+  initTRPC,
+  TRPCError,
+} from '@trpc/server';
 import superjson from 'superjson';
 import { ZodError } from 'zod';
 import { Context } from './createContext';
+import { AppRouter } from './routers/_app';
 export const t = initTRPC.context<Context>().create({
   transformer: superjson,
   errorFormatter({ shape, error }) {
@@ -33,3 +39,17 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
 });
 
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+
+/**
+ * Inference helper for inputs.
+ *
+ * @example type HelloInput = RouterInputs['example']['hello']
+ */
+export type RouterInputs = inferRouterInputs<AppRouter>;
+
+/**
+ * Inference helper for outputs.
+ *
+ * @example type HelloOutput = RouterOutputs['example']['hello']
+ */
+export type RouterOutputs = inferRouterOutputs<AppRouter>;

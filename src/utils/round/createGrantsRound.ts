@@ -6,6 +6,7 @@ import { UseFormGetValues } from 'react-hook-form';
 import { UseMutationResult } from 'react-query';
 import { FormData } from '~/pages/grants/new-grant';
 import { connection, createRoundIx } from '~/utils/program/contract';
+import { trpc } from '../trpc';
 
 interface CreateRoundMutationData {
   matchingPool: number;
@@ -29,9 +30,10 @@ export const createRound = async (
   start: moment.Moment | null,
   end: moment.Moment | null,
   onClose: () => void,
-  createRoundMutation: UseMutationResult<CreateRoundMutationData, any, any>,
   setTransactionError: (error: string | null) => void
 ) => {
+  const createRoundMutation = trpc.round.create.useMutation();
+
   try {
     const ts = await getSession();
 
@@ -61,6 +63,8 @@ export const createRound = async (
       short_description: description,
       startTime: start?.toISOString() as string,
       endtime: end?.toISOString() as string,
+      description: description,
+      manager: ts?.user.name as string,
     });
     onClose();
   } catch (error: any) {
@@ -76,8 +80,7 @@ export const onSignTransaction = async (
   setSignTransactionLoading: (_loading: boolean) => void,
   setTransactionError: (_error: string | null) => void,
   anchorWallet: any, // Add the specific type here
-  onClose: () => void,
-  createRoundMutation: any // Add the specific type here
+  onClose: () => void
 ) => {
   setSignTransactionLoading(true);
   try {
@@ -94,7 +97,6 @@ export const onSignTransaction = async (
       startMoment,
       endMoment,
       onClose,
-      createRoundMutation,
       setTransactionError
     );
   } catch (error: any) {
