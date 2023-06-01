@@ -34,11 +34,11 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
     if (!publicKey) {
       return;
     }
-    if (!connected && session?.user) {
-      return signOut({
-        redirect: false,
-      });
-    }
+    // if (!connected && session?.user) {
+    //   return signOut({
+    //     redirect: false,
+    //   });
+    // }
 
     if (!signatureStore) {
       // check for available signature
@@ -71,7 +71,7 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
         }
         console.log('redirecting to create profile');
 
-        router.push('/create-profile', undefined, { shallow: true });
+        router.push('/create-profile');
         return;
       }
 

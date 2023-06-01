@@ -8,7 +8,7 @@ export const fetchPrice = async (
       `https://api.coingecko.com/api/v3/simple/price?ids=${type}&vs_currencies=usd`
     );
 
-    return data[type];
+    return data[type].usd;
   } catch (error) {
     return null;
   }

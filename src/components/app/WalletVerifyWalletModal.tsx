@@ -27,6 +27,9 @@ import { createMessage, verifyMessage } from '~/utils/getsignMessage';
 import { FailureToast, SuccessToast } from '../common/toasts/Toasts';
 import { WalletAddress } from '../common/wallet/WalletAdd';
 
+import * as evey from '@solana/wallet-adapter-react';
+import * as eve from '@solana/wallet-adapter-base';
+
 const scaleIn = keyframes`
 0% {
   transform: scale(0);
@@ -77,7 +80,7 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
               redirect: false,
             });
           }
-          router.push('/create-profile', undefined, { shallow: true });
+          router.push('/create-profile');
 
           setVerifying(false);
           return;

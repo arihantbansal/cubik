@@ -117,6 +117,8 @@ export const ProjectDonationSimulator = ({
   async function onSubmit(_values: DonationFormType) {
     let sig: string | null = null;
     const price = await fetchPrice(_values.token.value);
+    console.log(price);
+
     if (!price) return console.log('price not found');
     if (String(_values.token.value).toLocaleLowerCase() === 'solana') {
       sig = await donateSOL(
@@ -203,7 +205,6 @@ export const ProjectDonationSimulator = ({
     usd: number
   ): Promise<string | null> => {
     try {
-      alert(roundId);
       const ix = await contributeSOL(
         anchorWallet as NodeWallet,
         roundId,
