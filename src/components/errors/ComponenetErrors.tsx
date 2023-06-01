@@ -34,7 +34,7 @@ const ComponentErrors = ({ error }: any) => {
               fontSize={{ base: '10px', md: '11px', xl: '12px' }}
               lineHeight={{ base: '14px', md: '14px', xl: '16px' }}
             >
-              {error.message || 'Unknown error occurred'}
+              {error?.message || 'Unknown error occurred'}
             </AlertDescription>
           </Alert>
         </AccordionPanel>

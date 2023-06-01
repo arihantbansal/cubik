@@ -20,6 +20,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { BsTwitter } from 'react-icons/bs';
 import { MdArrowForward } from 'react-icons/md';
+import { GoVerified } from 'react-icons/go';
 import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
 import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 
@@ -362,7 +363,24 @@ export const ProjectCTAs = ({
                 </Button>
               </Skeleton>
             ) : (
-              <></>
+              <HStack p="16px" rounded="12px" gap="12px" bg="#31F57910">
+                <Center p="8px" bg="#071A0F" rounded="full">
+                  <Box
+                    as={GoVerified}
+                    boxSize={['16px', '18px', '20px']}
+                    color={'#31F579'}
+                  />
+                </Center>{' '}
+                <Box
+                  as={'p'}
+                  textStyle={'body5'}
+                  color="white"
+                  textAlign={'start'}
+                >
+                  Only people with Verified Profiles can contribute to a project
+                  in a round.
+                </Box>
+              </HStack>
             )}
             <Skeleton
               fadeDuration={4}

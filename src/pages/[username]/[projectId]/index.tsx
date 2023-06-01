@@ -31,6 +31,8 @@ const ProjectDetails = ({
     return <ComponentErrors error={error} />;
   }
 
+  const isPreview = roundId === null;
+
   return (
     <>
       <SEO
@@ -64,7 +66,11 @@ const ProjectDetails = ({
               projectDetails={data}
               isLoading={isLoading}
             />
-            <ProjectInteractions projectDetails={data} isLoading={isLoading} />
+            <ProjectInteractions
+              projectDetails={data}
+              isLoading={isLoading}
+              preview={isPreview}
+            />
           </Stack>
         </Container>
       </main>

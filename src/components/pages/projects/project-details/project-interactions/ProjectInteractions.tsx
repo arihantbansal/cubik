@@ -440,12 +440,14 @@ export const SimilarProject = () => {
 export const ProjectCreatorAndLinks = ({
   projectDetails,
   isLoading,
+  preview,
 }: {
   projectDetails:
     | ProjectWithRoundDetailsWithOwnerWithTeamType
     | null
     | undefined;
   isLoading: boolean;
+  preview?: boolean;
 }) => {
   return (
     <VStack
@@ -457,17 +459,21 @@ export const ProjectCreatorAndLinks = ({
       display={{ base: 'none', lg: 'flex' }}
     >
       <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />
-      <ProjectFundingData
-        isLoading={isLoading}
-        contributers={
-          projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')
-            ?.contributions ?? 0
-        }
-        funding={
-          projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')
-            ?.amountRaise ?? 0
-        }
-      />
+      {!preview && (
+        <ProjectFundingData
+          isLoading={isLoading}
+          contributers={
+            projectDetails?.ProjectJoinRound.find(
+              (e) => e.status === 'APPROVED'
+            )?.contributions ?? 0
+          }
+          funding={
+            projectDetails?.ProjectJoinRound.find(
+              (e) => e.status === 'APPROVED'
+            )?.amountRaise ?? 0
+          }
+        />
+      )}
       <ProjectOwner isLoading={isLoading} projectDetails={projectDetails} />
       <VStack
         gap="16px"
@@ -500,11 +506,13 @@ interface ProjectInteractionsProps {
     | null
     | undefined;
   isLoading: boolean;
+  preview?: boolean;
 }
 
 export const ProjectInteractions = ({
   projectDetails,
   isLoading,
+  preview,
 }: ProjectInteractionsProps) => {
   return (
     <Stack
@@ -519,6 +527,7 @@ export const ProjectInteractions = ({
       <ProjectCreatorAndLinks
         projectDetails={projectDetails}
         isLoading={isLoading}
+        preview={preview}
       />
     </Stack>
   );
