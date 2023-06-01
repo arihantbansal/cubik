@@ -35,6 +35,7 @@ import { trpc } from '~/utils/trpc';
 import { AmountInput } from './form/DonationAmountInput';
 import { WalletBalanceError } from './form/WalletBalanceError';
 import { fetchPrice } from '~/utils/getPrice';
+import { useRouter } from 'next/router';
 
 type ProjectDonationSimulatorProps = {
   projectDetails: projectWithFundingRoundType;
@@ -53,6 +54,7 @@ export const ProjectDonationSimulator = ({
 }: ProjectDonationSimulatorProps) => {
   const { data } = useSession();
   const [txnError, setTxnError] = useState<string | null>(null);
+  const router = useRouter();
   const toast = useToast();
   const {
     handleSubmit,
@@ -116,33 +118,36 @@ export const ProjectDonationSimulator = ({
     let sig: string | null = null;
     const price = await fetchPrice(_values.token.value);
     if (!price) return console.log('price not found');
-    if (String(_values.token.value).toLocaleLowerCase() === 'sol') {
+    if (String(_values.token.value).toLocaleLowerCase() === 'solana') {
       sig = await donateSOL(
-        projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')
-          ?.fundingRound.roundName as string,
+        projectDetails?.ProjectJoinRound.find(
+          (e) => e.id === router.query.round
+        )?.fundingRound.roundName as string,
         projectDetails?.owner_publickey,
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
         _values.amount, //  token value direct because form is not taking near 0 values
-        _values.amount * price // usd value
+        _values.amount // usd value
       );
     } else {
       sig = await donateSPL(
-        projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')
-          ?.fundingRound.roundName as string,
+        projectDetails?.ProjectJoinRound.find(
+          (e) => e.id === router.query.round
+        )?.fundingRound.roundName as string,
         '',
         projectDetails?.owner_publickey,
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
         _values.amount, // token value direct because form is not taking near 0 values
-        _values.amount * price // usd value
+        _values.amount // usd value
       );
     }
+
     if (!sig) return;
     createContributionMutation.mutate({
       projectId: projectDetails.id,
       roundId: projectDetails?.ProjectJoinRound.find(
-        (e) => e.status === 'APPROVED'
+        (e) => e.id === router.query.round
       )?.fundingRound.id as string,
       split: _values.matchingPoolDonation,
       token: _values.token.value,
@@ -198,6 +203,7 @@ export const ProjectDonationSimulator = ({
     usd: number
   ): Promise<string | null> => {
     try {
+      alert(roundId);
       const ix = await contributeSOL(
         anchorWallet as NodeWallet,
         roundId,

@@ -16,7 +16,7 @@ interface Props {
 }
 
 export const AuthWrapper: React.FC<Props> = ({ children }) => {
-  const { publicKey, signMessage } = useWallet();
+  const { publicKey, connected } = useWallet();
   const { key, setKey } = useAuthStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
@@ -33,6 +33,11 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
 
     if (!publicKey) {
       return;
+    }
+    if (!connected && session?.user) {
+      return signOut({
+        redirect: false,
+      });
     }
 
     if (!signatureStore) {
