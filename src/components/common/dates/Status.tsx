@@ -46,16 +46,29 @@ const RoundStatus = ({
 
   if (isFuture(startDate)) {
     return (
-      <HStack rounded="full" backgroundColor="#1D1F1E" spacing="8px" mx={1}>
-        <AiTwotoneCalendar color="white" size={18} />
+      <HStack
+        rounded="full"
+        backgroundColor="#1D1F1E"
+        p="0px 12px"
+        spacing="8px"
+        mx={1}
+      >
+        <Box
+          as={AiTwotoneCalendar}
+          color="white"
+          boxSize={['12px', '14px', '18px']}
+        />
         <Box
           p="8px 12px"
+          ps="0px"
           as="p"
           whiteSpace="pre"
           color="neutral.11"
           textStyle={{ base: 'body6', md: 'body5' }}
         >
-          Round starts in {daysToStart} days
+          {daysToStart === 0
+            ? `Round starts in a day`
+            : `Round starts in ${daysToStart} days`}
         </Box>
       </HStack>
     );

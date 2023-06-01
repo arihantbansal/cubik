@@ -1,3 +1,4 @@
+import { ProjectJoinRoundStatus } from '.prisma/client';
 import { Container, Stack } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { join } from 'path';
@@ -7,6 +8,7 @@ import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-detai
 import ProjectDetailsLiveRoundStatus from '~/components/pages/projects/project-details/ProjectDetailsLiveRoundStatus';
 import SEO from '~/components/SEO';
 import { Mixpanel } from '~/utils/mixpanel';
+import { ProjectJoinRound } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 
 const ProjectDetails = ({
@@ -38,7 +40,12 @@ const ProjectDetails = ({
       />
       <main style={{ width: 'full' }}>
         <Container maxW={'full'} p="0">
-          {roundId && <ProjectDetailsLiveRoundStatus projectDetails={data} />}
+          {/*  */}
+          {roundId &&
+            data?.ProjectJoinRound[0].status ===
+              ProjectJoinRoundStatus.APPROVED && (
+              <ProjectDetailsLiveRoundStatus projectDetails={data} />
+            )}
           <Stack
             maxW="7xl"
             mx="auto"

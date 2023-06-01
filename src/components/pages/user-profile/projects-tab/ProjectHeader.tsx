@@ -53,32 +53,6 @@ const ProjectDetails = ({
   project: projectWithFundingRoundType;
   setDrawerBodyView: any;
 }) => {
-  const [showApplyToRound, setShowApplyToRound] = useState(false);
-
-  useEffect(() => {
-    if (project.status === ProjectVerifyStatus.VERIFIED) {
-      if (
-        ProjectStatus({ projectData: project as projectWithFundingRoundType })
-          ?.round?.status === ProjectJoinRoundStatus.APPROVED
-      ) {
-        return setShowApplyToRound(false); // project is approved ina a round so don't show apply to round
-      } else if (
-        ProjectStatus({ projectData: project as projectWithFundingRoundType })
-          ?.round?.status === ProjectJoinRoundStatus.REJECTED
-      ) {
-        return setShowApplyToRound(true); // project is rejected so show apply to round
-      } else if (
-        ProjectStatus({ projectData: project as projectWithFundingRoundType })
-          ?.round?.status === ProjectJoinRoundStatus.PENDING
-      ) {
-        return setShowApplyToRound(false); // project is rejected so show apply to round
-      }
-      return setShowApplyToRound(true);
-    } else {
-      setShowApplyToRound(false);
-    }
-  }, [project?.status]);
-
   const ProjectOptionsMenu = () => {
     return (
       <Menu>
@@ -157,7 +131,6 @@ const ProjectDetails = ({
             <Button
               variant="cubikFilled"
               size="cubikSmall"
-              isDisabled={!showApplyToRound}
               onClick={() => {
                 setDrawerBodyView(drawerBodyViewEnum.GRANTS);
               }}
@@ -227,7 +200,6 @@ const ProjectDetails = ({
           variant="cubikFilled"
           size={'cubikSmall'}
           width={'full'}
-          isDisabled={showApplyToRound}
           onClick={() => {
             setDrawerBodyView(drawerBodyViewEnum.GRANTS);
           }}

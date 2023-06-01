@@ -14,7 +14,7 @@ const GetFormattedLink = ({
       isLoaded={!isLoading}
       fadeDuration={3}
       opacity={isLoading ? 0.8 : 1}
-      w="8rem"
+      w="full"
     >
       <HStack
         w="full"
@@ -23,7 +23,7 @@ const GetFormattedLink = ({
         justify="start"
         spacing="4px"
       >
-        <BiLink size={20} color={'#A8F0E6'} />
+        <Box as={BiLink} boxSize={['14px', '16px', '18px']} color={'#A8F0E6'} />
         <Box
           noOfLines={1}
           textAlign="start"

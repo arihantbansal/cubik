@@ -1,4 +1,4 @@
-import { Card, CardHeader } from '@chakra-ui/react';
+import { Card, CardHeader, Skeleton } from '@chakra-ui/react';
 import { ProjectVerifyStatus, ProjectsModel } from '@prisma/client';
 
 import ProjectHeaderVisitorView from './ProjectHeaderVisitorView';
@@ -21,11 +21,18 @@ const ProjectVisitorCard = ({
       w="100%"
     >
       <ProjectBanner status={status} />
-      <CardHeader>
+      <CardHeader gap="0" mb="0">
         <ProjectHeaderVisitorView project={project} isLoading={isLoading} />
-        {project.status === ProjectVerifyStatus.VERIFIED && ( // todo: check if this check is required
-          <ProjectVisitorRoundsView project={project} isLoading={isLoading} />
-        )}
+        <Skeleton
+          w="full"
+          fadeDuration={0.4}
+          opacity={isLoading ? '0.5' : '1'}
+          isLoaded={!isLoading}
+        >
+          {project.status === ProjectVerifyStatus.VERIFIED && ( // todo: check if this check is required
+            <ProjectVisitorRoundsView project={project} isLoading={isLoading} />
+          )}
+        </Skeleton>
       </CardHeader>
     </Card>
   );

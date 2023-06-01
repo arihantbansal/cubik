@@ -3,6 +3,7 @@ import {
   Box,
   Center,
   HStack,
+  Spinner,
   Table,
   TableContainer,
   Tbody,
@@ -15,8 +16,10 @@ import {
 } from '@chakra-ui/react';
 import { Key, ReactChild } from 'react';
 import { BiChevronRight } from 'react-icons/bi';
+import ContributionsEmptyState from '~/components/common/empty-state/ContributionsEmptyState';
 import CustomTag from '~/components/common/tags/CustomTag';
 import { BONK, SOL, USDC } from '~/components/common/tokens/token';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { UserContributionsWithProjectOwnerAndProjectRound } from '~/types/contribution';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { timeSince } from '~/utils/gettimeSince';
@@ -157,9 +160,22 @@ const UserContributions = ({
     : { data: null, isError: false, isLoading: false }; // todo: i have a doubt if it works or not
 
   if (!userId) {
-    return <Text>No user ID provided</Text>;
+    return <ComponentErrors>No user ID provided</ComponentErrors>;
   }
 
+  if (isError) {
+    return <ComponentErrors />;
+  }
+
+  if (!data || data.length === 0) {
+    return <ContributionsEmptyState />;
+  }
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  console.log(data, isError, isLoading);
   return (
     <TableContainer w="full">
       <Table variant="unstyled">

@@ -10,7 +10,6 @@ import {
 } from '@chakra-ui/react';
 import { ProjectsModel } from '@prisma/client';
 import Link from 'next/link';
-import { useRef } from 'react';
 import GetFormattedLink from '~/components/HOC/GetLink';
 
 export const ProjectHeaderVisitorView = ({
@@ -20,7 +19,8 @@ export const ProjectHeaderVisitorView = ({
   project: ProjectsModel;
   isLoading: boolean;
 }) => {
-  const btnRef = useRef();
+  // get username from url using window object without using query
+  const username = window.location.pathname.split('/')[1];
   const headerSpacing = {
     base: '16px',
     sm: '20px',
@@ -98,7 +98,7 @@ export const ProjectHeaderVisitorView = ({
               variant={'cubikOutlined'}
               size={{ base: 'cubikMini', md: 'cubikSmall' }}
               as={Link}
-              href={'/projects/' + project?.id} // todo: adding round id to this route
+              href={username + '/' + project?.id + '?prev=true'} // todo: adding round id to this route
             >
               View Details
             </Button>

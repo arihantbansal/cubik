@@ -41,6 +41,7 @@ import { formatNumberWithK } from '~/utils/formatWithK';
 import { connection, ProjectJoinRound } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 import { drawerBodyViewEnum } from '../../ProjectHeader';
+import { checkRoundStatus, GRANT_STATUS } from '~/utils/round/checkRoundStatus';
 
 type FormData = {
   selectRoundId: string | null;
@@ -66,6 +67,7 @@ const ApplyForGrant: React.FC<{
   const wallet = useAnchorWallet();
   const toast = useToast();
   const [selectRoundId, setSelectRoundId] = React.useState<string | null>(null);
+
   const sendTransaction = async (
     roundName: string,
     projectUserCount: number
@@ -268,6 +270,32 @@ const ApplyForGrant: React.FC<{
     );
   };
 
+  const FilteredRoundTiles = () => {
+    const filteredRoundData = roundData?.filter((round) => {
+      return (
+        checkRoundStatus(round.startTime, round.endtime) ===
+        GRANT_STATUS.notStarted
+      );
+    });
+    if (filteredRoundData?.length === 0) {
+      // there is no round to be applied for then show there is no acitve round currently
+      return <>No active round</>;
+    } // there is a round to be applied for then show the round tiles
+    else {
+      return (
+        <VStack w="full" spacing="24px">
+          {roundData?.map((round: Round) => {
+            return (
+              checkRoundStatus(round.startTime, round.endtime) ===
+                GRANT_STATUS.notStarted && (
+                <Tile tileIndex={round.id} round={round} key={round.id} />
+              )
+            );
+          })}
+        </VStack>
+      );
+    }
+  };
   return (
     <ErrorBoundaryWrapper>
       <VStack align="start" p="40px" spacing="32px" w="full">
@@ -287,13 +315,7 @@ const ApplyForGrant: React.FC<{
               <TileSkeleton />
             </VStack>
           ) : (
-            <VStack w="full" spacing="24px">
-              {roundData?.map((round: Round) => {
-                return (
-                  <Tile tileIndex={round.id} round={round} key={round.id} />
-                );
-              })}
-            </VStack>
+            <FilteredRoundTiles />
           )}
         </VStack>
         <Center w="full">

@@ -15,6 +15,7 @@ import {
 import {
   Contribution,
   ProjectJoinRound,
+  ProjectJoinRoundStatus,
   ProjectsModel,
   Round,
   UserModel,
@@ -146,6 +147,11 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
       {
         // if project is participating in a round then make it visible else don't show it
         <Center
+          display={
+            projectJoinRound.status === ProjectJoinRoundStatus.APPROVED
+              ? 'flex'
+              : 'none'
+          }
           w="full"
           bg={`surface.${projectJoinRound.fundingRound.colorScheme}.3`}
           borderTopRadius={'16px'}
@@ -312,7 +318,13 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
             >
               <Button
                 as={Link}
-                href={`/${projectJoinRound.project.owner.username}/${projectJoinRound.project.id}?round=${projectJoinRound.id}`}
+                href={`/${projectJoinRound.project.owner.username}/${
+                  projectJoinRound.project.id
+                }${
+                  projectJoinRound.status === ProjectJoinRoundStatus.APPROVED
+                    ? `?round=${projectJoinRound.id}`
+                    : ``
+                }`}
                 background={'#1D1F1E'}
                 color="white"
                 fontWeight={'700'}

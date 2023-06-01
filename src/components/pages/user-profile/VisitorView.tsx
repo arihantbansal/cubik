@@ -12,6 +12,7 @@ import ProfileHeader from './ProfileHeader';
 import UserDetails from './details-tab/UserDetails';
 import { VisitorProjectEmptyState } from './empty-states/ProjectEmptyState';
 import ProjectVisitorCard from './projects-tab/ProjectVisitorCard';
+import UserContributions from './contributions-tab/UserContributions';
 
 type visitorViewType = {
   user: UserWithProjectType | null | undefined;
@@ -52,7 +53,7 @@ const VisitorView: FC<visitorViewType> = ({
               )}
             </Flex>
           </TabPanel>
-          <TabPanel>{/* <UserContributions userId={user.id} /> */}</TabPanel>
+          <TabPanel>{user && <UserContributions userId={user.id} />}</TabPanel>
         </TabPanels>
       </Tabs>
     </Flex>
