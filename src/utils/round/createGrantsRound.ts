@@ -35,8 +35,6 @@ export const createRound = async (
   try {
     const ts = await getSession();
 
-    console.log(ts);
-
     const ix = await createRoundIx(
       anchorWallet as NodeWallet,
       name,

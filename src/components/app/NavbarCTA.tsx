@@ -24,7 +24,6 @@ const NavbarCTA = () => {
     }
   }, []);
 
-  console.log('session status in cta - ', status);
   // If on create-profile page, don't show anything
   if (currentPath === '/create-profile') {
     return null;

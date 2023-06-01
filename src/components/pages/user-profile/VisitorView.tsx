@@ -34,7 +34,7 @@ const VisitorView: FC<visitorViewType> = ({
         <TabPanels p={'0'}>
           <TabPanel p="0">
             <Flex maxW={'full'} p="0" flexDir="column" gap="40px" py="40px">
-              <UserDetails isLoading={isLoading} />
+              <UserDetails isLoading={isLoading} userId={user?.id as string} />
             </Flex>
           </TabPanel>
           <TabPanel>

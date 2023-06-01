@@ -10,7 +10,14 @@ import {
   VStack,
   Wrap,
 } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
+import {
+  Contribution,
+  ProjectJoinRound,
+  ProjectsModel,
+  Round,
+  Team,
+  UserModel,
+} from '@prisma/client';
 import Link from 'next/link';
 import { Key } from 'react';
 import {
@@ -478,7 +485,18 @@ export const ProjectCreatorAndLinks = ({
 
 interface ProjectInteractionsProps {
   projectDetails:
-    | ProjectWithRoundDetailsWithOwnerWithTeamType
+    | (ProjectsModel & {
+        Team: (Team & {
+          user: UserModel;
+        })[];
+        ProjectJoinRound: (ProjectJoinRound & {
+          contributors: (Contribution & {
+            user: UserModel;
+          })[];
+          fundingRound: Round;
+        })[];
+        owner: UserModel;
+      })
     | null
     | undefined;
   isLoading: boolean;

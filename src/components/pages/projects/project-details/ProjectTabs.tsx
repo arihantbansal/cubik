@@ -12,18 +12,40 @@ import { formatDate } from '~/utils/formatDates';
 import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
 import Discussions from './ProjectDiscussion';
 import ProjectContributors from './project-interactions/project-tabs/ProjectContributors';
+import {
+  Contribution,
+  ProjectJoinRound,
+  ProjectsModel,
+  Round,
+  Team,
+  UserModel,
+} from '@prisma/client';
 
 export const ProjectsTabs = ({
   projectDetails,
   isLoading,
+  roundId,
 }: {
   projectDetails:
-    | ProjectWithRoundDetailsWithOwnerWithTeamType
+    | (ProjectsModel & {
+        Team: (Team & {
+          user: UserModel;
+        })[];
+        ProjectJoinRound: (ProjectJoinRound & {
+          contributors: (Contribution & {
+            user: UserModel;
+          })[];
+          fundingRound: Round;
+        })[];
+        owner: UserModel;
+      })
     | null
     | undefined;
+  roundId: string;
   isLoading: boolean;
 }) => {
-  console.log('project details - ', projectDetails);
+  // get the project id from the url using window object
+
   return (
     <Tabs variant={'cubik'} alignSelf={'start'} w="full">
       <TabList
@@ -54,6 +76,7 @@ export const ProjectsTabs = ({
         <TabPanel overflowX="scroll">
           {projectDetails?.id && (
             <ProjectContributors
+              roundId={roundId}
               projectId={projectDetails?.id}
               isLoading={isLoading}
             />

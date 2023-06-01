@@ -73,7 +73,6 @@ export const authOptions = (
             env.NODE_ENV === 'development'
               ? req?.cookies['next-auth.csrf-token']?.split('|')
               : req?.cookies['__Host-next-auth.csrf-token']?.split('|');
-          console.log(availableTokens, '-- availableTokens');
 
           try {
             const final = await verifyMessage(
@@ -100,8 +99,6 @@ export const authOptions = (
 
             return res;
           } catch (error) {
-            console.log(error);
-
             return null;
           }
         },

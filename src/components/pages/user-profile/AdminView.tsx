@@ -41,7 +41,7 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
         overflow={'none'}
         w={'full'}
         flexDir={'column'}
-        gap={{ base: '32px', sm: '40px', md: '56px' }}
+        gap={{ base: '28px', sm: '40px', md: '56px' }}
       >
         <ProfileHeader isLoading={isLoading} user={user} />
         <Tabs index={tabIndex} onChange={setTabIndex} variant={'cubik'}>
@@ -53,7 +53,10 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
           <TabPanels p={'0'}>
             <TabPanel>
               <Flex maxW={'full'} p="0" flexDir="column" gap="32px">
-                <UserDetails isLoading={isLoading} />
+                <UserDetails
+                  userId={user?.id as string}
+                  isLoading={isLoading}
+                />
                 <UserProofs isLoading={isLoading} />
               </Flex>
             </TabPanel>

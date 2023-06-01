@@ -129,14 +129,12 @@ const SelectProjectToApplyForGrant = ({
   };
 
   const onSubmit: SubmitHandler<FormData> = async () => {
-    console.log('submit button clicked - ', selectedProjectId);
     const project = userData?.project?.find(
       (project) => project.id === selectedProjectId
     );
     if (!project) return;
 
     setSelectedProject(project);
-    console.log('project - ', project);
     onModalOpen();
   };
 

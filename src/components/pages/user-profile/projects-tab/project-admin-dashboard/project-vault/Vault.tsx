@@ -11,9 +11,9 @@ import {
 import VaultHeader from './VaultHeader';
 
 const Vault = ({ projectData }: any) => {
-  console.log('project details - ', projectData);
   return (
     <VStack
+      pt={'16px'}
       alignItems={'start'}
       px={{ base: '12px', sm: '16px', md: '24px' }}
       gap={{ base: '16px', sm: '20px', md: '24px' }}

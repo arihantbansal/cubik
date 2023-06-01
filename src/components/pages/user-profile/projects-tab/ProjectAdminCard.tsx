@@ -23,7 +23,6 @@ import Vault from './project-admin-dashboard/project-vault/Vault';
 
 const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
   const [showVault, setShowVault] = useState(false);
-  console.log('projectid - ', project.id);
   const {
     data: projectData,
     isLoading,
@@ -50,7 +49,6 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
     );
   }
 
-  console.log('projectData in user profile - ', projectData);
   return (
     <Card
       px="0px"

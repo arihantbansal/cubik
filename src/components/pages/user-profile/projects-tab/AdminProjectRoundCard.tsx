@@ -103,7 +103,6 @@ const AdminProjectRoundCard = ({
     };
   };
 }) => {
-  console.log('round - ', round);
   return (
     <AccordionItem overflow={'scroll'} w="full" outline="none" border="none">
       <AccordionButton
@@ -149,9 +148,13 @@ const AdminProjectRoundCard = ({
       >
         {round.status === ProjectJoinRoundStatus.APPROVED ? (
           <Tabs variant={'cubik'}>
-            <TabList>
-              <Tab>Details</Tab>
-              <Tab>Contributors</Tab>
+            <TabList gap="12px" height="2.5rem">
+              <Tab height="2.5rem" fontSize={{ base: '14px', md: '17px' }}>
+                Details
+              </Tab>
+              <Tab height="2.5rem" fontSize={{ base: '14px', md: '17px' }}>
+                Contributors
+              </Tab>
             </TabList>
             <TabPanels p={'0'}>
               <TabPanel>
@@ -166,14 +169,12 @@ const AdminProjectRoundCard = ({
                     direction={{ base: 'column', lg: 'row' }}
                   >
                     <FundingOverview
-                      projectId={
-                        round.fundingRound.Contribution[0].projectId as string
-                      }
+                      projectId={round.projectId as string}
+                      roundId={round.fundingRound.id}
                     />
                     <ProjectInsights
-                      projectId={
-                        round.fundingRound.Contribution[0].projectId as string
-                      }
+                      projectId={round.projectId as string}
+                      roundId={round.fundingRound.id}
                     />
                   </Stack>
                 )}

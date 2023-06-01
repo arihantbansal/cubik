@@ -26,7 +26,6 @@ const GrantDetailsBody = ({
   data: RoundDetailsWithProjectsWithContributionsType | undefined | null;
   isLoading: boolean;
 }) => {
-  console.log('round data - ', data);
   return (
     <Tabs variant={'cubik'} alignSelf={'start'} w="full">
       <TabList

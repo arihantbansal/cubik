@@ -143,7 +143,6 @@ const CreateGrantRound = () => {
     } else if (step === 1) {
       setStep(2);
     } else {
-      console.log('form submitted - ', getValues());
       onOpen();
     }
   };

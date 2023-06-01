@@ -1,12 +1,36 @@
-import { Box, Center, VStack } from '@chakra-ui/react';
+import { Box, Center, Spinner, VStack } from '@chakra-ui/react';
 import { trpc } from '~/utils/trpc';
 import { VisitorsChart } from './Charts';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
 
-const ProjectInsights = ({ projectId }: { projectId: string }) => {
-  const { data, isError, isLoading } =
+const ProjectInsights = ({
+  projectId,
+  roundId,
+}: {
+  projectId: string;
+  roundId: string;
+}) => {
+  const { data, isError, isLoading, error } =
     trpc.contribution.getProjectContributors.useQuery({
       projectId,
+      roundId,
     });
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <ComponentErrors error={error} />;
+  }
+  // calculate total no of unique contributors
+  const totalNoOfUniqueContributors = () => {
+    const contributors = data.map((item) => item.userId);
+    const uniqueContributors = new Set(contributors);
+    // now calculate no of unique ids
+    console.log('unique contributors', uniqueContributors);
+    return uniqueContributors.size;
+  };
+
   return (
     <VStack
       flex={'50%'}
@@ -30,7 +54,7 @@ const ProjectInsights = ({ projectId }: { projectId: string }) => {
           textStyle={{ base: 'title4', md: 'title3' }}
           color="neutral.11"
         >
-          20.5%
+          --
         </Box>
       </VStack>
       <Center
@@ -47,23 +71,25 @@ const ProjectInsights = ({ projectId }: { projectId: string }) => {
             textStyle={{ base: 'title4', md: 'title3' }}
             color="neutral.11"
           >
-            200
+            --
           </Box>
         </VStack>
         <VStack align={'start'} flex="50%" w="full">
           <Box as="p" textStyle="body5" color={'neutral.8'}>
-            Contributors
+            Unique Contributors
           </Box>
           <Box
             as="p"
             textStyle={{ base: 'title4', md: 'title3' }}
             color="neutral.11"
           >
-            124
+            {totalNoOfUniqueContributors() === 0
+              ? 0
+              : totalNoOfUniqueContributors()}
           </Box>
         </VStack>
       </Center>
-      <VisitorsChart />
+      <VisitorsChart data={data} />
     </VStack>
   );
 };

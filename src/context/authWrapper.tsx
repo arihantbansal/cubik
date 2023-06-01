@@ -55,7 +55,6 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
       });
 
       if (signInResponse?.status === 401) {
-        console.log('401');
         if (session?.user.id) {
           await signOut({
             redirect: false,
@@ -72,7 +71,6 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
       }
 
       if (signInResponse?.error) {
-        console.log(signInResponse.error);
         return;
       }
     } catch (error) {

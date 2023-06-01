@@ -34,6 +34,7 @@ import {
 import { trpc } from '~/utils/trpc';
 import { AmountInput } from './form/DonationAmountInput';
 import { WalletBalanceError } from './form/WalletBalanceError';
+import { fetchPrice } from '~/utils/getPrice';
 
 type ProjectDonationSimulatorProps = {
   projectDetails: projectWithFundingRoundType;
@@ -88,7 +89,6 @@ export const ProjectDonationSimulator = ({
 
   const createContributionMutation = trpc.contribution.create.useMutation({
     onSuccess: async (data: any) => {
-      console.log('🤤 success - ', data);
       setDonationSuccessful(true);
 
       SuccessToast({ toast, message: 'Donation Successful' });
@@ -106,17 +106,16 @@ export const ProjectDonationSimulator = ({
       });
     },
     onError: (error) => {
-      console.log('there was some error', error);
       setTxnError('Trpc returned an error');
       FailureToast({ toast, message: 'Donation Failed' });
     },
   });
   const anchorWallet = useAnchorWallet();
 
-  async function onSubmit(_values: any) {
-    console.log(_values);
-
+  async function onSubmit(_values: DonationFormType) {
     let sig: string | null = null;
+    const price = await fetchPrice(_values.token.value);
+    if (!price) return console.log('price not found');
     if (String(_values.token.value).toLocaleLowerCase() === 'sol') {
       sig = await donateSOL(
         projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')
@@ -125,7 +124,7 @@ export const ProjectDonationSimulator = ({
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
         _values.amount, //  token value direct because form is not taking near 0 values
-        _values.amount // usd value
+        _values.amount * price // usd value
       );
     } else {
       sig = await donateSPL(
@@ -136,10 +135,9 @@ export const ProjectDonationSimulator = ({
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
         _values.amount, // token value direct because form is not taking near 0 values
-        _values.amount // usd value
+        _values.amount * price // usd value
       );
     }
-    console.log('donation number - ', donation);
     if (!sig) return;
     createContributionMutation.mutate({
       projectId: projectDetails.id,
@@ -149,7 +147,7 @@ export const ProjectDonationSimulator = ({
       split: _values.matchingPoolDonation,
       token: _values.token.value,
       totalAmount: _values.amount,
-      usd: _values.amount,
+      usd: _values.amount * price,
       tx: sig as string,
       userId: data?.user?.id as string,
     });
@@ -219,8 +217,6 @@ export const ProjectDonationSimulator = ({
 
       return txid;
     } catch (error: any) {
-      console.log();
-
       setTxnError(error.message || 'There was some error');
       return null;
     }
@@ -311,7 +307,7 @@ export const ProjectDonationSimulator = ({
                     align={'center'}
                     justify="center"
                     onClick={() => {
-                      setValue('matchingPoolDonation', percentage);
+                      setValue('matchingPoolDonation', percentage as number);
                     }}
                   >
                     <Box as="p" textStyle={'body4'} color="#E0FFFD">

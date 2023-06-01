@@ -10,7 +10,6 @@ const ExplorePageHeader = () => {
     isLoading,
     isError,
   } = trpc.round.findActivePresentAndFutureRounds.useQuery();
-  console.log('roundData ---------------------------------------', roundData);
   return (
     <VStack w="full">
       {isLoading ? (

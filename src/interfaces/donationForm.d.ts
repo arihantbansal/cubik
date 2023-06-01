@@ -5,6 +5,7 @@ export interface DonationFormType {
   amount: number;
   token: tokenGroup;
   matchingPoolDonation: number;
+  percentage: number;
 }
 
 export interface ListDonationFormType extends DonationFormType {

@@ -54,7 +54,6 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
   const router = useRouter();
   async function VerifyWallet() {
     setVerifying(true);
-    console.log(signMessage && publicKey);
 
     if (signMessage && publicKey) {
       try {
@@ -65,7 +64,6 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
           publicKey
         );
 
-        console.log('final - ', final);
         const signInResponse = await signIn('credentials', {
           redirect: false,
           wallet: publicKey.toBase58(),
@@ -78,7 +76,6 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
         });
 
         if (signInResponse?.status === 401) {
-          console.log('401');
           if (session?.user.id) {
             await signOut({
               redirect: false,
@@ -89,7 +86,6 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
           setVerifying(false);
         }
         setAuthenticated(true);
-        console.log('outside 401');
         setVerified(true);
         setVerifying(false);
         setAuthenticated(true);

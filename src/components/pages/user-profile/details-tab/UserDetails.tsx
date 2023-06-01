@@ -1,8 +1,32 @@
 import { Box, Card, HStack, Skeleton, Stack, VStack } from '@chakra-ui/react';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
+import { trpc } from '~/utils/trpc';
 
-const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
+const UserDetails = ({
+  isLoading,
+  userId,
+}: {
+  isLoading: boolean;
+  userId: string;
+}) => {
+  const { data, error, isError } =
+    trpc.contribution.getUserContributions.useQuery({ userId: userId });
+
+  if (isError) {
+    return <ComponentErrors error={error} />;
+  }
+  const userTotalContributionsAmount = data?.reduce((acc, contribution) => {
+    return acc + contribution.usdTotal;
+  }, 0);
+
+  const userLastDonationAmount = data
+    ? data[(data?.length as number) - 1]?.usdTotal
+    : 0;
+
+  console.log('usercontribution', userTotalContributionsAmount);
+
   return (
-    <VStack align="start" w="full" gap="24px">
+    <VStack align="start" w="full" gap={{ base: '16px', md: '24px' }}>
       <Skeleton
         isLoaded={!isLoading}
         opacity={isLoading ? '0.5' : 1}
@@ -17,10 +41,15 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
         </Box>
       </Skeleton>
       <Stack
-        direction={{ base: 'column', md: 'row' }}
-        gap={{ base: '24px', md: '32px' }}
+        w="full"
+        direction={{ base: 'column', sm: 'row' }}
+        spacing={{ base: '24px', md: '32px' }}
       >
-        <Card p={{ base: '16px', md: '24px' }}>
+        <Card
+          minH="12rem"
+          justify={'space-between'}
+          p={{ base: '16px', md: '24px' }}
+        >
           <VStack align={'start'} gap="8px">
             <Skeleton
               isLoaded={!isLoading}
@@ -45,23 +74,7 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
                 color="neutral.11"
                 textStyle={{ base: 'title3', sm: 'title2', md: 'title1' }}
               >
-                $00
-              </Box>
-            </Skeleton>
-            <Skeleton
-              isLoaded={!isLoading}
-              opacity={isLoading ? '0.3' : 1}
-              fadeDuration={4}
-            >
-              <Box
-                as="p"
-                color="#73FF9A"
-                backgroundColor={'#042919'}
-                rounded="full"
-                p="0.4rem 0.8rem"
-                textStyle={{ base: 'body5', md: 'body4' }}
-              >
-                + $00
+                ${userTotalContributionsAmount}
               </Box>
             </Skeleton>
           </VStack>
@@ -70,7 +83,11 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
             opacity={isLoading ? '0.3' : 1}
             fadeDuration={3}
           >
-            <HStack w="14rem" justifyContent={'space-between'} alignItems="end">
+            <HStack
+              w={{ base: 'full', sm: '14.5rem' }}
+              justifyContent={'space-between'}
+              alignItems="end"
+            >
               <Box
                 as="p"
                 color="neutral.8"
@@ -79,7 +96,9 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
                 Last Donation
               </Box>
               <Box as="p" color="neutral.11" textStyle="title4">
-                $00
+                {userLastDonationAmount === 0 && !userLastDonationAmount
+                  ? '--'
+                  : `$${userLastDonationAmount}`}
               </Box>
             </HStack>
           </Skeleton>
@@ -122,7 +141,7 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
               opacity={isLoading ? '0.3' : 1}
               fadeDuration={4}
             >
-              <Box
+              {/* <Box
                 as="p"
                 color="#73FF9A"
                 backgroundColor={'#042919'}
@@ -131,7 +150,7 @@ const UserDetails = ({ isLoading }: { isLoading: boolean }) => {
                 textStyle={{ base: 'body5', md: 'body4' }}
               >
                 + $00
-              </Box>
+              </Box> */}
             </Skeleton>
           </VStack>
           <VStack align={'start'} gap={{ base: '8px', md: '12px' }}>

@@ -128,12 +128,14 @@ export const contributionRouter = router({
     .input(
       z.object({
         projectId: z.string().nonempty(),
+        roundId: z.string().nonempty(),
       })
     )
     .query(async ({ input }) => {
       const contributions = await prisma.contribution.findMany({
         where: {
           projectId: input.projectId,
+          roundId: input.roundId,
         },
         include: {
           user: {

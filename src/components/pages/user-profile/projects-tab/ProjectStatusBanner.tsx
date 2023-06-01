@@ -16,7 +16,6 @@ const ProjectStatusBanner = ({
   endtime?: Date;
 }) => {
   // check if projects is live and receiving donation in a live round
-  console.log('status and round name', status, roundName, startTime, endtime);
   switch (status) {
     case ProjectVerifyStatus.REVIEW:
       return (

@@ -10,8 +10,6 @@ export const fetchPrice = async (
 
     return data[type];
   } catch (error) {
-    console.log(error);
-
     return null;
   }
 };

@@ -25,6 +25,14 @@ import {
 } from './project-interactions/ProjectInteractions';
 import ProjectDetailsHeader from './ProjectDetailsHeader';
 import { ProjectsTabs } from './ProjectTabs';
+import {
+  Contribution,
+  ProjectJoinRound,
+  ProjectsModel,
+  Round,
+  Team,
+  UserModel,
+} from '@prisma/client';
 
 type MobileDrawerTypes = {
   logo: string;
@@ -86,7 +94,18 @@ const MobileOnlyViews = ({
 }: {
   isLoading: boolean;
   projectDetails:
-    | ProjectWithRoundDetailsWithOwnerWithTeamType
+    | (ProjectsModel & {
+        Team: (Team & {
+          user: UserModel;
+        })[];
+        ProjectJoinRound: (ProjectJoinRound & {
+          contributors: (Contribution & {
+            user: UserModel;
+          })[];
+          fundingRound: Round;
+        })[];
+        owner: UserModel;
+      })
     | null
     | undefined;
   children?: React.ReactNode;
@@ -166,13 +185,26 @@ export const ProjectDetailsAndTabs = ({
   projectDetails,
   isLoading,
   children,
+  roundId,
 }: {
   projectDetails:
-    | ProjectWithRoundDetailsWithOwnerWithTeamType
+    | (ProjectsModel & {
+        Team: (Team & {
+          user: UserModel;
+        })[];
+        ProjectJoinRound: (ProjectJoinRound & {
+          contributors: (Contribution & {
+            user: UserModel;
+          })[];
+          fundingRound: Round;
+        })[];
+        owner: UserModel;
+      })
     | null
     | undefined;
   isLoading: boolean;
   children?: React.ReactNode;
+  roundId: string;
 }) => {
   return (
     <Container
@@ -193,7 +225,11 @@ export const ProjectDetailsAndTabs = ({
       <MobileOnlyViews isLoading={isLoading} projectDetails={projectDetails}>
         {children}
       </MobileOnlyViews>
-      <ProjectsTabs projectDetails={projectDetails} isLoading={isLoading} />
+      <ProjectsTabs
+        roundId={roundId}
+        projectDetails={projectDetails}
+        isLoading={isLoading}
+      />
     </Container>
   );
 };

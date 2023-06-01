@@ -9,7 +9,6 @@ const ProjectsContributorsNumber = ({
   projectId: string;
   contributorsList: ContributionsWithUserType[];
 }) => {
-  console.log('contributorsList', contributorsList);
   const [contributors, setContributors] = useState<
     ContributionsWithUserType[] | undefined
   >();
@@ -33,7 +32,6 @@ const ProjectsContributorsNumber = ({
     setContributors(contributorsData);
   }, [contributorsList]);
 
-  console.log('contribution - ', contributors);
   return (
     <>
       {contributors ? (

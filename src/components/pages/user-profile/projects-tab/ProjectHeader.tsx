@@ -56,9 +56,7 @@ const ProjectDetails = ({
   const [showApplyToRound, setShowApplyToRound] = useState(false);
 
   useEffect(() => {
-    console.log('project.status check');
     if (project.status === ProjectVerifyStatus.VERIFIED) {
-      console.log('project is verified so show ApplyRound to true');
       if (
         ProjectStatus({ projectData: project as projectWithFundingRoundType })
           ?.round?.status === ProjectJoinRoundStatus.APPROVED

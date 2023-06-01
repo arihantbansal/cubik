@@ -27,7 +27,6 @@ export const useFilteredProjects = () => {
     }
   );
 
-  console.log('filteredProjectsFromServer - ', filteredProjectsFromServer);
   useEffect(() => {
     if (roundsData) {
       setSelectedRounds(roundsData);

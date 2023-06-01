@@ -28,6 +28,11 @@ export const findOneProject = procedure
             },
             include: {
               fundingRound: true,
+              contributors: {
+                include: {
+                  user: true,
+                },
+              },
             },
           },
         },
@@ -48,6 +53,11 @@ export const findOneProject = procedure
           ProjectJoinRound: {
             include: {
               fundingRound: true,
+              contributors: {
+                include: {
+                  user: true,
+                },
+              },
             },
           },
         },

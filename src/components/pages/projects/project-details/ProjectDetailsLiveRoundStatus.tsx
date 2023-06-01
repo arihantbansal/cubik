@@ -1,5 +1,6 @@
 import { Box, Center, Container, Flex, HStack } from '@chakra-ui/react';
 import {
+  Contribution,
   ProjectJoinRound,
   ProjectJoinRoundStatus,
   ProjectsModel,
@@ -20,11 +21,14 @@ import { ProjectStatus } from '~/utils/getProjectStatus';
 interface Props {
   projectDetails:
     | (ProjectsModel & {
-        ProjectJoinRound: (ProjectJoinRound & {
-          fundingRound: Round;
-        })[];
         Team: (Team & {
           user: UserModel;
+        })[];
+        ProjectJoinRound: (ProjectJoinRound & {
+          contributors: (Contribution & {
+            user: UserModel;
+          })[];
+          fundingRound: Round;
         })[];
         owner: UserModel;
       })

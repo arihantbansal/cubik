@@ -22,8 +22,6 @@ export const AmountInput = ({
   token,
   control,
 }: AmountInputProps) => {
-  console.log('input rerendered');
-
   return (
     <>
       <InputGroup border="1px solid #141414" rounded={'8px'}>
@@ -82,7 +80,6 @@ export const AmountInput = ({
               value={donation} // Here's the change
               onChange={(e: any) => {
                 onChange(e);
-                console.log('on change');
                 setDonation(e.target.value);
               }}
               onBlur={({ target: { value } }) => {

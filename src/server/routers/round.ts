@@ -23,8 +23,6 @@ export const roundRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      console.log(ctx, '---ctx');
-
       const roundRes = await prisma.round.create({
         data: {
           id: uuid(),

@@ -17,8 +17,6 @@ export const updateProjectStatus = procedure
     })
   )
   .mutation(async ({ input, ctx }) => {
-    console.log(ctx?.session?.user.mainWallet, '------ main wallet');
-
     if (
       ctx?.session?.user.mainWallet !==
       '52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ'

@@ -194,16 +194,15 @@ model Contribution {
   isLatest           Boolean           @default(true)
   total              Float
   usdTotal           Float
+  projectJoinRoundId String?
   user               UserModel         @relation(fields: [userId], references: [id])
   ProjectsModel      ProjectsModel     @relation(fields: [projectId], references: [id])
   Round              Round             @relation(fields: [roundId], references: [id])
   ProjectJoinRound   ProjectJoinRound? @relation(fields: [projectJoinRoundId], references: [id])
-  projectJoinRoundId String?
 
   @@index([projectId])
   @@index([roundId])
   @@index([userId])
-  @@index([projectJoinRoundId])
 }
 
 model Comments {

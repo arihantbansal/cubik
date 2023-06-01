@@ -162,10 +162,12 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
 
 const ProjectContributors = ({
   projectId,
+  roundId,
   isLoading,
 }: {
   projectId: string;
   isLoading?: boolean;
+  roundId: string;
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortField, setSortField] = useState('timestamp');
@@ -176,7 +178,7 @@ const ProjectContributors = ({
     isLoading: loadingContributors,
     isError,
     error,
-  } = trpc.contribution.getProjectContributors.useQuery({ projectId });
+  } = trpc.contribution.getProjectContributors.useQuery({ projectId, roundId });
 
   const pageSize = 15;
   const siblingCount = 1;

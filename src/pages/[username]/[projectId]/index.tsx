@@ -1,5 +1,6 @@
 import { Container, Stack } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
+import { join } from 'path';
 import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';
 import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-details/ProjectDetailsAndTabs';
@@ -8,10 +9,16 @@ import SEO from '~/components/SEO';
 import { Mixpanel } from '~/utils/mixpanel';
 import { trpc } from '~/utils/trpc';
 
-const ProjectDetails = ({ projectId }: { projectId: string }) => {
+const ProjectDetails = ({
+  projectId,
+  roundId,
+}: {
+  projectId: string;
+  roundId: string | null;
+}) => {
   const { data, isError, isLoading, error } = trpc.project.findOne.useQuery({
     id: projectId as string,
-    projectJoinId: null,
+    projectJoinId: roundId,
   });
 
   Mixpanel.track('project_page_load', {
@@ -20,13 +27,6 @@ const ProjectDetails = ({ projectId }: { projectId: string }) => {
 
   if (isError) {
     return <ComponentErrors error={error} />;
-  }
-
-  if (typeof window !== 'undefined') {
-    const url = new URL(window.location.href);
-    const round = url.searchParams.get('round');
-    const prev = url.searchParams.get('prev');
-    console.log('round, prev - ', round, prev);
   }
 
   return (
@@ -38,7 +38,7 @@ const ProjectDetails = ({ projectId }: { projectId: string }) => {
       />
       <main style={{ width: 'full' }}>
         <Container maxW={'full'} p="0">
-          <ProjectDetailsLiveRoundStatus projectDetails={data} />
+          {roundId && <ProjectDetailsLiveRoundStatus projectDetails={data} />}
           <Stack
             maxW="7xl"
             mx="auto"
@@ -50,6 +50,10 @@ const ProjectDetails = ({ projectId }: { projectId: string }) => {
             justifyContent={'start'}
           >
             <ProjectDetailsAndTabs
+              roundId={
+                data?.ProjectJoinRound.find((e) => e.id === roundId)?.roundId ??
+                ''
+              }
               projectDetails={data}
               isLoading={isLoading}
             />
@@ -63,9 +67,23 @@ const ProjectDetails = ({ projectId }: { projectId: string }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const projectId = context.query.projectId as string;
 
-  return {
-    props: { projectId },
-  };
+  const roundId = context.query.round as string;
+  const prev = context.query.prev as string | undefined;
+
+  if (prev) {
+    return {
+      props: { projectId, roundId: null },
+    };
+  } else {
+    if (roundId) {
+      return {
+        props: { projectId, roundId },
+      };
+    }
+    return {
+      props: { projectId, roundId: null },
+    };
+  }
 };
 
 export default ProjectDetails;

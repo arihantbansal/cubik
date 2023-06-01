@@ -138,8 +138,6 @@ const GrantUnderReviewProjects = ({
     });
   };
 
-  console.log('projects under review - ', roundData);
-
   return (
     <VStack spacing={4} w="full">
       {isLoading ? (

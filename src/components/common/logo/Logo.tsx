@@ -47,7 +47,7 @@ const Logo = () => {
         rounded="full"
         variant="colorful"
         backgroundColor="#FFD83D18"
-        boxShadow="0px 4px 20px rgba(0, 0, 0, 0.4)"
+        boxShadow="0px 4px 20px rgba(0, 0, 0, 0.2)"
         fontSize="xs"
         p={{ base: '8px 12px', md: '8px 12px' }}
         mx={1}

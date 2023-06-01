@@ -1,7 +1,9 @@
-export const tokens = [
+import { tokenGroup } from '~/interfaces/token';
+
+export const tokens: tokenGroup[] = [
   {
     label: 'USDC',
-    value: 'usdc',
+    value: 'usd',
     devNetAdd: '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU',
     mainNetAdd: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
     icon: (
@@ -126,7 +128,7 @@ export const tokens = [
   },
   {
     label: 'SOL',
-    value: 'sol',
+    value: 'solana',
     devNetAdd: '',
     mainNetAdd: '',
     icon: (

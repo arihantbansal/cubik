@@ -85,7 +85,6 @@ const CreateProjectTransactionModal: React.FC<
       setProjectSubmitted(true);
     },
     onError: (error) => {
-      console.log('submission failed - ', error.message);
       setTransactionError(
         'There was a error in creating the project please contact the team'
       );
@@ -98,13 +97,6 @@ const CreateProjectTransactionModal: React.FC<
     if (!session) return;
     const id = uuidV4();
     try {
-      console.log(
-        'vault - ',
-        anchorWallet as NodeWallet,
-        getValues().projectName,
-        getValues().tagline,
-        imageUrl as string
-      );
       const { ix: valutIx, key } = await createVault(
         session.user.username as string,
         anchorWallet as NodeWallet,
@@ -152,7 +144,6 @@ const CreateProjectTransactionModal: React.FC<
       setTransactionError(
         error.message || 'There was an error while signing the transaction'
       );
-      console.log('error message - ', error);
       setTransactionLoading(false);
     }
   };

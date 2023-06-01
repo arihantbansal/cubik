@@ -112,7 +112,6 @@ export const markProjectVerified = (
     [Buffer.from('admin')],
     program.programId
   );
-  console.log(adminAccount.toBase58());
 
   let [user_account] = anchor.web3.PublicKey.findProgramAddressSync(
     [
@@ -121,7 +120,6 @@ export const markProjectVerified = (
     ],
     program.programId
   );
-  console.log(user_account.toBase58(), '--o');
   let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
     [
       anchor.utils.bytes.utf8.encode('project'),
@@ -130,7 +128,6 @@ export const markProjectVerified = (
     ],
     program.programId
   );
-  console.log(project_account.toBase58());
   const ix = program.methods
     .updateProjectStatusVerified(
       JSON.stringify(counter),
@@ -275,7 +272,6 @@ export const updateProjectRoundVerified = async (
     [Buffer.from('round'), Buffer.from(roundName)],
     program.programId
   );
-  console.log(round_account.toBase58());
 
   let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
     [
@@ -285,7 +281,6 @@ export const updateProjectRoundVerified = async (
     ],
     program.programId
   );
-  console.log(project_account.toBase58());
   let [roundVerfication_account] = anchor.web3.PublicKey.findProgramAddressSync(
     [
       anchor.utils.bytes.utf8.encode('roundjoin'),
@@ -294,7 +289,6 @@ export const updateProjectRoundVerified = async (
     ],
     program.programId
   );
-  console.log(roundVerfication_account.toBase58(), counter.toString());
   const ix = await program.methods
     .updateApproveRound(
       roundName,
@@ -386,7 +380,6 @@ export const contributeSPL = async (
   let tokenAccountIx;
   let tokenAccountIx1;
   if (!info) {
-    console.log('ATA Not found');
     tokenAccountIx = spl.createAssociatedTokenAccountInstruction(
       wallet.publicKey,
       ata_reciver,
@@ -483,8 +476,6 @@ export const contributeSOL = async (
   total: number,
   usd: number
 ): Promise<anchor.web3.TransactionInstruction> => {
-  console.log(split, total, usd);
-
   const program = anchorProgram(wallet);
   const [adminAccount] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from('admin')],
@@ -515,7 +506,6 @@ export const contributeSOL = async (
 
   //@ts-ignore
   const projectAccount = await program.account.project.fetch(project_account);
-  console.log(projectAccount.multiSig.toBase58());
 
   //@ts-ignore
   const adminAcc = await program.account.admin.fetch(adminAccount);

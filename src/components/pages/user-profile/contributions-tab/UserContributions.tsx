@@ -27,8 +27,6 @@ const UserContributionTableRow = ({
 }: {
   contribution: UserContributionsWithProjectOwnerAndProjectRound;
 }) => {
-  console.log('contribution - ', contribution);
-
   // projectLogo
   // projectName
   // projectCreator

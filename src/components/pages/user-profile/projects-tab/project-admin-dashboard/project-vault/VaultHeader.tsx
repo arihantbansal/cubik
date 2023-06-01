@@ -8,13 +8,15 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
+import Squads from '@sqds/sdk';
 
 const VaultHeader = ({ multiSigAddress }: { multiSigAddress: string }) => {
   return (
     <Stack
-      direction={{ base: 'column', md: 'row' }}
+      direction={{ base: 'column', sm: 'row' }}
       gap={{ base: '16px', sm: '20px', md: '24px' }}
       w="full"
+      justify={'space-between'}
     >
       <VStack alignItems={'start'}>
         <Box
@@ -30,7 +32,7 @@ const VaultHeader = ({ multiSigAddress }: { multiSigAddress: string }) => {
             textStyle={{ base: 'title3', sm: 'title2', md: 'title1' }}
             color="neutral.11"
           >
-            $5489.60
+            $0
           </Box>
           <WalletAddress
             walletAddress={multiSigAddress}
@@ -60,11 +62,12 @@ const VaultHeader = ({ multiSigAddress }: { multiSigAddress: string }) => {
           </WalletAddress>
         </HStack>
       </VStack>
-      <Center w="full">
+      <Center w={{ base: 'full', md: 'fit-content' }}>
         <Button
-          w={{ base: 'full', md: 'auto' }}
           ml="auto"
-          variant={'connect_wallet'}
+          w={['full', '8rem']}
+          size={{ base: 'cubikMini', md: 'cubikSmall' }}
+          variant={'cubikFilled'}
         >
           Withdraw
         </Button>
