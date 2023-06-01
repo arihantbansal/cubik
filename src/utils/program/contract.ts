@@ -2,14 +2,20 @@ import * as anchor from '@coral-xyz/anchor';
 import type NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import * as spl from '@solana/spl-token';
 
-import type { ContractType } from './program';
-import { Contract } from './program';
+import type { CubikContractV2 } from './program';
+import { IDL } from './program';
 
 const PROGRAM_ID = '218G51eHYC8uBd7mPp8FsXQKSekCYdfnVTdeCAqE3yfj';
 const RPC_URL =
   'https://rpc-devnet.helius.xyz/?api-key=6e7a9f7d-fd4a-4f2b-9c2d-2212248b28bb';
 
-const BASE_6 = 1000000;
+export type ProofType =
+  | 'LAMPORT'
+  | 'SUPERTEAM'
+  | 'MONKEYDAO'
+  | 'CIVIC'
+  | 'SOCIAL'
+  | 'DROPS01';
 export const connection = new anchor.web3.Connection(RPC_URL, 'confirmed');
 
 export const getProvider = (wallet: anchor.Wallet) => {
@@ -27,12 +33,12 @@ export const getProvider = (wallet: anchor.Wallet) => {
 
 export const anchorProgram = (wallet: anchor.Wallet) => {
   const provider = getProvider(wallet);
-  const idl = Contract as anchor.Idl;
+  const idl = IDL as anchor.Idl;
   const program = new anchor.Program(
     idl,
     PROGRAM_ID,
     provider
-  ) as unknown as anchor.Program<ContractType>;
+  ) as unknown as anchor.Program<CubikContractV2>;
 
   return program;
 };
@@ -562,6 +568,58 @@ export const contributeSOL = async (
       systemProgram: anchor.web3.SystemProgram.programId,
       rent: anchor.web3.SYSVAR_RENT_PUBKEY,
       tokenProgram: spl.TOKEN_PROGRAM_ID,
+    })
+    .instruction();
+
+  return ix;
+};
+
+export const admin_proof = async () => {};
+
+export const proofAdd = async (wallet: NodeWallet, proofType: ProofType) => {
+  const program = anchorProgram(wallet);
+  let [user_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [anchor.utils.bytes.utf8.encode('user'), wallet.publicKey.toBuffer()],
+    program.programId
+  );
+  let [admin_proof_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [anchor.utils.bytes.utf8.encode('proof')],
+    program.programId
+  );
+
+  const ix = await program.methods
+    .addProof(proofType)
+    .accounts({
+      authority: wallet.publicKey,
+      rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+      systemProgram: anchor.web3.SystemProgram.programId,
+      userAccount: user_account,
+      adminProofAccount: admin_proof_account,
+      admin: wallet.publicKey,
+    })
+    .instruction();
+
+  return ix;
+};
+export const proofRemove = async (wallet: NodeWallet, proofType: ProofType) => {
+  const program = anchorProgram(wallet);
+  let [user_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [anchor.utils.bytes.utf8.encode('user'), wallet.publicKey.toBuffer()],
+    program.programId
+  );
+  let [admin_proof_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [anchor.utils.bytes.utf8.encode('proof')],
+    program.programId
+  );
+
+  const ix = await program.methods
+    .removeProof(proofType)
+    .accounts({
+      authority: wallet.publicKey,
+      rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+      systemProgram: anchor.web3.SystemProgram.programId,
+      userAccount: user_account,
+      adminProofAccount: admin_proof_account,
     })
     .instruction();
 

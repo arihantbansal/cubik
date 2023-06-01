@@ -26,6 +26,7 @@ export const createUser = procedure
           mainWallet: input.mainWallet,
           profilePicture: input.profilePicture,
           username: input.username,
+          proof: [],
           tx: input.tx,
         },
       });
