@@ -610,7 +610,7 @@ const CreateProfile = () => {
                 </VStack>
                 <Button
                   as={Link}
-                  href={`${userName}`}
+                  href={`/${userName}`}
                   size={{ base: 'sm', md: 'md' }}
                   w="12rem"
                   variant="cubikOutlined"
