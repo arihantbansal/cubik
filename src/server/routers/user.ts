@@ -4,6 +4,7 @@ import {
   checkUsername,
   createUser,
   findOneUser,
+  getMe,
   searchUser,
 } from './users';
 
@@ -13,4 +14,5 @@ export const userRouter = router({
   searchUser: searchUser,
   checkUsername: checkUsername,
   addProof: addProof,
+  getMe: getMe,
 });
