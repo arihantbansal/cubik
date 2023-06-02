@@ -18,7 +18,7 @@ import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import DatePickerInput from '~/components/common/inputs/DatePickerInput';
 import { FormData } from '~/pages/grants/new-grant';
 
-registerLocale('en-gb', enGB);
+// registerLocale('en-gb', enGB);
 
 type GrantsStepOneProps = {
   errors: FieldErrors<FormData>;

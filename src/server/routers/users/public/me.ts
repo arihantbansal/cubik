@@ -12,13 +12,20 @@ export const getMe = procedure
   .query(async ({ input, ctx }) => {
     const { session } = ctx;
 
-    if (!session) return;
+    if (!session) return { connected: input.connected };
 
     if (!input.connected || !input.wallet) {
-      return signOut({
+      signOut({
         redirect: false,
       });
+      return {
+        connected: input.connected,
+      };
     }
 
-    return session.user;
+    return (
+      session.user ?? {
+        connected: input.connected,
+      }
+    );
   });

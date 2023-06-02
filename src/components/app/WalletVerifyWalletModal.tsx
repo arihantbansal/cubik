@@ -57,7 +57,7 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
   const router = useRouter();
   async function VerifyWallet() {
     setVerifying(true);
-
+    console.log('verifying wallet -1');
     if (signMessage && publicKey) {
       try {
         const msg = await createMessage();
@@ -83,7 +83,6 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
           router.push('/create-profile');
 
           setVerifying(false);
-          return;
         }
         setAuthenticated(true);
         setVerified(true);
