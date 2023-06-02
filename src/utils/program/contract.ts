@@ -5,9 +5,10 @@ import * as spl from '@solana/spl-token';
 import type { CubikContractV2 } from './program';
 import { IDL } from './program';
 
-const PROGRAM_ID = '218G51eHYC8uBd7mPp8FsXQKSekCYdfnVTdeCAqE3yfj';
+// const PROGRAM_ID = '218G51eHYC8uBd7mPp8FsXQKSekCYdfnVTdeCAqE3yfj';
+const PROGRAM_ID = 'DhnsZ5nAsNXH9jpyULUiw6196Q46E9QPoGhtv6Y3MfTH';
 const RPC_URL =
-  'https://rpc-devnet.helius.xyz/?api-key=6e7a9f7d-fd4a-4f2b-9c2d-2212248b28bb';
+  'https://rpc.helius.xyz/?api-key=6e7a9f7d-fd4a-4f2b-9c2d-2212248b28bb';
 
 export type ProofType =
   | 'LAMPORT'
@@ -41,6 +42,26 @@ export const anchorProgram = (wallet: anchor.Wallet) => {
   ) as unknown as anchor.Program<CubikContractV2>;
 
   return program;
+};
+
+export const createAdmin = async (wallet: NodeWallet) => {
+  const program = anchorProgram(wallet);
+
+  const [adminAccount] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('admin')],
+    program.programId
+  );
+  const ix = await program.methods
+    .createAdmin()
+    .accounts({
+      adminAccount: adminAccount,
+      authority: wallet.publicKey,
+      rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+      systemProgram: anchor.web3.SystemProgram.programId,
+    })
+    .instruction();
+
+  return ix;
 };
 
 export const createUser = async (wallet: NodeWallet, username: string) => {
