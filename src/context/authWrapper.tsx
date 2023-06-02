@@ -30,7 +30,7 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
 
   const checkAndVerifySignature = async () => {
     const signatureStore = getSignature();
-
+    console.log('verifying wallet -2');
     if (!publicKey) {
       return;
     }
@@ -60,7 +60,9 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
       });
 
       if (signInResponse?.status === 401) {
+        console.log('redirecting to create profile');
         if (session?.user.id) {
+          console.log('redirecting to ss');
           await signOut({
             redirect: false,
           });

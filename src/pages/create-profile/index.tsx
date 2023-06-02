@@ -84,6 +84,7 @@ const CreateProfile = () => {
   const userCreateMutation = trpc.user.create.useMutation({
     onSuccess: async () => {
       try {
+        console.log('verifying wallet -3');
         if (
           key.sig &&
           key.wallet === publicKey?.toBase58() &&

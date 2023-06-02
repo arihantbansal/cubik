@@ -3,6 +3,7 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { trpc } from '~/utils/trpc';
 import MemoizedIconButtonBadge from './list/ListButton';
 import UserNavMenu from './navbar-menu/UserNavMenu';
 
@@ -15,8 +16,22 @@ export interface UserContextProps {
 
 const NavbarCTA = () => {
   const [currentPath, setCurrentPath] = useState('');
-  const { publicKey, disconnect } = useWallet();
+  const { publicKey, disconnect, connected } = useWallet();
   const { status } = useSession();
+  trpc.user.getMe.useQuery(
+    {
+      connected: connected,
+      wallet: publicKey?.toBase58() ?? '',
+    },
+    {
+      retry(failureCount) {
+        return failureCount > 3;
+      },
+      refetchIntervalInBackground: true, // Refetch data even if window is not focused
+
+      refetchInterval: 5000,
+    }
+  );
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
