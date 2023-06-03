@@ -36,6 +36,7 @@ const GrantDetails: React.FC<GrantDetailsProps> = ({ grantId }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const grantId = context.query.grantId as string;
+  console.log(grantId);
 
   return {
     props: { grantId }, // will be passed to the page component as props

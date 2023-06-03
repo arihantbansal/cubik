@@ -73,7 +73,7 @@ const CreateProjectTransactionModal: React.FC<
   const [transactionLoading, setTransactionLoading] = useState(false);
   const [projectSubmitted, setProjectSubmitted] = useState(false);
 
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const anchorWallet = useAnchorWallet();
 
   const createProjectMutation = trpc.project.create.useMutation({
@@ -140,6 +140,7 @@ const CreateProjectTransactionModal: React.FC<
         email: getValues().email,
       });
       setProjectId(id);
+      update();
     } catch (error: any) {
       setTransactionError(
         error.message || 'There was an error while signing the transaction'

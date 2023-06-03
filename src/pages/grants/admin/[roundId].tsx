@@ -10,12 +10,13 @@ import {
   Tag,
 } from '@chakra-ui/react';
 import { Round } from '@prisma/client';
+import { GetServerSideProps } from 'next';
 import { useEffect, useState } from 'react';
 import CustomTag from '~/components/common/tags/CustomTag';
 import GrantUnderReviewProjects from '~/components/pages/grants/admin/GrantUnderReviewProjects';
 import { trpc } from '~/utils/trpc';
 
-const RoundAdmin = () => {
+const RoundAdmin = ({ roundId }: { roundId: string }) => {
   const [roundData, setRoundData] = useState<Round | undefined>(undefined);
   const [projectsNumberByStatus, setProjectsNumberByStatus] = useState({
     review: 0,
@@ -23,16 +24,18 @@ const RoundAdmin = () => {
     rejected: 0,
   });
 
-  const params = new URLSearchParams(window.location.search);
-  const roundId = params.get('roundId');
-
-  const { data } = trpc.round.findActive.useQuery();
+  const { data, isLoading } = trpc.round.findActive.useQuery();
 
   useEffect(() => {
-    if (data) {
-      const adminRound = data.find((round) => round.id === roundId);
-      setRoundData(adminRound);
-    }
+    const fetchRoundData = async () => {
+      if (!isLoading && data) {
+        console.log(data, 'This is data');
+
+        const adminRound = data.find((round) => round.id === roundId);
+        setRoundData(adminRound);
+      }
+    };
+    fetchRoundData();
   }, [data, roundId]);
 
   return (
@@ -109,6 +112,14 @@ const RoundAdmin = () => {
       </Container>
     </>
   );
+};
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const roundId = context.query.roundId as string;
+  console.log(roundId, '---');
+
+  return {
+    props: { roundId }, // will be passed to the page component as props
+  };
 };
 
 export default RoundAdmin;
