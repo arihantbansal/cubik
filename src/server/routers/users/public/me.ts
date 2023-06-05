@@ -17,7 +17,7 @@ export const getMe = procedure
     const userSession = await getSession();
 
     if (!input.connected || !input.wallet) {
-      signOut({
+      await signOut({
         redirect: false,
       });
       return {
@@ -26,7 +26,7 @@ export const getMe = procedure
     }
 
     if (userSession?.user.mainWallet !== input.wallet) {
-      signOut({
+      await signOut({
         redirect: false,
       });
       return {

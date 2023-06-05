@@ -26,22 +26,14 @@ const UserNavMenu = () => {
   const { setKey } = useAuthStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  function handleSignOut() {
-    disconnect()
-      .then(() => {
-        signOut({
-          redirect: false,
-        });
-        setKey({
-          sig: '',
-          wallet: '',
-        });
-        // refresh the page to clear the cache
-        localStorage.removeItem('walletName');
-      })
-      .catch((e: any) => {
-        throw new Error(e.message || 'Error while signing out');
-      });
+  async function handleSignOut() {
+    await disconnect();
+    await signOut({ redirect: false });
+    setKey({
+      sig: '',
+      wallet: '',
+    });
+    localStorage.removeItem('walletName');
   }
 
   if (!session?.user.id) return <>no user</>;
