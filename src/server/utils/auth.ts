@@ -40,6 +40,7 @@ export const authOptions = (
 
         return token;
       },
+
       session: async ({ session, token }) => {
         const userData = token.user as UserSession;
 
@@ -58,6 +59,7 @@ export const authOptions = (
       maxAge: 15 * 24 * 60 * 60,
     },
     adapter: PrismaAdapter(prisma),
+
     providers: [
       credentialsProvider({
         async authorize(credentials, _req) {

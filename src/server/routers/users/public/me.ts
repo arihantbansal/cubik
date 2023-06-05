@@ -1,4 +1,4 @@
-import { signOut } from 'next-auth/react';
+import { getSession, signOut } from 'next-auth/react';
 import { z } from 'zod';
 import { procedure } from '~/server/trpc';
 
@@ -14,6 +14,8 @@ export const getMe = procedure
 
     if (!session) return { connected: input.connected };
 
+    const userSession = await getSession();
+
     if (!input.connected || !input.wallet) {
       signOut({
         redirect: false,
@@ -23,9 +25,16 @@ export const getMe = procedure
       };
     }
 
-    return (
-      session.user ?? {
+    if (userSession?.user.mainWallet !== input.wallet) {
+      signOut({
+        redirect: false,
+      });
+      return {
         connected: input.connected,
-      }
-    );
+      };
+    }
+
+    return {
+      connected: input.connected,
+    };
   });

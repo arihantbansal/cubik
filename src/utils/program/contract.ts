@@ -5,10 +5,10 @@ import * as spl from '@solana/spl-token';
 import type { CubikContractV2 } from './program';
 import { IDL } from './program';
 
-// const PROGRAM_ID = '218G51eHYC8uBd7mPp8FsXQKSekCYdfnVTdeCAqE3yfj';
-const PROGRAM_ID = 'DhnsZ5nAsNXH9jpyULUiw6196Q46E9QPoGhtv6Y3MfTH';
+const PROGRAM_ID = '218G51eHYC8uBd7mPp8FsXQKSekCYdfnVTdeCAqE3yfj';
+// const PROGRAM_ID = 'DhnsZ5nAsNXH9jpyULUiw6196Q46E9QPoGhtv6Y3MfTH';
 const RPC_URL =
-  'https://rpc.helius.xyz/?api-key=6e7a9f7d-fd4a-4f2b-9c2d-2212248b28bb';
+  'https://rpc-devnet.helius.xyz/?api-key=6e7a9f7d-fd4a-4f2b-9c2d-2212248b28bb';
 
 export type ProofType =
   | 'LAMPORT'
