@@ -13,6 +13,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { array, object, string } from 'yup';
+import CustomStepper from '~/components/common/stepper/CustomStepper';
 import withAuth from '~/components/HOC/WithAuth';
 import { StepOne, StepThree, StepTwo } from '~/components/pages/create-project';
 import CreateProjectTransactionModal from '~/components/pages/create-project/TransactionSignModal';
@@ -200,6 +201,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
         maxW="full"
         p={{ base: '1rem', md: '0' }}
         my={{ base: '2rem', md: '5rem', lg: '6rem', xl: '8rem' }}
+        outline="1px solid red"
       >
         <Card
           maxW={{ base: '28rem', md: '36rem' }}
@@ -227,12 +229,17 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
               </CardHeader>
               <HStack
                 w="full"
-                spacing={{ base: '2px', md: '8px' }}
+                spacing={{ base: '0px', md: '8px' }}
                 justify={{ base: 'center', md: 'space-between' }}
               >
-                <ProjectTimeline index={1} name={'Basic Information'} />
-                <ProjectTimeline index={2} name={'Project Links'} />
-                <ProjectTimeline index={3} name={'Detailed Info'} />
+                <CustomStepper
+                  steps={[
+                    { index: 1, name: 'Basic Information' },
+                    { index: 2, name: 'Project Links' },
+                    { index: 3, name: 'Detailed Info' },
+                  ]}
+                  currentStep={step}
+                />
               </HStack>
             </>
           )}

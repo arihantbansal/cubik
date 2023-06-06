@@ -1,8 +1,4 @@
-import {
-  Box,
-  HStack,
-  Skeleton,
-} from '@chakra-ui/react';
+import { Box, HStack, Skeleton } from '@chakra-ui/react';
 import { GoVerified } from 'react-icons/go';
 import { UserProof } from '~/types/user';
 
