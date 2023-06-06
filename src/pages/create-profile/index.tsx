@@ -46,11 +46,15 @@ import {
 import { HiCheck } from 'react-icons/hi';
 import { v4 as uuidV4 } from 'uuid';
 import * as yup from 'yup';
+import CustomStepper from '~/components/common/stepper/CustomStepper';
 import { FailureToast, SuccessToast } from '~/components/common/toasts/Toasts';
 import {
   TruncatedAddr,
   WalletAddress,
 } from '~/components/common/wallet/WalletAdd';
+import CreateProfileStepOne from '~/components/pages/create-profile/CreateProfileStepOne';
+import CreateProfileStepThree from '~/components/pages/create-profile/CreateProfileStepThree';
+import CreateProfileStepTwo from '~/components/pages/create-profile/CreateProfileStepTwo';
 import FramerCarousel from '~/components/pages/create-profile/FramerNFTCarousel';
 import ProfilePicture from '~/components/pages/create-profile/ProfilePicture';
 import SEO from '~/components/SEO';
@@ -60,6 +64,7 @@ import { trpc } from '~/utils/trpc';
 
 const CreateProfile = () => {
   const { publicKey, connected } = useWallet();
+  const [activeStep, setActiveStep] = useState(2);
   const { setVisible } = useWalletModal();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const {
@@ -80,6 +85,9 @@ const CreateProfile = () => {
   const [userName, setUsername] = useState<string>('');
   const [loadingUserName, setLoadingUserName] = useState(false);
   const { key } = useAuthStore();
+
+  const goToNextStep = () => setActiveStep(activeStep + 1);
+  const goToPreviousStep = () => setActiveStep(activeStep - 1);
 
   const userCreateMutation = trpc.user.create.useMutation({
     onSuccess: async () => {
@@ -221,7 +229,7 @@ const CreateProfile = () => {
           overflow="hidden"
           maxW={'32rem'}
           mx="auto"
-          gap={{ base: '36px', md: '56px' }}
+          gap={{ base: '24px', sm: '28px', md: '32px' }}
           p={{ base: '22px', md: '32px' }}
           position="relative"
         >
@@ -259,170 +267,42 @@ const CreateProfile = () => {
                 Add details below to create your profile
               </Box>
             </CardHeader>
-            <CardBody>
-              <form
-                style={{
-                  gap: '32px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-                onSubmit={handleSubmit(onSubmit)}
-              >
-                <FormControl
-                  w="full"
-                  variant={'outline'}
-                  colorScheme={'pink'}
-                  isRequired
-                >
-                  <FormLabel
-                    fontSize={{ base: 'xs', md: 'sm' }}
-                    htmlFor="profilePicture"
-                  >
-                    Profile Picture
-                  </FormLabel>
-                  <ProfilePicture
-                    onOpen={onOpen}
-                    onClose={onClose}
-                    isOpen={isOpen}
-                    pfp={pfp}
-                  />
-                </FormControl>
-                <Collapse in={isOpen} animateOpacity>
-                  <FramerCarousel onClose={onClose} setPFP={setPFP} PFP={pfp} />
-                </Collapse>
-                <FormControl
-                  variant={'outline'}
-                  colorScheme={'pink'}
-                  isInvalid={!!errors.username}
-                  isRequired
-                >
-                  <FormLabel
-                    fontSize={{ base: 'xs', md: 'sm' }}
-                    htmlFor="username"
-                  >
-                    Username
-                  </FormLabel>
-                  <InputGroup>
-                    <Controller
-                      name="username"
-                      defaultValue=""
-                      control={control}
-                      rules={{
-                        required: true,
-                      }}
-                      render={({
-                        field: { onChange, ...field },
-                      }: {
-                        field: any;
-                      }) => (
-                        <Input
-                          {...field}
-                          autoComplete="false"
-                          placeholder="@username"
-                          onChange={({ target: { value } }) => {
-                            setUserNameIsAvailable(false);
-                            onChange(value);
-                            if (value.length > 3)
-                              trigger('username')
-                                .then((res: boolean) => {
-                                  if (res) {
-                                    setUserNameIsAvailable(true);
-                                  }
-                                })
-                                .catch(
-                                  (e: any) =>
-                                    new Error(e.message || 'there was an error')
-                                );
-                          }}
-                        />
-                      )}
-                    />
-                    {
-                      <InputRightElement fontSize="18px">
-                        {loadingUserName && (
-                          <Spinner size={'xs'} thickness="1px" />
-                        )}
-                        {!errors.username && userNameIsAvailable && (
-                          <HiCheck color={'#A8F0E6'} />
-                        )}
-                      </InputRightElement>
-                    }
-                  </InputGroup>
-                  <FormErrorMessage textAlign={'start'}>
-                    {errors.username && <>{errors.username.message}</>}
-                  </FormErrorMessage>
-                </FormControl>
-                <FormControl isRequired>
-                  <FormLabel
-                    fontSize={{ base: 'xs', md: 'sm' }}
-                    htmlFor="publickey"
-                  >
-                    Wallet Address
-                  </FormLabel>
-                  <HStack>
-                    <Center
-                      rounded="4px"
-                      backgroundColor="#0F0F0F"
-                      height="2.5rem"
-                      px="1.3rem"
-                      outline="1px solid #141414"
-                      w="full"
-                      m="0"
-                    >
-                      <WalletAddress
-                        walletAddress={publicKey?.toBase58() as string}
-                        size="xs"
-                      />
-                    </Center>
-                    <Button
-                      variant={'unstyled'}
-                      border="1px solid #A8F0E630"
-                      w="10rem"
-                      lineHeight={{ base: '14px', md: '16px' }}
-                      fontSize={'14px'}
-                      fontWeight="400"
-                      background="#A8F0E610"
-                      color="#A8F0E6"
-                      height="2.5rem"
-                      _hover={{
-                        background: '#A8F0E630',
-                      }}
-                      onClick={() => {
-                        setVisible(true);
-                      }}
-                    >
-                      Change
-                    </Button>
-                  </HStack>
-                  <FormErrorMessage>
-                    {errors.publickey ? <>{errors.publickey.message}</> : <></>}
-                  </FormErrorMessage>
-                </FormControl>
-                <VStack
-                  p="0"
-                  pt={{ base: '24px', md: '56px' }}
-                  w="full"
-                  align={'start'}
-                  justify="start"
-                  gap={{ base: '8px', md: '18px' }}
-                >
-                  <Button variant={'create_account'} w="full" type="submit">
-                    Create my account
-                  </Button>
-                  <Alert status="info" variant="cubik">
-                    <AlertIcon />
-                    <AlertDescription
-                      fontSize={{ base: '10px', md: '11px', xl: '12px' }}
-                      lineHeight={{ base: '14px', md: '14px', xl: '16px' }}
-                    >
-                      By clicking submit, you&apos;ll initiate a profile
-                      creation transaction from connected wallet. Ensure you
-                      have enough SOL to sign the transaction.
-                    </AlertDescription>
-                  </Alert>
-                </VStack>
-              </form>
-            </CardBody>
+            <HStack justify={'space-between'}>
+              <CustomStepper
+                steps={[
+                  { index: 1, name: 'Connect Wallet' },
+                  { index: 2, name: 'Connect Twitter' },
+                  { index: 3, name: 'Profile Details' },
+                ]}
+                currentStep={activeStep}
+              />
+            </HStack>
+            {activeStep === 1 ? (
+              <CreateProfileStepOne onNext={goToNextStep} />
+            ) : activeStep === 2 ? (
+              <CreateProfileStepTwo
+                onNext={goToNextStep}
+                onPrevious={goToPreviousStep}
+              />
+            ) : (
+              <CreateProfileStepThree
+                handleSubmit={handleSubmit}
+                onOpen={onOpen}
+                onClose={onClose}
+                isOpen={isOpen}
+                setUserNameIsAvailable={setUserNameIsAvailable}
+                trigger={trigger}
+                loadingUserName={loadingUserName}
+                errors={errors}
+                userNameIsAvailable={userNameIsAvailable}
+                pfp={pfp}
+                setPFP={setPFP}
+                control={control}
+                onSubmit={onSubmit}
+                onPrevious={goToPreviousStep}
+                onNext={goToNextStep}
+              />
+            )}
           </>
         </Card>
       </Container>
