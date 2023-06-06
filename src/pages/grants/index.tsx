@@ -48,7 +48,7 @@ const RoundPage = () => {
 
   return (
     <>
-      <Container maxW="7xl" py="64px">
+      <Container maxW="7xl" py={{ base: '48px', md: '64px' }}>
         <Stack
           direction={{ base: 'column', md: 'row' }}
           gap="40px"
@@ -63,27 +63,33 @@ const RoundPage = () => {
               as="p"
               textStyle={{ base: 'headline2', md: 'display3' }}
             >
-              Grants Help the ecosystem grow.
+              Grow Public Good with Decentralized Grants
             </Box>{' '}
             <Box
               color="neutral.9"
               as="p"
               textStyle={{ base: 'body4', md: 'body3' }}
             >
-              Apply for a grant or contribute in a grants round
+              Participate in Engaging Community Grant Rounds to Propel Your
+              Public Good Project
             </Box>
           </VStack>
-          <Button variant="close_modal" rightIcon={<BiPlus />}>
+          {/* <Button variant="close_modal" rightIcon={<BiPlus />}>
             <Link href="/grants/new-grant">Create Grant Round</Link>
-          </Button>
+          </Button> */}
         </Stack>
-        <VStack py="64px" w="full" align="start" spacing="32px">
+        <VStack
+          py={{ base: '48px', md: '64px' }}
+          w="full"
+          align="start"
+          spacing="32px"
+        >
           <Box
             color="neutral.11"
             as="p"
             textStyle={{ base: 'title3', md: 'title2' }}
           >
-            Grants Rounds
+            Grant Rounds
           </Box>{' '}
           {isLoading ? (
             [0, 1, 2].map((index) => (

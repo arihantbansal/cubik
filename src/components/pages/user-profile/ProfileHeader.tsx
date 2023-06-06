@@ -1,14 +1,13 @@
 import {
   Avatar as ChakraAvatar,
-  Box,
   Center,
   HStack,
   Skeleton,
   SkeletonCircle,
-  useBreakpointValue,
   VStack,
 } from '@chakra-ui/react';
 import { FC, memo } from 'react';
+import Username from '~/components/common/username/Username';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import { UserWithProjectType } from '~/types/user';
 
@@ -21,8 +20,6 @@ const ProfileHeader: FC<profileHeaderType> = ({
   user,
   isLoading,
 }: profileHeaderType) => {
-  const iconSize = useBreakpointValue({ base: '15px', md: '16px', lg: '17px' });
-
   return (
     <HStack
       w="full"
@@ -63,33 +60,12 @@ const ProfileHeader: FC<profileHeaderType> = ({
         justifyContent={'center'}
         align={'start'}
       >
-        <Skeleton
-          fadeDuration={4}
-          opacity={isLoading ? '0.6' : '1'}
-          isLoaded={!isLoading}
-        >
-          <HStack
-            marginInline={'0 !important'}
-            margin="0 !important"
-            spacing="10px"
-          >
-            <Box
-              as="p"
-              textStyle={{ base: 'title4', sm: 'title2', md: 'title1' }}
-              lineHeight={{ base: '16px', sm: '24px', md: '28px' }}
-              fontWeight="700"
-              color={'neutral.11'}
-            >
-              @{user?.username}
-            </Box>
-            {/* <Box
-              as={GoVerified}
-              color="#FFD83D"
-              w={iconSize || '17px'}
-              h={iconSize}
-            /> */}
-          </HStack>
-        </Skeleton>
+        <Username
+          username={user?.username}
+          isLoading={isLoading}
+          proofs={[]}
+          size="lg"
+        />
         <Center marginInline={'0 !important'} margin="0 !important">
           <Skeleton
             fadeDuration={5}

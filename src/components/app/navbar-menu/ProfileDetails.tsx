@@ -1,5 +1,6 @@
 import { Avatar, Box, Center, HStack, VStack } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
+import Username from '~/components/common/username/Username';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 
 const ProfileDetails = () => {
@@ -14,15 +15,17 @@ const ProfileDetails = () => {
         src={session?.user.profilePicture}
       />
       <VStack alignItems={'start'} justify="center" w="full" spacing="6px">
-        <Box as="p" textStyle={'title5'} color={'neutral.11'}>
-          @{session?.user.username}
-        </Box>
+        <Username
+          isLoading={false}
+          username={session?.user.username}
+          proofs={session?.user.proof}
+          size="sm"
+        />
         <Center>
           <WalletAddress
             // @ts-ignore
             walletAddress={session.user.mainWallet}
             size="xs"
-            copy={true}
           />
         </Center>
       </VStack>

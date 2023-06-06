@@ -24,7 +24,11 @@ const UserDetails = ({
     : 0;
 
   return (
-    <VStack align="start" w="full" gap={{ base: '16px', md: '24px' }}>
+    <VStack
+      align="start"
+      w="full"
+      gap={{ base: '16px', sm: '20px', md: '24px' }}
+    >
       <Skeleton
         isLoaded={!isLoading}
         opacity={isLoading ? '0.5' : 1}
@@ -40,7 +44,7 @@ const UserDetails = ({
       </Skeleton>
       <Stack
         w="full"
-        direction={{ base: 'column', sm: 'row' }}
+        direction={{ base: 'column', md: 'row' }}
         spacing={{ base: '24px', md: '32px' }}
       >
         <Card
@@ -82,7 +86,7 @@ const UserDetails = ({
             fadeDuration={3}
           >
             <HStack
-              w={{ base: 'full', sm: '14.5rem' }}
+              w={{ base: 'full', md: '14.5rem' }}
               justifyContent={'space-between'}
               alignItems="end"
             >
@@ -94,9 +98,11 @@ const UserDetails = ({
                 Last Donation
               </Box>
               <Box as="p" color="neutral.11" textStyle="title4">
-                {userLastDonationAmount === 0 && !userLastDonationAmount
-                  ? '--'
-                  : `$${userLastDonationAmount}`}
+                {userLastDonationAmount
+                  ? userLastDonationAmount === 0
+                    ? '--'
+                    : `$${userLastDonationAmount.toFixed(2)}`
+                  : '--'}
               </Box>
             </HStack>
           </Skeleton>
@@ -131,7 +137,7 @@ const UserDetails = ({
                 color="neutral.11"
                 textStyle={{ base: 'title3', sm: 'title2', md: 'title1' }}
               >
-                $00
+                $0.00
               </Box>
             </Skeleton>
             <Skeleton
@@ -155,6 +161,7 @@ const UserDetails = ({
             <Skeleton
               fadeDuration={3}
               isLoaded={!isLoading}
+              w="full"
               opacity={isLoading ? '0.3' : 1}
             >
               <HStack
@@ -169,7 +176,11 @@ const UserDetails = ({
                 >
                   Grants
                 </Box>
-                <Box as="p" color="neutral.11" textStyle="title4">
+                <Box
+                  as="p"
+                  color="neutral.11"
+                  textStyle={{ base: 'title6', sm: 'title5', md: 'title4' }}
+                >
                   -
                 </Box>
               </HStack>
@@ -178,6 +189,7 @@ const UserDetails = ({
               isLoaded={!isLoading}
               opacity={isLoading ? '0.3' : 1}
               fadeDuration={4}
+              w="full"
             >
               <HStack
                 w={{ base: 'full', md: '14rem' }}
@@ -191,7 +203,11 @@ const UserDetails = ({
                 >
                   Community
                 </Box>
-                <Box as="p" color="neutral.11" textStyle="title4">
+                <Box
+                  as="p"
+                  color="neutral.11"
+                  textStyle={{ base: 'title6', sm: 'title5', md: 'title4' }}
+                >
                   -
                 </Box>
               </HStack>
@@ -200,6 +216,7 @@ const UserDetails = ({
               isLoaded={!isLoading}
               opacity={isLoading ? '0.3' : 1}
               fadeDuration={5}
+              w="full"
             >
               <HStack
                 w={{ base: 'full', md: '14rem' }}
@@ -213,7 +230,11 @@ const UserDetails = ({
                 >
                   Tipping
                 </Box>
-                <Box as="p" color="neutral.11" textStyle="title4">
+                <Box
+                  as="p"
+                  color="neutral.11"
+                  textStyle={{ base: 'title6', sm: 'title5', md: 'title4' }}
+                >
                   -
                 </Box>
               </HStack>
@@ -222,6 +243,7 @@ const UserDetails = ({
               isLoaded={!isLoading}
               opacity={isLoading ? '0.3' : 1}
               fadeDuration={6}
+              w="full"
             >
               <HStack
                 w={{ base: 'full', md: '14rem' }}
@@ -235,7 +257,11 @@ const UserDetails = ({
                 >
                   Hackathons
                 </Box>
-                <Box as="p" color="neutral.11" textStyle="title4">
+                <Box
+                  as="p"
+                  color="neutral.11"
+                  textStyle={{ base: 'title6', sm: 'title5', md: 'title4' }}
+                >
                   -
                 </Box>
               </HStack>

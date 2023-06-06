@@ -81,6 +81,11 @@ export const textStyles = {
     fontSize: '10px',
     lineHeight: '12px',
   },
+  title9: {
+    fontWeight: '400',
+    fontSize: '9px',
+    lineHeight: '10px',
+  },
   overline1: {
     fontWeight: '700',
     fontSize: '16px',

@@ -19,6 +19,7 @@ import { MdPowerSettingsNew, MdUpload } from 'react-icons/md';
 import { useAuthStore } from '~/store/authStore';
 import ProfileDetails from './ProfileDetails';
 import WalletBalance from './WalletBalance';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
 
 const UserNavMenu = () => {
   const { disconnect } = useWallet();
@@ -36,7 +37,7 @@ const UserNavMenu = () => {
     localStorage.removeItem('walletName');
   }
 
-  if (!session?.user.id) return <>no user</>;
+  if (!session?.user.id) return <ComponentErrors />;
 
   const NavMenuButtons = () => {
     return (
@@ -49,7 +50,13 @@ const UserNavMenu = () => {
           display={'flex'}
           alignItems="center"
           justifyContent={'start'}
-          leftIcon={<BiUser size={20} color={'#ADB8B6'} />}
+          leftIcon={
+            <Box
+              as={BiUser}
+              boxSize={{ base: '12px', sm: '18px', md: '20px' }}
+              color={'#ADB8B6'}
+            />
+          }
           iconSpacing="8px"
           p={{ base: '12px', md: '8px' }}
           sx={{
@@ -64,7 +71,7 @@ const UserNavMenu = () => {
           as={Link}
           href={'/' + session.user.username}
         >
-          <Box as="p" textStyle={'body4'}>
+          <Box as="p" textStyle={{ base: 'body5', md: 'body4' }}>
             Profile
           </Box>
         </Button>
@@ -76,7 +83,13 @@ const UserNavMenu = () => {
           display={'flex'}
           alignItems="center"
           justifyContent={'start'}
-          leftIcon={<MdUpload size={20} color={'#ADB8B6'} />}
+          leftIcon={
+            <Box
+              as={MdUpload}
+              boxSize={{ base: '12px', sm: '18px', md: '20px' }}
+              color={'#ADB8B6'}
+            />
+          }
           iconSpacing="8px"
           p={{ base: '12px', md: '8px' }}
           sx={{
@@ -91,9 +104,7 @@ const UserNavMenu = () => {
           as={Link}
           href={'/submit-project'}
         >
-          <Box as="p" textStyle={'body4'}>
-            Submit Project
-          </Box>
+          <Box textStyle={{ base: 'body5', md: 'body4' }}>Submit Project</Box>
         </Button>
         <Button
           bg="transparent"
@@ -103,7 +114,13 @@ const UserNavMenu = () => {
           display={'flex'}
           alignItems="center"
           justifyContent={'start'}
-          leftIcon={<MdPowerSettingsNew size={20} color={'#ADB8B6'} />}
+          leftIcon={
+            <Box
+              as={MdPowerSettingsNew}
+              boxSize={{ base: '12px', sm: '18px', md: '20px' }}
+              color={'#ADB8B6'}
+            />
+          }
           p={{ base: '12px', md: '8px' }}
           onClick={handleSignOut}
           sx={{
@@ -116,11 +133,14 @@ const UserNavMenu = () => {
             backgroundColor: '#141414',
           }}
         >
-          Disconnect Wallet
+          <Box as="p" textStyle={{ base: 'body5', md: 'body4' }}>
+            Disconnect Wallet
+          </Box>
         </Button>
       </>
     );
   };
+
   return (
     <>
       <Avatar

@@ -206,19 +206,19 @@ const LandingPage = () => {
                   transition: { delay: 0.15, duration: 1 },
                 }}
               >
+                {!wallet.connected && (
+                  <Button onClick={() => setVisible(true)} variant="primary">
+                    Connect Wallet
+                  </Button>
+                )}
                 <Button
                   as={Link}
                   href="/projects"
-                  variant="primary"
+                  variant="secondary"
                   maxW="18rem"
                 >
                   Explore Projects
                 </Button>
-                {!wallet.connected && (
-                  <Button onClick={() => setVisible(true)} variant="secondary">
-                    Get Started
-                  </Button>
-                )}
               </MotionBox>
               <Center
                 transform={{

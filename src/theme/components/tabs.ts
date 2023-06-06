@@ -10,18 +10,18 @@ const cubik = definePartsStyle((props) => {
   return {
     tablist: {
       width: '100%',
-      height: '3rem',
+      height: { base: '2.2rem', md: '3rem' },
       backgroundColor: 'transparent',
       gap: { base: '10px', md: '32px' },
     },
     tab: {
       boxShadow: 'none !important',
-      padding: '8px 8px 12px 8px',
+      padding: { base: '6px 6px 10px 6px', md: '8px 8px 12px 8px' },
       fontWeight: '600',
       fontSize: { base: '14px', md: '18px' },
       lineHeight: { base: '16px', md: '22px' },
       backgroundColor: 'transparent',
-      height: { base: '2.4rem', md: '3rem' },
+      height: { base: '2.2rem', md: '3rem' },
       borderBottom: '2px solid transparent',
       color: 'neutral.7',
       mb: '-1px',
@@ -40,12 +40,12 @@ const cubik = definePartsStyle((props) => {
       },
     },
     tabpanel: {
-      padding: '32px 0px',
+      padding: { base: '24px 0px', md: '32px 0px' },
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'start',
       justifyContent: 'start',
-      gap: '32px',
+      gap: { base: '32px', md: '32px' },
       backgroundColor: 'transparent',
     },
   };

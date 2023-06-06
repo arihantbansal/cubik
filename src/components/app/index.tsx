@@ -2,16 +2,17 @@ import { Container } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import { AuthWrapper } from '~/context/authWrapper';
 import NavbarCTA from './NavbarCTA';
-import { Header } from './navigation/Header';
+import { useRouter } from 'next/router';
+import { Header } from './navigation/navbar/Header';
 
 interface AppLayoutProps {
   children: ReactNode;
 }
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
+  const router = useRouter();
   const mtValue =
-    typeof window !== 'undefined' &&
-    window.location.pathname.split('/')[1] === 'hackathons'
+    router.pathname.split('/')[1] === 'hackathons'
       ? '0'
       : { base: '4.2rem', md: '5.2rem' };
 

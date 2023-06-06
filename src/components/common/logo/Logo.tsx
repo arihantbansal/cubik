@@ -2,8 +2,13 @@ import { Box, Button, Center, HStack, Tag, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
 const Logo = () => {
+  const devnet = false;
   return (
-    <HStack spacing="8px" alignItems={'center'} justify="space-between">
+    <HStack
+      spacing={{ base: '2px', md: '8px' }}
+      alignItems={'center'}
+      justify="space-between"
+    >
       <Button
         as={Link}
         display="flex"
@@ -43,26 +48,30 @@ const Logo = () => {
           CUBIK
         </Text>
       </Button>
-      <Tag
-        rounded="full"
-        variant="colorful"
-        backgroundColor="#FFD83D18"
-        boxShadow="0px 4px 20px rgba(0, 0, 0, 0.2)"
-        fontSize="xs"
-        p={{ base: '8px 12px', md: '8px 12px' }}
-        mx={1}
-      >
-        <Box
-          as="p"
-          whiteSpace="pre"
-          color="#FFE747"
-          textStyle={{ base: 'body6', md: 'body5' }}
-          fontWeight="700 !important"
-          letterSpacing="1.2px"
+      {devnet ? (
+        <Tag
+          rounded="full"
+          variant="colorful"
+          backgroundColor="#FFD83D18"
+          boxShadow="0px 4px 20px rgba(0, 0, 0, 0.2)"
+          fontSize="xs"
+          p={{ base: '8px 12px', md: '8px 12px' }}
+          mx={1}
         >
-          DEVNET
-        </Box>
-      </Tag>
+          <Box
+            as="p"
+            whiteSpace="pre"
+            color="#FFE747"
+            textStyle={{ base: 'body6', md: 'body5' }}
+            fontWeight="700 !important"
+            letterSpacing="1.2px"
+          >
+            DEVNET
+          </Box>
+        </Tag>
+      ) : (
+        <></>
+      )}
     </HStack>
   );
 };
