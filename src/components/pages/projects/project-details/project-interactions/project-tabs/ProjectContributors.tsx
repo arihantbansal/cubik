@@ -25,7 +25,6 @@ import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { timeSince } from '~/utils/gettimeSince';
 import { trpc } from '~/utils/trpc';
-import { Contribution, UserDetailsModel, UserModel } from '@prisma/client';
 
 type Contributor = {
   id: string;

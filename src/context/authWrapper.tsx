@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import WalletVerifyModal from '~/components/app/WalletVerifyWalletModal';
 import { useAuthStore } from '~/store/authStore';
+import jwt from 'jsonwebtoken';
 
 interface SignatureData {
   signature: string;
@@ -28,61 +29,86 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
     return { signature: key.sig, wallet: key.wallet };
   };
 
-  const checkAndVerifySignature = async () => {
-    const signatureStore = getSignature();
-    console.log('verifying wallet -2');
-    if (!publicKey) {
+  // const checkAndVerifySignature = async () => {
+  //   const signatureStore = getSignature();
+  //   console.log('verifying wallet -2');
+  //   if (!publicKey) {
+  //     return;
+  //   }
+  //   // if (!connected && session?.user) {
+  //   //   return signOut({
+  //   //     redirect: false,
+  //   //   });
+  //   // }
+
+  //   if (!signatureStore) {
+  //     // check for available signature
+  //     onOpen();
+  //     return;
+  //   }
+
+  //   if (signatureStore && signatureStore.wallet !== publicKey.toBase58()) {
+  //     // check for available signature for current wallet
+  //     onOpen();
+  //     return;
+  //   }
+  //   try {
+  //     // Try Login
+  //     const signInResponse = await signIn('credentials', {
+  //       redirect: false,
+  //       wallet: publicKey?.toBase58(),
+  //       signature: signatureStore?.signature,
+  //     });
+
+  //     if (signInResponse?.status === 401) {
+  //       console.log('redirecting to create profile');
+  //       if (session?.user.id) {
+  //         console.log('redirecting to ss');
+  //         await signOut({
+  //           redirect: false,
+  //         });
+  //         setKey({
+  //           sig: '',
+  //           wallet: '',
+  //         });
+  //       }
+  //       console.log('redirecting to create profile');
+
+  //       router.push('/create-profile');
+  //       return;
+  //     }
+
+  //     if (signInResponse?.error) {
+  //       return;
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  const checkAndVerifySignature = () => {
+    if (!publicKey || !connected) {
       return;
     }
-    // if (!connected && session?.user) {
-    //   return signOut({
-    //     redirect: false,
-    //   });
-    // }
 
-    if (!signatureStore) {
-      // check for available signature
-      onOpen();
-      return;
-    }
+    // check the jwt for expire or wallet address
+    if (localStorage.getItem('wallet_auth')) {
+      const walletAuth = localStorage.getItem('wallet_auth') as string;
 
-    if (signatureStore && signatureStore.wallet !== publicKey.toBase58()) {
-      // check for available signature for current wallet
-      onOpen();
-      return;
-    }
-    try {
-      // Try Login
-      const signInResponse = await signIn('credentials', {
-        redirect: false,
-        wallet: publicKey?.toBase58(),
-        signature: signatureStore?.signature,
-      });
+      const payload = jwt.decode(walletAuth) as jwt.JwtPayload;
 
-      if (signInResponse?.status === 401) {
-        console.log('redirecting to create profile');
-        if (session?.user.id) {
-          console.log('redirecting to ss');
-          await signOut({
-            redirect: false,
-          });
-          setKey({
-            sig: '',
-            wallet: '',
-          });
-        }
-        console.log('redirecting to create profile');
-
-        router.push('/create-profile');
+      if (
+        payload.wallet !== publicKey.toBase58() ||
+        payload.exp! < Date.now() / 1000
+      ) {
+        onOpen();
         return;
       }
-
-      if (signInResponse?.error) {
-        return;
-      }
-    } catch (error) {
-      console.log(error);
+      console.log(payload, 'this payload');
+      return null;
     }
+
+    onOpen();
+    // check for available signature
   };
   useEffect(() => {
     checkAndVerifySignature();

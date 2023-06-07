@@ -10,26 +10,36 @@ datasource db {
 }
 
 model UserModel {
-  id               String            @id @default(uuid()) @map("_id")
-  username         String            @unique
-  mainWallet       String            @unique
-  proof            Json?
-  profilePicture   String            @db.VarChar(500)
-  tx               String            @db.VarChar(500)
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  isActive         Boolean           @default(true)
-  isArchive        Boolean           @default(false)
-  userDetailsModel UserDetailsModel?
-  team             Team[]
-  Session          Session[]
-  project          ProjectsModel[]
-  Reply            Reply[]
-  Comments         Comments[]
-  Contribution     Contribution[]
-  Round            Round[]
+  id             String          @id @default(uuid()) @map("_id")
+  username       String          @unique
+  mainWallet     String          @unique
+  proof          Json?
+  profilePicture String          @db.VarChar(500)
+  tx             String          @db.VarChar(500)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  isActive       Boolean         @default(true)
+  isArchive      Boolean         @default(false)
+  team           Team[]
+  Session        Session[]
+  project        ProjectsModel[]
+  Reply          Reply[]
+  Comments       Comments[]
+  Contribution   Contribution[]
+  Round          Round[]
 
   @@fulltext([username])
+}
+
+model UserKeys {
+  id        String   @id @default(uuid()) @map("_id")
+  publicKey String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isActive  Boolean  @default(true)
+  isArchive Boolean  @default(false)
+
+  @@index([id])
 }
 
 model Session {
@@ -52,27 +62,6 @@ model VerificationToken {
   updatedAt  DateTime @updatedAt
 
   @@unique([identifier, token])
-}
-
-model UserDetailsModel {
-  id             String    @id @default(uuid()) @map("_id")
-  firstName      String?
-  lastName       String?
-  bio            String?   @db.VarChar(1000)
-  email          String?
-  website        String?
-  twitterHandle  String?
-  githubHandle   String?
-  linkedinUrl    String?
-  telegramHandle String?
-  userModelId    String    @unique
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  isActive       Boolean   @default(true)
-  isArchive      Boolean   @default(false)
-  user           UserModel @relation(fields: [userModelId], references: [id])
-
-  @@index([userModelId])
 }
 
 model ProjectsModel {

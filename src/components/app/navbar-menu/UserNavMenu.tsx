@@ -12,7 +12,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { BiChevronDown, BiUser } from 'react-icons/bi';
 import { MdPowerSettingsNew, MdUpload } from 'react-icons/md';
@@ -20,13 +20,15 @@ import { useAuthStore } from '~/store/authStore';
 import ProfileDetails from './ProfileDetails';
 import WalletBalance from './WalletBalance';
 import ComponentErrors from '~/components/errors/ComponenetErrors';
+import { useUserStore } from '~/store/userStore';
 
 const UserNavMenu = () => {
   const { disconnect } = useWallet();
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const { setKey } = useAuthStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const { user } = useUserStore();
   async function handleSignOut() {
     await disconnect();
     await signOut({ redirect: false });
@@ -36,8 +38,6 @@ const UserNavMenu = () => {
     });
     localStorage.removeItem('walletName');
   }
-
-  if (!session?.user.id) return <ComponentErrors />;
 
   const NavMenuButtons = () => {
     return (
@@ -69,7 +69,7 @@ const UserNavMenu = () => {
             backgroundColor: '#141414',
           }}
           as={Link}
-          href={'/' + session.user.username}
+          href={'/' + user?.username}
         >
           <Box as="p" textStyle={{ base: 'body5', md: 'body4' }}>
             Profile
@@ -150,8 +150,8 @@ const UserNavMenu = () => {
         width={{ base: '30px', md: '36px' }}
         height={{ base: '30px', md: '36px' }}
         borderRadius={6}
-        name={session.user.username}
-        src={session.user.profilePicture}
+        name={user?.username}
+        src={user?.profilePicture}
       />
       <Drawer
         variant="cubik"
@@ -195,8 +195,8 @@ const UserNavMenu = () => {
             width={{ base: '28px', md: '36px' }}
             height={{ base: '28px', md: '36px' }}
             borderRadius={6}
-            name={session.user.username}
-            src={session.user.profilePicture}
+            name={user?.username}
+            src={user?.profilePicture}
           />
         </MenuButton>
         <MenuList
