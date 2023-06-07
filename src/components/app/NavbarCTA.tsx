@@ -1,6 +1,7 @@
 import { Center, HStack, Skeleton, Spinner } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { trpc } from '~/utils/trpc';
@@ -16,28 +17,34 @@ export interface UserContextProps {
 
 const NavbarCTA = () => {
   const [currentPath, setCurrentPath] = useState('');
-  const { publicKey, disconnect, connected } = useWallet();
+  const { publicKey, disconnect, connected, disconnecting } = useWallet();
   const { status } = useSession();
-  trpc.user.getMe.useQuery(
-    {
-      connected: connected,
-      wallet: publicKey?.toBase58() ?? '',
-    },
-    {
-      retry(failureCount) {
-        return failureCount > 3;
-      },
-      refetchIntervalInBackground: true, // Refetch data even if window is not focused
-
-      refetchInterval: 5000,
-    }
-  );
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setCurrentPath(window.location.pathname);
     }
   }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        if (connected && publicKey && !disconnecting) {
+          const { data, status } = await axios.post('/api/me/id', {
+            publicKey: publicKey.toBase58(),
+          });
+
+          if (status === 200 || status === 201) {
+            return localStorage.setItem('anon_id', data.data.id);
+          }
+        }
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+    };
+    fetch();
+  }, [connected, publicKey]);
 
   // If on create-profile page, don't show anything
   if (currentPath === '/create-profile') {

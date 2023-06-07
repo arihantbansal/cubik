@@ -23,6 +23,8 @@ export const env = createEnv({
     NEXT_PUBLIC_NOTION_DATABASEID: z.string().min(1),
     NEXT_PUBLIC_NOTION_PAGEID: z.string().min(1),
     NEXT_PUBLIC_MIXPANEL: z.string().min(1),
+    NEXT_PUBLIC_SUPABASE_URL: z.string().min(1),
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
   },
   runtimeEnv: {
     PROD_DATABASE_URL: process.env.PROD_DATABASE_URL,
@@ -37,5 +39,7 @@ export const env = createEnv({
     NEXT_PUBLIC_NOTION_TOKEN: process.env.NEXT_PUBLIC_NOTION_TOKEN,
     NEXT_PUBLIC_NOTION_PAGEID: process.env.NEXT_PUBLIC_NOTION_PAGEID,
     NEXT_PUBLIC_MIXPANEL: process.env.NEXT_PUBLIC_MIXPANEL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
   },
 });

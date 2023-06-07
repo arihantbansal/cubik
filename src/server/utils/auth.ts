@@ -58,6 +58,7 @@ export const authOptions = (
       strategy: 'jwt',
       maxAge: 15 * 24 * 60 * 60,
     },
+
     adapter: PrismaAdapter(prisma),
 
     providers: [
