@@ -1,10 +1,7 @@
 import { useDisclosure } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { signIn, signOut, useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import WalletVerifyModal from '~/components/app/WalletVerifyWalletModal';
-import { useAuthStore } from '~/store/authStore';
 import jwt from 'jsonwebtoken';
 
 interface SignatureData {
@@ -18,16 +15,7 @@ interface Props {
 
 export const AuthWrapper: React.FC<Props> = ({ children }) => {
   const { publicKey, connected } = useWallet();
-  const { key, setKey } = useAuthStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const router = useRouter();
-  const { data: session } = useSession();
-  const getSignature = (): SignatureData | undefined => {
-    if (key.sig === '') {
-      return undefined;
-    }
-    return { signature: key.sig, wallet: key.wallet };
-  };
 
   // const checkAndVerifySignature = async () => {
   //   const signatureStore = getSignature();

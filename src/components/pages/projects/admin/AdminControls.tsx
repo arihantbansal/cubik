@@ -1,22 +1,19 @@
 import { Box, Button, Center, Flex, HStack } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { TbLockAccess } from 'react-icons/tb';
+import { useUserStore } from '~/store/userStore';
 const AdminWallet = ['52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ'];
 
 const AdminControls = () => {
-  const { data } = useSession();
+  const { user } = useUserStore();
   const { publicKey, connected } = useWallet();
 
   if (!connected) {
     return null;
   }
 
-  if (
-    !data?.user.mainWallet ||
-    data?.user.mainWallet !== publicKey?.toBase58()
-  ) {
+  if (!user?.mainWallet || user?.mainWallet !== publicKey?.toBase58()) {
     return null;
   }
 

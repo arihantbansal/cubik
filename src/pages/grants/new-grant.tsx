@@ -9,6 +9,7 @@ import {
   Center,
   Container,
   HStack,
+  Link,
   Modal,
   ModalBody,
   ModalContent,
@@ -25,8 +26,6 @@ import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import { addDays } from 'date-fns';
 import enGB from 'date-fns/locale/en-GB';
 import moment from 'moment';
-import { getSession, useSession } from 'next-auth/react';
-import Link from 'next/link';
 import { useState } from 'react';
 import { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -39,6 +38,7 @@ import GrantStepZero from '~/components/pages/grants/create-grant/GrantStepZero'
 import { connection, createRoundIx } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 import * as anchor from '@coral-xyz/anchor';
+import { useUserStore } from '~/store/userStore';
 
 registerLocale('en-gb', enGB);
 
@@ -134,7 +134,7 @@ const CreateGrantRound = () => {
       setSuccess(true);
     },
   });
-  const { data: session } = useSession();
+  const { user } = useUserStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [transactionError, setTransactionError] = useState<string | null>(null);
@@ -201,7 +201,7 @@ const CreateGrantRound = () => {
         startTime: start?.toISOString() as string,
         endtime: end?.toISOString() as string,
         description: description,
-        manager: (session?.user.username as string) ?? '',
+        manager: (user?.username as string) ?? '',
       });
       onClose();
     } catch (error: any) {

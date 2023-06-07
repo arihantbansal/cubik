@@ -10,7 +10,6 @@ import {
   Tag,
 } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import CustomTag from '~/components/common/tags/CustomTag';
 import AllProjectsTab from '~/components/pages/projects/admin/AllProjectsTab';
@@ -18,12 +17,13 @@ import ParticipatingProjectsTab from '~/components/pages/projects/admin/Particip
 import RejectedProjectsTab from '~/components/pages/projects/admin/RejectedProjectsTab';
 import ReviewProjectsTab from '~/components/pages/projects/admin/ReviewProjectsTab';
 import VerifiedProjectsTab from '~/components/pages/projects/admin/VerifiedProjectsTab';
+import { useUserStore } from '~/store/userStore';
 
 const AdminWallet = ['52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ'];
 
 const ProjectAuthenticationRoute = () => {
   const { publicKey, connected } = useWallet();
-  const { data } = useSession();
+  const { user } = useUserStore();
   const [projectsNumberByStatus, setProjectsNumberByStatus] = useState({
     all: 0,
     review: 0,
@@ -36,10 +36,7 @@ const ProjectAuthenticationRoute = () => {
     return null;
   }
 
-  if (
-    !data?.user.mainWallet ||
-    data?.user.mainWallet !== publicKey?.toBase58()
-  ) {
+  if (!user?.mainWallet || user?.mainWallet !== publicKey?.toBase58()) {
     return null;
   }
 

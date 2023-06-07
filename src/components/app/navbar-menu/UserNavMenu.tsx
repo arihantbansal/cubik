@@ -19,12 +19,10 @@ import { MdPowerSettingsNew, MdUpload } from 'react-icons/md';
 import { useAuthStore } from '~/store/authStore';
 import ProfileDetails from './ProfileDetails';
 import WalletBalance from './WalletBalance';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { useUserStore } from '~/store/userStore';
 
 const UserNavMenu = () => {
   const { disconnect } = useWallet();
-  // const { data: session } = useSession();
   const { setKey } = useAuthStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
 

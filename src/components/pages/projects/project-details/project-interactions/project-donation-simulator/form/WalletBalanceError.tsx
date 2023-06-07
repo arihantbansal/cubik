@@ -1,25 +1,24 @@
 import { Box, HStack } from '@chakra-ui/react';
-import { Session } from 'next-auth'; // adjust this import as per your actual session type
 import { BiError } from 'react-icons/bi';
 import { useTokenBalance } from '~/hooks/useTokenBalance';
 import { tokenGroup } from '~/interfaces/token';
+import { useUserStore } from '~/store/userStore';
 
 type WalletBalanceErrorProps = {
   selectedToken: tokenGroup;
-  data: Session | null; // adjust this type as per your actual session type
 };
 
 export const WalletBalanceError = ({
   selectedToken,
-  data,
 }: WalletBalanceErrorProps) => {
+  const { user } = useUserStore();
   const {
     data: balance,
     isError,
     error,
   } = useTokenBalance(
     selectedToken.mainNetAdd as string,
-    data?.user.mainWallet as string
+    user?.mainWallet as string
   );
 
   return isError || !balance ? (

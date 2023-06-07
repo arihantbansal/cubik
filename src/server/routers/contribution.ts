@@ -138,11 +138,7 @@ export const contributionRouter = router({
           roundId: input.roundId,
         },
         include: {
-          user: {
-            include: {
-              userDetailsModel: true,
-            },
-          },
+          user: true,
         },
       });
       return contributions;
@@ -188,11 +184,7 @@ export const contributionRouter = router({
           roundId: input.roundId,
         },
         include: {
-          user: {
-            include: {
-              userDetailsModel: true,
-            },
-          },
+          user: true,
           ProjectsModel: true,
           Round: true,
         },

@@ -16,13 +16,13 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
-import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { BsTwitter } from 'react-icons/bs';
 import { MdArrowForward } from 'react-icons/md';
 import { GoVerified } from 'react-icons/go';
 import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
 import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
+import { useUserStore } from '~/store/userStore';
 
 interface ProjectCTAsProps {
   projectDetails:
@@ -52,7 +52,7 @@ export const ProjectCTAs = ({
   projectDetails,
   isLoading,
 }: ProjectCTAsProps) => {
-  const session = useSession();
+  const { user } = useUserStore();
   const { setVisible } = useWalletModal();
   const [isHovered, setIsHovered] = useState(false);
   const [donationSuccessful, setDonationSuccessful] = useState(false);
@@ -60,7 +60,7 @@ export const ProjectCTAs = ({
   const [showDonation, setShowDonation] = useState(false);
 
   const onDonateHandler = () => {
-    if (session.data?.user?.id) {
+    if (user?.id) {
       onOpen();
     } else {
       setVisible(true);

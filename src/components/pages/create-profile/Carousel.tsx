@@ -1,7 +1,7 @@
 import { Box, Flex, Skeleton } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { useSession } from 'next-auth/react';
 import { Key, memo, useState } from 'react';
+import { useUserStore } from '~/store/userStore';
 
 const Carousel = memo(function Carousel({
   carouselWidth,
@@ -14,7 +14,7 @@ const Carousel = memo(function Carousel({
   PFP: string;
   setPFP: (pfp: string) => void;
 }) {
-  const { data: session } = useSession();
+  const { user } = useUserStore();
   const [isDragging, setIsDragging] = useState(false);
 
   const handleDragStart = () => {
@@ -79,7 +79,9 @@ const Carousel = memo(function Carousel({
               loading="lazy"
               style={{
                 outline:
-                  session?.user.image === nft.image ? '1px solid #fff' : 'none',
+                  user?.profilePicture === nft.image
+                    ? '1px solid #fff'
+                    : 'none',
                 pointerEvents: 'none',
                 borderRadius: '6px',
                 width: '5rem',

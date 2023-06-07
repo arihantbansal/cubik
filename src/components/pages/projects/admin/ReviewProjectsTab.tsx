@@ -24,7 +24,6 @@ import {
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
-import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { SuccessToast } from '~/components/common/toasts/Toasts';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
@@ -53,7 +52,6 @@ const ReviewProjectsTab = ({ setProjectsNumberByStatus }: any) => {
     error,
   } = trpc.project.findManyReview.useQuery();
   const anchorWallet = useAnchorWallet();
-  const { data } = useSession();
   const toast = useToast();
   const projectUpdateMutation = trpc.project.updateProjectStatus.useMutation({
     onSuccess: () => {

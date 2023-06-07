@@ -6,8 +6,8 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react';
-import { useSession } from 'next-auth/react';
 import { useState } from 'react';
+import { useUserStore } from '~/store/userStore';
 interface CommentType {
   id: string;
   name: string;
@@ -18,16 +18,12 @@ interface CommentType {
 const Discussions = () => {
   const [comments, setComments] = useState<CommentType[]>([]);
   const [message, setMessage] = useState<string>('');
-  const session = useSession();
+  const { user } = useUserStore();
   return (
     <>
       <VStack position={'relative'} w={'full'} mt={6}>
         <HStack w="full" align={'top'} gap="18px">
-          <Avatar
-            src={session.data?.user.profilePicture}
-            width="54px"
-            height="54px"
-          />
+          <Avatar src={user?.profilePicture} width="54px" height="54px" />
           <Textarea
             h={32}
             minH={32}
