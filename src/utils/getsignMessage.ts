@@ -1,27 +1,30 @@
 import * as anchor from '@coral-xyz/anchor';
-import { getCsrfToken } from 'next-auth/react';
 import nacl from 'tweetnacl';
 
-export const createMessage = async (crsfToken?: string | undefined) => {
+export const createMessage = async (token?: string | undefined) => {
   const message =
     'Welcome to Cubik a platform where community helps projects to grow'; //todo: isko change karna hai
-  let crsf: string | undefined = '';
-  if (crsfToken) {
-    crsf = crsfToken;
+  let id: string | undefined = '';
+  if (token) {
+    id = token;
   } else {
-    crsf = await getCsrfToken();
+    id = localStorage.getItem('anon_id') ?? undefined;
   }
 
-  const data = new TextEncoder().encode(message + '-' + crsf);
+  if (!id) {
+    throw new Error('id not found');
+  }
+
+  const data = new TextEncoder().encode(message + '-' + id);
 
   return data;
 };
 export const verifyMessage = async (
   signature: string,
   publicKey: anchor.web3.PublicKey,
-  crfToken?: string
+  id?: string
 ) => {
-  const message = await createMessage(crfToken);
+  const message = await createMessage(id);
 
   const result = nacl.sign.detached.verify(
     message,

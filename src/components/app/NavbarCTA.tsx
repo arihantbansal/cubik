@@ -3,8 +3,11 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useUserStore } from '~/store/userStore';
 import { trpc } from '~/utils/trpc';
+import ComponentErrors from '../errors/ComponenetErrors';
 import MemoizedIconButtonBadge from './list/ListButton';
 import UserNavMenu from './navbar-menu/UserNavMenu';
 
@@ -17,8 +20,11 @@ export interface UserContextProps {
 
 const NavbarCTA = () => {
   const [currentPath, setCurrentPath] = useState('');
-  const { publicKey, disconnect, connected, disconnecting } = useWallet();
-  const { status } = useSession();
+  const [error, setError] = useState<boolean>(false);
+  const { setUser } = useUserStore();
+  const { publicKey, disconnect, connected, disconnecting, connecting } =
+    useWallet();
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -34,12 +40,27 @@ const NavbarCTA = () => {
             publicKey: publicKey.toBase58(),
           });
 
-          if (status === 200 || status === 201) {
-            return localStorage.setItem('anon_id', data.data.id);
+          if (status === 200) {
+            localStorage.setItem('anon_id', data.data.id);
+            const { data: user, status } = await axios.post('/api/me', {
+              id: data.data.id,
+            });
+            if (status === 204) {
+              localStorage.removeItem('wallet_auth');
+            }
+            setUser(user);
+            return;
+          }
+          if (status === 201) {
+            localStorage.setItem('anon_id', data.data.id);
+            localStorage.removeItem('wallet_auth');
+            router.push('/create-profile');
+            return;
           }
         }
       } catch (error) {
         console.log(error);
+        setError(true);
         return null;
       }
     };
@@ -50,9 +71,9 @@ const NavbarCTA = () => {
   if (currentPath === '/create-profile') {
     return null;
   }
+  if (error) return <ComponentErrors />;
 
-  // Based on status, render appropriate component
-  if (status === 'loading') {
+  if (connecting && !publicKey) {
     return (
       <Skeleton
         isLoaded
@@ -63,7 +84,7 @@ const NavbarCTA = () => {
     );
   }
 
-  if (status === 'authenticated' && publicKey) {
+  if (connected && publicKey) {
     return (
       <HStack gap={{ base: '2px', md: '16px' }}>
         <MemoizedIconButtonBadge />

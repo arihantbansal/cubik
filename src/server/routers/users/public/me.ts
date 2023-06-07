@@ -1,40 +1,27 @@
 import { getSession, signOut } from 'next-auth/react';
 import { z } from 'zod';
 import { procedure } from '~/server/trpc';
+import { prisma } from '~/server/utils/prisma';
 
 export const getMe = procedure
   .input(
     z.object({
-      connected: z.boolean().optional(),
-      wallet: z.string().optional(),
+      id: z.string().optional(),
     })
   )
-  .query(async ({ input, ctx }) => {
-    const { session } = ctx;
+  .query(async ({ input }) => {
+    if (!input.id) {
+      return null;
+    }
+    const user = await prisma.userModel.findUnique({
+      where: {
+        id: input.id,
+      },
+    });
 
-    if (!session) return { connected: input.connected };
-
-    const userSession = await getSession();
-
-    if (!input.connected || !input.wallet) {
-      await signOut({
-        redirect: false,
-      });
-      return {
-        connected: input.connected,
-      };
+    if (!user) {
+      return null;
     }
 
-    if (userSession?.user.mainWallet !== input.wallet) {
-      await signOut({
-        redirect: false,
-      });
-      return {
-        connected: input.connected,
-      };
-    }
-
-    return {
-      connected: input.connected,
-    };
+    return user;
   });

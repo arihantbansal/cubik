@@ -4,32 +4,34 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { wallet } = req.body as { wallet: string };
+  const { publicKey } = req.body as { publicKey: string };
 
   try {
     // @todo:- Put a check for the wallet address is valid or not
 
-    const user = await prisma.userKeys.findFirst({
+    const user = await prisma.userKeys.findUnique({
       where: {
-        publicKey: wallet,
+        publicKey: publicKey,
       },
     });
 
     if (!user) {
       const newUser = await prisma.userKeys.create({
         data: {
-          publicKey: wallet,
+          publicKey: publicKey,
         },
       });
+
       return res.status(201).send({
         data: {
           id: newUser.id,
-          wallet: wallet,
+          wallet: publicKey,
         },
         code: 201,
         error: null,
       });
     }
+
     return res.status(200).send({
       data: {
         id: user.id,

@@ -27,8 +27,9 @@ import { createMessage, verifyMessage } from '~/utils/getsignMessage';
 import { FailureToast, SuccessToast } from '../common/toasts/Toasts';
 import { WalletAddress } from '../common/wallet/WalletAdd';
 
-import * as evey from '@solana/wallet-adapter-react';
-import * as eve from '@solana/wallet-adapter-base';
+import axios from 'axios';
+import { useUserStore } from '~/store/userStore';
+import { UserModel } from '@prisma/client';
 
 const scaleIn = keyframes`
 0% {
@@ -48,57 +49,55 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
   const toast = useToast();
   const { setAuthenticated, setKey } = useAuthStore();
   const [verifying, setVerifying] = useState(false);
-  const { status, data: session } = useSession();
+  const { setUser } = useUserStore();
   const [verified, setVerified] = useState(false);
   const { publicKey, disconnect, signMessage } = useWallet();
   const [verifyWalletError, setVerifyWalletError] = useState<string | null>(
     null
   );
   const router = useRouter();
-  async function VerifyWallet() {
-    setVerifying(true);
-    console.log('verifying wallet -1');
-    if (signMessage && publicKey) {
-      try {
-        const msg = await createMessage();
-        const sig = await signMessage(msg);
 
-        const signInResponse = await signIn('credentials', {
-          redirect: false,
-          wallet: publicKey.toBase58(),
-          signature: anchor.utils.bytes.bs58.encode(sig),
-        });
+  const VerifyWallet = async () => {
+    if (!publicKey && !signMessage) return;
 
-        setKey({
-          sig: anchor.utils.bytes.bs58.encode(sig),
-          wallet: publicKey.toBase58(),
-        });
+    try {
+      setVerifying(true);
 
-        if (signInResponse?.status === 401) {
-          if (session?.user.id) {
-            await signOut({
-              redirect: false,
-            });
-          }
-          router.push('/create-profile');
+      const msg = await createMessage();
+      const sig = await signMessage!(msg);
 
-          setVerifying(false);
-        }
-        setAuthenticated(true);
-        setVerified(true);
+      const { data, status } = await axios.post('/api/me/login', {
+        id: localStorage.getItem('anon_id'),
+        signature: anchor.utils.bytes.bs58.encode(sig),
+      });
+
+      if (status === 204) {
+        console.log('this is data indeix', data);
+        router.push('/create-profile');
         setVerifying(false);
-        setAuthenticated(true);
         onClose();
-        SuccessToast({ toast, message: 'Wallet Verified' });
-      } catch (error: any) {
-        if ((error as Error).message === 'User rejected the request.') {
-          setVerifying(false);
-          setVerifyWalletError(`Error: ${error.message}`);
-          throw error; // re-throw the error after handling it
-        }
+        return null;
+      }
+
+      localStorage.setItem('wallet_auth', data.data.access_token);
+      setUser(data.data.user as UserModel);
+
+      setAuthenticated(true);
+      setVerified(true);
+      setVerifying(false);
+      setAuthenticated(true);
+      onClose();
+      SuccessToast({ toast, message: 'Wallet Verified' });
+    } catch (error) {
+      console.log(error);
+
+      if ((error as Error).message === 'User rejected the request.') {
+        setVerifying(false);
+        setVerifyWalletError(`Error: ${(error as Error).message}`);
+        throw error;
       }
     }
-  }
+  };
 
   return publicKey ? (
     <Modal

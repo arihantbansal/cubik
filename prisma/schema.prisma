@@ -20,7 +20,6 @@ model UserModel {
   updatedAt      DateTime        @updatedAt
   isActive       Boolean         @default(true)
   isArchive      Boolean         @default(false)
-  userKeys       UserKeys[]
   team           Team[]
   Session        Session[]
   project        ProjectsModel[]
@@ -33,13 +32,12 @@ model UserModel {
 }
 
 model UserKeys {
-  id        String     @id @default(uuid()) @map("_id")
-  publicKey String     @unique
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  isActive  Boolean    @default(true)
-  isArchive Boolean    @default(false)
-  UserModel UserModel? @relation(fields: [id], references: [id])
+  id        String   @id @default(uuid()) @map("_id")
+  publicKey String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isActive  Boolean  @default(true)
+  isArchive Boolean  @default(false)
 
   @@index([id])
 }

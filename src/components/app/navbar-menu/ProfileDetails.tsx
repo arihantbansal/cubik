@@ -1,30 +1,31 @@
-import { Avatar, Box, Center, HStack, VStack } from '@chakra-ui/react';
-import { useSession } from 'next-auth/react';
+import { Avatar, Center, HStack, VStack } from '@chakra-ui/react';
 import Username from '~/components/common/username/Username';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
+import { useUserStore } from '~/store/userStore';
+import { UserProof } from '~/types/user';
 
 const ProfileDetails = () => {
-  const { data: session } = useSession();
+  const { user } = useUserStore();
   return (
     <HStack p="8px" rounded="8px" gap="12px">
       <Avatar
         width="40px"
         height="40px"
         borderRadius={6}
-        name={session?.user.username}
-        src={session?.user.profilePicture}
+        name={user?.username}
+        src={user?.profilePicture}
       />
       <VStack alignItems={'start'} justify="center" w="full" spacing="6px">
         <Username
           isLoading={false}
-          username={session?.user.username}
-          proofs={session?.user.proof}
+          username={user?.username}
+          proofs={(user?.proof as unknown as UserProof[]) ?? []}
           size="sm"
         />
         <Center>
           <WalletAddress
             // @ts-ignore
-            walletAddress={session.user.mainWallet}
+            walletAddress={user?.mainWallet}
             size="xs"
           />
         </Center>
