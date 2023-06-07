@@ -36,6 +36,7 @@ import { AmountInput } from './form/DonationAmountInput';
 import { WalletBalanceError } from './form/WalletBalanceError';
 import { fetchPrice } from '~/utils/getPrice';
 import { useRouter } from 'next/router';
+import Graph from './Graph';
 
 type ProjectDonationSimulatorProps = {
   projectDetails: projectWithFundingRoundType;
@@ -418,14 +419,14 @@ export const ProjectDonationSimulator = ({
           </Button>
         </VStack>
       </form>
-      {/* <Graph
+      <Graph
         width={width}
         height={height}
         maximumDonationValue={1000}
         donationAmount={donation}
         setValue={setValue}
         projectId={projectDetails.id}
-      /> */}
+      />
     </Stack>
   );
 };

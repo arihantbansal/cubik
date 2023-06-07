@@ -23,7 +23,7 @@ const HackathonHeader = ({ isLoading }: { isLoading: boolean }) => {
           borderRadius="12px"
           backgroundColor={'#1C1C1C'}
           src={
-            'https://res.cloudinary.com/demonicirfan/image/upload/v1685007355/Frame_126_itzdri.png'
+            'https://res.cloudinary.com/demonicirfan/image/upload/v1685650786/Property_1_Default_qwohel.png'
           }
           width={{ base: '5.5rem', md: '7rem' }}
           height={{ base: '5.5rem', md: '7rem' }}

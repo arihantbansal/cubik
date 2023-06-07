@@ -1,4 +1,5 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import HackathonSchedule from './HackathonSchedule';
 
 const HackathonTabs = () => {
   return (
@@ -15,7 +16,9 @@ const HackathonTabs = () => {
       <TabPanels p="0">
         <TabPanel></TabPanel>
         <TabPanel overflowX="scroll"></TabPanel>
-        <TabPanel></TabPanel>
+        <TabPanel>
+          <HackathonSchedule />
+        </TabPanel>
       </TabPanels>
     </Tabs>
   );

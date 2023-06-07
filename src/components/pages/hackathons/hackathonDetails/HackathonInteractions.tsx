@@ -1,5 +1,6 @@
 import {
   Avatar,
+  AvatarGroup,
   Box,
   Center,
   HStack,
@@ -139,6 +140,44 @@ const HackathonInteractions = ({ isLoading }: { isLoading: boolean }) => {
               </Center>
             </HStack>
           </VStack>
+        </Skeleton>
+      </VStack>
+      <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
+        <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
+          Participants
+        </Box>
+        <Skeleton
+          isLoaded={!isLoading}
+          fadeDuration={4}
+          opacity={isLoading ? 0.4 : 1}
+          w="full"
+        >
+          <HStack justify={'space-between'}>
+            <AvatarGroup
+              size={{ base: 'sm', md: 'md' }}
+              max={7}
+              spacing={'-24px'}
+            >
+              <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
+              <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
+              <Avatar name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
+              <Avatar
+                name="Prosper Otemuyiwa"
+                src="https://bit.ly/prosper-baba"
+              />
+              <Avatar name="Christian Nwamba" src="https://bit.ly/code-beast" />
+              <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
+              <Avatar name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
+            </AvatarGroup>
+            <Box
+              color="neutral.9"
+              px="8px"
+              as="p"
+              textStyle={{ base: 'title5', md: 'title4' }}
+            >
+              <b>+12</b> Participants
+            </Box>
+          </HStack>
         </Skeleton>
       </VStack>
       <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">

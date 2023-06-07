@@ -26,7 +26,7 @@ const HackathonDetail = () => {
         >
           <Image
             src={
-              'https://res.cloudinary.com/demonicirfan/image/upload/v1685007351/Frame_127_bdguyz.png'
+              'https://res.cloudinary.com/demonicirfan/image/upload/v1685650788/Frame_141_d02pxf.png'
             }
             alt={'hackathon'}
             layout="fill"

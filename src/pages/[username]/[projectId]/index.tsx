@@ -69,6 +69,10 @@ const ProjectDetails = ({
             <ProjectInteractions
               projectDetails={data}
               isLoading={isLoading}
+              roundId={
+                data?.ProjectJoinRound.find((e) => e.id === roundId)?.roundId ??
+                ''
+              }
               preview={isPreview}
             />
           </Stack>
