@@ -43,7 +43,7 @@ export function calculateProjectMatchingFund(
     const finalMatch = updatedProjects.map((project) => ({
       projectId: project.id,
       amount:
-        arrOfMatch.find((match) => match.projectId === project.id)?.sum *
+        arrOfMatch.find((match) => match.projectId === project.id)?.sum! *
         divisor,
     }));
 
