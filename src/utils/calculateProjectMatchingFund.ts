@@ -1,15 +1,13 @@
-import { Grant } from '';
-
-export interface Project {
+export interface Grant {
   id: string;
   contributions: number[];
 }
 
 export function calculateProjectMatchingFund(
-  projectId: string,
-  maxDonation: number,
-  step: number,
-  projects: Project[],
+  projectId: string, // The project that the user is donating to
+  maxDonation: number, // The maximum donation that the user can make
+  step: number, // The step size for the donation
+  grant: Grant[], // The projects that are in the round that the user is donating to
   availableMatch: number
 ): { donation: number; additionalMatch: number }[] {
   const dataPoints = [];
@@ -19,7 +17,7 @@ export function calculateProjectMatchingFund(
     const arrOfMatch: { projectId: string; sum: number }[] = [];
 
     // Add the additional donation to the target project's contributions
-    const updatedProjects = projects.map((project) => ({
+    const updatedProjects = grant.map((project) => ({
       ...project,
       contributions:
         project.id === projectId

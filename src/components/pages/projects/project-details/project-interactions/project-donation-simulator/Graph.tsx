@@ -24,9 +24,7 @@ const Graph: React.FC<GraphProps> = ({
   projectId,
 }) => {
   const router = useRouter();
-  const [data, setData] = (useState<
-    { donation: number; additionalMatch: number }[] | []
-  > = []);
+  const [data, setData] = useState([]);
   const { data: graphData } = trpc.project.projectGraph.useQuery({
     id: router.query.projectId as string,
   });
@@ -41,19 +39,19 @@ const Graph: React.FC<GraphProps> = ({
   };
 
   useEffect(() => {
-    if (graphData)
-      setData(
-        calculateProjectMatchingFund(
-          projectId,
-          10000,
-          1,
-          graphData.round,
-          graphData.contributions,
-          graphData.matchingFunds,
-          graphData.rounds,
-          graphData.teams
-        )
-      );
+    // contribution: number[] | undefined;
+    // round: Grant[];
+    // matchingPool: number | undefined;
+
+    if (graphData) {
+      return;
+      //setData(
+      // calculateProjectMatchingFund(
+      //   projectId,
+      //   10000,
+      //   1,
+      // )
+    }
   }, [graphData]);
 
   console.log('graphData', graphData);
