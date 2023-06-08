@@ -19,6 +19,7 @@ export interface UserContextProps {
 const NavbarCTA = () => {
   const [currentPath, setCurrentPath] = useState('');
   const [error, setError] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { setUser } = useUserStore();
   const { publicKey, disconnect, connected, disconnecting, connecting } =
     useWallet();
@@ -32,6 +33,7 @@ const NavbarCTA = () => {
 
   useEffect(() => {
     const fetch = async () => {
+      setIsLoading(true);
       try {
         if (connected && publicKey && !disconnecting) {
           const { data, status } = await axios.post('/api/me/id', {
@@ -40,24 +42,27 @@ const NavbarCTA = () => {
 
           if (status === 200) {
             localStorage.setItem('anon_id', data.data.id);
-            const { data: user, status } = await axios.post('/api/me', {
-              id: data.data.id,
-            });
-            if (status === 204) {
-              localStorage.removeItem('wallet_auth');
+
+            if (localStorage.getItem('wallet_auth')) {
+              const { data: user, status } = await axios.post('/api/me', {
+                id: data.data.id,
+              });
+              setUser(user);
             }
-            setUser(user);
+            setIsLoading(false);
             return;
           }
           if (status === 201) {
             localStorage.setItem('anon_id', data.data.id);
             localStorage.removeItem('wallet_auth');
             router.push('/create-profile');
+            setIsLoading(false);
             return;
           }
         }
       } catch (error) {
         console.log(error);
+        setIsLoading(false);
         setError(true);
         return null;
       }
@@ -92,7 +97,7 @@ const NavbarCTA = () => {
   }
 
   // Default case
-  return publicKey ? (
+  return publicKey && !isLoading ? (
     <Center as="button" onClick={disconnect}>
       <Spinner size="sm" color="teal" />
     </Center>
