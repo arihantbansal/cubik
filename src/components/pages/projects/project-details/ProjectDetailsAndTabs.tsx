@@ -17,7 +17,7 @@ import {
 import { useState } from 'react';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
-import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
+// import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
 import {
   ProjectFundingData,
   ProjectOwner,
@@ -75,12 +75,12 @@ const MobileDrawer = ({
           </HStack>
         </DrawerHeader>
         <DrawerBody mx="auto">
-          <ProjectDonationSimulator
+          {/* <ProjectDonationSimulator
             height={80}
             width={120}
             projectDetails={projectDetails}
             setDonationSuccessful={setDonationSuccessful}
-          />
+          /> */}
         </DrawerBody>
       </DrawerContent>
     </Drawer>
