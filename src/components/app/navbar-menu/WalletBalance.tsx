@@ -2,9 +2,9 @@ import { HStack, VStack } from '@chakra-ui/layout';
 import { Box, Skeleton } from '@chakra-ui/react';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
 import { useQuery } from 'react-query';
 import { env } from '~/env.mjs';
+import { useUserStore } from '~/store/userStore';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { BONK, SOL, USDC } from '../../common/tokens/token';
 
@@ -37,10 +37,10 @@ const getBalances = async (address: string) => {
 };
 
 const WalletBalance = () => {
-  const { data: session } = useSession();
+  const { user } = useUserStore();
   const { isLoading, error, data } = useQuery(
     'balances',
-    () => getBalances(session?.user.mainWallet as string),
+    () => getBalances(user?.mainWallet as string),
     {
       // Cache data for 5 minutes (in milliseconds)
       staleTime: 5 * 60 * 1000,
@@ -51,7 +51,7 @@ const WalletBalance = () => {
     }
   );
 
-  if (!session?.user.id) return <>no user</>;
+  if (!user?.id) return <>no user</>;
   if (!data) {
     if (isLoading) return <Skeleton w="full" height="4rem" />;
     return <>no data</>;

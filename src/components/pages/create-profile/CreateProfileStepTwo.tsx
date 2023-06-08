@@ -1,6 +1,7 @@
 import { Box, Button, CardBody, CardFooter } from '@chakra-ui/react';
-import React from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { supabase, useUser } from '~/utils/supabase';
 
 const CreateProfileStepTwo = ({
   onNext,
@@ -9,16 +10,29 @@ const CreateProfileStepTwo = ({
   onNext: () => void;
   onPrevious: () => void;
 }) => {
+  const { user } = useUser(supabase);
+  const handleClick = async () => {
+    console.log('sometjhing');
+    const a = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: 'http://localhost:3000/create-profile',
+      },
+    });
+  };
+
   return (
     <>
       <CardBody>
         <Button
           size={{ base: 'cubikMini', md: 'cubikSmall' }}
-          variant="cubikFilled"
+          variant="cubikOutline"
           loadingText="Submitting"
-          onClick={() => {}}
+          onClick={() => {
+            handleClick();
+          }}
         >
-          Connect Google
+          {user?.data?.user?.email ? user?.data?.user?.email : 'Connect Google'}
         </Button>
       </CardBody>
       <CardFooter>
@@ -26,7 +40,9 @@ const CreateProfileStepTwo = ({
           size={{ base: 'cubikMini', md: 'cubikSmall' }}
           variant={'cubikText'}
           leftIcon={<Box as={FiChevronLeft} width={5} height={5} />}
-          onClick={() => onPrevious()}
+          onClick={async () => {
+            onPrevious();
+          }}
         >
           Previous
         </Button>
@@ -34,6 +50,7 @@ const CreateProfileStepTwo = ({
           size={{ base: 'cubikMini', md: 'cubikSmall' }}
           variant="cubikFilled"
           loadingText="Submitting"
+          isDisabled={!user?.data.user?.email}
           rightIcon={
             <Box as={FiChevronRight} boxSize={['10px', '12px', '16px']} />
           }

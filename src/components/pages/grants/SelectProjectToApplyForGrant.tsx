@@ -28,7 +28,6 @@ import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { ProjectsModel } from '@prisma/client';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -36,6 +35,7 @@ import { BsPlus } from 'react-icons/bs';
 import { v4 as uuidV4 } from 'uuid';
 import { SuccessToast } from '~/components/common/toasts/Toasts';
 import EmptyStateHOC from '~/components/HOC/EmptyState';
+import { useUserStore } from '~/store/userStore';
 import { connection, ProjectJoinRound } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 
@@ -48,7 +48,7 @@ const SelectProjectToApplyForGrant = ({
   onClose,
   selectedGrantRound,
 }: any) => {
-  const { data } = useSession();
+  const { user } = useUserStore();
   const toast = useToast();
   const anchorWallet = useAnchorWallet();
   const { handleSubmit } = useForm<FormData>();
@@ -59,7 +59,7 @@ const SelectProjectToApplyForGrant = ({
     error: userProjectsError,
     isError: userProjectsIsError,
   } = trpc.user.findOne.useQuery({
-    username: data?.user?.username as string,
+    username: user?.username as string,
   });
 
   const [signTransactionLoading, setsignTransactionLoading] = useState(false);

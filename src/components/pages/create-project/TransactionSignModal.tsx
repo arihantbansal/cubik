@@ -21,13 +21,13 @@ import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { UseFormGetValues } from 'react-hook-form';
 import { v4 as uuidV4 } from 'uuid';
 import { FailureToast, SuccessToast } from '~/components/common/toasts/Toasts';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
+import { useUserStore } from '~/store/userStore';
 import { connection, createProject } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 import { createVault, getVault } from '~/utils/vault';
@@ -73,7 +73,7 @@ const CreateProjectTransactionModal: React.FC<
   const [transactionLoading, setTransactionLoading] = useState(false);
   const [projectSubmitted, setProjectSubmitted] = useState(false);
 
-  const { data: session, update } = useSession();
+  const { user } = useUserStore();
   const anchorWallet = useAnchorWallet();
 
   const createProjectMutation = trpc.project.create.useMutation({
@@ -94,11 +94,11 @@ const CreateProjectTransactionModal: React.FC<
 
   const HandleTransactionSign = async () => {
     setTransactionLoading(true);
-    if (!session) return;
+    if (!user) return;
     const id = uuidV4();
     try {
       const { ix: valutIx, key } = await createVault(
-        session.user.username as string,
+        user?.username as string,
         anchorWallet as NodeWallet,
         getValues().projectName,
         getValues().tagline,
@@ -108,7 +108,7 @@ const CreateProjectTransactionModal: React.FC<
       const tx = new anchor.web3.Transaction();
       const ix = await createProject(
         anchorWallet as NodeWallet,
-        session.user.count.project + 1,
+        1, /// update a counter
         new anchor.web3.PublicKey(vaultAuth)
       );
       const { blockhash } = await connection.getLatestBlockhash();
@@ -134,13 +134,12 @@ const CreateProjectTransactionModal: React.FC<
         project_link: getValues().projectLink,
         discord_link: getValues().projectLink,
         telegram_link: getValues().telegram,
-        projectUserCount: session.user.count.project + 1,
+        projectUserCount: 1, ////////////////////////////////////////////// update the value here
         team: getValues()?.team?.map((member) => member.value) ?? [],
         multiSigAddress: vaultAuth,
         email: getValues().email,
       });
       setProjectId(id);
-      update();
     } catch (error: any) {
       setTransactionError(
         error.message || 'There was an error while signing the transaction'
@@ -346,7 +345,7 @@ const CreateProjectTransactionModal: React.FC<
                 </VStack>
                 <Button
                   as={Link}
-                  href={`/${session?.user.username}?project`}
+                  href={`/${user?.username}?project`}
                   mx="auto"
                   variant="cubikFilled"
                   size={{ based: 'cubikMini', md: 'cubikSmall' }}
@@ -457,7 +456,7 @@ const CreateProjectTransactionModal: React.FC<
                         <WalletAddress
                           size="sm"
                           color="#fff"
-                          walletAddress={session?.user.mainWallet as string}
+                          walletAddress={user?.mainWallet as string}
                         />
                       </Box>
                     </VStack>

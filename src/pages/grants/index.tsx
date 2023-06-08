@@ -14,13 +14,12 @@ import {
 import { Round } from '@prisma/client';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useState } from 'react';
-import { BiPlus } from 'react-icons/bi';
 import { FiChevronRight } from 'react-icons/fi';
 import RoundStatus from '~/components/common/dates/Status';
 import SelectProjectToApplyForGrant from '~/components/pages/grants/SelectProjectToApplyForGrant';
+import { useUserStore } from '~/store/userStore';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { checkRoundStatus, GRANT_STATUS } from '~/utils/round/checkRoundStatus';
 import { trpc } from '~/utils/trpc';
@@ -33,8 +32,7 @@ const RoundPage = () => {
     isError,
     error,
   } = trpc.round.findActive.useQuery();
-  const { data } = useSession();
-
+  const { user } = useUserStore();
   const wallet = useWallet();
   const walletModal = useWalletModal();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -234,7 +232,7 @@ const RoundPage = () => {
                     </Button>
                   </Center>{' '}
                   <Center h="full">
-                    {data?.user.id === round.userId ? (
+                    {user?.id === round.userId ? (
                       <Button
                         variant={'cubikText'}
                         size={'cubikSmall'}

@@ -1,9 +1,12 @@
 import { ChakraProvider } from '@chakra-ui/react';
+import { useWallet } from '@solana/wallet-adapter-react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import axios from 'axios';
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import type { AppProps, AppType } from 'next/app';
 import dynamic from 'next/dynamic';
+import { useEffect, useMemo } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import AppLayout from '~/components/app';
 import theme from '~/config/chakra.config';
@@ -21,6 +24,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }: AppProps) => {
   Mixpanel.track('root_load');
+
   return (
     <QueryClientProvider client={queryClient}>
       <WalletContext>

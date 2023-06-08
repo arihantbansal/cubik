@@ -1,14 +1,14 @@
 import { Container } from '@chakra-ui/react';
-import { useSession } from 'next-auth/react';
 import React from 'react';
 import SEO from 'src/components/SEO';
 import ComponentErrors from '~/components/errors/ComponenetErrors';
 import AdminView from '~/components/pages/user-profile/AdminView';
 import VisitorView from '~/components/pages/user-profile/VisitorView';
+import { useUserStore } from '~/store/userStore';
 import { trpc } from '~/utils/trpc';
 
 const ProfilePage = ({ username }: { username: string }) => {
-  const { data: session } = useSession();
+  const { user } = useUserStore();
 
   const { data, isError, isLoading, error } = trpc.user.findOne.useQuery(
     {
@@ -33,7 +33,7 @@ const ProfilePage = ({ username }: { username: string }) => {
         w="full"
         p={{ base: '23px 20px', sm: '32px', md: '48px', lg: '48px 20px' }}
       >
-        {session?.user.username === data?.username ? (
+        {user?.username === data?.username ? (
           <AdminView user={data} isLoading={isLoading} />
         ) : (
           <VisitorView user={data} isLoading={isLoading} />
