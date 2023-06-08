@@ -65,7 +65,7 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
 
       const msg = await createMessage();
       const sig = await signMessage!(msg);
-
+      localStorage.setItem('anon_sig', anchor.utils.bytes.bs58.encode(sig));
       const { data, status } = await axios.post('/api/me/login', {
         id: localStorage.getItem('anon_id'),
         signature: anchor.utils.bytes.bs58.encode(sig),

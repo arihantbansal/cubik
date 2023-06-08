@@ -48,6 +48,8 @@ import { useAuthStore } from '~/store/authStore';
 import { v4 as uuidV4 } from 'uuid';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
 import axios from 'axios';
+import { useUserStore } from '~/store/userStore';
+import { UserModel } from '@prisma/client';
 
 type CreateProfileStepThreeTypes = {
   handleSubmit: any;
@@ -81,7 +83,7 @@ const CreateProfileStepThree = ({
   const anchorWallet = useAnchorWallet();
   const toast = useToast();
   const { user } = useUser(supabase);
-  console.log('user - ', user);
+  const { setUser } = useUserStore();
   const UserProfilePicture = user?.data.user?.user_metadata.picture || pfp;
   const UserUserName = user?.data.user?.user_metadata.full_name
     .replace(/\s/g, '')
@@ -138,24 +140,17 @@ const CreateProfileStepThree = ({
       ProfilePicture: UserProfilePicture,
     },
   });
-  console.log(
-    'username - ',
-    UserUserName,
-    'UserProfilePicture - ',
-    UserProfilePicture
-  );
 
   const userCreateMutation = trpc.user.create.useMutation({
     onSuccess: async () => {
       try {
-        console.log('verifying wallet -3');
-        if (
-          key.sig &&
-          key.wallet === publicKey?.toBase58() &&
-          publicKey &&
-          connected
-        ) {
-          const { data } = await axios.post('/api/me/login', {});
+        if (publicKey && connected) {
+          const { data } = await axios.post('/api/me/login', {
+            id: localStorage.getItem('anon_id'),
+            signature: localStorage.getItem('anon_sig'),
+          });
+          localStorage.setItem('wallet_auth', data.data.access_token);
+          setUser(data.data.user as UserModel);
           setProfileCreated(true);
           SuccessToast({ toast, message: 'Profile Created Successfully' });
           setSigningTransaction(false);
@@ -204,7 +199,7 @@ const CreateProfileStepThree = ({
     if (!sig) return;
     userCreateMutation.mutate({
       username: data.username,
-      id: uuidV4(),
+      id: localStorage.getItem('anon_id') ?? '',
       profilePicture: pfp,
       tx: sig,
       mainWallet: publicKey?.toBase58() as string,
