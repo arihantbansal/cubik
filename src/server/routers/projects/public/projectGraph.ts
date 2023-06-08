@@ -60,11 +60,12 @@ export const projectGraph = procedure
     });
     let roundContri: Grant[] = [];
     round?.ProjectJoinRound.forEach((round) => {
-      return roundContri.push({
-        funding: round.project?.Contribution.map((contribution) => {
+      roundContri.push({
+        id: round.project?.id || '',
+        // contributions: round.project?.Contribution.map((contribution) => {
+        contributions: round.project?.Contribution.map((contribution) => {
           return contribution.usdTotal;
         }),
-        projectId: '', // @todo add project id here i have added it because it was showing some bug
       });
     });
 

@@ -12,6 +12,7 @@ import FlipNumbers from 'react-flip-numbers';
 import GraphProps from '~/types/graphProps';
 import { trpc } from '~/utils/trpc';
 import { GraphLine } from './GraphLines';
+import { useState, useEffect } from 'react';
 
 const Graph: React.FC<GraphProps> = ({
   width,
@@ -22,12 +23,13 @@ const Graph: React.FC<GraphProps> = ({
   projectId,
 }) => {
   const router = useRouter();
-  const a = trpc.project.projectGraph.useQuery({
+  const [data, setData] = useState([]);
+  const { data: graphData } = trpc.project.projectGraph.useQuery({
     id: router.query.projectId as string,
   });
 
-  const contributionMutation = trpc.contribution.create.useMutation();
-  const data: { donation: number; additionalMatch: number }[] = [];
+  const { data: contributionMutationData } =
+    trpc.contribution.create.useMutation();
 
   const exponent = 2;
 
@@ -35,6 +37,23 @@ const Graph: React.FC<GraphProps> = ({
     // setValue(Math.round(value));
   };
 
+  useEffect(() => {
+    // contribution: number[] | undefined;
+    // round: Grant[];
+    // matchingPool: number | undefined;
+
+    if (graphData) {
+      return;
+      //setData(
+      // calculateProjectMatchingFund(
+      //   projectId,
+      //   10000,
+      //   1,
+      // )
+    }
+  }, [graphData]);
+
+  console.log('graphData', graphData);
   return (
     <VStack flex="1" p="1rem" width={'100%'} gap="0">
       <Box

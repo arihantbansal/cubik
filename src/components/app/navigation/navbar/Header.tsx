@@ -17,6 +17,9 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import Logo from '~/components/common/logo/Logo';
 import { SearchBar } from '~/components/common/searchbar';
 import { MobileNavCollapsible } from './MobileNav';
+import { isMobileOnly } from 'react-device-detect';
+import { useRouter } from 'next/router';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 
 export const Header = memo(function Header({
   children,
@@ -24,6 +27,7 @@ export const Header = memo(function Header({
   children?: React.ReactNode;
 }) {
   const { connected } = useWallet();
+  const router = useRouter();
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [isDesktop] = useMediaQuery('(min-width: 768px)');
   const isCreateProfilePage =
@@ -100,6 +104,16 @@ export const Header = memo(function Header({
               Grants
             </Box>
           </Button>
+          <Button as={Link} href="/hackathons" h="full" variant={'unstyled'}>
+            <Box
+              as="p"
+              textStyle={'title4'}
+              color={isActiveRoute('/hackathons') ? 'brand.teal5' : 'neutral.8'}
+              cursor={'pointer'}
+            >
+              Hackathons
+            </Box>
+          </Button>
         </HStack>
       </>
     ) : (
@@ -144,7 +158,7 @@ export const Header = memo(function Header({
           onToggle={onToggle}
         />
       </Container>
-      {connected ? (
+      {connected && isMobileOnly && router.pathname === '/' ? (
         ''
       ) : (
         <Container
@@ -154,7 +168,7 @@ export const Header = memo(function Header({
           maxW={'full'}
           position="fixed"
           bottom="0px"
-          minH="6rem"
+          minH={{ base: '4rem', md: '6rem' }}
           p="0"
           bg="#31F57908"
           sx={{
@@ -171,7 +185,7 @@ export const Header = memo(function Header({
             justify={'space-between'}
             gap="32px"
           >
-            <VStack align="start">
+            <VStack display={{ base: 'none', md: 'flex' }} align="start">
               <Box
                 as="p"
                 textStyle={{ base: 'title5', md: 'title3' }}
@@ -189,23 +203,19 @@ export const Header = memo(function Header({
                 project on cubik
               </Box>
             </VStack>
-            <Stack direction={{ base: 'column', md: 'row' }}>
+            <Stack direction={{ base: 'row', md: 'row' }}>
               <Button
                 as={Link}
-                href="https://phantom.app/ul/v1/connect"
-                variant="cubikFilled"
-                size={{ base: 'cubikMini', md: 'cubikSmall' }}
-              >
-                Open In Safari
-              </Button>
-              <Button
-                as={Link}
-                href="https://phantom.app/ul/v1/connect"
+                href={`https://phantom.app/ul/browse/${encodeURIComponent(
+                  router.asPath
+                )}`}
                 variant="cubikOutlined"
                 size={{ base: 'cubikMini', md: 'cubikSmall' }}
+                w="full"
               >
-                Open In Glow
+                Open In Phantom
               </Button>
+              <WalletMultiButton>Connect another wallet</WalletMultiButton>
             </Stack>
           </HStack>
         </Container>

@@ -1,14 +1,13 @@
 export interface Grant {
-  funding: number[];
-  projectId: string;
+  id: string;
+  contributions: number[];
 }
 
 export function calculateProjectMatchingFund(
-  projectId: string,
-  maxDonation: number,
-  step: number,
-  projectContributions: { projectId: string; amount: number }[],
-  grants: Grant[],
+  projectId: string, // The project that the user is donating to
+  maxDonation: number, // The maximum donation that the user can make
+  step: number, // The step size for the donation
+  grant: Grant[], // The projects that are in the round that the user is donating to
   availableMatch: number
 ): { donation: number; additionalMatch: number }[] {
   const dataPoints = [];
@@ -17,40 +16,39 @@ export function calculateProjectMatchingFund(
     let summed = 0;
     const arrOfMatch: { projectId: string; sum: number }[] = [];
 
-    const projectMapContribution = [
-      ...projectContributions,
-      { projectId, amount: donation },
-    ];
+    // Add the additional donation to the target project's contributions
+    const updatedProjects = grant.map((project) => ({
+      ...project,
+      contributions:
+        project.id === projectId
+          ? [...project.contributions, donation]
+          : project.contributions,
+    }));
 
-    grants.forEach((grant) => {
-      let sumAmount = 0;
-      projectMapContribution
-        .filter((project) => project.projectId === grant.projectId)
-        .forEach((project) => {
-          sumAmount += Math.sqrt(project.amount);
-        });
-
-      sumAmount *= sumAmount;
+    updatedProjects.forEach((project) => {
+      const sumOfRoots = project.contributions.reduce(
+        (sum, contribution) => sum + Math.sqrt(contribution),
+        0
+      );
+      const sumAmount = sumOfRoots * sumOfRoots;
       summed += sumAmount;
       arrOfMatch.push({
-        projectId: grant.projectId,
+        projectId: project.id,
         sum: sumAmount,
       });
     });
 
-    let divisor = availableMatch / summed;
+    const divisor = availableMatch / summed;
 
-    const finalMatch = grants.map((grant) => {
-      return {
-        projectId: grant.projectId,
-        amount:
-          arrOfMatch.filter((e) => e.projectId === grant.projectId)[0].sum *
-          divisor,
-      };
-    });
+    const finalMatch = updatedProjects.map((project) => ({
+      projectId: project.id,
+      amount:
+        arrOfMatch.find((match) => match.projectId === project.id)?.sum! *
+        divisor,
+    }));
 
     const donationImpact =
-      finalMatch.filter((e) => e.projectId === projectId)[0]?.amount || 0;
+      finalMatch.find((match) => match.projectId === projectId)?.amount || 0;
 
     dataPoints.push({ donation, additionalMatch: donationImpact });
   }

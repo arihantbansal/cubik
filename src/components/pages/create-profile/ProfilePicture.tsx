@@ -12,6 +12,7 @@ const ProfilePicture = ({
   isOpen: boolean;
   pfp: string;
 }) => {
+  console.log('passed profile picture - ', pfp);
   return (
     <Center
       cursor={'pointer'}

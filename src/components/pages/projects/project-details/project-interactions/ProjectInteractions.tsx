@@ -5,10 +5,12 @@ import {
   Center,
   HStack,
   IconButton,
+  Button,
   Skeleton,
   Stack,
   VStack,
   Wrap,
+  Flex,
 } from '@chakra-ui/react';
 import {
   Contribution,
@@ -19,7 +21,7 @@ import {
   UserModel,
 } from '@prisma/client';
 import Link from 'next/link';
-import { Key } from 'react';
+import { Key, useEffect, useState } from 'react';
 import {
   FaDiscord,
   FaGithub,
@@ -36,6 +38,11 @@ import {
   ProjectSocialsSkeleton,
 } from '../skeletons/ProjectPageLoadingSkeleton';
 import { ProjectCTAs } from './ProjectCTAs';
+import { formatNumberWithK } from '~/utils/formatWithK';
+import { SOL } from '~/components/common/tokens/token';
+import { BiChevronRight } from 'react-icons/bi';
+import { motion } from 'framer-motion';
+import { RecentContributions } from './RecentContributors';
 
 type ProjectCreatorTeamMemberProps = {
   teamMember: ProjectCreatorTeamType;
@@ -72,7 +79,6 @@ export const ProjectFundingData = ({
           overflow={'hidden'}
           position={'relative'}
         >
-          {' '}
           <Box
             as="svg"
             position="absolute"
@@ -95,7 +101,6 @@ export const ProjectFundingData = ({
               <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
                 ${funding.toFixed(2)}
               </Box>
-
               <Box as="p" textStyle={'body4'} color={'neutral.8'}>
                 Estimated Funds Raised
               </Box>
@@ -391,47 +396,56 @@ export const ProjectOwner = ({
 
 export const SimilarProject = () => {
   return (
-    <VStack align={'start'} w="full" gap="16px" color="#CBCBCB">
-      <Card w="full" direction={'row'} gap="16px" p="16px" align={'start'}>
-        <Avatar
-          size="md"
-          src="https://pbs.twimg.com/profile_images/1536479364657086464/0J5Nw811_400x400.jpg"
-        />
-        <VStack w="full" alignItems={'start'} textAlign="start">
-          <Box as="p" textStyle={'title4'} color="white">
-            Solarplex
-          </Box>
-          <Box as="p" color="#B4B0B2" textStyle={'body5'}>
-            Product Hunt for Solana Blockchain.
-          </Box>
-        </VStack>
-      </Card>
-      <Card direction={'row'} gap="16px" p="16px" align={'start'}>
-        <Avatar
-          size="md"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCOMVpOC5XXMwOU6RtVD8zvHxObLbk38Jfrtc0SbMC2w&s"
-        />
-        <VStack alignItems={'start'} textAlign="start">
-          <Box as="p" textStyle={'title4'} color="white">
-            Superteam Earn
-          </Box>
-          <Box as="p" color="#B4B0B2" textStyle={'body5'}>
-            Build your Web3 reputation through Solana bounties, grants, and
-            jobs.
-          </Box>
-        </VStack>
-      </Card>
-      <Card direction={'row'} gap="16px" p="16px" align={'start'}>
-        <Avatar size="md" src="https://i.ibb.co/G2bNtMP/blob.jpg" />
-        <VStack alignItems={'start'} textAlign="start">
-          <Box as="p" textStyle={'title4'} color="white">
-            XRay
-          </Box>
-          <Box as="p" color="#B4B0B2" textStyle={'body5'}>
-            On a mission to make Solana the most human-readable blockchain.
-          </Box>
-        </VStack>
-      </Card>
+    <VStack
+      gap="16px"
+      align={'start'}
+      w={{ base: 'auto', sm: 'auto', lg: 'full' }}
+    >
+      <Box as="p" textStyle={'title3'} color="white">
+        Similar Projects
+      </Box>
+      <VStack align={'start'} w="full" gap="16px" color="#CBCBCB">
+        <Card w="full" direction={'row'} gap="16px" p="16px" align={'start'}>
+          <Avatar
+            size="md"
+            src="https://pbs.twimg.com/profile_images/1536479364657086464/0J5Nw811_400x400.jpg"
+          />
+          <VStack w="full" alignItems={'start'} textAlign="start">
+            <Box as="p" textStyle={'title4'} color="white">
+              Solarplex
+            </Box>
+            <Box as="p" color="#B4B0B2" textStyle={'body5'}>
+              Product Hunt for Solana Blockchain.
+            </Box>
+          </VStack>
+        </Card>
+        <Card direction={'row'} gap="16px" p="16px" align={'start'}>
+          <Avatar
+            size="md"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCOMVpOC5XXMwOU6RtVD8zvHxObLbk38Jfrtc0SbMC2w&s"
+          />
+          <VStack alignItems={'start'} textAlign="start">
+            <Box as="p" textStyle={'title4'} color="white">
+              Superteam Earn
+            </Box>
+            <Box as="p" color="#B4B0B2" textStyle={'body5'}>
+              Build your Web3 reputation through Solana bounties, grants, and
+              jobs.
+            </Box>
+          </VStack>
+        </Card>
+        <Card direction={'row'} gap="16px" p="16px" align={'start'}>
+          <Avatar size="md" src="https://i.ibb.co/G2bNtMP/blob.jpg" />
+          <VStack alignItems={'start'} textAlign="start">
+            <Box as="p" textStyle={'title4'} color="white">
+              XRay
+            </Box>
+            <Box as="p" color="#B4B0B2" textStyle={'body5'}>
+              On a mission to make Solana the most human-readable blockchain.
+            </Box>
+          </VStack>
+        </Card>
+      </VStack>
     </VStack>
   );
 };
@@ -439,13 +453,26 @@ export const SimilarProject = () => {
 // sidebar
 export const ProjectCreatorAndLinks = ({
   projectDetails,
+  roundId,
   isLoading,
   preview,
 }: {
   projectDetails:
-    | ProjectWithRoundDetailsWithOwnerWithTeamType
+    | (ProjectsModel & {
+        Team: (Team & {
+          user: UserModel;
+        })[];
+        ProjectJoinRound: (ProjectJoinRound & {
+          contributors: (Contribution & {
+            user: UserModel;
+          })[];
+          fundingRound: Round;
+        })[];
+        owner: UserModel;
+      })
     | null
     | undefined;
+  roundId: string;
   isLoading: boolean;
   preview?: boolean;
 }) => {
@@ -458,7 +485,11 @@ export const ProjectCreatorAndLinks = ({
       justifyContent={'start'}
       display={{ base: 'none', lg: 'flex' }}
     >
-      <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />
+      <RecentContributions
+        projectId={projectDetails?.id || ''}
+        roundId={roundId}
+        isLoading={isLoading}
+      />
       {!preview && (
         <ProjectFundingData
           isLoading={isLoading}
@@ -475,16 +506,8 @@ export const ProjectCreatorAndLinks = ({
         />
       )}
       <ProjectOwner isLoading={isLoading} projectDetails={projectDetails} />
-      <VStack
-        gap="16px"
-        align={'start'}
-        w={{ base: 'auto', sm: 'auto', lg: 'full' }}
-      >
-        <Box as="p" textStyle={'title3'} color="white">
-          Similar Projects
-        </Box>
-        <SimilarProject />
-      </VStack>
+      <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />
+      <SimilarProject />
     </VStack>
   );
 };
@@ -507,12 +530,14 @@ interface ProjectInteractionsProps {
     | undefined;
   isLoading: boolean;
   preview?: boolean;
+  roundId: string;
 }
 
 export const ProjectInteractions = ({
   projectDetails,
   isLoading,
   preview,
+  roundId,
 }: ProjectInteractionsProps) => {
   return (
     <Stack
@@ -526,6 +551,7 @@ export const ProjectInteractions = ({
       <ProjectCTAs projectDetails={projectDetails} isLoading={isLoading} />
       <ProjectCreatorAndLinks
         projectDetails={projectDetails}
+        roundId={roundId}
         isLoading={isLoading}
         preview={preview}
       />
