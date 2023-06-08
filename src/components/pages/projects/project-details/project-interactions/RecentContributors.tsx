@@ -14,7 +14,7 @@ import { SOL } from '~/components/common/tokens/token';
 import { BiChevronRight } from 'react-icons/bi';
 import { motion, AnimatePresence } from 'framer-motion';
 import { trpc } from '~/utils/trpc';
-import { Contribution, UserModel, UserDetailsModel } from '@prisma/client';
+import { Contribution, UserModel } from '@prisma/client';
 
 const variants = {
   enter: { opacity: 0, y: 50 },
@@ -41,7 +41,7 @@ export const RecentContributions = ({
   } = trpc.contribution.getProjectContributors.useQuery({ projectId, roundId });
   const [visibleContributors, setVisibleContributors] = useState<
     (Contribution & {
-      user: UserModel & { userDetailsModel: UserDetailsModel | null };
+      user: UserModel;
     })[]
   >([]);
 
