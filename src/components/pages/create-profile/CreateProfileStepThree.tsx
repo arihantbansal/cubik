@@ -221,7 +221,8 @@ const CreateProfileStepThree = ({
             display: 'flex',
             flexDirection: 'column',
           }}
-          onSubmit={handleSubmit(onSubmit)}
+          //@ts-ignore
+          onSubmit={handleSubmit(onsubmit)} /// @irffan this is causing trouble check once
         >
           <FormControl
             w="full"

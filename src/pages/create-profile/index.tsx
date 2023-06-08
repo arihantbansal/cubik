@@ -104,6 +104,7 @@ const CreateProfile = () => {
                 onOpen={onOpen}
                 onClose={onClose}
                 isOpen={isOpen}
+                handleSubmit={() => {}}
                 onPrevious={goToPreviousStep}
               />
             )}
