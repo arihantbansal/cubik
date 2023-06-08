@@ -26,9 +26,8 @@ const CreateProfileStepTwo = ({
       <CardBody>
         <Button
           size={{ base: 'cubikMini', md: 'cubikSmall' }}
-          variant="cubikFilled"
+          variant="cubikOutline"
           loadingText="Submitting"
-          isDisabled={user?.data.user?.email ? true : false}
           onClick={() => {
             handleClick();
           }}
@@ -42,8 +41,7 @@ const CreateProfileStepTwo = ({
           variant={'cubikText'}
           leftIcon={<Box as={FiChevronLeft} width={5} height={5} />}
           onClick={async () => {
-            const { data } = await supabase.auth.getUser();
-            console.log(data);
+            onPrevious();
           }}
         >
           Previous
