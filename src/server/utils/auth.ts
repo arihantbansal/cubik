@@ -1,16 +1,25 @@
 import * as anchor from '@coral-xyz/anchor';
+
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
+
 import { Prisma } from '@prisma/client';
+
 import { GetServerSidePropsContext, NextApiRequest } from 'next';
+
 import {
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
 } from 'next-auth';
+
 import credentialsProvider from 'next-auth/providers/credentials';
+
 import { env } from '~/env.mjs';
+
 import { UserProof } from '~/types/user';
+
 import { verifyMessage } from '~/utils/getsignMessage';
+
 import { prisma } from './prisma';
 declare module 'next-auth' {
   interface Session extends DefaultSession {

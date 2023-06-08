@@ -105,11 +105,8 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
       isOpen={isOpen}
       onClose={async () => {
         await disconnect();
-        await signOut({ redirect: false });
-        setKey({
-          sig: '',
-          wallet: '',
-        });
+        localStorage.removeItem('anon_sig');
+        localStorage.removeItem('wallet_auth');
         onClose();
         FailureToast({
           toast,
@@ -171,11 +168,8 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
             variant={'cubikOutlined'}
             onClick={async () => {
               await disconnect();
-              await signOut({ redirect: false });
-              setKey({
-                sig: '',
-                wallet: '',
-              });
+              localStorage.removeItem('anon_sig');
+              localStorage.removeItem('wallet_auth');
 
               onClose();
               FailureToast({

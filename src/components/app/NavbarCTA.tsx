@@ -98,7 +98,14 @@ const NavbarCTA = () => {
 
   // Default case
   return publicKey && !isLoading ? (
-    <Center as="button" onClick={disconnect}>
+    <Center
+      as="button"
+      onClick={() => {
+        disconnect();
+        localStorage.removeItem('anon_sig');
+        localStorage.removeItem('wallet_auth');
+      }}
+    >
       <Spinner size="sm" color="teal" />
     </Center>
   ) : (

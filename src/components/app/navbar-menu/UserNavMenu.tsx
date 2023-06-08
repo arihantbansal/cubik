@@ -29,11 +29,8 @@ const UserNavMenu = () => {
   const { user } = useUserStore();
   async function handleSignOut() {
     await disconnect();
-    await signOut({ redirect: false });
-    setKey({
-      sig: '',
-      wallet: '',
-    });
+    localStorage.removeItem('anon_sig');
+    localStorage.removeItem('wallet_auth');
     localStorage.removeItem('walletName');
   }
 
