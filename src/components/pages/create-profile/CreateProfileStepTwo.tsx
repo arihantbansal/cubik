@@ -2,6 +2,7 @@ import { Box, Button, CardBody, CardFooter, VStack } from '@chakra-ui/react';
 import React, { use, useEffect, useState } from 'react';
 import { BsGoogle } from 'react-icons/bs';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { getURL } from '~/utils/getURL';
 import { supabase, useUser } from '~/utils/supabase';
 import { trpc } from '~/utils/trpc';
 
@@ -20,7 +21,7 @@ const CreateProfileStepTwo = ({
     const a = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: 'http://localhost:3000/create-profile',
+        redirectTo: `${getURL()}/create-profile`,
       },
     });
   };
