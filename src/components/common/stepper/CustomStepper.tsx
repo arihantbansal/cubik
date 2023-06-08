@@ -33,7 +33,7 @@ const CustomStepper = ({ steps, currentStep }: CustomStepperProps) => {
             key={step.index}
             w={{ base: 'fit-content', sm: 'full' }}
             rounded="full"
-            //border="1px solid #FFFFFF10"
+            border="1px solid #FFFFFF10"
             borderRadius="full"
             py={{ base: '0.4rem', sm: '0.5rem' }}
             px={{ base: '0.6rem', sm: '0.8rem' }}
@@ -51,8 +51,8 @@ const CustomStepper = ({ steps, currentStep }: CustomStepperProps) => {
               backgroundColor="none"
               transition={{ duration: 0.5, ease: 'easeInOut' }}
               variants={{
-                inactive: { opacity: 0 },
-                active: { opacity: 0.5 },
+                inactive: { opacity: 1 },
+                active: { opacity: 1 },
                 complete: { opacity: 1 },
               }}
             >

@@ -6,15 +6,15 @@ import {
   IconButton,
   Spinner,
   Text,
-  VStack
+  VStack,
 } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { motion } from 'framer-motion';
-import { useSession } from 'next-auth/react';
 import { memo, useEffect, useRef, useState } from 'react';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import { BsImage } from 'react-icons/bs';
 import { useNftDataByOwner } from '~/hooks/getNFTsByOwner';
+import { useUserStore } from '~/store/userStore';
 import Carousel from './Carousel';
 
 type CarouselPropsType = {
@@ -30,8 +30,7 @@ const FramerCarousel = memo(function FramerCarousel({
 }: CarouselPropsType) {
   const carousel = useRef<HTMLElement>();
   const [carouselWidth, setCarouselWidth] = useState(0);
-
-  const { data: session } = useSession();
+  const { user } = useUserStore();
   const { publicKey } = useWallet();
 
   const { data: nftsData, isLoading, error } = useNftDataByOwner(publicKey);
@@ -79,7 +78,7 @@ const FramerCarousel = memo(function FramerCarousel({
           p="0.3rem 0.8rem"
           size="8px"
           onClick={() => {
-            if (session?.user.image) {
+            if (user?.profilePicture) {
               // set this to the database
               onClose();
             } else {

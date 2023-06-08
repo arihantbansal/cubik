@@ -1,7 +1,7 @@
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
+import { useUserStore } from '~/store/userStore';
 
 interface WithAuthProps {
   redirect?: string;
@@ -13,14 +13,14 @@ const withAuth = (
 ) => {
   const WithAuthWrapper: FC = (props: any) => {
     const router = useRouter();
-    const { data: session } = useSession();
+    const { user } = useUserStore();
     const { publicKey } = useWallet();
 
     useEffect(() => {
-      if (!session && !publicKey) {
+      if (!user && !publicKey) {
         router.replace(redirect);
       }
-    }, [session, publicKey, redirect]);
+    }, [user, publicKey, redirect]);
 
     return <WrappedComponent {...props} />;
   };

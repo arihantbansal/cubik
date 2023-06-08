@@ -16,7 +16,6 @@ import {
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
-import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import { useForm } from 'react-hook-form';
@@ -36,7 +35,11 @@ import { AmountInput } from './form/DonationAmountInput';
 import { WalletBalanceError } from './form/WalletBalanceError';
 import { fetchPrice } from '~/utils/getPrice';
 import { useRouter } from 'next/router';
+<<<<<<< HEAD
 import Graph from './Graph';
+=======
+import { useUserStore } from '~/store/userStore';
+>>>>>>> refactor/auth-remove
 
 type ProjectDonationSimulatorProps = {
   projectDetails: projectWithFundingRoundType;
@@ -49,11 +52,9 @@ export const token: tokenGroup[] = tokens;
 
 export const ProjectDonationSimulator = ({
   projectDetails,
-  height,
-  width,
   setDonationSuccessful,
 }: ProjectDonationSimulatorProps) => {
-  const { data } = useSession();
+  const { user } = useUserStore();
   const [txnError, setTxnError] = useState<string | null>(null);
   const router = useRouter();
   const toast = useToast();
@@ -157,7 +158,7 @@ export const ProjectDonationSimulator = ({
       totalAmount: _values.amount,
       usd: _values.amount * price,
       tx: sig as string,
-      userId: data?.user?.id as string,
+      userId: user?.id as string,
     });
     // onOpen();
   }
@@ -281,7 +282,7 @@ export const ProjectDonationSimulator = ({
             <FormErrorMessage textStyle={{ base: 'body5', md: 'body4' }}>
               <>{errors.amount && errors.amount.message}</>
             </FormErrorMessage>
-            <WalletBalanceError selectedToken={selectedToken} data={data} />
+            <WalletBalanceError selectedToken={selectedToken} />
           </FormControl>
           <FormControl>
             <FormLabel
