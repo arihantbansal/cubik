@@ -14,6 +14,7 @@ model UserModel {
   username       String          @unique
   mainWallet     String          @unique
   proof          Json?
+  email          String
   profilePicture String          @db.VarChar(500)
   tx             String          @db.VarChar(500)
   createdAt      DateTime        @default(now())
@@ -28,6 +29,7 @@ model UserModel {
   Contribution   Contribution[]
   Round          Round[]
 
+  @@unique([email])
   @@fulltext([username])
 }
 

@@ -33,7 +33,7 @@ const CustomStepper = ({ steps, currentStep }: CustomStepperProps) => {
             key={step.index}
             w={{ base: 'fit-content', sm: 'full' }}
             rounded="full"
-            border="1px solid #FFFFFF10"
+            outline="1px solid #FFFFFF10"
             borderRadius="full"
             py={{ base: '0.4rem', sm: '0.5rem' }}
             px={{ base: '0.6rem', sm: '0.8rem' }}

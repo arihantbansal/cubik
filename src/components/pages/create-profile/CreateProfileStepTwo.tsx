@@ -1,7 +1,9 @@
-import { Box, Button, CardBody, CardFooter } from '@chakra-ui/react';
+import { Box, Button, CardBody, CardFooter, VStack } from '@chakra-ui/react';
 import React, { use, useEffect, useState } from 'react';
+import { BsGoogle } from 'react-icons/bs';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { supabase, useUser } from '~/utils/supabase';
+import { trpc } from '~/utils/trpc';
 
 const CreateProfileStepTwo = ({
   onNext,
@@ -11,8 +13,10 @@ const CreateProfileStepTwo = ({
   onPrevious: () => void;
 }) => {
   const { user } = useUser(supabase);
+  const [emailUnique, setEmailUnique] = useState<boolean>(true);
+
+  const checkEmailMutation = trpc.user.checkEmail.useMutation();
   const handleClick = async () => {
-    console.log('sometjhing');
     const a = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -21,19 +25,48 @@ const CreateProfileStepTwo = ({
     });
   };
 
+  useEffect(() => {
+    const checkEmail = async () => {
+      if (user?.data?.user?.email) {
+        const res = await checkEmailMutation.mutateAsync({
+          email: user?.data?.user?.email,
+        });
+        setEmailUnique(res);
+      }
+    };
+    checkEmail();
+  }, [user?.data?.user?.email]);
+
   return (
     <>
       <CardBody>
-        <Button
-          size={{ base: 'cubikMini', md: 'cubikSmall' }}
-          variant="cubikOutline"
-          loadingText="Submitting"
-          onClick={() => {
-            handleClick();
-          }}
-        >
-          {user?.data?.user?.email ? user?.data?.user?.email : 'Connect Google'}
-        </Button>
+        <VStack py="16px" spacing="12px" w="full" align="start">
+          <Button
+            w="full"
+            size={{ base: 'cubikMini', md: 'cubikSmall' }}
+            variant="cubikOutlined"
+            loadingText="Submitting"
+            leftIcon={
+              <Box as={BsGoogle} boxSize={{ base: '12px', md: '13px' }} />
+            }
+            onClick={() => {
+              handleClick();
+            }}
+          >
+            {user?.data?.user?.email
+              ? user?.data?.user?.email
+              : 'Connect Google'}
+          </Button>
+          <Box
+            display={emailUnique ? 'none' : ''}
+            as="p"
+            textStyle={'body4'}
+            color="surface.red.2"
+          >
+            *connect a unique account to proceed. Connect different account by
+            clicking on it again
+          </Box>
+        </VStack>
       </CardBody>
       <CardFooter>
         <Button
@@ -50,7 +83,7 @@ const CreateProfileStepTwo = ({
           size={{ base: 'cubikMini', md: 'cubikSmall' }}
           variant="cubikFilled"
           loadingText="Submitting"
-          isDisabled={!user?.data.user?.email}
+          isDisabled={!emailUnique}
           rightIcon={
             <Box as={FiChevronRight} boxSize={['10px', '12px', '16px']} />
           }

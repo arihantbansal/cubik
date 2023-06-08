@@ -13,7 +13,6 @@ import GraphProps from '~/types/graphProps';
 import { trpc } from '~/utils/trpc';
 import { GraphLine } from './GraphLines';
 import { useState, useEffect } from 'react';
-import { calculateProjectMatchingFund } from '~/utils/calculateProjectMatchingFund';
 
 const Graph: React.FC<GraphProps> = ({
   width,

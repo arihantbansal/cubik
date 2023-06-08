@@ -24,7 +24,7 @@ import { tokens } from '~/components/common/tokens/DonationTokens';
 import { DonationFormType } from '~/interfaces/donationForm';
 import { tokenGroup } from '~/interfaces/token';
 import { projectWithFundingRoundType } from '~/types/project';
-
+import Graph from './Graph';
 import {
   connection,
   contributeSOL,
@@ -35,11 +35,7 @@ import { AmountInput } from './form/DonationAmountInput';
 import { WalletBalanceError } from './form/WalletBalanceError';
 import { fetchPrice } from '~/utils/getPrice';
 import { useRouter } from 'next/router';
-<<<<<<< HEAD
-import Graph from './Graph';
-=======
 import { useUserStore } from '~/store/userStore';
->>>>>>> refactor/auth-remove
 
 type ProjectDonationSimulatorProps = {
   projectDetails: projectWithFundingRoundType;
@@ -52,6 +48,8 @@ export const token: tokenGroup[] = tokens;
 
 export const ProjectDonationSimulator = ({
   projectDetails,
+  width,
+  height,
   setDonationSuccessful,
 }: ProjectDonationSimulatorProps) => {
   const { user } = useUserStore();

@@ -2,21 +2,12 @@ import {
   Box,
   Card,
   CardHeader,
-  Avatar,
   Container,
   HStack,
   useDisclosure,
 } from '@chakra-ui/react';
-import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
-import { useWalletModal } from '@solana/wallet-adapter-react-ui';
-import { signIn } from 'next-auth/react';
 import { useState } from 'react';
-import { FieldValues, SubmitHandler } from 'react-hook-form';
-
 import CustomStepper from '~/components/common/stepper/CustomStepper';
-
 import CreateProfileStepOne from '~/components/pages/create-profile/CreateProfileStepOne';
 import CreateProfileStepThree from '~/components/pages/create-profile/CreateProfileStepThree';
 import CreateProfileStepTwo from '~/components/pages/create-profile/CreateProfileStepTwo';
@@ -105,6 +96,7 @@ const CreateProfile = () => {
                 onClose={onClose}
                 isOpen={isOpen}
                 onPrevious={goToPreviousStep}
+                handleSubmit={undefined}
               />
             )}
           </>

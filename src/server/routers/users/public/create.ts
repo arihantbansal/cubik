@@ -13,6 +13,7 @@ export const createUser = procedure
       mainWallet: z.string().nonempty(),
       profilePicture: z.string(),
       tx: z.string().nonempty(),
+      email: z.string().email(),
     })
   )
   .mutation(async ({ input }) => {
@@ -26,6 +27,7 @@ export const createUser = procedure
           mainWallet: input.mainWallet,
           profilePicture: input.profilePicture,
           username: input.username,
+          email: input.email,
           proof: [],
           tx: input.tx,
         },
