@@ -83,7 +83,8 @@ const CreateProfileStepThree = ({
   const anchorWallet = useAnchorWallet();
   const toast = useToast();
   const { user } = useUser(supabase);
-  const { setUser } = useUserStore();
+  const { setUser, user: Users } = useUserStore();
+
   const UserProfilePicture = user?.data.user?.user_metadata.picture || pfp;
   const UserUserName = user?.data.user?.user_metadata.full_name
     .replace(/\s/g, '')

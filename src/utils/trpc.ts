@@ -23,7 +23,13 @@ export const trpc = createTRPCNext<AppRouter>({
       links: [
         httpBatchLink({
           url: `${getBaseUrl()}/api/trpc`,
+          headers() {
+            return {
+              Authorization: `Bearer ${localStorage.getItem('wallet_auth')}`,
+            };
+          },
         }),
+
         loggerLink({
           enabled: (opts) =>
             process.env.NODE_ENV === 'development' ||

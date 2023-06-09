@@ -1,12 +1,12 @@
 import { inferAsyncReturnType } from '@trpc/server';
 import type { CreateNextContextOptions } from '@trpc/server/adapters/next';
 import { getServerAuthSession } from './utils/auth';
+import { authHandler } from './utils/authHandler';
 
-export const createContext = async ({ req, res }: CreateNextContextOptions) => {
-  const session = await getServerAuthSession({ req, res });
-
+export const createContext = async ({ req }: CreateNextContextOptions) => {
+  const user = await authHandler(req.headers.authorization);
   return {
-    session,
+    user,
   };
 };
 

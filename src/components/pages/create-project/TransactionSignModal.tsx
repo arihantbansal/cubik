@@ -74,6 +74,9 @@ const CreateProjectTransactionModal: React.FC<
   const [projectSubmitted, setProjectSubmitted] = useState(false);
 
   const { user } = useUserStore();
+  const projectCount = trpc.project.count.useQuery({
+    id: (user?.id as string) ?? '',
+  });
   const anchorWallet = useAnchorWallet();
 
   const createProjectMutation = trpc.project.create.useMutation({
@@ -108,7 +111,7 @@ const CreateProjectTransactionModal: React.FC<
       const tx = new anchor.web3.Transaction();
       const ix = await createProject(
         anchorWallet as NodeWallet,
-        1, /// update a counter
+        (projectCount.data?._count.project as number) + 1,
         new anchor.web3.PublicKey(vaultAuth)
       );
       const { blockhash } = await connection.getLatestBlockhash();
@@ -134,7 +137,7 @@ const CreateProjectTransactionModal: React.FC<
         project_link: getValues().projectLink,
         discord_link: getValues().projectLink,
         telegram_link: getValues().telegram,
-        projectUserCount: 1, ////////////////////////////////////////////// update the value here
+        projectUserCount: (projectCount.data?._count.project as number) + 1,
         team: getValues()?.team?.map((member) => member.value) ?? [],
         multiSigAddress: vaultAuth,
         email: getValues().email,

@@ -13,6 +13,7 @@ import {
   findOneProject,
   joinRound,
   projectAdminDetails,
+  projectCount,
   verifiedProjects,
 } from './projects/index';
 import {
@@ -44,4 +45,5 @@ export const projectsRouter = router({
   projectVisitorsDetail: projectVisitorsDetail,
   updateProjectStatus: updateProjectStatus,
   verifiedProjects: verifiedProjects,
+  count: projectCount,
 });

@@ -14,7 +14,7 @@ export const joinRound = protectedProcedure
     })
   )
   .mutation(async ({ input, ctx }) => {
-    if (!ctx.session) {
+    if (!ctx.session.user) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: 'Session not found',
