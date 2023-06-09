@@ -104,7 +104,6 @@ const CreateProjectTransactionModal: React.FC<
         user?.username as string,
         anchorWallet as NodeWallet,
         getValues().projectName,
-        getValues().tagline,
         imageUrl as string
       );
       const vaultAuth = await getVault(anchorWallet as NodeWallet, key);
