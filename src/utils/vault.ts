@@ -1,23 +1,29 @@
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import Squads from '@sqds/sdk';
+import { env } from '~/env.mjs';
+
+const getSquads = async (wallet: NodeWallet): Promise<Squads> => {
+  if (env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta') {
+    const squads = Squads.mainnet(wallet);
+    return squads;
+  }
+  const squads = Squads.devnet(wallet);
+
+  return squads;
+};
 
 export const createVault = async (
   username: string,
   wallet: NodeWallet,
   name: string,
-  description: string,
   image: string
 ) => {
-  const squads = Squads.devnet(wallet);
-
+  const squads = await getSquads(wallet);
   const ix = await squads.buildCreateMultisig(
     2,
     anchor.web3.Keypair.generate().publicKey,
-    [
-      wallet.publicKey,
-      new anchor.web3.PublicKey('8hpDP2azqJjTuKnys6ptQ56z4xdqSTHRPpPUYxdpaTJ3'),
-    ],
+    [wallet.publicKey, new anchor.web3.PublicKey(env.NEXT_PUBLIC_ADMIN_VAULT)],
     `Cubik Vault`,
     `This treasured holds the funds raised on cubik by @${username} for @${name}`,
     image
@@ -29,7 +35,7 @@ export const getVault = async (
   wallet: NodeWallet,
   mutliSigAccount: anchor.web3.PublicKey
 ): Promise<string> => {
-  const squads = Squads.devnet(wallet);
+  const squads = await getSquads(wallet);
 
   const [authority] = anchor.web3.PublicKey.findProgramAddressSync(
     [

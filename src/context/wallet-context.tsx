@@ -18,9 +18,13 @@ import {
 import { clusterApiUrl } from '@solana/web3.js';
 import type { FC, ReactNode } from 'react';
 import { useMemo } from 'react';
+import { env } from '~/env.mjs';
 
 const WalletContext: FC<{ children: ReactNode }> = ({ children }) => {
-  const network = WalletAdapterNetwork.Mainnet;
+  const network =
+    env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta'
+      ? WalletAdapterNetwork.Mainnet
+      : WalletAdapterNetwork.Devnet;
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
   const wallets = useMemo(
     () => [
