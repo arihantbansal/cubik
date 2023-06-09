@@ -1,0 +1,39 @@
+import { procedure } from '~/server/trpc';
+import { z } from 'zod';
+import { prisma } from '~/server/utils/prisma';
+
+export const findOneJoinRound = procedure
+  .input(
+    z.object({
+      id: z.string().nonempty(),
+    })
+  )
+  .query(async ({ input }) => {
+    const res = await prisma.projectJoinRound.findUnique({
+      where: {
+        id: input.id,
+      },
+      include: {
+        project: {
+          include: {
+            Team: {
+              include: {
+                user: true,
+              },
+            },
+            owner: true,
+            Contribution: {
+              where: {
+                projectJoinRoundId: input.id,
+              },
+              include: {
+                user: true,
+              },
+            },
+          },
+        },
+        fundingRound: true,
+      },
+    });
+    return res;
+  });

@@ -199,7 +199,7 @@ const CreateGrantRound = () => {
         colorScheme: colorScheme,
         short_description: short_description,
         startTime: start?.toISOString() as string,
-        endtime: end?.toISOString() as string,
+        endTime: end?.toISOString() as string,
         description: description,
         manager: (user?.username as string) ?? '',
       });

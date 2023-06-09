@@ -18,7 +18,6 @@ export const authHandler = async (token: string | undefined) => {
       id: payload.id,
     },
   });
-  console.log(user, '-----');
 
   return user;
 };

@@ -19,29 +19,18 @@ import RoundStatus from '~/components/common/dates/Status';
 import { ProjectStatus } from '~/utils/getProjectStatus';
 
 interface Props {
-  projectDetails:
-    | (ProjectsModel & {
-        Team: (Team & {
-          user: UserModel;
-        })[];
-        ProjectJoinRound: (ProjectJoinRound & {
-          contributors: (Contribution & {
-            user: UserModel;
-          })[];
-          fundingRound: Round;
-        })[];
-        owner: UserModel;
-      })
-    | null
-    | undefined;
+  roundName: string;
+  startTime: Date;
+  endTime: Date;
+  status: any;
 }
 
-const ProjectDetailsLiveRoundStatus = ({ projectDetails }: Props) => {
-  // todo fix this
-  const { startTime, endtime, status, round } =
-    ProjectStatus({
-      projectData: projectDetails,
-    }) || {};
+const ProjectDetailsLiveRoundStatus = ({
+  endTime,
+  roundName,
+  startTime,
+  status,
+}: Props) => {
   switch (status) {
     case ProjectVerifyStatus.REVIEW:
       return (
@@ -174,9 +163,9 @@ const ProjectDetailsLiveRoundStatus = ({ projectDetails }: Props) => {
             padding={{ base: '10px 16px', md: '12px 24px' }}
             align={{ base: 'start', sm: 'center' }}
           >
-            {startTime && endtime && (
+            {startTime && endTime && (
               <Center w="fit-content">
-                <RoundStatus startDate={startTime} endDate={endtime} />
+                <RoundStatus startDate={startTime} endDate={endTime} />
               </Center>
             )}
             <Box
@@ -188,7 +177,7 @@ const ProjectDetailsLiveRoundStatus = ({ projectDetails }: Props) => {
               color="neutral.11"
               w="full"
             >
-              Participating in <b>{round?.fundingRound.roundName}</b> Round
+              Participating in <b>{roundName}</b> Round
             </Box>
           </Flex>
         </Container>
@@ -228,7 +217,7 @@ const ProjectDetailsLiveRoundStatus = ({ projectDetails }: Props) => {
             color="#E6D6FF"
           >
             Congratulations your project has been selected to participate in{' '}
-            <b>{round?.fundingRound.roundName} Round.</b>
+            <b>{roundName} Round.</b>
           </Box>
         </Flex>
       );
@@ -307,9 +296,8 @@ const ProjectDetailsLiveRoundStatus = ({ projectDetails }: Props) => {
               textStyle={{ base: 'body6', md: 'body5' }}
               color="#FFCCFF"
             >
-              Your project is currently under review for{' '}
-              {round?.fundingRound.roundName} Round. Check your mail for more
-              information.
+              Your project is currently under review for {roundName} Round.
+              Check your mail for more information.
             </Box>
           </Flex>
         </Container>

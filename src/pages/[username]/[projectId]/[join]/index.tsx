@@ -8,19 +8,19 @@ import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-detai
 import ProjectDetailsLiveRoundStatus from '~/components/pages/projects/project-details/ProjectDetailsLiveRoundStatus';
 import SEO from '~/components/SEO';
 import { Mixpanel } from '~/utils/mixpanel';
-import { ProjectJoinRound } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 
 const ProjectDetails = ({
   projectId,
-  roundId,
+  joinId,
 }: {
   projectId: string;
-  roundId: string | null;
+  joinId: string;
 }) => {
-  const { data, isError, isLoading, error } = trpc.project.findOne.useQuery({
-    id: projectId as string,
-  });
+  const { data, isError, isLoading, error } =
+    trpc.project.findOneJoinRound.useQuery({
+      id: joinId as string,
+    });
 
   Mixpanel.track('project_page_load', {
     id: projectId,
@@ -30,17 +30,25 @@ const ProjectDetails = ({
     return <ComponentErrors error={error} />;
   }
 
-  const isPreview = roundId === null;
+  // const isPreview = roundId === null;
 
   return (
     <>
       <SEO
-        title={`${data ? data.name : 'Project'} - Cubik`}
-        description={`${data ? data.short_description : ''}`}
-        image={data ? data?.logo : ''}
+        title={`${data ? data.project.name : 'Project'} - Cubik`}
+        description={`${data ? data.project.short_description : ''}`}
+        image={data ? data?.project.logo : ''}
       />
       <main style={{ width: 'full' }}>
         <Container maxW={'full'} p="0">
+          {joinId && (
+            <ProjectDetailsLiveRoundStatus
+              endTime={data?.fundingRound.endTime as Date}
+              startTime={data?.fundingRound.startTime as Date}
+              status={data?.status as ProjectJoinRoundStatus}
+              roundName={data?.fundingRound.roundName as string}
+            />
+          )}
           <Stack
             maxW="7xl"
             mx="auto"
@@ -52,27 +60,27 @@ const ProjectDetails = ({
             justifyContent={'start'}
           >
             <ProjectDetailsAndTabs
-              ownerName={data?.owner.username as string}
-              roundId={''}
+              funding={data?.amountRaise ?? 0}
+              contributors={data?.project.Contribution.length ?? 0}
+              ownerName={data?.project.owner.username as string}
+              roundId={data?.fundingRound.id as string}
               isLoading={isLoading}
-              contributors={0}
-              funding={0}
-              team={data?.Team ?? []}
+              team={data?.project.Team ?? []}
               projectDetails={{
-                ...data!!,
+                ...data?.project!!,
               }}
             />
 
             <ProjectInteractions
               projectDetails={{
-                ...data!!,
+                ...data?.project!!,
               }}
-              contributors={0}
-              funding={0}
-              roundId={''}
+              contributors={data?.project.Contribution.length ?? 0}
+              funding={data?.amountRaise ?? 0}
+              roundId={data?.fundingRound.id as string}
               isLoading={isLoading}
-              preview={isPreview}
-              team={data?.Team ?? []}
+              preview={false}
+              team={data?.project.Team ?? []}
             />
           </Stack>
         </Container>
@@ -82,24 +90,14 @@ const ProjectDetails = ({
 };
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const projectId = context.query.projectId as string;
+  const join = context.query.join as string;
 
-  const roundId = context.query.round as string;
-  const prev = context.query.prev as string | undefined;
-
-  if (prev) {
-    return {
-      props: { projectId, roundId: null },
-    };
-  } else {
-    if (roundId) {
-      return {
-        props: { projectId, roundId },
-      };
-    }
-    return {
-      props: { projectId, roundId: null },
-    };
-  }
+  return {
+    props: {
+      projectId,
+      joinId: join,
+    },
+  };
 };
 
 export default ProjectDetails;

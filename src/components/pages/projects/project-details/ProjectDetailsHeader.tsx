@@ -48,13 +48,16 @@ export const ProjectLink = ({ urlName }: { urlName: string }) => {
 
 const ProjectDetailsHeader = ({
   isLoading,
-  projectDetails,
+  name,
+  logo,
+  industry,
+  short_description,
 }: {
   isLoading: boolean;
-  projectDetails:
-    | ProjectWithRoundDetailsWithOwnerWithTeamType
-    | null
-    | undefined;
+  name: string;
+  logo: string;
+  industry: string;
+  short_description: string;
 }) => {
   return (
     <Stack
@@ -72,7 +75,7 @@ const ProjectDetailsHeader = ({
       >
         <Avatar
           backgroundColor={'#1C1C1C'}
-          src={projectDetails?.logo}
+          src={logo}
           width={{ base: '4.4rem', md: '6.2rem' }}
           height={{ base: '4.4rem', md: '6.2rem' }}
         />
@@ -101,7 +104,7 @@ const ProjectDetailsHeader = ({
                 whiteSpace="nowrap"
                 textOverflow="ellipsis"
               >
-                {projectDetails?.name}
+                {name}
               </Box>
               <Menu>
                 <MenuButton
@@ -146,16 +149,14 @@ const ProjectDetailsHeader = ({
               pt="0.5rem"
               display={{ base: 'none', md: 'flex' }}
             >
-              {projectDetails &&
-                JSON.parse(projectDetails.industry)?.map(
-                  (tag: any, key: React.Key) => {
-                    return (
-                      <CustomTag color={tag?.label} key={key}>
-                        {tag?.label}
-                      </CustomTag>
-                    );
-                  }
-                )}
+              {industry &&
+                JSON.parse(industry)?.map((tag: any, key: React.Key) => {
+                  return (
+                    <CustomTag color={tag?.label} key={key}>
+                      {tag?.label}
+                    </CustomTag>
+                  );
+                })}
             </HStack>
           </Skeleton>
         </Stack>
@@ -175,7 +176,7 @@ const ProjectDetailsHeader = ({
             noOfLines={2}
             textOverflow="ellipsis"
           >
-            {projectDetails?.short_description}
+            {short_description}
           </Box>
         </SkeletonText>
         {/* <HStack>

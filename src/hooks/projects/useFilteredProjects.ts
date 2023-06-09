@@ -14,6 +14,7 @@ export const useFilteredProjects = () => {
   // trpc calls
   const { data: roundsData, isLoading: roundsLoading } =
     trpc.round.findOngoingRounds.useQuery();
+
   const {
     data: filteredProjectsFromServer,
     isLoading: filteredProjectsLoading,
@@ -29,6 +30,8 @@ export const useFilteredProjects = () => {
 
   useEffect(() => {
     if (roundsData) {
+      console.log('roundsData', roundsData);
+
       setSelectedRounds(roundsData);
     }
   }, [roundsData]);

@@ -26,7 +26,7 @@ const ExplorePageHeader = () => {
               <FundingRoundBanner
                 key={round.id}
                 startDate={round.startTime}
-                endDate={round.endtime}
+                endDate={round.endTime}
                 roundId={round.id}
                 roundName={round.roundName}
                 roundDescription={round.short_description}

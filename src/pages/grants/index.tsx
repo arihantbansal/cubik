@@ -180,7 +180,7 @@ const RoundPage = () => {
                       </Box>
                       <RoundStatus
                         startDate={round.startTime}
-                        endDate={round.endtime}
+                        endDate={round.endTime}
                       />
                     </HStack>
                     <Box
@@ -243,7 +243,7 @@ const RoundPage = () => {
                         </Link>
                       </Button>
                     ) : (
-                      checkRoundStatus(round.startTime, round.endtime) ===
+                      checkRoundStatus(round.startTime, round.endTime) ===
                         GRANT_STATUS.notStarted && (
                         <Button
                           onClick={() => {

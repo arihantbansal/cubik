@@ -8,12 +8,12 @@ const ProjectStatusBanner = ({
   status,
   roundName,
   startTime,
-  endtime,
+  endTime,
 }: {
   status: string;
   roundName?: string;
   startTime?: Date;
-  endtime?: Date;
+  endTime?: Date;
 }) => {
   // check if projects is live and receiving donation in a live round
   switch (status) {
@@ -158,9 +158,9 @@ const ProjectStatusBanner = ({
     //       borderColor="#31F57940"
     //       backgroundColor={'#31F57908'}
     //     >
-    //       {startTime && endtime && (
+    //       {startTime && endTime && (
     //         <Center w="fit-content">
-    //           <RoundStatus startDate={startTime} endDate={endtime} />
+    //           <RoundStatus startDate={startTime} endDate={endTime} />
     //         </Center>
     //       )}
     //       <Box

@@ -159,7 +159,7 @@ model Round {
   active            Boolean            @default(true)
   userId            String
   description       String             @default(dbgenerated("(_utf8mb4\\'\\')")) @db.Text
-  endtime           DateTime           @default(now())
+  endTime           DateTime           @default(now())
   startTime         DateTime           @default(now())
   tx                String             @db.VarChar(500)
   createdAt         DateTime           @default(now())

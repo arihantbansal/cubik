@@ -152,7 +152,7 @@ const VisitorProjectRoundCard = ({
               </HStack>
               <RoundStatus
                 startDate={round?.fundingRound.startTime}
-                endDate={round?.fundingRound.endtime}
+                endDate={round?.fundingRound.endTime}
               />
             </Stack>
           </HStack>

@@ -32,7 +32,7 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
     id: project.id,
   });
 
-  const { startTime, endtime, status, round } = ProjectStatus({
+  const { startTime, endTime, status, round } = ProjectStatus({
     projectData: projectData as projectWithFundingRoundType,
   });
 

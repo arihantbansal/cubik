@@ -45,18 +45,20 @@ import { motion } from 'framer-motion';
 import { RecentContributions } from './RecentContributors';
 
 type ProjectCreatorTeamMemberProps = {
-  teamMember: ProjectCreatorTeamType;
+  teamMember: Team[] & {
+    user: UserModel;
+  };
 };
 interface Props {
   isLoading: boolean;
   funding: number;
-  contributers: number;
+  contributors: number;
 }
 
 export const ProjectFundingData = ({
   isLoading,
   funding,
-  contributers,
+  contributors,
 }: Props) => {
   return (
     <VStack gap="16px" align={'start'} w="full">
@@ -203,7 +205,7 @@ export const ProjectFundingData = ({
           <HStack w="full" align={'start'}>
             <VStack align={'start'} gap="8px">
               <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
-                {contributers}
+                {contributors}
               </Box>
               <Box as="p" textStyle={'body4'} color={'neutral.8'}>
                 Contributors
@@ -261,35 +263,31 @@ export const ProjectSocials = ({
 }: {
   isLoading: boolean;
   hideTitle?: boolean;
-  projectDetails:
-    | ProjectWithRoundDetailsWithOwnerWithTeamType
-    | ProjectsModel
-    | null
-    | undefined;
+  projectDetails: ProjectsModel;
 }) => {
   const socials = [
     {
-      name: projectDetails?.twitter_handle ? 'twitter' : undefined,
-      url: projectDetails?.twitter_handle
+      name: projectDetails.twitter_handle ? 'twitter' : undefined,
+      url: projectDetails.twitter_handle
         ? projectDetails.twitter_handle
         : undefined,
     },
     {
-      name: projectDetails?.discord_link ? 'discord' : undefined,
-      url: projectDetails?.discord_link
+      name: projectDetails.discord_link ? 'discord' : undefined,
+      url: projectDetails.discord_link
         ? projectDetails.discord_link
         : undefined,
     },
     {
-      name: projectDetails?.telegram_link ? 'telegram' : undefined,
+      name: projectDetails.telegram_link ? 'telegram' : undefined,
 
-      url: projectDetails?.telegram_link
+      url: projectDetails.telegram_link
         ? projectDetails.telegram_link
         : undefined,
     },
     {
-      name: projectDetails?.github_link ? 'github' : undefined,
-      url: projectDetails?.github_link ? projectDetails.github_link : undefined,
+      name: projectDetails.github_link ? 'github' : undefined,
+      url: projectDetails.github_link ? projectDetails.github_link : undefined,
     },
   ];
   return (
@@ -337,7 +335,11 @@ export const ProjectSocials = ({
 
 export const ProjectCreatorTeamMember = ({
   teamMember,
-}: ProjectCreatorTeamMemberProps) => {
+}: {
+  teamMember: Team & {
+    user: UserModel;
+  };
+}) => {
   return (
     <HStack
       as={Link}
@@ -367,13 +369,12 @@ export const ProjectCreatorTeamMember = ({
 };
 
 export const ProjectOwner = ({
-  projectDetails,
+  team,
   isLoading,
 }: {
-  projectDetails:
-    | ProjectWithRoundDetailsWithOwnerWithTeamType
-    | null
-    | undefined;
+  team: (Team & {
+    user: UserModel;
+  })[];
   isLoading: boolean;
 }) => {
   return (
@@ -384,11 +385,9 @@ export const ProjectOwner = ({
       {isLoading ? (
         <ProjectCreatorSkeleton isLoading={isLoading} />
       ) : (
-        projectDetails?.Team.map(
-          (teamMember: ProjectCreatorTeamType, key: Key) => (
-            <ProjectCreatorTeamMember teamMember={teamMember} key={key} />
-          )
-        )
+        team.map((teamMember: ProjectCreatorTeamType, key: Key) => (
+          <ProjectCreatorTeamMember teamMember={teamMember} key={key} />
+        ))
       )}
     </VStack>
   );
@@ -456,25 +455,19 @@ export const ProjectCreatorAndLinks = ({
   roundId,
   isLoading,
   preview,
+  team,
+  contributors,
+  funding,
 }: {
-  projectDetails:
-    | (ProjectsModel & {
-        Team: (Team & {
-          user: UserModel;
-        })[];
-        ProjectJoinRound: (ProjectJoinRound & {
-          contributors: (Contribution & {
-            user: UserModel;
-          })[];
-          fundingRound: Round;
-        })[];
-        owner: UserModel;
-      })
-    | null
-    | undefined;
+  projectDetails: ProjectsModel;
   roundId: string;
   isLoading: boolean;
   preview?: boolean;
+  team: (Team & {
+    user: UserModel;
+  })[];
+  contributors: number;
+  funding: number;
 }) => {
   return (
     <VStack
@@ -493,19 +486,11 @@ export const ProjectCreatorAndLinks = ({
       {!preview && (
         <ProjectFundingData
           isLoading={isLoading}
-          contributers={
-            projectDetails?.ProjectJoinRound.find(
-              (e) => e.status === 'APPROVED'
-            )?.contributions ?? 0
-          }
-          funding={
-            projectDetails?.ProjectJoinRound.find(
-              (e) => e.status === 'APPROVED'
-            )?.amountRaise ?? 0
-          }
+          contributors={contributors}
+          funding={funding}
         />
       )}
-      <ProjectOwner isLoading={isLoading} projectDetails={projectDetails} />
+      <ProjectOwner isLoading={isLoading} team={team} />
       <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />
       <SimilarProject />
     </VStack>
@@ -513,24 +498,15 @@ export const ProjectCreatorAndLinks = ({
 };
 
 interface ProjectInteractionsProps {
-  projectDetails:
-    | (ProjectsModel & {
-        Team: (Team & {
-          user: UserModel;
-        })[];
-        ProjectJoinRound: (ProjectJoinRound & {
-          contributors: (Contribution & {
-            user: UserModel;
-          })[];
-          fundingRound: Round;
-        })[];
-        owner: UserModel;
-      })
-    | null
-    | undefined;
+  projectDetails: ProjectsModel;
   isLoading: boolean;
   preview?: boolean;
   roundId: string;
+  team: (Team & {
+    user: UserModel;
+  })[];
+  contributors: number;
+  funding: number;
 }
 
 export const ProjectInteractions = ({
@@ -538,6 +514,9 @@ export const ProjectInteractions = ({
   isLoading,
   preview,
   roundId,
+  team,
+  contributors,
+  funding,
 }: ProjectInteractionsProps) => {
   return (
     <Stack
@@ -550,10 +529,13 @@ export const ProjectInteractions = ({
     >
       <ProjectCTAs projectDetails={projectDetails} isLoading={isLoading} />
       <ProjectCreatorAndLinks
+        team={team}
         projectDetails={projectDetails}
         roundId={roundId}
         isLoading={isLoading}
         preview={preview}
+        contributors={contributors || 0}
+        funding={funding || 0}
       />
     </Stack>
   );

@@ -334,7 +334,7 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
                   projectJoinRound.project.id
                 }${
                   projectJoinRound.status === ProjectJoinRoundStatus.APPROVED
-                    ? `?round=${projectJoinRound.id}`
+                    ? `/${projectJoinRound.id}`
                     : ``
                 }`}
                 background={'#1D1F1E'}

@@ -16,7 +16,7 @@ export const roundRouter = router({
         matchingPool: z.number().positive(),
         colorScheme: z.string(),
         short_description: z.string(),
-        endtime: z.string(),
+        endTime: z.string(),
         startTime: z.string(),
         description: z.string(),
         manager: z.string(),
@@ -36,7 +36,7 @@ export const roundRouter = router({
           description: input.description,
           tx: input.tx,
           colorScheme: input.colorScheme,
-          endtime: input.endtime,
+          endTime: input.endTime,
           startTime: input.startTime,
           manager: input.manager,
           short_description: input.short_description,
@@ -81,7 +81,7 @@ export const roundRouter = router({
     const roundRes = await prisma.round.findMany({
       where: {
         active: true,
-        endtime: {
+        endTime: {
           gte: new Date(),
         },
       },
@@ -92,7 +92,7 @@ export const roundRouter = router({
     const roundRes = await prisma.round.findMany({
       where: {
         active: true,
-        endtime: {
+        endTime: {
           gte: new Date(),
         },
         startTime: {
@@ -110,13 +110,6 @@ export const roundRouter = router({
       })
     )
     .query(async ({ ctx, input }) => {
-      if (!ctx.user) {
-        throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: 'Session not found',
-          cause: 'User not logged in',
-        });
-      }
       const roundRes = await prisma.round.findFirst({
         where: {
           id: input.id,
