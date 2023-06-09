@@ -12,10 +12,8 @@ type usernameProps = {
 };
 
 const Username = ({ isLoading, username, proofs, size }: usernameProps) => {
-  console.log('proofs', proofs);
   // see time stamp for the user from proofs array of the first proof and show the popup with if the time stamp matches the current time stamp
   const CheckMark = ({ size }: { size?: size }) => {
-    console.log('proofs', proofs);
     if (proofs?.length === 0) return <></>;
     else if (proofs?.length === 1) {
       return (

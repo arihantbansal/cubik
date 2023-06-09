@@ -26,10 +26,8 @@ const NavbarCTA = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setCurrentPath(window.location.pathname);
-    }
-  }, []);
+    setCurrentPath(router.pathname);
+  }, [router.pathname]);
 
   useEffect(() => {
     const fetch = async () => {
