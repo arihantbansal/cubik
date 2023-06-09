@@ -110,7 +110,7 @@ export const roundRouter = router({
       })
     )
     .query(async ({ ctx, input }) => {
-      if (!ctx.session) {
+      if (!ctx.user) {
         throw new TRPCError({
           code: 'FORBIDDEN',
           message: 'Session not found',
@@ -241,7 +241,7 @@ export const roundRouter = router({
         });
       }
 
-      if (roundInfo.userId !== ctx.session?.user.id) {
+      if (roundInfo.userId !== ctx?.user?.id) {
         throw new TRPCError({
           code: 'FORBIDDEN',
           message: 'Invalid Round Admin',

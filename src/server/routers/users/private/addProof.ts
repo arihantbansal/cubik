@@ -27,11 +27,14 @@ export const addProof = protectedProcedure
       },
       data: {
         proof: (user.proof
-          ? user.proof.push({
-              name: input.name as ProofType,
-              timestamp: new Date(),
-              tx: input.tx,
-            })
+          ? [
+              ...(user.proof as unknown as ProofType[]),
+              {
+                name: input.name as ProofType,
+                timestamp: new Date(),
+                tx: input.tx,
+              },
+            ]
           : [
               {
                 name: input.name as ProofType,
