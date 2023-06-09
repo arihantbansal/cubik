@@ -25,7 +25,7 @@ import { tokens } from '~/components/common/tokens/DonationTokens';
 import { DonationFormType } from '~/interfaces/donationForm';
 import { tokenGroup } from '~/interfaces/token';
 import { projectWithFundingRoundType } from '~/types/project';
-
+import Graph from './Graph';
 import {
   connection,
   contributeSOL,
@@ -246,9 +246,8 @@ export const ProjectDonationSimulator = ({
         onSubmit={handleSubmit(onSubmit)}
         style={{
           width: 'full',
-          height: '100%',
+          height: '22rem',
           display: 'flex',
-          gap: '52px',
           flex: '1',
           flexDirection: 'column',
           justifyContent: 'space-between',
@@ -279,7 +278,7 @@ export const ProjectDonationSimulator = ({
             </FormErrorMessage>
             <WalletBalanceError selectedToken={selectedToken} data={data} />
           </FormControl>
-          <FormControl>
+          {/* <FormControl>
             <FormLabel
               textStyle={{ base: 'title6', md: 'title5' }}
               color="neutral.8"
@@ -347,7 +346,7 @@ export const ProjectDonationSimulator = ({
                 <></>
               )}
             </FormErrorMessage>
-          </FormControl>
+          </FormControl> */}
         </VStack>
         <VStack w="full" gap="16px">
           <VStack w="full" align="center" gap="8px">
@@ -368,7 +367,7 @@ export const ProjectDonationSimulator = ({
                 />
               </Center>
             </HStack>
-            <HStack w="full" justify={'space-between'}>
+            {/* <HStack w="full" justify={'space-between'}>
               <Box as="p" textStyle={'body5'} color="neutral.8">
                 Matching pool contribution
               </Box>
@@ -389,7 +388,7 @@ export const ProjectDonationSimulator = ({
                   }
                 />
               </Center>
-            </HStack>
+            </HStack> */}
           </VStack>
           {txnError && (
             <Alert status="error" variant="cubik">
@@ -415,14 +414,14 @@ export const ProjectDonationSimulator = ({
           </Button>
         </VStack>
       </form>
-      {/* <Graph
+      <Graph
         width={width}
         height={height}
         maximumDonationValue={1000}
         donationAmount={donation}
         setValue={setValue}
         projectId={projectDetails.id}
-      /> */}
+      />
     </Stack>
   );
 };
