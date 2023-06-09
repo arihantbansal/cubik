@@ -18,8 +18,7 @@ export const updateProjectStatus = procedure
   )
   .mutation(async ({ input, ctx }) => {
     if (
-      ctx?.session?.user.mainWallet !==
-      '52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ'
+      ctx.user?.mainWallet !== '52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ'
     ) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
