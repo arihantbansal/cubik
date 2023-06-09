@@ -398,6 +398,18 @@ export const Button = {
         },
       },
     }),
+    cubikAccept: (_props: StyleFunctionProps) => ({
+      backgroundColor: '#31F57910',
+      p: '12px !important',
+      borderRadius: '10px',
+      border: '2px solid #31F57940',
+    }),
+    cubikReject: (_props: StyleFunctionProps) => ({
+      backgroundColor: '#ADB8B610',
+      p: '12px !important',
+      borderRadius: '10px',
+      border: '2px solid #ADB8B640',
+    }),
   },
   sizes: {
     cubikMini: {

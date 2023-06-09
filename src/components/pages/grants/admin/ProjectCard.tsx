@@ -9,6 +9,8 @@ import {
   Stack,
   VStack,
 } from '@chakra-ui/react';
+import { BiCheck } from 'react-icons/bi';
+import { RxCross2 } from 'react-icons/rx';
 import GetFormattedLink from '~/components/HOC/GetLink';
 
 const ProjectRoundManagerCardPendingStatus = ({
@@ -74,28 +76,46 @@ const ProjectRoundManagerCardPendingStatus = ({
           </Stack>
           <HStack justifyContent={'end'}>
             <Button
-              variant={'cubikDanger'}
-              maxW={{ base: '100%', sm: '8rem', md: '10rem' }}
-              w={{ base: 'full', sm: '8rem', md: '10rem' }}
-              size={{ base: 'cubikMedium', md: 'cubikSmall' }}
+              w="fit-content"
+              variant={'cubikFilled'}
+              h="full"
+              size={{ base: 'cubikMini', md: 'cubikSmall' }}
               onClick={() => {
                 setProjectToBeRejected(projectJoinRound.project);
                 onRejectModelOpen();
               }}
             >
-              Reject
+              View Details
             </Button>
             <Button
-              variant={'cubikFilled'}
-              maxW={{ base: '100%', sm: '8rem', md: '20rem' }}
-              w={{ base: 'full', sm: '8rem', md: '10rem' }}
-              size={{ base: 'cubikMedium', md: 'cubikSmall' }}
+              w="fit-content"
+              variant={'cubikReject'}
+              size={{ base: 'cubikMini', md: 'cubikSmall' }}
+              onClick={() => {
+                setProjectToBeRejected(projectJoinRound.project);
+                onRejectModelOpen();
+              }}
+            >
+              <Box
+                as={RxCross2}
+                color="#ADB8B6"
+                boxSize={{ base: '18px', md: '26px' }}
+              />
+            </Button>
+            <Button
+              w="fit-content"
+              variant={'cubikAccept'}
+              size={{ base: 'cubikMini', md: 'cubikSmall' }}
               onClick={() => {
                 setProjectToBeAccepted(projectJoinRound.project);
                 onAcceptModalOpen();
               }}
             >
-              Accept
+              <Box
+                as={BiCheck}
+                color="#31F579"
+                boxSize={{ base: '18px', md: '26px' }}
+              />
             </Button>
           </HStack>
         </Stack>

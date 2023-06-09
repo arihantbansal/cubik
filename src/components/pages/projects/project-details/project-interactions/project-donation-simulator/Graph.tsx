@@ -13,17 +13,18 @@ import GraphProps from '~/types/graphProps';
 import { trpc } from '~/utils/trpc';
 import { GraphLine } from './GraphLines';
 import { useState, useEffect } from 'react';
+import { calculateProjectMatchingFund } from '~/utils/calculateProjectMatchingFund';
 
 const Graph: React.FC<GraphProps> = ({
   width,
   height,
   donationAmount,
-  setValue,
   maximumDonationValue,
   projectId,
 }) => {
   const router = useRouter();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>([]);
+  const [value, setValue] = useState(100);
   const { data: graphData } = trpc.project.projectGraph.useQuery({
     id: router.query.projectId as string,
   });
@@ -31,10 +32,8 @@ const Graph: React.FC<GraphProps> = ({
   const { data: contributionMutationData } =
     trpc.contribution.create.useMutation();
 
-  const exponent = 2;
-
   const handleSliderChange = (value: number) => {
-    // setValue(Math.round(value));
+    setValue(Math.round(value));
   };
 
   useEffect(() => {
@@ -43,17 +42,19 @@ const Graph: React.FC<GraphProps> = ({
     // matchingPool: number | undefined;
 
     if (graphData) {
-      return;
-      //setData(
-      // calculateProjectMatchingFund(
-      //   projectId,
-      //   10000,
-      //   1,
-      // )
+      setData(
+        calculateProjectMatchingFund(
+          projectId,
+          10,
+          1,
+          graphData.round,
+          graphData.matchingPool as number
+        )
+      );
     }
   }, [graphData]);
 
-  console.log('graphData', graphData);
+  console.log('graphData', data);
   return (
     <VStack flex="1" p="1rem" width={'100%'} gap="0">
       <Box
@@ -85,14 +86,14 @@ const Graph: React.FC<GraphProps> = ({
         aria-label="donation-amount"
         defaultValue={donationAmount}
         min={0}
-        max={Math.pow(maximumDonationValue, 1 / exponent)}
+        max={maximumDonationValue}
         step={1}
         onChange={(value) => handleSliderChange(value)}
         w={'94%'}
         mt="-5px !important"
         transform={'translateX(18px)'}
         py="0"
-        value={Math.round(Math.pow(donationAmount, 1 / exponent))}
+        value={Math.round(donationAmount)}
       >
         {/* <SliderMark
           fontSize={'sm'}

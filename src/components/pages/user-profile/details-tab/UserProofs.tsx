@@ -9,9 +9,14 @@ import {
   VStack,
   Wrap,
   Center,
+  Tag,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import TwitterProof from './proofs/TwitterProof';
+import MonkeDAOProof from './proofs/MonkeDAOProof';
+import CivicIDProof from './proofs/CivicIDProof';
+import DripProof from './proofs/DripProof';
+import LamportDAOProof from './proofs/LamportDAOProof';
 
 const MotionBox = motion(Box);
 
@@ -36,7 +41,7 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
             Proofs
           </Box>
         </Skeleton>
-        {/* <Skeleton
+        <Skeleton
           fadeDuration={3}
           isLoaded={!isLoading}
           opacity={isLoading ? 0.6 : 1}
@@ -51,9 +56,9 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
             background={'surface.yellow.3'}
             rounded="full"
           >
-            0 / 8 Collected
+            0 / 5 Collected
           </Tag>
-        </Skeleton> */}
+        </Skeleton>
       </HStack>
       <Alert
         w="full"
@@ -97,7 +102,25 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
             <TwitterProof />
           </MotionBox>
         </Skeleton>
-        {/* <Skeleton
+        <Skeleton
+          fadeDuration={4}
+          isLoaded={!isLoading}
+          opacity={isLoading ? 0.4 : 1}
+          rounded="12px"
+        >
+          <MotionBox
+            as={Card}
+            cursor="pointer"
+            w={{ base: 'full', sm: 'full', md: '17.8rem' }}
+            height="fit-content"
+            h="full"
+            whileHover={{ y: -8, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <LamportDAOProof />
+          </MotionBox>
+        </Skeleton>
+        <Skeleton
           fadeDuration={5}
           isLoaded={!isLoading}
           opacity={isLoading ? 0.4 : 1}
@@ -150,7 +173,7 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
           >
             <MonkeDAOProof />
           </MotionBox>
-        </Skeleton> */}
+        </Skeleton>
       </Wrap>
     </VStack>
   );

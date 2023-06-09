@@ -12,6 +12,7 @@ import { Popover } from './popover';
 import { Select } from './select';
 import { Skeleton } from './skeleton';
 import { Slider } from './slider';
+import { Stat } from './stat';
 import { Tabs } from './tabs';
 import { Tag } from './tag';
 import { Textarea } from './textArea';
@@ -19,6 +20,7 @@ import { Textarea } from './textArea';
 export const components = {
   Alert,
   Tag,
+  Stat,
   Tabs,
   Card,
   Menu,
