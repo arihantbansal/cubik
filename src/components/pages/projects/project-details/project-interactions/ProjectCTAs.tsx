@@ -23,6 +23,7 @@ import { GoVerified } from 'react-icons/go';
 import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
 import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 import { useUserStore } from '~/store/userStore';
+import { useRouter } from 'next/router';
 
 interface ProjectCTAsProps {
   projectDetails:
@@ -53,6 +54,7 @@ export const ProjectCTAs = ({
   isLoading,
 }: ProjectCTAsProps) => {
   const { user } = useUserStore();
+  const router = useRouter();
   const { setVisible } = useWalletModal();
   const [isHovered, setIsHovered] = useState(false);
   const [donationSuccessful, setDonationSuccessful] = useState(false);
@@ -68,18 +70,13 @@ export const ProjectCTAs = ({
   };
 
   useEffect(() => {
-    {
-      if (typeof window !== 'undefined') {
-        const url = new URL(window.location.href);
-        const round = url.searchParams.get('round');
-        const prev = url.searchParams.get('prev');
+    const round = router.query.round;
+    const prev = router.query.prev;
 
-        if (prev) {
-          return;
-        } else if (round) {
-          setShowDonation(true);
-        }
-      }
+    if (prev) {
+      return;
+    } else if (round) {
+      setShowDonation(true);
     }
   }, []);
 

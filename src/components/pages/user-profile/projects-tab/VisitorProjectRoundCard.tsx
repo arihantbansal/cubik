@@ -5,6 +5,7 @@ import {
   Round,
 } from '@prisma/client';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { FiClock } from 'react-icons/fi';
 import { HiBan } from 'react-icons/hi';
 import { ImCheckboxChecked } from 'react-icons/im';
@@ -107,8 +108,8 @@ const VisitorProjectRoundCard = ({
     | undefined;
   isLoading: boolean;
 }) => {
-  const router = window.location.pathname.split('/');
-  const username = router[1];
+  const router = useRouter();
+  const username = router.pathname.split('/')[1];
 
   return (
     <Skeleton

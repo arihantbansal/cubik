@@ -30,16 +30,13 @@ export const Header = memo(function Header({
   const router = useRouter();
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [isDesktop] = useMediaQuery('(min-width: 768px)');
-  const isCreateProfilePage =
-    typeof window !== 'undefined' &&
-    window.location.pathname !== '/create-profile';
+  const isCreateProfilePage = router.pathname !== '/create-profile';
 
   const isActiveRoute = (route: string): boolean => {
-    return typeof window !== 'undefined' && window.location.pathname === route;
+    return router.pathname === route;
   };
 
-  const landingPage =
-    typeof window !== 'undefined' && window.location.pathname === '/';
+  const landingPage = router.pathname === '/';
 
   const NavbarCTA: React.FC<any> = ({ children }) => {
     return (

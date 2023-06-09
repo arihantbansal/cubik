@@ -77,7 +77,7 @@ export const AdminProjectEmptyState = () => {
             Submit Your Project
           </Box>
           <Box
-            maxW="22rem"
+            maxW="26rem"
             textAlign={'center'}
             as="p"
             color="neutral.8"
@@ -91,7 +91,7 @@ export const AdminProjectEmptyState = () => {
           as={Link}
           href="/submit-project"
           variant="cubikFilled"
-          size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+          size={{ base: 'cubikMini', md: 'cubikSmall' }}
         >
           Upload Project
         </Button>

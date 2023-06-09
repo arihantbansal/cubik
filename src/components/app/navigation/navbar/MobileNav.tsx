@@ -1,5 +1,6 @@
 import { Box, Center, Collapse, Flex } from '@chakra-ui/react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { memo } from 'react';
 import { SearchBar } from '~/components/common/searchbar';
 
@@ -14,8 +15,8 @@ export const MobileNavCollapsible = memo(function MobileNavCollapsible({
   onClose: () => void;
   children?: React.ReactNode;
 }) {
-  const landingPage =
-    typeof window !== 'undefined' && window.location.pathname === '/';
+  const router = useRouter();
+  const landingPage = router.pathname === '/';
 
   return (
     <Collapse in={isOpen} animateOpacity>
