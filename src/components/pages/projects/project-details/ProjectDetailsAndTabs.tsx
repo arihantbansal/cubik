@@ -40,7 +40,6 @@ type MobileDrawerTypes = {
   walletAddress: string;
   isOpen: boolean;
   onClose: () => void;
-  projectDetails: ProjectWithRoundDetailsWithOwnerWithTeamType;
   setDonationSuccessful: any;
 };
 
@@ -50,7 +49,6 @@ const MobileDrawer = ({
   walletAddress,
   isOpen,
   onClose,
-  projectDetails,
   setDonationSuccessful,
 }: MobileDrawerTypes) => {
   return (
@@ -91,23 +89,18 @@ const MobileOnlyViews = ({
   projectDetails,
   isLoading,
   children,
+  team,
+  contributors,
+  funding,
 }: {
   isLoading: boolean;
-  projectDetails:
-    | (ProjectsModel & {
-        Team: (Team & {
-          user: UserModel;
-        })[];
-        ProjectJoinRound: (ProjectJoinRound & {
-          contributors: (Contribution & {
-            user: UserModel;
-          })[];
-          fundingRound: Round;
-        })[];
-        owner: UserModel;
-      })
-    | null
-    | undefined;
+  projectDetails: ProjectsModel;
+  team: (Team & {
+    user: UserModel;
+  })[];
+  contributors: number;
+  funding: number;
+
   children?: React.ReactNode;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -153,18 +146,10 @@ const MobileOnlyViews = ({
         <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />{' '}
         <ProjectFundingData
           isLoading={isLoading}
-          contributers={
-            projectDetails?.ProjectJoinRound.find(
-              (e) => e.status === 'APPROVED'
-            )?.contributions ?? 0
-          }
-          funding={
-            projectDetails?.ProjectJoinRound.find(
-              (e) => e.status === 'APPROVED'
-            )?.amountRaise ?? 0
-          }
+          contributors={contributors}
+          funding={funding}
         />
-        <ProjectOwner isLoading={isLoading} projectDetails={projectDetails} />
+        <ProjectOwner isLoading={isLoading} team={team} />
       </VStack>
       {projectDetails && (
         <MobileDrawer
@@ -173,7 +158,6 @@ const MobileOnlyViews = ({
           walletAddress={projectDetails.owner_publickey}
           isOpen={isOpen}
           onClose={onClose}
-          projectDetails={projectDetails}
           setDonationSuccessful={setDonationSuccessful}
         />
       )}
@@ -182,29 +166,25 @@ const MobileOnlyViews = ({
 };
 
 export const ProjectDetailsAndTabs = ({
-  projectDetails,
   isLoading,
   children,
   roundId,
+  projectDetails,
+  ownerName,
+  team,
+  contributors,
+  funding,
 }: {
-  projectDetails:
-    | (ProjectsModel & {
-        Team: (Team & {
-          user: UserModel;
-        })[];
-        ProjectJoinRound: (ProjectJoinRound & {
-          contributors: (Contribution & {
-            user: UserModel;
-          })[];
-          fundingRound: Round;
-        })[];
-        owner: UserModel;
-      })
-    | null
-    | undefined;
   isLoading: boolean;
   children?: React.ReactNode;
   roundId: string;
+  projectDetails: ProjectsModel;
+  ownerName: string;
+  contributors: number;
+  funding: number;
+  team: (Team & {
+    user: UserModel;
+  })[];
 }) => {
   return (
     <Container
@@ -220,12 +200,22 @@ export const ProjectDetailsAndTabs = ({
     >
       <ProjectDetailsHeader
         isLoading={isLoading}
-        projectDetails={projectDetails}
+        industry={projectDetails?.industry}
+        logo={projectDetails?.logo}
+        name={projectDetails.name}
+        short_description={projectDetails?.short_description}
       />
-      <MobileOnlyViews isLoading={isLoading} projectDetails={projectDetails}>
+      <MobileOnlyViews
+        isLoading={isLoading}
+        contributors={contributors}
+        funding={funding}
+        team={team}
+        projectDetails={projectDetails}
+      >
         {children}
       </MobileOnlyViews>
       <ProjectsTabs
+        ownerName={ownerName}
         roundId={roundId}
         projectDetails={projectDetails}
         isLoading={isLoading}

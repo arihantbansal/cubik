@@ -7,3 +7,4 @@ export * from './updateProjectStatus';
 export * from './findPubkey';
 export * from './findManyVerified';
 export * from './findManyReview';
+export * from './findOneJoinRound';

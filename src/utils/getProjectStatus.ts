@@ -22,7 +22,7 @@ type projectRoundAndVerifyType = {
     | undefined
     | null;
   startTime?: Date;
-  endtime?: Date;
+  endTime?: Date;
 };
 
 export const ProjectStatus = ({
@@ -52,21 +52,21 @@ export const ProjectStatus = ({
                   round: projectJoinRound,
                   status: ProjectJoinRoundStatus.APPROVED,
                   startTime: projectJoinRound.fundingRound.startTime,
-                  endtime: projectJoinRound.fundingRound.endtime,
+                  endTime: projectJoinRound.fundingRound.endTime,
                 };
-              } else if (isFuture(projectJoinRound.fundingRound.endtime)) {
+              } else if (isFuture(projectJoinRound.fundingRound.endTime)) {
                 projectRoundData = {
                   round: projectJoinRound,
                   status: 'LIVE',
                   startTime: projectJoinRound.fundingRound.startTime,
-                  endtime: projectJoinRound.fundingRound.endtime,
+                  endTime: projectJoinRound.fundingRound.endTime,
                 };
-              } else if (isPast(projectJoinRound.fundingRound.endtime)) {
+              } else if (isPast(projectJoinRound.fundingRound.endTime)) {
                 projectRoundData = {
                   round: projectJoinRound,
                   status: 'ENDED',
                   startTime: projectJoinRound.fundingRound.startTime,
-                  endtime: projectJoinRound.fundingRound.endtime,
+                  endTime: projectJoinRound.fundingRound.endTime,
                 };
               }
             } else {

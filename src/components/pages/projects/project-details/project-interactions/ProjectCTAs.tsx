@@ -23,6 +23,7 @@ import { GoVerified } from 'react-icons/go';
 import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
 import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 import { useUserStore } from '~/store/userStore';
+import { ProjectsModel } from '@prisma/client';
 
 interface ProjectCTAsProps {
   projectDetails:
@@ -51,7 +52,10 @@ const AnimatedArrowIcon = (props: IconProps & { animate: boolean }) => {
 export const ProjectCTAs = ({
   projectDetails,
   isLoading,
-}: ProjectCTAsProps) => {
+}: {
+  projectDetails: ProjectsModel;
+  isLoading: boolean;
+}) => {
   const { user } = useUserStore();
   const { setVisible } = useWalletModal();
   const [isHovered, setIsHovered] = useState(false);

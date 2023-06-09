@@ -7,40 +7,20 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react';
-import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 import { formatDate } from '~/utils/formatDates';
 import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
 import Discussions from './ProjectDiscussion';
 import ProjectContributors from './project-interactions/project-tabs/ProjectContributors';
-import {
-  Contribution,
-  ProjectJoinRound,
-  ProjectsModel,
-  Round,
-  Team,
-  UserModel,
-} from '@prisma/client';
+import { ProjectsModel } from '@prisma/client';
 
 export const ProjectsTabs = ({
   projectDetails,
   isLoading,
   roundId,
+  ownerName,
 }: {
-  projectDetails:
-    | (ProjectsModel & {
-        Team: (Team & {
-          user: UserModel;
-        })[];
-        ProjectJoinRound: (ProjectJoinRound & {
-          contributors: (Contribution & {
-            user: UserModel;
-          })[];
-          fundingRound: Round;
-        })[];
-        owner: UserModel;
-      })
-    | null
-    | undefined;
+  projectDetails: ProjectsModel;
+  ownerName: string;
   roundId: string;
   isLoading: boolean;
 }) => {
@@ -67,8 +47,8 @@ export const ProjectsTabs = ({
           {projectDetails && (
             <Stack direction={{ base: 'row', md: 'row' }}>
               <Box as="p" textStyle="body4" color="neutral.7">
-                Created: {formatDate(projectDetails?.createdAt)}
-                {''} by @{projectDetails?.owner?.username}
+                Created: {formatDate(projectDetails?.createdAt ?? Date.now())}
+                {''} by @{ownerName}
               </Box>
             </Stack>
           )}

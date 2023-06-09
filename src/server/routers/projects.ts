@@ -1,13 +1,4 @@
-import {
-  Prisma,
-  ProjectJoinRoundStatus,
-  ProjectVerifyStatus,
-} from '@prisma/client';
-import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
-import { Grant } from '~/utils/calculateProjectMatchingFund';
-import { procedure, protectedProcedure, router } from '../trpc';
-import { prisma } from '../utils/prisma';
+import { router } from '../trpc';
 import {
   createProject,
   findOneProject,
@@ -21,6 +12,7 @@ import {
   findManyProjects,
   findManyReview,
   findManyVerified,
+  findOneJoinRound,
   findPubkey,
   projectGraph,
   updateProjectStatus,
@@ -46,4 +38,5 @@ export const projectsRouter = router({
   updateProjectStatus: updateProjectStatus,
   verifiedProjects: verifiedProjects,
   count: projectCount,
+  findOneJoinRound: findOneJoinRound,
 });

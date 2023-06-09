@@ -273,7 +273,7 @@ const ApplyForGrant: React.FC<{
   const FilteredRoundTiles = () => {
     const filteredRoundData = roundData?.filter((round) => {
       return (
-        checkRoundStatus(round.startTime, round.endtime) ===
+        checkRoundStatus(round.startTime, round.endTime) ===
         GRANT_STATUS.notStarted
       );
     });
@@ -286,7 +286,7 @@ const ApplyForGrant: React.FC<{
         <VStack w="full" spacing="24px">
           {roundData?.map((round: Round) => {
             return (
-              checkRoundStatus(round.startTime, round.endtime) ===
+              checkRoundStatus(round.startTime, round.endTime) ===
                 GRANT_STATUS.notStarted && (
                 <Tile tileIndex={round.id} round={round} key={round.id} />
               )

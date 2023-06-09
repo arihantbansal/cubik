@@ -44,7 +44,7 @@ const GrantDetailsHeader = ({
             opacity={isLoading ? '0.5' : '1'}
             rounded="full"
           >
-            <RoundStatus startDate={data?.startTime} endDate={data?.endtime} />
+            <RoundStatus startDate={data?.startTime} endDate={data?.endTime} />
           </Skeleton>
           <VStack align={'start'} spacing={{ base: '12px', md: '24px' }}>
             <Skeleton
@@ -137,7 +137,7 @@ const GrantDetailsHeader = ({
               display={
                 checkRoundStatus(
                   data?.startTime as Date,
-                  data?.endtime as Date
+                  data?.endTime as Date
                 ) === GRANT_STATUS.notStarted
                   ? 'block'
                   : 'none'

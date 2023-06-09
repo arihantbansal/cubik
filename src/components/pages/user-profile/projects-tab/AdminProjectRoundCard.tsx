@@ -134,7 +134,7 @@ const AdminProjectRoundCard = ({
             <HStack>
               <RoundStatus
                 startDate={round.fundingRound.startTime}
-                endDate={round.fundingRound.endtime}
+                endDate={round.fundingRound.endTime}
               />
             </HStack>
           </HStack>
