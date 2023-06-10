@@ -369,7 +369,7 @@ const SelectProjectToApplyForGrant = ({
                     textStyle={{ base: 'title6', md: 'title5' }}
                     color="neutral.11"
                   >
-                    {selectedGrantRound?.roundName} Round
+                    {selectedGrantRound?.roundName}
                   </Box>
                 </VStack>
               </Stack>

@@ -23,12 +23,13 @@ import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import parse from 'html-react-parser';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   AiOutlineExpand,
   AiOutlineLink,
   AiOutlineOrderedList,
 } from 'react-icons/ai';
+import { TbPencil, TbEye } from 'react-icons/tb';
 import { BiHeading } from 'react-icons/bi';
 import { BsBlockquoteLeft, BsTypeItalic } from 'react-icons/bs';
 import {
@@ -42,10 +43,12 @@ const MarkdownEditor = ({
   editorHeading,
   editorData,
   setEditorData,
+  componentSize: componentSize,
 }: {
   editorHeading?: string;
   editorData: string | undefined;
   setEditorData: any;
+  componentSize?: 'sm' | 'md' | 'lg';
 }) => {
   const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
   const [isEditorModalOpen, setIsEditorModal] = useState(false);
@@ -89,17 +92,6 @@ const MarkdownEditor = ({
     content: editorData,
   });
 
-  const EditorCardBody = () => {
-    return (
-      <Box
-        position={'relative'}
-        w={'full'}
-        height={'20rem'}
-        overflow="scroll"
-      ></Box>
-    );
-  };
-
   const handleAddLink = () => {
     if (url) {
       // @ts-ignore
@@ -113,6 +105,35 @@ const MarkdownEditor = ({
       setIsLinkModalOpen(false);
     }
   };
+
+  const [size, setSize] = useState({ base: '8px', sm: '12px', md: '16px' });
+  useEffect(() => {
+    if (componentSize === 'sm') {
+      setSize({ base: '12px', sm: '14px', md: '16px' });
+    } else if (componentSize === 'md') {
+      setSize({ base: '12px', sm: '24px', md: '32px' });
+    } else if (componentSize === 'lg') {
+      setSize({ base: '0px', sm: '32px', md: '44px' });
+    } else {
+      setSize({ base: '8px', sm: '12px', md: '16px' });
+    }
+  }, []);
+
+  const EditorArea = () => {
+    return (
+      <EditorContent
+        id="reset-des"
+        placeholder="Enter your project description here"
+        style={{
+          height: '100%',
+        }}
+        width={'100%'}
+        height={'100%'}
+        editor={editor}
+      />
+    );
+  };
+
   return (
     <>
       <Modal
@@ -143,15 +164,27 @@ const MarkdownEditor = ({
       </Modal>
       <Modal
         isCentered
+        variant={'cubik'}
+        size={'6xl'}
         isOpen={isEditorModalOpen}
         onClose={() => setIsEditorModal(false)}
       >
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Add a link</ModalHeader>
+        <ModalContent height="85vh" mt="5rem">
+          <ModalHeader>{editorHeading}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <EditorCardBody />
+            <EditorContent
+              id="reset-des"
+              placeholder="Enter your project description here"
+              style={{
+                height: '100%',
+                padding: '0px',
+              }}
+              width={'100%'}
+              height={'100%'}
+              editor={editor}
+            />
           </ModalBody>
           <ModalFooter>
             <Button
@@ -165,88 +198,221 @@ const MarkdownEditor = ({
       </Modal>
       {/* editor controls */}
       {editorHeading && (
-        <Box w="full">
+        <Box px={size} w="full">
           <Box as="p" textStyle={'title2'}>
             {editorHeading}
           </Box>
         </Box>
       )}
-      <Flex w={'full'} p="1rem" align={'center'} justify={'space-between'}>
-        <Box onClick={() => setPreview(!preview)} cursor="pointer">
+      <Flex
+        w={'full'}
+        px={size}
+        py={{ base: '12px', md: '16px' }}
+        gap={{ base: '12px', md: '16px' }}
+        align={{ base: 'start', md: 'center' }}
+        direction={{ base: 'row', md: 'row' }}
+        justify={'space-between'}
+      >
+        <Button
+          p="8px 16px"
+          rounded="8px"
+          bg={'neutral.4'}
+          _hover={{
+            bg: 'neutral.2',
+          }}
+          rightIcon={
+            preview ? (
+              <Box
+                as={TbPencil}
+                boxSize={{ base: '12px', md: '14px' }}
+                color="white"
+              />
+            ) : (
+              <Box as={TbEye} boxSize={{ base: '12px', md: '14px' }} />
+            )
+          }
+          fontSize={{ base: '12px', md: '14px' }}
+          onClick={() => setPreview(!preview)}
+          cursor="pointer"
+        >
           {!preview ? 'Preview' : 'Edit'}
-        </Box>
-        <HStack spacing="0.1rem">
+        </Button>
+        <HStack height="38px" spacing="4px">
           <IconButton
+            h="100%"
             aria-label="Markdown Heading"
             variant={'markdownIconButton'}
-            bg={editor?.isActive('heading', { level: 2 }) ? '#ffffff30' : ''}
+            bg={
+              editor?.isActive('heading', { level: 2 }) ? 'neutral.4' : 'none'
+            }
             onClick={() => {
               editor?.commands.toggleHeading({ level: 2 });
             }}
-            icon={<BiHeading size={20} />}
+            icon={
+              <Box
+                as={BiHeading}
+                boxSize={
+                  componentSize === 'sm'
+                    ? { base: '10px', md: '16px' }
+                    : componentSize === 'md'
+                    ? { base: '12px', md: '18px' }
+                    : componentSize === 'lg'
+                    ? { base: '16px', md: '20px' }
+                    : { base: '12px', md: '18px' }
+                }
+              />
+            }
           />
           <IconButton
+            h="100%"
             aria-label="Markdown bold"
             variant={'markdownIconButton'}
-            bg={editor?.isActive('bold') ? '#ffffff30' : ''}
+            bg={editor?.isActive('bold') ? 'neutral.4' : ''}
             onClick={() => {
               editor?.chain().focus().toggleBold().run();
             }}
-            icon={<MdOutlineFormatBold size={20} />}
+            icon={
+              <Box
+                as={MdOutlineFormatBold}
+                boxSize={
+                  componentSize === 'sm'
+                    ? { base: '10px', md: '16px' }
+                    : componentSize === 'md'
+                    ? { base: '12px', md: '18px' }
+                    : componentSize === 'lg'
+                    ? { base: '16px', md: '20px' }
+                    : { base: '12px', md: '18px' }
+                }
+              />
+            }
           />
           <IconButton
+            h="100%"
             aria-label="Markdown bold"
             variant={'markdownIconButton'}
-            bg={editor?.isActive('italic') ? '#ffffff30' : ''}
+            bg={editor?.isActive('italic') ? 'neutral.4' : ''}
             onClick={() => {
               editor?.chain().focus().toggleItalic().run();
             }}
-            icon={<BsTypeItalic size={20} />}
+            icon={
+              <Box
+                as={BsTypeItalic}
+                boxSize={
+                  componentSize === 'sm'
+                    ? { base: '10px', md: '16px' }
+                    : componentSize === 'md'
+                    ? { base: '12px', md: '18px' }
+                    : componentSize === 'lg'
+                    ? { base: '16px', md: '20px' }
+                    : { base: '12px', md: '18px' }
+                }
+              />
+            }
           />
           <IconButton
+            h="100%"
             aria-label="Markdown bold"
             variant={'markdownIconButton'}
-            bg={editor?.isActive('underline') ? '#ffffff30' : ''}
+            bg={editor?.isActive('underline') ? 'neutral.4' : ''}
             onClick={() => {
               editor?.chain().focus().toggleUnderline().run();
             }}
           >
-            <MdOutlineFormatUnderlined size={20} />
+            <Box
+              as={MdOutlineFormatUnderlined}
+              boxSize={
+                componentSize === 'sm'
+                  ? { base: '10px', md: '16px' }
+                  : componentSize === 'md'
+                  ? { base: '12px', md: '18px' }
+                  : componentSize === 'lg'
+                  ? { base: '16px', md: '20px' }
+                  : { base: '12px', md: '18px' }
+              }
+            />
           </IconButton>
           <IconButton
+            h="100%"
             aria-label="Markdown link"
             variant={'markdownIconButton'}
-            bg={editor?.isActive('link') ? '#ffffff30' : ''}
+            bg={editor?.isActive('link') ? 'neutral.4' : ''}
             onClick={() => setIsLinkModalOpen(true)}
-            icon={<AiOutlineLink size={20} />}
+            icon={
+              <Box
+                as={AiOutlineLink}
+                boxSize={
+                  componentSize === 'sm'
+                    ? { base: '10px', md: '16px' }
+                    : componentSize === 'md'
+                    ? { base: '12px', md: '18px' }
+                    : componentSize === 'lg'
+                    ? { base: '16px', md: '20px' }
+                    : { base: '12px', md: '18px' }
+                }
+              />
+            }
           />
           <IconButton
+            h="100%"
             aria-label="Markdown bold"
             variant={'markdownIconButton'}
-            bg={editor?.isActive('bulletList') ? '#ffffff30' : ''}
+            bg={editor?.isActive('bulletList') ? 'neutral.4' : ''}
             onClick={() => {
               editor?.chain().focus().toggleBulletList().run();
             }}
-            icon={<MdOutlineFormatListBulleted size={20} />}
+            icon={
+              <Box
+                as={MdOutlineFormatListBulleted}
+                boxSize={
+                  componentSize === 'sm'
+                    ? { base: '10px', md: '16px' }
+                    : componentSize === 'md'
+                    ? { base: '12px', md: '18px' }
+                    : componentSize === 'lg'
+                    ? { base: '16px', md: '20px' }
+                    : { base: '12px', md: '18px' }
+                }
+              />
+            }
           />
           <IconButton
+            h="100%"
             aria-label="Markdown bold"
             variant={'markdownIconButton'}
-            bg={editor?.isActive('orderedList') ? '#ffffff30' : ''}
+            bg={editor?.isActive('orderedList') ? 'neutral.4' : ''}
             onClick={() => {
               editor?.chain().focus().toggleOrderedList().run();
             }}
-            icon={<AiOutlineOrderedList size={20} />}
+            icon={
+              <Box
+                as={AiOutlineOrderedList}
+                boxSize={
+                  componentSize === 'sm'
+                    ? { base: '10px', md: '16px' }
+                    : componentSize === 'md'
+                    ? { base: '12px', md: '18px' }
+                    : componentSize === 'lg'
+                    ? { base: '16px', md: '20px' }
+                    : { base: '12px', md: '18px' }
+                }
+              />
+            }
           />
-          <IconButton
+          {/* <IconButton
+            h="100%"
             aria-label="Markdown blockquote"
             variant={'markdownIconButton'}
-            bg={editor?.isActive('blockquote') ? '#ffffff30' : ''}
+            bg={editor?.isActive('blockquote') ? 'neutral.4' : ''}
             onClick={() => {
               editor?.chain().focus().toggleBlockquote().run();
             }}
-            icon={<BsBlockquoteLeft size={20} />}
-          />
+            icon={
+              <Box
+                as={BsBlockquoteLeft}
+                boxSize={{ base: '12px', md: '14px' }}
+              />
+            }
+          />*/}
         </HStack>
       </Flex>
       <Box w={'full'} h="1px" backgroundColor="neutral.3" />
@@ -256,21 +422,30 @@ const MarkdownEditor = ({
         </Box>
       ) : (
         <Box
-          position={'relative'}
+          px={size}
           w={'full'}
-          height={'20rem'}
+          height={
+            componentSize === 'sm'
+              ? { base: '10px', md: '16px' }
+              : componentSize === 'md'
+              ? { base: '12px', md: '18px' }
+              : componentSize === 'lg'
+              ? { base: '40rem', md: '100%' }
+              : { base: '20rem', md: '20rem' }
+          }
           overflow="scroll"
         >
           <IconButton
+            h="2rem"
             as={'button'}
+            position={'absolute'}
             cursor="pointer"
             zIndex={'10'}
-            position={'fixed'}
-            bottom="0.5rem"
+            bottom="10"
+            right={'10'}
             _hover={{
               backgroundColor: '#001F1B',
             }}
-            right={'0.5rem'}
             aria-label="expand"
             variant={'expand IconButton'}
             onClick={() => {
@@ -280,7 +455,15 @@ const MarkdownEditor = ({
           />
           <div
             style={{
-              height: '100% !important',
+              padding: '0px',
+              height:
+                componentSize === 'sm'
+                  ? '20rem'
+                  : componentSize === 'md'
+                  ? '30rem'
+                  : componentSize === 'lg'
+                  ? '60vh'
+                  : '20rem',
               overflow: 'hidden',
               border: 'none !important',
             }}
@@ -291,6 +474,7 @@ const MarkdownEditor = ({
               placeholder="Enter your project description here"
               style={{
                 height: '100%',
+                padding: '0px',
               }}
               width={'100%'}
               height={'100%'}

@@ -18,14 +18,17 @@ const GrantStepTwo = ({
     <>
       <CardBody
         rounded={'8px'}
-        gap="1rem"
+        gap={{ base: '0px', md: '12px' }}
         backgroundColor={'transparent'}
         minH="70vh"
+        py={{ base: '12px', md: '32px', lg: '32px' }}
+        position={'relative'}
       >
         <MarkdownEditor
           editorHeading="Round Description"
           editorData={editorData}
           setEditorData={setEditorData}
+          componentSize="lg"
         />
       </CardBody>
     </>

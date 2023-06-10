@@ -116,7 +116,9 @@ const RoundStatus = ({
           textStyle={{ base: 'body6', md: 'body5' }}
           display={{ base: 'none', md: 'block' }}
         >
-          Round ended {daysSinceEnd} days ago
+          {daysSinceEnd > 1
+            ? `Round ended ${daysSinceEnd} days ago`
+            : 'Round ended'}
         </Box>
       </HStack>
     );

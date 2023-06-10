@@ -347,7 +347,7 @@ export const ProjectListWithFilter: React.FC = () => {
                         textStyle={{ base: 'body6', md: 'body5' }}
                         color={`surface.${round.colorScheme}.1`}
                       >
-                        {round.roundName} Round
+                        {round.roundName}
                       </Box>
                     </HStack>
                   </MenuItem>

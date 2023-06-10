@@ -40,7 +40,7 @@ const cubik = definePartsStyle({
   },
   arrow: {},
   closeButton: {
-    border: '1px solid red',
+    border: 'none',
   },
 });
 

@@ -33,7 +33,7 @@ const ProjectVisitorRoundsView = ({
 
   return filteredData && filteredData?.length > 0 ? (
     <VStack
-      border="1px solid red"
+      border="none"
       p="16px"
       mt="12px"
       borderTop="1px solid"

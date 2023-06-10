@@ -57,7 +57,7 @@ const GrantDetailsHeader = ({
                 textStyle={{ base: 'title1', md: 'display3' }}
                 color={'neutral.11'}
               >
-                {data?.roundName} Round
+                {data?.roundName}
               </Box>
             </Skeleton>
             <Skeleton

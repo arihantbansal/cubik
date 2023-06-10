@@ -7,6 +7,7 @@ import { env } from '~/env.mjs';
 import { useUserStore } from '~/store/userStore';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { BONK, SOL, USDC } from '../../common/tokens/token';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
 
 type TokenInfo = {
   tokenAccount: string;
@@ -55,7 +56,7 @@ const WalletBalance = () => {
   if (!user?.id) return <>no user</>;
   if (!data) {
     if (isLoading) return <Skeleton w="full" height="4rem" />;
-    return <>no data</>;
+    return <ComponentErrors />;
   }
   if (error) {
     return <>error</>;

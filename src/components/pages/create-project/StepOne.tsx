@@ -33,6 +33,7 @@ import { VscCloudUpload } from 'react-icons/vsc';
 import { FormData } from '~/pages/submit-project';
 import { trpc } from '~/utils/trpc';
 import { category } from './projectCategories';
+import useTeamSearch from '~/hooks/useTeamSearch';
 
 type StepOneProps = {
   onSubmit: (data: any) => void;
@@ -59,6 +60,11 @@ const StepOne: React.FC<StepOneProps> = ({
   const [currentTeammateName, setCurrentTeammateName] = useState<
     string | undefined
   >(undefined);
+  const {
+    data: teamSearch,
+    isLoading: teamSearchLoading,
+    error: teamSearchError,
+  } = useTeamSearch(currentTeammateName);
 
   const onDrop = useCallback((acceptedFiles: any[]) => {
     setValue('logo', acceptedFiles[0]);
@@ -70,19 +76,14 @@ const StepOne: React.FC<StepOneProps> = ({
     onDrop,
   });
 
-  const teamSearch = trpc.user.searchUser.useQuery({
-    username: currentTeammateName || '',
-  });
-
   const teamWithNames =
-    teamSearch.data?.map((item) => {
+    teamSearch?.map((item) => {
       return {
         value: item.id,
         label: item.username,
       };
     }) || [];
 
-  // create an arry of random colors
   const colors = [
     'red',
     'orange',

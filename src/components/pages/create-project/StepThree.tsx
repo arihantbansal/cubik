@@ -25,7 +25,11 @@ const StepThree = ({
         border={'1px solid'}
         borderColor="neutral.3"
       >
-        <MarkdownEditor editorData={editorData} setEditorData={setEditorData} />
+        <MarkdownEditor
+          editorData={editorData}
+          setEditorData={setEditorData}
+          componentSize="sm"
+        />
       </CardBody>
       <CardFooter>
         <Button

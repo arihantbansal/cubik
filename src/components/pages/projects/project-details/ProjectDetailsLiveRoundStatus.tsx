@@ -217,7 +217,7 @@ const ProjectDetailsLiveRoundStatus = ({
             color="#E6D6FF"
           >
             Congratulations your project has been selected to participate in{' '}
-            <b>{roundName} Round.</b>
+            <b>{roundName}</b>
           </Box>
         </Flex>
       );
@@ -296,8 +296,9 @@ const ProjectDetailsLiveRoundStatus = ({
               textStyle={{ base: 'body6', md: 'body5' }}
               color="#FFCCFF"
             >
-              Your project is currently under review for {roundName} Round.
-              Check your mail for more information.
+              Your project is currently under review for{' '}
+              {round?.fundingRound.roundName}. Check your mail for more
+              information.
             </Box>
           </Flex>
         </Container>

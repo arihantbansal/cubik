@@ -75,7 +75,7 @@ const ParticipatingProjectsTab = ({ setProjectsNumberByStatus }: any) => {
                   textStyle={'title5'}
                   color={`surface.${projectjoinround.fundingRound.colorScheme}.1`}
                 >
-                  {projectjoinround.fundingRound.roundName} Round
+                  {projectjoinround.fundingRound.roundName}
                 </Box>
               </HStack>
             </Center>

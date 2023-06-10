@@ -4,14 +4,24 @@ export const Input: ComponentStyleConfig = {
   baseStyle: {
     field: {
       background: '#0F0F0F',
+      color: 'white',
       boxShadow: 'none',
+      fontSize: { base: '12px', md: '14px' },
       _focus: {
         background: '#0F0F0F',
+        color: 'white',
         boxShadow: '0 0 0 1px #141414',
+      },
+      _error: {
+        color: 'white',
       },
       _hover: {
         background: '#0F0F0F',
+        color: 'white',
         boxShadow: '0 0 0 1px #141414',
+      },
+      _placeholder: {
+        fontSize: { base: '12px', md: '14px' },
       },
     },
   },

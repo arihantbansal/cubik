@@ -185,7 +185,7 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
               textStyle={{ base: 'title6', md: 'title5' }}
               color={`surface.${projectJoinRound.fundingRound.colorScheme}.1`}
             >
-              {projectJoinRound.fundingRound.roundName} Round
+              {projectJoinRound.fundingRound.roundName}
             </Box>
           </HStack>
         </Center>

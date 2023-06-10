@@ -103,7 +103,7 @@ export const RecentContributions = ({
                 transition={{ type: 'spring', stiffness: 30, damping: 10 }}
               >
                 <HStack
-                  border="1px solid red"
+                  border="none"
                   w="full"
                   direction={'row'}
                   gap="12px"

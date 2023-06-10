@@ -20,6 +20,8 @@ export const roundRouter = router({
         startTime: z.string(),
         description: z.string(),
         manager: z.string(),
+        registrationStartDate: z.date(),
+        registrationEndDate: z.date(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -40,6 +42,8 @@ export const roundRouter = router({
           startTime: input.startTime,
           manager: input.manager,
           short_description: input.short_description,
+          registrationEndDate: input.registrationEndDate,
+          registrationStartDate: input.registrationStartDate,
         },
       });
       return roundRes;

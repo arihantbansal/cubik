@@ -175,7 +175,6 @@ const ApplyForGrant: React.FC<{
                 textStyle={{ base: 'title2', md: 'title1' }}
               >
                 {round.roundName}
-                {''} Round
               </Box>
               <HStack
                 rounded="full"

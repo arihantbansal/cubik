@@ -176,7 +176,6 @@ const RoundPage = () => {
                         textTransform={'capitalize'}
                       >
                         {round.roundName}
-                        {''} Round
                       </Box>
                       <RoundStatus
                         startDate={round.startTime}

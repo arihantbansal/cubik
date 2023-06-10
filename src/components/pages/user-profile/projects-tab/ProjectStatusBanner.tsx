@@ -211,7 +211,7 @@ const ProjectStatusBanner = ({
     //         color="#E6D6FF"
     //       >
     //         Congratulations your project has been selected to participate in{' '}
-    //         <b>{roundName} Round.</b>
+    //         <b>{roundName} </b>
     //       </Box>
     //     </Flex>
     //   );
@@ -288,7 +288,7 @@ const ProjectStatusBanner = ({
     //         textStyle={{ base: 'body6', md: 'body5' }}
     //         color="#FFCCFF"
     //       >
-    //         Your project is currently under review for {roundName} Round. Check
+    //         Your project is currently under review for {roundName}. Check
     //         your mail for more information.
     //       </Box>
     //     </Flex>

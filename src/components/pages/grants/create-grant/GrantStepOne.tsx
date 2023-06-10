@@ -6,46 +6,66 @@ import {
   FormLabel,
   HStack,
   Input,
-  Select,
   Stack,
+  Select as ChakraSelect,
   Textarea,
   VStack,
+  FormHelperText,
 } from '@chakra-ui/react';
+import { GroupBase, OptionsOrGroups, Select } from 'chakra-react-select';
 import { addDays } from 'date-fns';
 import enGB from 'date-fns/locale/en-GB';
+import { useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormTrigger,
+  UseFormWatch,
+} from 'react-hook-form';
 import DatePickerInput from '~/components/common/inputs/DatePickerInput';
-import { FormData } from '~/pages/grants/new-grant';
+import useTeamSearch from '~/hooks/useTeamSearch';
+import { NewGrantsApplicationFormData } from '~/pages/grants/new-grant';
 
-// registerLocale('en-gb', enGB);
+registerLocale('en-gb', enGB);
 
 type GrantsStepOneProps = {
-  errors: FieldErrors<FormData>;
-  register: UseFormRegister<FormData>;
-  startDate: Date;
-  setStartDate: (_date: Date) => void;
-  endDate: Date;
-  setEndDate: (_date: Date) => void;
+  control: Control<NewGrantsApplicationFormData>;
+  errors: FieldErrors<NewGrantsApplicationFormData>;
+  register: UseFormRegister<NewGrantsApplicationFormData>;
+  setValue: UseFormSetValue<NewGrantsApplicationFormData>;
+  getValues: UseFormGetValues<NewGrantsApplicationFormData>;
 };
 
 const GrantStepOne = ({
+  control,
   errors,
   register,
-  startDate,
-  setStartDate,
-  endDate,
-  setEndDate,
+  setValue,
+  getValues,
 }: GrantsStepOneProps) => {
   const tomorrow = addDays(new Date(), 1);
-
+  const [currentTeammateName, setCurrentTeammateName] = useState<
+    string | undefined
+  >(undefined);
+  const {
+    data: teamSearch,
+    isLoading: teamSearchLoading,
+    error: teamSearchError,
+  } = useTeamSearch(currentTeammateName);
+  const teamWithNames =
+    teamSearch?.map((item) => {
+      return {
+        id: item.id,
+        username: item.username,
+      };
+    }) || [];
   return (
-    <CardBody
-      rounded={'8px'}
-      gap="40px"
-      backgroundColor={'transparent'}
-      minH="70vh"
-    >
+    <CardBody minH="70vh" gap={{ base: '24px', md: '40px' }}>
       <VStack alignItems={'start'}>
         <Box
           as="h1"
@@ -66,7 +86,7 @@ const GrantStepOne = ({
       </VStack>
       <Stack
         w="full"
-        gap={{ base: '32px', md: '32px' }}
+        gap={{ base: '24px', md: '32px' }}
         direction={{ base: 'column', md: 'row' }}
       >
         <FormControl isRequired w="full" isInvalid={Boolean(errors.name)}>
@@ -79,7 +99,8 @@ const GrantStepOne = ({
           </FormLabel>
           <Input
             id="name"
-            placeholder="Enter your rounds name"
+            placeholder="Alpha Grants Round"
+            fontSize={{ base: '12px', md: '14px' }}
             _placeholder={{
               fontSize: { base: '12px', md: '14px' },
               color: '#3B3D3D',
@@ -95,36 +116,176 @@ const GrantStepOne = ({
             </FormErrorMessage>
           )}
         </FormControl>
-        <FormControl w="full">
-          <FormLabel
-            fontSize={{ base: '12px', md: '14px' }}
-            pb="0.5rem"
-            htmlFor="name"
-          >
-            Round managers
-          </FormLabel>
-          <Input
-            id="round_managers"
-            placeholder="Search Username"
-            _placeholder={{
-              fontSize: { base: '12px', md: '14px' },
-              color: '#3B3D3D',
-            }}
-            {...register('round_managers', {
-              required: false,
-            })}
-          />
-          {errors.name && (
-            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
-              <>{errors.name.message}</>
-            </FormErrorMessage>
+        <Controller
+          control={control}
+          name="team"
+          render={({
+            field: { onChange, onBlur, value, name, ref },
+            fieldState: { error },
+          }) => (
+            <FormControl isInvalid={!!error} id="team">
+              <FormLabel
+                fontSize={{ base: '12px', md: '14px' }}
+                pb="0.5rem"
+                htmlFor="team"
+              >
+                Search Team
+              </FormLabel>
+              <Select
+                isMulti
+                name={name}
+                ref={ref}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value as any}
+                options={
+                  teamWithNames as unknown as OptionsOrGroups<
+                    string,
+                    GroupBase<string>
+                  >
+                }
+                menuIsOpen={
+                  !!currentTeammateName && currentTeammateName.length > 0
+                }
+                placeholder="Search Username"
+                closeMenuOnSelect={true}
+                selectedOptionStyle="check"
+                variant="unstyled"
+                focusBorderColor="transparent"
+                onInputChange={(inputValue) => {
+                  setCurrentTeammateName(inputValue);
+                }}
+                chakraStyles={{
+                  container: (provided, state) => ({
+                    ...provided,
+                    border: 'none',
+                    background: 'surface.input_field',
+                    outline: '0px !important',
+                    borderRadius: '8px',
+                    height: '40px',
+                    boxShadow: '0',
+                    ps: '0rem',
+                    w: 'full',
+                    ':focus': {
+                      outline: 'none',
+                      boxShadow: '0',
+                      border: 'none',
+                    },
+                    ':hover': {
+                      outline: 'none',
+                      boxShadow: '0 !important',
+                      border: 'none !important',
+                    },
+                    ':active': {
+                      outline: 'none',
+                      boxShadow: '0',
+                      border: 'none',
+                    },
+                    ':selected': {
+                      outline: 'none',
+                      boxShadow: '0',
+                      border: 'none',
+                    },
+                  }),
+                  inputContainer: (provided, state) => ({
+                    ...provided,
+                    ps: '8px',
+                    fontSize: { base: '12px', md: '14px' },
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    boxShadow: 'none',
+                    outline: 'none',
+                  }),
+                  valueContainer: (provided, state) => ({
+                    ...provided,
+                    ps: '8px',
+                    border: 'none',
+                    backgroundColor: 'transparent',
+                    boxShadow: 'none',
+                    outline: 'none',
+                  }),
+                  clearIndicator: (provided, state) => ({
+                    ...provided,
+                    display: 'none',
+                  }),
+                  dropdownIndicator: (provided, state) => ({
+                    ...provided,
+                    background: '',
+                    borderColor: 'transparent !important',
+                    outline: '0px !important',
+                    boxShadow: '0',
+                    p: 0,
+                    w: '60px',
+                  }),
+                  indicatorSeparator: (provided, state) => ({
+                    ...provided,
+                    display: 'none',
+                  }),
+                  menu: (provided, state) => ({
+                    ...provided,
+                    //border: 'none',
+                    transform: 'translateY(-10px)',
+                    backgroundColor: '#0F0F0F',
+                  }),
+                  menuList: (provided, state) => ({
+                    ...provided,
+                    backgroundColor: '#0F0F0F',
+                    border: '1px solid #141414',
+                    fontSize: { base: '12px', md: '14px' },
+                    borderTop: 'none',
+                    borderTopRadius: 'none',
+                    boxShadow: 'none',
+                    padding: '0px',
+                  }),
+                  option: (provided, state) => ({
+                    ...provided,
+                    color: 'neutral.11',
+                    fontSize: { base: '12px', md: '14px' },
+                    fontWeight: '400',
+                    backgroundColor: state.isSelected
+                      ? '#010F0D'
+                      : state.isFocused
+                      ? '#010F0D'
+                      : '#0F0F0F',
+                    _hover: {
+                      backgroundColor: '#010F0D',
+                    },
+                    ':active': {
+                      backgroundColor: '#0F0F0F',
+                    },
+                  }),
+                  control: (provided, state) => ({
+                    ...provided,
+                    border: 'none',
+                    backgroundColor: '#0F0F0F',
+                    boxShadow: 'none',
+                    outline: 'none',
+                    ':hover': {
+                      border: 'none',
+                      backgroundColor: '#0F0F0F',
+                    },
+                  }),
+                  placeholder: (provided, state) => ({
+                    ...provided,
+                    textAlign: 'start',
+                    px: '1rem',
+                    fontSize: { base: '12px', md: '14px' },
+                    color: '#3B3D3D',
+                  }),
+                }}
+              />
+              <FormErrorMessage pt="1rem">
+                {error && error.message}
+              </FormErrorMessage>
+            </FormControl>
           )}
-        </FormControl>
+        />
       </Stack>
       <Stack
+        align={'top'}
         w="full"
         gap={{ base: '24px', md: '32px' }}
-        direction={{ base: 'row', md: 'row' }}
+        direction={{ base: 'column', md: 'row' }}
       >
         <FormControl isRequired w="full" isInvalid={Boolean(errors.pool)}>
           <FormLabel
@@ -132,12 +293,13 @@ const GrantStepOne = ({
             pb="0.5rem"
             htmlFor="pool"
           >
-            Matching Pool Amount
+            Matching Pool Amount in USDC
           </FormLabel>
           <Input
             id="pool"
-            placeholder="Matching Pool"
+            placeholder="$ 0.00"
             type="number"
+            fontSize={{ base: '12px', md: '14px' }}
             _placeholder={{
               fontSize: { base: '12px', md: '14px' },
               color: '#3B3D3D',
@@ -146,10 +308,18 @@ const GrantStepOne = ({
               required: true,
             })}
           />
-          {errors.pool && (
+          {errors.pool ? (
             <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
               <>{errors.pool.message}</>
             </FormErrorMessage>
+          ) : (
+            <FormHelperText
+              fontSize={{ base: '12px', md: '14px' }}
+              color="neutral.6"
+            >
+              Matching funds can be added anytime to the Grant Rounds multisig
+              later.
+            </FormHelperText>
           )}
         </FormControl>
         <FormControl isRequired w="full" isInvalid={Boolean(errors.projects)}>
@@ -162,8 +332,9 @@ const GrantStepOne = ({
           </FormLabel>
           <Input
             id="projects"
-            placeholder="Participating Projects"
+            placeholder="30"
             type="number"
+            fontSize={{ base: '12px', md: '14px' }}
             _placeholder={{
               fontSize: { base: '12px', md: '14px' },
               color: '#3B3D3D',
@@ -172,37 +343,133 @@ const GrantStepOne = ({
               required: true,
             })}
           />
-          {errors.projects && (
+          {errors.projects ? (
             <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
               <>{errors.projects.message}</>
             </FormErrorMessage>
+          ) : (
+            <FormHelperText
+              fontSize={{ base: '12px', md: '14px' }}
+              color="neutral.6"
+            >
+              The number of estimated projects you are expecting to participate
+              in the grant round.
+            </FormHelperText>
           )}
         </FormControl>
       </Stack>
-      <HStack w="full" gap={{ base: '24px', md: '32px' }}>
-        <FormControl variant="withAddOn" isRequired w="full">
+      <HStack align={'top'} w="full" gap={{ base: '24px', md: '32px' }}>
+        <FormControl
+          variant="withAddOn"
+          isRequired
+          w="full"
+          isInvalid={Boolean(errors.registrationStartDate)}
+        >
           <FormLabel fontSize={{ base: '12px', md: '14px' }} pb="0.5rem">
-            Start Date
+            Application Period Start Date
           </FormLabel>
           <DatePicker
-            selected={startDate}
-            onChange={(date: Date) => setStartDate(date)}
-            customInput={<DatePickerInput />}
+            selected={getValues('registrationStartDate')}
+            onChange={(date: Date) => {
+              setValue('registrationStartDate', date);
+            }}
+            customInput={
+              <DatePickerInput
+                value={tomorrow}
+                updatedValue={getValues('registrationStartDate')}
+              />
+            }
             locale="en-gb"
-            minDate={tomorrow} // restrict past and today's date selection
+            minDate={tomorrow}
           />
+          {errors.registrationStartDate && (
+            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+              <>{errors.registrationStartDate.message}</>
+            </FormErrorMessage>
+          )}
         </FormControl>
-        <FormControl variant="withAddOn" isRequired w="full">
+        <FormControl
+          variant="withAddOn"
+          isRequired
+          w="full"
+          isInvalid={Boolean(errors.registrationEndDate)}
+        >
           <FormLabel fontSize={{ base: '12px', md: '14px' }} pb="0.5rem">
-            End Date
+            Application Period End Date
           </FormLabel>
           <DatePicker
-            selected={endDate}
-            onChange={(date: Date) => setEndDate(date)}
-            customInput={<DatePickerInput />}
+            selected={getValues('registrationEndDate')}
+            onChange={(date: Date) => setValue('registrationEndDate', date)}
+            customInput={
+              <DatePickerInput
+                value={tomorrow}
+                updatedValue={getValues('registrationEndDate')}
+              />
+            }
+            locale="en-gb"
+            minDate={tomorrow}
+          />
+          {errors.registrationEndDate && (
+            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+              <>{errors.registrationEndDate.message}</>
+            </FormErrorMessage>
+          )}
+        </FormControl>
+      </HStack>
+      <HStack align={'top'} w="full" gap={{ base: '24px', md: '32px' }}>
+        <FormControl
+          variant="withAddOn"
+          isRequired
+          w="full"
+          isInvalid={Boolean(errors.startDate)}
+        >
+          <FormLabel fontSize={{ base: '12px', md: '14px' }} pb="0.5rem">
+            Round Start Date
+          </FormLabel>
+          <DatePicker
+            selected={getValues('startDate')}
+            onChange={(date: Date) => setValue('startDate', date)}
+            customInput={
+              <DatePickerInput
+                value={tomorrow}
+                updatedValue={getValues('startDate')}
+              />
+            }
+            locale="en-gb"
+            minDate={tomorrow}
+          />
+          {errors.startDate && (
+            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+              <>{errors.startDate.message}</>
+            </FormErrorMessage>
+          )}
+        </FormControl>
+        <FormControl
+          variant="withAddOn"
+          isRequired
+          w="full"
+          isInvalid={Boolean(errors.endDate)}
+        >
+          <FormLabel fontSize={{ base: '12px', md: '14px' }} pb="0.5rem">
+            Round End Date
+          </FormLabel>
+          <DatePicker
+            selected={getValues('endDate')}
+            onChange={(date: Date) => setValue('endDate', date)}
+            customInput={
+              <DatePickerInput
+                value={tomorrow}
+                updatedValue={getValues('endDate')}
+              />
+            }
             locale="en-gb"
             minDate={tomorrow} // restrict past and today's date selection
           />
+          {errors.endDate && (
+            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+              <>{errors.endDate.message}</>
+            </FormErrorMessage>
+          )}
         </FormControl>
       </HStack>
       <FormControl isRequired isInvalid={Boolean(errors.short_description)}>
@@ -218,6 +485,7 @@ const GrantStepOne = ({
           resize="none"
           id="short_description"
           placeholder="A one sentence description of the Round"
+          fontSize={{ base: '12px', md: '14px' }}
           _placeholder={{
             fontSize: { base: '12px', md: '14px' },
             color: '#3B3D3D',
@@ -240,23 +508,24 @@ const GrantStepOne = ({
         >
           Color Scheme
         </FormLabel>
-        <Select
+        <ChakraSelect
           borderColor="#141414"
           defaultValue={1}
           id="colorScheme"
           placeholder="Select color scheme"
+          fontSize={{ base: '12px', md: '14px' }}
           _placeholder={{
             fontSize: { base: '10px', md: '12px' },
             color: '#3B3D3D',
           }}
           {...register('colorScheme')}
         >
-          <option value="light">Teal</option>
-          <option value="dark">Yellow</option>
-          <option value="dark">Blue</option>
-          <option value="dark">Green</option>
-          <option value="dark">Purple</option>
-        </Select>
+          <option value="teal">Teal</option>
+          <option value="yellow">Yellow</option>
+          <option value="blue">Blue</option>
+          <option value="green">Green</option>
+          <option value="purple">Purple</option>
+        </ChakraSelect>
         {errors.colorScheme && (
           <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
             <>{errors.colorScheme.message}</>

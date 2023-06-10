@@ -201,7 +201,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
         maxW="full"
         p={{ base: '1rem', md: '0' }}
         my={{ base: '2rem', md: '5rem', lg: '6rem', xl: '8rem' }}
-        outline="1px solid red"
+        outline="none"
       >
         <Card
           maxW={{ base: '28rem', md: '36rem' }}

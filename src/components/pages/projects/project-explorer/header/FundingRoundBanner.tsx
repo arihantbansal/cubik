@@ -205,7 +205,7 @@ const FundingRoundBanner = ({
                   as="p"
                   textStyle={{ base: 'title2', md: 'headline3' }}
                 >
-                  {roundName} Round
+                  {roundName}
                 </Box>
                 <Box
                   maxW={{ base: '340px', md: '500px' }}

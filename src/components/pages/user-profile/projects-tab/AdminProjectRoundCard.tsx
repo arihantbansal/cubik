@@ -3,6 +3,9 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Box,
   Center,
   Flex,
@@ -128,7 +131,7 @@ const AdminProjectRoundCard = ({
                 textStyle={{ base: 'title6', md: 'title4' }}
                 color="neutral.11"
               >
-                {round.fundingRound.roundName} Round
+                {round.fundingRound.roundName}
               </Box>
             </HStack>
             <HStack>
@@ -195,23 +198,50 @@ const AdminProjectRoundCard = ({
           </Tabs>
         ) : round.status === ProjectJoinRoundStatus.PENDING ? (
           <Center w="full" h="2rem">
-            <Box
-              as="p"
-              textStyle={{ base: 'body5', md: 'body4' }}
-              color={'neutral.8'}
+            <Alert
+              w="full"
+              variant={'solid'}
+              rounded="none"
+              backgroundColor={'#AE7AFF10'}
+              borderLeft={'2px solid'}
+              borderColor={'#AE7AFF40'}
+              status="info"
             >
-              No results to show here!
-            </Box>
+              <Center h={'1.4rem'}>
+                <Box as={AlertIcon} boxSize={'12px'} color="#AE7AFF" />
+              </Center>
+              <AlertDescription
+                color="neutral.11"
+                fontSize={{ base: '10px', md: '12px' }}
+              >
+                To start contributing on the platform you need to collect proofs
+                by verifying your digital identity.
+              </AlertDescription>
+            </Alert>
           </Center>
         ) : (
+          //  status = rejected
           <Center w="full" h="2rem">
-            <Box
-              as="p"
-              textStyle={{ base: 'body5', md: 'body4' }}
-              color={'neutral.8'}
+            <Alert
+              w="full"
+              variant={'solid'}
+              rounded="none"
+              backgroundColor={'#AE7AFF10'}
+              borderLeft={'2px solid'}
+              borderColor={'#AE7AFF40'}
+              status="info"
             >
-              No results to show here!
-            </Box>
+              <Center h={'1.4rem'}>
+                <Box as={AlertIcon} boxSize={'12px'} color="#AE7AFF" />
+              </Center>
+              <AlertDescription
+                color="neutral.11"
+                fontSize={{ base: '10px', md: '12px' }}
+              >
+                To start contributing on the platform you need to collect proofs
+                by verifying your digital identity.
+              </AlertDescription>
+            </Alert>
           </Center>
         )}
       </AccordionPanel>

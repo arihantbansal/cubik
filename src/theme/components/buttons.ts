@@ -52,14 +52,15 @@ export const Button = {
       },
     }),
     markdownIconButton: (_props: StyleFunctionProps) => ({
-      borderRadius: '12px',
+      rounded: '6px',
+      padding: '4px !important',
       border: 'none',
       background: 'red.800',
       transition: 'all 0.2s',
-      height: '30px',
+      height: 'full',
       maxW: '10px',
       color: '#ADB8B6',
-      _hover: { height: '30px', maxW: '10px', background: '#ffffff30' },
+      _hover: { height: 'full', maxW: '10px', background: 'neutral.3' },
     }),
     primary: (_props: StyleFunctionProps) => ({
       color: '#031513',
