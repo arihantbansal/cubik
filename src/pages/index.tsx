@@ -1,8 +1,14 @@
+import { Button } from '@chakra-ui/react';
+import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import type { NextPage } from 'next';
 import LandingPage from '~/components/pages/landing-page/LandingPage';
 import SEO from '~/components/SEO';
+import { connection, createAdmin } from '~/utils/program/contract';
+import * as anchor from '@coral-xyz/anchor';
 
 const Home: NextPage = () => {
+  const anchorWallet = useAnchorWallet();
   return (
     <>
       <SEO

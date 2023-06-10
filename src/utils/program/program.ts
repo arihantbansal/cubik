@@ -109,11 +109,15 @@ export type CubikContractV2 = {
         },
         {
           name: 'matchingPool';
-          type: 'f64';
+          type: 'u64';
         },
         {
           name: 'projectSize';
-          type: 'f64';
+          type: 'u64';
+        },
+        {
+          name: 'limit';
+          type: 'u64';
         }
       ];
     },
@@ -455,15 +459,15 @@ export type CubikContractV2 = {
         },
         {
           name: 'usdAmount';
-          type: 'f64';
+          type: 'u64';
         },
         {
           name: 'total';
-          type: 'f64';
+          type: 'u64';
         },
         {
           name: 'split';
-          type: 'f64';
+          type: 'u64';
         }
       ];
     },
@@ -546,15 +550,15 @@ export type CubikContractV2 = {
         },
         {
           name: 'usdAmount';
-          type: 'f64';
+          type: 'u64';
         },
         {
           name: 'total';
-          type: 'f64';
+          type: 'u64';
         },
         {
           name: 'split';
-          type: 'f64';
+          type: 'u64';
         }
       ];
     },
@@ -627,15 +631,15 @@ export type CubikContractV2 = {
         },
         {
           name: 'usdAmount';
-          type: 'f64';
+          type: 'u64';
         },
         {
           name: 'total';
-          type: 'f64';
+          type: 'u64';
         },
         {
           name: 'split';
-          type: 'f64';
+          type: 'u64';
         }
       ];
     },
@@ -708,15 +712,15 @@ export type CubikContractV2 = {
         },
         {
           name: 'usdAmount';
-          type: 'f64';
+          type: 'u64';
         },
         {
           name: 'total';
-          type: 'f64';
+          type: 'u64';
         },
         {
           name: 'split';
-          type: 'f64';
+          type: 'u64';
         }
       ];
     },
@@ -861,11 +865,11 @@ export type CubikContractV2 = {
           },
           {
             name: 'total';
-            type: 'f64';
+            type: 'u64';
           },
           {
             name: 'usd';
-            type: 'f64';
+            type: 'u64';
           }
         ];
       };
@@ -922,12 +926,16 @@ export type CubikContractV2 = {
             type: 'u8';
           },
           {
-            name: 'poolSize';
-            type: 'f64';
+            name: 'matchingPoolSize';
+            type: 'u64';
+          },
+          {
+            name: 'limit';
+            type: 'u64';
           },
           {
             name: 'projectSize';
-            type: 'f64';
+            type: 'u64';
           }
         ];
       };
@@ -1064,27 +1072,27 @@ export type CubikContractV2 = {
         },
         {
           name: 'usdAmount';
-          type: 'f64';
+          type: 'u64';
           index: false;
         },
         {
           name: 'total';
-          type: 'f64';
+          type: 'u64';
           index: false;
         },
         {
           name: 'totalContribution';
-          type: 'f64';
+          type: 'u64';
           index: false;
         },
         {
           name: 'totalUsdAmount';
-          type: 'f64';
+          type: 'u64';
           index: false;
         },
         {
           name: 'split';
-          type: 'f64';
+          type: 'u64';
           index: false;
         }
       ];
@@ -1260,11 +1268,15 @@ export const IDL: CubikContractV2 = {
         },
         {
           name: 'matchingPool',
-          type: 'f64',
+          type: 'u64',
         },
         {
           name: 'projectSize',
-          type: 'f64',
+          type: 'u64',
+        },
+        {
+          name: 'limit',
+          type: 'u64',
         },
       ],
     },
@@ -1606,15 +1618,15 @@ export const IDL: CubikContractV2 = {
         },
         {
           name: 'usdAmount',
-          type: 'f64',
+          type: 'u64',
         },
         {
           name: 'total',
-          type: 'f64',
+          type: 'u64',
         },
         {
           name: 'split',
-          type: 'f64',
+          type: 'u64',
         },
       ],
     },
@@ -1697,15 +1709,15 @@ export const IDL: CubikContractV2 = {
         },
         {
           name: 'usdAmount',
-          type: 'f64',
+          type: 'u64',
         },
         {
           name: 'total',
-          type: 'f64',
+          type: 'u64',
         },
         {
           name: 'split',
-          type: 'f64',
+          type: 'u64',
         },
       ],
     },
@@ -1778,15 +1790,15 @@ export const IDL: CubikContractV2 = {
         },
         {
           name: 'usdAmount',
-          type: 'f64',
+          type: 'u64',
         },
         {
           name: 'total',
-          type: 'f64',
+          type: 'u64',
         },
         {
           name: 'split',
-          type: 'f64',
+          type: 'u64',
         },
       ],
     },
@@ -1859,15 +1871,15 @@ export const IDL: CubikContractV2 = {
         },
         {
           name: 'usdAmount',
-          type: 'f64',
+          type: 'u64',
         },
         {
           name: 'total',
-          type: 'f64',
+          type: 'u64',
         },
         {
           name: 'split',
-          type: 'f64',
+          type: 'u64',
         },
       ],
     },
@@ -2012,11 +2024,11 @@ export const IDL: CubikContractV2 = {
           },
           {
             name: 'total',
-            type: 'f64',
+            type: 'u64',
           },
           {
             name: 'usd',
-            type: 'f64',
+            type: 'u64',
           },
         ],
       },
@@ -2073,12 +2085,16 @@ export const IDL: CubikContractV2 = {
             type: 'u8',
           },
           {
-            name: 'poolSize',
-            type: 'f64',
+            name: 'matchingPoolSize',
+            type: 'u64',
+          },
+          {
+            name: 'limit',
+            type: 'u64',
           },
           {
             name: 'projectSize',
-            type: 'f64',
+            type: 'u64',
           },
         ],
       },
@@ -2215,27 +2231,27 @@ export const IDL: CubikContractV2 = {
         },
         {
           name: 'usdAmount',
-          type: 'f64',
+          type: 'u64',
           index: false,
         },
         {
           name: 'total',
-          type: 'f64',
+          type: 'u64',
           index: false,
         },
         {
           name: 'totalContribution',
-          type: 'f64',
+          type: 'u64',
           index: false,
         },
         {
           name: 'totalUsdAmount',
-          type: 'f64',
+          type: 'u64',
           index: false,
         },
         {
           name: 'split',
-          type: 'f64',
+          type: 'u64',
           index: false,
         },
       ],

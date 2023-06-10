@@ -6,7 +6,7 @@ import { env } from '~/env.mjs';
 import type { CubikContractV2 } from './program';
 import { IDL } from './program';
 
-const PROGRAM_ID = '218G51eHYC8uBd7mPp8FsXQKSekCYdfnVTdeCAqE3yfj';
+const PROGRAM_ID = 'GxnJAYzcMhBSyZ2EhiqeB7Mb72SqyTSuf9twp39SZ6Ke';
 // const PROGRAM_ID = 'DhnsZ5nAsNXH9jpyULUiw6196Q46E9QPoGhtv6Y3MfTH';
 const RPC_URL =
   env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta'
@@ -228,7 +228,12 @@ export const createRoundIx = async (
     program.programId
   );
   const ix = await program.methods
-    .createRound(id, matchingPool, projectSize)
+    .createRound(
+      id,
+      new anchor.BN(matchingPool),
+      new anchor.BN(projectSize),
+      new anchor.BN(2)
+    )
     .accounts({
       authority: wallet.publicKey,
       roundAccount: round_account,
@@ -425,9 +430,9 @@ export const contributeSPL = async (
         roundId,
         projectUserCount.toString(),
         new anchor.web3.PublicKey(projectOwner),
-        usd,
-        total,
-        split
+        new anchor.BN(usd),
+        new anchor.BN(total),
+        new anchor.BN(split)
       )
       .accounts({
         adminAccount: adminAccount,
@@ -460,9 +465,9 @@ export const contributeSPL = async (
       roundId,
       projectUserCount.toString(),
       new anchor.web3.PublicKey(projectOwner),
-      usd,
-      total,
-      split
+      new anchor.BN(usd),
+      new anchor.BN(total),
+      new anchor.BN(split)
     )
     .accounts({
       adminAccount: adminAccount,
@@ -542,9 +547,9 @@ export const contributeSOL = async (
         roundId,
         projectUserCount.toString(),
         projectAccount.owner,
-        usd,
-        total * anchor.web3.LAMPORTS_PER_SOL,
-        split
+        new anchor.BN(usd),
+        new anchor.BN(total * anchor.web3.LAMPORTS_PER_SOL),
+        new anchor.BN(split)
       )
       .accounts({
         adminAccount: adminAccount,
@@ -567,9 +572,9 @@ export const contributeSOL = async (
       roundId,
       projectUserCount.toString(),
       projectAccount.owner,
-      usd,
-      total * anchor.web3.LAMPORTS_PER_SOL,
-      split
+      new anchor.BN(usd),
+      new anchor.BN(total * anchor.web3.LAMPORTS_PER_SOL),
+      new anchor.BN(split)
     )
     .accounts({
       adminAccount: adminAccount,
