@@ -24,6 +24,7 @@ import { useUserStore } from '~/store/userStore';
 const UserNavMenu = () => {
   const { disconnect } = useWallet();
   const { setKey } = useAuthStore();
+  const { setUser } = useUserStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { user } = useUserStore();
@@ -32,6 +33,7 @@ const UserNavMenu = () => {
     localStorage.removeItem('anon_sig');
     localStorage.removeItem('wallet_auth');
     localStorage.removeItem('walletName');
+    setUser(null);
   }
 
   const NavMenuButtons = () => {

@@ -107,6 +107,7 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
         await disconnect();
         localStorage.removeItem('anon_sig');
         localStorage.removeItem('wallet_auth');
+        setUser(null);
         onClose();
         FailureToast({
           toast,
@@ -170,7 +171,7 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
               await disconnect();
               localStorage.removeItem('anon_sig');
               localStorage.removeItem('wallet_auth');
-
+              setUser(null);
               onClose();
               FailureToast({
                 toast,
@@ -181,6 +182,7 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
           >
             Cancel
           </Button>
+
           <Button
             variant={'cubikFilled'}
             loadingText="Verifying"

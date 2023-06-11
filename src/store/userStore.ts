@@ -3,10 +3,10 @@ import { create } from 'zustand';
 
 type State = {
   user: UserModel | null;
-  setUser: (user: UserModel) => void;
+  setUser: (user: UserModel | null) => void;
 };
 
 export const useUserStore = create<State>((set) => ({
   user: null,
-  setUser: (user: UserModel) => set({ user }),
+  setUser: (user: UserModel | null) => set({ user }),
 }));
