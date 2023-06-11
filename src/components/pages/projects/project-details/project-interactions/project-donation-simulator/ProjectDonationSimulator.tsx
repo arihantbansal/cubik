@@ -25,6 +25,7 @@ import { FailureToast, SuccessToast } from '~/components/common/toasts/Toasts';
 import { tokens } from '~/components/common/tokens/DonationTokens';
 import { DonationFormType } from '~/interfaces/donationForm';
 import { tokenGroup } from '~/interfaces/token';
+import { useUserStore } from '~/store/userStore';
 import { projectWithFundingRoundType } from '~/types/project';
 
 import {
@@ -57,7 +58,6 @@ export const ProjectDonationSimulator = ({
   projectJoinRoundId,
   roundName,
 }: ProjectDonationSimulatorProps) => {
-  const { data } = useSession();
   const [txnError, setTxnError] = useState<string | null>(null);
   const toast = useToast();
   const {
@@ -75,6 +75,7 @@ export const ProjectDonationSimulator = ({
       matchingPoolDonation: 10,
     },
   });
+  const { user } = useUserStore();
   const donation: number = watch('amount');
   const selectedToken: tokenGroup = watch('token');
 
@@ -120,16 +121,36 @@ export const ProjectDonationSimulator = ({
     console.log(_values);
 
     let sig: string | null = null;
-    if (String(_values.token.value).toLocaleLowerCase() === 'sol') {
+    if (String(_values.token.value).includes('sol')) {
+      console.log('----------------------------');
+      console.log(
+        roundName as string,
+        projectDetails?.owner_publickey,
+        projectDetails?.projectUserCount,
+        _values.matchingPoolDonation,
+        _values.amount,
+        _values.amount
+      );
+      console.log('----------------------------');
       sig = await donateSOL(
         roundName as string,
         projectDetails?.owner_publickey,
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
-        _values.amount, //  token value direct because form is not taking near 0 values
-        _values.amount // usd value
+        _values.amount,
+        _values.amount
       );
     } else {
+      console.log('----------------------------');
+      console.log(
+        roundName as string,
+        projectDetails?.owner_publickey,
+        projectDetails?.projectUserCount,
+        _values.matchingPoolDonation,
+        _values.amount,
+        _values.amount
+      );
+      console.log('----------------------------');
       sig = await donateSPL(
         roundName as string,
         '',
@@ -150,7 +171,7 @@ export const ProjectDonationSimulator = ({
       totalAmount: _values.amount,
       usd: _values.amount,
       tx: sig as string,
-      userId: data?.user?.id as string,
+      userId: user?.id as string,
     });
     // onOpen();
   }
