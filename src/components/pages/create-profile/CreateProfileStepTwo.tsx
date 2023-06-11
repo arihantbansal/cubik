@@ -61,7 +61,7 @@ const CreateProfileStepTwo = ({
               : 'Connect Google'}
           </Button>
           <Box
-            display={emailUnique ? 'none' : ''}
+            display={emailUnique && user?.data?.user?.email ? 'none' : ''}
             as="p"
             textStyle={{ base: 'body5', md: 'body4' }}
             color="surface.red.2"
