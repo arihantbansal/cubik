@@ -64,6 +64,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
     formState: { errors },
     setValue,
     getValues,
+    setError,
   } = useForm<FormData>({
     resolver: yupResolver(
       object().shape({
@@ -74,6 +75,9 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
           .required("Tagline can't be empty")
           .max(240, 'Must be at most 240 characters'),
         logo: string().required("Logo can't be empty"),
+        email: string()
+          .required("Email can't be empty")
+          .email('Email is not valid'),
         category: array()
           .of(
             object({
@@ -260,6 +264,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
                 onSubmit={handleStepOneSubmit}
                 register={register}
                 errors={errors}
+                setError={setError}
                 setValue={setValue}
                 getValues={getValues}
                 watch={watch}
@@ -273,6 +278,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
                 register={register}
                 onPrevious={goToPreviousStep}
                 errors={errors}
+                setError={setError}
               />
             )}
             {step === 3 && (

@@ -1,14 +1,5 @@
 import { Box, Center, Container, Flex, HStack } from '@chakra-ui/react';
-import {
-  Contribution,
-  ProjectJoinRound,
-  ProjectJoinRoundStatus,
-  ProjectsModel,
-  ProjectVerifyStatus,
-  Round,
-  Team,
-  UserModel,
-} from '@prisma/client';
+import { ProjectJoinRoundStatus, ProjectVerifyStatus } from '@prisma/client';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { FiClock } from 'react-icons/fi';
 import { HiBan } from 'react-icons/hi';
@@ -16,7 +7,6 @@ import { ImCheckboxChecked } from 'react-icons/im';
 import { MdVerified } from 'react-icons/md';
 import { TbListSearch } from 'react-icons/tb';
 import RoundStatus from '~/components/common/dates/Status';
-import { ProjectStatus } from '~/utils/getProjectStatus';
 
 interface Props {
   roundName: string;
@@ -182,7 +172,7 @@ const ProjectDetailsLiveRoundStatus = ({
           </Flex>
         </Container>
       );
-    case ProjectJoinRoundStatus.APPROVED:
+    case 'ENDED':
       return (
         <Flex
           zIndex="9"
@@ -193,19 +183,19 @@ const ProjectDetailsLiveRoundStatus = ({
           gap="8px"
           borderBottom="1px solid"
           borderTopRadius={'16px'}
-          borderColor="#8F47FF16"
-          backgroundColor={'#0A001A'}
+          backgroundColor={'#0F0A00'}
+          borderColor="#FFA50010"
         >
-          <HStack w="fit-content" rounded="full" p="6px 10px" bg="#6D28D9">
-            <ImCheckboxChecked size={14} color="#E6D6FF" />
+          <HStack w="fit-content" rounded="full" p="6px 10px" bg="#EB7626">
+            <HiBan size={14} color="#FFE3CC" />
             <Box
               as="p"
               noOfLines={1}
               whiteSpace={'nowrap'}
               textStyle={{ base: 'body6', md: 'body5' }}
-              color="#E6D6FF"
+              color="#FFE3CC"
             >
-              Selected
+              Not Selected
             </Box>
           </HStack>
           <Box
@@ -214,12 +204,53 @@ const ProjectDetailsLiveRoundStatus = ({
             display={{ base: 'none', md: 'block' }}
             whiteSpace={{ base: 'normal', md: 'nowrap' }}
             textStyle={{ base: 'body6', md: 'body5' }}
-            color="#E6D6FF"
+            color="surface.red.3"
           >
-            Congratulations your project has been selected to participate in{' '}
-            <b>{roundName}</b>
+            Thank you for your submission, but unfortunately it did not meet our
+            review criteria.
           </Box>
         </Flex>
+      );
+
+    case ProjectJoinRoundStatus.APPROVED:
+      return (
+        <Container maxW="7xl" p="0" pt="24px">
+          <Flex
+            w="full"
+            zIndex="9"
+            gap="8px"
+            flexDirection={{ base: 'column', sm: 'row' }}
+            padding={{ base: '10px 16px', md: '12px 24px' }}
+            align={{ base: 'start', sm: 'center' }}
+            borderBottom="1px solid"
+            borderRadius={'12px'}
+            borderColor="#8F47FF16"
+            backgroundColor={'#0A001A'}
+          >
+            <HStack w="fit-content" rounded="full" p="6px 10px" bg="#6D28D9">
+              <ImCheckboxChecked size={14} color="#E6D6FF" />
+              <Box
+                as="p"
+                noOfLines={1}
+                whiteSpace={'nowrap'}
+                textStyle={{ base: 'body6', md: 'body5' }}
+                color="#E6D6FF"
+              >
+                Selected
+              </Box>
+            </HStack>
+            <Box
+              as="p"
+              noOfLines={{ base: 2, md: 1 }}
+              display={{ base: 'none', md: 'block' }}
+              whiteSpace={{ base: 'normal', md: 'nowrap' }}
+              textStyle={{ base: 'body6', md: 'body5' }}
+              color="#E6D6FF"
+            >
+              The project has been selected to participate in <b>{roundName}</b>
+            </Box>
+          </Flex>
+        </Container>
       );
     case ProjectJoinRoundStatus.REJECTED:
       return (
@@ -296,8 +327,8 @@ const ProjectDetailsLiveRoundStatus = ({
               textStyle={{ base: 'body6', md: 'body5' }}
               color="#FFCCFF"
             >
-              Your project is currently under review for {roundName}. Check your
-              mail for more information.
+              Your project is currently under review. Check your mail for more
+              information.
             </Box>
           </Flex>
         </Container>

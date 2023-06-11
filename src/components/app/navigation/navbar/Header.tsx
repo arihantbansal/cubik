@@ -101,7 +101,7 @@ export const Header = memo(function Header({
               Grants
             </Box>
           </Button>
-          <Button as={Link} href="/hackathons" h="full" variant={'unstyled'}>
+          {/* <Button as={Link} href="/hackathons" h="full" variant={'unstyled'}>
             <Box
               as="p"
               textStyle={'title4'}
@@ -110,7 +110,7 @@ export const Header = memo(function Header({
             >
               Hackathons
             </Box>
-          </Button>
+          </Button> */}
         </HStack>
       </>
     ) : (
@@ -155,11 +155,11 @@ export const Header = memo(function Header({
           onToggle={onToggle}
         />
       </Container>
-      {connected && isMobileOnly && router.pathname === '/' ? (
+      {router.pathname === '/' ? (
         ''
       ) : (
         <Container
-          display={{ base: 'block', md: 'none' }}
+          display={connected ? 'none' : { base: 'block', md: 'none' }}
           w="full"
           zIndex="10"
           maxW={'full'}

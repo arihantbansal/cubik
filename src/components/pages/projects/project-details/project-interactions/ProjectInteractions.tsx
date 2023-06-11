@@ -478,6 +478,7 @@ export const ProjectCreatorAndLinks = ({
       justifyContent={'start'}
       display={{ base: 'none', lg: 'flex' }}
     >
+      <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />
       <RecentContributions
         projectId={projectDetails?.id || ''}
         roundId={roundId}
@@ -491,7 +492,6 @@ export const ProjectCreatorAndLinks = ({
         />
       )}
       <ProjectOwner isLoading={isLoading} team={team} />
-      <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />
       <SimilarProject />
     </VStack>
   );

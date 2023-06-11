@@ -63,7 +63,13 @@ const CustomStepper = ({ steps, currentStep }: CustomStepperProps) => {
                 height={{ base: '0.8rem', sm: '1.1rem' }}
                 rounded="full"
                 as="p"
-                bg="white"
+                backgroundColor={
+                  status === 'complete'
+                    ? 'white'
+                    : status === 'active'
+                    ? 'white'
+                    : 'neutral.6'
+                }
                 color={'black'}
                 textStyle={{ base: 'body7', sm: 'body6' }}
                 position="relative"
@@ -81,21 +87,16 @@ const CustomStepper = ({ steps, currentStep }: CustomStepperProps) => {
                 >
                   {step.index}
                 </MotionBox>
-                <MotionBox
-                  as={MdCheck}
-                  initial={{ opacity: 0 }}
-                  animate={
-                    status === 'complete'
-                      ? { opacity: 1 }
-                      : status === 'active'
-                      ? { opacity: 0 }
-                      : { opacity: 0 }
-                  }
-                  transition={{ duration: 0.1 }}
-                  position="absolute"
-                  size="16px"
-                  style={{ color: 'black' }}
-                />
+                {status === 'complete' ? (
+                  <Box
+                    as={MdCheck}
+                    position="absolute"
+                    boxSize={{ base: '12px', md: '14px' }}
+                    style={{ color: 'black' }}
+                  />
+                ) : (
+                  <></>
+                )}
               </Center>
               <Box
                 as="p"

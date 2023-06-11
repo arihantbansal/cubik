@@ -2,7 +2,7 @@ import { Box, Button, Center, HStack, Tag, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
 const Logo = () => {
-  const devnet = false;
+  const beta = true;
   return (
     <HStack
       spacing={{ base: '2px', md: '8px' }}
@@ -48,7 +48,7 @@ const Logo = () => {
           CUBIK
         </Text>
       </Button>
-      {devnet ? (
+      {beta ? (
         <Tag
           rounded="full"
           variant="colorful"
@@ -66,7 +66,7 @@ const Logo = () => {
             fontWeight="700 !important"
             letterSpacing="1.2px"
           >
-            DEVNET
+            BETA
           </Box>
         </Tag>
       ) : (

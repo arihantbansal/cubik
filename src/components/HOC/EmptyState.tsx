@@ -5,11 +5,13 @@ const EmptyStateHOC = ({
   heading,
   subHeading,
   children,
+  CTA,
   margin,
 }: {
   heading: string;
   subHeading: string;
   children?: React.ReactNode;
+  CTA?: React.ReactNode;
   margin?: string;
 }) => {
   return (
@@ -88,23 +90,26 @@ const EmptyStateHOC = ({
           </svg>
         </Center>
       )}
-      <Box
-        as="p"
-        textStyle={{ base: 'title3', md: 'title2' }}
-        color="neutral.11"
-      >
-        {heading}
-      </Box>
-      <Box
-        maxW={'28rem'}
-        textAlign="center"
-        mx="auto"
-        as="p"
-        textStyle={{ base: 'body3', md: 'body2' }}
-        color="neutral.8"
-      >
-        {subHeading}
-      </Box>
+      <VStack w="full" gap="8px">
+        <Box
+          as="p"
+          textStyle={{ base: 'title3', md: 'title2' }}
+          color="neutral.11"
+        >
+          {heading}
+        </Box>
+        <Box
+          maxW={'24rem'}
+          textAlign="center"
+          mx="auto"
+          as="p"
+          textStyle={{ base: 'body4', md: 'body4' }}
+          color="neutral.7"
+        >
+          {subHeading}
+        </Box>
+        {CTA ? CTA : <></>}
+      </VStack>
     </VStack>
   );
 };

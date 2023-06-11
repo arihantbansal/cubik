@@ -24,6 +24,7 @@ import {
   FieldErrors,
   UseFormGetValues,
   UseFormRegister,
+  UseFormSetError,
   UseFormSetValue,
   UseFormTrigger,
   UseFormWatch,
@@ -40,6 +41,7 @@ type StepOneProps = {
   trigger: UseFormTrigger<FormData>;
   register: UseFormRegister<FormData>;
   errors: FieldErrors<FormData>;
+  setError: UseFormSetError<FormData>;
   setValue: UseFormSetValue<FormData>;
   getValues: UseFormGetValues<FormData>;
   watch: UseFormWatch<FormData>;
@@ -51,6 +53,7 @@ const StepOne: React.FC<StepOneProps> = ({
   onSubmit,
   register,
   errors,
+  setError,
   setValue,
   getValues,
   control,
@@ -67,12 +70,26 @@ const StepOne: React.FC<StepOneProps> = ({
   } = useTeamSearch(currentTeammateName);
 
   const onDrop = useCallback((acceptedFiles: any[]) => {
-    setValue('logo', acceptedFiles[0]);
+    // Only accept the first file from the dropped files
+    if (acceptedFiles.length > 0) {
+      const file = acceptedFiles[0];
+
+      // Check file size, should be less than or equal to 5MB
+      // file.size is in bytes, so 5MB is 5 * 1024 * 1024 bytes
+      if (file.size <= 5 * 1024 * 1024) {
+        setValue('logo', file);
+      } else {
+        setError('logo', {
+          message: 'File size should be less than or equal to 5MB',
+        });
+      }
+    }
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     // @ts-ignore
     accept: 'image/*',
+    multiple: false, // prevent multiple file selection
     onDrop,
   });
 
@@ -580,7 +597,7 @@ const StepOne: React.FC<StepOneProps> = ({
               <Center {...getRootProps()}>
                 <input {...getInputProps()} />{' '}
                 <Button variant={'primary'} fontSize={{ base: 'xs', md: 'md' }}>
-                  Upload Image
+                  {getValues('logo') ? 'Upload New Image' : 'Upload Image'}
                 </Button>{' '}
               </Center>
               <Box

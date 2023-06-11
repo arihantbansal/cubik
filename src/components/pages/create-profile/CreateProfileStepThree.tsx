@@ -135,11 +135,7 @@ const CreateProfileStepThree = ({
     control,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
-    defaultValues: {
-      username: UserUserName,
-      ProfilePicture: UserProfilePicture,
-    },
+    resolver: yupResolver(schema), // todo: add user profile picture from google later
   });
 
   const userCreateMutation = trpc.user.create.useMutation({
@@ -532,8 +528,7 @@ const CreateProfileStepThree = ({
                 <Button
                   as={Link}
                   href={`/${userName}`}
-                  size={{ base: 'sm', md: 'md' }}
-                  w="12rem"
+                  size={{ base: 'cubikMini', md: 'cubikSmall' }}
                   variant="cubikOutlined"
                 >
                   Go to profile

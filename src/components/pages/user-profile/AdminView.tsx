@@ -43,10 +43,10 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
           <TabPanels p={'0'}>
             <TabPanel w="full">
               <Flex
+                gap={{ base: '24px', md: '32px' }}
                 w={'full'}
                 p="0"
                 flexDir="column"
-                gap={{ base: '24px', md: '32px' }}
               >
                 <UserDetails
                   userId={user?.id as string}

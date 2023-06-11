@@ -14,7 +14,7 @@ const CreateProfileStepTwo = ({
   onPrevious: () => void;
 }) => {
   const { user } = useUser(supabase);
-  const [emailUnique, setEmailUnique] = useState<boolean>(true);
+  const [emailUnique, setEmailUnique] = useState<boolean>(false);
 
   const checkEmailMutation = trpc.user.checkEmail.useMutation();
   const handleClick = async () => {
@@ -27,11 +27,13 @@ const CreateProfileStepTwo = ({
   };
 
   useEffect(() => {
+    console.log('inside use effect ', user?.data?.user?.email);
     const checkEmail = async () => {
       if (user?.data?.user?.email) {
         const res = await checkEmailMutation.mutateAsync({
           email: user?.data?.user?.email,
         });
+        console.log('is email unique - ', res);
         setEmailUnique(res);
       }
     };
@@ -61,10 +63,10 @@ const CreateProfileStepTwo = ({
           <Box
             display={emailUnique ? 'none' : ''}
             as="p"
-            textStyle={'body4'}
+            textStyle={{ base: 'body5', md: 'body4' }}
             color="surface.red.2"
           >
-            *connect a unique account to proceed. Connect different account by
+            *Email belongs to a different account. Connect different account by
             clicking on it again
           </Box>
         </VStack>

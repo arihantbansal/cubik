@@ -14,7 +14,12 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { FieldErrors, UseFormRegister, UseFormTrigger } from 'react-hook-form';
+import {
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetError,
+  UseFormTrigger,
+} from 'react-hook-form';
 import {
   FaDiscord,
   FaGithub,
@@ -24,12 +29,14 @@ import {
 } from 'react-icons/fa';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { FormData } from '~/pages/submit-project';
+
 type StepTwoProps = {
   trigger: UseFormTrigger<FormData>;
   onSubmit: () => void;
   onPrevious: () => void;
   register: UseFormRegister<FormData>;
   errors: FieldErrors<StepTwoFormValues>;
+  setError: UseFormSetError<FormData>;
 };
 
 type StepTwoFormValues = {
@@ -45,6 +52,7 @@ const StepTwo: React.FC<StepTwoProps> = ({
   register,
   onPrevious,
   errors,
+  setError,
 }: StepTwoProps) => {
   const handleSubmit = async () => {
     trigger(['projectLink', 'twitter']).then((isValid) => {

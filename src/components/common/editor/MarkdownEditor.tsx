@@ -118,22 +118,19 @@ const MarkdownEditor = ({
       setSize({ base: '8px', sm: '12px', md: '16px' });
     }
   }, []);
-
-  const EditorArea = () => {
-    return (
-      <EditorContent
-        id="reset-des"
-        placeholder="Enter your project description here"
-        style={{
-          height: '100%',
-        }}
-        width={'100%'}
-        height={'100%'}
-        editor={editor}
-      />
-    );
-  };
-
+  const EditorArea = (
+    <EditorContent
+      id="reset-des"
+      placeholder="Enter your project description here"
+      style={{
+        height: '100%',
+        padding: '0px',
+      }}
+      width={'100%'}
+      height={'100%'}
+      editor={editor}
+    />
+  );
   return (
     <>
       <Modal
@@ -162,40 +159,30 @@ const MarkdownEditor = ({
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <Modal
-        isCentered
-        variant={'cubik'}
-        size={'6xl'}
-        isOpen={isEditorModalOpen}
-        onClose={() => setIsEditorModal(false)}
-      >
-        <ModalOverlay />
-        <ModalContent height="85vh" mt="5rem">
-          <ModalHeader>{editorHeading}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <EditorContent
-              id="reset-des"
-              placeholder="Enter your project description here"
-              style={{
-                height: '100%',
-                padding: '0px',
-              }}
-              width={'100%'}
-              height={'100%'}
-              editor={editor}
-            />
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              variant="connect_wallet"
-              onClick={() => setIsEditorModal(false)}
-            >
-              Submit
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <Box display={isEditorModalOpen ? 'block' : 'none'}>
+        <Modal
+          isCentered
+          variant={'cubik'}
+          size={'6xl'}
+          isOpen={isEditorModalOpen}
+          onClose={() => setIsEditorModal(false)}
+        >
+          <ModalOverlay />
+          <ModalContent minH={'85vh'} height="fit-content" mt="5rem">
+            <ModalHeader>{editorHeading}</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>{EditorArea}</ModalBody>
+            <ModalFooter>
+              <Button
+                variant="connect_wallet"
+                onClick={() => setIsEditorModal(false)}
+              >
+                Submit
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </Box>
       {/* editor controls */}
       {editorHeading && (
         <Box px={size} w="full">
@@ -426,12 +413,12 @@ const MarkdownEditor = ({
           w={'full'}
           height={
             componentSize === 'sm'
-              ? { base: '10px', md: '16px' }
+              ? { base: '100%', md: '100%' }
               : componentSize === 'md'
-              ? { base: '12px', md: '18px' }
+              ? { base: '100%', md: '100%' }
               : componentSize === 'lg'
-              ? { base: '40rem', md: '100%' }
-              : { base: '20rem', md: '20rem' }
+              ? { base: '100%', md: '100%' }
+              : { base: '100%', md: '100%' }
           }
           overflow="scroll"
         >
@@ -441,7 +428,7 @@ const MarkdownEditor = ({
             position={'absolute'}
             cursor="pointer"
             zIndex={'10'}
-            bottom="10"
+            bottom="16%"
             right={'10'}
             _hover={{
               backgroundColor: '#001F1B',
@@ -469,17 +456,7 @@ const MarkdownEditor = ({
             }}
             className="reset"
           >
-            <EditorContent
-              id="reset-des"
-              placeholder="Enter your project description here"
-              style={{
-                height: '100%',
-                padding: '0px',
-              }}
-              width={'100%'}
-              height={'100%'}
-              editor={editor}
-            />
+            {EditorArea}
           </div>
         </Box>
       )}

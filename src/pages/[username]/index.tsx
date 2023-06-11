@@ -55,4 +55,4 @@ export async function getServerSideProps(context: {
   };
 }
 
-export default React.memo(ProfilePage);
+export default ProfilePage;

@@ -17,16 +17,13 @@ import MonkeDAOProof from './proofs/MonkeDAOProof';
 import CivicIDProof from './proofs/CivicIDProof';
 import DripProof from './proofs/DripProof';
 import LamportDAOProof from './proofs/LamportDAOProof';
+import GoogleProof from './proofs/GoogleProof';
 
 const MotionBox = motion(Box);
 
 const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
   return (
-    <VStack
-      align="start"
-      w="full"
-      gap={{ base: '16px', sm: '20px', md: '24px' }}
-    >
+    <VStack align="start" w="full">
       <HStack gap="8px">
         <Skeleton
           isLoaded={!isLoading}
@@ -48,7 +45,7 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
           rounded="full"
         >
           <Tag
-            size={{ base: 'sm', md: 'md' }}
+            size={{ base: 'sm', md: 'sm' }}
             px="16px"
             py="6px"
             fontWeight={'700'}
@@ -56,11 +53,11 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
             background={'surface.yellow.3'}
             rounded="full"
           >
-            0 / 5 Collected
+            1 / 1 Collected
           </Tag>
         </Skeleton>
       </HStack>
-      <Alert
+      {/* <Alert
         w="full"
         variant={'solid'}
         rounded="none"
@@ -79,10 +76,11 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
           To start contributing on the platform you need to collect proofs by
           verifying your digital identity.
         </AlertDescription>
-      </Alert>
+      </Alert> */}
       <Wrap
         direction={{ base: 'column', md: 'row' }}
         spacing={{ base: '24px', md: '32px' }}
+        pt={{ base: '16px', sm: '20px', md: '24px' }}
       >
         <Skeleton
           fadeDuration={4}
@@ -99,43 +97,7 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
             whileHover={{ y: -8, scale: 1 }}
             transition={{ duration: 0.3 }}
           >
-            <TwitterProof />
-          </MotionBox>
-        </Skeleton>
-        <Skeleton
-          fadeDuration={4}
-          isLoaded={!isLoading}
-          opacity={isLoading ? 0.4 : 1}
-          rounded="12px"
-        >
-          <MotionBox
-            as={Card}
-            cursor="pointer"
-            w={{ base: 'full', sm: 'full', md: '17.8rem' }}
-            height="fit-content"
-            h="full"
-            whileHover={{ y: -8, scale: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <LamportDAOProof />
-          </MotionBox>
-        </Skeleton>
-        <Skeleton
-          fadeDuration={5}
-          isLoaded={!isLoading}
-          opacity={isLoading ? 0.4 : 1}
-          rounded="12px"
-        >
-          <MotionBox
-            as={Card}
-            cursor="pointer"
-            w={{ base: '40vw', md: '17.8rem' }}
-            height="fit-content"
-            h="full"
-            whileHover={{ y: -8, scale: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <DripProof />
+            <GoogleProof />
           </MotionBox>
         </Skeleton>
         <Skeleton
@@ -147,31 +109,13 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
           <MotionBox
             as={Card}
             cursor="pointer"
-            w={{ base: '40vw', md: '17.8rem' }}
+            w={{ base: 'full', sm: 'full', md: '17.8rem' }}
             height="fit-content"
             h="full"
             //  whileHover={{ y: -8, scale: 1 }}
             transition={{ duration: 0.3 }}
           >
             <CivicIDProof />
-          </MotionBox>
-        </Skeleton>
-        <Skeleton
-          fadeDuration={7}
-          isLoaded={!isLoading}
-          opacity={isLoading ? 0.4 : 1}
-          rounded="12px"
-        >
-          <MotionBox
-            as={Card}
-            cursor="pointer"
-            w={{ base: '40vw', md: '17.8rem' }}
-            height="fit-content"
-            h="full"
-            //  whileHover={{ y: -8, scale: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <MonkeDAOProof />
           </MotionBox>
         </Skeleton>
       </Wrap>

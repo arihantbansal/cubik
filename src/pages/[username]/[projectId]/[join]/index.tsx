@@ -1,5 +1,5 @@
 import { ProjectJoinRoundStatus } from '.prisma/client';
-import { Container, Stack } from '@chakra-ui/react';
+import { Container, Skeleton, Stack } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { join } from 'path';
 import ComponentErrors from '~/components/errors/ComponenetErrors';
@@ -40,15 +40,23 @@ const ProjectDetails = ({
         image={data ? data?.project.logo : ''}
       />
       <main style={{ width: 'full' }}>
-        <Container maxW={'full'} p="0">
-          {joinId && (
-            <ProjectDetailsLiveRoundStatus
-              endTime={data?.fundingRound.endTime as Date}
-              startTime={data?.fundingRound.startTime as Date}
-              status={data?.status as ProjectJoinRoundStatus}
-              roundName={data?.fundingRound.roundName as string}
-            />
-          )}
+        <Container maxW={'full'}>
+          <Skeleton
+            isLoaded={!isLoading}
+            w="full"
+            h="auto"
+            maxW="7xl"
+            mx="auto"
+          >
+            {joinId && (
+              <ProjectDetailsLiveRoundStatus
+                endTime={data?.fundingRound.endTime as Date}
+                startTime={data?.fundingRound.startTime as Date}
+                status={data?.status as ProjectJoinRoundStatus}
+                roundName={data?.fundingRound.roundName as string}
+              />
+            )}
+          </Skeleton>
           <Stack
             maxW="7xl"
             mx="auto"
