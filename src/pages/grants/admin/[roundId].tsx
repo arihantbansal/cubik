@@ -7,48 +7,42 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  Tag,
   VStack,
   Stat,
   Skeleton,
-  StatNumber,
-  StatArrow,
-  StatGroup,
-  Wrap,
 } from '@chakra-ui/react';
 import { Round } from '@prisma/client';
 import { GetServerSideProps } from 'next';
 import { useEffect, useState } from 'react';
-import RoundStatus from '~/components/common/dates/Status';
-import CustomTag from '~/components/common/tags/CustomTag';
 import ErrorBoundary from '~/components/errors/Errorboundary';
 import GrantMatchingPoolAdminPannel from '~/components/pages/grants/admin/GrantMatchingPoolAdminPannel';
-import GrantUnderReviewProjects from '~/components/pages/grants/admin/GrantUnderReviewProjects';
 import GrantsDashboardDetails from '~/components/pages/grants/admin/GrantsDashboardDetails';
 import RoundAdminSettings from '~/components/pages/grants/admin/RoundAdminSettings';
 import RoundResults from '~/components/pages/grants/admin/RoundResults';
 import { trpc } from '~/utils/trpc';
 
 const RoundAdmin = ({ roundId }: { roundId: string }) => {
-  const [roundData, setRoundData] = useState<Round | undefined>(undefined);
+  // const [roundData, setRoundData] = useState<Round | undefined>(undefined);
 
-  const { data, isLoading } = trpc.round.findActive.useQuery();
+  const { data, isLoading } = trpc.round.findOneAdmin.useQuery({
+    id: roundId,
+  });
 
-  useEffect(() => {
-    const fetchRoundData = async () => {
-      if (!isLoading && data) {
-        const adminRound = data.find((round) => round.id === roundId);
-        setRoundData(adminRound);
-      }
-    };
-    fetchRoundData();
-  }, [data, roundId]);
+  // useEffect(() => {
+  //   const fetchRoundData = async () => {
+  //     if (!isLoading && data) {
+  //       const adminRound = data.find((round) => round.id === roundId);
+  //       setRoundData(adminRound);
+  //     }
+  //   };
+  //   fetchRoundData();
+  // }, [data, roundId]);
 
   return (
     <ErrorBoundary>
       <Container maxW="full" py="40px" px="0">
         <VStack align="start" w="full" gap="40px">
-          {roundData && (
+          {data && (
             <VStack mx="auto" maxW="7xl" px="1rem" w="full" align="start">
               <Skeleton isLoaded={!isLoading}>
                 <Box
@@ -56,7 +50,7 @@ const RoundAdmin = ({ roundId }: { roundId: string }) => {
                   textStyle={{ base: 'title2', md: 'title1' }}
                   color="neutral.11"
                 >
-                  {roundData.roundName}
+                  {data.roundName}
                 </Box>
               </Skeleton>
             </VStack>
@@ -86,16 +80,62 @@ const RoundAdmin = ({ roundId }: { roundId: string }) => {
             </TabList>
             <TabPanels maxW="7xl" px="1rem" mx="auto">
               <TabPanel py="40px" w="full">
-                <GrantsDashboardDetails roundData={roundData} />
+                <GrantsDashboardDetails
+                  roundData={{
+                    ...data!!,
+                  }}
+                  totalContribution={
+                    data?.Contribution?.reduce((a, b) => a + b.usdTotal, 0) ?? 0
+                  }
+                  isLoading={isLoading}
+                  totalContributors={data?.Contribution?.length ?? 0}
+                  avgContribution={
+                    isNaN(
+                      (data?.Contribution?.reduce(
+                        (a, b) => a + b.usdTotal,
+                        0
+                      ) as number) / (data?.Contribution?.length as number)
+                    )
+                      ? 0
+                      : (data?.Contribution?.reduce(
+                          (a, b) => a + b.usdTotal,
+                          0
+                        ) as number) / (data?.Contribution?.length as number)
+                  }
+                  lastContributon={
+                    data?.Contribution[data.Contribution.length]?.usdTotal ?? 0
+                  }
+                  todayAverage={
+                    (data?.Contribution.filter(
+                      (e) => e.createdAt === new Date()
+                    ).reduce((a, b) => a + b.usdTotal, 0) as number) /
+                      (data?.Contribution.filter(
+                        (e) => e.createdAt === new Date()
+                      ).length as number) ?? 0
+                  }
+                  todayContributors={
+                    (data?.Contribution.filter(
+                      (e) => e.createdAt === new Date()
+                    ).length as number) ?? 0
+                  }
+                />
               </TabPanel>
               <TabPanel>
                 <GrantMatchingPoolAdminPannel
-                  roundData={roundData}
+                  roundData={{
+                    ...data!!,
+                  }}
+                  ProjectJoinRound={data?.ProjectJoinRound ?? []}
                   isLoading={isLoading}
                 />
               </TabPanel>
               <TabPanel>
-                <RoundResults roundData={roundData} isLoading={isLoading} />
+                <RoundResults
+                  roundData={{
+                    ...data!!,
+                  }}
+                  isLoading={isLoading}
+                />
               </TabPanel>
               <TabPanel>
                 <RoundAdminSettings />

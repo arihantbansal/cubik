@@ -268,4 +268,51 @@ export const roundRouter = router({
         return roundRes;
       }
     }),
+
+  findOneAdmin: protectedProcedure
+    .input(
+      z.object({
+        id: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
+      const res = await prisma.round.findFirst({
+        where: {
+          id: input.id,
+        },
+        include: {
+          ProjectJoinRound: {
+            include: {
+              project: {
+                include: {
+                  owner: true,
+                },
+              },
+            },
+          },
+          Contribution: {
+            include: {
+              user: true,
+            },
+          },
+        },
+      });
+      if (!res) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Round not found',
+          cause: 'Round not found',
+        });
+      }
+
+      if (res.userId !== ctx?.user?.id) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'Invalid Round Admin',
+          cause: 'round user id doesnt match login user id',
+        });
+      }
+
+      return res;
+    }),
 });

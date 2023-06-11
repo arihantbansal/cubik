@@ -57,25 +57,22 @@ const OverviewStatsCard = ({
 };
 
 const GrantAdminDashboardOverview = ({
-  roundData,
   isLoading,
+  totalContribution,
+  avgContribution,
+  totalContributors,
+  lastContributon,
+  todayAverage,
+  todayContributors,
 }: {
-  roundData: Round | undefined;
   isLoading?: boolean;
+  totalContribution: number;
+  avgContribution: number;
+  totalContributors: number;
+  lastContributon: number;
+  todayAverage: number;
+  todayContributors: number;
 }) => {
-  const [totalCommunityContributions, setTotalCommunityContributions] =
-    useState(0);
-
-  const [averageContributionSize, setAverageContributionSize] = useState();
-
-  useEffect(() => {
-    console.log('roundData', roundData);
-    if (roundData) {
-      const total = roundData.contributions;
-      setTotalCommunityContributions(total);
-    }
-  }, [roundData]);
-
   return (
     <VStack align={'start'} w="full" gap="16px">
       <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
@@ -91,8 +88,8 @@ const GrantAdminDashboardOverview = ({
         w="full"
       >
         <OverviewStatsCard
-          title={'Total Contributions'}
-          value={totalCommunityContributions}
+          title={'Total Donation'}
+          value={totalContribution}
           isLoading={isLoading}
         >
           <HStack
@@ -118,14 +115,14 @@ const GrantAdminDashboardOverview = ({
                 textStyle={{ base: 'title6', md: 'title5' }}
                 color="neutral.11"
               >
-                $10
+                ${lastContributon}
               </Box>
             </Skeleton>
           </HStack>
         </OverviewStatsCard>
         <OverviewStatsCard
           title={'Average Contribution'}
-          value={0.0}
+          value={avgContribution}
           isLoading={isLoading}
         >
           <HStack
@@ -142,7 +139,7 @@ const GrantAdminDashboardOverview = ({
                 textStyle={{ base: 'overline5', md: 'overline4' }}
                 color="neutral.8"
               >
-                Last Contribution
+                Todays Average
               </Box>
             </Skeleton>
             <Skeleton>
@@ -151,7 +148,7 @@ const GrantAdminDashboardOverview = ({
                 textStyle={{ base: 'title6', md: 'title5' }}
                 color="neutral.11"
               >
-                $10
+                ${todayAverage}
               </Box>
             </Skeleton>
           </HStack>
@@ -166,7 +163,7 @@ const GrantAdminDashboardOverview = ({
             >
               Total Contributors
             </StatLabel>
-            <StatNumber>$0.00</StatNumber>
+            <StatNumber>{totalContributors}</StatNumber>
           </VStack>
           <HStack
             w="full"
@@ -181,14 +178,14 @@ const GrantAdminDashboardOverview = ({
               textStyle={{ base: 'overline5', md: 'overline4' }}
               color="neutral.8"
             >
-              Last Donation
+              Todays Contributors
             </Box>
             <Box
               as="p"
               textStyle={{ base: 'title6', md: 'title5' }}
               color="neutral.11"
             >
-              $10
+              {todayContributors}
             </Box>
           </HStack>
         </Stat>
@@ -318,16 +315,33 @@ const GrantAdminDashboardProjects = ({
 const GrantsDashboardDetails = ({
   roundData,
   isLoading,
+  totalContribution,
+  avgContribution,
+  totalContributors,
+  lastContributon,
+  todayAverage,
+  todayContributors,
 }: {
   roundData: Round | undefined;
   isLoading?: boolean;
+  totalContribution: number;
+  avgContribution: number;
+  totalContributors: number;
+  lastContributon: number;
+  todayAverage: number;
+  todayContributors: number;
 }) => {
   return (
     <Container maxW="full" p="0" py="20px">
       <VStack w="full" gap="40px">
         <GrantAdminDashboardOverview
-          roundData={roundData}
           isLoading={isLoading}
+          totalContribution={totalContribution}
+          totalContributors={totalContributors}
+          avgContribution={avgContribution}
+          lastContributon={lastContributon}
+          todayAverage={todayAverage}
+          todayContributors={todayContributors}
         />
         <GrantAdminDashboardProjects
           roundData={roundData}
