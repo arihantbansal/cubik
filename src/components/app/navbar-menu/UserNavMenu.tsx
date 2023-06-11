@@ -12,7 +12,6 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { BiChevronDown, BiUser } from 'react-icons/bi';
 import { MdPowerSettingsNew, MdUpload } from 'react-icons/md';

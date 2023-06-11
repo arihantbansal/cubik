@@ -19,6 +19,7 @@ export type ProofType =
   | 'MONKEYDAO'
   | 'CIVIC'
   | 'SOCIAL'
+  | 'GOOGLE'
   | 'DROPS01';
 export const connection = new anchor.web3.Connection(RPC_URL, 'confirmed');
 

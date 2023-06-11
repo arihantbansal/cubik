@@ -28,7 +28,13 @@ export const createUser = procedure
           profilePicture: input.profilePicture,
           username: input.username,
           email: input.email,
-          proof: [],
+          proof: [
+            {
+              name: 'GOOGLE',
+              timestamp: Date.now(),
+              tx: '',
+            },
+          ],
           tx: input.tx,
         },
       });

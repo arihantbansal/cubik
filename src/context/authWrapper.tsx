@@ -94,9 +94,9 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
       console.log(payload, 'this payload');
       return null;
     }
-
-    onOpen();
-    // check for available signature
+    if (!localStorage.getItem('anon_sig')) {
+      onOpen();
+    }
   };
   useEffect(() => {
     checkAndVerifySignature();
