@@ -152,27 +152,29 @@ model ProjectJoinRound {
 }
 
 model Round {
-  id                String             @id @default(uuid()) @map("_id")
-  roundName         String
-  matchedPool       Float              @default(0)
-  notionPage        String             @db.VarChar(500)
-  projectCount      Int                @default(0)
-  active            Boolean            @default(true)
-  userId            String
-  description       String             @default("") @db.Text
-  endTime           DateTime           @default(now())
-  startTime         DateTime           @default(now())
-  tx                String             @db.VarChar(500)
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
-  colorScheme       String             @default("teal")
-  short_description String             @default("") @db.VarChar(2000)
-  contributions     Float              @default(0)
-  manager           String             @default("")
-  sponsor           Sponsor[]
-  User              UserModel          @relation(fields: [userId], references: [id])
-  ProjectJoinRound  ProjectJoinRound[]
-  Contribution      Contribution[]
+  id                    String             @id @default(uuid()) @map("_id")
+  roundName             String
+  matchedPool           Float              @default(0)
+  notionPage            String             @db.VarChar(500)
+  projectCount          Int                @default(0)
+  active                Boolean            @default(true)
+  userId                String
+  description           String             @default("") @db.Text
+  endTime               DateTime           @default(now())
+  startTime             DateTime           @default(now())
+  registrationEndDate   DateTime           @default(now())
+  registrationStartDate DateTime           @default(now())
+  tx                    String             @db.VarChar(500)
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+  colorScheme           String             @default("teal")
+  short_description     String             @default("") @db.VarChar(2000)
+  contributions         Float              @default(0)
+  manager               String             @default("")
+  sponsor               Sponsor[]
+  User                  UserModel          @relation(fields: [userId], references: [id])
+  ProjectJoinRound      ProjectJoinRound[]
+  Contribution          Contribution[]
 
   @@index([userId])
 }
