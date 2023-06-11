@@ -8,6 +8,7 @@ import { useUserStore } from '~/store/userStore';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { BONK, SOL, USDC } from '../../common/tokens/token';
 import ComponentErrors from '~/components/errors/ComponenetErrors';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 type TokenInfo = {
   tokenAccount: string;
@@ -40,13 +41,15 @@ const getBalances = async (address: string) => {
 
 const WalletBalance = () => {
   const { user } = useUserStore();
+  const { publicKey } = useWallet();
+
   const { isLoading, error, data } = useQuery(
     'balances',
-    () => getBalances(user?.mainWallet as string),
+    () => getBalances(publicKey?.toBase58() as string),
     {
-      // Cache data for 5 minutes (in milliseconds)
-      staleTime: 5 * 60 * 1000,
-      // Don't automatically refetch data in the background
+      // // Cache data for 5 minutes (in milliseconds)
+      staleTime: 3 * 60 * 1000,
+      // // Don't automatically refetch data in the background
       refetchIntervalInBackground: false,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,

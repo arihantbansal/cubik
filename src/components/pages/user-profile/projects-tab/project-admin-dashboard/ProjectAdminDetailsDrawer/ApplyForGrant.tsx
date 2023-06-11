@@ -42,7 +42,7 @@ import { connection, ProjectJoinRound } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 import { drawerBodyViewEnum } from '../../ProjectHeader';
 import { checkRoundStatus, GRANT_STATUS } from '~/utils/round/checkRoundStatus';
-
+import { isPast } from 'date-fns';
 type FormData = {
   selectRoundId: string | null;
 };
@@ -103,24 +103,29 @@ const ApplyForGrant: React.FC<{
   };
 
   const onSignTransactionHandler = async () => {
-    setSignTxnLoading(true);
-    const round = roundData?.find((round) => round.id === selectRoundId);
-    if (!round) return;
+    try {
+      setSignTxnLoading(true);
+      const round = roundData?.find((round) => round.id === selectRoundId);
+      if (!round) return;
 
-    const sig = await sendTransaction(
-      round.roundName,
-      project.projectUserCount
-    );
-    if (!sig) return;
-    joinRoundMutation.mutate({
-      roundId: selectRoundId as string,
-      projectId: project.id,
-      tx: sig,
-      id: uuidV4(),
-    });
-    setSignTxnLoading(false);
-    SuccessToast({ toast, message: 'Submission Successful' });
-    onClose();
+      const sig = await sendTransaction(
+        round.roundName,
+        project.projectUserCount
+      );
+      if (!sig) return;
+      joinRoundMutation.mutate({
+        roundId: selectRoundId as string,
+        projectId: project.id,
+        tx: sig,
+        id: uuidV4(),
+      });
+      setSignTxnLoading(false);
+      SuccessToast({ toast, message: 'Submission Successful' });
+      onClose();
+    } catch (error) {
+      setSignTxnLoading(false);
+      console.log(error);
+    }
   };
 
   if (hasError) {
@@ -271,10 +276,7 @@ const ApplyForGrant: React.FC<{
 
   const FilteredRoundTiles = () => {
     const filteredRoundData = roundData?.filter((round) => {
-      return (
-        checkRoundStatus(round.startTime, round.endTime) ===
-        GRANT_STATUS.notStarted
-      );
+      return isPast(round.startTime);
     });
     if (filteredRoundData?.length === 0) {
       // there is no round to be applied for then show there is no acitve round currently
@@ -284,12 +286,7 @@ const ApplyForGrant: React.FC<{
       return (
         <VStack w="full" spacing="24px">
           {roundData?.map((round: Round) => {
-            return (
-              checkRoundStatus(round.startTime, round.endTime) ===
-                GRANT_STATUS.notStarted && (
-                <Tile tileIndex={round.id} round={round} key={round.id} />
-              )
-            );
+            return <Tile tileIndex={round.id} round={round} key={round.id} />;
           })}
         </VStack>
       );

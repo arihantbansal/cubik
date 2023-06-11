@@ -106,6 +106,7 @@ const GrantUnderReviewProjects = ({
       projectJoinRoundId: projectJoinRoundId,
       status: 'ACCEPTED',
     });
+    onAcceptModelClose();
   };
 
   const markUnverified = async (

@@ -109,23 +109,29 @@ const SelectProjectToApplyForGrant = ({
   };
 
   const signTransactionHandler = async () => {
-    setsignTransactionLoading(true);
-    if (!selectedGrantRound) return;
+    try {
+      setsignTransactionLoading(true);
+      if (!selectedGrantRound) return;
 
-    const sig = await sendTransaction(
-      selectedGrantRound.roundName,
-      selectedProject?.projectUserCount as number
-    );
-    if (!sig) return;
-    joinRoundMutation.mutate({
-      roundId: selectedGrantRound.id as string,
-      projectId: selectedProject?.id as string,
-      tx: sig,
-      id: uuidV4(),
-    });
-    setsignTransactionLoading(false);
-    SuccessToast({ toast, message: 'Submission Successful' });
-    onClose();
+      const sig = await sendTransaction(
+        selectedGrantRound.roundName,
+        selectedProject?.projectUserCount as number
+      );
+      if (!sig) return;
+      joinRoundMutation.mutate({
+        roundId: selectedGrantRound.id as string,
+        projectId: selectedProject?.id as string,
+        tx: sig,
+        id: uuidV4(),
+      });
+      setsignTransactionLoading(false);
+      onClose();
+      SuccessToast({ toast, message: 'Submission Successful' });
+    } catch (error) {
+      console.log(error);
+      setsignTransactionLoading(false);
+      onClose();
+    }
   };
 
   const onSubmit: SubmitHandler<FormData> = async () => {
