@@ -54,6 +54,8 @@ const ProjectDetails = ({
             <ProjectDetailsAndTabs
               ownerName={data?.owner.username as string}
               roundId={''}
+              projectJoinRoundId={''}
+              roundName={''}
               isLoading={isLoading}
               contributors={0}
               funding={0}

@@ -533,6 +533,9 @@ export const ProjectInteractions = ({
         round={round}
         projectDetails={projectDetails}
         isLoading={isLoading}
+        projectJoinRoundId={roundId}
+        roundName={round?.roundName as string}
+        roundid={(round?.id as string) ?? roundId}
       />
       <ProjectCreatorAndLinks
         team={team}

@@ -59,10 +59,16 @@ export const ProjectCTAs = ({
   round,
   projectDetails,
   isLoading,
+  projectJoinRoundId,
+  roundid,
+  roundName,
 }: {
   round?: Round;
   projectDetails: ProjectsModel;
   isLoading: boolean;
+  projectJoinRoundId: string;
+  roundName: string;
+  roundid: string;
 }) => {
   const { user } = useUserStore();
   const router = useRouter();
@@ -375,6 +381,9 @@ export const ProjectCTAs = ({
             <ModalBody>
               {projectDetails && (
                 <PaymentModalBody
+                  projectJoinRoundId={projectJoinRoundId}
+                  roundId={roundid as string}
+                  roundName={roundName}
                   setDonationSuccessful={setDonationSuccessful}
                   projectDetails={projectDetails}
                 />

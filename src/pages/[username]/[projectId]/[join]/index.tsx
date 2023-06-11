@@ -2,7 +2,6 @@ import { ProjectJoinRoundStatus } from '.prisma/client';
 import { Container, Skeleton, Stack } from '@chakra-ui/react';
 import { isPast } from 'date-fns';
 import { GetServerSideProps } from 'next';
-import { join } from 'path';
 import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';
 import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-details/ProjectDetailsAndTabs';
@@ -80,6 +79,8 @@ const ProjectDetails = ({
               ownerName={data?.project.owner.username as string}
               roundId={data?.fundingRound.id as string}
               isLoading={isLoading}
+              projectJoinRoundId={data?.id as string}
+              roundName={data?.fundingRound.roundName as string}
               team={data?.project.Team ?? []}
               projectDetails={{
                 ...data?.project!!,

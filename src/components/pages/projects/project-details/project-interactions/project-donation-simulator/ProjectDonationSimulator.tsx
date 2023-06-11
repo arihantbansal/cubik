@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import { ProjectsModel } from '@prisma/client';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
@@ -36,10 +37,13 @@ import { AmountInput } from './form/DonationAmountInput';
 import { WalletBalanceError } from './form/WalletBalanceError';
 
 type ProjectDonationSimulatorProps = {
-  projectDetails: projectWithFundingRoundType;
+  projectDetails: ProjectsModel;
   height: number;
   width: number;
   setDonationSuccessful?: any;
+  roundId: string;
+  projectJoinRoundId: string;
+  roundName: string;
 };
 
 export const token: tokenGroup[] = tokens;
@@ -49,6 +53,9 @@ export const ProjectDonationSimulator = ({
   height,
   width,
   setDonationSuccessful,
+  roundId,
+  projectJoinRoundId,
+  roundName,
 }: ProjectDonationSimulatorProps) => {
   const { data } = useSession();
   const [txnError, setTxnError] = useState<string | null>(null);
@@ -94,12 +101,8 @@ export const ProjectDonationSimulator = ({
       SuccessToast({ toast, message: 'Donation Successful' });
       updateProjectRaise.mutate({
         projectId: projectDetails.id,
-        projectJoinRoundId:
-          projectDetails.ProjectJoinRound.find((e) => e.status === 'APPROVED')
-            ?.id ?? '',
-        roundId:
-          projectDetails.ProjectJoinRound.find((e) => e.status === 'APPROVED')
-            ?.roundId ?? '',
+        projectJoinRoundId: projectJoinRoundId,
+        roundId: roundId,
       });
       utils.contribution.getProjectContributors.invalidate({
         projectId: projectDetails.id, // check once if the value is right or not for project Id
@@ -119,8 +122,7 @@ export const ProjectDonationSimulator = ({
     let sig: string | null = null;
     if (String(_values.token.value).toLocaleLowerCase() === 'sol') {
       sig = await donateSOL(
-        projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')
-          ?.fundingRound.roundName as string,
+        roundName as string,
         projectDetails?.owner_publickey,
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
@@ -129,8 +131,7 @@ export const ProjectDonationSimulator = ({
       );
     } else {
       sig = await donateSPL(
-        projectDetails?.ProjectJoinRound.find((e) => e.status === 'APPROVED')
-          ?.fundingRound.roundName as string,
+        roundName as string,
         '',
         projectDetails?.owner_publickey,
         projectDetails?.projectUserCount,
@@ -143,9 +144,7 @@ export const ProjectDonationSimulator = ({
     if (!sig) return;
     createContributionMutation.mutate({
       projectId: projectDetails.id,
-      roundId: projectDetails?.ProjectJoinRound.find(
-        (e) => e.status === 'APPROVED'
-      )?.fundingRound.id as string,
+      roundId: roundId,
       split: _values.matchingPoolDonation,
       token: _values.token.value,
       totalAmount: _values.amount,
@@ -228,9 +227,7 @@ export const ProjectDonationSimulator = ({
   const EstimatedAmmount = trpc.pool.findEstimated.useQuery({
     amount: watch('amount'),
     projectId: projectDetails.id,
-    roundId: projectDetails?.ProjectJoinRound.find(
-      (e) => e.status === 'APPROVED'
-    )?.fundingRound.id as string,
+    roundId: roundId,
   });
 
   return (

@@ -16,8 +16,6 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
-import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
-// import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
 import {
   ProjectFundingData,
   ProjectOwner,
@@ -25,14 +23,9 @@ import {
 } from './project-interactions/ProjectInteractions';
 import ProjectDetailsHeader from './ProjectDetailsHeader';
 import { ProjectsTabs } from './ProjectTabs';
-import {
-  Contribution,
-  ProjectJoinRound,
-  ProjectsModel,
-  Round,
-  Team,
-  UserModel,
-} from '@prisma/client';
+import { ProjectsModel, Team, UserModel } from '@prisma/client';
+import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
+import { ro } from 'date-fns/locale';
 
 type MobileDrawerTypes = {
   logo: string;
@@ -41,6 +34,10 @@ type MobileDrawerTypes = {
   isOpen: boolean;
   onClose: () => void;
   setDonationSuccessful: any;
+  roundId: string;
+  projectJoinRoundId: string;
+  projectDetails: ProjectsModel;
+  roundName: string;
 };
 
 const MobileDrawer = ({
@@ -50,6 +47,10 @@ const MobileDrawer = ({
   isOpen,
   onClose,
   setDonationSuccessful,
+  roundId,
+  projectJoinRoundId,
+  projectDetails,
+  roundName,
 }: MobileDrawerTypes) => {
   return (
     <Drawer
@@ -73,12 +74,15 @@ const MobileDrawer = ({
           </HStack>
         </DrawerHeader>
         <DrawerBody mx="auto">
-          {/* <ProjectDonationSimulator
+          <ProjectDonationSimulator
             height={80}
             width={120}
+            roundName={roundName}
             projectDetails={projectDetails}
+            projectJoinRoundId={projectJoinRoundId}
+            roundId={roundId}
             setDonationSuccessful={setDonationSuccessful}
-          /> */}
+          />
         </DrawerBody>
       </DrawerContent>
     </Drawer>
@@ -92,6 +96,9 @@ const MobileOnlyViews = ({
   team,
   contributors,
   funding,
+  projectJoinRoundId,
+  roundId,
+  roundName,
 }: {
   isLoading: boolean;
   projectDetails: ProjectsModel;
@@ -100,8 +107,10 @@ const MobileOnlyViews = ({
   })[];
   contributors: number;
   funding: number;
-
+  roundId: string;
+  projectJoinRoundId: string;
   children?: React.ReactNode;
+  roundName: string;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [donationSuccessful, setDonationSuccessful] = useState(false);
@@ -153,11 +162,15 @@ const MobileOnlyViews = ({
       </VStack>
       {projectDetails && (
         <MobileDrawer
+          roundName={roundName}
+          projectDetails={projectDetails}
           logo={projectDetails.logo}
           projectName={projectDetails.name}
           walletAddress={projectDetails.owner_publickey}
           isOpen={isOpen}
           onClose={onClose}
+          projectJoinRoundId={projectJoinRoundId}
+          roundId={roundId}
           setDonationSuccessful={setDonationSuccessful}
         />
       )}
@@ -174,14 +187,18 @@ export const ProjectDetailsAndTabs = ({
   team,
   contributors,
   funding,
+  projectJoinRoundId,
+  roundName,
 }: {
   isLoading: boolean;
   children?: React.ReactNode;
-  roundId: string;
   projectDetails: ProjectsModel;
   ownerName: string;
   contributors: number;
   funding: number;
+  roundId: string;
+  projectJoinRoundId: string;
+  roundName: string;
   team: (Team & {
     user: UserModel;
   })[];
@@ -210,7 +227,10 @@ export const ProjectDetailsAndTabs = ({
         contributors={contributors}
         funding={funding}
         team={team}
+        roundName={roundName}
         projectDetails={projectDetails}
+        projectJoinRoundId={projectJoinRoundId}
+        roundId={roundId}
       >
         {children}
       </MobileOnlyViews>
