@@ -296,9 +296,8 @@ const ProjectDetailsLiveRoundStatus = ({
               textStyle={{ base: 'body6', md: 'body5' }}
               color="#FFCCFF"
             >
-              Your project is currently under review for{' '}
-              {round?.fundingRound.roundName}. Check your mail for more
-              information.
+              Your project is currently under review for {roundName}. Check your
+              mail for more information.
             </Box>
           </Flex>
         </Container>
