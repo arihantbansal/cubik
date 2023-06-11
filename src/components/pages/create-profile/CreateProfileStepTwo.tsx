@@ -60,15 +60,17 @@ const CreateProfileStepTwo = ({
               ? user?.data?.user?.email
               : 'Connect Google'}
           </Button>
-          <Box
-            display={emailUnique && user?.data?.user?.email ? 'none' : ''}
-            as="p"
-            textStyle={{ base: 'body5', md: 'body4' }}
-            color="surface.red.2"
-          >
-            *Email belongs to a different account. Connect different account by
-            clicking on it again
-          </Box>
+          {user?.data.user?.email && (
+            <Box
+              display={emailUnique ? 'none' : 'block'}
+              as="p"
+              textStyle={{ base: 'body5', md: 'body4' }}
+              color="surface.red.2"
+            >
+              *Email belongs to a different account. Connect different account
+              by clicking on it again
+            </Box>
+          )}
         </VStack>
       </CardBody>
       <CardFooter>
