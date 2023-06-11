@@ -498,6 +498,7 @@ export const ProjectCreatorAndLinks = ({
 };
 
 interface ProjectInteractionsProps {
+  round?: Round;
   projectDetails: ProjectsModel;
   isLoading: boolean;
   preview?: boolean;
@@ -510,6 +511,7 @@ interface ProjectInteractionsProps {
 }
 
 export const ProjectInteractions = ({
+  round,
   projectDetails,
   isLoading,
   preview,
@@ -527,7 +529,11 @@ export const ProjectInteractions = ({
       flexDir="column"
       justifyContent="start"
     >
-      <ProjectCTAs projectDetails={projectDetails} isLoading={isLoading} />
+      <ProjectCTAs
+        round={round}
+        projectDetails={projectDetails}
+        isLoading={isLoading}
+      />
       <ProjectCreatorAndLinks
         team={team}
         projectDetails={projectDetails}

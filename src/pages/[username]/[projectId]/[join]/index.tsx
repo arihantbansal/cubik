@@ -1,5 +1,6 @@
 import { ProjectJoinRoundStatus } from '.prisma/client';
 import { Container, Skeleton, Stack } from '@chakra-ui/react';
+import { isPast } from 'date-fns';
 import { GetServerSideProps } from 'next';
 import { join } from 'path';
 import ComponentErrors from '~/components/errors/ComponenetErrors';
@@ -32,6 +33,19 @@ const ProjectDetails = ({
 
   // const isPreview = roundId === null;
 
+  const RoundStatusBanner = () => {
+    if (isPast(data?.fundingRound.startTime as Date)) {
+      return (
+        <ProjectDetailsLiveRoundStatus
+          endTime={data?.fundingRound.endTime as Date}
+          startTime={data?.fundingRound.startTime as Date}
+          status={data?.status as ProjectJoinRoundStatus}
+          roundName={data?.fundingRound.roundName as string}
+        />
+      );
+    } else return <></>;
+  };
+
   return (
     <>
       <SEO
@@ -48,14 +62,7 @@ const ProjectDetails = ({
             maxW="7xl"
             mx="auto"
           >
-            {joinId && (
-              <ProjectDetailsLiveRoundStatus
-                endTime={data?.fundingRound.endTime as Date}
-                startTime={data?.fundingRound.startTime as Date}
-                status={data?.status as ProjectJoinRoundStatus}
-                roundName={data?.fundingRound.roundName as string}
-              />
-            )}
+            {joinId && <RoundStatusBanner />}
           </Skeleton>
           <Stack
             maxW="7xl"
@@ -80,6 +87,7 @@ const ProjectDetails = ({
             />
 
             <ProjectInteractions
+              round={data?.fundingRound}
               projectDetails={{
                 ...data?.project!!,
               }}

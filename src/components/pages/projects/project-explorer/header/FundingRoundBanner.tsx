@@ -4,12 +4,13 @@ import FlipNumbers from 'react-flip-numbers';
 import RoundStatus from '~/components/common/dates/Status';
 
 interface CountdownTimerProps {
-  finalDate: Date;
+  date: Date;
 }
 
-const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
-  const getTimeRemaining = (endDate: Date) => {
-    const total = endDate.getTime() - new Date().getTime();
+export const CountdownTimer: React.FC<CountdownTimerProps> = ({ date }) => {
+  const getTimeRemaining = (date: Date) => {
+    console.log('date - ', date);
+    const total = date?.getTime() - new Date().getTime();
     const seconds = Math.floor((total / 1000) % 60);
     const minutes = Math.floor((total / 1000 / 60) % 60);
     const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
@@ -24,12 +25,12 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
   };
 
   const [timeRemaining, setTimeRemaining] = useState<number>(
-    getTimeRemaining(finalDate).total
+    getTimeRemaining(date).total
   );
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const time = getTimeRemaining(finalDate);
+      const time = getTimeRemaining(date);
       if (time.total <= 0) {
         clearInterval(interval);
       }
@@ -37,7 +38,67 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [finalDate]);
+  }, [date]);
+
+  const formatNumber = (number: number) => {
+    return number < 10 ? '0' + number : number;
+  };
+
+  return (
+    <HStack as="span" spacing="4px">
+      {getTimeRemaining(date).days && (
+        <Box as="p" textStyle="body5">
+          {String(formatNumber(getTimeRemaining(date).days)) + 'd : '}
+        </Box>
+      )}
+
+      {getTimeRemaining(date).hours && (
+        <Box as="p" textStyle="body5">
+          {String(formatNumber(getTimeRemaining(date).hours) + 'h : ')}
+        </Box>
+      )}
+
+      {getTimeRemaining(date).minutes && (
+        <Box as="p" textStyle="body5">
+          {String(formatNumber(getTimeRemaining(date).minutes) + 'm')}
+        </Box>
+      )}
+    </HStack>
+  );
+};
+
+export const CountdownTimerBig: React.FC<CountdownTimerProps> = ({ date }) => {
+  const getTimeRemaining = (date: Date) => {
+    console.log('date - ', date);
+    const total = date?.getTime() - new Date().getTime();
+    const seconds = Math.floor((total / 1000) % 60);
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(total / (1000 * 60 * 60 * 24));
+    return {
+      total,
+      days,
+      hours,
+      minutes,
+      seconds,
+    };
+  };
+
+  const [timeRemaining, setTimeRemaining] = useState<number>(
+    getTimeRemaining(date).total
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const time = getTimeRemaining(date);
+      if (time.total <= 0) {
+        clearInterval(interval);
+      }
+      setTimeRemaining(time.total);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [date]);
 
   const formatNumber = (number: number) => {
     return number < 10 ? '0' + number : number;
@@ -51,7 +112,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
       fontWeight={'700'}
     >
       <HStack gap={{ base: '1.8rem', md: '2rem' }}>
-        {getTimeRemaining(finalDate).days && (
+        {getTimeRemaining(date).days && (
           <VStack>
             <Box as="p" textStyle={'headline3'}>
               <Box as="p" textStyle="headline3">
@@ -62,9 +123,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
                   //background="black"
                   play
                   perspective={700}
-                  numbers={String(
-                    formatNumber(getTimeRemaining(finalDate).days)
-                  )}
+                  numbers={String(formatNumber(getTimeRemaining(date).days))}
                 />
               </Box>
             </Box>
@@ -73,7 +132,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
             </Box>
           </VStack>
         )}
-        {getTimeRemaining(finalDate).hours && (
+        {getTimeRemaining(date).hours && (
           <VStack>
             <Box as="p" textStyle={'headline3'}>
               <Box as="p" textStyle="headline3">
@@ -84,9 +143,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
                   //background="black"
                   play
                   perspective={700}
-                  numbers={String(
-                    formatNumber(getTimeRemaining(finalDate).hours)
-                  )}
+                  numbers={String(formatNumber(getTimeRemaining(date).hours))}
                 />
               </Box>
             </Box>
@@ -95,7 +152,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
             </Box>
           </VStack>
         )}
-        {getTimeRemaining(finalDate).minutes && (
+        {getTimeRemaining(date).minutes && (
           <VStack>
             <Box as="p" textStyle={'headline3'}>
               <Box as="p" textStyle="headline3">
@@ -106,9 +163,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
                   //background="black"
                   play
                   perspective={700}
-                  numbers={String(
-                    formatNumber(getTimeRemaining(finalDate).minutes)
-                  )}
+                  numbers={String(formatNumber(getTimeRemaining(date).minutes))}
                 />
               </Box>
             </Box>

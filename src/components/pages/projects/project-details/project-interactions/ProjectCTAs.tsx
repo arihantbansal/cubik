@@ -23,8 +23,13 @@ import { GoVerified } from 'react-icons/go';
 import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
 import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 import { useUserStore } from '~/store/userStore';
-import { ProjectsModel } from '@prisma/client';
+import { ProjectsModel, Round } from '@prisma/client';
 import { useRouter } from 'next/router';
+import { differenceInDays, isFuture, isPast } from 'date-fns';
+import {
+  RoundEndedBanner,
+  RoundStartingSoon,
+} from '~/components/common/donationCTA/DonationCTA';
 
 interface ProjectCTAsProps {
   projectDetails:
@@ -51,9 +56,11 @@ const AnimatedArrowIcon = (props: IconProps & { animate: boolean }) => {
 };
 
 export const ProjectCTAs = ({
+  round,
   projectDetails,
   isLoading,
 }: {
+  round?: Round;
   projectDetails: ProjectsModel;
   isLoading: boolean;
 }) => {
@@ -73,16 +80,53 @@ export const ProjectCTAs = ({
     }
   };
 
-  useEffect(() => {
-    const round = router.query.round;
-    const prev = router.query.prev;
+  const roundId = router.query.join;
 
-    if (prev) {
-      return;
-    } else if (round) {
-      setShowDonation(true);
-    }
-  }, []);
+  // if round is not going on show a different state
+  // if round has ended show a different state
+  // now all users will be verified except if he is not logged in
+
+  const DonationStatus = () => {
+    if (roundId && round) {
+      // if round is going on show donation button
+      // if user has already donated show donate again
+      // if user has not donated show donate
+      if (isFuture(round?.startTime))
+        return (
+          <RoundStartingSoon
+            startDate={round.startTime}
+            isLoading={isLoading}
+          />
+        );
+      else if (isPast(round.startTime)) {
+        if (isPast(round.endTime))
+          return (
+            <RoundEndedBanner endDate={round.endTime} isLoading={isLoading} />
+          );
+        else if (isFuture(round.endTime))
+          return (
+            <Skeleton
+              opacity={isLoading ? '0.5' : 1}
+              fadeDuration={3}
+              isLoaded={!isLoading}
+              w="full"
+            >
+              <Button
+                onClick={onDonateHandler}
+                variant="cubikFilled"
+                size="md"
+                w="full"
+              >
+                Donate
+              </Button>
+            </Skeleton>
+          );
+        return <></>;
+      } else {
+        return <></>;
+      }
+    } else return <></>; // query does not have round id so it is a preview page
+  };
 
   return (
     <>
@@ -347,42 +391,7 @@ export const ProjectCTAs = ({
           alignItems={{ base: 'center', lg: 'start' }}
         >
           <VStack gap="16px" align={'end'} spacing="0" w="full" pb="0.5rem">
-            {showDonation ? (
-              <Skeleton
-                opacity={isLoading ? '0.5' : 1}
-                fadeDuration={3}
-                isLoaded={!isLoading}
-                w="full"
-              >
-                <Button
-                  onClick={onDonateHandler}
-                  variant="cubikFilled"
-                  size="md"
-                  w="full"
-                >
-                  Donate
-                </Button>
-              </Skeleton>
-            ) : (
-              <HStack p="16px" rounded="12px" gap="12px" bg="#31F57910">
-                <Center p="8px" bg="#071A0F" rounded="full">
-                  <Box
-                    as={GoVerified}
-                    boxSize={['16px', '18px', '20px']}
-                    color={'#31F579'}
-                  />
-                </Center>{' '}
-                <Box
-                  as={'p'}
-                  textStyle={'body5'}
-                  color="white"
-                  textAlign={'start'}
-                >
-                  Only people with Verified Profiles can contribute to a project
-                  in a round.
-                </Box>
-              </HStack>
-            )}
+            <DonationStatus />
             <Skeleton
               fadeDuration={4}
               opacity={isLoading ? '0.4' : 1}

@@ -8,11 +8,8 @@ export default function SplineAsset() {
   });
 
   return isSmallerThan800 ? (
-    <Spline scene="https://prod.spline.design/pFJMp0UpB5jxTNqw/scene.splinecode" />
+    <Spline scene="https://prod.spline.design/lTGvo2EflOHml1Wi/scene.splinecode" />
   ) : (
-    <Spline
-      onLoad={() => {}}
-      scene="https://prod.spline.design/yf3HawGE1cvYNAxl/scene.splinecode"
-    />
+    <Spline scene="https://prod.spline.design/8XzHj4lBAJA2mngS/scene.splinecode" />
   );
 }

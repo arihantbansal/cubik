@@ -31,7 +31,7 @@ const ProjectDetails = ({
   }
 
   const isPreview = roundId === null;
-
+  // this is the page where project details will show but no round details will be there
   return (
     <>
       <SEO
