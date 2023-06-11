@@ -100,6 +100,7 @@ const NavbarCTA = () => {
       as="button"
       onClick={() => {
         disconnect();
+        setUser(null);
         localStorage.removeItem('anon_sig');
         localStorage.removeItem('wallet_auth');
       }}
