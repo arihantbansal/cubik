@@ -11,7 +11,13 @@ import {
   VStack,
   Wrap,
 } from '@chakra-ui/react';
-import { Round } from '@prisma/client';
+import {
+  Contribution,
+  ProjectJoinRound,
+  ProjectsModel,
+  Round,
+  UserModel,
+} from '@prisma/client';
 import React from 'react';
 import { BiPlus } from 'react-icons/bi';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
@@ -22,9 +28,15 @@ import NoInformation from '~/components/common/empty-state/NoInformation';
 const ProjectsFundsPayouts = ({
   roundData,
   isLoading,
+  ProjectJoinRound,
 }: {
   roundData: Round | undefined;
   isLoading?: boolean;
+  ProjectJoinRound: (ProjectJoinRound & {
+    project: ProjectsModel & {
+      owner: UserModel;
+    };
+  })[];
 }) => {
   const ProjectsFundsPayoutsEmptyState = () => {
     return (
@@ -53,13 +65,15 @@ const ProjectsFundsPayouts = ({
         <Box textStyle={{ base: 'title3', md: 'title2' }} color="neutral.11">
           Fund Projects
         </Box>
-        {/* <Box textStyle={{ base: 'body5', md: 'body4' }} color="neutral.8">
-          Select which grantees you wish to allocate funds to.
-        </Box> */}
       </Stack>
       <VStack w="full">
         {roundData ? (
-          <ProjectsFundsPayout isLoading={isLoading} />
+          <>
+            <ProjectsFundsPayout
+              ProjectJoinRound={ProjectJoinRound}
+              isLoading={isLoading}
+            />
+          </>
         ) : (
           <NoInformation />
         )}
@@ -152,14 +166,24 @@ const SquadsVaultAdminAccess = () => {
 const GrantMatchingPoolAdminPannel = ({
   roundData,
   isLoading,
+  ProjectJoinRound,
 }: {
   roundData: Round | undefined;
   isLoading: boolean;
+  ProjectJoinRound: (ProjectJoinRound & {
+    project: ProjectsModel & {
+      owner: UserModel;
+    };
+  })[];
 }) => {
   return (
     <VStack gap="40px" w="full" align={'start'}>
       <SquadsVaultAdminAccess />
-      <ProjectsFundsPayouts roundData={roundData} isLoading={isLoading} />
+      <ProjectsFundsPayouts
+        roundData={roundData}
+        isLoading={isLoading}
+        ProjectJoinRound={ProjectJoinRound}
+      />
     </VStack>
   );
 };

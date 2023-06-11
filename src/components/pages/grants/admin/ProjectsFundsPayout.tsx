@@ -12,6 +12,12 @@ import {
   HStack,
   Center,
 } from '@chakra-ui/react';
+import {
+  Contribution,
+  ProjectJoinRound,
+  ProjectsModel,
+  UserModel,
+} from '@prisma/client';
 import React, { ReactElement, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 
@@ -19,7 +25,17 @@ type TFormValues = Record<string, boolean>;
 
 const defaultValues = {};
 
-const ProjectsFundsPayout = ({ isLoading }: { isLoading?: boolean }) => {
+const ProjectsFundsPayout = ({
+  isLoading,
+  ProjectJoinRound,
+}: {
+  isLoading?: boolean;
+  ProjectJoinRound: (ProjectJoinRound & {
+    project: ProjectsModel & {
+      owner: UserModel;
+    };
+  })[];
+}) => {
   const checkBoxArray = [
     'value one',
     'value two',
@@ -89,14 +105,14 @@ const ProjectsFundsPayout = ({ isLoading }: { isLoading?: boolean }) => {
         </Thead>
         {isLoading ? null : ( // <TableLoading />
           <Tbody>
-            {checkBoxArray.map((cbName): ReactElement => {
+            {ProjectJoinRound.map((projectjoinround): ReactElement => {
               return (
-                <Tr key={cbName}>
+                <Tr key={projectjoinround?.id}>
                   <Td h="100%">
                     <Center>
                       <Controller
                         control={control}
-                        name={cbName}
+                        name={projectjoinround.project.name}
                         defaultValue={false}
                         render={({ field: { onChange, value, ref } }) => (
                           <Checkbox
@@ -122,16 +138,16 @@ const ProjectsFundsPayout = ({ isLoading }: { isLoading?: boolean }) => {
                         src="https://pbs.twimg.com/profile_images/1628722617334267905/s7UFpQtX_400x400.jpg"
                       />
                       <Box as="p" textStyle={'title4'} color="neutral.11">
-                        Tiny Dancer
+                        {projectjoinround.project.name}
                       </Box>
                     </HStack>
                   </Td>
                   <Td px="12px">
                     <Box textStyle={'body4'} color="neutral.8">
-                      D1C7e67F42DA834247DA8A35ba21e79fa70b10c
+                      {projectjoinround.project.mutliSigAddress}
                     </Box>
                   </Td>
-                  <Td px="12px">20</Td>
+                  <Td px="12px">2</Td>
                   <Td px="12px">40%</Td>
                 </Tr>
               );
@@ -139,11 +155,12 @@ const ProjectsFundsPayout = ({ isLoading }: { isLoading?: boolean }) => {
           </Tbody>
         )}
       </Table>
+      {/*       
       <Center p="16px" width="full">
         <Button ml="auto" variant="cubikFilled" type="submit">
           Payout Funds
         </Button>
-      </Center>
+      </Center> */}
     </form>
   );
 };
