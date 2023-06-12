@@ -107,7 +107,7 @@ export const RecentContributions = ({
       </HStack>
       <VStack align={'start'} w="full" gap="16px" color="#CBCBCB">
         <Skeleton isLoaded={!isLoading} w="full">
-          {visibleContributors?.map((contributor, i) => (
+          {contributorsData?.map((contributor, i) => (
             <motion.div
               key={contributor.id}
               variants={variants}
@@ -152,7 +152,9 @@ export const RecentContributions = ({
                     color="#B4B0B2"
                     textStyle={{ base: 'body6', md: 'body5' }}
                   >
-                    {'asd..asdf'}
+                    {contributor.user.mainWallet.slice(0, 4) +
+                      '...' +
+                      contributor.user.mainWallet.slice(-4)}
                   </Box>
                 </VStack>
                 <HStack gap="8px" align={'center'}>
