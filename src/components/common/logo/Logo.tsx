@@ -66,7 +66,7 @@ const Logo = () => {
             fontWeight="700 !important"
             letterSpacing="1.2px"
           >
-            BETA
+            DEVNET
           </Box>
         </Tag>
       ) : (
