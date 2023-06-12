@@ -38,7 +38,7 @@ const ProjectDetails = ({
         <ProjectDetailsLiveRoundStatus
           endTime={data?.fundingRound.endTime as Date}
           startTime={data?.fundingRound.startTime as Date}
-          status={data?.status as ProjectJoinRoundStatus}
+          status={'LIVE'}
           roundName={data?.fundingRound.roundName as string}
         />
       );
