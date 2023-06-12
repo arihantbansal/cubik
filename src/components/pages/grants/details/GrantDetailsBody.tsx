@@ -18,6 +18,7 @@ import {
 import Link from 'next/link';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import { RoundDetailsWithProjectsWithContributionsType } from '~/types/round';
+import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
 
 const GrantDetailsBody = ({
   data,
@@ -50,7 +51,12 @@ const GrantDetailsBody = ({
         <Tab isDisabled>Contributions</Tab>
       </TabList>
       <TabPanels p="0">
-        <TabPanel></TabPanel>
+        <TabPanel>
+          <ProjectsDetailedDescription
+            isLoading={isLoading}
+            description={data?.description}
+          />
+        </TabPanel>
         <TabPanel>
           {data?.ProjectJoinRound.map((round) => (
             <Card
