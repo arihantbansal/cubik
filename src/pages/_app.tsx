@@ -1,17 +1,15 @@
-import { ChakraProvider } from '@chakra-ui/react';
-import { useWallet } from '@solana/wallet-adapter-react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import axios from 'axios';
-import { Session } from 'next-auth';
-import { SessionProvider } from 'next-auth/react';
 import type { AppProps, AppType } from 'next/app';
-import dynamic from 'next/dynamic';
-import { useEffect, useMemo } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import AppLayout from '~/components/app';
 import theme from '~/config/chakra.config';
 import { Mixpanel } from '~/utils/mixpanel';
 import { trpc } from '../utils/trpc';
+import dynamic from 'next/dynamic';
+const ChakraProvider = dynamic(() =>
+  import('@chakra-ui/provider').then((mod) => mod.ChakraProvider)
+);
+
 require('@solana/wallet-adapter-react-ui/styles.css');
 
 const WalletContext: any = dynamic(() => import('../context/wallet-context'), {
@@ -19,26 +17,20 @@ const WalletContext: any = dynamic(() => import('../context/wallet-context'), {
 });
 
 const queryClient = new QueryClient();
-const MyApp: AppType<{ session: Session | null }> = ({
+const MyApp: AppType = ({
   Component,
-  pageProps: { session, ...pageProps },
+  pageProps: { ...pageProps },
 }: AppProps) => {
   Mixpanel.track('root_load');
 
   return (
     <QueryClientProvider client={queryClient}>
       <WalletContext>
-        <SessionProvider
-          session={session}
-          refetchInterval={5 * 60}
-          refetchOnWindowFocus={true}
-        >
-          <ChakraProvider theme={theme}>
-            <AppLayout>
-              <Component {...pageProps} />
-            </AppLayout>
-          </ChakraProvider>
-        </SessionProvider>
+        <ChakraProvider theme={theme}>
+          <AppLayout>
+            <Component {...pageProps} />
+          </AppLayout>
+        </ChakraProvider>
       </WalletContext>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>

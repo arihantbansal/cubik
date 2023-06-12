@@ -16,7 +16,6 @@ import {
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
-import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import { useForm } from 'react-hook-form';

@@ -1,6 +1,5 @@
 import { inferAsyncReturnType } from '@trpc/server';
 import type { CreateNextContextOptions } from '@trpc/server/adapters/next';
-import { getServerAuthSession } from './utils/auth';
 import { authHandler } from './utils/authHandler';
 
 export const createContext = async ({ req }: CreateNextContextOptions) => {

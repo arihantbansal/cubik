@@ -3,14 +3,14 @@ import {
   CardBody,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   HStack,
   Input,
-  Stack,
   Select as ChakraSelect,
+  Stack,
   Textarea,
   VStack,
-  FormHelperText,
 } from '@chakra-ui/react';
 import { GroupBase, OptionsOrGroups, Select } from 'chakra-react-select';
 import { addDays } from 'date-fns';
@@ -24,8 +24,6 @@ import {
   UseFormGetValues,
   UseFormRegister,
   UseFormSetValue,
-  UseFormTrigger,
-  UseFormWatch,
 } from 'react-hook-form';
 import DatePickerInput from '~/components/common/inputs/DatePickerInput';
 import useTeamSearch from '~/hooks/useTeamSearch';

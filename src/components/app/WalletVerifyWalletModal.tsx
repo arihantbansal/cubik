@@ -19,17 +19,16 @@ import {
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useAuthStore } from '~/store/authStore';
-import { createMessage, verifyMessage } from '~/utils/getsignMessage';
+import { createMessage } from '~/utils/getsignMessage';
 import { FailureToast, SuccessToast } from '../common/toasts/Toasts';
 import { WalletAddress } from '../common/wallet/WalletAdd';
 
+import { UserModel } from '@prisma/client';
 import axios from 'axios';
 import { useUserStore } from '~/store/userStore';
-import { UserModel } from '@prisma/client';
 
 const scaleIn = keyframes`
 0% {
@@ -47,7 +46,7 @@ interface Props {
 
 const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
   const toast = useToast();
-  const { setAuthenticated, setKey } = useAuthStore();
+  const { setAuthenticated } = useAuthStore();
   const [verifying, setVerifying] = useState(false);
   const { setUser } = useUserStore();
   const [verified, setVerified] = useState(false);

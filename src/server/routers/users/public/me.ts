@@ -1,4 +1,3 @@
-import { getSession, signOut } from 'next-auth/react';
 import { z } from 'zod';
 import { procedure } from '~/server/trpc';
 import { prisma } from '~/server/utils/prisma';
