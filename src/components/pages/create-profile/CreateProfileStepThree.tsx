@@ -43,7 +43,6 @@ import { FailureToast, SuccessToast } from '~/components/common/toasts/Toasts';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
-import { signIn } from 'next-auth/react';
 import { useAuthStore } from '~/store/authStore';
 import { v4 as uuidV4 } from 'uuid';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
