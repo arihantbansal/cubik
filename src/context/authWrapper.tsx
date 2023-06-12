@@ -33,14 +33,14 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
         payload.exp! < Date.now() / 1000
       ) {
         onOpen();
-        return;
+        // return;
       }
       console.log(payload, 'this payload');
       return null;
     }
-    if (!localStorage.getItem('anon_sig')) {
-      onOpen();
-    }
+    // if (!localStorage.getItem('anon_sig')) {
+    onOpen();
+    // }
   };
   useEffect(() => {
     checkAndVerifySignature();
