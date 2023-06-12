@@ -378,7 +378,7 @@ export const ProjectCTAs = ({
               Donate to {projectDetails?.name}
             </ModalHeader>
             <ModalCloseButton top="24px" />
-            <ModalBody>
+            <ModalBody border="1px solid red">
               {projectDetails && (
                 <PaymentModalBody
                   projectJoinRoundId={projectJoinRoundId}

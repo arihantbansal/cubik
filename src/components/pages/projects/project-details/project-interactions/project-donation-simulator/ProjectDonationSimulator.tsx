@@ -15,7 +15,6 @@ import {
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { ProjectsModel } from '@prisma/client';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
@@ -36,6 +35,7 @@ import {
 import { trpc } from '~/utils/trpc';
 import { AmountInput } from './form/DonationAmountInput';
 import { WalletBalanceError } from './form/WalletBalanceError';
+import { ProjectsModel } from '@prisma/client';
 
 type ProjectDonationSimulatorProps = {
   projectDetails: ProjectsModel;
