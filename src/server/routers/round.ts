@@ -96,12 +96,6 @@ export const roundRouter = router({
     const roundRes = await prisma.round.findMany({
       where: {
         active: true,
-        endTime: {
-          gte: new Date(),
-        },
-        startTime: {
-          lte: new Date(),
-        },
       },
     });
     return roundRes;

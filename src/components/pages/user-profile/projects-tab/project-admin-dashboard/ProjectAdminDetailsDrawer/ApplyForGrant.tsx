@@ -42,7 +42,7 @@ import { connection, ProjectJoinRound } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 import { drawerBodyViewEnum } from '../../ProjectHeader';
 import { checkRoundStatus, GRANT_STATUS } from '~/utils/round/checkRoundStatus';
-import { isPast } from 'date-fns';
+import { isFuture, isPast } from 'date-fns';
 type FormData = {
   selectRoundId: string | null;
 };
@@ -276,7 +276,8 @@ const ApplyForGrant: React.FC<{
 
   const FilteredRoundTiles = () => {
     const filteredRoundData = roundData?.filter((round) => {
-      return isPast(round.startTime);
+      console.log(isFuture(round.startTime));
+      return isFuture(round.startTime);
     });
     if (filteredRoundData?.length === 0) {
       // there is no round to be applied for then show there is no acitve round currently
