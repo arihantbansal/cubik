@@ -21,7 +21,7 @@ const CreateProfileStepTwo = ({
     const a = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${getURL()}/create-profile`,
+        redirectTo: `https://devnet.cubik.so/create-profile`,
       },
     });
   };
