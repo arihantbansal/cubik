@@ -35,7 +35,6 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
         onOpen();
         return;
       }
-      console.log(payload, 'this payload');
       return null;
     }
     if (!localStorage.getItem('anon_sig')) {

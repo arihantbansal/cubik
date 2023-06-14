@@ -199,7 +199,6 @@ const CreateProfileStepThree = ({
       profilePicture: pfp,
       tx: sig,
       mainWallet: publicKey?.toBase58() as string,
-      email: user?.data?.user?.email as string,
     });
   };
 

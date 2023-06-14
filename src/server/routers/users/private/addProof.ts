@@ -13,6 +13,7 @@ export const addProof = protectedProcedure
         'MONKEYDAO',
         'CIVIC',
         'SOCIAL',
+        'GOOGLE',
         'DROPS01',
       ]),
       tx: z.string().nonempty(),
