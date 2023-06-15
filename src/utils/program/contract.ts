@@ -6,8 +6,9 @@ import { env } from '~/env.mjs';
 import type { CubikContractV2 } from './program';
 import { IDL } from './program';
 
-const PROGRAM_ID = 'GxnJAYzcMhBSyZ2EhiqeB7Mb72SqyTSuf9twp39SZ6Ke';
-// const PROGRAM_ID = 'DhnsZ5nAsNXH9jpyULUiw6196Q46E9QPoGhtv6Y3MfTH';
+// const PROGRAM_ID = 'GxnJAYzcMhBSyZ2EhiqeB7Mb72SqyTSuf9twp39SZ6Ke';
+// const PROGRAM_ID = '2PMzvGUUg7XagkusFsvC2W3EYkHNj5fH1pfNMwmdKhbs';
+const PROGRAM_ID = 'BVo5TquTYMAASZhfX392BcjFUxda6DKzHStNapJE6Wyz';
 const RPC_URL =
   env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta'
     ? env.NEXT_PUBLIC_RPC_MAINNET_URL
@@ -594,7 +595,25 @@ export const contributeSOL = async (
   return ix;
 };
 
-export const admin_proof = async () => {};
+export const admin_proof = async (wallet: NodeWallet) => {
+  const program = anchorProgram(wallet);
+
+  const [adminProofAccount] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('proof')],
+    program.programId
+  );
+  const ix = await program.methods
+    .adminProof()
+    .accounts({
+      authority: wallet.publicKey,
+      adminProofAccount: adminProofAccount,
+      rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+      systemProgram: anchor.web3.SystemProgram.programId,
+    })
+    .instruction();
+
+  return ix;
+};
 
 export const proofAdd = async (wallet: NodeWallet, proofType: ProofType) => {
   const program = anchorProgram(wallet);
