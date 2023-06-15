@@ -22,7 +22,8 @@ const VisitorProjectRoundCard = ({
   isLoading: boolean;
 }) => {
   const router = useRouter();
-  const username = router.pathname.split('/')[1];
+  // get username from router
+  const username = router.query.username;
 
   return (
     <Skeleton
@@ -34,7 +35,7 @@ const VisitorProjectRoundCard = ({
       <Card
         as={Link}
         href={{
-          pathname: `/${username}/${round?.projectId}`,
+          pathname: `/${username}/${round?.projectId}/${round?.id}`,
           query: { round: round?.id },
         }}
         p="16px"
@@ -64,7 +65,7 @@ const VisitorProjectRoundCard = ({
                   textStyle={{ base: 'title6', sm: 'title5', md: 'title4' }}
                   color="neutral.11"
                 >
-                  {round?.fundingRound.roundName} Grant Round
+                  {round?.fundingRound.roundName}
                 </Box>
               </HStack>
               <RoundStatus
