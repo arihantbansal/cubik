@@ -102,19 +102,24 @@ const GrantDetailsHeader = ({
           spacing={{ base: '12px', md: '24px' }}
           w="full"
         >
-          <HStack gap="24px">
+          <HStack pt="12px" gap="24px">
             <Skeleton
               isLoaded={!isLoading}
               fadeDuration={3}
               opacity={isLoading ? '0.4' : '1'}
             >
               <Stack
-                direction={{ base: 'row', md: 'column' }}
+                direction={{ base: 'row', md: 'row' }}
                 spacing="4px"
                 align={'baseline'}
               >
-                <HStack gap="16px" align="center" justify="start">
-                  <Center w="8px" h="8px" backgroundColor="" />
+                <HStack gap="4px" align="center" justify="start">
+                  <Center
+                    w="10px"
+                    h="10px"
+                    backgroundColor="surface.green.2"
+                    rounded="full"
+                  />
                   <Box
                     as="p"
                     textStyle={{ base: 'title5', md: 'title4' }}
@@ -123,15 +128,13 @@ const GrantDetailsHeader = ({
                     ${data?.matchedPool}
                   </Box>
                 </HStack>
-                <HStack gap="16px" align="center" justify="start">
-                  <Box
-                    as="p"
-                    textStyle={{ base: 'overline4', md: 'overline3' }}
-                    color={'neutral.11'}
-                  >
-                    Matching Pool
-                  </Box>
-                </HStack>
+                <Box
+                  as="p"
+                  textStyle={{ base: 'overline4', md: 'overline3' }}
+                  color={'neutral.11'}
+                >
+                  Matching Pool
+                </Box>
               </Stack>
             </Skeleton>
             <Skeleton
@@ -139,21 +142,29 @@ const GrantDetailsHeader = ({
               fadeDuration={3}
               opacity={isLoading ? '0.4' : '1'}
             >
-              <HStack spacing="4px" align={'baseline'}>
-                <Box
-                  as="p"
-                  textStyle={{ base: 'title5', md: 'title4' }}
-                  color={'neutral.8'}
-                >
-                  {data?.projectCount}
-                </Box>
-                <Box
-                  as="p"
-                  textStyle={{ base: 'overline4', md: 'overline3' }}
-                  color={'neutral.8'}
-                >
-                  Projects Participating
-                </Box>
+              <HStack gap="4px" align="center" justify="start">
+                <Center
+                  w="10px"
+                  h="10px"
+                  backgroundColor="surface.teal.2"
+                  rounded="full"
+                />
+                <HStack spacing="4px" align={'baseline'}>
+                  <Box
+                    as="p"
+                    textStyle={{ base: 'title5', md: 'title4' }}
+                    color={'neutral.8'}
+                  >
+                    {data?.projectCount}
+                  </Box>
+                  <Box
+                    as="p"
+                    textStyle={{ base: 'overline4', md: 'overline3' }}
+                    color={'neutral.8'}
+                  >
+                    Projects Participating
+                  </Box>
+                </HStack>
               </HStack>
             </Skeleton>
           </HStack>

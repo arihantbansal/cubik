@@ -270,7 +270,7 @@ const SelectProjectToApplyForGrant = ({
                   variant="cubikFilled"
                   size={'cubikSmall'}
                   as={Link}
-                  href="/create-project"
+                  href="/submit-project"
                   leftIcon={<BsPlus width={20} height={20} />}
                 >
                   New Project

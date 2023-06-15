@@ -1,5 +1,9 @@
 export const category = [
   {
+    label: 'AI',
+    value: 'ai',
+  },
+  {
     label: 'AMM',
     value: 'amm',
   },
@@ -24,6 +28,10 @@ export const category = [
     value: 'blog',
   },
   {
+    label: 'Bridges',
+    value: 'bridges',
+  },
+  {
     label: 'Centralized Exchange',
     value: 'centralized_exchange',
   },
@@ -36,8 +44,16 @@ export const category = [
     value: 'community_management',
   },
   {
+    label: 'Compression',
+    value: 'compression',
+  },
+  {
     label: 'Consumer',
     value: 'consumer',
+  },
+  {
+    label: 'Cross-Chain Liquidity',
+    value: 'cross_chain_liquidity',
   },
   {
     label: 'Cryptography',
@@ -52,6 +68,26 @@ export const category = [
     value: 'dao',
   },
   {
+    label: 'Data Providers',
+    value: 'data_providers',
+  },
+  {
+    label: 'Data Storage',
+    value: 'data_storage',
+  },
+  {
+    label: 'Decentralized Exchange',
+    value: 'decentralized_exchange',
+  },
+  {
+    label: 'Derivatives',
+    value: 'derivatives',
+  },
+  {
+    label: 'Developer Tools',
+    value: 'developer_tools',
+  },
+  {
     label: 'dApp',
     value: 'dapp',
   },
@@ -62,18 +98,6 @@ export const category = [
   {
     label: 'dStorage',
     value: 'dstorage',
-  },
-  {
-    label: 'Data Providers',
-    value: 'data_providers',
-  },
-  {
-    label: 'Decentralized Exchange',
-    value: 'decentralized_exchange',
-  },
-  {
-    label: 'Developer Tools',
-    value: 'developer_tools',
   },
   {
     label: 'Ecosystem Fund',
@@ -116,12 +140,32 @@ export const category = [
     value: 'insurance',
   },
   {
+    label: 'Interoperability',
+    value: 'interoperability',
+  },
+  {
     label: 'Investment Fund',
     value: 'investment_fund',
   },
   {
+    label: 'L1',
+    value: 'l1',
+  },
+  {
+    label: 'L2',
+    value: 'l2',
+  },
+  {
     label: 'Launchpad',
     value: 'launchpad',
+  },
+  {
+    label: 'Lend & Borrow',
+    value: 'lend_borrow',
+  },
+  {
+    label: 'Liquidity Aggregators',
+    value: 'liquidity_aggregators',
   },
   {
     label: 'Longevity',
@@ -148,12 +192,24 @@ export const category = [
     value: 'news',
   },
   {
+    label: 'On-chain Governance',
+    value: 'on_chain_governance',
+  },
+  {
     label: 'Oracle',
     value: 'oracle',
   },
   {
+    label: 'Payment Solutions',
+    value: 'payment_solutions',
+  },
+  {
     label: 'Payments',
     value: 'payments',
+  },
+  {
+    label: 'Prediction Markets',
+    value: 'prediction_markets',
   },
   {
     label: 'Privacy',
@@ -176,8 +232,16 @@ export const category = [
     value: 'security',
   },
   {
+    label: 'Smart Contracts',
+    value: 'smart_contracts',
+  },
+  {
     label: 'Social',
     value: 'social',
+  },
+  {
+    label: 'Social Tokens',
+    value: 'social_tokens',
   },
   {
     label: 'Solana Infrastructure',
@@ -196,6 +260,10 @@ export const category = [
     value: 'sustainability',
   },
   {
+    label: 'Derivatives',
+    value: 'derivatives',
+  },
+  {
     label: 'Token',
     value: 'token',
   },
@@ -206,6 +274,10 @@ export const category = [
   {
     label: 'Usability',
     value: 'usability',
+  },
+  {
+    label: 'VR',
+    value: 'vr',
   },
   {
     label: 'Voting',
@@ -220,7 +292,19 @@ export const category = [
     value: 'web3_integration',
   },
   {
+    label: 'Yield Farming',
+    value: 'yield_farming',
+  },
+  {
     label: 'Youtube',
     value: 'youtube',
+  },
+  {
+    label: 'cNFT',
+    value: 'nft',
+  },
+  {
+    label: 'pNFT',
+    value: 'pnft',
   },
 ];

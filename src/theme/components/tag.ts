@@ -11,7 +11,7 @@ const baseStyle = definePartsStyle({
     color: '#B1A9A9',
   },
   label: {
-    fontSize: { base: '8px', md: '10px' },
+    fontSize: { base: '10px', md: '12px' },
   },
 });
 const colorful = definePartsStyle({

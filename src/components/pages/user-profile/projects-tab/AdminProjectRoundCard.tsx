@@ -338,19 +338,19 @@ const AdminProjectRoundCard = ({
               p="16px"
               rounded="12px"
               gap="12px"
-              backgroundColor="#1D1F1E70"
+              backgroundColor="surface.orange.3"
             >
               <Center p="6px" bg="#FFFFFF12" rounded="full">
                 <Box
                   as={HiBan}
                   boxSize={{ base: '14px', md: '18px' }}
-                  color="white"
+                  color="#FF9347"
                 />
               </Center>
               <Box
                 as={'p'}
                 textStyle={{ base: 'body6', md: 'body5' }}
-                color="white"
+                color="#FF9347"
                 textAlign={'start'}
               >
                 Your Project was not selected for this round by the grant

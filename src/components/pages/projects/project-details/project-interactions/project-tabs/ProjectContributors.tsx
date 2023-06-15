@@ -24,6 +24,7 @@ import { SOL, USDC } from '~/components/common/tokens/token';
 import Username from '~/components/common/username/Username';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import Contributors from '~/components/pages/user-profile/projects-tab/project-admin-dashboard/project-vault/project-vault-tabs/Contributors';
+import useCurrentTokenPrice from '~/hooks/useCurrentTokenPrice';
 import { UserProof } from '~/types/user';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { timeSince } from '~/utils/gettimeSince';
@@ -102,7 +103,8 @@ export const TableLoading = () => {
 export const ContributorRow: React.FC<ContributorRowProps> = ({
   contributor,
 }) => {
-  console.log('contributors - ', contributor);
+  const { data: price, isLoading, error } = useCurrentTokenPrice('solana');
+
   return (
     <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
       <Td p="18px">
@@ -153,13 +155,17 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
                 {contributor.token.toUpperCase()}
               </Box>
             </HStack>
-            <Box
-              as="p"
-              color="neutral.8"
-              textStyle={{ base: 'body6', md: 'body5' }}
-            >
-              {formatNumberWithK(contributor.currentusdTotal)}$
-            </Box>
+            {price ? (
+              <Box
+                as="p"
+                color="neutral.8"
+                textStyle={{ base: 'body6', md: 'body5' }}
+              >
+                ${formatNumberWithK(contributor.currentusdTotal * price)}
+              </Box>
+            ) : (
+              <>...</>
+            )}
           </VStack>
         </HStack>
       </Td>

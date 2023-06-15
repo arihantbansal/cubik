@@ -1,16 +1,32 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Box,
   Button,
   Center,
   HStack,
+  Link,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Stack,
   Tooltip,
   VStack,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import Squads from '@sqds/sdk';
+import { BiUpArrowAlt } from 'react-icons/bi';
+import success from '~/pages/api/success';
+import WithdrawFundsTransactionModal from './WithdrawFundsTransactionModal';
 
 const VaultHeader = ({ multiSigAddress }: { multiSigAddress: string }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Stack
       direction={{ base: 'column', sm: 'row' }}
@@ -65,13 +81,66 @@ const VaultHeader = ({ multiSigAddress }: { multiSigAddress: string }) => {
       <Center w={{ base: 'full', md: 'fit-content' }}>
         <Button
           ml="auto"
+          onClick={onOpen}
           w={['full', '8rem']}
           size={{ base: 'cubikMini', md: 'cubikSmall' }}
           variant={'cubikFilled'}
+          iconSpacing={{ base: '0px', md: '4px' }}
+          rightIcon={
+            <Box as={BiUpArrowAlt} boxSize={{ base: '18px', md: '20px' }} />
+          }
         >
           Withdraw
         </Button>
       </Center>
+      <Modal variant={'cubik'} size="md" isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <HStack>
+              <Box
+                as="p"
+                textStyle={{ base: 'title3', md: 'title2' }}
+                color="neutral.11"
+              >
+                Create Transaction
+              </Box>
+            </HStack>
+          </ModalHeader>
+          <ModalBody>
+            <VStack pt="12px" align={'start'} gap="16px">
+              <WithdrawFundsTransactionModal />
+              {/* {transactionError && (
+                    <Alert status="error" variant="cubik">
+                      <AlertIcon />
+                      <AlertDescription
+                        fontSize={{ base: '10px', md: '11px', xl: '12px' }}
+                        lineHeight={{ base: '14px', md: '14px', xl: '16px' }}
+                      >
+                        {transactionError}
+                      </AlertDescription>
+                    </Alert>
+                  )} */}
+            </VStack>
+          </ModalBody>
+          <ModalFooter display="flex" justifyContent="space-between">
+            <Button w="8rem" variant="close_modal" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              px="32px"
+              variant="apply_for_grant"
+              onClick={() => {
+                // hello
+              }}
+              //isLoading={signTransactionLoading}
+              loadingText="Confirming"
+            >
+              Confirm
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Stack>
   );
 };
