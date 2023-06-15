@@ -6,10 +6,10 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
+import { Prisma, ProjectsModel } from '@prisma/client';
 import { FC, Key, memo } from 'react';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
-import { UserWithProjectType } from '~/types/user';
+import { UserProof, UserWithProjectType } from '~/types/user';
 import ProfileHeader from './ProfileHeader';
 import UserContributions from './contributions-tab/UserContributions';
 import UserDetails from './details-tab/UserDetails';
@@ -52,7 +52,10 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
                   userId={user?.id as string}
                   isLoading={isLoading}
                 />
-                <UserProofs isLoading={isLoading} />
+                <UserProofs
+                  isLoading={isLoading}
+                  proofs={user?.proof as unknown as UserProof[]}
+                />
               </Flex>
             </TabPanel>
             <TabPanel>
