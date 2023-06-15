@@ -97,7 +97,7 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
             whileHover={{ y: -8, scale: 1 }}
             transition={{ duration: 0.3 }}
           >
-            <GoogleProof />
+            <GoogleProof minted={false} />
           </MotionBox>
         </Skeleton>
         <Skeleton

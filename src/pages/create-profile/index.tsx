@@ -77,20 +77,13 @@ const CreateProfile = () => {
               <CustomStepper
                 steps={[
                   { index: 1, name: 'Connect Wallet' },
-                  { index: 2, name: 'Connect Google' },
-                  { index: 3, name: 'Profile Details' },
+                  { index: 2, name: 'Profile Details' },
                 ]}
                 currentStep={activeStep}
               />
             </HStack>
-            {activeStep === 1 ? (
-              <CreateProfileStepOne onNext={goToNextStep} />
-            ) : activeStep === 2 ? (
-              <CreateProfileStepTwo
-                onNext={goToNextStep}
-                onPrevious={goToPreviousStep}
-              />
-            ) : (
+            {activeStep === 1 && <CreateProfileStepOne onNext={goToNextStep} />}
+            {activeStep === 2 && (
               <CreateProfileStepThree
                 onOpen={onOpen}
                 onClose={onClose}

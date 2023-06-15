@@ -9,18 +9,54 @@ import {
   ModalOverlay,
   Tag,
   useDisclosure,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import GoogleLogo from './SVGs/Google';
 import { BiCheck } from 'react-icons/bi';
+import { trpc } from '~/utils/trpc';
+import { SuccessToast } from '~/components/common/toasts/Toasts';
+import { supabase } from '~/utils/supabase';
+import { useRouter } from 'next/router';
+import { env } from '~/env.mjs';
 
-const GoogleProof = () => {
+interface Props {
+  minted: boolean;
+}
+const GoogleProof = ({ minted }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+  const router = useRouter();
 
+  const proofMutation = trpc.user.addProof.useMutation();
+  supabase.auth.onAuthStateChange((event, session) => {
+    session?.provider_token === 'google';
+    console.log('test');
+  });
+  const handleMint = async () => {
+    if (minted) return;
+    console.log(env.NEXT_PUBLIC_URL_BASE + router.asPath);
+    const user = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: env.NEXT_PUBLIC_URL_BASE + router.asPath,
+      },
+    });
+
+    // proofMutation.mutate({
+    //   name: 'GOOGLE',
+    //   tx: '0x123',
+    // });
+    onClose();
+    SuccessToast({
+      toast,
+      message: 'Proof minted successfully',
+    });
+  };
   return (
     <>
       <VStack
-        onClick={onOpen}
+        onClick={handleMint}
         p={{ base: '24px', md: '32px' }}
         gap="8px"
         align="start"
@@ -43,7 +79,7 @@ const GoogleProof = () => {
             rounded="full"
             fontSize={{ base: '10px', sm: '12px', md: '14px' }}
           >
-            Minted
+            {minted ? 'Minted' : 'Mint'}
           </Tag>
         </HStack>
         <Box
@@ -111,11 +147,14 @@ const GoogleProof = () => {
                 variant={'cubikFilled'}
                 size={{ base: 'cubikMini', md: 'cubikSmall' }}
                 iconSpacing={{ base: '4px', md: '6px' }}
+                onClick={handleMint}
                 rightIcon={
-                  <Box as={BiCheck} boxSize={{ base: '15px', md: '18px' }} />
+                  minted ? (
+                    <Box as={BiCheck} boxSize={{ base: '15px', md: '18px' }} />
+                  ) : undefined
                 }
               >
-                Minted
+                {minted ? 'Minted' : 'Mint'}
               </Button>
             </VStack>
           </ModalBody>
