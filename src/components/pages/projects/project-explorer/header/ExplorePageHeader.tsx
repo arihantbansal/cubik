@@ -3,6 +3,8 @@ import { trpc } from '~/utils/trpc';
 import FundingRoundBanner from './FundingRoundBanner';
 import GrantsCarousel from './GrantsCaruosel';
 import RoundsCarouselLoadingState from './LoadingState';
+import { isPast } from 'date-fns';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
 
 const ExplorePageHeader = () => {
   const {
@@ -10,8 +12,35 @@ const ExplorePageHeader = () => {
     isLoading,
     isError,
   } = trpc.round.findActivePresentAndFutureRounds.useQuery();
+  // filter round data with only active rounds and future rounds
+  const activeAndFutureRounds = roundData?.filter(
+    (round: { endTime: number | Date }) =>
+      isPast(round.endTime) ? null : round
+  );
+
+  if (isError) {
+    return (
+      <Center
+        w="full"
+        py={{ base: '16px', sm: '24px' }}
+        border="1px dashed"
+        borderColor={'#1D1F1E'}
+        rounded="12px"
+      >
+        <ComponentErrors />
+      </Center>
+    );
+  }
+
   return (
-    <VStack w="full">
+    <VStack
+      display={
+        activeAndFutureRounds && activeAndFutureRounds?.length > 0
+          ? 'flex'
+          : 'none'
+      }
+      w="full"
+    >
       {isLoading ? (
         <>
           <RoundsCarouselLoadingState />
@@ -21,8 +50,8 @@ const ExplorePageHeader = () => {
         </>
       ) : (
         <GrantsCarousel>
-          {roundData ? (
-            roundData?.map((round) => (
+          {activeAndFutureRounds ? (
+            activeAndFutureRounds?.map((round) => (
               <FundingRoundBanner
                 key={round.id}
                 startDate={round.startTime}

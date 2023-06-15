@@ -4,6 +4,7 @@ import { Control, FieldErrors, UseFormRegister } from 'react-hook-form';
 import { ControlledSelect } from '~/components/common/select/ControlledSelect';
 import { DonationFormType } from '~/interfaces/donationForm';
 import { tokenGroup } from '~/interfaces/token';
+import useCurrentTokenPrice from '~/hooks/useCurrentTokenPrice';
 
 type AmountInputProps = {
   donation: number;
@@ -22,6 +23,8 @@ export const AmountInput = ({
   token,
   control,
 }: AmountInputProps) => {
+  const { data: price, isLoading, error } = useCurrentTokenPrice('solana');
+
   return (
     <>
       <InputGroup border="1px solid #141414" rounded={'8px'}>
@@ -155,24 +158,30 @@ export const AmountInput = ({
           //   }
           // }}
         />
-        <InputRightAddon
-          textAlign={'end'}
-          justifyContent={'end'}
-          borderLeft={'none'}
-          outline="none"
-          minWidth="1.5rem"
-        >
-          $
-          <FlipNumbers
-            height={15}
-            width={10}
-            color="#636666"
-            //background="black"
-            play
-            perspective={700}
-            numbers={String(donation)}
-          />
-        </InputRightAddon>
+        {isLoading ? (
+          <>...</>
+        ) : price ? (
+          <InputRightAddon
+            textAlign={'end'}
+            justifyContent={'end'}
+            borderLeft={'none'}
+            outline="none"
+            minWidth="1.5rem"
+          >
+            $
+            <FlipNumbers
+              height={15}
+              width={10}
+              color="#636666"
+              //background="black"
+              play
+              perspective={700}
+              numbers={String((donation * price).toFixed(2))}
+            />
+          </InputRightAddon>
+        ) : (
+          <>e</>
+        )}
       </InputGroup>
       <ControlledSelect
         control={control}

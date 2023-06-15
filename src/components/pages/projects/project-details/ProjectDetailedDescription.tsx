@@ -1,22 +1,50 @@
-import { Box, SkeletonText, Stack, Text, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  Center,
+  SkeletonText,
+  Stack,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 
 import { Link, LinkProps } from '@chakra-ui/react';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
+
+const ErrorUI = () => {
+  return (
+    <Center
+      w="full"
+      py={{ base: '16px', sm: '24px' }}
+      border="1px dashed"
+      borderColor={'#1D1F1E'}
+      rounded="12px"
+    >
+      <ComponentErrors />
+    </Center>
+  );
+};
 
 export const ProjectsDetailedDescription = ({
+  isError,
   isLoading,
   description,
   maxH,
   overflow,
 }: {
+  isError?: boolean;
   isLoading: boolean;
   description: string | null | undefined;
   maxH?: string;
   overflow?: string;
 }) => {
+  if (isError) {
+    return <ErrorUI />;
+  }
+
   const newTheme = {
     a: (props: LinkProps) => {
       const { children } = props;

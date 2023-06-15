@@ -8,6 +8,7 @@ import {
   AlertIcon,
   Box,
   Center,
+  Container,
   Flex,
   HStack,
   Stack,
@@ -31,8 +32,23 @@ import RoundStatus from '~/components/common/dates/Status';
 import ProjectContributorsAdminView from '../../projects/project-details/project-interactions/project-tabs/ProjectContributorsAdminView';
 import FundingOverview from './project-admin-dashboard/FundingOverview';
 import ProjectInsights from './project-admin-dashboard/ProjectInsights';
+import { isFuture, isPast } from 'date-fns';
+import { Player } from '@lottiefiles/react-lottie-player';
+import { CountdownTimer } from '../../projects/project-explorer/header/FundingRoundBanner';
+import { CgMediaLive } from 'react-icons/cg';
+import { IoMdDoneAll } from 'react-icons/io';
 
-const FundingRoundStatus = ({ status }: { status: string }) => {
+export const FundingRoundStatus = ({
+  status,
+  startTime,
+  endTime,
+  roundName,
+}: {
+  status: string;
+  startTime?: Date;
+  endTime?: Date;
+  roundName?: string;
+}) => {
   if (status === ProjectJoinRoundStatus.PENDING) {
     return (
       <HStack w="fit-content" rounded="full" bg="#470E47" p="6px 10px">
@@ -53,24 +69,83 @@ const FundingRoundStatus = ({ status }: { status: string }) => {
       </HStack>
     );
   } else if (status === ProjectJoinRoundStatus.APPROVED) {
-    return (
-      <HStack w="fit-content" rounded="full" p="6px 10px" bg="#6D28D9">
-        <Box
-          as={ImCheckboxChecked}
-          color="#E6D6FF"
-          boxSize={['10px', '11px', '12px', '14px']}
-        />
-        <Box
-          as="p"
-          noOfLines={1}
-          whiteSpace={'nowrap'}
-          textStyle={{ base: 'body6', md: 'body5' }}
-          color="#E6D6FF"
+    if (startTime && isFuture(startTime)) {
+      // Selected
+      return (
+        <HStack w="fit-content" rounded="full" p="6px 10px" bg="#6D28D9">
+          <ImCheckboxChecked size={14} color="#E6D6FF" />
+          <Box
+            as="p"
+            noOfLines={1}
+            whiteSpace={'nowrap'}
+            textStyle={{ base: 'body6', md: 'body5' }}
+            color="#E6D6FF"
+          >
+            Selected to Participate
+          </Box>
+        </HStack>
+      );
+    } else if (startTime && endTime && isPast(startTime) && isFuture(endTime)) {
+      // Active in round
+      return (
+        <HStack
+          w="fit-content"
+          rounded="full"
+          p="6px 10px"
+          bg="surface.green.3"
         >
-          Selected
-        </Box>
-      </HStack>
-    );
+          <Box
+            as={CgMediaLive}
+            boxSize={{ base: '14px', md: '16px' }}
+            color="#D6FFE5"
+          />
+          <Box
+            as="p"
+            noOfLines={1}
+            whiteSpace={'nowrap'}
+            textStyle={{ base: 'body6', md: 'body5' }}
+            color="surface.green.1"
+          >
+            Participating
+          </Box>
+        </HStack>
+      );
+    } else if (endTime && isPast(endTime)) {
+      // Participated in round
+      return (
+        <HStack w="fit-content" rounded="full" p="6px 10px" bg="brand.teal4">
+          <Box
+            as={IoMdDoneAll}
+            boxSize={{ base: '12px', md: '14px' }}
+            color="#E0FFFD"
+          />
+          <Box
+            as="p"
+            noOfLines={1}
+            whiteSpace={'nowrap'}
+            textStyle={{ base: 'body6', md: 'body5' }}
+            color="brand.teal6"
+          >
+            Participated
+          </Box>
+        </HStack>
+      );
+    } else {
+      return (
+        <HStack w="fit-content" rounded="full" p="6px 10px" bg="#6D28D9">
+          <ImCheckboxChecked size={14} color="#E6D6FF" />
+          <Box
+            as="p"
+            noOfLines={1}
+            whiteSpace={'nowrap'}
+            textStyle={{ base: 'body6', md: 'body5' }}
+            color="#E6D6FF"
+          >
+            Selected
+          </Box>
+        </HStack>
+      );
+    }
   } else if (status === ProjectJoinRoundStatus.REJECTED) {
     return (
       <HStack w="fit-content" rounded="full" p="6px 10px" bg="#EB7626">
@@ -125,7 +200,11 @@ const AdminProjectRoundCard = ({
         <HStack justify={'space-between'} w="full">
           <HStack justify={'space-between'} w="full">
             <HStack gap={{ base: '6px', md: '8px' }}>
-              <FundingRoundStatus status={round.status} />
+              <FundingRoundStatus
+                status={round.status}
+                startTime={round.fundingRound.startTime}
+                endTime={round.fundingRound.endTime}
+              />
               <Box
                 as="p"
                 textStyle={{ base: 'title6', md: 'title4' }}
@@ -134,7 +213,7 @@ const AdminProjectRoundCard = ({
                 {round.fundingRound.roundName}
               </Box>
             </HStack>
-            <HStack>
+            <HStack display={{ base: 'none', md: 'flex' }}>
               <RoundStatus
                 startDate={round.fundingRound.startTime}
                 endDate={round.fundingRound.endTime}
@@ -149,7 +228,8 @@ const AdminProjectRoundCard = ({
         borderBottomRightRadius={'12px'}
         borderBottomLeftRadius={'12px'}
       >
-        {round.status === ProjectJoinRoundStatus.APPROVED ? (
+        {round.status === ProjectJoinRoundStatus.APPROVED &&
+        isPast(round.fundingRound.startTime) ? (
           <Tabs variant={'cubik'}>
             <TabList gap="12px" height="2.5rem">
               <Tab height="2.5rem" fontSize={{ base: '14px', md: '17px' }}>
@@ -197,51 +277,56 @@ const AdminProjectRoundCard = ({
             </TabPanels>
           </Tabs>
         ) : round.status === ProjectJoinRoundStatus.PENDING ? (
-          <Center w="full" h="2rem">
-            <Alert
-              w="full"
-              variant={'solid'}
-              rounded="none"
-              backgroundColor={'#AE7AFF10'}
-              borderLeft={'2px solid'}
-              borderColor={'#AE7AFF40'}
-              status="info"
-            >
-              <Center h={'1.4rem'}>
-                <Box as={AlertIcon} boxSize={'12px'} color="#AE7AFF" />
+          <Center w="full" h="3.5rem">
+            <HStack p="16px" w="full" rounded="12px" gap="12px" bg="#240724">
+              <Center p="4px" bg="#240724" rounded="full">
+                <Player
+                  autoplay
+                  loop={true}
+                  src={
+                    'https://lottie.host/03a3bbb2-ceec-4634-ae91-219fe3daef10/vgGjcfeDoo.json'
+                  }
+                  style={{ height: `20px`, width: `20px` }}
+                />
               </Center>
-              <AlertDescription
-                color="neutral.11"
-                fontSize={{ base: '10px', md: '12px' }}
+              <Box
+                as={'p'}
+                textStyle={'body5'}
+                color="#FFCCFF"
+                textAlign={'start'}
               >
-                To start contributing on the platform you need to collect proofs
-                by verifying your digital identity.
-              </AlertDescription>
-            </Alert>
+                The project is under review by the grant creator.
+              </Box>
+            </HStack>
           </Center>
         ) : (
           //  status = rejected
-          <Center w="full" h="2rem">
-            <Alert
-              w="full"
-              variant={'solid'}
-              rounded="none"
-              backgroundColor={'#AE7AFF10'}
-              borderLeft={'2px solid'}
-              borderColor={'#AE7AFF40'}
-              status="info"
-            >
-              <Center h={'1.4rem'}>
-                <Box as={AlertIcon} boxSize={'12px'} color="#AE7AFF" />
+          <Center w="full" h="3.5rem">
+            <HStack w="full" p="16px" rounded="12px" gap="12px" bg="#31F57910">
+              <Center p="8px" bg="#071A0F" rounded="full">
+                <Player
+                  autoplay
+                  loop={true}
+                  src={
+                    'https://assets7.lottiefiles.com/packages/lf20_4htoEB.json'
+                  }
+                  style={{ height: `24px`, width: `24px` }}
+                />
               </Center>
-              <AlertDescription
-                color="neutral.11"
-                fontSize={{ base: '10px', md: '12px' }}
+              <Box
+                as={'p'}
+                textStyle={{ base: 'body6', md: 'body5' }}
+                color="white"
+                textAlign={'start'}
               >
-                To start contributing on the platform you need to collect proofs
-                by verifying your digital identity.
-              </AlertDescription>
-            </Alert>
+                You will start receiving contribution from the community
+                directly in the vault when the round starts -{' '}
+                <Box as="span" display={'inline-block'}>
+                  {CountdownTimer({ date: round.fundingRound.startTime })}
+                </Box>{' '}
+                to go
+              </Box>
+            </HStack>
           </Center>
         )}
       </AccordionPanel>

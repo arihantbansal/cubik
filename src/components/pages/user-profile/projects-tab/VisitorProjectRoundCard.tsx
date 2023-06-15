@@ -6,95 +6,8 @@ import {
 } from '@prisma/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FiClock } from 'react-icons/fi';
-import { HiBan } from 'react-icons/hi';
-import { ImCheckboxChecked } from 'react-icons/im';
 import RoundStatus from '~/components/common/dates/Status';
-
-const FundingRoundStatus = ({ status }: { status: string }) => {
-  if (status === ProjectJoinRoundStatus.PENDING) {
-    return (
-      <HStack
-        w="fit-content"
-        rounded="full"
-        bg="#470E47"
-        p={{ base: '4px 8px', md: '6px 10px' }}
-        spacing={{ base: '6px', md: '8px' }}
-      >
-        <Box
-          as={FiClock}
-          color="#FFCCFF"
-          boxSize={['10px', '12px', '13px', '14px']}
-        />
-        <Box
-          as="p"
-          noOfLines={1}
-          whiteSpace={'nowrap'}
-          textStyle={{ base: 'body6', md: 'body5' }}
-          color="#FFCCFF"
-        >
-          Approval Pending
-        </Box>
-      </HStack>
-    );
-  } else if (status === ProjectJoinRoundStatus.APPROVED) {
-    return (
-      <HStack
-        w="fit-content"
-        rounded="full"
-        bg="#6D28D9"
-        p={{ base: '4px 8px', md: '6px 10px' }}
-        spacing={{ base: '6px', md: '8px' }}
-      >
-        <Box
-          as={ImCheckboxChecked}
-          color="#E6D6FF"
-          boxSize={['10px', '12px', '13px', '14px']}
-        />
-        <Box
-          as="p"
-          noOfLines={1}
-          whiteSpace={'nowrap'}
-          textStyle={{ base: 'body6', md: 'body5' }}
-          color="#E6D6FF"
-        >
-          Selected
-        </Box>
-      </HStack>
-    );
-  } else if (status === ProjectJoinRoundStatus.REJECTED) {
-    return (
-      <HStack
-        w="fit-content"
-        rounded="full"
-        bg="#EB7626"
-        p={{ base: '4px 8px', md: '6px 10px' }}
-        spacing={{ base: '6px', md: '8px' }}
-      >
-        <Box
-          as={HiBan}
-          color="#FFE3CC"
-          boxSize={['10px', '12px', '13px', '14px']}
-        />
-        <Box
-          as="p"
-          noOfLines={1}
-          whiteSpace={'nowrap'}
-          textStyle={{ base: 'body6', md: 'body5' }}
-          color="#FFE3CC"
-        >
-          Not Selected
-        </Box>
-      </HStack>
-    );
-  } else {
-    return (
-      <HStack>
-        <Box>Approval Pending</Box>
-      </HStack>
-    );
-  }
-};
+import { FundingRoundStatus } from './AdminProjectRoundCard';
 
 const VisitorProjectRoundCard = ({
   round,
@@ -141,7 +54,11 @@ const VisitorProjectRoundCard = ({
               w="full"
             >
               <HStack gap="8px">
-                <FundingRoundStatus status={round?.status as string} />
+                <FundingRoundStatus
+                  status={round?.status as string}
+                  startTime={round?.fundingRound.startTime}
+                  endTime={round?.fundingRound.endTime}
+                />
                 <Box
                   as="p"
                   textStyle={{ base: 'title6', sm: 'title5', md: 'title4' }}

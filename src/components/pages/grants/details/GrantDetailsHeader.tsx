@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   Button,
+  Center,
   HStack,
   Skeleton,
   Stack,
@@ -16,13 +17,18 @@ import RoundStatus from '~/components/common/dates/Status';
 import { RoundDetailsWithProjectsWithContributionsType } from '~/types/round';
 import { GRANT_STATUS, checkRoundStatus } from '~/utils/round/checkRoundStatus';
 import SelectProjectToApplyForGrant from '../SelectProjectToApplyForGrant';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
 
 const GrantDetailsHeader = ({
   data,
   isLoading,
+  isError,
+  error,
 }: {
   data: RoundDetailsWithProjectsWithContributionsType | undefined | null;
   isLoading: boolean;
+  isError: boolean;
+  error?: any;
 }) => {
   const walletModal = useWalletModal();
   const wallet = useWallet();
@@ -34,13 +40,27 @@ const GrantDetailsHeader = ({
     if (!wallet.publicKey?.toBase58()) return walletModal.setVisible(true);
     onOpen();
   };
+
+  if (isError) {
+    return (
+      <Center
+        w="full"
+        py={{ base: '16px', sm: '24px' }}
+        border="1px dashed"
+        borderColor={'#1D1F1E'}
+        rounded="12px"
+      >
+        <ComponentErrors error={error?.message} />
+      </Center>
+    );
+  }
   return (
     <VStack w="full" align={'start'} gap={{ base: '28px', md: '40px' }}>
       <VStack w="full" align={'start'} gap={{ base: '8px', md: '8px' }}>
         <VStack align={'start'} spacing={{ base: '12px', md: '24px' }}>
           <Skeleton
             isLoaded={!isLoading}
-            fadeDuration={2}
+            fadeDuration={1}
             opacity={isLoading ? '0.5' : '1'}
             rounded="full"
           >
@@ -49,8 +69,8 @@ const GrantDetailsHeader = ({
           <VStack align={'start'} spacing={{ base: '12px', md: '24px' }}>
             <Skeleton
               isLoaded={!isLoading}
-              fadeDuration={1}
-              opacity={isLoading ? '0.7' : '1'}
+              fadeDuration={1.2}
+              opacity={isLoading ? '0.6' : '1'}
             >
               <Box
                 as="p"
@@ -62,7 +82,7 @@ const GrantDetailsHeader = ({
             </Skeleton>
             <Skeleton
               isLoaded={!isLoading}
-              fadeDuration={2}
+              fadeDuration={1.5}
               opacity={isLoading ? '0.6' : '1'}
             >
               <Box
@@ -88,22 +108,31 @@ const GrantDetailsHeader = ({
               fadeDuration={3}
               opacity={isLoading ? '0.4' : '1'}
             >
-              <HStack spacing="4px" align={'baseline'}>
-                <Box
-                  as="p"
-                  textStyle={{ base: 'title5', md: 'title4' }}
-                  color={'neutral.11'}
-                >
-                  ${data?.matchedPool}
-                </Box>
-                <Box
-                  as="p"
-                  textStyle={{ base: 'overline4', md: 'overline3' }}
-                  color={'neutral.11'}
-                >
-                  Matching Pool
-                </Box>
-              </HStack>
+              <Stack
+                direction={{ base: 'row', md: 'column' }}
+                spacing="4px"
+                align={'baseline'}
+              >
+                <HStack gap="16px" align="center" justify="start">
+                  <Center w="8px" h="8px" backgroundColor="" />
+                  <Box
+                    as="p"
+                    textStyle={{ base: 'title5', md: 'title4' }}
+                    color={'neutral.11'}
+                  >
+                    ${data?.matchedPool}
+                  </Box>
+                </HStack>
+                <HStack gap="16px" align="center" justify="start">
+                  <Box
+                    as="p"
+                    textStyle={{ base: 'overline4', md: 'overline3' }}
+                    color={'neutral.11'}
+                  >
+                    Matching Pool
+                  </Box>
+                </HStack>
+              </Stack>
             </Skeleton>
             <Skeleton
               isLoaded={!isLoading}

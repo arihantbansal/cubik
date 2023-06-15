@@ -1,4 +1,4 @@
-import { Container } from '@chakra-ui/react';
+import { Box, Container } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import SEO from '~/components/SEO';
 import GrantDetailsBody from '~/components/pages/grants/details/GrantDetailsBody';
@@ -10,13 +10,17 @@ interface GrantDetailsProps {
 }
 
 const GrantDetails: React.FC<GrantDetailsProps> = ({ grantId }) => {
-  const { data, error, isLoading } = trpc.round.details.useQuery({
+  const { data, isError, isLoading, error } = trpc.round.details.useQuery({
     id: grantId,
   });
 
   return (
     <div>
-      <SEO title={``} description={``} image={``} />
+      <SEO
+        title={`${data?.roundName || 'Grant'}`}
+        description={`${data?.short_description || 'Grant Round on Cubik'}`}
+        image={``}
+      />
       <main>
         <Container
           py="80px"
@@ -24,10 +28,20 @@ const GrantDetails: React.FC<GrantDetailsProps> = ({ grantId }) => {
           px="1rem"
           display={'flex'}
           flexDir={'column'}
-          gap="80px"
+          gap="60px"
         >
-          <GrantDetailsHeader data={data} isLoading={isLoading} />
-          <GrantDetailsBody data={data} isLoading={isLoading} />
+          <GrantDetailsHeader
+            isError={isError}
+            data={data}
+            isLoading={isLoading}
+            error={error}
+          />
+          <Box h="1px" backgroundColor="#1D1F1E90" w="full" />
+          <GrantDetailsBody
+            isError={isError}
+            data={data}
+            isLoading={isLoading}
+          />
         </Container>
       </main>
     </div>

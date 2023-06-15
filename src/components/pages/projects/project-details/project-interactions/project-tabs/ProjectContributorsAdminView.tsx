@@ -22,7 +22,9 @@ import { BiChevronDown, BiChevronRight, BiChevronUp } from 'react-icons/bi';
 import ContributionsEmptyState from '~/components/common/empty-state/ContributionsEmptyState';
 import Pagination from '~/components/common/pagination/Pagination';
 import { SOL, USDC } from '~/components/common/tokens/token';
+import Username from '~/components/common/username/Username';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
+import { UserProof } from '~/types/user';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { timeSince } from '~/utils/gettimeSince';
 
@@ -94,13 +96,12 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
             justify="center"
             spacing={{ base: '8px', md: '8px' }}
           >
-            <Box
-              as="p"
-              textStyle={{ base: 'title6', md: 'title4' }}
-              color="neutral.11"
-            >
-              @{user.username}
-            </Box>
+            <Username
+              isLoading={false}
+              username={user?.username}
+              proofs={(user?.proof as unknown as UserProof[]) ?? []}
+              size="sm"
+            />
             <Box
               as="p"
               textStyle={{ base: 'body6', md: 'body5' }}

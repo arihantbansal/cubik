@@ -5,11 +5,13 @@ import {
   Skeleton,
   SkeletonCircle,
   VStack,
+  Box,
 } from '@chakra-ui/react';
 import { FC, memo } from 'react';
 import Username from '~/components/common/username/Username';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
-import { UserWithProjectType } from '~/types/user';
+import { UserProof, UserWithProjectType } from '~/types/user';
+import { ProofType } from '~/utils/program/contract';
 
 type profileHeaderType = {
   user: UserWithProjectType | null | undefined;
@@ -60,14 +62,21 @@ const ProfileHeader: FC<profileHeaderType> = ({
         justifyContent={'center'}
         align={'start'}
       >
-        <Username
-          username={user?.username}
-          isLoading={isLoading}
-          proofs={[]}
-          size="lg"
-        />
+        <HStack gap="8px">
+          <Username
+            username={user?.username}
+            isLoading={isLoading}
+            proofs={(user?.proof as unknown as UserProof[]) ?? []}
+            size="lg"
+          />
+          {/* <HStack>
+            <Box as="p">Get Verified</Box>
+          </HStack> */}
+        </HStack>
         <Center marginInline={'0 !important'} margin="0 !important">
           <Skeleton
+            w="6rem"
+            h="16px"
             fadeDuration={5}
             opacity={isLoading ? '0.5' : '1'}
             isLoaded={!isLoading}

@@ -87,11 +87,11 @@ export const ControlledSelect = ({
     name,
     control,
     rules, // @ts-ignore
-    defaultValue: token[2],
+    defaultValue: token[0],
   });
 
   useEffect(() => {
-    onChange(token[1]);
+    onChange(token[0]);
   }, [onChange]);
 
   return (
@@ -100,7 +100,7 @@ export const ControlledSelect = ({
       name={name}
       ref={ref}
       onChange={onChange}
-      defaultValue={token[2]}
+      defaultValue={token[0]}
       onBlur={onBlur}
       value={value}
       // @ts-ignore

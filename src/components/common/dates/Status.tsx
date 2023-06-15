@@ -51,6 +51,7 @@ const RoundStatus = ({
         backgroundColor="#1D1F1E"
         p="0px 12px"
         spacing="8px"
+        minH={'22px'}
         mx={1}
       >
         <Box

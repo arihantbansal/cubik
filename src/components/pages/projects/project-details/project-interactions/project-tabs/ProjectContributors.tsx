@@ -21,7 +21,10 @@ import { BiChevronDown, BiChevronRight, BiChevronUp } from 'react-icons/bi';
 import ContributionsEmptyState from '~/components/common/empty-state/ContributionsEmptyState';
 import Pagination from '~/components/common/pagination/Pagination';
 import { SOL, USDC } from '~/components/common/tokens/token';
+import Username from '~/components/common/username/Username';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
+import Contributors from '~/components/pages/user-profile/projects-tab/project-admin-dashboard/project-vault/project-vault-tabs/Contributors';
+import { UserProof } from '~/types/user';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { timeSince } from '~/utils/gettimeSince';
 import { trpc } from '~/utils/trpc';
@@ -98,77 +101,83 @@ export const TableLoading = () => {
 
 export const ContributorRow: React.FC<ContributorRowProps> = ({
   contributor,
-}) => (
-  <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
-    <Td p="18px">
-      <HStack align={'start'} gap={{ base: '8px', md: '16px' }}>
-        <Avatar
-          width={{ base: '36px', md: '44px' }}
-          height={{ base: '36px', md: '44px' }}
-          src={contributor.avatar}
-        />
-        <VStack
-          align={'start'}
-          justify="center"
-          spacing={{ base: '8px', md: '8px' }}
+}) => {
+  console.log('contributors - ', contributor);
+  return (
+    <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
+      <Td p="18px">
+        <HStack align={'start'} gap={{ base: '8px', md: '16px' }}>
+          <Avatar
+            width={{ base: '36px', md: '44px' }}
+            height={{ base: '36px', md: '44px' }}
+            src={contributor.avatar}
+          />
+          <VStack
+            align={'start'}
+            justify="center"
+            spacing={{ base: '8px', md: '8px' }}
+          >
+            <Username
+              isLoading={false}
+              username={contributor?.username}
+              proofs={(contributor?.proof as unknown as UserProof[]) ?? []}
+              size="sm"
+            />
+            <Box
+              as="p"
+              textStyle={{ base: 'body6', md: 'body5' }}
+              color="neutral.7"
+            >
+              {TruncatedAddr({
+                walletAddress: contributor.walletAddress,
+              })}
+            </Box>
+          </VStack>
+        </HStack>
+      </Td>
+      <Td p="18px">
+        <HStack gap="8px" align={'center'}>
+          <Center>
+            {contributor.token.includes('sol') ? (
+              <SOL size={28} />
+            ) : (
+              <USDC size={28} />
+            )}
+          </Center>
+          <VStack justify={'center'} spacing="2px" align={'start'}>
+            <HStack align={'baseline'} color="white">
+              <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
+                {formatNumberWithK(contributor.amount)}
+              </Box>
+              <Box as="p" textStyle={{ base: 'title6', md: 'title7' }}>
+                {contributor.token.toUpperCase()}
+              </Box>
+            </HStack>
+            <Box
+              as="p"
+              color="neutral.8"
+              textStyle={{ base: 'body6', md: 'body5' }}
+            >
+              {formatNumberWithK(contributor.currentusdTotal)}$
+            </Box>
+          </VStack>
+        </HStack>
+      </Td>
+      <Td p="18px">
+        <Box
+          as="p"
+          textStyle={{ base: 'body5', md: 'body4' }}
+          color="neutral.11"
         >
-          <Box
-            as="p"
-            textStyle={{ base: 'title6', md: 'title4' }}
-            color="neutral.11"
-          >
-            @{contributor.username}
-          </Box>
-          <Box
-            as="p"
-            textStyle={{ base: 'body6', md: 'body5' }}
-            color="neutral.7"
-          >
-            {TruncatedAddr({
-              walletAddress: contributor.walletAddress,
-            })}
-          </Box>
-        </VStack>
-      </HStack>
-    </Td>
-    <Td p="18px">
-      <HStack gap="8px" align={'center'}>
-        <Center>
-          {contributor.token.includes('sol') ? (
-            <SOL size={28} />
-          ) : (
-            <USDC size={28} />
-          )}
-        </Center>
-        <VStack justify={'center'} spacing="2px" align={'start'}>
-          <HStack align={'baseline'} color="white">
-            <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
-              {formatNumberWithK(contributor.amount)}
-            </Box>
-            <Box as="p" textStyle={{ base: 'title6', md: 'title7' }}>
-              {contributor.token.toUpperCase()}
-            </Box>
-          </HStack>
-          <Box
-            as="p"
-            color="neutral.8"
-            textStyle={{ base: 'body6', md: 'body5' }}
-          >
-            {formatNumberWithK(contributor.currentusdTotal)}$
-          </Box>
-        </VStack>
-      </HStack>
-    </Td>
-    <Td p="18px">
-      <Box as="p" textStyle={{ base: 'body5', md: 'body4' }} color="neutral.11">
-        {timeSince(new Date(contributor.timestamp))}
-      </Box>
-    </Td>
-    <Td p="18px">
-      <BiChevronRight size="24" />
-    </Td>
-  </Tr>
-);
+          {timeSince(new Date(contributor.timestamp))}
+        </Box>
+      </Td>
+      <Td p="18px">
+        <BiChevronRight size="24" />
+      </Td>
+    </Tr>
+  );
+};
 
 const ProjectContributors = ({
   projectId,

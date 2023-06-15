@@ -1,5 +1,7 @@
 import { Box, HStack, Skeleton } from '@chakra-ui/react';
-import { GoVerified } from 'react-icons/go';
+import { BsPatchCheckFill } from 'react-icons/bs';
+import { MdVerified } from 'react-icons/md';
+import { TbSquareRoundedCheckFilled } from 'react-icons/tb';
 import { UserProof } from '~/types/user';
 
 type size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined | null;
@@ -7,30 +9,33 @@ type size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined | null;
 type usernameProps = {
   isLoading: boolean;
   username: string | null | undefined;
-  proofs: UserProof[] | null | undefined;
+  proofs?: UserProof[] | null | undefined;
   size: size;
 };
 
 const Username = ({ isLoading, username, proofs, size }: usernameProps) => {
   // see time stamp for the user from proofs array of the first proof and show the popup with if the time stamp matches the current time stamp
+  console.log('proofs - ', proofs);
   const CheckMark = ({ size }: { size?: size }) => {
     if (proofs?.length === 0) return <></>;
     else if (proofs?.length === 1) {
+      return <></>;
+    } else if (proofs?.length === 2) {
       return (
         <Box
-          as={GoVerified}
-          transform="translateY(1px)"
-          color="#FFD83D"
+          as={MdVerified}
+          transform="translateY(0px)"
+          color="surface.yellow.2"
           boxSize={
             size === 'xs'
-              ? { base: '8px', sm: '9px', md: '10px' }
+              ? { base: '8px', sm: '9px', md: '15px' }
               : size === 'sm'
-              ? { base: '10px', sm: '11px', md: '12px' }
+              ? { base: '10px', sm: '11px', md: '15px' }
               : size === 'md'
-              ? { base: '12px', sm: '13px', md: '14px' }
+              ? { base: '12px', sm: '13px', md: '18px' }
               : size === 'lg'
-              ? { base: '14px', sm: '15px', md: '16px' }
-              : { base: '12px', sm: '13px', md: '14px' }
+              ? { base: '14px', sm: '15px', md: '20px' }
+              : { base: '12px', sm: '13px', md: '18px' }
           }
         />
       );
@@ -39,27 +44,28 @@ const Username = ({ isLoading, username, proofs, size }: usernameProps) => {
   };
 
   return (
-    <Skeleton
-      fadeDuration={4}
-      opacity={isLoading ? '0.6' : '1'}
-      isLoaded={!isLoading}
+    <HStack
+      align="baseline"
+      justify="center"
+      marginInline={'0 !important'}
+      margin="0 !important"
+      spacing={
+        size === 'xs'
+          ? { base: '2px', sm: '3px', md: '4px' }
+          : size === 'sm'
+          ? { base: '2px', sm: '3px', md: '6px' }
+          : size === 'md'
+          ? { base: '4px', sm: '5px', md: '6px' }
+          : size === 'lg'
+          ? { base: '6px', sm: '7px', md: '8px' }
+          : { base: '4px', sm: '5px', md: '6px' }
+      }
     >
-      <HStack
-        align="baseline"
-        justify="center"
-        marginInline={'0 !important'}
-        margin="0 !important"
-        spacing={
-          size === 'xs'
-            ? { base: '2px', sm: '3px', md: '4px' }
-            : size === 'sm'
-            ? { base: '2px', sm: '3px', md: '6px' }
-            : size === 'md'
-            ? { base: '4px', sm: '5px', md: '6px' }
-            : size === 'lg'
-            ? { base: '6px', sm: '7px', md: '8px' }
-            : { base: '4px', sm: '5px', md: '6px' }
-        }
+      <Skeleton
+        fadeDuration={3}
+        w={isLoading ? '10rem' : 'fit-content'}
+        opacity={isLoading ? '0.6' : '1'}
+        isLoaded={!isLoading}
       >
         <Box
           as="p"
@@ -90,9 +96,16 @@ const Username = ({ isLoading, username, proofs, size }: usernameProps) => {
         >
           @{username}
         </Box>
+      </Skeleton>
+      <Skeleton
+        fadeDuration={4}
+        w={isLoading ? '1rem' : 'fit-content'}
+        opacity={isLoading ? '0.6' : '1'}
+        isLoaded={!isLoading}
+      >
         <CheckMark size={size} />
-      </HStack>
-    </Skeleton>
+      </Skeleton>
+    </HStack>
   );
 };
 

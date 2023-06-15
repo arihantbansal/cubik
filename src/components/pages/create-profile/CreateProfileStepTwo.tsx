@@ -67,8 +67,8 @@ const CreateProfileStepTwo = ({
               textStyle={{ base: 'body5', md: 'body4' }}
               color="surface.red.2"
             >
-              *Email belongs to a different account. Connect different account
-              by clicking on it again
+              *Email belongs to a different account. Connect different Google
+              Account.
             </Box>
           )}
         </VStack>

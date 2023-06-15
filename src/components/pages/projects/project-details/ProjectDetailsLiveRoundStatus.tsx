@@ -1,5 +1,6 @@
 import { Box, Center, Container, Flex, HStack } from '@chakra-ui/react';
 import { ProjectJoinRoundStatus, ProjectVerifyStatus } from '@prisma/client';
+import { isFuture, isPast } from 'date-fns';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { FiClock } from 'react-icons/fi';
 import { HiBan } from 'react-icons/hi';
@@ -211,47 +212,136 @@ const ProjectDetailsLiveRoundStatus = ({
           </Box>
         </Flex>
       );
-
     case ProjectJoinRoundStatus.APPROVED:
-      return (
-        <Container maxW="7xl" p="0" pt="24px">
-          <Flex
-            w="full"
-            zIndex="9"
-            gap="8px"
-            flexDirection={{ base: 'column', sm: 'row' }}
-            padding={{ base: '10px 16px', md: '12px 24px' }}
-            align={{ base: 'start', sm: 'center' }}
-            borderBottom="1px solid"
-            borderRadius={'12px'}
-            borderColor="#8F47FF16"
-            backgroundColor={'#0A001A'}
-          >
-            <HStack w="fit-content" rounded="full" p="6px 10px" bg="#6D28D9">
-              <ImCheckboxChecked size={14} color="#E6D6FF" />
+      if (isFuture(startTime)) {
+        // Selected
+        return (
+          <Container maxW="7xl" p="0" pt="24px">
+            <Flex
+              w="full"
+              zIndex="9"
+              gap="8px"
+              flexDirection={{ base: 'column', sm: 'row' }}
+              padding={{ base: '10px 16px', md: '12px 24px' }}
+              align={{ base: 'start', sm: 'center' }}
+              borderBottom="1px solid"
+              borderRadius={'12px'}
+              borderColor="#8F47FF16"
+              backgroundColor={'#0A001A'}
+            >
+              <HStack w="fit-content" rounded="full" p="6px 10px" bg="#6D28D9">
+                <ImCheckboxChecked size={14} color="#E6D6FF" />
+                <Box
+                  as="p"
+                  noOfLines={1}
+                  whiteSpace={'nowrap'}
+                  textStyle={{ base: 'body6', md: 'body5' }}
+                  color="#E6D6FF"
+                >
+                  Selected to Participate
+                </Box>
+              </HStack>
               <Box
                 as="p"
-                noOfLines={1}
-                whiteSpace={'nowrap'}
+                noOfLines={{ base: 2, md: 1 }}
+                display={{ base: 'none', md: 'block' }}
+                whiteSpace={{ base: 'normal', md: 'nowrap' }}
                 textStyle={{ base: 'body6', md: 'body5' }}
                 color="#E6D6FF"
               >
-                Selected
+                The project has been selected to participate in{' '}
+                <b>{roundName}</b>
               </Box>
-            </HStack>
-            <Box
-              as="p"
-              noOfLines={{ base: 2, md: 1 }}
-              display={{ base: 'none', md: 'block' }}
-              whiteSpace={{ base: 'normal', md: 'nowrap' }}
-              textStyle={{ base: 'body6', md: 'body5' }}
-              color="#E6D6FF"
+            </Flex>
+          </Container>
+        );
+      } else if (isPast(startTime) && isFuture(endTime)) {
+        // Active in round
+        return (
+          <Container maxW="7xl" p="0" pt="24px">
+            <Flex
+              w="full"
+              zIndex="9"
+              gap="8px"
+              flexDirection={{ base: 'column', sm: 'row' }}
+              padding={{ base: '10px 16px', md: '12px 24px' }}
+              align={{ base: 'start', sm: 'center' }}
+              borderBottom="1px solid"
+              borderRadius={'12px'}
+              borderColor="#8F47FF16"
+              backgroundColor={'#0A001A'}
             >
-              The project has been selected to participate in <b>{roundName}</b>
-            </Box>
-          </Flex>
-        </Container>
-      );
+              <HStack w="fit-content" rounded="full" p="6px 10px" bg="#6D28D9">
+                <ImCheckboxChecked size={14} color="#E6D6FF" />
+                <Box
+                  as="p"
+                  noOfLines={1}
+                  whiteSpace={'nowrap'}
+                  textStyle={{ base: 'body6', md: 'body5' }}
+                  color="#E6D6FF"
+                >
+                  Selected
+                </Box>
+              </HStack>
+              <Box
+                as="p"
+                noOfLines={{ base: 2, md: 1 }}
+                display={{ base: 'none', md: 'block' }}
+                whiteSpace={{ base: 'normal', md: 'nowrap' }}
+                textStyle={{ base: 'body6', md: 'body5' }}
+                color="#E6D6FF"
+              >
+                The project has been selected to participate in{' '}
+                <b>{roundName}</b>
+              </Box>
+            </Flex>
+          </Container>
+        );
+      } else if (isPast(endTime)) {
+        // Participated in round
+        return (
+          <Container maxW="7xl" p="0" pt="24px">
+            <Flex
+              w="full"
+              zIndex="9"
+              gap="8px"
+              flexDirection={{ base: 'column', sm: 'row' }}
+              padding={{ base: '10px 16px', md: '12px 24px' }}
+              align={{ base: 'start', sm: 'center' }}
+              borderBottom="1px solid"
+              borderRadius={'12px'}
+              borderColor="#8F47FF16"
+              backgroundColor={'#0A001A'}
+            >
+              <HStack w="fit-content" rounded="full" p="6px 10px" bg="#6D28D9">
+                <ImCheckboxChecked size={14} color="#E6D6FF" />
+                <Box
+                  as="p"
+                  noOfLines={1}
+                  whiteSpace={'nowrap'}
+                  textStyle={{ base: 'body6', md: 'body5' }}
+                  color="#E6D6FF"
+                >
+                  Selected
+                </Box>
+              </HStack>
+              <Box
+                as="p"
+                noOfLines={{ base: 2, md: 1 }}
+                display={{ base: 'none', md: 'block' }}
+                whiteSpace={{ base: 'normal', md: 'nowrap' }}
+                textStyle={{ base: 'body6', md: 'body5' }}
+                color="#E6D6FF"
+              >
+                The project has been selected to participate in{' '}
+                <b>{roundName}</b>
+              </Box>
+            </Flex>
+          </Container>
+        );
+      } else {
+        return <></>;
+      }
     case ProjectJoinRoundStatus.REJECTED:
       return (
         <Flex

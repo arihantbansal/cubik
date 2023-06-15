@@ -25,6 +25,7 @@ import { DonationFormType } from '~/interfaces/donationForm';
 import { tokenGroup } from '~/interfaces/token';
 import { useUserStore } from '~/store/userStore';
 import { projectWithFundingRoundType } from '~/types/project';
+import { fetchPrice } from '~/utils/getPrice';
 
 import {
   connection,
@@ -70,10 +71,11 @@ export const ProjectDonationSimulator = ({
   } = useForm<DonationFormType>({
     defaultValues: {
       amount: 1,
-      token: token[2],
+      token: token[0],
       matchingPoolDonation: 10,
     },
   });
+  console.log('token 0 -', token[0]);
   const { user } = useUserStore();
   const donation: number = watch('amount');
   const selectedToken: tokenGroup = watch('token');

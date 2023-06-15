@@ -21,7 +21,6 @@ import {
   VStack,
   useDisclosure,
 } from '@chakra-ui/react';
-import { ProjectJoinRoundStatus, ProjectVerifyStatus } from '@prisma/client';
 import { useEffect, useRef, useState } from 'react';
 import { AiOutlineEdit, AiOutlineMore } from 'react-icons/ai';
 import { BiMessageSquareDots } from 'react-icons/bi';
@@ -308,7 +307,11 @@ const ProjectHeader = ({
                 <Button
                   w="full"
                   variant={'cubikOutlined'}
-                  size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+                  size={{
+                    base: 'cubikMini',
+                    sm: 'cubikSmall',
+                    md: 'cubikMedium',
+                  }}
                   onClick={onOpen}
                 >
                   View Details

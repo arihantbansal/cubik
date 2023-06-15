@@ -31,6 +31,7 @@ import GetFormattedLink from '~/components/HOC/GetLink';
 import useListStore from '~/store/listStore';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import ProjectsContributorsNumber from './ProjectsContributorsNumber';
+import { isFuture, isPast } from 'date-fns';
 
 type PropsType = {
   projectJoinRound: ProjectJoinRound & {
@@ -106,7 +107,7 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
       !!projectList.find((item) => item.id === projectJoinRound.projectId)
     );
   }, [projectList]);
-
+  console.log('projectJoinRound', projectJoinRound);
   return (
     <Card
       border={addedToList ? '2px solid #659C95' : '2px solid transparent'}
@@ -144,52 +145,53 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
         </Center>
       )}
       {/* card Header */}
-      {
-        // if project is participating in a round then make it visible else don't show it
-        <Center
-          display={
-            projectJoinRound.status === ProjectJoinRoundStatus.APPROVED
-              ? 'flex'
-              : 'none'
-          }
-          w="full"
-          bg={`surface.${projectJoinRound.fundingRound.colorScheme}.3`}
-          borderTopRadius={'16px'}
-        >
-          <HStack
+      {isPast(projectJoinRound.fundingRound.startTime) &&
+        !isPast(projectJoinRound.fundingRound.endTime) && (
+          // if project is participating in a round then make it visible else don't show it
+          <Center
+            display={
+              projectJoinRound.status === ProjectJoinRoundStatus.APPROVED
+                ? 'flex'
+                : 'none'
+            }
             w="full"
-            gap="8px"
-            borderColor="red"
-            borderBottom={'red'}
-            padding={'12px 24px'}
+            bg={`surface.${projectJoinRound.fundingRound.colorScheme}.3`}
             borderTopRadius={'16px'}
-            justifyContent="space-between"
           >
-            <Box
+            <HStack
               w="full"
-              as="p"
-              noOfLines={1}
-              whiteSpace={'nowrap'}
-              color={`surface.${projectJoinRound.fundingRound.colorScheme}.1`}
-              textStyle={'overline4'}
-              textTransform="uppercase"
-              letterSpacing={'0.2em'}
-              fontSize={{ base: '8px', md: '10px' }}
+              gap="8px"
+              borderColor="red"
+              borderBottom={'red'}
+              padding={'12px 24px'}
+              borderTopRadius={'16px'}
+              justifyContent="space-between"
             >
-              Participating In
-            </Box>
-            <Box
-              as="p"
-              w="fit-content"
-              whiteSpace={'nowrap'}
-              textStyle={{ base: 'title6', md: 'title5' }}
-              color={`surface.${projectJoinRound.fundingRound.colorScheme}.1`}
-            >
-              {projectJoinRound.fundingRound.roundName}
-            </Box>
-          </HStack>
-        </Center>
-      }
+              <Box
+                w="full"
+                as="p"
+                noOfLines={1}
+                whiteSpace={'nowrap'}
+                color={`surface.${projectJoinRound.fundingRound.colorScheme}.1`}
+                textStyle={'overline4'}
+                textTransform="uppercase"
+                letterSpacing={'0.2em'}
+                fontSize={{ base: '8px', md: '10px' }}
+              >
+                Participating In
+              </Box>
+              <Box
+                as="p"
+                w="fit-content"
+                whiteSpace={'nowrap'}
+                textStyle={{ base: 'title6', md: 'title5' }}
+                color={`surface.${projectJoinRound.fundingRound.colorScheme}.1`}
+              >
+                {projectJoinRound.fundingRound.roundName}
+              </Box>
+            </HStack>
+          </Center>
+        )}
       {/* cards footer */}
       <VStack
         w="full"
