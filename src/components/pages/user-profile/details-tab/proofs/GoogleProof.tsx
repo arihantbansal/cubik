@@ -21,6 +21,7 @@ import { supabase, useUser } from '~/utils/supabase';
 import { useRouter } from 'next/router';
 import { env } from '~/env.mjs';
 import { useEffect } from 'react';
+import { useUserStore } from '~/store/userStore';
 
 interface Props {
   minted: boolean;

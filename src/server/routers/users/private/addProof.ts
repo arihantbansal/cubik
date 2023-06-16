@@ -24,9 +24,8 @@ export const addProof = protectedProcedure
     const user = ctx.session.user;
     let otherInfo = {};
     if (input.name === 'GOOGLE') {
-      console.log('GOOGLE', user.email);
       otherInfo = {
-        email: user.email,
+        email: input.email,
       };
     }
     console.log('otherInfo', otherInfo);
