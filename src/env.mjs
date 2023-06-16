@@ -29,6 +29,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
     NEXT_PUBLIC_SOLANA_NETWORK: z.string().min(1),
     NEXT_PUBLIC_ADMIN_VAULT: z.string().min(1),
+    NEXT_PUBLIC_URL_BASE: z.string().min(1),
   },
   runtimeEnv: {
     PROD_DATABASE_URL: process.env.PROD_DATABASE_URL,
@@ -48,5 +49,6 @@ export const env = createEnv({
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SOLANA_NETWORK: process.env.NEXT_PUBLIC_SOLANA_NETWORK,
     NEXT_PUBLIC_ADMIN_VAULT: process.env.NEXT_PUBLIC_ADMIN_VAULT,
+    NEXT_PUBLIC_URL_BASE: process.env.NEXT_PUBLIC_URL_BASE,
   },
 });

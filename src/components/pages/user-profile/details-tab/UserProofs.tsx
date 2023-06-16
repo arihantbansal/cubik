@@ -18,10 +18,14 @@ import CivicIDProof from './proofs/CivicIDProof';
 import DripProof from './proofs/DripProof';
 import LamportDAOProof from './proofs/LamportDAOProof';
 import GoogleProof from './proofs/GoogleProof';
+import { UserProof } from '~/types/user';
 
 const MotionBox = motion(Box);
-
-const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
+interface Props {
+  isLoading: boolean;
+  proofs: UserProof[];
+}
+const UserProofs = ({ isLoading, proofs }: Props) => {
   return (
     <VStack align="start" w="full">
       <HStack gap="8px">
@@ -97,7 +101,14 @@ const UserProofs = ({ isLoading }: { isLoading: boolean }) => {
             whileHover={{ y: -8, scale: 1 }}
             transition={{ duration: 0.3 }}
           >
-            <GoogleProof />
+            <GoogleProof
+              minted={
+                proofs?.find((e) => e.name.toLocaleLowerCase() === 'google')
+                  ? true
+                  : false
+              }
+              isLoading={isLoading}
+            />
           </MotionBox>
         </Skeleton>
         <Skeleton

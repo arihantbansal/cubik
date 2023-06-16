@@ -8,14 +8,70 @@ import {
   ModalContent,
   ModalOverlay,
   Tag,
+  Text,
   useDisclosure,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import GoogleLogo from './SVGs/Google';
 import { BiCheck } from 'react-icons/bi';
+import { trpc } from '~/utils/trpc';
+import { SuccessToast } from '~/components/common/toasts/Toasts';
+import { supabase, useUser } from '~/utils/supabase';
+import { useRouter } from 'next/router';
+import { env } from '~/env.mjs';
+import { useEffect } from 'react';
+import { useUserStore } from '~/store/userStore';
 
-const GoogleProof = () => {
+interface Props {
+  minted: boolean;
+  isLoading: boolean;
+}
+const GoogleProof = ({ minted, isLoading }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+  const router = useRouter();
+  const { user, loading } = useUser(supabase);
+  const proofMutation = trpc.user.addProof.useMutation();
+
+  const handleMint = async () => {
+    if (minted) return;
+    if (!user?.data.user?.email) {
+      console.log(env.NEXT_PUBLIC_URL_BASE + router.asPath);
+      await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: env.NEXT_PUBLIC_URL_BASE + router.asPath + '?google=true',
+        },
+      });
+    } else {
+      console.log('minting', user.data.user.email);
+      proofMutation.mutate({
+        name: 'GOOGLE',
+        tx: '0x123',
+        email: user?.data.user?.email,
+      });
+    }
+    onClose();
+    SuccessToast({
+      toast,
+      message: 'Proof minted successfully',
+    });
+  };
+  useEffect(() => {
+    const checkGoogle = async () => {
+      if (
+        router.query.google &&
+        !isLoading &&
+        user?.data.user?.email &&
+        !loading
+      ) {
+        // onClose clear the query
+        onOpen();
+      }
+    };
+    checkGoogle();
+  }, []);
 
   return (
     <>
@@ -43,7 +99,7 @@ const GoogleProof = () => {
             rounded="full"
             fontSize={{ base: '10px', sm: '12px', md: '14px' }}
           >
-            Minted
+            {minted ? 'Minted' : 'Mint'}
           </Tag>
         </HStack>
         <Box
@@ -107,16 +163,48 @@ const GoogleProof = () => {
                   Claim your first proof by connecting your google account.
                 </Box>
               </VStack>
-              <Button
-                variant={'cubikFilled'}
-                size={{ base: 'cubikMini', md: 'cubikSmall' }}
-                iconSpacing={{ base: '4px', md: '6px' }}
-                rightIcon={
-                  <Box as={BiCheck} boxSize={{ base: '15px', md: '18px' }} />
-                }
-              >
-                Minted
-              </Button>
+              {minted ? (
+                <Button
+                  variant={'cubikFilled'}
+                  size={{ base: 'cubikMini', md: 'cubikSmall' }}
+                  iconSpacing={{ base: '4px', md: '6px' }}
+                  onClick={handleMint}
+                  rightIcon={
+                    minted ? (
+                      <Box
+                        as={BiCheck}
+                        boxSize={{ base: '15px', md: '18px' }}
+                      />
+                    ) : undefined
+                  }
+                >
+                  Minted
+                </Button>
+              ) : (
+                <>
+                  <VStack>
+                    {user?.data.user?.email && (
+                      <Text>{user?.data.user?.email}</Text>
+                    )}
+                    <Button
+                      variant={'cubikFilled'}
+                      size={{ base: 'cubikMini', md: 'cubikSmall' }}
+                      iconSpacing={{ base: '4px', md: '6px' }}
+                      onClick={handleMint}
+                      rightIcon={
+                        minted ? (
+                          <Box
+                            as={BiCheck}
+                            boxSize={{ base: '15px', md: '18px' }}
+                          />
+                        ) : undefined
+                      }
+                    >
+                      {user?.data.user?.email ? 'Mint' : 'Connect Google'}
+                    </Button>
+                  </VStack>
+                </>
+              )}
             </VStack>
           </ModalBody>
         </ModalContent>

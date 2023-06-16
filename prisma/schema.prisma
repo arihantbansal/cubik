@@ -32,7 +32,7 @@ model UserModel {
   username       String          @unique
   mainWallet     String          @unique
   proof          Json?
-  email          String
+  email          String?
   profilePicture String          @db.VarChar(500)
   tx             String          @db.VarChar(500)
   createdAt      DateTime        @default(now())

@@ -13,19 +13,28 @@ export const addProof = protectedProcedure
         'MONKEYDAO',
         'CIVIC',
         'SOCIAL',
+        'GOOGLE',
         'DROPS01',
       ]),
       tx: z.string().nonempty(),
+      email: z.string().nonempty(),
     })
   )
   .mutation(async ({ ctx, input }) => {
     const user = ctx.session.user;
-
+    let otherInfo = {};
+    if (input.name === 'GOOGLE') {
+      otherInfo = {
+        email: input.email,
+      };
+    }
+    console.log('otherInfo', otherInfo);
     const updatedUser = await prisma.userModel.update({
       where: {
         id: user.id,
       },
       data: {
+        ...otherInfo,
         proof: (user.proof
           ? [
               ...(user.proof as unknown as ProofType[]),
