@@ -6,9 +6,11 @@ import { env } from '~/env.mjs';
 import type { CubikContractV2 } from './program';
 import { IDL } from './program';
 
-// const PROGRAM_ID = 'GxnJAYzcMhBSyZ2EhiqeB7Mb72SqyTSuf9twp39SZ6Ke';
-// const PROGRAM_ID = '2PMzvGUUg7XagkusFsvC2W3EYkHNj5fH1pfNMwmdKhbs';
-const PROGRAM_ID = 'BVo5TquTYMAASZhfX392BcjFUxda6DKzHStNapJE6Wyz';
+const PROGRAM_ID =
+  env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta'
+    ? 'BVo5TquTYMAASZhfX392BcjFUxda6DKzHStNapJE6Wyz'
+    : 'GxnJAYzcMhBSyZ2EhiqeB7Mb72SqyTSuf9twp39SZ6Ke';
+
 const RPC_URL =
   env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta'
     ? env.NEXT_PUBLIC_RPC_MAINNET_URL
