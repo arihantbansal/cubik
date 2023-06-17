@@ -51,7 +51,9 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
         tx: '0x123',
         email: user?.data.user?.email,
       });
+      await supabase.auth.signOut();
     }
+
     onClose();
     SuccessToast({
       toast,
@@ -64,14 +66,15 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
         router.query.google &&
         !isLoading &&
         user?.data.user?.email &&
-        !loading
+        !loading &&
+        !isOpen
       ) {
         // onClose clear the query
         onOpen();
       }
     };
     checkGoogle();
-  }, []);
+  }, [router.query.google, !isLoading, user?.data.user?.email, !loading]);
 
   return (
     <>
