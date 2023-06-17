@@ -9,7 +9,13 @@ import {
   Center,
   Skeleton,
 } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
+import {
+  Contribution,
+  ProjectJoinRound,
+  ProjectsModel,
+  Round,
+  UserModel,
+} from '@prisma/client';
 import { useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import ComponentErrors from '~/components/errors/ComponenetErrors';
@@ -76,46 +82,65 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
         <ProjectHeader isLoading={isLoading} project={projectData} />
       </CardHeader>
       {projectData && projectData?.ProjectJoinRound.length > 0 && (
-        <>
-          <Box w="full" h={'1px'} backgroundColor="neutral.3" />
-          <CardBody gap={{ base: '16px', md: '24px' }}>
-            <Accordion
-              px={{ base: '12px', md: '16px' }}
-              w="full"
-              display={'flex'}
-              flexDir={'column'}
-              gap={{ base: '16px', md: '24px' }}
-              allowMultiple
-              allowToggle
-              variant={'unstyled'}
-            >
-              {projectData?.ProjectJoinRound.map((round) => (
-                <AdminProjectRoundCard key={round.id} round={round} />
-              ))}
-            </Accordion>
-            {showVault && <Vault projectData={projectData} />}
-            <Center w="full">
-              <Button
-                onClick={() => setShowVault(!showVault)}
-                variant="cubikText"
-                size={{ base: 'cubikMini', md: 'cubikSmall' }}
-                rightIcon={
-                  showVault ? (
-                    <Box as={BiChevronUp} boxSize={['14px', '16px', '18px']} />
-                  ) : (
-                    <Box
-                      as={BiChevronDown}
-                      boxSize={['14px', '16px', '18px']}
-                    />
-                  )
-                }
-              >
-                {showVault ? 'Hide' : 'Show'} Vault Details
-              </Button>
-            </Center>
-          </CardBody>
-        </>
+        <Box w="full" h={'1px'} backgroundColor="neutral.3" />
       )}
+      <Skeleton
+        isLoaded={!isLoading}
+        fadeDuration={4}
+        opacity={isLoading ? 0.5 : 1}
+        w="full"
+      >
+        <CardBody gap={{ base: '16px', md: '24px' }}>
+          <Accordion
+            px={{ base: '12px', md: '16px' }}
+            w="full"
+            display={'flex'}
+            flexDir={'column'}
+            gap={{ base: '16px', md: '24px' }}
+            allowMultiple
+            allowToggle
+            variant={'unstyled'}
+          >
+            {projectData?.ProjectJoinRound.map(
+              (
+                round: ProjectJoinRound & {
+                  fundingRound: Round & {
+                    Contribution: (Contribution & { user: UserModel })[];
+                  };
+                }
+              ) => (
+                <AdminProjectRoundCard
+                  isLoading={isLoading}
+                  key={round.id}
+                  round={round}
+                />
+              )
+            )}
+          </Accordion>
+          {showVault && (
+            <Vault
+              isLoading={isLoading}
+              multisigAddress={projectData?.mutliSigAddress}
+            />
+          )}
+          <Center w="full">
+            <Button
+              onClick={() => setShowVault(!showVault)}
+              variant="cubikText"
+              size={{ base: 'cubikMini', md: 'cubikSmall' }}
+              rightIcon={
+                showVault ? (
+                  <Box as={BiChevronUp} boxSize={['14px', '16px', '18px']} />
+                ) : (
+                  <Box as={BiChevronDown} boxSize={['14px', '16px', '18px']} />
+                )
+              }
+            >
+              {showVault ? 'Hide' : 'Show'} Vault Details
+            </Button>
+          </Center>
+        </CardBody>
+      </Skeleton>
       <CardFooter display="none" />
     </Card>
   );

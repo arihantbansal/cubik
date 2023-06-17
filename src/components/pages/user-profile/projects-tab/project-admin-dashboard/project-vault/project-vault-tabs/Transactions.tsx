@@ -1,5 +1,7 @@
-const Transactions = () => {
-  return <div>Transactions</div>;
+import NoInformation from '~/components/common/empty-state/NoInformation';
+
+const MultisigTransactions = () => {
+  return <NoInformation />;
 };
 
-export default Transactions;
+export default MultisigTransactions;

@@ -22,15 +22,24 @@ import React from 'react';
 import { BiPlus } from 'react-icons/bi';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import { formatNumberWithK } from '~/utils/formatWithK';
-import ProjectsFundsPayout from './ProjectsFundsPayout';
+import ProjectsFundsPayout from '../ProjectsFundsPayout';
 import NoInformation from '~/components/common/empty-state/NoInformation';
+import { isFuture } from 'date-fns';
 
 const ProjectsFundsPayouts = ({
   roundData,
+  contributions,
+  matchingPoolAmount,
   isLoading,
   ProjectJoinRound,
 }: {
   roundData: Round | undefined;
+  contributions:
+    | (Contribution & {
+        user: UserModel;
+      })[]
+    | undefined;
+  matchingPoolAmount?: number;
   isLoading?: boolean;
   ProjectJoinRound: (ProjectJoinRound & {
     project: ProjectsModel & {
@@ -38,6 +47,7 @@ const ProjectsFundsPayouts = ({
     };
   })[];
 }) => {
+  // filter this contribution data for every project
   const ProjectsFundsPayoutsEmptyState = () => {
     return (
       <Box
@@ -54,6 +64,7 @@ const ProjectsFundsPayouts = ({
       </Box>
     );
   };
+
   return (
     <VStack gap="16px" w="full" align={'start'}>
       <Stack
@@ -67,10 +78,12 @@ const ProjectsFundsPayouts = ({
         </Box>
       </Stack>
       <VStack w="full">
-        {roundData ? (
+        {roundData && !isFuture(roundData.startTime) ? (
           <>
             <ProjectsFundsPayout
+              contributions={contributions}
               ProjectJoinRound={ProjectJoinRound}
+              matchingPoolAmount={matchingPoolAmount}
               isLoading={isLoading}
             />
           </>
@@ -163,12 +176,20 @@ const SquadsVaultAdminAccess = () => {
   );
 };
 
-const GrantMatchingPoolAdminPannel = ({
+const GrantMatchingPoolAdminPanel = ({
   roundData,
+  contributions,
+  matchingPoolAmount,
   isLoading,
   ProjectJoinRound,
 }: {
   roundData: Round | undefined;
+  contributions:
+    | (Contribution & {
+        user: UserModel;
+      })[]
+    | undefined;
+  matchingPoolAmount?: number;
   isLoading: boolean;
   ProjectJoinRound: (ProjectJoinRound & {
     project: ProjectsModel & {
@@ -181,6 +202,8 @@ const GrantMatchingPoolAdminPannel = ({
       <SquadsVaultAdminAccess />
       <ProjectsFundsPayouts
         roundData={roundData}
+        contributions={contributions}
+        matchingPoolAmount={matchingPoolAmount}
         isLoading={isLoading}
         ProjectJoinRound={ProjectJoinRound}
       />
@@ -188,4 +211,4 @@ const GrantMatchingPoolAdminPannel = ({
   );
 };
 
-export default GrantMatchingPoolAdminPannel;
+export default GrantMatchingPoolAdminPanel;

@@ -37,7 +37,25 @@ const ProjectInsights = ({
       align={'start'}
       width="full"
       gap={{ base: '16px', sm: '20px', md: '24px' }}
+      position={'relative'}
     >
+      <Box
+        zIndex="8"
+        h="full"
+        w="full"
+        position={'absolute'}
+        bgGradient="linear(to-t,rgb(20, 20, 20,1), rgb(20, 20, 20,0.9))"
+      >
+        <Center w="full" h="full">
+          <Box
+            as="p"
+            textStyle={{ base: 'title3', md: 'title2' }}
+            color="white"
+          >
+            Coming Soon...
+          </Box>
+        </Center>{' '}
+      </Box>
       <Box
         as="p"
         textStyle={{ base: 'title3', md: 'title2' }}
@@ -46,7 +64,11 @@ const ProjectInsights = ({
         Project Insights
       </Box>
       <VStack align={'start'} w="full">
-        <Box as="p" textStyle="body5" color={'neutral.8'}>
+        <Box
+          as="p"
+          textStyle={{ base: 'body6', md: 'body5' }}
+          color={'neutral.8'}
+        >
           Conversion Rate
         </Box>
         <Box

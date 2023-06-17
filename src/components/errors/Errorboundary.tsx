@@ -32,6 +32,8 @@ class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <Center
+          maxW={'7xl'}
+          mx="auto"
           w="full"
           py={{ base: '16px', sm: '24px' }}
           border="1px dashed"

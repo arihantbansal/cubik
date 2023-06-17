@@ -27,38 +27,47 @@ const defaultValues = {};
 
 const ProjectsFundsPayout = ({
   isLoading,
+  contributions,
+  matchingPoolAmount,
   ProjectJoinRound,
 }: {
   isLoading?: boolean;
+  contributions:
+    | (Contribution & {
+        user: UserModel;
+      })[]
+    | undefined;
+  matchingPoolAmount?: number;
   ProjectJoinRound: (ProjectJoinRound & {
     project: ProjectsModel & {
       owner: UserModel;
     };
   })[];
 }) => {
-  const checkBoxArray = [
-    'value one',
-    'value two',
-    'value three',
-    'value four',
-    'value five',
-    'value six',
-    'value seven',
-  ];
-
   const [isAllChecked, setAllChecked] = useState(false);
-
   const { handleSubmit, control, reset, setValue, getValues } =
     useForm<TFormValues>({
       defaultValues,
     });
 
   const handleCheckAll = (isChecked: boolean) => {
-    checkBoxArray.forEach((name) => {
-      setValue(name, isChecked);
+    ProjectJoinRound.forEach((project) => {
+      setValue(String(project.id), isChecked);
     });
     setAllChecked(isChecked);
   };
+
+  const handleSingleCheck =
+    (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(id, e.target.checked);
+      const formValues = getValues();
+      const isEveryChecked = ProjectJoinRound.every(
+        (project) => formValues[String(project.id)]
+      );
+      setAllChecked(isEveryChecked);
+    };
+
+  console.log('percentage - ', matchingPoolAmount);
 
   const onSubmit = handleSubmit((data) => {
     console.log('submit data', data);
@@ -105,24 +114,25 @@ const ProjectsFundsPayout = ({
         </Thead>
         {isLoading ? null : ( // <TableLoading />
           <Tbody>
-            {ProjectJoinRound.map((projectjoinround): ReactElement => {
+            {ProjectJoinRound.sort(
+              (a, b) =>
+                (b.amountRaise || 0) / (matchingPoolAmount || 1) -
+                (a.amountRaise || 0) / (matchingPoolAmount || 1)
+            ).map((projectJoinRound): ReactElement => {
               return (
-                <Tr key={projectjoinround?.id}>
+                <Tr key={projectJoinRound?.id}>
                   <Td h="100%">
                     <Center>
                       <Controller
                         control={control}
-                        name={projectjoinround.project.name}
+                        name={String(projectJoinRound.id)}
                         defaultValue={false}
                         render={({ field: { onChange, value, ref } }) => (
                           <Checkbox
                             colorScheme="teal"
-                            onChange={(e) => {
-                              onChange(e.target.checked);
-                              setAllChecked(
-                                checkBoxArray.every((name) => getValues()[name])
-                              );
-                            }}
+                            onChange={handleSingleCheck(
+                              String(projectJoinRound.id)
+                            )}
                             ref={ref}
                             isChecked={value}
                           />
@@ -135,20 +145,39 @@ const ProjectsFundsPayout = ({
                       <Avatar
                         width="40px"
                         height="40px"
-                        src="https://pbs.twimg.com/profile_images/1628722617334267905/s7UFpQtX_400x400.jpg"
+                        src={projectJoinRound.project.logo}
                       />
                       <Box as="p" textStyle={'title4'} color="neutral.11">
-                        {projectjoinround.project.name}
+                        {projectJoinRound.project.name}
                       </Box>
                     </HStack>
                   </Td>
                   <Td px="12px">
                     <Box textStyle={'body4'} color="neutral.8">
-                      {projectjoinround.project.mutliSigAddress}
+                      {projectJoinRound.project.mutliSigAddress}
                     </Box>
                   </Td>
-                  <Td px="12px">2</Td>
-                  <Td px="12px">40%</Td>
+                  <Td px="12px">
+                    {contributions
+                      ? new Set(
+                          contributions
+                            .filter(
+                              (c) => c.projectId === projectJoinRound.project.id
+                            )
+                            .map((c) => c.user.id)
+                        ).size
+                      : 0}
+                  </Td>
+                  <Td px="12px">
+                    {projectJoinRound?.amountRaise &&
+                    matchingPoolAmount &&
+                    matchingPoolAmount !== 0
+                      ? (
+                          (projectJoinRound.amountRaise / matchingPoolAmount) *
+                          100
+                        ).toFixed(1) + '%'
+                      : '0%'}
+                  </Td>
                 </Tr>
               );
             })}

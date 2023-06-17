@@ -36,10 +36,10 @@ const NoInformation = () => {
         textStyle={{ base: 'body3', md: 'title2' }}
         color="neutral.11"
       >
-        No Information
+        No Tokens
       </Box>
       <Box as="p" textStyle={{ base: 'body5', md: 'body4' }} color="neutral.8">
-        There is no information to show here at this time.
+        You do not have any tokens in the vault right now.
       </Box>
     </VStack>
   );

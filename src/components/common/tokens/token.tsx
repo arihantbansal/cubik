@@ -1,9 +1,9 @@
 import { Center, HStack } from '@chakra-ui/react';
 
-export const BONK = ({ size }: { size: number }) => {
+export const BONK = ({ size }: { size: string | object }) => {
   return (
     <HStack>
-      <Center width={`${size}px`} height={`${size}px`}>
+      <Center width={size} height={size}>
         <svg
           width="46"
           height="46"
@@ -102,10 +102,10 @@ export const BONK = ({ size }: { size: number }) => {
     </HStack>
   );
 };
-export const SOL = ({ size }: { size: number }) => {
+export const SOL = ({ size }: { size: string | object }) => {
   return (
     <HStack>
-      <Center width={`${size}px`} height={`${size}px`}>
+      <Center width={size} height={size}>
         <svg
           width="46"
           height="46"
@@ -123,10 +123,10 @@ export const SOL = ({ size }: { size: number }) => {
     </HStack>
   );
 };
-export const USDC = ({ size }: { size: number }) => {
+export const USDC = ({ size }: { size: string | object }) => {
   return (
     <HStack>
-      <Center width={`${size}px`} height={`${size}px`}>
+      <Center width={size} height={size}>
         <svg
           width="46"
           height="46"

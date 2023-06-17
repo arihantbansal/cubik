@@ -12,7 +12,7 @@ const GetFormattedLink = ({
   return (
     <Skeleton
       isLoaded={!isLoading}
-      fadeDuration={3}
+      fadeDuration={4}
       opacity={isLoading ? 0.8 : 1}
       w="full"
     >

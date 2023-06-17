@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { procedure, protectedProcedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
 import { activeRounds } from './rounds';
+import { ProjectJoinRoundStatus } from '@prisma/client';
 
 export const roundRouter = router({
   create: protectedProcedure
@@ -133,18 +134,18 @@ export const roundRouter = router({
   findAcceptedGrants: procedure
     .input(
       z.object({
-        roundId: z.string().nonempty(),
+        id: z.string().nonempty(),
       })
     )
-    .query(async ({ input }) => {
-      const roundRes = await prisma.round.findMany({
+    .query(async ({ ctx, input }) => {
+      const roundRes = await prisma.round.findFirst({
         where: {
-          id: input.roundId,
+          id: input.id,
         },
         include: {
           ProjectJoinRound: {
             where: {
-              status: 'APPROVED',
+              status: ProjectJoinRoundStatus.APPROVED,
             },
             include: {
               project: {
@@ -161,18 +162,18 @@ export const roundRouter = router({
   findRejectedGrants: procedure
     .input(
       z.object({
-        roundId: z.string().nonempty(),
+        id: z.string().nonempty(),
       })
     )
-    .query(async ({ input }) => {
-      const roundRes = await prisma.round.findMany({
+    .query(async ({ ctx, input }) => {
+      const roundRes = await prisma.round.findFirst({
         where: {
-          id: input.roundId,
+          id: input.id,
         },
         include: {
           ProjectJoinRound: {
             where: {
-              status: 'REJECTED',
+              status: ProjectJoinRoundStatus.REJECTED,
             },
             include: {
               project: {

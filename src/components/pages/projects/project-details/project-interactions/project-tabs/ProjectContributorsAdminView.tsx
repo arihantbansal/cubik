@@ -118,9 +118,9 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
         <HStack gap="8px" align={'center'}>
           <Center>
             {contribution.token === 'sol' ? (
-              <SOL size={28} />
+              <SOL size={'28px'} />
             ) : (
-              <USDC size={28} />
+              <USDC size={'28px'} />
             )}
           </Center>
           <VStack justify={'center'} spacing="2px" align={'start'}>

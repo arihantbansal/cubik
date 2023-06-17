@@ -159,7 +159,7 @@ export const RecentContributions = ({
                 </VStack>
                 <HStack gap="8px" align={'center'}>
                   <Center>
-                    <SOL size={22} />
+                    <SOL size={'22px'} />
                   </Center>
                   <HStack align={'baseline'} color="white">
                     <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>

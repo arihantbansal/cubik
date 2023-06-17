@@ -1,7 +1,5 @@
-import { Box, HStack, Skeleton } from '@chakra-ui/react';
-import { BsPatchCheckFill } from 'react-icons/bs';
-import { MdVerified } from 'react-icons/md';
-import { TbSquareRoundedCheckFilled } from 'react-icons/tb';
+import { Box, HStack, Skeleton } from '@chakra-ui/react'; 
+import { MdVerified } from 'react-icons/md'; 
 import { UserProof } from '~/types/user';
 
 type size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined | null;
@@ -14,8 +12,6 @@ type usernameProps = {
 };
 
 const Username = ({ isLoading, username, proofs, size }: usernameProps) => {
-  // see time stamp for the user from proofs array of the first proof and show the popup with if the time stamp matches the current time stamp
-  console.log('proofs - ', proofs);
   const CheckMark = ({ size }: { size?: size }) => {
     if (proofs?.length === 0) return <></>;
     else if (proofs?.length === 1) {

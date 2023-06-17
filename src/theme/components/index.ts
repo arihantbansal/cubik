@@ -16,6 +16,7 @@ import { Stat } from './stat';
 import { Tabs } from './tabs';
 import { Tag } from './tag';
 import { Textarea } from './textArea';
+import { Tooltip } from './tooltip';
 
 export const components = {
   Alert,
@@ -32,6 +33,7 @@ export const components = {
   Select,
   Button,
   Popover,
+  Tooltip,
   Checkbox,
   Textarea,
   Skeleton,

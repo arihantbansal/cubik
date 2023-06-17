@@ -3,6 +3,8 @@ import {
   Box,
   Center,
   HStack,
+  Skeleton,
+  SkeletonCircle,
   Spinner,
   Table,
   TableContainer,
@@ -26,122 +28,177 @@ import { timeSince } from '~/utils/gettimeSince';
 import { trpc } from '~/utils/trpc';
 
 const UserContributionTableRow = ({
+  isLoading,
   contribution,
 }: {
+  isLoading?: boolean;
   contribution: UserContributionsWithProjectOwnerAndProjectRound;
 }) => {
-  // projectLogo
-  // projectName
-  // projectCreator
-  // projectin
-  // amount donated by user
-  // project donors data
-  // total amount raised
   return (
     <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
       <Td px="12px">
         <HStack align={'start'} gap={{ base: '14px', md: '16px' }}>
-          <Avatar
-            borderRadius={'8px'}
+          <SkeletonCircle
+            isLoaded={!isLoading}
             width={{ base: '36px', md: '52px' }}
             height={{ base: '36px', md: '52px' }}
-            src={contribution.ProjectsModel.logo}
-          />
+          >
+            <Avatar
+              // borderRadius={'8px'}
+              width={{ base: '36px', md: '52px' }}
+              height={{ base: '36px', md: '52px' }}
+              src={contribution.ProjectsModel.logo}
+            />
+          </SkeletonCircle>
           <VStack
             align={'start'}
             justify="center"
             spacing={{ base: '8px', md: '8px' }}
+          >
+            <Skeleton
+              isLoaded={!isLoading}
+              fadeDuration={3}
+              opacity={isLoading ? 0.5 : 1}
+            >
+              <Box
+                as="p"
+                textStyle={{ base: 'title5', md: 'title4' }}
+                color="neutral.11"
+              >
+                {contribution.ProjectsModel.name}
+              </Box>
+            </Skeleton>
+            <Skeleton
+              isLoaded={!isLoading}
+              fadeDuration={3}
+              opacity={isLoading ? 0.5 : 1}
+            >
+              <Box
+                as="p"
+                textStyle={{ base: 'body5', md: 'body4' }}
+                color="neutral.7"
+              >
+                by <b>@{contribution.ProjectsModel.owner.username}</b>
+              </Box>
+            </Skeleton>
+          </VStack>
+        </HStack>
+      </Td>
+      <Td px="12px">
+        <Skeleton
+          isLoaded={!isLoading}
+          fadeDuration={3}
+          opacity={isLoading ? 0.5 : 1}
+        >
+          <HStack>
+            {JSON.parse(contribution.ProjectsModel.industry).map(
+              (industry: {
+                value: Key | null | undefined;
+                label: ReactChild;
+              }) => (
+                <CustomTag key={industry.value}>{industry.label}</CustomTag>
+              )
+            )}
+          </HStack>
+        </Skeleton>
+      </Td>
+      <Td px="12px">
+        <HStack gap="8px" align={'center'}>
+          <Skeleton
+            isLoaded={!isLoading}
+            fadeDuration={3}
+            opacity={isLoading ? 0.5 : 1}
+          >
+            <Center>
+              {contribution.token === 'solana' ? (
+                <SOL size={'32px'} />
+              ) : contribution.token === 'usdc' ? (
+                <USDC size={'32px'} />
+              ) : contribution.token === 'bonk' ? (
+                <BONK size={'32px'} />
+              ) : (
+                contribution.token
+              )}
+            </Center>
+          </Skeleton>
+          <VStack justify={'center'} spacing="2px" align={'start'}>
+            <HStack align={'baseline'} color="white">
+              <Skeleton
+                isLoaded={!isLoading}
+                fadeDuration={3}
+                opacity={isLoading ? 0.5 : 1}
+              >
+                <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
+                  {formatNumberWithK(contribution.total)}
+                </Box>
+              </Skeleton>
+              <Box as="p" textStyle={{ base: 'title8', md: 'title7' }}>
+                {contribution.token.toUpperCase()}
+              </Box>
+            </HStack>
+            <Skeleton
+              isLoaded={!isLoading}
+              fadeDuration={3}
+              opacity={isLoading ? 0.5 : 1}
+            >
+              <Box
+                as="p"
+                color="neutral.8"
+                textStyle={{ base: 'body6', md: 'body5' }}
+              >
+                {formatNumberWithK(contribution.usdTotal)}$
+              </Box>
+            </Skeleton>
+          </VStack>
+        </HStack>
+      </Td>
+      <Td px="12px">
+        <VStack alignItems={'start'} gap="0px" justify="start">
+          <Skeleton
+            isLoaded={!isLoading}
+            fadeDuration={3}
+            opacity={isLoading ? 0.5 : 1}
           >
             <Box
               as="p"
               textStyle={{ base: 'title5', md: 'title4' }}
               color="neutral.11"
             >
-              {contribution.ProjectsModel.name}
+              {
+                contribution.ProjectsModel.ProjectJoinRound[0].fundingRound
+                  .roundName
+              }
             </Box>
+          </Skeleton>
+          <Skeleton
+            isLoaded={!isLoading}
+            fadeDuration={3}
+            opacity={isLoading ? 0.5 : 1}
+          >
             <Box
               as="p"
               textStyle={{ base: 'body5', md: 'body4' }}
               color="neutral.7"
             >
-              by <b>@{contribution.ProjectsModel.owner.username}</b>
+              {timeSince(new Date(contribution.createdAt))}
             </Box>
-          </VStack>
-        </HStack>
-      </Td>
-      <Td px="12px">
-        <HStack>
-          {JSON.parse(contribution.ProjectsModel.industry).map(
-            (industry: {
-              value: Key | null | undefined;
-              label: ReactChild;
-            }) => (
-              <CustomTag key={industry.value}>{industry.label}</CustomTag>
-            )
-          )}
-        </HStack>
-      </Td>
-      <Td px="12px">
-        <HStack gap="8px" align={'center'}>
-          <Center>
-            {contribution.token === 'sol' ? (
-              <SOL size={32} />
-            ) : contribution.token === 'usdc' ? (
-              <USDC size={32} />
-            ) : contribution.token === 'bonk' ? (
-              <BONK size={32} />
-            ) : (
-              '- -'
-            )}
-          </Center>
-          <VStack justify={'center'} spacing="2px" align={'start'}>
-            <HStack align={'baseline'} color="white">
-              <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
-                {formatNumberWithK(contribution.total)}
-              </Box>
-              <Box as="p" textStyle={{ base: 'title8', md: 'title7' }}>
-                {contribution.token.toUpperCase()}
-              </Box>
-            </HStack>
-            <Box
-              as="p"
-              color="neutral.8"
-              textStyle={{ base: 'body6', md: 'body5' }}
-            >
-              {formatNumberWithK(contribution.usdTotal)}$
-            </Box>
-          </VStack>
-        </HStack>
-      </Td>
-      <Td px="12px">
-        <VStack alignItems={'start'} gap="0px" justify="start">
-          <Box
-            as="p"
-            textStyle={{ base: 'title5', md: 'title4' }}
-            color="neutral.11"
-          >
-            {
-              contribution.ProjectsModel.ProjectJoinRound[0].fundingRound
-                .roundName
-            }{' '}
-          </Box>
-          <Box
-            as="p"
-            textStyle={{ base: 'body5', md: 'body4' }}
-            color="neutral.7"
-          >
-            {timeSince(new Date(contribution.createdAt))}
-          </Box>
+          </Skeleton>
         </VStack>
       </Td>
       <Td px="12px">
-        <Box
-          as="p"
-          textStyle={{ base: 'title4', md: 'title3' }}
-          color="neutral.11"
+        <Skeleton
+          isLoaded={!isLoading}
+          fadeDuration={3}
+          opacity={isLoading ? 0.5 : 1}
         >
-          $12,248.64
-        </Box>
+          <Box
+            as="p"
+            textStyle={{ base: 'title4', md: 'title3' }}
+            color="neutral.11"
+          >
+            $12,248.64
+          </Box>
+        </Skeleton>
       </Td>
       <Td px="12px">
         <BiChevronRight size="24" />
@@ -167,12 +224,8 @@ const UserContributions = ({
     return <ComponentErrors />;
   }
 
-  if (!data || data.length === 0) {
+  if (!isLoading && !data) {
     return <ContributionsEmptyState />;
-  }
-
-  if (isLoading) {
-    return <Spinner />;
   }
 
   console.log(data, isError, isLoading);
@@ -238,6 +291,7 @@ const UserContributions = ({
           {data &&
             data.map((contribution) => (
               <UserContributionTableRow
+                isLoading={isLoading}
                 key={contribution.id}
                 contribution={contribution}
               />

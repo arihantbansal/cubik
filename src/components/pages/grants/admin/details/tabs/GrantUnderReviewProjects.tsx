@@ -5,6 +5,7 @@ import {
   Avatar,
   Box,
   Button,
+  Center,
   HStack,
   Modal,
   ModalBody,
@@ -30,12 +31,24 @@ import {
   updateProjectRoundVerified,
 } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
-import ProjectRoundManagerCardPendingStatus from './ProjectCard';
+import ProjectRoundManagerCardPendingStatus from '../../ProjectCard';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
+import { ProjectEmptyState } from '../../../../user-profile/empty-states/ProjectEmptyState';
+import ProjectsLoadingState from '../../loadingState/ProjectsLoadingState';
 
 const GrantUnderReviewProjects = ({
   roundId,
   setProjectsNumberByStatus,
-}: any) => {
+}: {
+  roundId: string;
+  setProjectsNumberByStatus: React.Dispatch<
+    React.SetStateAction<{
+      review: number;
+      accepted: number;
+      rejected: number;
+    }>
+  >;
+}) => {
   const {
     data: roundData,
     isLoading,
@@ -142,9 +155,19 @@ const GrantUnderReviewProjects = ({
   return (
     <VStack spacing={4} w="full">
       {isLoading ? (
-        <Spinner />
+        <ProjectsLoadingState isLoading={isLoading} />
       ) : isError ? (
-        <>There is some error - {error.message}</>
+        <Center
+          w="full"
+          py={{ base: '16px', sm: '24px' }}
+          border="1px dashed"
+          borderColor={'#1D1F1E'}
+          rounded="12px"
+        >
+          <ComponentErrors />
+        </Center>
+      ) : roundData?.ProjectJoinRound.length === 0 ? (
+        <ProjectEmptyState />
       ) : (
         <>
           {roundData?.ProjectJoinRound.map((projectJoinRound) => (

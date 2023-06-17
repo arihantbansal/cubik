@@ -58,3 +58,22 @@ export const VisitorProjectEmptyState = () => {
     </Center>
   );
 };
+
+export const ProjectEmptyState = () => {
+  return (
+    <Center
+      w="full"
+      border="1px dashed"
+      borderColor={'neutral.3'}
+      rounded="12px"
+      flexDir={'column'}
+    >
+      <EmptyStateHOC
+        heading={'No Projects'}
+        subHeading={
+          'There is no project to view here yet. Check back after some time or refresh the page.'
+        }
+      />
+    </Center>
+  );
+};

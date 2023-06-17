@@ -22,36 +22,36 @@ const ProfilePage = ({ username }: { username: string }) => {
   );
 
   if (isError) return <ComponentErrors error={error} />;
-  // if (!isLoading && !data) {
-  //   return (
-  //     <>
-  //       <SEO
-  //         title={`Error 404`}
-  //         description={`There was some error!!`}
-  //         image={`error`}
-  //       />
-  //       <Container maxW="full">
-  //         <Center gap="16px" flexDir={'column'} maxW="4xl" mx="auto" py="14rem">
-  //           <Heading fontSize="9xl">404</Heading>
-  //           <Box as="p" textStyle={'title1'}>
-  //             Page Not Found{' '}
-  //           </Box>
-  //           <Box textAlign={'center'} maxW="22rem" as="p" textStyle={'body2'}>
-  //             The page you are looking for does not exist. Go back{' '}
-  //             <Box
-  //               as={Link}
-  //               href="/projects"
-  //               color="brand.teal5"
-  //               textDecoration={'underline'}
-  //             >
-  //               home
-  //             </Box>
-  //           </Box>
-  //         </Center>
-  //       </Container>
-  //     </>
-  //   );
-  // }
+  if (!isLoading && !data) {
+    return (
+      <>
+        <SEO
+          title={`Error 404`}
+          description={`There was some error!!`}
+          image={`error`}
+        />
+        <Container maxW="full">
+          <Center gap="16px" flexDir={'column'} maxW="4xl" mx="auto" py="14rem">
+            <Heading fontSize="9xl">404</Heading>
+            <Box as="p" textStyle={'title1'}>
+              Page Not Found
+            </Box>
+            <Box textAlign={'center'} maxW="22rem" as="p" textStyle={'body2'}>
+              The page you are looking for does not exist. Go back
+              <Box
+                as={Link}
+                href="/projects"
+                color="brand.teal5"
+                textDecoration={'underline'}
+              >
+                home
+              </Box>
+            </Box>
+          </Center>
+        </Container>
+      </>
+    );
+  }
 
   return (
     <>

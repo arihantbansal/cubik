@@ -285,92 +285,86 @@ const ProjectHeader = ({
                 {project?.name}
               </Box>
             </Skeleton>
-            {isLoading ? (
-              <Skeleton w="8rem" h="1rem" opacity={0.4} />
-            ) : (
-              <GetFormattedLink
-                isLoading={isLoading}
-                link={project?.project_link}
-              />
-            )}
+            <GetFormattedLink
+              isLoading={isLoading}
+              link={project?.project_link}
+            />
           </VStack>
         </Stack>
-        {project && (
-          <>
-            <Center w="full" justifyContent={'end'}>
-              <Skeleton
-                isLoaded={!isLoading}
-                fadeDuration={3}
-                opacity={isLoading ? '0.3' : '1'}
-                w={{ base: 'full', sm: 'auto' }}
-              >
-                <Button
-                  w="full"
-                  variant={'cubikOutlined'}
-                  size={{
-                    base: 'cubikMini',
-                    sm: 'cubikSmall',
-                    md: 'cubikMedium',
-                  }}
-                  onClick={onOpen}
-                >
-                  View Details
-                </Button>
-              </Skeleton>
-            </Center>
-            <Drawer
-              maxW="40rem"
-              isOpen={isOpen}
-              placement="bottom"
-              onClose={() => {
-                setDrawerBodyView(drawerBodyViewEnum.PROJECT_DETAILS);
-                onClose();
+        <Center w="full" justifyContent={'end'}>
+          <Skeleton
+            isLoaded={!isLoading}
+            fadeDuration={4}
+            opacity={isLoading ? '0.3' : '1'}
+            w={{ base: 'full', sm: 'auto' }}
+          >
+            <Button
+              w="full"
+              variant={'cubikOutlined'}
+              size={{
+                base: 'cubikMini',
+                sm: 'cubikSmall',
+                md: 'cubikMedium',
               }}
-              //@ts-ignore
-              finalFocusRef={btnRef}
+              onClick={onOpen}
             >
-              <DrawerOverlay
-                color="rgba(0, 0, 0, 0.72)"
-                backdropFilter="blur(8px)"
+              View Details
+            </Button>
+          </Skeleton>
+        </Center>
+        {project && (
+          <Drawer
+            maxW="40rem"
+            isOpen={isOpen}
+            placement="bottom"
+            onClose={() => {
+              setDrawerBodyView(drawerBodyViewEnum.PROJECT_DETAILS);
+              onClose();
+            }}
+            //@ts-ignore
+            finalFocusRef={btnRef}
+          >
+            <DrawerOverlay
+              color="rgba(0, 0, 0, 0.72)"
+              backdropFilter="blur(8px)"
+            />
+            <DrawerContent
+              borderColor={'#1D1F1E'}
+              borderBottom={'none'}
+              borderTopRadius={'24px'}
+              background="#080808"
+              maxW="80rem !important"
+              mx="auto"
+              p="0"
+            >
+              <DrawerCloseButton
+                transform={'translateY(-3rem)'}
+                rounded="full"
+                backgroundColor="#141414"
               />
-              <DrawerContent
-                borderColor={'#1D1F1E'}
-                borderBottom={'none'}
-                borderTopRadius={'24px'}
-                background="#080808"
-                maxW="80rem !important"
-                mx="auto"
-                p="0"
-              >
-                <DrawerCloseButton
-                  transform={'translateY(-3rem)'}
-                  rounded="full"
-                  backgroundColor="#141414"
-                />
 
-                <DrawerBody maxH={'90vh'} p="0">
-                  {drawerBodyView === drawerBodyViewEnum.GRANTS ? (
-                    <ApplyForGrant
-                      setDrawerBodyView={setDrawerBodyView}
+              <DrawerBody maxH={'90vh'} p="0">
+                {drawerBodyView === drawerBodyViewEnum.GRANTS ? (
+                  <ApplyForGrant
+                    setDrawerBodyView={setDrawerBodyView}
+                    project={project}
+                  />
+                ) : drawerBodyView === drawerBodyViewEnum.EDIT ? (
+                  <EditProjectDetails />
+                ) : drawerBodyView === drawerBodyViewEnum.PREVIEW ? (
+                  <></>
+                ) : (
+                  <>
+                    <ProjectDetails
+                      isLoading={false}
                       project={project}
+                      setDrawerBodyView={setDrawerBodyView}
                     />
-                  ) : drawerBodyView === drawerBodyViewEnum.EDIT ? (
-                    <EditProjectDetails />
-                  ) : drawerBodyView === drawerBodyViewEnum.PREVIEW ? (
-                    <></>
-                  ) : (
-                    <>
-                      <ProjectDetails
-                        isLoading={false}
-                        project={project}
-                        setDrawerBodyView={setDrawerBodyView}
-                      />
-                    </>
-                  )}
-                </DrawerBody>
-              </DrawerContent>
-            </Drawer>
-          </>
+                  </>
+                )}
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
         )}
       </Stack>
     </>

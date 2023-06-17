@@ -1,4 +1,5 @@
 import React from 'react';
+import NoInformation from '~/components/common/empty-state/NoInformation';
 
 const RoundResults = ({
   roundData,
@@ -7,7 +8,7 @@ const RoundResults = ({
   roundData?: any;
   isLoading?: boolean;
 }) => {
-  return <div>RoundResults</div>;
+  return <NoInformation />;
 };
 
 export default RoundResults;
