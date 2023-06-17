@@ -17,6 +17,7 @@ export const contributionRouter = router({
         usd: z.number().positive(),
         projectId: z.string().nonempty(),
         roundId: z.string().nonempty(),
+        projectJoinRoundId: z.string().nonempty(),
       })
     )
     .mutation(async ({ input }) => {
@@ -43,6 +44,7 @@ export const contributionRouter = router({
             projectId: input.projectId,
             roundId: input.roundId,
             isLatest: true,
+            projectJoinRoundId: contribution.projectJoinRoundId,
           },
         });
         await prisma.contribution.update({
@@ -69,6 +71,7 @@ export const contributionRouter = router({
             currentTotal: input.totalAmount,
             currentusdTotal: input.usd,
             isLatest: true,
+            projectJoinRoundId: input.projectJoinRoundId,
           },
         });
         return contributionRes;
@@ -128,10 +131,11 @@ export const contributionRouter = router({
     .input(
       z.object({
         projectId: z.string().nonempty(),
-        roundId: z.string().nonempty(),
+        roundId: z.string(),
       })
     )
     .query(async ({ input }) => {
+      if (!input.roundId) return [];
       const contributions = await prisma.contribution.findMany({
         where: {
           projectId: input.projectId,
