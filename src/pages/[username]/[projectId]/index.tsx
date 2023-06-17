@@ -57,7 +57,6 @@ const ProjectDetails = ({
               projectJoinRoundId={''}
               roundName={''}
               isLoading={isLoading}
-              contributors={0}
               funding={0}
               team={data?.Team ?? []}
               projectDetails={{
@@ -69,7 +68,6 @@ const ProjectDetails = ({
               projectDetails={{
                 ...data!!,
               }}
-              contributors={0}
               funding={0}
               roundId={''}
               isLoading={isLoading}
