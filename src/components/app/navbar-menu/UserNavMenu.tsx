@@ -8,6 +8,8 @@ import {
   DrawerContent,
   DrawerOverlay,
   MenuDivider,
+  Skeleton,
+  SkeletonCircle,
   VStack,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -38,117 +40,143 @@ const UserNavMenu = () => {
   const NavMenuButtons = () => {
     return (
       <>
-        <Button
-          bg="transparent"
-          rounded="md"
-          textStyle={'body4'}
-          color="white"
-          display={'flex'}
-          alignItems="center"
-          justifyContent={'start'}
-          leftIcon={
-            <Box
-              as={BiUser}
-              boxSize={{ base: '12px', sm: '18px', md: '20px' }}
-              color={'#ADB8B6'}
-            />
-          }
-          iconSpacing="8px"
-          p={{ base: '12px', md: '8px' }}
-          sx={{
-            width: '-webkit-fill-available',
-          }}
-          _hover={{
-            backgroundColor: '#141414',
-          }}
-          _active={{
-            backgroundColor: '#141414',
-          }}
-          as={Link}
-          href={'/' + user?.username}
+        <Skeleton
+          opacity={!user?.username ? 0.5 : 1}
+          fadeDuration={4}
+          isLoaded={!!user?.username}
         >
-          <Box as="p" textStyle={{ base: 'body5', md: 'body4' }}>
-            Profile
-          </Box>
-        </Button>
-        <Button
-          bg="transparent"
-          rounded="md"
-          textStyle={'body4'}
-          color="white"
-          display={'flex'}
-          alignItems="center"
-          justifyContent={'start'}
-          leftIcon={
-            <Box
-              as={MdUpload}
-              boxSize={{ base: '12px', sm: '18px', md: '20px' }}
-              color={'#ADB8B6'}
-            />
-          }
-          iconSpacing="8px"
-          p={{ base: '12px', md: '8px' }}
-          sx={{
-            width: '-webkit-fill-available',
-          }}
-          _hover={{
-            backgroundColor: '#141414',
-          }}
-          _active={{
-            backgroundColor: '#141414',
-          }}
-          as={Link}
-          href={'/submit-project'}
+          <Button
+            bg="transparent"
+            rounded="md"
+            textStyle={'body4'}
+            color="white"
+            display={'flex'}
+            alignItems="center"
+            justifyContent={'start'}
+            leftIcon={
+              <Box
+                as={BiUser}
+                boxSize={{ base: '12px', sm: '18px', md: '20px' }}
+                color={'#ADB8B6'}
+              />
+            }
+            iconSpacing="8px"
+            p={{ base: '12px', md: '8px' }}
+            sx={{
+              width: '-webkit-fill-available',
+            }}
+            _hover={{
+              backgroundColor: '#141414',
+            }}
+            _active={{
+              backgroundColor: '#141414',
+            }}
+            as={Link}
+            href={'/' + user?.username}
+          >
+            <Box as="p" textStyle={{ base: 'body5', md: 'body4' }}>
+              Profile
+            </Box>
+          </Button>
+        </Skeleton>
+        <Skeleton
+          opacity={!user?.username ? 0.3 : 1}
+          fadeDuration={4}
+          isLoaded={!!user?.username}
         >
-          <Box textStyle={{ base: 'body5', md: 'body4' }}>Submit Project</Box>
-        </Button>
-        <Button
-          bg="transparent"
-          rounded="md"
-          textStyle={'body4'}
-          color="white"
-          display={'flex'}
-          alignItems="center"
-          justifyContent={'start'}
-          leftIcon={
-            <Box
-              as={MdPowerSettingsNew}
-              boxSize={{ base: '12px', sm: '18px', md: '20px' }}
-              color={'#ADB8B6'}
-            />
-          }
-          p={{ base: '12px', md: '8px' }}
-          onClick={handleSignOut}
-          sx={{
-            width: '-webkit-fill-available',
-          }}
-          _hover={{
-            backgroundColor: '#141414',
-          }}
-          _active={{
-            backgroundColor: '#141414',
-          }}
+          <Button
+            bg="transparent"
+            rounded="md"
+            textStyle={'body4'}
+            color="white"
+            display={'flex'}
+            alignItems="center"
+            justifyContent={'start'}
+            leftIcon={
+              <Box
+                as={MdUpload}
+                boxSize={{ base: '12px', sm: '18px', md: '20px' }}
+                color={'#ADB8B6'}
+              />
+            }
+            iconSpacing="8px"
+            p={{ base: '12px', md: '8px' }}
+            sx={{
+              width: '-webkit-fill-available',
+            }}
+            _hover={{
+              backgroundColor: '#141414',
+            }}
+            _active={{
+              backgroundColor: '#141414',
+            }}
+            as={Link}
+            href={'/submit-project'}
+          >
+            <Box textStyle={{ base: 'body5', md: 'body4' }}>Submit Project</Box>
+          </Button>
+        </Skeleton>
+        <Skeleton
+          opacity={!user?.username ? 0.1 : 1}
+          fadeDuration={4}
+          isLoaded={!!user?.username}
         >
-          <Box as="p" textStyle={{ base: 'body5', md: 'body4' }}>
-            Disconnect Wallet
-          </Box>
-        </Button>
+          <Button
+            bg="transparent"
+            rounded="md"
+            textStyle={'body4'}
+            color="white"
+            display={'flex'}
+            alignItems="center"
+            justifyContent={'start'}
+            leftIcon={
+              <Box
+                as={MdPowerSettingsNew}
+                boxSize={{ base: '12px', sm: '18px', md: '20px' }}
+                color={'#ADB8B6'}
+              />
+            }
+            p={{ base: '12px', md: '8px' }}
+            onClick={handleSignOut}
+            sx={{
+              width: '-webkit-fill-available',
+            }}
+            _hover={{
+              backgroundColor: '#141414',
+            }}
+            _active={{
+              backgroundColor: '#141414',
+            }}
+          >
+            <Box as="p" textStyle={{ base: 'body5', md: 'body4' }}>
+              Disconnect Wallet
+            </Box>
+          </Button>
+        </Skeleton>
       </>
     );
   };
 
   return (
     <>
-      <Avatar
-        display={{ base: 'flex', md: 'none' }}
-        as="button"
-        onClick={onOpen}
+      <Skeleton
+        fadeDuration={2}
+        isLoaded={!!user?.profilePicture}
         width={{ base: '30px', md: '36px' }}
         height={{ base: '30px', md: '36px' }}
-        borderRadius={6}
-        name={user?.username}
-        src={user?.profilePicture}
-      />
+        display={{ base: 'flex', md: 'none' }}
+        borderRadius="8px"
+      >
+        <Avatar
+          as="button"
+          onClick={onOpen}
+          width={{ base: '30px', md: '36px' }}
+          height={{ base: '30px', md: '36px' }}
+          borderRadius={6}
+          name={user?.username}
+          src={user?.profilePicture}
+        />
+      </Skeleton>
       <Drawer
         variant="cubik"
         isOpen={isOpen}
@@ -158,7 +186,7 @@ const UserNavMenu = () => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerBody>
-            <VStack gap="16px" w="full" align={'start'}>
+            <VStack border="1px solid red" gap="16px" w="full" align={'start'}>
               <ProfileDetails />
               <WalletBalance />{' '}
               <Box w="full" h="1px" backgroundColor={'#1D1F1E'} />
@@ -187,13 +215,21 @@ const UserNavMenu = () => {
           p="0"
           rightIcon={<BiChevronDown size={26} color="#A8F0E6" />}
         >
-          <Avatar
-            width={{ base: '28px', md: '36px' }}
-            height={{ base: '28px', md: '36px' }}
-            borderRadius={6}
-            name={user?.username}
-            src={user?.profilePicture}
-          />
+          <Skeleton
+            fadeDuration={4}
+            isLoaded={!!user?.profilePicture}
+            width={{ base: '28px', md: '40px' }}
+            height={{ base: '28px', md: '40px' }}
+            borderRadius="8px"
+          >
+            <Avatar
+              width={{ base: '28px', md: '36px' }}
+              height={{ base: '28px', md: '36px' }}
+              borderRadius={6}
+              name={user?.username}
+              src={user?.profilePicture}
+            />
+          </Skeleton>
         </MenuButton>
         <MenuList
           background={'linear-gradient(322.35deg, #000000 0%, #0F0F0F 100%)'}
@@ -203,7 +239,16 @@ const UserNavMenu = () => {
           flexDir="column"
         >
           <ProfileDetails />
-          <WalletBalance />
+          <Skeleton
+            opacity={!user?.profilePicture ? 0.6 : 1}
+            fadeDuration={3}
+            isLoaded={!!user?.profilePicture}
+            width={'full'}
+            height={'3rem'}
+            borderRadius="8px"
+          >
+            <WalletBalance />
+          </Skeleton>
           <MenuDivider />
           <NavMenuButtons />
         </MenuList>

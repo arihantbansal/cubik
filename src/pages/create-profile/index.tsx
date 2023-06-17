@@ -73,25 +73,13 @@ const CreateProfile = () => {
                 Create your Cubik account to get started.
               </Box>
             </CardHeader>
-            <HStack justify={'space-between'}>
-              <CustomStepper
-                steps={[
-                  { index: 1, name: 'Connect Wallet' },
-                  { index: 2, name: 'Profile Details' },
-                ]}
-                currentStep={activeStep}
-              />
-            </HStack>
-            {activeStep === 1 && <CreateProfileStepOne onNext={goToNextStep} />}
-            {activeStep === 2 && (
-              <CreateProfileStepThree
-                onOpen={onOpen}
-                onClose={onClose}
-                isOpen={isOpen}
-                onPrevious={goToPreviousStep}
-                handleSubmit={undefined}
-              />
-            )}
+            <CreateProfileStepThree
+              onOpen={onOpen}
+              onClose={onClose}
+              isOpen={isOpen}
+              onPrevious={goToPreviousStep}
+              handleSubmit={undefined}
+            />
           </>
         </Card>
       </Container>

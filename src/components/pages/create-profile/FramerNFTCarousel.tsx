@@ -13,9 +13,9 @@ import { motion } from 'framer-motion';
 import { memo, useEffect, useRef, useState } from 'react';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import { BsImage } from 'react-icons/bs';
-import { useNftDataByOwner } from '~/hooks/getNFTsByOwner';
 import { useUserStore } from '~/store/userStore';
 import Carousel from './Carousel';
+import useGetUserAssets from '~/hooks/useGetUserAssets';
 
 type CarouselPropsType = {
   onClose: () => void;
@@ -33,8 +33,13 @@ const FramerCarousel = memo(function FramerCarousel({
   const { user } = useUserStore();
   const { publicKey } = useWallet();
 
-  const { data: nftsData, isLoading, error } = useNftDataByOwner(publicKey);
-
+  // const { data: nftsData, isLoading, error } = useNftDataByOwner(publicKey);
+  const {
+    data: nftsData,
+    isLoading,
+    error,
+  } = useGetUserAssets(publicKey?.toBase58() as string, 5, 100);
+  console.log('nfts data - ', nftsData, publicKey?.toBase58());
   useEffect(() => {
     if (carousel.current) {
       setCarouselWidth(

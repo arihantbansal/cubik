@@ -34,7 +34,7 @@ const filterTokens = (tokens: TokenInfo[]) => {
 
 const getBalances = async (address: string) => {
   const { data } = await axios.get(
-    `https://api-devnet.helius.xyz/v0/addresses/${address}/balances?api-key=${env.NEXT_PUBLIC_HELIUS_API_KEY}`
+    `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${env.NEXT_PUBLIC_HELIUS_API_KEY}`
   );
   return data;
 };

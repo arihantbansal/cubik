@@ -17,7 +17,7 @@ const getBalances = async (address: string): Promise<BalanceData> => {
   if (!address) throw new Error('No address provided.');
   const { data } = await axios.get(
     // todo: change api-devnet to api when using mainet
-    `https://api-devnet.helius.xyz/v0/addresses/${address}/balances?api-key=${process.env.NEXT_PUBLIC_HELIUS_API_KEY}`
+    `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${process.env.NEXT_PUBLIC_HELIUS_API_KEY}`
   );
   return data;
 };
