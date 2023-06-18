@@ -36,6 +36,7 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
 
   const handleMint = async () => {
     if (minted) return;
+
     if (!user?.data.user?.email) {
       console.log(env.NEXT_PUBLIC_URL_BASE + router.asPath);
       await supabase.auth.signInWithOAuth({
