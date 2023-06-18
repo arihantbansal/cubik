@@ -11,7 +11,7 @@ import { formatDate } from '~/utils/formatDates';
 import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
 import Discussions from './ProjectDiscussion';
 import ProjectContributors from './project-interactions/project-tabs/ProjectContributors';
-import { ProjectsModel } from '@prisma/client';
+import { ProjectsModel, Team, Contribution, UserModel } from '@prisma/client';
 
 export const ProjectsTabs = ({
   projectDetails,
@@ -19,7 +19,17 @@ export const ProjectsTabs = ({
   roundId,
   ownerName,
 }: {
-  projectDetails: ProjectsModel;
+  projectDetails:
+    | (ProjectsModel & {
+        Team: (Team & {
+          user: UserModel;
+        })[];
+        Contribution: (Contribution & {
+          user: UserModel;
+        })[];
+        owner: UserModel;
+      })
+    | undefined;
   ownerName: string;
   roundId: string;
   isLoading: boolean;

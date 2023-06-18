@@ -32,36 +32,34 @@ import {
 import { HiLink } from 'react-icons/hi';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import { ProjectCreatorTeamType } from '~/types/IProjectDetails';
+import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 import {
   ProjectCreatorSkeleton,
   ProjectSocialsSkeleton,
 } from '../skeletons/ProjectPageLoadingSkeleton';
 import { ProjectCTAs } from './ProjectCTAs';
+import { formatNumberWithK } from '~/utils/formatWithK';
+import { SOL } from '~/components/common/tokens/token';
+import { BiChevronRight } from 'react-icons/bi';
+import { motion } from 'framer-motion';
 import { RecentContributions } from './RecentContributors';
-import { trpc } from '~/utils/trpc';
 
+type ProjectCreatorTeamMemberProps = {
+  teamMember: Team[] & {
+    user: UserModel;
+  };
+};
 interface Props {
   isLoading: boolean;
   funding: number;
-  roundId: string;
-  projectId: string;
+  contributors: number;
 }
 
 export const ProjectFundingData = ({
   isLoading,
   funding,
-  roundId,
-  projectId,
+  contributors,
 }: Props) => {
-  const {
-    data: contributorsData,
-    isLoading: loadingContributors,
-    isError,
-    error,
-  } = trpc.contribution.getProjectContributors.useQuery({
-    roundId,
-    projectId,
-  });
   return (
     <VStack gap="16px" align={'start'} w="full">
       <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
@@ -207,7 +205,7 @@ export const ProjectFundingData = ({
           <HStack w="full" align={'start'}>
             <VStack align={'start'} gap="8px">
               <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
-                {contributorsData?.length ?? 0}
+                {contributors}
               </Box>
               <Box as="p" textStyle={'body4'} color={'neutral.8'}>
                 Contributors
@@ -269,27 +267,29 @@ export const ProjectSocials = ({
 }) => {
   const socials = [
     {
-      name: projectDetails.twitter_handle ? 'twitter' : undefined,
-      url: projectDetails.twitter_handle
-        ? projectDetails.twitter_handle
+      name: projectDetails?.twitter_handle ? 'twitter' : undefined,
+      url: projectDetails?.twitter_handle
+        ? projectDetails?.twitter_handle
         : undefined,
     },
     {
-      name: projectDetails.discord_link ? 'discord' : undefined,
-      url: projectDetails.discord_link
-        ? projectDetails.discord_link
+      name: projectDetails?.discord_link ? 'discord' : undefined,
+      url: projectDetails?.discord_link
+        ? projectDetails?.discord_link
         : undefined,
     },
     {
-      name: projectDetails.telegram_link ? 'telegram' : undefined,
+      name: projectDetails?.telegram_link ? 'telegram' : undefined,
 
-      url: projectDetails.telegram_link
-        ? projectDetails.telegram_link
+      url: projectDetails?.telegram_link
+        ? projectDetails?.telegram_link
         : undefined,
     },
     {
-      name: projectDetails.github_link ? 'github' : undefined,
-      url: projectDetails.github_link ? projectDetails.github_link : undefined,
+      name: projectDetails?.github_link ? 'github' : undefined,
+      url: projectDetails?.github_link
+        ? projectDetails?.github_link
+        : undefined,
     },
   ];
   return (
@@ -374,9 +374,11 @@ export const ProjectOwner = ({
   team,
   isLoading,
 }: {
-  team: (Team & {
-    user: UserModel;
-  })[];
+  team:
+    | (Team & {
+        user: UserModel;
+      })[]
+    | undefined;
   isLoading: boolean;
 }) => {
   return (
@@ -387,7 +389,7 @@ export const ProjectOwner = ({
       {isLoading ? (
         <ProjectCreatorSkeleton isLoading={isLoading} />
       ) : (
-        team.map((teamMember: ProjectCreatorTeamType, key: Key) => (
+        team?.map((teamMember: ProjectCreatorTeamType, key: Key) => (
           <ProjectCreatorTeamMember teamMember={teamMember} key={key} />
         ))
       )}
@@ -458,15 +460,17 @@ export const ProjectCreatorAndLinks = ({
   isLoading,
   preview,
   team,
+  contributors,
   funding,
 }: {
   projectDetails: ProjectsModel;
-  roundId: string;
+  roundId?: string;
   isLoading: boolean;
   preview?: boolean;
   team: (Team & {
     user: UserModel;
   })[];
+  contributors: number;
   funding: number;
 }) => {
   return (
@@ -481,15 +485,14 @@ export const ProjectCreatorAndLinks = ({
       <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />
       <RecentContributions
         projectId={projectDetails?.id || ''}
-        roundId={roundId}
+        roundId={roundId as string}
         isLoading={isLoading}
       />
       {!preview && (
         <ProjectFundingData
           isLoading={isLoading}
+          contributors={contributors}
           funding={funding}
-          projectId={projectDetails?.id || ''}
-          roundId={roundId}
         />
       )}
       <ProjectOwner isLoading={isLoading} team={team} />
@@ -499,24 +502,28 @@ export const ProjectCreatorAndLinks = ({
 };
 
 interface ProjectInteractionsProps {
+  joinId?: string;
   round?: Round;
+  preview?: boolean;
+  funding?: number;
   projectDetails: ProjectsModel;
   isLoading: boolean;
-  preview?: boolean;
-  roundId: string;
   team: (Team & {
     user: UserModel;
   })[];
-  funding: number;
+  contributors?: (Contribution & {
+    user: UserModel;
+  })[];
 }
 
 export const ProjectInteractions = ({
+  joinId,
   round,
   projectDetails,
   isLoading,
   preview,
-  roundId,
   team,
+  contributors,
   funding,
 }: ProjectInteractionsProps) => {
   return (
@@ -529,19 +536,20 @@ export const ProjectInteractions = ({
       justifyContent="start"
     >
       <ProjectCTAs
+        joinId={joinId}
         round={round}
         projectDetails={projectDetails}
         isLoading={isLoading}
-        projectJoinRoundId={roundId}
+        projectJoinRoundId={round?.id as string}
         roundName={round?.roundName as string}
-        roundid={(round?.id as string) ?? roundId}
+        roundId={round?.id as string}
       />
       <ProjectCreatorAndLinks
         team={team}
         projectDetails={projectDetails}
-        roundId={roundId}
         isLoading={isLoading}
         preview={preview}
+        contributors={contributors?.length || 0}
         funding={funding || 0}
       />
     </Stack>

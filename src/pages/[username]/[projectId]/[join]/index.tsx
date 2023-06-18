@@ -17,7 +17,7 @@ const ProjectDetails = ({
   projectId: string;
   joinId: string;
 }) => {
-  const { data, isError, isLoading, error } =
+  const { data, isLoading, isError, error } =
     trpc.project.findOneJoinRound.useQuery({
       id: joinId as string,
     });
@@ -31,8 +31,6 @@ const ProjectDetails = ({
     return <ComponentErrors error={error} />;
   }
 
-  // const isPreview = roundId === null;
-
   const RoundStatusBanner = () => {
     if (isPast(data?.fundingRound.startTime as Date)) {
       return (
@@ -40,6 +38,7 @@ const ProjectDetails = ({
           endTime={data?.fundingRound.endTime as Date}
           startTime={data?.fundingRound.startTime as Date}
           status={'LIVE'}
+          show={true}
           roundName={data?.fundingRound.roundName as string}
         />
       );
@@ -49,51 +48,48 @@ const ProjectDetails = ({
   return (
     <>
       <SEO
-        title={`${data ? data.project.name : 'Project'} - Cubik`}
-        description={`${data ? data.project.short_description : ''}`}
-        image={data ? data?.project.logo : ''}
+        title={`${data ? data?.project?.name : 'Project'} - Cubik`}
+        description={`${data ? data?.project?.short_description : ''}`}
+        image={data ? data?.project?.logo : ''}
       />
       <main style={{ width: 'full' }}>
         <Container maxW={'full'}>
-          <Skeleton
-            isLoaded={!isLoading}
-            w="full"
-            h="auto"
-            maxW="7xl"
-            mx="auto"
-          >
-            {joinId && <RoundStatusBanner />}
-          </Skeleton>
+          {joinId && (
+            <Skeleton
+              isLoaded={!isLoading}
+              w="full"
+              maxW="7xl"
+              mx="auto"
+              fadeDuration={3}
+              opacity={isLoading ? 0.3 : 1}
+              h={isLoading ? '3rem' : 'auto'}
+            >
+              <RoundStatusBanner />
+            </Skeleton>
+          )}
           <Stack
             maxW="7xl"
             mx="auto"
             direction={{ base: 'column', lg: 'row' }}
             gap={{ base: '24px', md: '12px', lg: '60px', xl: '100px' }}
-            px={{ base: '1rem', sm: '2rem', md: '2rem', xl: '1rem' }}
+            px={{ base: '0.5rem', sm: '2rem', md: '2rem', xl: '1rem' }}
             py={{ base: '24px', md: '64px' }}
             alignItems={'start'}
             justifyContent={'start'}
           >
             <ProjectDetailsAndTabs
-              funding={data?.amountRaise ?? 0}
-              ownerName={data?.project.owner.username as string}
-              roundId={data?.fundingRound.id as string}
+              joinId={joinId}
+              data={data}
               isLoading={isLoading}
-              projectJoinRoundId={data?.id as string}
-              roundName={data?.fundingRound.roundName as string}
-              team={data?.project.Team ?? []}
-              projectDetails={{
-                ...data?.project!!,
-              }}
             />
-
             <ProjectInteractions
+              joinId={joinId}
               round={data?.fundingRound}
               projectDetails={{
                 ...data?.project!!,
               }}
+              contributors={data?.project.Contribution}
               funding={data?.amountRaise ?? 0}
-              roundId={data?.fundingRound.id as string}
               isLoading={isLoading}
               preview={false}
               team={data?.project.Team ?? []}

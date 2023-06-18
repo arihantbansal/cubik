@@ -7,6 +7,8 @@ import {
   VStack,
   Flex,
   Skeleton,
+  AvatarGroup,
+  SkeletonCircle,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { formatNumberWithK } from '~/utils/formatWithK';
@@ -20,14 +22,17 @@ const transition = {
   type: 'spring',
   stiffness: 30,
   damping: 10,
-  duration: 0.8,
+  duration: 2,
 };
-const yTransition = { ...transition, y: { duration: 0.8 } };
+const yTransition = { ...transition, y: { duration: 2 } };
+
 const variants = {
   initial: { opacity: 0, y: 10 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -10 },
 };
+
+const MotionCenter = motion(Center);
 
 const displayedItemsCount = 3; // number of items to display at once
 
@@ -53,12 +58,6 @@ export const RecentContributions = ({
   >([]);
 
   useEffect(() => {
-    console.log(
-      '🚀 ~ file: RecentContributions.tsx ~ line 150 ~ contributorsData',
-      contributorsData,
-      roundId,
-      projectId
-    );
     if (contributorsData && contributorsData.length >= displayedItemsCount) {
       setVisibleContributors(contributorsData?.slice(0, displayedItemsCount));
     }
@@ -78,36 +77,44 @@ export const RecentContributions = ({
           contributorsData[nextContributorIndex],
         ]);
       }
-    }, 1000); // Update every second
+    }, 2000); // Update every second
     return () => clearInterval(intervalId); // Clean up on unmount
   }, [contributorsData, visibleContributors]);
 
-  return contributorsData && contributorsData?.length > 0 ? (
-    <VStack
-      gap="16px"
-      align={'start'}
-      w={{ base: 'auto', sm: 'auto', lg: 'full' }}
-    >
+  return (
+    <VStack gap="16px" align={'start'} w={{ base: 'full', lg: 'full' }}>
       <HStack w="full" justify={'space-between'}>
-        <Skeleton isLoaded={!isLoading}>
-          <Box as="p" textStyle={'title3'} color="white">
-            Recent Contributors
-          </Box>
-        </Skeleton>
-        <Button
-          size="cubikMini"
-          variant="cubikText"
-          h="fit-content"
-          p="0"
-          px="0"
-          rightIcon={<Box as={BiChevronRight} />}
-        >
-          View All
-        </Button>
+        <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
+          Recent Contributors
+        </Box>
+        {/* <Button
+            display={{ base: 'none', md: 'block' }}
+            size="cubikMini"
+            variant="cubikText"
+            h="fit-content"
+            p="0"
+            px="0"
+            rightIcon={<Box as={BiChevronRight} />}
+          >
+            View All
+          </Button> */}
       </HStack>
-      <VStack align={'start'} w="full" gap="16px" color="#CBCBCB">
-        <Skeleton isLoaded={!isLoading} w="full">
-          {contributorsData?.map((contributor, i) => (
+      <VStack
+        display={{ base: 'none', md: 'flex' }}
+        align={'start'}
+        w="full"
+        spacing="2px"
+        color="#CBCBCB"
+      >
+        {isLoading && (
+          <VStack spacing="10px" w="full">
+            <Skeleton opacity={0.4} height="2.5rem" width="full" />
+            <Skeleton opacity={0.3} height="2.5rem" width="full" />
+            <Skeleton opacity={0.2} height="2.5rem" width="full" />
+          </VStack>
+        )}
+        {visibleContributors.length > 0 ? (
+          visibleContributors?.map((contributor, i) => (
             <motion.div
               key={contributor.id}
               variants={variants}
@@ -125,7 +132,7 @@ export const RecentContributions = ({
                 w="full"
                 direction={'row'}
                 gap="12px"
-                align={'start'}
+                align={'center'}
                 justify={'center'}
               >
                 <Avatar
@@ -152,9 +159,7 @@ export const RecentContributions = ({
                     color="#B4B0B2"
                     textStyle={{ base: 'body6', md: 'body5' }}
                   >
-                    {contributor.user.mainWallet.slice(0, 4) +
-                      '...' +
-                      contributor.user.mainWallet.slice(-4)}
+                    {'asd..asdf'}
                   </Box>
                 </VStack>
                 <HStack gap="8px" align={'center'}>
@@ -172,11 +177,116 @@ export const RecentContributions = ({
                 </HStack>
               </HStack>
             </motion.div>
-          ))}
-        </Skeleton>
+          ))
+        ) : (
+          <MotionCenter
+            display={isLoading ? 'none' : 'flex'}
+            maxW={'7xl'}
+            mx="auto"
+            w="full"
+            py={{ base: '16px', sm: '24px' }}
+            border="1px dashed"
+            borderColor={'#1D1F1E'}
+            rounded="12px"
+            initial={isLoading ? 'hidden' : 'show'}
+            animate={isLoading ? 'hidden' : 'show'}
+            transition={{ duration: 3 }}
+            variants={{
+              hidden: { opacity: 0 },
+              show: { opacity: 1 },
+            }}
+          >
+            <Box as="p" textStyle={{ base: 'body4' }} color="neutral.6">
+              No Contributors yet
+            </Box>
+          </MotionCenter>
+        )}
       </VStack>
+      <Flex
+        display={{ base: 'flex', md: 'none' }}
+        justify="start"
+        align={'end'}
+        flex="1"
+        w={'full'}
+        gap="4px"
+        position="relative"
+        zIndex="1"
+      >
+        <AvatarGroup size="sm" max={5} gap={'0.3rem'}>
+          {isLoading && (
+            <HStack spacing="-10px">
+              <Center
+                rounded="full"
+                border="3px solid black"
+                bgColor={'black'}
+                zIndex={'4'}
+              >
+                <SkeletonCircle
+                  fadeDuration={2}
+                  opacity={0.4}
+                  height="2rem"
+                  width="2rem"
+                />
+              </Center>
+              <Center
+                rounded="full"
+                border="3px solid black"
+                bgColor={'black'}
+                zIndex={'3'}
+              >
+                <SkeletonCircle
+                  fadeDuration={2}
+                  opacity={0.4}
+                  height="2rem"
+                  width="2rem"
+                />
+              </Center>
+              <Center
+                rounded="full"
+                border="3px solid black"
+                bgColor={'black'}
+                zIndex={'2'}
+              >
+                <SkeletonCircle
+                  fadeDuration={2}
+                  opacity={0.4}
+                  height="2rem"
+                  width="2rem"
+                />
+              </Center>
+              <Center
+                rounded="full"
+                border="3px solid black"
+                bgColor={'black'}
+                zIndex={'1'}
+              >
+                <SkeletonCircle
+                  fadeDuration={2}
+                  opacity={0.4}
+                  height="2rem"
+                  width="2rem"
+                />
+              </Center>
+            </HStack>
+          )}
+          {contributorsData?.slice(-5).map((contribution) => (
+            <Avatar
+              key={contribution.id}
+              outline="2px solid #0C0D0D"
+              name={contribution.user.username}
+              src={contribution.user.profilePicture}
+            />
+          ))}
+        </AvatarGroup>
+        <Box as="p" color="white" textStyle={{ base: 'body4', md: 'body3' }}>
+          {contributorsData &&
+            (contributorsData?.length === 0
+              ? '- -'
+              : contributorsData?.length > 5
+              ? '+' + (contributorsData?.length - 5) + ' more'
+              : '')}
+        </Box>
+      </Flex>
     </VStack>
-  ) : (
-    <></>
   );
 };

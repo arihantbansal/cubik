@@ -10,6 +10,7 @@ import SEO from '~/components/SEO';
 import { Mixpanel } from '~/utils/mixpanel';
 import { ProjectJoinRound } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
+import { ProjectsModel } from '@prisma/client';
 
 const ProjectDetails = ({
   projectId,
@@ -51,29 +52,13 @@ const ProjectDetails = ({
             alignItems={'start'}
             justifyContent={'start'}
           >
-            <ProjectDetailsAndTabs
-              ownerName={data?.owner.username as string}
-              roundId={''}
-              projectJoinRoundId={''}
-              roundName={''}
+            {/* <ProjectDetailsAndTabs data={data} isLoading={isLoading} /> */}
+            {/* <ProjectInteractions
+              projectDetails={data as ProjectsModel}
               isLoading={isLoading}
-              funding={0}
+              preview={true}
               team={data?.Team ?? []}
-              projectDetails={{
-                ...data!!,
-              }}
-            />
-
-            <ProjectInteractions
-              projectDetails={{
-                ...data!!,
-              }}
-              funding={0}
-              roundId={''}
-              isLoading={isLoading}
-              preview={isPreview}
-              team={data?.Team ?? []}
-            />
+            /> */}
           </Stack>
         </Container>
       </main>

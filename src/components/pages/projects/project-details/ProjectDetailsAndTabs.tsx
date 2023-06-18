@@ -1,5 +1,6 @@
 import {
   Avatar,
+  AvatarGroup,
   Box,
   Button,
   Container,
@@ -9,6 +10,7 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
+  Flex,
   HStack,
   Skeleton,
   useDisclosure,
@@ -23,9 +25,19 @@ import {
 } from './project-interactions/ProjectInteractions';
 import ProjectDetailsHeader from './ProjectDetailsHeader';
 import { ProjectsTabs } from './ProjectTabs';
-import { ProjectsModel, Team, UserModel } from '@prisma/client';
+import {
+  Contribution,
+  ProjectJoinRound,
+  ProjectsModel,
+  Round,
+  Team,
+  UserModel,
+} from '@prisma/client';
 import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
 import { ro } from 'date-fns/locale';
+import ProjectsContributorsNumber from '../project-explorer/body/ProjectsContributorsNumber';
+import { RecentContributions } from './project-interactions/RecentContributors';
+import { ProjectCTAsMobile } from './project-interactions/ProjectCTAs';
 
 type MobileDrawerTypes = {
   logo: string;
@@ -90,33 +102,36 @@ const MobileDrawer = ({
 };
 
 const MobileOnlyViews = ({
-  projectDetails,
+  joinId,
   isLoading,
-  children,
-  team,
-  funding,
-  projectJoinRoundId,
-  roundId,
-  roundName,
+  data,
 }: {
+  joinId?: string;
   isLoading: boolean;
-  projectDetails: ProjectsModel;
-  team: (Team & {
-    user: UserModel;
-  })[];
-  funding: number;
-  roundId: string;
-  projectJoinRoundId: string;
-  children?: React.ReactNode;
-  roundName: string;
+  data:
+    | (ProjectJoinRound & {
+        project: ProjectsModel & {
+          Team: (Team & {
+            user: UserModel;
+          })[];
+          Contribution: (Contribution & {
+            user: UserModel;
+          })[];
+          owner: UserModel;
+        };
+        fundingRound: Round;
+      })
+    | null
+    | undefined;
 }) => {
+  console.log('2 - data', data);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [donationSuccessful, setDonationSuccessful] = useState(false);
 
   return (
     <>
       <VStack gap="32px" w="full" display={{ base: 'flex', lg: 'none' }}>
-        <HStack w="full">
+        {/* <HStack w="full">
           <Skeleton
             isLoaded={!isLoading}
             opacity={isLoading ? 0.6 : 1}
@@ -149,56 +164,68 @@ const MobileOnlyViews = ({
               Visit Project
             </Button>
           </Skeleton>
-        </HStack>
-        <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />{' '}
-        <ProjectFundingData
-          projectId={projectDetails.id}
-          roundId={roundId}
+        </HStack>{' '} */}
+        <ProjectCTAsMobile
+          joinId={joinId}
+          round={data?.fundingRound}
+          projectDetails={data?.project}
           isLoading={isLoading}
-          funding={funding}
+          onOpen={onOpen}
         />
-        <ProjectOwner isLoading={isLoading} team={team} />
+        <ProjectSocials
+          isLoading={isLoading}
+          projectDetails={data?.project as ProjectsModel}
+        />
+        <RecentContributions
+          projectId={data?.projectId as string}
+          roundId={data?.roundId as string}
+          isLoading={isLoading}
+        />
+        <ProjectFundingData
+          isLoading={isLoading}
+          contributors={data?.contributions || 0}
+          funding={(data?.amountRaise as number) || 0}
+        />
+        <ProjectOwner isLoading={isLoading} team={data?.project.Team} />
       </VStack>
-      {projectDetails && (
-        <MobileDrawer
-          roundName={roundName}
-          projectDetails={projectDetails}
-          logo={projectDetails.logo}
-          projectName={projectDetails.name}
-          walletAddress={projectDetails.owner_publickey}
-          isOpen={isOpen}
-          onClose={onClose}
-          projectJoinRoundId={projectJoinRoundId}
-          roundId={roundId}
-          setDonationSuccessful={setDonationSuccessful}
-        />
-      )}
+      <MobileDrawer
+        roundName={data?.fundingRound.roundName as string}
+        projectDetails={data?.project as ProjectsModel}
+        logo={data?.project.logo as string}
+        projectName={data?.project.name as string}
+        walletAddress={data?.project.mutliSigAddress as string}
+        isOpen={isOpen}
+        onClose={onClose}
+        projectJoinRoundId={data?.roundId as string}
+        roundId={data?.roundId || ''}
+        setDonationSuccessful={setDonationSuccessful}
+      />
     </>
   );
 };
 
 export const ProjectDetailsAndTabs = ({
+  joinId,
   isLoading,
-  children,
-  roundId,
-  projectDetails,
-  ownerName,
-  team,
-  funding,
-  projectJoinRoundId,
-  roundName,
+  data,
 }: {
+  joinId?: string;
   isLoading: boolean;
-  children?: React.ReactNode;
-  projectDetails: ProjectsModel;
-  ownerName: string;
-  funding: number;
-  roundId: string;
-  projectJoinRoundId: string;
-  roundName: string;
-  team: (Team & {
-    user: UserModel;
-  })[];
+  data:
+    | (ProjectJoinRound & {
+        project: ProjectsModel & {
+          Team: (Team & {
+            user: UserModel;
+          })[];
+          Contribution: (Contribution & {
+            user: UserModel;
+          })[];
+          owner: UserModel;
+        };
+        fundingRound: Round;
+      })
+    | null
+    | undefined;
 }) => {
   return (
     <Container
@@ -214,26 +241,16 @@ export const ProjectDetailsAndTabs = ({
     >
       <ProjectDetailsHeader
         isLoading={isLoading}
-        industry={projectDetails?.industry}
-        logo={projectDetails?.logo}
-        name={projectDetails.name}
-        short_description={projectDetails?.short_description}
+        industry={data?.project.industry as string}
+        logo={data?.project.logo as string}
+        name={data?.project.name as string}
+        short_description={data?.project.short_description as string}
       />
-      <MobileOnlyViews
-        isLoading={isLoading}
-        funding={funding}
-        team={team}
-        roundName={roundName}
-        projectDetails={projectDetails}
-        projectJoinRoundId={projectJoinRoundId}
-        roundId={roundId}
-      >
-        {children}
-      </MobileOnlyViews>
+      <MobileOnlyViews joinId={joinId} isLoading={isLoading} data={data} />
       <ProjectsTabs
-        ownerName={ownerName}
-        roundId={roundId}
-        projectDetails={projectDetails}
+        ownerName={data?.project.owner.username as string}
+        roundId={data?.roundId || ''}
+        projectDetails={data?.project}
         isLoading={isLoading}
       />
     </Container>

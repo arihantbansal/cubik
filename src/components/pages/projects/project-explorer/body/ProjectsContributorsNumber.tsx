@@ -1,28 +1,36 @@
 import { Avatar, AvatarGroup, Box, Flex } from '@chakra-ui/react';
 import { Contribution, UserModel } from '@prisma/client';
 import { useEffect, useState } from 'react';
-import { ContributionsWithUserType } from '~/types/project';
 
 const ProjectsContributorsNumber = ({
   projectId,
   contributorsList,
 }: {
   projectId: string;
-  contributorsList: (Contribution & {
-    user: UserModel;
-  })[];
+  contributorsList:
+    | (Contribution & {
+        user: UserModel;
+      })[]
+    | undefined;
 }) => {
   const [contributors, setContributors] = useState<
-    ContributionsWithUserType[] | undefined
+    | (Contribution & {
+        user: UserModel;
+      })[]
+    | undefined
   >();
-  // @irfan check if this works once just to be safe
+
   useEffect(() => {
-    let contributorsData = [] as ContributionsWithUserType[];
+    let contributorsData = [] as
+      | (Contribution & {
+          user: UserModel;
+        })[]
+      | undefined;
     console.log(contributorsList);
 
     // filter out duplicate donations from the same user
     const userNames: { [key: string]: boolean } = {};
-    contributorsData = contributorsList.filter((contribution) => {
+    contributorsData = contributorsList?.filter((contribution) => {
       if (userNames[contribution.user.username]) {
         // This user has already made a donation, skip this donation
         return false;

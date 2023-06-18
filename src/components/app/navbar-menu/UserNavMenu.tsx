@@ -244,7 +244,7 @@ const UserNavMenu = () => {
             fadeDuration={3}
             isLoaded={!!user?.profilePicture}
             width={'full'}
-            height={'3rem'}
+            height={!user?.profilePicture ? '3rem' : 'auto'}
             borderRadius="8px"
           >
             <WalletBalance />

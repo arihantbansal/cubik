@@ -25,7 +25,6 @@ import {
 import { HiLink } from 'react-icons/hi';
 import { MdReportGmailerrorred } from 'react-icons/md';
 import CustomTag from '~/components/common/tags/CustomTag';
-import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 
 export const ProjectLink = ({ urlName }: { urlName: string }) => {
   switch (urlName) {
@@ -68,7 +67,7 @@ const ProjectDetailsHeader = ({
     >
       <SkeletonCircle
         isLoaded={!isLoading}
-        fadeDuration={3}
+        fadeDuration={2}
         opacity={isLoading ? '0.6' : '1'}
         width={{ base: '4.4rem', md: '6.2rem' }}
         height={{ base: '4.4rem', md: '6.2rem' }}
@@ -87,16 +86,21 @@ const ProjectDetailsHeader = ({
         justifyContent="center"
         w="full"
       >
-        <Stack spacing={{ base: '12px', md: '24px' }} direction={'row'}>
+        <Stack
+          spacing={{ base: '2px', md: '0px' }}
+          direction={'row'}
+          justify={'center'}
+        >
           <Skeleton
             isLoaded={!isLoading}
-            fadeDuration={4}
+            fadeDuration={2}
             opacity={isLoading ? '0.6' : '1'}
+            minW="10rem"
           >
-            <HStack align="center">
+            <HStack align="center" spacing="1px">
               <Box
                 as="p"
-                textStyle={{ base: 'title1', md: 'headline3' }}
+                textStyle={{ base: 'title2', sm: 'title1', md: 'headline3' }}
                 textTransform="capitalize"
                 color="neutral.11"
                 noOfLines={1}
@@ -108,14 +112,16 @@ const ProjectDetailsHeader = ({
               </Box>
               <Menu>
                 <MenuButton
-                  w="4px !important"
+                  w={{ base: '4px !important', md: '8px !important' }}
                   display="flex"
                   marginInline={'0px'}
                   alignContent={'center'}
                   justifyContent={'center'}
                   m="0 !important"
                   as={Button}
-                  variant="unstyled"
+                  iconSpacing={'0px'}
+                  variant="cubikText"
+                  maxH="1rem"
                   rightIcon={<BiChevronDown size={26} color="white" />}
                 />
                 <MenuList p="0" outline="0" border="0">
@@ -138,15 +144,15 @@ const ProjectDetailsHeader = ({
           </Skeleton>
           <Skeleton
             isLoaded={!isLoading}
-            fadeDuration={4}
+            fadeDuration={3}
             opacity={isLoading ? '0.4' : '1'}
           >
             <HStack
               overflow={'hidden'}
-              flexDirection={'row'}
-              align="center"
+              alignItems="center"
+              justifyContent={'center'}
               spacing="0.4rem"
-              pt="0.5rem"
+              h="full"
               display={{ base: 'none', md: 'flex' }}
             >
               {industry &&
@@ -163,7 +169,7 @@ const ProjectDetailsHeader = ({
         <SkeletonText
           isLoaded={!isLoading}
           w="full"
-          fadeDuration={5}
+          fadeDuration={4}
           noOfLines={2}
           opacity={isLoading ? '0.5' : '1'}
           skeletonHeight="16px"

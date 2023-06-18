@@ -12,6 +12,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Skeleton,
+  Stack,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
@@ -23,7 +24,14 @@ import { GoVerified } from 'react-icons/go';
 import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
 import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 import { useUserStore } from '~/store/userStore';
-import { ProjectsModel, Round } from '@prisma/client';
+import {
+  Contribution,
+  ProjectJoinRound,
+  ProjectsModel,
+  Round,
+  Team,
+  UserModel,
+} from '@prisma/client';
 import { useRouter } from 'next/router';
 import { differenceInDays, isFuture, isPast } from 'date-fns';
 import {
@@ -44,10 +52,9 @@ const AnimatedArrowIcon = (props: IconProps & { animate: boolean }) => {
   const transform = props.animate ? 'translateX(0.5rem)' : '';
 
   return (
-    <Icon
+    <Box
       as={MdArrowForward}
-      w={6}
-      h={6}
+      boxSize={{ base: '12px', md: '16px' }}
       transition={transition}
       transform={transform}
       {...props}
@@ -56,19 +63,21 @@ const AnimatedArrowIcon = (props: IconProps & { animate: boolean }) => {
 };
 
 export const ProjectCTAs = ({
+  joinId,
   round,
   projectDetails,
   isLoading,
   projectJoinRoundId,
-  roundid,
+  roundId,
   roundName,
 }: {
+  joinId?: string;
   round?: Round;
   projectDetails: ProjectsModel;
   isLoading: boolean;
-  projectJoinRoundId: string;
+  projectJoinRoundId?: string;
   roundName: string;
-  roundid: string;
+  roundId: string;
 }) => {
   const { user } = useUserStore();
   const router = useRouter();
@@ -86,14 +95,8 @@ export const ProjectCTAs = ({
     }
   };
 
-  const roundId = router.query.join;
-
-  // if round is not going on show a different state
-  // if round has ended show a different state
-  // now all users will be verified except if he is not logged in
-
   const DonationStatus = () => {
-    if (roundId && round) {
+    if (joinId && round) {
       // if round is going on show donation button
       // if user has already donated show donate again
       // if user has not donated show donate
@@ -381,8 +384,8 @@ export const ProjectCTAs = ({
             <ModalBody>
               {projectDetails && (
                 <PaymentModalBody
-                  projectJoinRoundId={projectJoinRoundId}
-                  roundId={roundid as string}
+                  projectJoinRoundId={projectJoinRoundId as string}
+                  roundId={roundId as string}
                   roundName={roundName}
                   setDonationSuccessful={setDonationSuccessful}
                   projectDetails={projectDetails}
@@ -401,9 +404,19 @@ export const ProjectCTAs = ({
         >
           <VStack gap="16px" align={'end'} spacing="0" w="full" pb="0.5rem">
             <DonationStatus />
+            {joinId && (
+              <Skeleton
+                opacity="0.3"
+                fadeDuration={2}
+                display={isLoading ? 'block' : 'none'}
+                h="3rem"
+                w="full"
+                isLoaded={!isLoading}
+              />
+            )}
             <Skeleton
               fadeDuration={4}
-              opacity={isLoading ? '0.4' : 1}
+              opacity={isLoading ? 0.3 : 1}
               isLoaded={!isLoading}
               w="full"
             >
@@ -427,6 +440,151 @@ export const ProjectCTAs = ({
               </Button>
             </Skeleton>
           </VStack>
+        </VStack>
+      </Box>
+    </>
+  );
+};
+export const ProjectCTAsMobile = ({
+  joinId,
+  round,
+  projectDetails,
+  isLoading,
+  onOpen,
+}: {
+  joinId?: string;
+  round: Round | undefined;
+  projectDetails:
+    | (ProjectsModel & {
+        Team: (Team & {
+          user: UserModel;
+        })[];
+        Contribution: (Contribution & {
+          user: UserModel;
+        })[];
+        owner: UserModel;
+      })
+    | undefined;
+  isLoading: boolean;
+  onOpen: () => void;
+}) => {
+  console.log('3 - projectDetails and round details', projectDetails, round);
+  const { user } = useUserStore();
+  const router = useRouter();
+  const { setVisible } = useWalletModal();
+  const [isHovered, setIsHovered] = useState(false);
+
+  const onDonateHandler = () => {
+    if (user?.id) {
+      onOpen();
+    } else {
+      setVisible(true);
+    }
+  };
+
+  const DonationStatus = () => {
+    if (joinId && round) {
+      // if round is going on show donation button
+      // if user has already donated show donate again
+      // if user has not donated show donate
+      if (isFuture(round?.startTime))
+        return (
+          <RoundStartingSoon
+            startDate={round.startTime}
+            isLoading={isLoading}
+          />
+        );
+      else if (isPast(round.startTime)) {
+        if (isPast(round.endTime))
+          return (
+            <RoundEndedBanner endDate={round.endTime} isLoading={isLoading} />
+          );
+        else if (isFuture(round.endTime))
+          return (
+            <Skeleton
+              opacity={isLoading ? '0.5' : 1}
+              fadeDuration={3}
+              isLoaded={!isLoading}
+              w="full"
+            >
+              <Button
+                onClick={onDonateHandler}
+                variant="cubikFilled"
+                size="cubikSmall"
+                w="full"
+              >
+                Donate
+              </Button>
+            </Skeleton>
+          );
+        return <></>;
+      } else {
+        return <></>;
+      }
+    } else return <></>; // query does not have round id so it is a preview page
+  };
+
+  return (
+    <>
+      <Box display={{ base: 'block', lg: 'none' }} w="full">
+        <VStack
+          ml="auto"
+          right="20rem"
+          w={'full'}
+          alignItems={{ base: 'center', lg: 'start' }}
+        >
+          <Stack
+            direction={{
+              base:
+                round && isPast(round.startTime) && isFuture(round.endTime)
+                  ? 'row'
+                  : 'column',
+              lg: 'column',
+            }}
+            gap="16px"
+            align={'end'}
+            spacing="0"
+            w="full"
+            pb="0.5rem"
+          >
+            <DonationStatus />
+            {joinId && (
+              <Skeleton
+                display={isLoading ? 'block' : 'none'}
+                opacity="0.3"
+                fadeDuration={2}
+                h="3rem"
+                w="full"
+                isLoaded={!isLoading}
+              />
+            )}
+            <Skeleton
+              fadeDuration={4}
+              opacity={isLoading ? '0.3' : 1}
+              isLoaded={!isLoading}
+              w="full"
+            >
+              <Button
+                rightIcon={
+                  <AnimatedArrowIcon
+                    animate={isHovered}
+                    width={18}
+                    height={18}
+                  />
+                }
+                variant="cubikOutlined"
+                w="full"
+                as="a"
+                size="cubikMini"
+                href={projectDetails?.project_link}
+                target="_blank"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                Visit Project
+              </Button>
+            </Skeleton>
+          </Stack>
         </VStack>
       </Box>
     </>

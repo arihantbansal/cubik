@@ -21,6 +21,12 @@ export const findOneJoinRound = procedure
                 user: true,
               },
             },
+            // @dhruv i have added these here
+            Contribution: {
+              include: {
+                user: true,
+              },
+            },
             owner: true,
           },
         },

@@ -33,7 +33,6 @@ const FramerCarousel = memo(function FramerCarousel({
   const { user } = useUserStore();
   const { publicKey } = useWallet();
 
-  // const { data: nftsData, isLoading, error } = useNftDataByOwner(publicKey);
   const {
     data: nftsData,
     isLoading,

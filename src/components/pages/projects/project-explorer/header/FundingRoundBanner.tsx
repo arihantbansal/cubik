@@ -9,7 +9,6 @@ interface CountdownTimerProps {
 
 export const CountdownTimer: React.FC<CountdownTimerProps> = ({ date }) => {
   const getTimeRemaining = (date: Date) => {
-    console.log('date - ', date);
     const total = date?.getTime() - new Date().getTime();
     const seconds = Math.floor((total / 1000) % 60);
     const minutes = Math.floor((total / 1000 / 60) % 60);
@@ -69,7 +68,6 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ date }) => {
 
 export const CountdownTimerBig: React.FC<CountdownTimerProps> = ({ date }) => {
   const getTimeRemaining = (date: Date) => {
-    console.log('date - ', date);
     const total = date?.getTime() - new Date().getTime();
     const seconds = Math.floor((total / 1000) % 60);
     const minutes = Math.floor((total / 1000 / 60) % 60);

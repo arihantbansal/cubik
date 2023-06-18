@@ -14,6 +14,7 @@ interface Props {
   startTime: Date;
   endTime: Date;
   status: any;
+  show?: boolean;
 }
 
 const ProjectDetailsLiveRoundStatus = ({
@@ -21,6 +22,7 @@ const ProjectDetailsLiveRoundStatus = ({
   roundName,
   startTime,
   status,
+  show,
 }: Props) => {
   switch (status) {
     case ProjectVerifyStatus.REVIEW:
@@ -140,7 +142,12 @@ const ProjectDetailsLiveRoundStatus = ({
       );
     case 'LIVE':
       return (
-        <Container maxW="7xl" p="0" pt="24px">
+        <Container
+          maxW="7xl"
+          p="0"
+          pt="24px"
+          px={{ base: '0.5rem', sm: '1rem', md: '0' }}
+        >
           <Flex
             w="full"
             maxW="7xl"
@@ -150,25 +157,29 @@ const ProjectDetailsLiveRoundStatus = ({
             backgroundColor={'#31F57908'}
             border="1px solid"
             borderColor="#31F57940"
-            flexDirection={{ base: 'column', sm: 'row' }}
-            padding={{ base: '10px 16px', md: '12px 24px' }}
-            align={{ base: 'start', sm: 'center' }}
+            flexDirection={'row'}
+            padding={{ base: '10px 6px', md: '12px 24px' }}
+            align={'center'}
           >
             {startTime && endTime && (
               <Center w="fit-content">
-                <RoundStatus startDate={startTime} endDate={endTime} />
+                <RoundStatus
+                  show={show}
+                  startDate={startTime}
+                  endDate={endTime}
+                />
               </Center>
             )}
             <Box
               as="p"
               noOfLines={{ base: 2, md: 1 }}
-              display={{ base: 'none', md: 'block' }}
+              display={show ? 'block' : { base: 'none', md: 'block' }}
               whiteSpace={{ base: 'normal', md: 'nowrap' }}
               textStyle={{ base: 'body6', md: 'body5' }}
               color="neutral.11"
               w="full"
             >
-              Participating in <b>{roundName}</b> Round
+              Participating in <b>{roundName}</b>
             </Box>
           </Flex>
         </Container>

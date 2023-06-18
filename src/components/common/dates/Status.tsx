@@ -31,9 +31,11 @@ const CircleRipple = chakra(Box, {
 });
 
 const RoundStatus = ({
+  show,
   startDate,
   endDate,
 }: {
+  show?: boolean;
   startDate: Date | undefined | null;
   endDate: Date | undefined | null;
 }) => {
@@ -94,9 +96,11 @@ const RoundStatus = ({
           whiteSpace="pre"
           color="neutral.11"
           textStyle={{ base: 'body6', md: 'overline3' }}
-          display={{ base: 'none', md: 'block' }}
+          display={{ base: show ? 'block' : 'none', md: 'block' }}
         >
-          Live - ends in {daysToEnd} days
+          {daysToEnd > 1
+            ? `Live - ends in ${daysToEnd} days`
+            : 'Live - ending in a day'}
         </Box>
       </HStack>
     );
