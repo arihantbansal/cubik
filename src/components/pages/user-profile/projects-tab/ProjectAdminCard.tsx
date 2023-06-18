@@ -12,6 +12,7 @@ import {
 import {
   Contribution,
   ProjectJoinRound,
+  ProjectVerifyStatus,
   ProjectsModel,
   Round,
   UserModel,
@@ -123,7 +124,14 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
               multisigAddress={projectData?.mutliSigAddress}
             />
           )}
-          <Center w="full">
+          <Center
+            display={
+              projectData?.status === ProjectVerifyStatus.VERIFIED
+                ? 'flex'
+                : 'none'
+            }
+            w="full"
+          >
             <Button
               onClick={() => setShowVault(!showVault)}
               variant="cubikText"

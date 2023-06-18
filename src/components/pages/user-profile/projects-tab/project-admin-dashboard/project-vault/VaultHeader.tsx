@@ -140,19 +140,33 @@ const VaultHeader = ({
             }
           />
         </Tooltip>
-        {/* <Button
-          ml="auto"
-          w={['full', '10rem']}
-          size={{ base: 'cubikMini', md: 'cubikSmall' }}
-          variant={'cubikOutlined'}
-          iconSpacing={{ base: '0px', md: '4px' }}
-          rounded="8px"
-          rightIcon={
-            <Box as={HiExternalLink} boxSize={{ base: '14px', md: '18px' }} />
-          }
-        >
-          Open Multisig
-        </Button> */}
+        {multiSigAddress && (
+          <Button
+            as="a"
+            href={`https://v3.squads.so/dashboard/${Buffer.from(
+              multiSigAddress as string
+            ).toString('base64')}`}
+            ml="auto"
+            w={['full', '10rem']}
+            size={{ base: 'cubikMini', md: 'cubikSmall' }}
+            variant={'cubikText'}
+            background={'neutral.2'}
+            border="2px solid"
+            borderColor="neutral.4"
+            color="neutral.7"
+            _hover={{
+              color: 'neutral.8',
+              borderColor: 'neutral.6',
+            }}
+            iconSpacing={{ base: '0px', md: '4px' }}
+            rounded="8px"
+            // rightIcon={
+            //   <Box as={HiExternalLink} boxSize={{ base: '14px', md: '16px' }} />
+            // }
+          >
+            Open Multisig
+          </Button>
+        )}
       </HStack>
       <Modal variant={'cubik'} size="md" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
