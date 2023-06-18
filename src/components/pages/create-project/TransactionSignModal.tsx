@@ -134,7 +134,7 @@ const CreateProjectTransactionModal: React.FC<
         github_link: getValues().github,
         twitter_handle: getValues().twitter,
         project_link: getValues().projectLink,
-        discord_link: getValues().projectLink,
+        discord_link: getValues().discord,
         telegram_link: getValues().telegram,
         projectUserCount: (projectCount.data?._count.project as number) + 1,
         team: getValues()?.team?.map((member) => member.value) ?? [],
