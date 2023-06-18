@@ -8,6 +8,7 @@ import { admin_proof, connection } from '~/utils/program/contract';
 import * as anchor from '@coral-xyz/anchor';
 const Home: NextPage = () => {
   const anchorWallet = useAnchorWallet();
+
   return (
     <>
       <SEO

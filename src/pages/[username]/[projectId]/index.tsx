@@ -52,13 +52,23 @@ const ProjectDetails = ({
             alignItems={'start'}
             justifyContent={'start'}
           >
-            {/* <ProjectDetailsAndTabs data={data} isLoading={isLoading} /> */}
-            {/* <ProjectInteractions
+            <ProjectDetailsAndTabs
+              projectDetails={{
+                ...data!!,
+              }}
+              roundId={roundId as string}
+              joinId={''}
+              isLoading={isLoading}
+              amountRaise={0}
+              contributions={0}
+            />
+
+            <ProjectInteractions
               projectDetails={data as ProjectsModel}
               isLoading={isLoading}
               preview={true}
               team={data?.Team ?? []}
-            /> */}
+            />
           </Stack>
         </Container>
       </main>

@@ -79,8 +79,14 @@ const ProjectDetails = ({
           >
             <ProjectDetailsAndTabs
               joinId={joinId}
-              data={data}
               isLoading={isLoading}
+              amountRaise={data?.amountRaise ?? 0}
+              roundId={data?.fundingRound.id as string}
+              fundingRound={data?.fundingRound}
+              projectDetails={{
+                ...data?.project!!,
+              }}
+              contributions={data?.project.Contribution.length ?? 0}
             />
             <ProjectInteractions
               joinId={joinId}

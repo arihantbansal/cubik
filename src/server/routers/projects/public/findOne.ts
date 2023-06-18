@@ -15,6 +15,11 @@ export const findOneProject = procedure
       },
       include: {
         owner: true,
+        Contribution: {
+          include: {
+            user: true,
+          },
+        },
         Team: {
           include: {
             user: true,

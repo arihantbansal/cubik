@@ -38,7 +38,6 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
     if (minted) return;
 
     if (!user?.data.user?.email) {
-      console.log(env.NEXT_PUBLIC_URL_BASE + router.asPath);
       await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -46,12 +45,12 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
         },
       });
     } else {
-      console.log('minting', user.data.user.email);
       proofMutation.mutate({
         name: 'GOOGLE',
         tx: '0x123',
         email: user?.data.user?.email,
       });
+
       await supabase.auth.signOut();
     }
 

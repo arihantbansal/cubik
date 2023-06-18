@@ -104,27 +104,30 @@ const MobileDrawer = ({
 const MobileOnlyViews = ({
   joinId,
   isLoading,
-  data,
+  fundingRound,
+  project,
+  roundId,
+  amountRaise,
+  contributions,
 }: {
   joinId?: string;
   isLoading: boolean;
-  data:
-    | (ProjectJoinRound & {
-        project: ProjectsModel & {
-          Team: (Team & {
-            user: UserModel;
-          })[];
-          Contribution: (Contribution & {
-            user: UserModel;
-          })[];
-          owner: UserModel;
-        };
-        fundingRound: Round;
+  fundingRound: Round;
+  roundId: string;
+  amountRaise: number;
+  contributions: number;
+  project:
+    | (ProjectsModel & {
+        Team: (Team & {
+          user: UserModel;
+        })[];
+        Contribution: (Contribution & {
+          user: UserModel;
+        })[];
+        owner: UserModel;
       })
-    | null
     | undefined;
 }) => {
-  console.log('2 - data', data);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [donationSuccessful, setDonationSuccessful] = useState(false);
 
@@ -167,37 +170,39 @@ const MobileOnlyViews = ({
         </HStack>{' '} */}
         <ProjectCTAsMobile
           joinId={joinId}
-          round={data?.fundingRound}
-          projectDetails={data?.project}
+          round={fundingRound}
+          projectDetails={project}
           isLoading={isLoading}
           onOpen={onOpen}
         />
         <ProjectSocials
           isLoading={isLoading}
-          projectDetails={data?.project as ProjectsModel}
+          projectDetails={{
+            ...project!!,
+          }}
         />
         <RecentContributions
-          projectId={data?.projectId as string}
-          roundId={data?.roundId as string}
+          projectId={project?.id as string}
+          roundId={roundId as string}
           isLoading={isLoading}
         />
         <ProjectFundingData
           isLoading={isLoading}
-          contributors={data?.contributions || 0}
-          funding={(data?.amountRaise as number) || 0}
+          contributors={contributions || 0}
+          funding={(amountRaise as number) || 0}
         />
-        <ProjectOwner isLoading={isLoading} team={data?.project.Team} />
+        <ProjectOwner isLoading={isLoading} team={project?.Team} />
       </VStack>
       <MobileDrawer
-        roundName={data?.fundingRound.roundName as string}
-        projectDetails={data?.project as ProjectsModel}
-        logo={data?.project.logo as string}
-        projectName={data?.project.name as string}
-        walletAddress={data?.project.mutliSigAddress as string}
+        roundName={fundingRound?.roundName as string}
+        projectDetails={project as ProjectsModel}
+        logo={project?.logo as string}
+        projectName={project?.name as string}
+        walletAddress={project?.mutliSigAddress as string}
         isOpen={isOpen}
         onClose={onClose}
-        projectJoinRoundId={data?.roundId as string}
-        roundId={data?.roundId || ''}
+        projectJoinRoundId={roundId as string}
+        roundId={roundId || ''}
         setDonationSuccessful={setDonationSuccessful}
       />
     </>
@@ -207,24 +212,28 @@ const MobileOnlyViews = ({
 export const ProjectDetailsAndTabs = ({
   joinId,
   isLoading,
-  data,
+  projectDetails,
+  roundId,
+  amountRaise,
+  fundingRound,
+  contributions,
 }: {
   joinId?: string;
   isLoading: boolean;
-  data:
-    | (ProjectJoinRound & {
-        project: ProjectsModel & {
-          Team: (Team & {
-            user: UserModel;
-          })[];
-          Contribution: (Contribution & {
-            user: UserModel;
-          })[];
-          owner: UserModel;
-        };
-        fundingRound: Round;
+  roundId: string;
+  amountRaise: number;
+  contributions: number;
+  fundingRound?: Round;
+  projectDetails:
+    | (ProjectsModel & {
+        Team: (Team & {
+          user: UserModel;
+        })[];
+        Contribution: (Contribution & {
+          user: UserModel;
+        })[];
+        owner: UserModel;
       })
-    | null
     | undefined;
 }) => {
   return (
@@ -241,16 +250,24 @@ export const ProjectDetailsAndTabs = ({
     >
       <ProjectDetailsHeader
         isLoading={isLoading}
-        industry={data?.project.industry as string}
-        logo={data?.project.logo as string}
-        name={data?.project.name as string}
-        short_description={data?.project.short_description as string}
+        industry={projectDetails?.industry as string}
+        logo={projectDetails?.logo as string}
+        name={projectDetails?.name as string}
+        short_description={projectDetails?.short_description as string}
       />
-      <MobileOnlyViews joinId={joinId} isLoading={isLoading} data={data} />
+      <MobileOnlyViews
+        joinId={joinId}
+        amountRaise={amountRaise}
+        contributions={contributions as number}
+        fundingRound={fundingRound as Round}
+        isLoading={isLoading}
+        project={projectDetails}
+        roundId={roundId}
+      />
       <ProjectsTabs
-        ownerName={data?.project.owner.username as string}
-        roundId={data?.roundId || ''}
-        projectDetails={data?.project}
+        ownerName={projectDetails?.owner?.username as string}
+        roundId={roundId || ''}
+        projectDetails={projectDetails}
         isLoading={isLoading}
       />
     </Container>
