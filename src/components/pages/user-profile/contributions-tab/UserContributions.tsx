@@ -223,12 +223,11 @@ const UserContributions = ({
     return <ComponentErrors />;
   }
 
-  if (!isLoading && !data) {
+  if (!isLoading && data === null) {
     return <ContributionsEmptyState />;
   }
 
-  console.log(data, isError, isLoading);
-  return (
+  return data && data.length > 0 ? (
     <TableContainer w="full">
       <Table variant="unstyled">
         <Thead>
@@ -298,6 +297,8 @@ const UserContributions = ({
         </Tbody>
       </Table>
     </TableContainer>
+  ) : (
+    <ContributionsEmptyState />
   );
 };
 
