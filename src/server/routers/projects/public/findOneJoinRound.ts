@@ -22,14 +22,6 @@ export const findOneJoinRound = procedure
               },
             },
             owner: true,
-            Contribution: {
-              where: {
-                projectJoinRoundId: input.id,
-              },
-              include: {
-                user: true,
-              },
-            },
           },
         },
         fundingRound: true,

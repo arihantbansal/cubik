@@ -24,6 +24,7 @@ const ProjectDetails = ({
 
   Mixpanel.track('project_page_load', {
     id: projectId,
+    name: data?.project.name,
   });
 
   if (isError) {
@@ -75,7 +76,6 @@ const ProjectDetails = ({
           >
             <ProjectDetailsAndTabs
               funding={data?.amountRaise ?? 0}
-              contributors={data?.project.Contribution.length ?? 0}
               ownerName={data?.project.owner.username as string}
               roundId={data?.fundingRound.id as string}
               isLoading={isLoading}
@@ -92,7 +92,6 @@ const ProjectDetails = ({
               projectDetails={{
                 ...data?.project!!,
               }}
-              contributors={data?.project.Contribution.length ?? 0}
               funding={data?.amountRaise ?? 0}
               roundId={data?.fundingRound.id as string}
               isLoading={isLoading}

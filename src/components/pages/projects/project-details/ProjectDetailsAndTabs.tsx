@@ -94,7 +94,6 @@ const MobileOnlyViews = ({
   isLoading,
   children,
   team,
-  contributors,
   funding,
   projectJoinRoundId,
   roundId,
@@ -105,7 +104,6 @@ const MobileOnlyViews = ({
   team: (Team & {
     user: UserModel;
   })[];
-  contributors: number;
   funding: number;
   roundId: string;
   projectJoinRoundId: string;
@@ -154,8 +152,9 @@ const MobileOnlyViews = ({
         </HStack>
         <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />{' '}
         <ProjectFundingData
+          projectId={projectDetails.id}
+          roundId={roundId}
           isLoading={isLoading}
-          contributors={contributors}
           funding={funding}
         />
         <ProjectOwner isLoading={isLoading} team={team} />
@@ -185,7 +184,6 @@ export const ProjectDetailsAndTabs = ({
   projectDetails,
   ownerName,
   team,
-  contributors,
   funding,
   projectJoinRoundId,
   roundName,
@@ -194,7 +192,6 @@ export const ProjectDetailsAndTabs = ({
   children?: React.ReactNode;
   projectDetails: ProjectsModel;
   ownerName: string;
-  contributors: number;
   funding: number;
   roundId: string;
   projectJoinRoundId: string;
@@ -224,7 +221,6 @@ export const ProjectDetailsAndTabs = ({
       />
       <MobileOnlyViews
         isLoading={isLoading}
-        contributors={contributors}
         funding={funding}
         team={team}
         roundName={roundName}

@@ -32,34 +32,36 @@ import {
 import { HiLink } from 'react-icons/hi';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import { ProjectCreatorTeamType } from '~/types/IProjectDetails';
-import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 import {
   ProjectCreatorSkeleton,
   ProjectSocialsSkeleton,
 } from '../skeletons/ProjectPageLoadingSkeleton';
 import { ProjectCTAs } from './ProjectCTAs';
-import { formatNumberWithK } from '~/utils/formatWithK';
-import { SOL } from '~/components/common/tokens/token';
-import { BiChevronRight } from 'react-icons/bi';
-import { motion } from 'framer-motion';
 import { RecentContributions } from './RecentContributors';
+import { trpc } from '~/utils/trpc';
 
-type ProjectCreatorTeamMemberProps = {
-  teamMember: Team[] & {
-    user: UserModel;
-  };
-};
 interface Props {
   isLoading: boolean;
   funding: number;
-  contributors: number;
+  roundId: string;
+  projectId: string;
 }
 
 export const ProjectFundingData = ({
   isLoading,
   funding,
-  contributors,
+  roundId,
+  projectId,
 }: Props) => {
+  const {
+    data: contributorsData,
+    isLoading: loadingContributors,
+    isError,
+    error,
+  } = trpc.contribution.getProjectContributors.useQuery({
+    roundId,
+    projectId,
+  });
   return (
     <VStack gap="16px" align={'start'} w="full">
       <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
@@ -205,7 +207,7 @@ export const ProjectFundingData = ({
           <HStack w="full" align={'start'}>
             <VStack align={'start'} gap="8px">
               <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
-                {contributors}
+                {contributorsData?.length ?? 0}
               </Box>
               <Box as="p" textStyle={'body4'} color={'neutral.8'}>
                 Contributors
@@ -456,7 +458,6 @@ export const ProjectCreatorAndLinks = ({
   isLoading,
   preview,
   team,
-  contributors,
   funding,
 }: {
   projectDetails: ProjectsModel;
@@ -466,7 +467,6 @@ export const ProjectCreatorAndLinks = ({
   team: (Team & {
     user: UserModel;
   })[];
-  contributors: number;
   funding: number;
 }) => {
   return (
@@ -487,8 +487,9 @@ export const ProjectCreatorAndLinks = ({
       {!preview && (
         <ProjectFundingData
           isLoading={isLoading}
-          contributors={contributors}
           funding={funding}
+          projectId={projectDetails?.id || ''}
+          roundId={roundId}
         />
       )}
       <ProjectOwner isLoading={isLoading} team={team} />
@@ -506,7 +507,6 @@ interface ProjectInteractionsProps {
   team: (Team & {
     user: UserModel;
   })[];
-  contributors: number;
   funding: number;
 }
 
@@ -517,7 +517,6 @@ export const ProjectInteractions = ({
   preview,
   roundId,
   team,
-  contributors,
   funding,
 }: ProjectInteractionsProps) => {
   return (
@@ -543,7 +542,6 @@ export const ProjectInteractions = ({
         roundId={roundId}
         isLoading={isLoading}
         preview={preview}
-        contributors={contributors || 0}
         funding={funding || 0}
       />
     </Stack>

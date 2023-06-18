@@ -11,6 +11,7 @@ export const authHandler = async (token: string | undefined) => {
   if (tokenSplit === 'null') {
     return null;
   }
+
   const payload = jwt.decode(tokenSplit) as jwt.JwtPayload;
 
   const user = await prisma.userModel.findUnique({
