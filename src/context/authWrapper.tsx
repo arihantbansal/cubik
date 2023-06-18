@@ -3,6 +3,7 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { useEffect } from 'react';
 import WalletVerifyModal from '~/components/app/WalletVerifyWalletModal';
 import jwt from 'jsonwebtoken';
+import { verifyMessage } from '~/utils/getsignMessage';
 
 interface SignatureData {
   signature: string;
@@ -17,7 +18,7 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
   const { publicKey, connected } = useWallet();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const checkAndVerifySignature = () => {
+  const checkAndVerifySignature = async () => {
     if (!publicKey || !connected) {
       return;
     }
@@ -37,7 +38,16 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
       }
       return null;
     }
+
     if (!localStorage.getItem('anon_sig')) {
+      onOpen();
+    }
+    const sigCheck = await verifyMessage(
+      localStorage.getItem('anon_sig') as string,
+      publicKey
+    );
+    console.log(sigCheck);
+    if (!sigCheck) {
       onOpen();
     }
   };

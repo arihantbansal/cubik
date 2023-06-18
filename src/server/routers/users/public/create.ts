@@ -28,6 +28,7 @@ export const createUser = procedure
           username: input.username,
           proof: [],
           tx: input.tx,
+          email: '',
         },
       });
       return res;
