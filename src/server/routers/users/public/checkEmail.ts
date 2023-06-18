@@ -6,7 +6,7 @@ export const checkEmail = procedure
   .input(z.object({ email: z.string() }))
   .mutation(async ({ input }) => {
     if (input.email.length < 3) return false;
-    const res = await prisma.userModel.findUnique({
+    const res = await prisma.userModel.findFirst({
       where: {
         email: input.email,
       },
