@@ -1,7 +1,9 @@
 import { Prisma } from '@prisma/client';
+import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { protectedProcedure } from '~/server/trpc';
 import { prisma } from '~/server/utils/prisma';
+import { UserProof } from '~/types/user';
 import { ProofType } from '~/utils/program/contract';
 
 export const addProof = protectedProcedure
@@ -17,7 +19,7 @@ export const addProof = protectedProcedure
         'DROPS01',
       ]),
       tx: z.string().nonempty(),
-      email: z.string().nonempty(),
+      email: z.string().optional(),
     })
   )
   .mutation(async ({ ctx, input }) => {
@@ -28,7 +30,14 @@ export const addProof = protectedProcedure
         email: input.email,
       };
     }
-    console.log('otherInfo', otherInfo);
+    const alreadyClaimedProofs = ctx.user?.proof as unknown as UserProof[];
+
+    if (alreadyClaimedProofs.find((e) => e.name === input.name)) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Proof already claimed',
+      });
+    }
     const updatedUser = await prisma.userModel.update({
       where: {
         id: user.id,

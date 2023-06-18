@@ -53,6 +53,7 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
                   isLoading={isLoading}
                 />
                 <UserProofs
+                  wallet={user?.mainWallet as string}
                   isLoading={isLoading}
                   proofs={user?.proof as unknown as UserProof[]}
                 />

@@ -19,13 +19,16 @@ import DripProof from './proofs/DripProof';
 import LamportDAOProof from './proofs/LamportDAOProof';
 import GoogleProof from './proofs/GoogleProof';
 import { UserProof } from '~/types/user';
+import SuperteamProof from './proofs/SuperteamProof';
+import { SuperteamMembers } from '~/utils/data/superteamMembers';
 
 const MotionBox = motion(Box);
 interface Props {
   isLoading: boolean;
   proofs: UserProof[];
+  wallet: string;
 }
-const UserProofs = ({ isLoading, proofs }: Props) => {
+const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
   return (
     <VStack align="start" w="full">
       <HStack gap="8px">
@@ -57,7 +60,7 @@ const UserProofs = ({ isLoading, proofs }: Props) => {
             background={'surface.yellow.3'}
             rounded="full"
           >
-            1 / 1 Collected
+            {proofs?.length ?? 0} / 1 Collected
           </Tag>
         </Skeleton>
       </HStack>
@@ -108,6 +111,31 @@ const UserProofs = ({ isLoading, proofs }: Props) => {
                   : false
               }
               isLoading={isLoading}
+            />
+          </MotionBox>
+        </Skeleton>
+        <Skeleton
+          fadeDuration={4}
+          isLoaded={!isLoading}
+          opacity={isLoading ? 0.4 : 1}
+          rounded="12px"
+        >
+          <MotionBox
+            as={Card}
+            cursor="pointer"
+            w={{ base: 'full', sm: 'full', md: '17.8rem' }}
+            height="fit-content"
+            h="full"
+            whileHover={{ y: -8, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <SuperteamProof
+              claimed={
+                proofs?.find((e) => e.name === 'SUPERTEAM') ? true : false
+              }
+              isClaimAble={
+                SuperteamMembers.find((e) => e === wallet) ? true : false
+              }
             />
           </MotionBox>
         </Skeleton>
