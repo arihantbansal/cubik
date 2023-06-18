@@ -12,11 +12,11 @@ import {
   useToast,
   VStack,
 } from '@chakra-ui/react';
-import { ImCheckmark, ImCheckmark2 } from 'react-icons/im';
+import { ImCheckmark } from 'react-icons/im';
 import { SuccessToast } from '~/components/common/toasts/Toasts';
-import { UserProof } from '~/types/user';
 import { trpc } from '~/utils/trpc';
 import LamportDAoSVG from './SVGs/LamportDAO';
+import SuperteamDAO from './SVGs/Superteam';
 
 interface Props {
   isClaimAble: boolean;
@@ -48,7 +48,7 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
   return (
     <>
       <VStack onClick={onOpen} p="32px" gap="8px" align="start">
-        <LamportDAoSVG size={'60px'} />
+        <SuperteamDAO size={'60px'} />
         <HStack spacing="8px">
           <Box
             as="p"
@@ -108,11 +108,11 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
             >
               <VStack spacing="24px">
                 <Center transform={'scale(2)'} h="130px">
-                  <LamportDAoSVG size={'60px'} />
+                  <SuperteamDAO size={'60px'} />
                 </Center>
                 <VStack spacing="12px">
                   <Box as="p" textStyle={'title2'} color="neutral.11">
-                    Sclaim Proof
+                    Superteam Proof
                   </Box>
                   <Box
                     as="p"

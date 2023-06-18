@@ -12,11 +12,7 @@ import {
   Tag,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import TwitterProof from './proofs/TwitterProof';
-import MonkeDAOProof from './proofs/MonkeDAOProof';
 import CivicIDProof from './proofs/CivicIDProof';
-import DripProof from './proofs/DripProof';
-import LamportDAOProof from './proofs/LamportDAOProof';
 import GoogleProof from './proofs/GoogleProof';
 import { UserProof } from '~/types/user';
 import SuperteamProof from './proofs/SuperteamProof';
@@ -60,7 +56,7 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
             background={'surface.yellow.3'}
             rounded="full"
           >
-            {proofs?.length ?? 0} / 1 Collected
+            {proofs?.length ?? 0} / 3 Collected
           </Tag>
         </Skeleton>
       </HStack>
