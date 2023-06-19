@@ -256,7 +256,7 @@ const ProjectContributors = ({
               fontFamily={'Plus Jakarta Sans, sans-serif'}
             >
               <Tr>
-                <Th w={'40%'} p="18px">
+                <Th w={'40%'} p="0px 18px">
                   <Text
                     fontSize={{ base: '12px', md: '14px' }}
                     textTransform={'capitalize'}
@@ -265,7 +265,7 @@ const ProjectContributors = ({
                     Contributor
                   </Text>
                 </Th>
-                <Th w={'25%'} p="18px">
+                <Th w={'25%'} p="0px 18px">
                   <ButtonGroup
                     onClick={() => handleSortChange('amount')}
                     variant="unstyled"
@@ -294,7 +294,7 @@ const ProjectContributors = ({
                     />
                   </ButtonGroup>
                 </Th>
-                <Th w={'25%'} p="18px">
+                <Th w={'25%'} p="0px 18px">
                   <ButtonGroup
                     onClick={() => handleSortChange('timestamp')}
                     variant="unstyled"

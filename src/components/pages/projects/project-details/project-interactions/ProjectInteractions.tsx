@@ -38,17 +38,15 @@ import {
   ProjectSocialsSkeleton,
 } from '../skeletons/ProjectPageLoadingSkeleton';
 import { ProjectCTAs } from './ProjectCTAs';
-import { formatNumberWithK } from '~/utils/formatWithK';
-import { SOL } from '~/components/common/tokens/token';
-import { BiChevronRight } from 'react-icons/bi';
-import { motion } from 'framer-motion';
 import { RecentContributions } from './RecentContributors';
+import { trpc } from '~/utils/trpc';
 
 type ProjectCreatorTeamMemberProps = {
   teamMember: Team[] & {
     user: UserModel;
   };
 };
+
 interface Props {
   isLoading: boolean;
   funding: number;
@@ -397,7 +395,30 @@ export const ProjectOwner = ({
   );
 };
 
+const getRandomProjects = (
+  arr: ProjectsModel[] | undefined,
+  n: number
+): ProjectsModel[] | undefined => {
+  let len = arr?.length || 0;
+  if (len <= n) return arr; // If array length is less than or equal to 3, return the whole array
+
+  let result = new Array(n),
+    taken = new Array(len);
+  while (n--) {
+    const x = Math.floor(Math.random() * len);
+    result[n] = arr![x in taken ? taken[x] : x];
+    taken[x] = --len in taken ? taken[len] : len;
+  }
+  return result;
+};
+
 export const SimilarProject = () => {
+  const { data, isLoading, error } = trpc.project.findSimilarProjects.useQuery({
+    industry: [],
+  });
+
+  const randomProjects = getRandomProjects(data, 3);
+
   return (
     <VStack
       gap="16px"
@@ -408,46 +429,26 @@ export const SimilarProject = () => {
         Similar Projects
       </Box>
       <VStack align={'start'} w="full" gap="16px" color="#CBCBCB">
-        <Card w="full" direction={'row'} gap="16px" p="16px" align={'start'}>
-          <Avatar
-            size="md"
-            src="https://pbs.twimg.com/profile_images/1536479364657086464/0J5Nw811_400x400.jpg"
-          />
-          <VStack w="full" alignItems={'start'} textAlign="start">
-            <Box as="p" textStyle={'title4'} color="white">
-              Solarplex
-            </Box>
-            <Box as="p" color="#B4B0B2" textStyle={'body5'}>
-              Product Hunt for Solana Blockchain.
-            </Box>
-          </VStack>
-        </Card>
-        <Card direction={'row'} gap="16px" p="16px" align={'start'}>
-          <Avatar
-            size="md"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCOMVpOC5XXMwOU6RtVD8zvHxObLbk38Jfrtc0SbMC2w&s"
-          />
-          <VStack alignItems={'start'} textAlign="start">
-            <Box as="p" textStyle={'title4'} color="white">
-              Superteam Earn
-            </Box>
-            <Box as="p" color="#B4B0B2" textStyle={'body5'}>
-              Build your Web3 reputation through Solana bounties, grants, and
-              jobs.
-            </Box>
-          </VStack>
-        </Card>
-        <Card direction={'row'} gap="16px" p="16px" align={'start'}>
-          <Avatar size="md" src="https://i.ibb.co/G2bNtMP/blob.jpg" />
-          <VStack alignItems={'start'} textAlign="start">
-            <Box as="p" textStyle={'title4'} color="white">
-              XRay
-            </Box>
-            <Box as="p" color="#B4B0B2" textStyle={'body5'}>
-              On a mission to make Solana the most human-readable blockchain.
-            </Box>
-          </VStack>
-        </Card>
+        {randomProjects?.map((project: ProjectsModel) => (
+          <Card
+            key={project.id}
+            w="full"
+            direction={'row'}
+            gap="16px"
+            p="16px"
+            align={'start'}
+          >
+            <Avatar size="md" src={project.logo} />
+            <VStack w="full" alignItems={'start'} textAlign="start">
+              <Box as="p" textStyle={'title4'} color="white">
+                {project.name}
+              </Box>
+              <Box noOfLines={2} as="p" color="#B4B0B2" textStyle={'body5'}>
+                {project.short_description}
+              </Box>
+            </VStack>
+          </Card>
+        ))}
       </VStack>
     </VStack>
   );

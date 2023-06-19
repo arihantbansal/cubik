@@ -16,6 +16,7 @@ import {
   findPubkey,
   projectGraph,
   updateProjectStatus,
+  findSimilar,
 } from './projects/public';
 import { findManyRejected } from './projects/public/findManyRejected';
 import { findManyVerifiedWithContributions } from './projects/public/findManyVerifiedWithContributions';
@@ -39,4 +40,5 @@ export const projectsRouter = router({
   verifiedProjects: verifiedProjects,
   count: projectCount,
   findOneJoinRound: findOneJoinRound,
+  findSimilarProjects: findSimilar,
 });

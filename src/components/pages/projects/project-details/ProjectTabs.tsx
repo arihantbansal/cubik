@@ -1,5 +1,6 @@
 import {
   Box,
+  Skeleton,
   Stack,
   Tab,
   TabList,
@@ -56,10 +57,16 @@ export const ProjectsTabs = ({
           />
           {projectDetails && (
             <Stack direction={{ base: 'row', md: 'row' }}>
-              <Box as="p" textStyle="body4" color="neutral.7">
-                Created: {formatDate(projectDetails?.createdAt ?? Date.now())}
-                {''} by @{ownerName}
-              </Box>
+              <Skeleton
+                isLoaded={!isLoading}
+                fadeDuration={4}
+                opacity={isLoading ? '0.3' : '1'}
+              >
+                <Box as="p" textStyle="body4" color="neutral.7">
+                  Created: {formatDate(projectDetails?.createdAt ?? Date.now())}
+                  {''} by @{ownerName}
+                </Box>
+              </Skeleton>
             </Stack>
           )}
         </TabPanel>

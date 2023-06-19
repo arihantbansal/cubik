@@ -21,7 +21,7 @@ const Username = ({ isLoading, username, proofs, size }: usernameProps) => {
         <Box
           as={MdVerified}
           transform="translateY(0px)"
-          color="surface.yellow.2"
+          color="surface.yellow.1"
           boxSize={
             size === 'xs'
               ? { base: '8px', sm: '9px', md: '15px' }

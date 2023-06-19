@@ -209,7 +209,7 @@ const GrantDetailsHeader = ({
           </Box>
         </Skeleton>
         <HStack spacing={'16px'}>
-          <Skeleton
+          {/* <Skeleton
             isLoaded={!isLoading}
             fadeDuration={4}
             opacity={isLoading ? '0.4' : '1'}
@@ -262,6 +262,34 @@ const GrantDetailsHeader = ({
                 color="neutral.11"
               >
                 Bonk DAO
+              </Box>
+            </HStack>
+          </Skeleton> */}
+          <Skeleton
+            isLoaded={!isLoading}
+            fadeDuration={4}
+            opacity={isLoading ? '0.4' : '1'}
+            rounded="full"
+          >
+            <HStack
+              rounded="full"
+              backgroundColor={'neutral.4'}
+              p="8px"
+              spacing="16px"
+              pe="24px"
+            >
+              <Avatar
+                size="sm"
+                src={
+                  'https://pbs.twimg.com/profile_images/1505359960942657539/sMjuxRcg_400x400.jpg'
+                }
+              />
+              <Box
+                as="p"
+                textStyle={{ base: 'title5', md: 'title4' }}
+                color="neutral.11"
+              >
+                Superteam DAO
               </Box>
             </HStack>
           </Skeleton>

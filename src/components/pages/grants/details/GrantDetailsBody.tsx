@@ -139,7 +139,7 @@ const GrantDetailsBody = ({
                     <HStack justifyContent={'end'}>
                       <Button
                         as={Link}
-                        href={`/projects/${round.project.id}`}
+                        href={`/${round.project.owner.username}/${round.project.id}/${round.id}`}
                         variant={'cubikFilled'}
                         maxW={{ base: '100%', sm: '8rem', md: '10rem' }}
                         w={{ base: 'full', sm: '8rem', md: '10rem' }}
@@ -155,7 +155,12 @@ const GrantDetailsBody = ({
             </Skeleton>
           ))}
         </TabPanel>
-        <TabPanel>{isError && <ErrorUI />}</TabPanel>
+        <TabPanel>
+          {isError && <ErrorUI />}
+          {
+            // todo: add contributions
+          }
+        </TabPanel>
       </TabPanels>
     </Tabs>
   );
