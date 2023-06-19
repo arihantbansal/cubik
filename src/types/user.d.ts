@@ -25,4 +25,5 @@ export type UserProof = {
   name: ProofType;
   timestamp: Date;
   tx: string;
+  githubUsername?: string;
 };
