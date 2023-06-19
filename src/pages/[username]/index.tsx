@@ -1,7 +1,5 @@
-import { Box, Center, Container, Heading } from '@chakra-ui/react';
+import { Box, Center, Container, Heading } from '@chakra-ui/layout';
 import Link from 'next/link';
-import router from 'next/router';
-import React from 'react';
 import SEO from 'src/components/SEO';
 import ComponentErrors from '~/components/errors/ComponenetErrors';
 import AdminView from '~/components/pages/user-profile/AdminView';

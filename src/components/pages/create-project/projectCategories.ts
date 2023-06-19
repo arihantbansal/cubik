@@ -36,6 +36,10 @@ export const category = [
     value: 'centralized_exchange',
   },
   {
+    label: 'CLOB',
+    value: 'clob',
+  },
+  {
     label: 'Community',
     value: 'community',
   },
@@ -82,6 +86,10 @@ export const category = [
   {
     label: 'Derivatives',
     value: 'derivatives',
+  },
+  {
+    label: 'DeFi',
+    value: 'defi',
   },
   {
     label: 'Developer Tools',

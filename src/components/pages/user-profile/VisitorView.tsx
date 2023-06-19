@@ -1,18 +1,12 @@
-import {
-  Flex,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/layout';
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
 import { FC, memo } from 'react';
 import { UserWithProjectType } from '~/types/user';
 import ProfileHeader from './ProfileHeader';
+import UserContributions from './contributions-tab/UserContributions';
 import UserDetails from './details-tab/UserDetails';
 import { VisitorProjectEmptyState } from './empty-states/ProjectEmptyState';
 import ProjectVisitorCard from './projects-tab/ProjectVisitorCard';
-import UserContributions from './contributions-tab/UserContributions';
 
 type visitorViewType = {
   user: UserWithProjectType | null | undefined;
@@ -34,7 +28,7 @@ const VisitorView: FC<visitorViewType> = ({
         </TabList>
         <TabPanels p={'0'}>
           <TabPanel p="0">
-            <Flex maxW={'full'} p="0" flexDir="column" gap="40px" py="40px">
+            <Flex maxW={'full'} p="0" flexDir="column" gap="40px">
               <UserDetails isLoading={isLoading} userId={user?.id as string} />
             </Flex>
           </TabPanel>
@@ -43,6 +37,7 @@ const VisitorView: FC<visitorViewType> = ({
               {user && user.project.length ? (
                 user.project.map((project, key) => (
                   <ProjectVisitorCard
+                    userName={user.username}
                     project={project}
                     isLoading={isLoading}
                     key={key}

@@ -2,14 +2,12 @@ import {
   Box,
   Card,
   CardHeader,
-  Center,
   Container,
   HStack,
   useDisclosure,
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { ProjectsModel } from '@prisma/client';
-import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { array, object, string } from 'yup';
@@ -45,6 +43,7 @@ export type FormData = {
 
 const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
   const [step, setStep] = useState<number>(1);
+  const [increasedSize, setIncreasedSize] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [editorData, setEditorData] = useState<string | null>(null);
   const [LoadingSubmit, setLoadingSubmit] = useState<boolean>(false);
@@ -65,6 +64,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
     setValue,
     getValues,
     setError,
+    getFieldState,
   } = useForm<FormData>({
     resolver: yupResolver(
       object().shape({
@@ -73,7 +73,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
           .max(36, 'Must be at most 36 characters'),
         tagline: string()
           .required("Tagline can't be empty")
-          .max(240, 'Must be at most 240 characters'),
+          .max(120, 'Tagline can not be more than 120 characters'),
         logo: string().required("Logo can't be empty"),
         email: string()
           .required("Email can't be empty")
@@ -99,6 +99,10 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
       })
     ),
     mode: 'onChange',
+    defaultValues: {
+      twitter: 'https://twitter.com/@username',
+      projectLink: 'https://example.com',
+    },
   });
 
   const goToNextStep = () => setStep(step + 1);
@@ -133,66 +137,6 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
     }
   };
 
-  //@ts-ignore
-  const MotionHStack = motion(HStack);
-
-  const ProjectTimeline = ({
-    index,
-    name,
-  }: {
-    index: number;
-    name: string;
-  }) => {
-    const status =
-      index < step ? 'complete' : step === index ? 'active' : 'inactive';
-
-    return (
-      <MotionHStack
-        initial={false}
-        animate={status}
-        transition={{
-          duration: 2,
-          ease: 'easeInOut',
-        }}
-        variants={{
-          inactive: { backgroundColor: 'transparent' },
-          active: { backgroundColor: '#010F0D' },
-          complete: { backgroundColor: '#14665B' },
-        }}
-        w={{ base: 'fit-content', md: 'full' }}
-        rounded="full"
-        border="1px solid #FFFFFF10"
-        py="0.5rem"
-        px="0.8rem"
-        align={'center'}
-        justify="start"
-      >
-        <Box as={motion.div}>
-          <Center
-            w={{ base: '0.8rem', md: '1.1rem' }}
-            height={{ base: '0.8rem', md: '1.1rem' }}
-            rounded="full"
-            as="p"
-            bg="white"
-            color={'black'}
-            textStyle={{ base: 'body6', md: 'body5' }}
-          >
-            {index}
-          </Center>
-        </Box>
-        <Box
-          as="p"
-          whiteSpace="pre"
-          display={{ base: 'block', md: 'block' }}
-          textStyle={{ base: 'body6', md: 'body5' }}
-          color={status === 'inactive' ? 'neutral.7' : 'brand.teal6'}
-        >
-          {name}
-        </Box>
-      </MotionHStack>
-    );
-  };
-
   return (
     <>
       <SEO
@@ -202,19 +146,22 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
       />
       <Container
         transition="all .25s ease"
-        maxW="full"
+        maxW="7xl"
         p={{ base: '1rem', md: '0' }}
         my={{ base: '2rem', md: '5rem', lg: '6rem', xl: '8rem' }}
         outline="none"
       >
         <Card
-          maxW={{ base: '28rem', md: '36rem' }}
+          maxW={{
+            base: increasedSize ? '98%' : '28rem',
+            md: increasedSize ? '90%' : '32rem',
+          }}
           mx="auto"
           padding={{ base: '24px', md: '40px' }}
         >
           {!(step === 4) && (
             <>
-              <CardHeader>
+              <CardHeader maxW={{ base: '28rem', md: '36rem' }} mx="auto">
                 <Box
                   as="h1"
                   color="neutral.11"
@@ -229,22 +176,23 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
                 >
                   Bring your vision to life! Create a project, receive grants
                   through public donations, and make an impact.
-                </Box>
+                </Box>{' '}
+                <HStack
+                  pt="18px"
+                  w="full"
+                  spacing={{ base: '0px', md: '8px' }}
+                  justify={{ base: 'center', md: 'space-between' }}
+                >
+                  <CustomStepper
+                    steps={[
+                      { index: 1, name: 'Basic Information' },
+                      { index: 2, name: 'Project Links' },
+                      { index: 3, name: 'Detailed Info' },
+                    ]}
+                    currentStep={step}
+                  />
+                </HStack>
               </CardHeader>
-              <HStack
-                w="full"
-                spacing={{ base: '0px', md: '8px' }}
-                justify={{ base: 'center', md: 'space-between' }}
-              >
-                <CustomStepper
-                  steps={[
-                    { index: 1, name: 'Basic Information' },
-                    { index: 2, name: 'Project Links' },
-                    { index: 3, name: 'Detailed Info' },
-                  ]}
-                  currentStep={step}
-                />
-              </HStack>
             </>
           )}
           <form
@@ -269,6 +217,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
                 getValues={getValues}
                 watch={watch}
                 control={control}
+                getFieldState={getFieldState}
               />
             )}
             {step === 2 && (
@@ -283,6 +232,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
             )}
             {step === 3 && (
               <StepThree
+                setIncreasedSize={setIncreasedSize}
                 onPrevious={goToPreviousStep}
                 onSubmit={handleStepThreeSubmit}
                 setLoadingSubmit={setLoadingSubmit}

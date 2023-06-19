@@ -12,12 +12,12 @@ import {
   useToast,
   VStack,
 } from '@chakra-ui/react';
+import { Player } from '@lottiefiles/react-lottie-player';
+import { useRef } from 'react';
 import { BiCheck } from 'react-icons/bi';
 import { SuccessToast } from '~/components/common/toasts/Toasts';
 import { trpc } from '~/utils/trpc';
 import SuperteamDAO from './SVGs/Superteam';
-import { Player } from '@lottiefiles/react-lottie-player';
-import { useRef } from 'react';
 
 interface Props {
   isClaimAble: boolean;
@@ -195,6 +195,8 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
               ) : (
                 <Button
                   variant={'cubikFilled'}
+                  size={{ base: 'cubikMini', md: 'cubikSmall' }}
+                  iconSpacing={{ base: '4px', md: '6px' }}
                   w="12rem"
                   isDisabled={claimed}
                   rightIcon={

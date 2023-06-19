@@ -1,27 +1,20 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Center,
-  Skeleton,
-  SkeletonCircle,
-  Stack,
-  VStack,
-} from '@chakra-ui/react';
+import { Avatar } from '@chakra-ui/avatar';
+import { Button } from '@chakra-ui/button';
+import { Box, Center, Stack, VStack } from '@chakra-ui/layout';
+import { Skeleton, SkeletonCircle } from '@chakra-ui/skeleton';
 import { ProjectsModel } from '@prisma/client';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import GetFormattedLink from '~/components/HOC/GetLink';
 
 export const ProjectHeaderVisitorView = ({
+  projectOwnerName,
   project,
   isLoading,
 }: {
+  projectOwnerName?: string;
   project: ProjectsModel;
   isLoading: boolean;
 }) => {
-  const router = useRouter();
-  const username = router.pathname.split('/')[1];
   const headerSpacing = {
     base: '16px',
     sm: '20px',
@@ -99,7 +92,7 @@ export const ProjectHeaderVisitorView = ({
               variant={'cubikOutlined'}
               size={{ base: 'cubikMini', md: 'cubikSmall' }}
               as={Link}
-              href={username + '/' + project?.id + '?prev=true'} // todo: adding round id to this route
+              href={projectOwnerName + '/' + project?.id} // todo: adding round id to this route
             >
               View Details
             </Button>

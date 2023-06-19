@@ -1,4 +1,4 @@
-import { Box, Stack, useDisclosure, VStack } from '@chakra-ui/react';
+import { Box, Stack, Text, VStack, useDisclosure } from '@chakra-ui/react';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -13,12 +13,12 @@ export const DescriptionPreview = ({
 }) => {
   //const projectDescription = description[0] === '"' ? JSON.parse(description) : description;
   const { isOpen, onToggle } = useDisclosure();
-
+  console.log('description', description);
   const newTheme = {
     a: (props: LinkProps) => {
       const { children } = props;
       return (
-        <Link color="#31F579" href={props.href} isExternal>
+        <Link color="#A8F0E6" href={props.href} textDecor="none" isExternal>
           {children}
         </Link>
       );
@@ -26,9 +26,15 @@ export const DescriptionPreview = ({
     p: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={{ base: 'body4', md: 'body3' }} color="#D7E0DF">
+        <Text
+          fontSize={{ base: '14px', md: '16px' }}
+          lineHeight={{ base: '22px', md: '24px' }}
+          fontWeight="400"
+          letterSpacing="normal"
+          color="#D7E0DF"
+        >
           {children}
-        </Box>
+        </Text>
       );
     },
     h1: (props: any) => {
@@ -74,33 +80,36 @@ export const DescriptionPreview = ({
     li: (props: any) => {
       const { children } = props;
       return (
-        <Box
-          _before={{
-            content: '"•"',
-            color: '#D7E0DF',
-            display: 'inline-block',
-            width: '1rem',
-            marginLeft: '-1rem',
-          }}
-          as="p"
-          textStyle={{ base: 'body4', md: 'body3' }}
+        <Text
+          as="li"
+          ml="1rem"
+          fontSize={{ base: '14px', md: '16px' }}
+          lineHeight={{ base: '24px', md: '24px' }}
+          fontWeight="400"
+          letterSpacing="normal"
           color="#D7E0DF"
         >
           {children}
-        </Box>
+        </Text>
       );
     },
   };
 
   return (
-    <Stack alignSelf={'start'} w="full" direction={'column'} gap="0.5rem">
-      <VStack align="start" gap="0.5rem">
+    <Stack
+      alignSelf={'start'}
+      minH="10rem"
+      w="full"
+      direction={'column'}
+      gap="0.5rem"
+    >
+      <VStack overflow={'scroll'} align="start" gap="0.5rem">
         <ReactMarkdown
           components={ChakraUIRenderer(newTheme)}
           rehypePlugins={[rehypeRaw]}
           remarkPlugins={[remarkGfm]}
         >
-          {description}
+          {description ? description : ''}
         </ReactMarkdown>
       </VStack>
     </Stack>

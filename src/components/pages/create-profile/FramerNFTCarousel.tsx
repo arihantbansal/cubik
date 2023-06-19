@@ -13,9 +13,9 @@ import { motion } from 'framer-motion';
 import { memo, useEffect, useRef, useState } from 'react';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import { BsImage } from 'react-icons/bs';
+import useGetUserAssets from '~/hooks/useGetUserAssets';
 import { useUserStore } from '~/store/userStore';
 import Carousel from './Carousel';
-import useGetUserAssets from '~/hooks/useGetUserAssets';
 
 type CarouselPropsType = {
   onClose: () => void;
@@ -37,8 +37,8 @@ const FramerCarousel = memo(function FramerCarousel({
     data: nftsData,
     isLoading,
     error,
-  } = useGetUserAssets(publicKey?.toBase58() as string, 5, 100);
-  console.log('nfts data - ', nftsData, publicKey?.toBase58());
+  } = useGetUserAssets(publicKey?.toBase58() as string);
+
   useEffect(() => {
     if (carousel.current) {
       setCarouselWidth(

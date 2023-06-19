@@ -1,13 +1,16 @@
 import { CardBody } from '@chakra-ui/react';
+import { Dispatch, SetStateAction } from 'react';
 import MarkdownEditor from '~/components/common/editor/MarkdownEditor';
 
 const GrantStepTwo = ({
+  setIncreasedSize,
   editorData,
   setEditorData,
   onSubmit,
   errors,
   register,
 }: {
+  setIncreasedSize: Dispatch<SetStateAction<boolean>>;
   editorData: string | undefined;
   setEditorData: any;
   onSubmit: (_grant: any) => void;
@@ -29,6 +32,7 @@ const GrantStepTwo = ({
           editorData={editorData}
           setEditorData={setEditorData}
           componentSize="lg"
+          setIncreasedSize={setIncreasedSize}
         />
       </CardBody>
     </>

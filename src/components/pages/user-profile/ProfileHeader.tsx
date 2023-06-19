@@ -1,17 +1,10 @@
-import {
-  Avatar as ChakraAvatar,
-  Center,
-  HStack,
-  Skeleton,
-  SkeletonCircle,
-  VStack,
-  Box,
-} from '@chakra-ui/react';
+import { Avatar } from '@chakra-ui/avatar';
+import { Center, HStack, VStack } from '@chakra-ui/layout';
+import { Skeleton, SkeletonCircle } from '@chakra-ui/skeleton';
 import { FC, memo } from 'react';
 import Username from '~/components/common/username/Username';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import { UserProof, UserWithProjectType } from '~/types/user';
-import { ProofType } from '~/utils/program/contract';
 
 type profileHeaderType = {
   user: UserWithProjectType | null | undefined;
@@ -39,7 +32,7 @@ const ProfileHeader: FC<profileHeaderType> = ({
           borderRadius="12px"
           size={{ base: '56px', sm: '72px', md: '84px' }}
         >
-          <ChakraAvatar
+          <Avatar
             ignoreFallback={true}
             loading="lazy"
             showBorder={true}
@@ -81,7 +74,11 @@ const ProfileHeader: FC<profileHeaderType> = ({
             opacity={isLoading ? '0.5' : '1'}
             isLoaded={!isLoading}
           >
-            <WalletAddress walletAddress={user?.mainWallet || ''} size="sm" />
+            <WalletAddress
+              walletAddress={user?.mainWallet || ''}
+              size="sm"
+              copy={true}
+            />
           </Skeleton>
         </Center>
       </VStack>

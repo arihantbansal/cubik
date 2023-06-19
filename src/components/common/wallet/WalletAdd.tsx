@@ -21,9 +21,8 @@ export const WalletAddress: FC<PropsType> = ({
   children,
 }: PropsType) => {
   const { onCopy, value, setValue, hasCopied } = useClipboard('');
-  // const toast = useToast();
-  const addr = walletAddress;
   const toast = useToast();
+  const addr = walletAddress;
 
   useEffect(() => {
     if (addr) {
@@ -125,7 +124,7 @@ export const WalletAddress: FC<PropsType> = ({
       {copy && (
         <Center
           onClick={() => {
-            onCopy();
+            onCopy(); // todo: this is not working
             SuccessToast({ toast, message: 'Wallet Address Copied' });
           }}
           transform={'scale(0.95)'}

@@ -84,6 +84,7 @@ const CreateProjectTransactionModal: React.FC<
       const a = await axios.post('/api/createNotion', {
         data: data,
       });
+      setProjectId(data.id);
       SuccessToast({ toast, message: 'Project Submitted Succesfully' });
       setProjectSubmitted(true);
     },
@@ -347,7 +348,7 @@ const CreateProjectTransactionModal: React.FC<
                 </VStack>
                 <Button
                   as={Link}
-                  href={`/${user?.username}?project`}
+                  href={`/${user?.username}/${projectId}`}
                   mx="auto"
                   variant="cubikFilled"
                   size={{ based: 'cubikMini', md: 'cubikSmall' }}

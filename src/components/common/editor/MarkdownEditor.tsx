@@ -23,35 +23,36 @@ import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import parse from 'html-react-parser';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import {
   AiOutlineExpand,
   AiOutlineLink,
   AiOutlineOrderedList,
 } from 'react-icons/ai';
-import { TbPencil, TbEye } from 'react-icons/tb';
 import { BiHeading } from 'react-icons/bi';
-import { BsBlockquoteLeft, BsTypeItalic } from 'react-icons/bs';
+import { BsTypeItalic } from 'react-icons/bs';
 import {
   MdOutlineFormatBold,
   MdOutlineFormatListBulleted,
   MdOutlineFormatUnderlined,
 } from 'react-icons/md';
+import { TbEye, TbPencil } from 'react-icons/tb';
 import { DescriptionPreview } from './MarkdownEditorPreview';
 
 const MarkdownEditor = ({
+  setIncreasedSize,
   editorHeading,
   editorData,
   setEditorData,
   componentSize: componentSize,
 }: {
+  setIncreasedSize: Dispatch<SetStateAction<boolean>>;
   editorHeading?: string;
   editorData: string | undefined;
   setEditorData: any;
   componentSize?: 'sm' | 'md' | 'lg';
 }) => {
   const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
-  const [isEditorModalOpen, setIsEditorModal] = useState(false);
   const [url, setUrl] = useState<string>('');
   const [preview, setPreview] = useState(false);
   const [HTMLPreviewData, setHTMLPreviewData] = useState('');
@@ -159,38 +160,6 @@ const MarkdownEditor = ({
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <Box display={isEditorModalOpen ? 'block' : 'none'}>
-        <Modal
-          isCentered
-          variant={'cubik'}
-          size={'6xl'}
-          isOpen={isEditorModalOpen}
-          onClose={() => setIsEditorModal(false)}
-        >
-          <ModalOverlay />
-          <ModalContent minH={'85vh'} height="fit-content" mt="5rem">
-            <ModalHeader>{editorHeading}</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>{EditorArea}</ModalBody>
-            <ModalFooter>
-              <Button
-                variant="connect_wallet"
-                onClick={() => setIsEditorModal(false)}
-              >
-                Submit
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </Box>
-      {/* editor controls */}
-      {editorHeading && (
-        <Box px={size} w="full">
-          <Box as="p" textStyle={'title2'}>
-            {editorHeading}
-          </Box>
-        </Box>
-      )}
       <Flex
         w={'full'}
         px={size}
@@ -404,7 +373,20 @@ const MarkdownEditor = ({
       </Flex>
       <Box w={'full'} h="1px" backgroundColor="neutral.3" />
       {preview ? (
-        <Box w={'full'} height={'100%'} overflow="scroll" p="0.5rem 1.6rem">
+        <Box
+          w={'full'}
+          height={
+            componentSize === 'sm'
+              ? '20rem'
+              : componentSize === 'md'
+              ? '30rem'
+              : componentSize === 'lg'
+              ? '60vh'
+              : '20rem'
+          }
+          overflow="scroll"
+          p="0.5rem 1.6rem"
+        >
           <DescriptionPreview description={HTMLPreviewData} />
         </Box>
       ) : (
@@ -436,7 +418,7 @@ const MarkdownEditor = ({
             aria-label="expand"
             variant={'expand IconButton'}
             onClick={() => {
-              setIsEditorModal(true);
+              setIncreasedSize((prevValue) => !prevValue);
             }}
             icon={<AiOutlineExpand size={20} color="#A8F0E6" />}
           />
@@ -451,7 +433,7 @@ const MarkdownEditor = ({
                   : componentSize === 'lg'
                   ? '60vh'
                   : '20rem',
-              overflow: 'hidden',
+              overflow: 'scroll',
               border: 'none !important',
             }}
             className="reset"

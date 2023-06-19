@@ -25,14 +25,14 @@ const Username = ({ isLoading, username, proofs, size }: usernameProps) => {
           color="surface.yellow.1"
           boxSize={
             size === 'xs'
-              ? { base: '8px', sm: '9px', md: '15px' }
+              ? { base: '8px', sm: '9px', md: '12px' }
               : size === 'sm'
-              ? { base: '10px', sm: '11px', md: '15px' }
+              ? { base: '9px', sm: '10px', md: '12px' }
               : size === 'md'
-              ? { base: '12px', sm: '13px', md: '18px' }
+              ? { base: '10px', sm: '11px', md: '16px' }
               : size === 'lg'
-              ? { base: '14px', sm: '15px', md: '20px' }
-              : { base: '12px', sm: '13px', md: '18px' }
+              ? { base: '12px', sm: '14px', md: '18px' }
+              : { base: '11px', sm: '12px', md: '16px' }
           }
         />
       );

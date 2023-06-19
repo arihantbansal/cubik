@@ -17,13 +17,13 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  useToast,
   VStack,
 } from '@chakra-ui/react';
+import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
-import { addDays, parseISO } from 'date-fns';
+import { addDays } from 'date-fns';
 import enGB from 'date-fns/locale/en-GB';
 import { useState } from 'react';
 import { registerLocale } from 'react-datepicker';
@@ -34,10 +34,9 @@ import * as yup from 'yup';
 import GrantStepOne from '~/components/pages/grants/create-grant/GrantStepOne';
 import GrantStepTwo from '~/components/pages/grants/create-grant/GrantStepTwo';
 import GrantStepZero from '~/components/pages/grants/create-grant/GrantStepZero';
+import { useUserStore } from '~/store/userStore';
 import { connection, createRoundIx } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
-import * as anchor from '@coral-xyz/anchor';
-import { useUserStore } from '~/store/userStore';
 
 registerLocale('en-gb', enGB);
 
@@ -105,6 +104,7 @@ const CreateGrantRound = () => {
   const { user } = useUserStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const tomorrow = addDays(new Date(), 1);
+  const [increasedSize, setIncreasedSize] = useState(false);
   const anchorWallet = useAnchorWallet();
   const [step, setStep] = useState(0);
   const [editorData, setEditorData] = useState();
@@ -354,6 +354,7 @@ const CreateGrantRound = () => {
               />
             ) : step === 2 ? (
               <GrantStepTwo
+                setIncreasedSize={setIncreasedSize}
                 editorData={editorData}
                 setEditorData={setEditorData}
                 onSubmit={handleSubmit(onSubmit)}

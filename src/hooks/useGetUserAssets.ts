@@ -1,12 +1,7 @@
 import { useQuery } from 'react-query';
-import axios from 'axios';
 
-const useGetUserAssets = (
-  ownerAddress: string,
-  page: number = 1,
-  limit: number = 1000
-) => {
-  return useQuery(['assetsByOwner', ownerAddress, page, limit], async () => {
+const useGetUserAssets = (ownerAddress: string) => {
+  return useQuery(['assetsByOwner', ownerAddress], async () => {
     const response = await fetch(
       `https://rpc.helius.xyz/?api-key=${process.env.NEXT_PUBLIC_HELIUS_API_KEY}`,
       {
@@ -20,16 +15,22 @@ const useGetUserAssets = (
           method: 'getAssetsByOwner',
           params: {
             ownerAddress,
-            page,
-            limit,
+            page: 1,
+            limit: 1000,
           },
         }),
       }
     );
     const r = await response.json();
-    console.log('response - ', r);
-    const myNfts = await r.result.items;
-    console.log(myNfts);
+    const myNftsData = await r.result.items;
+    const myNfts = myNftsData.map((nft: any) => {
+      const image = nft.content.files[0].uri;
+      return {
+        id: nft.id,
+        name: nft.name,
+        image,
+      };
+    });
     return myNfts;
   });
 };

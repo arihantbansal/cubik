@@ -31,11 +31,12 @@ const baseStyle = defineStyle({
   _required: {
     borderColor: '#A8F0E6',
     borderRadius: '8px',
-    boxShadow: '0 0 0 1px #A8F0E6',
+    boxShadow: '0 0 0 2px red !important',
     outlineColor: '#A8F0E6',
   },
   _invalid: {
     color: '#A8F0E6',
+    boxShadow: '0 0 0 2px red !important',
     rounded: '8px',
   },
   _placeholder: {

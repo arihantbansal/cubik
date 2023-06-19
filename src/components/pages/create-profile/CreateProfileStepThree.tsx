@@ -1,55 +1,56 @@
+import { Alert, AlertDescription, AlertIcon } from '@chakra-ui/alert';
+import { Avatar } from '@chakra-ui/avatar';
+import { Button } from '@chakra-ui/button';
+import { CardBody, CardFooter } from '@chakra-ui/card';
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  Avatar,
-  Box,
-  Button,
-  CardBody,
-  CardFooter,
-  Center,
-  Collapse,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Link,
+} from '@chakra-ui/form-control';
+import { useDisclosure } from '@chakra-ui/hooks';
+import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
+import { Box, Center, HStack, VStack } from '@chakra-ui/layout';
+import {
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Spinner,
-  VStack,
-  useDisclosure,
-  useToast,
-} from '@chakra-ui/react';
-import * as yup from 'yup';
-import React, { useState, useEffect } from 'react';
-import ProfilePicture from './ProfilePicture';
-import FramerCarousel from './FramerNFTCarousel';
-import { Controller, useForm } from 'react-hook-form';
-import { HiCheck } from 'react-icons/hi';
-import { FiChevronLeft } from 'react-icons/fi';
+} from '@chakra-ui/modal';
+import { Spinner } from '@chakra-ui/spinner';
+import { useToast } from '@chakra-ui/toast';
+import { Collapse } from '@chakra-ui/transition';
 import * as anchor from '@coral-xyz/anchor';
+import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { UserModel } from '@prisma/client';
+import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+import axios from 'axios';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import {
+  Controller,
+  FieldValues,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
+import { HiCheck } from 'react-icons/hi';
+import * as yup from 'yup';
+import { FailureToast, SuccessToast } from '~/components/common/toasts/Toasts';
+import {
+  TruncatedAddr,
+  WalletAddress,
+} from '~/components/common/wallet/WalletAdd';
+import { useAuthStore } from '~/store/authStore';
+import { useUserStore } from '~/store/userStore';
 import { connection, createUser } from '~/utils/program/contract';
 import { supabase, useUser } from '~/utils/supabase';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { trpc } from '~/utils/trpc';
-import { FailureToast, SuccessToast } from '~/components/common/toasts/Toasts';
-import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
-import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
-import { useAuthStore } from '~/store/authStore';
-import { v4 as uuidV4 } from 'uuid';
-import { FieldValues, SubmitHandler } from 'react-hook-form';
-import axios from 'axios';
-import { useUserStore } from '~/store/userStore';
-import { UserModel } from '@prisma/client';
-import { Player } from '@lottiefiles/react-lottie-player';
+import FramerCarousel from './FramerNFTCarousel';
+import ProfilePicture from './ProfilePicture';
 
 type CreateProfileStepThreeTypes = {
   handleSubmit: any;
@@ -71,6 +72,7 @@ const CreateProfileStepThree = ({
     onClose: onTransactionModalClose,
   } = useDisclosure();
   const [userName, setUsername] = useState<string>('');
+  const { setVisible } = useWalletModal();
   const { publicKey, connected } = useWallet();
   const [loadingUserName, setLoadingUserName] = useState(false);
   const [profileCreated, setProfileCreated] = useState(false);
@@ -86,7 +88,7 @@ const CreateProfileStepThree = ({
   const { setUser, user: Users } = useUserStore();
 
   const UserProfilePicture = user?.data.user?.user_metadata.picture || pfp;
-  const UserUserName = user?.data.user?.user_metadata.full_name
+  const UserName = user?.data.user?.user_metadata.full_name
     .replace(/\s/g, '')
     .toLowerCase();
 
@@ -112,7 +114,6 @@ const CreateProfileStepThree = ({
 
             setUsername(username);
             // await refetch();
-
             if (usercheck) {
               throw new yup.ValidationError(
                 username + ' is not available',
@@ -219,7 +220,6 @@ const CreateProfileStepThree = ({
   };
   return (
     <>
-      {' '}
       <CardBody>
         <form
           style={{
@@ -229,12 +229,7 @@ const CreateProfileStepThree = ({
           }}
           onSubmit={handleSubmit(onSubmit)}
         >
-          <FormControl
-            w="full"
-            variant={'outline'}
-            colorScheme={'pink'}
-            isRequired
-          >
+          <FormControl w="full" variant={'outline'} colorScheme={'pink'}>
             <FormLabel
               fontSize={{ base: 'xs', md: 'sm' }}
               htmlFor="profilePicture"
@@ -300,8 +295,60 @@ const CreateProfileStepThree = ({
                 </InputRightElement>
               }
             </InputGroup>
-            <FormErrorMessage textAlign={'start'}>
-              {errors.username && <>{errors.username.message}</>}
+            {errors.username ? (
+              <FormErrorMessage textAlign={'start'}>
+                {errors.username && <>{errors.username.message}</>}
+              </FormErrorMessage>
+            ) : (
+              <FormHelperText
+                fontSize={{ base: '12px', md: '14px' }}
+                color="neutral.6"
+              >
+                Username can&apos;t be changed.
+              </FormHelperText>
+            )}
+          </FormControl>
+          <FormControl isRequired>
+            <FormLabel fontSize={{ base: 'xs', md: 'sm' }} htmlFor="publickey">
+              Wallet Address
+            </FormLabel>
+            <HStack>
+              <Center
+                rounded="4px"
+                backgroundColor="#0F0F0F"
+                height="2.5rem"
+                px="1.3rem"
+                outline="1px solid #141414"
+                w="full"
+                m="0"
+              >
+                <WalletAddress
+                  walletAddress={publicKey?.toBase58() as string}
+                  size="xs"
+                />
+              </Center>
+              <Button
+                variant={'unstyled'}
+                border="1px solid #A8F0E630"
+                w="10rem"
+                lineHeight={{ base: '14px', md: '16px' }}
+                fontSize={'14px'}
+                fontWeight="400"
+                background="#A8F0E610"
+                color="#A8F0E6"
+                height="2.5rem"
+                _hover={{
+                  background: '#A8F0E630',
+                }}
+                onClick={() => {
+                  setVisible(true);
+                }}
+              >
+                Change
+              </Button>
+            </HStack>
+            <FormErrorMessage>
+              {errors.publickey ? <>{errors.publickey.message}</> : <></>}
             </FormErrorMessage>
           </FormControl>
           <VStack
@@ -370,19 +417,153 @@ const CreateProfileStepThree = ({
             {profileCreated ? (
               <VStack w="full" gap={{ base: '18px', md: '24px' }}>
                 <Center>
-                  <Player
-                    autoplay
-                    keepLastFrame
-                    loop={false}
-                    src={
-                      'https://lottie.host/79be0c13-acc1-4b37-b8f1-766b93fb0b1d/6Orce6R84W.json'
-                    }
-                    style={{ height: `150px`, width: `150px` }}
-                  />
+                  <svg
+                    width="96"
+                    height="96"
+                    viewBox="0 0 96 96"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g opacity="0.24">
+                      <path
+                        d="M95.9925 48.8377C95.5299 75.3433 73.6678 96.4552 47.1623 95.9925C20.6567 95.5299 -0.455195 73.6678 0.00746113 47.1623C0.470117 20.6567 22.3322 -0.455195 48.8377 0.00746113C75.3433 0.470117 96.4552 22.3322 95.9925 48.8377Z"
+                        fill="#007A6A"
+                      />
+                      <path
+                        d="M95.9925 48.8377C95.5299 75.3433 73.6678 96.4552 47.1623 95.9925C20.6567 95.5299 -0.455195 73.6678 0.00746113 47.1623C0.470117 20.6567 22.3322 -0.455195 48.8377 0.00746113C75.3433 0.470117 96.4552 22.3322 95.9925 48.8377Z"
+                        fill="url(#paint0_linear_3032_41056)"
+                      />
+                      <path
+                        d="M95.8925 48.836C95.4309 75.2863 73.6144 96.3542 47.164 95.8925C20.7137 95.4309 -0.354246 73.6144 0.107446 47.164C0.569138 20.7137 22.3856 -0.354246 48.836 0.107446C75.2863 0.569138 96.3542 22.3856 95.8925 48.836Z"
+                        stroke="white"
+                        strokeOpacity="0.18"
+                        strokeWidth="0.2"
+                      />
+                    </g>
+                    <g opacity="0.24">
+                      <path
+                        d="M83.9942 48.628C83.6472 68.5072 67.2506 84.3411 47.3715 83.9942C27.4923 83.6472 11.6584 67.2506 12.0054 47.3715C12.3523 27.4923 28.7489 11.6584 48.628 12.0054C68.5072 12.3523 84.3411 28.7489 83.9942 48.628Z"
+                        fill="#007A6A"
+                      />
+                      <path
+                        d="M83.9942 48.628C83.6472 68.5072 67.2506 84.3411 47.3715 83.9942C27.4923 83.6472 11.6584 67.2506 12.0054 47.3715C12.3523 27.4923 28.7489 11.6584 48.628 12.0054C68.5072 12.3523 84.3411 28.7489 83.9942 48.628Z"
+                        fill="url(#paint1_linear_3032_41056)"
+                      />
+                      <path
+                        d="M83.8942 48.6263C83.5481 68.4502 67.1972 84.2402 47.3732 83.8942C27.5493 83.5481 11.7593 67.1972 12.1053 47.3732C12.4514 27.5493 28.8024 11.7593 48.6263 12.1053C68.4502 12.4514 84.2402 28.8024 83.8942 48.6263Z"
+                        stroke="white"
+                        strokeOpacity="0.18"
+                        strokeWidth="0.2"
+                      />
+                    </g>
+                    <rect
+                      x="25"
+                      y="25"
+                      width="46"
+                      height="46"
+                      rx="23"
+                      fill="url(#paint2_linear_3032_41056)"
+                    />
+                    <g clip-path="url(#clip0_3032_41056)">
+                      <path
+                        d="M55.8592 44.3094L55.8593 44.3093C56.3556 43.813 56.3556 43.0197 55.8593 42.5235C55.3631 42.0273 54.5698 42.0273 54.0736 42.5235L45.2498 51.3473L42.2927 48.3902C41.7964 47.8939 41.0031 47.8939 40.5069 48.3902C40.0107 48.8864 40.0107 49.6797 40.5069 50.1759L44.3477 54.0168C44.8439 54.513 45.6463 54.513 46.1425 54.0169C46.1426 54.0168 46.1426 54.0168 46.1427 54.0168L55.8592 44.3094Z"
+                        fill="#14665B"
+                      />
+                      <path
+                        d="M55.8592 44.3094L55.8593 44.3093C56.3556 43.813 56.3556 43.0197 55.8593 42.5235C55.3631 42.0273 54.5698 42.0273 54.0736 42.5235L45.2498 51.3473L42.2927 48.3902C41.7964 47.8939 41.0031 47.8939 40.5069 48.3902C40.0107 48.8864 40.0107 49.6797 40.5069 50.1759L44.3477 54.0168C44.8439 54.513 45.6463 54.513 46.1425 54.0169C46.1426 54.0168 46.1426 54.0168 46.1427 54.0168L55.8592 44.3094Z"
+                        fill="url(#paint3_linear_3032_41056)"
+                        fillOpacity="0.48"
+                      />
+                      <path
+                        d="M55.8592 44.3094L55.8593 44.3093C56.3556 43.813 56.3556 43.0197 55.8593 42.5235C55.3631 42.0273 54.5698 42.0273 54.0736 42.5235L45.2498 51.3473L42.2927 48.3902C41.7964 47.8939 41.0031 47.8939 40.5069 48.3902C40.0107 48.8864 40.0107 49.6797 40.5069 50.1759L44.3477 54.0168C44.8439 54.513 45.6463 54.513 46.1425 54.0169C46.1426 54.0168 46.1426 54.0168 46.1427 54.0168L55.8592 44.3094Z"
+                        stroke="#14665B"
+                        stroke-width="0.710526"
+                      />
+                      <path
+                        d="M55.8592 44.3094L55.8593 44.3093C56.3556 43.813 56.3556 43.0197 55.8593 42.5235C55.3631 42.0273 54.5698 42.0273 54.0736 42.5235L45.2498 51.3473L42.2927 48.3902C41.7964 47.8939 41.0031 47.8939 40.5069 48.3902C40.0107 48.8864 40.0107 49.6797 40.5069 50.1759L44.3477 54.0168C44.8439 54.513 45.6463 54.513 46.1425 54.0169C46.1426 54.0168 46.1426 54.0168 46.1427 54.0168L55.8592 44.3094Z"
+                        stroke="url(#paint4_linear_3032_41056)"
+                        strokeOpacity="0.48"
+                        strokeWidth="0.710526"
+                      />
+                    </g>
+                    <rect
+                      x="25"
+                      y="25"
+                      width="46"
+                      height="46"
+                      rx="23"
+                      stroke="#001F1B"
+                    />
+                    <defs>
+                      <linearGradient
+                        id="paint0_linear_3032_41056"
+                        x1="48"
+                        y1="0"
+                        x2="48"
+                        y2="96"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stopOpacity="0" />
+                        <stop offset="1" />
+                      </linearGradient>
+                      <linearGradient
+                        id="paint1_linear_3032_41056"
+                        x1="47.9998"
+                        y1="11.9998"
+                        x2="47.9998"
+                        y2="83.9998"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stopOpacity="0" />
+                        <stop offset="1" />
+                      </linearGradient>
+                      <linearGradient
+                        id="paint2_linear_3032_41056"
+                        x1="25"
+                        y1="25"
+                        x2="71"
+                        y2="71"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stop-color="#B3FFF5" />
+                        <stop offset="1" stop-color="#5ACCBD" />
+                      </linearGradient>
+                      <linearGradient
+                        id="paint3_linear_3032_41056"
+                        x1="48.1831"
+                        y1="42.5066"
+                        x2="48.1831"
+                        y2="54.0337"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stopOpacity="0" />
+                        <stop offset="1" />
+                      </linearGradient>
+                      <linearGradient
+                        id="paint4_linear_3032_41056"
+                        x1="48.1831"
+                        y1="42.5066"
+                        x2="48.1831"
+                        y2="54.0337"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stopOpacity="0" />
+                        <stop offset="1" />
+                      </linearGradient>
+                      <clipPath id="clip0_3032_41056">
+                        <rect
+                          width="22"
+                          height="22"
+                          fill="white"
+                          transform="translate(37 37)"
+                        />
+                      </clipPath>
+                    </defs>
+                  </svg>
                 </Center>
                 <VStack spacing={{ base: '4px', md: '8px' }} w="full">
                   <Box as="p" textStyle={{ base: 'title2', md: 'headline4' }}>
-                    Welcome to Cubik
+                    Welcome to Cubik @{userName}
                   </Box>
                   <Box
                     as="p"
@@ -396,7 +577,7 @@ const CreateProfileStepThree = ({
                   as={Link}
                   href={`/${userName}`}
                   size={{ base: 'cubikMini', md: 'cubikSmall' }}
-                  variant="cubikOutlined"
+                  variant="cubikFilled"
                 >
                   Go to profile
                 </Button>

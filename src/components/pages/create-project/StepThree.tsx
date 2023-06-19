@@ -1,14 +1,16 @@
-import { Button, CardBody, CardFooter, Icon } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Box, Button, CardBody, CardFooter } from '@chakra-ui/react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { FiChevronLeft } from 'react-icons/fi';
 import MarkdownEditor from '~/components/common/editor/MarkdownEditor';
 
 const StepThree = ({
+  setIncreasedSize,
   onPrevious,
   onSubmit,
   setLoadingSubmit,
   LoadingSubmit,
 }: {
+  setIncreasedSize: Dispatch<SetStateAction<boolean>>;
   onPrevious: () => void;
   onSubmit: (editorData: string) => void;
   setLoadingSubmit: (loading: boolean) => void;
@@ -26,6 +28,7 @@ const StepThree = ({
         borderColor="neutral.3"
       >
         <MarkdownEditor
+          setIncreasedSize={setIncreasedSize}
           editorData={editorData}
           setEditorData={setEditorData}
           componentSize="sm"
@@ -36,7 +39,9 @@ const StepThree = ({
           size={{ base: 'cubikMini', md: 'cubikSmall' }}
           variant={'cubikText'}
           onClick={onPrevious}
-          leftIcon={<Icon as={FiChevronLeft} width={5} height={5} />}
+          leftIcon={
+            <Box boxSize={{ base: '14px', md: '18px' }} as={FiChevronLeft} />
+          }
         >
           Previous
         </Button>

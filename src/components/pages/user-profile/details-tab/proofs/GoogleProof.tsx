@@ -13,16 +13,15 @@ import {
   useToast,
   VStack,
 } from '@chakra-ui/react';
-import GoogleLogo from './SVGs/Google';
-import { BiCheck } from 'react-icons/bi';
-import { trpc } from '~/utils/trpc';
-import { SuccessToast } from '~/components/common/toasts/Toasts';
-import { supabase, useUser } from '~/utils/supabase';
-import { useRouter } from 'next/router';
-import { env } from '~/env.mjs';
-import { useEffect, useRef } from 'react';
-import { useUserStore } from '~/store/userStore';
 import { Player } from '@lottiefiles/react-lottie-player';
+import { useRouter } from 'next/router';
+import { useEffect, useRef } from 'react';
+import { BiCheck } from 'react-icons/bi';
+import { SuccessToast } from '~/components/common/toasts/Toasts';
+import { env } from '~/env.mjs';
+import { supabase, useUser } from '~/utils/supabase';
+import { trpc } from '~/utils/trpc';
+import GoogleLogo from './SVGs/Google';
 
 interface Props {
   minted: boolean;
@@ -203,7 +202,7 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
                     ) : undefined
                   }
                 >
-                  Minted
+                  Proof Collected
                 </Button>
               ) : (
                 <>

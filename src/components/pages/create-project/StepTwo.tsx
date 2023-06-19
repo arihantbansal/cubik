@@ -7,7 +7,6 @@ import {
   FormErrorMessage,
   FormHelperText,
   FormLabel,
-  Icon,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -70,7 +69,11 @@ const StepTwo: React.FC<StepTwoProps> = ({
           isInvalid={Boolean(errors.projectLink)}
           id="projectLink"
         >
-          <FormLabel>Project Link</FormLabel>
+          <FormLabel pb="0.5rem">
+            <Box as="span" textStyle="title5" color="neutral.11">
+              Project Link
+            </Box>
+          </FormLabel>
           <Input
             placeholder="https://example.com"
             type="url"
@@ -108,6 +111,9 @@ const StepTwo: React.FC<StepTwoProps> = ({
                 })}
               />
             </InputGroup>
+            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+              {errors.twitter && errors.twitter.message}
+            </FormErrorMessage>
           </FormControl>
           <FormControl id="github">
             <InputGroup>
@@ -177,14 +183,21 @@ const StepTwo: React.FC<StepTwoProps> = ({
       </CardBody>
       <CardFooter>
         <Button
-          variant={'outline'}
+          variant={'cubikText'}
+          size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+          leftIcon={
+            <Box boxSize={{ base: '14px', md: '18px' }} as={FiChevronLeft} />
+          }
           onClick={onPrevious}
-          leftIcon={<Icon as={FiChevronLeft} width={5} height={5} />}
         >
           Previous
         </Button>
         <Button
-          variant={'outline'}
+          variant={'cubikText'}
+          size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+          rightIcon={
+            <Box boxSize={{ base: '14px', md: '18px' }} as={FiChevronRight} />
+          }
           onClick={async () => {
             const isValid = await trigger(['projectLink', 'twitter']);
             if (isValid) {
@@ -192,7 +205,6 @@ const StepTwo: React.FC<StepTwoProps> = ({
               onSubmit();
             }
           }}
-          rightIcon={<Icon as={FiChevronRight} width={5} height={5} />}
         >
           Next
         </Button>

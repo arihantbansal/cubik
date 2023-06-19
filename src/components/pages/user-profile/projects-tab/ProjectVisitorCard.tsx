@@ -6,9 +6,11 @@ import ProjectBanner from './ProjectStatusBanner';
 import ProjectVisitorRoundsView from './ProjectVisitorRoundsView';
 
 const ProjectVisitorCard = ({
+  userName,
   project,
   isLoading,
 }: {
+  userName: string;
   project: ProjectsModel;
   isLoading: boolean;
 }) => {
@@ -22,7 +24,11 @@ const ProjectVisitorCard = ({
     >
       <ProjectBanner status={status} />
       <CardHeader gap="0" mb="0">
-        <ProjectHeaderVisitorView project={project} isLoading={isLoading} />
+        <ProjectHeaderVisitorView
+          projectOwnerName={userName}
+          project={project}
+          isLoading={isLoading}
+        />
         <Skeleton
           w="full"
           fadeDuration={0.4}
