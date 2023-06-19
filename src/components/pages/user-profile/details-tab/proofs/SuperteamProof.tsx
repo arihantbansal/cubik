@@ -53,7 +53,12 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
   return (
     <>
       <VStack
-        onClick={onOpen}
+        onClick={() => {
+          if (!isClaimAble) {
+            return;
+          }
+          onOpen();
+        }}
         p={{ base: '24px', md: '32px' }}
         gap="8px"
         align="start"
@@ -88,7 +93,7 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
             rounded="full"
             fontSize={{ base: '10px', sm: '12px', md: '14px' }}
           >
-            {claimed ? 'Claimed' : isClaimAble ? 'Claim' : 'Can’t Claim'}
+            {claimed ? 'Minted' : isClaimAble ? 'Mint' : 'Can’t Claim'}
           </Tag>
         </HStack>
         <Box as="p" textStyle={{ base: '', md: 'body5' }} color={'neutral.7'}>
@@ -182,7 +187,7 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
                   variant={'connect_wallet'}
                   w="12rem"
                 >
-                  Claim
+                  Mint
                 </Button>
               ) : (
                 <Button
@@ -190,7 +195,7 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
                   w="12rem"
                   rightIcon={<ImCheckmark />}
                 >
-                  Claimed
+                  Minted
                 </Button>
               )}
             </VStack>
