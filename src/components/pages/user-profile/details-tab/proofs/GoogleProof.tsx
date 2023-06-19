@@ -20,8 +20,9 @@ import { SuccessToast } from '~/components/common/toasts/Toasts';
 import { supabase, useUser } from '~/utils/supabase';
 import { useRouter } from 'next/router';
 import { env } from '~/env.mjs';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useUserStore } from '~/store/userStore';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 interface Props {
   minted: boolean;
@@ -31,12 +32,12 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const router = useRouter();
+  const playerRef = useRef<Player>(null);
   const { user, loading } = useUser(supabase);
   const proofMutation = trpc.user.addProof.useMutation();
 
   const handleMint = async () => {
     if (minted) return;
-
     if (!user?.data.user?.email) {
       await supabase.auth.signInWithOAuth({
         provider: 'google',
@@ -53,12 +54,14 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
 
       await supabase.auth.signOut();
     }
-
-    onClose();
-    SuccessToast({
-      toast,
-      message: 'Proof minted successfully',
-    });
+    playerRef?.current?.play();
+    setTimeout(() => {
+      onClose();
+      SuccessToast({
+        toast,
+        message: 'Proof minted successfully',
+      });
+    }, 2000);
   };
   useEffect(() => {
     const checkGoogle = async () => {
@@ -148,7 +151,24 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
               mx="auto"
             >
               <VStack spacing={{ base: '12px', md: '24px' }}>
-                <Center transform={'scale(2)'} h="130px">
+                <Center transform={'scale(2)'} h="130px" position="relative">
+                  <Center
+                    h="0"
+                    overflow="visible"
+                    top="0px"
+                    position="absolute"
+                  >
+                    <Player
+                      ref={playerRef}
+                      autoplay={false}
+                      controls={true}
+                      speed={0.7}
+                      src={
+                        'https://assets4.lottiefiles.com/packages/lf20_obhph3sh.json'
+                      }
+                      style={{ height: `300px`, width: `300px` }}
+                    />
+                  </Center>
                   <GoogleLogo size={'60px'} />
                 </Center>
                 <Box
@@ -158,6 +178,7 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
                 >
                   Google Proof
                 </Box>
+
                 <Box
                   as="p"
                   textStyle={{ base: 'title6', md: 'title5' }}
@@ -168,6 +189,7 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
               </VStack>
               {minted ? (
                 <Button
+                  isDisabled
                   variant={'cubikFilled'}
                   size={{ base: 'cubikMini', md: 'cubikSmall' }}
                   iconSpacing={{ base: '4px', md: '6px' }}

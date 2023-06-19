@@ -17,6 +17,8 @@ import { SuccessToast } from '~/components/common/toasts/Toasts';
 import { trpc } from '~/utils/trpc';
 import LamportDAoSVG from './SVGs/LamportDAO';
 import SuperteamDAO from './SVGs/Superteam';
+import { Player } from '@lottiefiles/react-lottie-player';
+import { useRef } from 'react';
 
 interface Props {
   isClaimAble: boolean;
@@ -25,6 +27,7 @@ interface Props {
 const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const addProof = trpc.user.addProof.useMutation();
+  const playerRef = useRef<Player>(null);
   const toast = useToast();
   const claimProof = () => {
     if (!isClaimAble) return;
@@ -34,12 +37,14 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
         name: 'SUPERTEAM',
         tx: 'SUPERTEAM',
       });
-
-      onClose();
-      SuccessToast({
-        toast,
-        message: 'Sucessfully claimed proof',
-      });
+      playerRef?.current?.play();
+      setTimeout(() => {
+        onClose();
+        SuccessToast({
+          toast,
+          message: 'Proof minted successfully',
+        });
+      }, 2000);
     } catch (error) {
       console.log(error);
       onClose();
@@ -47,29 +52,51 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
   };
   return (
     <>
-      <VStack onClick={onOpen} p="32px" gap="8px" align="start">
+      <VStack
+        onClick={onOpen}
+        p={{ base: '24px', md: '32px' }}
+        gap="8px"
+        align="start"
+      >
         <SuperteamDAO size={'60px'} />
         <HStack spacing="8px">
           <Box
             as="p"
-            textStyle={{ base: '', md: 'title3' }}
+            textStyle={{ base: 'title4', md: 'title3' }}
             color={'neutral.11'}
           >
-            Superteam DAO
+            Superteam
           </Box>
           <Tag
             size={{ base: 'xs', md: 'sm' }}
             px="12px"
             py="4px"
-            color="surface.yellow.1"
-            background={'surface.yellow.3'}
+            color={
+              claimed
+                ? 'surface.green.2'
+                : isClaimAble
+                ? 'surface.yellow.2'
+                : 'surface.red.2'
+            }
+            background={
+              claimed
+                ? 'surface.green.3'
+                : isClaimAble
+                ? 'surface.yellow.3'
+                : 'surface.red.3'
+            }
             rounded="full"
+            fontSize={{ base: '10px', sm: '12px', md: '14px' }}
           >
             {claimed ? 'Claimed' : isClaimAble ? 'Claim' : 'Can’t Claim'}
           </Tag>
         </HStack>
         <Box as="p" textStyle={{ base: '', md: 'body5' }} color={'neutral.7'}>
-          Collect Proof of Superteam DAO
+          {claimed
+            ? 'You have collected this proof which identifies you as a part of superteam'
+            : isClaimAble
+            ? 'You are eligible to Mint this proof and add more weight to your vote'
+            : 'This wallet is not connected to any superteam NFT'}
         </Box>
       </VStack>
       <Modal
@@ -100,18 +127,39 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
         >
           <ModalBody>
             <VStack
-              py="32px"
-              gap="32px"
+              py={{ base: '24px', md: '32px' }}
+              gap={{ base: '18px', md: '32px' }}
               textAlign={'center'}
               maxW="16rem"
               mx="auto"
             >
               <VStack spacing="24px">
                 <Center transform={'scale(2)'} h="130px">
+                  <Center
+                    h="0"
+                    overflow="visible"
+                    top="0px"
+                    position="absolute"
+                  >
+                    <Player
+                      ref={playerRef}
+                      autoplay={false}
+                      controls={true}
+                      speed={0.7}
+                      src={
+                        'https://assets4.lottiefiles.com/packages/lf20_obhph3sh.json'
+                      }
+                      style={{ height: `300px`, width: `300px` }}
+                    />
+                  </Center>
                   <SuperteamDAO size={'60px'} />
                 </Center>
                 <VStack spacing="12px">
-                  <Box as="p" textStyle={'title2'} color="neutral.11">
+                  <Box
+                    as="p"
+                    textStyle={{ base: 'title3', md: 'title2' }}
+                    color="neutral.11"
+                  >
                     Superteam Proof
                   </Box>
                   <Box
@@ -120,7 +168,7 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
                     color="neutral.8"
                     textTransform={'uppercase'}
                   >
-                    Solana Developer
+                    Part Of SuperteamDAO
                   </Box>
                 </VStack>
                 <Box as="p" textStyle={'title5'} color="neutral.11">
@@ -129,6 +177,7 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
               </VStack>
               {!claimed ? (
                 <Button
+                  isDisabled={!isClaimAble}
                   onClick={claimProof}
                   variant={'connect_wallet'}
                   w="12rem"

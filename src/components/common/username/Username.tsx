@@ -1,5 +1,6 @@
 import { Box, HStack, Skeleton } from '@chakra-ui/react';
 import { MdVerified } from 'react-icons/md';
+import useCheckVerifiedProfile from '~/hooks/useCheckVerifiedProfile';
 import { UserProof } from '~/types/user';
 
 type size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined | null;

@@ -60,26 +60,35 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
           </Tag>
         </Skeleton>
       </HStack>
-      {/* <Alert
+      <Skeleton
+        mt={{ base: '16px', sm: '20px', md: '24px' }}
+        fadeDuration={3}
+        isLoaded={!isLoading}
+        opacity={isLoading ? 0.6 : 1}
         w="full"
-        variant={'solid'}
-        rounded="none"
-        backgroundColor={'#31F57910'}
-        borderLeft={'2px solid'}
-        borderColor={'#31F57940'}
-        status="info"
       >
-        <Center h={'1.4rem'}>
-          <Box as={AlertIcon} boxSize={'12px'} color="#31F579" />
-        </Center>
-        <AlertDescription
-          color="neutral.11"
-          fontSize={{ base: '10px', md: '12px' }}
+        <Alert
+          mt={{ base: '16px', sm: '20px', md: '24px' }}
+          w="full"
+          variant={'solid'}
+          rounded="none"
+          backgroundColor={'#31F57910'}
+          borderLeft={'2px solid'}
+          borderColor={'#31F57940'}
+          status="info"
         >
-          To start contributing on the platform you need to collect proofs by
-          verifying your digital identity.
-        </AlertDescription>
-      </Alert> */}
+          <Center h={'1.4rem'}>
+            <Box as={AlertIcon} boxSize={'12px'} color="#31F579" />
+          </Center>
+          <AlertDescription
+            color="neutral.11"
+            fontSize={{ base: '10px', md: '12px' }}
+          >
+            To start contributing on the platform you need to collect proofs. By
+            collecting more proofs your voting power increases.
+          </AlertDescription>
+        </Alert>
+      </Skeleton>
       <Wrap
         direction={{ base: 'column', md: 'row' }}
         spacing={{ base: '24px', md: '32px' }}
