@@ -2,7 +2,7 @@ import { Box, Button, Center, HStack, Tag, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
 const Logo = () => {
-  const beta = true;
+  const beta = false;
   return (
     <HStack
       spacing={{ base: '2px', md: '8px' }}

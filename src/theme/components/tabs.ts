@@ -12,7 +12,7 @@ const cubik = definePartsStyle((props) => {
       width: '100%',
       height: { base: '2.2rem', md: '3rem' },
       backgroundColor: 'transparent',
-      gap: { base: '10px', md: '32px' },
+      gap: { base: '18px', md: '32px' },
     },
     tab: {
       boxShadow: 'none !important',

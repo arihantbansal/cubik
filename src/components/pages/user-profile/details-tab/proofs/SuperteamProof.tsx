@@ -12,10 +12,9 @@ import {
   useToast,
   VStack,
 } from '@chakra-ui/react';
-import { ImCheckmark } from 'react-icons/im';
+import { BiCheck } from 'react-icons/bi';
 import { SuccessToast } from '~/components/common/toasts/Toasts';
 import { trpc } from '~/utils/trpc';
-import LamportDAoSVG from './SVGs/LamportDAO';
 import SuperteamDAO from './SVGs/Superteam';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { useRef } from 'react';
@@ -176,7 +175,11 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
                     Part Of SuperteamDAO
                   </Box>
                 </VStack>
-                <Box as="p" textStyle={'title5'} color="neutral.11">
+                <Box
+                  as="p"
+                  textStyle={{ base: 'body5', md: 'body5' }}
+                  color={'neutral.7'}
+                >
                   Claim this badge by verifying you’re a part of SuperteamDAO
                 </Box>
               </VStack>
@@ -184,18 +187,26 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
                 <Button
                   isDisabled={!isClaimAble}
                   onClick={claimProof}
-                  variant={'connect_wallet'}
+                  variant={'cubikFilled'}
                   w="12rem"
                 >
                   Mint
                 </Button>
               ) : (
                 <Button
-                  variant={'connect_wallet'}
+                  variant={'cubikFilled'}
                   w="12rem"
-                  rightIcon={<ImCheckmark />}
+                  isDisabled={claimed}
+                  rightIcon={
+                    claimed ? (
+                      <Box
+                        as={BiCheck}
+                        boxSize={{ base: '15px', md: '18px' }}
+                      />
+                    ) : undefined
+                  }
                 >
-                  Minted
+                  Proof Collected
                 </Button>
               )}
             </VStack>

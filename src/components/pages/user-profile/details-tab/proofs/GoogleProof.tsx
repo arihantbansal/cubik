@@ -225,7 +225,9 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
                         ) : undefined
                       }
                     >
-                      {user?.data.user?.email ? 'Mint' : 'Connect Google'}
+                      {user?.data.user?.email
+                        ? 'Proof Collected'
+                        : 'Connect Google'}
                     </Button>
                   </VStack>
                 </>
