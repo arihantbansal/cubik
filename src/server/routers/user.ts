@@ -2,6 +2,7 @@ import { router } from '../trpc';
 import {
   addProof,
   checkEmail,
+  checkProof,
   checkUsername,
   createUser,
   findOneUser,
@@ -19,4 +20,5 @@ export const userRouter = router({
   addProof: addProof,
   getMe: getMe,
   checkEmail: checkEmail,
+  checkProof: checkProof,
 });
