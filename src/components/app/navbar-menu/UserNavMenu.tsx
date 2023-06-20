@@ -9,7 +9,6 @@ import {
   DrawerOverlay,
   MenuDivider,
   Skeleton,
-  SkeletonCircle,
   VStack,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -18,9 +17,9 @@ import Link from 'next/link';
 import { BiChevronDown, BiUser } from 'react-icons/bi';
 import { MdPowerSettingsNew, MdUpload } from 'react-icons/md';
 import { useAuthStore } from '~/store/authStore';
+import { useUserStore } from '~/store/userStore';
 import ProfileDetails from './ProfileDetails';
 import WalletBalance from './WalletBalance';
-import { useUserStore } from '~/store/userStore';
 
 const UserNavMenu = () => {
   const { disconnect } = useWallet();
@@ -44,9 +43,11 @@ const UserNavMenu = () => {
           opacity={!user?.username ? 0.5 : 1}
           fadeDuration={4}
           isLoaded={!!user?.username}
+          w="full"
         >
           <Button
             bg="transparent"
+            w="full"
             rounded="md"
             textStyle={'body4'}
             color="white"
@@ -56,7 +57,7 @@ const UserNavMenu = () => {
             leftIcon={
               <Box
                 as={BiUser}
-                boxSize={{ base: '12px', sm: '18px', md: '20px' }}
+                boxSize={{ base: '16px', sm: '18px', md: '20px' }}
                 color={'#ADB8B6'}
               />
             }
@@ -80,6 +81,7 @@ const UserNavMenu = () => {
           </Button>
         </Skeleton>
         <Skeleton
+          w="full"
           opacity={!user?.username ? 0.3 : 1}
           fadeDuration={4}
           isLoaded={!!user?.username}
@@ -87,6 +89,7 @@ const UserNavMenu = () => {
           <Button
             bg="transparent"
             rounded="md"
+            w="full"
             textStyle={'body4'}
             color="white"
             display={'flex'}
@@ -95,7 +98,7 @@ const UserNavMenu = () => {
             leftIcon={
               <Box
                 as={MdUpload}
-                boxSize={{ base: '12px', sm: '18px', md: '20px' }}
+                boxSize={{ base: '16px', sm: '18px', md: '20px' }}
                 color={'#ADB8B6'}
               />
             }
@@ -117,6 +120,7 @@ const UserNavMenu = () => {
           </Button>
         </Skeleton>
         <Skeleton
+          w="full"
           opacity={!user?.username ? 0.1 : 1}
           fadeDuration={4}
           isLoaded={!!user?.username}
@@ -124,6 +128,7 @@ const UserNavMenu = () => {
           <Button
             bg="transparent"
             rounded="md"
+            w="full"
             textStyle={'body4'}
             color="white"
             display={'flex'}
@@ -132,7 +137,7 @@ const UserNavMenu = () => {
             leftIcon={
               <Box
                 as={MdPowerSettingsNew}
-                boxSize={{ base: '12px', sm: '18px', md: '20px' }}
+                boxSize={{ base: '16px', sm: '18px', md: '20px' }}
                 color={'#ADB8B6'}
               />
             }
@@ -186,11 +191,11 @@ const UserNavMenu = () => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerBody>
-            <VStack border="1px solid red" gap="16px" w="full" align={'start'}>
+            <VStack gap="16px" w="full" align={'start'}>
               <ProfileDetails />
               <WalletBalance />{' '}
               <Box w="full" h="1px" backgroundColor={'#1D1F1E'} />
-              <VStack gap="0px" align={'start'} w="full">
+              <VStack spacing="0px" align={'start'} w="full">
                 <NavMenuButtons />
               </VStack>
             </VStack>

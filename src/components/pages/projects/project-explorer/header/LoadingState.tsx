@@ -16,7 +16,7 @@ const RoundsCarouselLoadingState = () => {
         <VStack w="full" align={'start'} gap={{ base: '8px', md: '16px' }}>
           <Skeleton
             width={'10rem'}
-            height={{ base: '1.6rem', md: '1.9rem' }}
+            height={{ base: '1.4rem', md: '1.8rem' }}
             rounded="full"
             opacity="0.5"
           />
@@ -30,7 +30,7 @@ const RoundsCarouselLoadingState = () => {
             <VStack align={'start'} gap="12px" w={{ base: 'full', md: '60%' }}>
               <Skeleton
                 width="18rem"
-                height={{ base: '1.8rem', md: '2.2rem' }}
+                height={{ base: '1.6rem', md: '2rem' }}
                 opacity="0.7"
               />
               <SkeletonText
@@ -42,7 +42,7 @@ const RoundsCarouselLoadingState = () => {
             </VStack>
             <Skeleton
               w="14rem"
-              height={{ base: '2.4rem', md: '3rem' }}
+              height={{ base: '2.3rem', md: '2.8rem' }}
               rounded="full"
               opacity={0.5}
             />

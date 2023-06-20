@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useUserStore } from '~/store/userStore';
 import ComponentErrors from '../errors/ComponenetErrors';
-import MemoizedIconButtonBadge from './list/ListButton';
 import UserNavMenu from './navbar-menu/UserNavMenu';
 
 export interface UserContextProps {
@@ -88,7 +87,7 @@ const NavbarCTA = () => {
   if (connected && publicKey) {
     return (
       <HStack gap={{ base: '2px', md: '16px' }}>
-        <MemoizedIconButtonBadge />
+        {/* <MemoizedIconButtonBadge /> */}
         <UserNavMenu />
       </HStack>
     );

@@ -1,10 +1,10 @@
 import { Center, Skeleton, VStack } from '@chakra-ui/react';
+import { isPast } from 'date-fns';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { trpc } from '~/utils/trpc';
 import FundingRoundBanner from './FundingRoundBanner';
 import GrantsCarousel from './GrantsCaruosel';
 import RoundsCarouselLoadingState from './LoadingState';
-import { isPast } from 'date-fns';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
 
 const ExplorePageHeader = () => {
   const {
@@ -34,19 +34,19 @@ const ExplorePageHeader = () => {
 
   return (
     <VStack
-      display={
-        activeAndFutureRounds && activeAndFutureRounds?.length > 0
-          ? 'flex'
-          : 'none'
-      }
+      // display={
+      //   activeAndFutureRounds && activeAndFutureRounds?.length > 0
+      //     ? 'flex'
+      //     : 'none'
+      // }
       w="full"
     >
       {isLoading ? (
         <>
           <RoundsCarouselLoadingState />
-          <Center w="full" py="16px">
+          {/* <Center w="full" py="16px">
             <Skeleton w="12rem" height="6px" />
-          </Center>
+          </Center> */}
         </>
       ) : (
         <GrantsCarousel>

@@ -36,7 +36,6 @@ import {
   MdOutlineFormatListBulleted,
   MdOutlineFormatUnderlined,
 } from 'react-icons/md';
-import { TbEye, TbPencil } from 'react-icons/tb';
 import { DescriptionPreview } from './MarkdownEditorPreview';
 
 const MarkdownEditor = ({
@@ -169,7 +168,7 @@ const MarkdownEditor = ({
         direction={{ base: 'row', md: 'row' }}
         justify={'space-between'}
       >
-        <Button
+        {/* <Button
           p="8px 16px"
           rounded="8px"
           bg={'neutral.4'}
@@ -192,8 +191,8 @@ const MarkdownEditor = ({
           cursor="pointer"
         >
           {!preview ? 'Preview' : 'Edit'}
-        </Button>
-        <HStack height="38px" spacing="4px">
+        </Button> */}
+        <HStack ml="auto" height="38px" spacing="4px">
           <IconButton
             h="100%"
             aria-label="Markdown Heading"

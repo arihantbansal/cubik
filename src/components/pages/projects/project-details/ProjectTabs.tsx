@@ -8,11 +8,11 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react';
-import { formatDate } from '~/utils/formatDates';
+import { Contribution, ProjectsModel, Team, UserModel } from '@prisma/client';
+import { formateDateInMonths } from '~/utils/formatDates';
 import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
 import Discussions from './ProjectDiscussion';
 import ProjectContributors from './project-interactions/project-tabs/ProjectContributors';
-import { ProjectsModel, Team, Contribution, UserModel } from '@prisma/client';
 
 export const ProjectsTabs = ({
   projectDetails,
@@ -63,7 +63,8 @@ export const ProjectsTabs = ({
                 opacity={isLoading ? '0.3' : '1'}
               >
                 <Box as="p" textStyle="body4" color="neutral.7">
-                  Created: {formatDate(projectDetails?.createdAt ?? Date.now())}
+                  Project Created:{' '}
+                  {formateDateInMonths(projectDetails?.createdAt ?? Date.now())}
                   {''} by @{ownerName}
                 </Box>
               </Skeleton>

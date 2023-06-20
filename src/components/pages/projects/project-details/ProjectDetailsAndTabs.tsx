@@ -1,8 +1,6 @@
 import {
   Avatar,
-  AvatarGroup,
   Box,
-  Button,
   Container,
   Drawer,
   DrawerBody,
@@ -10,34 +8,29 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  Flex,
   HStack,
-  Skeleton,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { useState } from 'react';
-import { WalletAddress } from '~/components/common/wallet/WalletAdd';
-import {
-  ProjectFundingData,
-  ProjectOwner,
-  ProjectSocials,
-} from './project-interactions/ProjectInteractions';
-import ProjectDetailsHeader from './ProjectDetailsHeader';
-import { ProjectsTabs } from './ProjectTabs';
 import {
   Contribution,
-  ProjectJoinRound,
   ProjectsModel,
   Round,
   Team,
   UserModel,
 } from '@prisma/client';
+import { useState } from 'react';
+import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
-import { ro } from 'date-fns/locale';
-import ProjectsContributorsNumber from '../project-explorer/body/ProjectsContributorsNumber';
-import { RecentContributions } from './project-interactions/RecentContributors';
 import { ProjectCTAsMobile } from './project-interactions/ProjectCTAs';
+import {
+  ProjectFundingData,
+  ProjectOwner,
+  ProjectSocials,
+} from './project-interactions/ProjectInteractions';
+import { RecentContributions } from './project-interactions/RecentContributors';
+import ProjectDetailsHeader from './ProjectDetailsHeader';
+import { ProjectsTabs } from './ProjectTabs';
 
 type MobileDrawerTypes = {
   logo: string;

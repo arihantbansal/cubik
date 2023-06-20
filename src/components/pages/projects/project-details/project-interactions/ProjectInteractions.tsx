@@ -5,23 +5,21 @@ import {
   Center,
   HStack,
   IconButton,
-  Button,
   Skeleton,
   Stack,
   VStack,
   Wrap,
-  Flex,
 } from '@chakra-ui/react';
 import {
   Contribution,
-  ProjectJoinRound,
+  ProjectVerifyStatus,
   ProjectsModel,
   Round,
   Team,
   UserModel,
 } from '@prisma/client';
 import Link from 'next/link';
-import { Key, useEffect, useState } from 'react';
+import { Key } from 'react';
 import {
   FaDiscord,
   FaGithub,
@@ -30,16 +28,16 @@ import {
   FaYoutube,
 } from 'react-icons/fa';
 import { HiLink } from 'react-icons/hi';
-import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
+import { WalletAddress } from '~/components/common/wallet/WalletAdd';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { ProjectCreatorTeamType } from '~/types/IProjectDetails';
-import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
+import { trpc } from '~/utils/trpc';
 import {
   ProjectCreatorSkeleton,
   ProjectSocialsSkeleton,
 } from '../skeletons/ProjectPageLoadingSkeleton';
 import { ProjectCTAs } from './ProjectCTAs';
 import { RecentContributions } from './RecentContributors';
-import { trpc } from '~/utils/trpc';
 
 type ProjectCreatorTeamMemberProps = {
   teamMember: Team[] & {
@@ -360,9 +358,10 @@ export const ProjectCreatorTeamMember = ({
         </Box>
       </HStack>
       <Box color="#B4B0B2" as="p" textStyle={{ base: 'body5', md: 'body4' }}>
-        {TruncatedAddr({
+        {/* {TruncatedAddr({
           walletAddress: teamMember.user.mainWallet,
-        })}
+        })} */}
+        <WalletAddress walletAddress={teamMember.user.mainWallet} size="xs" />
       </Box>
     </HStack>
   );
@@ -396,9 +395,21 @@ export const ProjectOwner = ({
 };
 
 const getRandomProjects = (
-  arr: ProjectsModel[] | undefined,
+  arr:
+    | (ProjectsModel & {
+        owner: UserModel;
+      })[]
+    | undefined,
   n: number
-): ProjectsModel[] | undefined => {
+):
+  | (ProjectsModel & {
+      owner: UserModel;
+    })[]
+  | undefined => {
+  // filter the array by verified projects
+  arr = arr?.filter(
+    (project) => project.status === ProjectVerifyStatus.VERIFIED
+  );
   let len = arr?.length || 0;
   if (len <= n) return arr; // If array length is less than or equal to 3, return the whole array
 
@@ -413,11 +424,16 @@ const getRandomProjects = (
 };
 
 export const SimilarProject = () => {
-  const { data, isLoading, error } = trpc.project.findSimilarProjects.useQuery({
-    industry: [],
-  });
+  const { data, isLoading, isError } =
+    trpc.project.findSimilarProjects.useQuery({
+      industry: [],
+    });
 
   const randomProjects = getRandomProjects(data, 3);
+
+  if (isError) {
+    return <ComponentErrors />;
+  }
 
   return (
     <VStack
@@ -429,8 +445,10 @@ export const SimilarProject = () => {
         Similar Projects
       </Box>
       <VStack align={'start'} w="full" gap="16px" color="#CBCBCB">
-        {randomProjects?.map((project: ProjectsModel) => (
+        {randomProjects?.map((project) => (
           <Card
+            as={Link}
+            href={`/${project.owner.username}/${project.id}`}
             key={project.id}
             w="full"
             direction={'row'}

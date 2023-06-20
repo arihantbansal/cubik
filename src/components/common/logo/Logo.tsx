@@ -43,7 +43,7 @@ const Logo = () => {
           fontWeight={'800'}
           fontSize={{ base: '18px', sm: '20px' }}
           color="white"
-          display={{ base: 'none', sm: 'block', lg: 'block' }}
+          display={{ base: 'block', sm: 'block', lg: 'block' }}
         >
           CUBIK
         </Text>

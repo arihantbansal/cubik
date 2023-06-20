@@ -13,7 +13,9 @@ export const findSimilar = procedure
       orderBy: {
         createdAt: 'desc',
       },
+      include: {
+        owner: true,
+      },
     });
-
     return projects;
   });

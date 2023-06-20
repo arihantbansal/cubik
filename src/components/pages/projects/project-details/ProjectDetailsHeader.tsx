@@ -86,16 +86,12 @@ const ProjectDetailsHeader = ({
         justifyContent="center"
         w="full"
       >
-        <Stack
-          spacing={{ base: '2px', md: '0px' }}
-          direction={'row'}
-          justify={'center'}
-        >
+        <Stack direction={'row'} justify={'center'}>
           <Skeleton
             isLoaded={!isLoading}
             fadeDuration={2}
             opacity={isLoading ? '0.6' : '1'}
-            minW="10rem"
+            minW={isLoading ? '10rem' : 'auto'}
           >
             <HStack align="center" spacing="1px">
               <Box

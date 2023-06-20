@@ -1,15 +1,15 @@
 import { HStack, VStack } from '@chakra-ui/layout';
 import { Box, Skeleton } from '@chakra-ui/react';
+import { useWallet } from '@solana/wallet-adapter-react';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { env } from '~/env.mjs';
+import useCurrentTokenPrice from '~/hooks/useCurrentTokenPrice';
 import { useUserStore } from '~/store/userStore';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { BONK, SOL, USDC } from '../../common/tokens/token';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
-import { useWallet } from '@solana/wallet-adapter-react';
-import useCurrentTokenPrice from '~/hooks/useCurrentTokenPrice';
 
 type TokenInfo = {
   tokenAccount: string;
@@ -119,7 +119,7 @@ const WalletBalance = ({
                   ? size === 'md'
                     ? { base: 'body4', md: 'body3' }
                     : { base: 'body3', md: 'body2' }
-                  : { base: 'body6', md: 'body5' }
+                  : { base: 'body5', md: 'body4' }
               }
               color="neutral.11"
             >
@@ -202,7 +202,7 @@ const WalletBalance = ({
                   ? size === 'md'
                     ? { base: 'body4', md: 'body3' }
                     : { base: 'body3', md: 'body2' }
-                  : { base: 'body6', md: 'body5' }
+                  : { base: 'body5', md: 'body4' }
               }
               color="neutral.11"
             >
@@ -250,7 +250,17 @@ const WalletBalance = ({
           'CG8TA4H9dysAaXS9hTAnhgWXUcJmoHZYK4oKDJqYcFSE' ? (
           <HStack p="0px 2px" gap="8px" w="full" key={token.tokenAccount}>
             <USDC size={'20px'} />
-            <Box as="p" textStyle={'body5'} color="neutral.11">
+            <Box
+              as="p"
+              textStyle={
+                size
+                  ? size === 'md'
+                    ? { base: 'body4', md: 'body3' }
+                    : { base: 'body3', md: 'body2' }
+                  : { base: 'body5', md: 'body4' }
+              }
+              color="neutral.11"
+            >
               USDC
             </Box>
             <Box

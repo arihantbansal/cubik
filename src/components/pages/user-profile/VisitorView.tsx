@@ -1,5 +1,6 @@
 import { Flex } from '@chakra-ui/layout';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
+import { ProjectVerifyStatus } from '@prisma/client';
 import { FC, memo } from 'react';
 import { UserWithProjectType } from '~/types/user';
 import ProfileHeader from './ProfileHeader';
@@ -34,15 +35,23 @@ const VisitorView: FC<visitorViewType> = ({
           </TabPanel>
           <TabPanel>
             <Flex direction="column" w="full" gap="32px">
-              {user && user.project.length ? (
-                user.project.map((project, key) => (
-                  <ProjectVisitorCard
-                    userName={user.username}
-                    project={project}
-                    isLoading={isLoading}
-                    key={key}
-                  />
-                ))
+              {user &&
+              user.project.filter(
+                (project) => project.status === ProjectVerifyStatus.VERIFIED
+              ).length ? (
+                // filter verified projects only to show on user profile
+                user.project
+                  .filter(
+                    (project) => project.status === ProjectVerifyStatus.VERIFIED
+                  )
+                  .map((project, key) => (
+                    <ProjectVisitorCard
+                      userName={user.username}
+                      project={project}
+                      isLoading={isLoading}
+                      key={key}
+                    />
+                  ))
               ) : (
                 <VisitorProjectEmptyState />
               )}
