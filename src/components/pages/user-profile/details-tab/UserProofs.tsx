@@ -1,23 +1,25 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Box,
   Card,
+  Center,
   HStack,
   Skeleton,
-  AlertDescription,
-  Alert,
-  AlertIcon,
+  Tag,
   VStack,
   Wrap,
-  Center,
-  Tag,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import CivicIDProof from './proofs/CivicIDProof';
-import GoogleProof from './proofs/GoogleProof';
 import { UserProof } from '~/types/user';
-import SuperteamProof from './proofs/SuperteamProof';
 import { SuperteamMembers } from '~/utils/data/superteamMembers';
+import { trpc } from '~/utils/trpc';
+import CivicIDProof from './proofs/CivicIDProof';
+import CubikGrantee from './proofs/CubikGrantee';
 import GithubProof from './proofs/github';
+import GoogleProof from './proofs/GoogleProof';
+import SuperteamProof from './proofs/SuperteamProof';
 
 const MotionBox = motion(Box);
 interface Props {
@@ -26,6 +28,7 @@ interface Props {
   wallet: string;
 }
 const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
+  const checkProofs = trpc.user.checkProof.useQuery();
   return (
     <VStack align="start" w="full">
       <HStack gap="8px">
@@ -164,6 +167,34 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
             <GithubProof
               minted={
                 proofs?.find((e) => e.name.toLocaleLowerCase() === 'github')
+                  ? true
+                  : false
+              }
+              isLoading={isLoading}
+            />
+          </MotionBox>
+        </Skeleton>
+        <Skeleton
+          fadeDuration={4}
+          isLoaded={!isLoading}
+          opacity={isLoading ? 0.4 : 1}
+          rounded="12px"
+        >
+          <MotionBox
+            as={Card}
+            cursor="pointer"
+            w={{ base: 'full', sm: 'full', md: '17.8rem' }}
+            height="fit-content"
+            h="full"
+            whileHover={{ y: -8, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <CubikGrantee
+              canMint={(checkProofs.data as boolean) ?? false}
+              minted={
+                proofs?.find(
+                  (e) => e.name.toLocaleLowerCase() === 'cubikgrantee'
+                )
                   ? true
                   : false
               }

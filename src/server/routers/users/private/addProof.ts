@@ -18,6 +18,7 @@ export const addProof = protectedProcedure
         'GOOGLE',
         'DROPS01',
         'GITHUB',
+        'CUBIKGRANTEE',
       ]),
       tx: z.string().nonempty(),
       email: z.string().optional(),
