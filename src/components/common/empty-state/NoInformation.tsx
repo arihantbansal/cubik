@@ -1,5 +1,4 @@
 import { Box, Center, VStack } from '@chakra-ui/react';
-import React from 'react';
 
 const NoInformation = () => {
   return (

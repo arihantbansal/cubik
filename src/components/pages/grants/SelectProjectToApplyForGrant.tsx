@@ -33,6 +33,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { BsPlus } from 'react-icons/bs';
 import { v4 as uuidV4 } from 'uuid';
+import NoInformation from '~/components/common/empty-state/NoInformation';
 import { SuccessToast } from '~/components/common/toasts/Toasts';
 import EmptyStateHOC from '~/components/HOC/EmptyState';
 import { useUserStore } from '~/store/userStore';
@@ -54,11 +55,11 @@ const SelectProjectToApplyForGrant = ({
   const { handleSubmit } = useForm<FormData>();
 
   const {
-    data: userData,
+    data: userDataWithProjectsAndRoundDetails,
     isLoading: userProjectsLoading,
     error: userProjectsError,
     isError: userProjectsIsError,
-  } = trpc.user.findOne.useQuery({
+  } = trpc.user.findOneWithProjectAndRoundDetails.useQuery({
     username: user?.username as string,
   });
 
@@ -75,6 +76,7 @@ const SelectProjectToApplyForGrant = ({
     onOpen: onModalOpen,
     onClose: onModalClose,
   } = useDisclosure();
+
   const joinRoundMutation = trpc.project.joinRound.useMutation({
     onSuccess: () => {
       console.log('success');
@@ -135,7 +137,7 @@ const SelectProjectToApplyForGrant = ({
   };
 
   const onSubmit: SubmitHandler<FormData> = async () => {
-    const project = userData?.project?.find(
+    const project = userDataWithProjectsAndRoundDetails?.project?.find(
       (project) => project.id === selectedProjectId
     );
     if (!project) return;
@@ -247,15 +249,34 @@ const SelectProjectToApplyForGrant = ({
             {/* select project to apply for grant */}
             {userProjectsLoading ? (
               <>is loading</>
-            ) : userData && userData.project.length > 0 ? (
+            ) : userDataWithProjectsAndRoundDetails &&
+              userDataWithProjectsAndRoundDetails.project.length > 0 ? (
               <VStack gap="24px">
-                {userData?.project.map((project, index) => (
-                  <Tile
-                    key={project.id}
-                    tileIndex={project.id}
-                    project={project}
-                  />
-                ))}
+                {userDataWithProjectsAndRoundDetails?.project.filter(
+                  (project) => {
+                    return !project.ProjectJoinRound.some(
+                      (projectJoinRound) =>
+                        projectJoinRound?.roundId === selectedGrantRound?.id
+                    );
+                  }
+                ).length > 0 ? (
+                  userDataWithProjectsAndRoundDetails?.project
+                    .filter((project) => {
+                      return !project.ProjectJoinRound.some(
+                        (projectJoinRound) =>
+                          projectJoinRound?.roundId === selectedGrantRound?.id
+                      );
+                    })
+                    .map((project, index) => (
+                      <Tile
+                        key={project.id}
+                        tileIndex={project.id}
+                        project={project}
+                      />
+                    ))
+                ) : (
+                  <NoInformation />
+                )}
               </VStack>
             ) : (
               <VStack py="4rem" justify={'center'}>

@@ -36,13 +36,11 @@ import { FiChevronLeft } from 'react-icons/fi';
 import { v4 as uuidV4 } from 'uuid';
 import { SuccessToast } from '~/components/common/toasts/Toasts';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
-import { formatDate } from '~/utils/formatDates';
+import { formateDateInMonths } from '~/utils/formatDates';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { connection, ProjectJoinRound } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 import { drawerBodyViewEnum } from '../../ProjectHeader';
-import { checkRoundStatus, GRANT_STATUS } from '~/utils/round/checkRoundStatus';
-import { isFuture, isPast } from 'date-fns';
 type FormData = {
   selectRoundId: string | null;
 };
@@ -195,7 +193,7 @@ const ApplyForGrant: React.FC<{
                   color="neutral.11"
                   textStyle={{ base: 'body6', md: 'body5' }}
                 >
-                  {formatDate(round.startTime)}
+                  Start - {formateDateInMonths(round.startTime)}
                 </Box>
               </HStack>
             </HStack>
@@ -276,17 +274,36 @@ const ApplyForGrant: React.FC<{
 
   const FilteredRoundTiles = () => {
     const filteredRoundData = roundData?.filter((round) => {
-      console.log(isFuture(round.startTime));
-      return isFuture(round.startTime);
+      // add this after this round return isFuture(round.startTime);
+      // we have to just chekc if the project is already applied to the round or not
+      return round.ProjectJoinRound.find((projectJoinRound) => {
+        // return only rounds where the current project id is not there
+        if (!projectJoinRound.projectId) return true;
+      });
     });
+
     if (filteredRoundData?.length === 0) {
       // there is no round to be applied for then show there is no acitve round currently
-      return <>No active round</>;
+      return (
+        <Center
+          maxW={'7xl'}
+          mx="auto"
+          w="full"
+          py={{ base: '32px', sm: '54px' }}
+          border="1px dashed"
+          borderColor={'#1D1F1E'}
+          rounded="12px"
+        >
+          <Box as="p" textStyle="body4" color="neutral.6">
+            No Round to Apply
+          </Box>
+        </Center>
+      );
     } // there is a round to be applied for then show the round tiles
     else {
       return (
-        <VStack w="full" spacing="24px">
-          {roundData?.map((round: Round) => {
+        <VStack border="1px solid red" w="full" spacing="24px">
+          {filteredRoundData?.map((round: Round) => {
             return <Tile tileIndex={round.id} round={round} key={round.id} />;
           })}
         </VStack>
@@ -295,8 +312,13 @@ const ApplyForGrant: React.FC<{
   };
   return (
     <ErrorBoundaryWrapper>
-      <VStack align="start" p="40px" spacing="32px" w="full">
-        <Box as="p" textStyle={'headline2'}>
+      <VStack
+        align="start"
+        p={{ base: '24px', md: '40px' }}
+        spacing={{ base: '18px', md: '32px' }}
+        w="full"
+      >
+        <Box as="p" textStyle={{ base: 'title2', md: 'headline2' }}>
           Select a Grant
         </Box>
         <VStack
@@ -304,10 +326,10 @@ const ApplyForGrant: React.FC<{
           overflow="scroll"
           w="full"
           align={'start'}
-          spacing="32px"
+          spacing={{ base: '18px', md: '32px' }}
         >
           {isLoading ? (
-            <VStack w="full" spacing="24px">
+            <VStack w="full" spacing={{ base: '24px', md: '32px' }}>
               <TileSkeleton />
               <TileSkeleton />
             </VStack>

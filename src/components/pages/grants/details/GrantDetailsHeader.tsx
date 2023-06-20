@@ -14,10 +14,10 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { useState } from 'react';
 import RoundStatus from '~/components/common/dates/Status';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { RoundDetailsWithProjectsWithContributionsType } from '~/types/round';
 import { GRANT_STATUS, checkRoundStatus } from '~/utils/round/checkRoundStatus';
 import SelectProjectToApplyForGrant from '../SelectProjectToApplyForGrant';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
 
 const GrantDetailsHeader = ({
   data,
@@ -74,7 +74,7 @@ const GrantDetailsHeader = ({
             >
               <Box
                 as="p"
-                textStyle={{ base: 'title1', md: 'display3' }}
+                textStyle={{ base: 'display5', md: 'display3' }}
                 color={'neutral.11'}
               >
                 {data?.roundName}
@@ -97,12 +97,19 @@ const GrantDetailsHeader = ({
         </VStack>
         <Stack
           justify={'space-between'}
-          align={{ base: 'start', md: 'end' }}
-          direction={{ base: 'column', md: 'row' }}
+          align={{ base: 'center', md: 'end' }}
+          direction={{ base: 'row', md: 'row' }}
           spacing={{ base: '12px', md: '24px' }}
           w="full"
         >
-          <HStack pt="12px" gap="24px">
+          <Stack
+            w={{ base: 'full', md: 'auto' }}
+            align={{ base: 'start', md: 'center' }}
+            flexDir={{ base: 'column', md: 'row' }}
+            pt="12px"
+            pb={{ base: '12px', md: '0px' }}
+            gap={{ base: '0px', md: '24px' }}
+          >
             <Skeleton
               isLoaded={!isLoading}
               fadeDuration={3}
@@ -167,7 +174,7 @@ const GrantDetailsHeader = ({
                 </HStack>
               </HStack>
             </Skeleton>
-          </HStack>
+          </Stack>
           <Skeleton
             isLoaded={!isLoading}
             fadeDuration={4}

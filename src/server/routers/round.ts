@@ -1,10 +1,10 @@
+import { ProjectJoinRoundStatus } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
 import { procedure, protectedProcedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
 import { activeRounds } from './rounds';
-import { ProjectJoinRoundStatus } from '@prisma/client';
 
 export const roundRouter = router({
   create: protectedProcedure
@@ -97,6 +97,13 @@ export const roundRouter = router({
     const roundRes = await prisma.round.findMany({
       where: {
         active: true,
+      },
+      include: {
+        ProjectJoinRound: {
+          include: {
+            project: true,
+          },
+        },
       },
     });
     return roundRes;

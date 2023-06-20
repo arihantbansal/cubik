@@ -5,6 +5,7 @@ import {
   checkUsername,
   createUser,
   findOneUser,
+  findOneWithProjectAndRoundDetails,
   getMe,
   searchUser,
 } from './users';
@@ -12,6 +13,7 @@ import {
 export const userRouter = router({
   create: createUser,
   findOne: findOneUser,
+  findOneWithProjectAndRoundDetails: findOneWithProjectAndRoundDetails,
   searchUser: searchUser,
   checkUsername: checkUsername,
   addProof: addProof,

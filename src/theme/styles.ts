@@ -6,6 +6,10 @@ export const styles = {
     '*': {
       //  outline: '1px dashed white',
     },
+    // disable blue overlay on touch
+    'a, button': {
+      WebkitTapHighlightColor: 'transparent',
+    },
     '::-webkit-scrollbar': {
       display: 'none',
     },

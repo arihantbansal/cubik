@@ -1,27 +1,17 @@
 import {
   Box,
-  Button,
   Center,
   Container,
   HStack,
-  Icon,
+  LinkBox,
   Skeleton,
   SkeletonText,
   Stack,
-  useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { Round } from '@prisma/client';
-import { useWallet } from '@solana/wallet-adapter-react';
-import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import Link from 'next/link';
-import { useState } from 'react';
-import { FiChevronRight } from 'react-icons/fi';
 import RoundStatus from '~/components/common/dates/Status';
-import SelectProjectToApplyForGrant from '~/components/pages/grants/SelectProjectToApplyForGrant';
-import { useUserStore } from '~/store/userStore';
 import { formatNumberWithK } from '~/utils/formatWithK';
-import { checkRoundStatus, GRANT_STATUS } from '~/utils/round/checkRoundStatus';
 import { trpc } from '~/utils/trpc';
 
 // todo make upcoming live grants separate
@@ -32,17 +22,6 @@ const RoundPage = () => {
     isError,
     error,
   } = trpc.round.findActive.useQuery();
-  const { user } = useUserStore();
-  const wallet = useWallet();
-  const walletModal = useWalletModal();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedGrantRound, setSelectedGrantRound] = useState<Round | null>(
-    null
-  );
-  const handleApplyForGrant = () => {
-    if (!wallet.publicKey?.toBase58()) return walletModal.setVisible(true);
-    onOpen();
-  };
 
   return (
     <>
@@ -59,7 +38,7 @@ const RoundPage = () => {
             <Box
               color="neutral.11"
               as="p"
-              textStyle={{ base: 'headline2', md: 'display3' }}
+              textStyle={{ base: 'display5', md: 'display3' }}
             >
               Grow Public Good with Decentralized Grants
             </Box>{' '}
@@ -77,7 +56,7 @@ const RoundPage = () => {
           </Button> */}
         </Stack>
         <VStack
-          py={{ base: '48px', md: '64px' }}
+          py={{ base: '32px', md: '64px' }}
           w="full"
           align="start"
           spacing="32px"
@@ -137,138 +116,146 @@ const RoundPage = () => {
               </Center>
             </Container>
           ) : (
-            rounds?.map((round) => (
-              <Stack
-                direction={{ base: 'column', md: 'row' }}
-                align={{ base: 'start', md: 'center' }}
-                justify="space-between"
-                key={round.id}
-                border={'2px solid'}
-                borderColor="#ffffff10"
-                backgroundColor="#000000"
-                p={{ base: '16px', md: '32px' }}
-                w="full"
-                gap={{ base: '40px', md: '24px' }}
-                rounded="20px"
-                position="relative"
-                overflow={'hidden'}
-                _after={{
-                  content: '""',
-                  zIndex: '1',
-                  position: 'absolute',
-                  bottom: '50%',
-                  left: '0%',
-                  transform: 'translate(0%, -50%)',
-                  width: '8rem',
-                  height: '8rem',
-                  backgroundColor: '#31F579',
-                  filter: 'blur(100px)',
-                  borderRadius: 'full',
-                }}
-              >
-                <VStack align={'start'} spacing="24px">
-                  <VStack align="start" w="full" spacing="12px">
-                    <HStack align="center" gap="16px">
-                      <Box
-                        color="neutral.11"
-                        as="p"
-                        textStyle={{ base: 'title3', md: 'title1' }}
-                        textTransform={'capitalize'}
-                      >
-                        {round.roundName}
-                      </Box>
-                      <RoundStatus
-                        startDate={round.startTime}
-                        endDate={round.endTime}
-                      />
-                    </HStack>
-                    <Box
-                      as="p"
-                      noOfLines={2}
-                      maxW="38rem"
-                      textStyle={{ base: 'body5', md: 'body4' }}
-                      color="neutral.9"
-                    >
-                      {round.short_description}
-                    </Box>
-                  </VStack>
-                  <HStack
-                    bg="#ffffff08"
-                    rounded="8px"
-                    shadow="0px 4px 24px rgba(0, 0, 0, 0.08)"
-                    outline="1px solid #ffffff16"
-                    p={{ base: '0.6rem 1.2rem', md: '0.8rem 1.5rem' }}
-                  >
-                    <Box
-                      color="#B4B0B2"
-                      textTransform={'uppercase'}
-                      as="p"
-                      textStyle={{ base: 'body6', md: 'overline3' }}
-                    >
-                      Matching Pool
-                    </Box>
-                    <Box as="p" textStyle={{ base: 'body5', md: 'title4' }}>
-                      : {formatNumberWithK(round.matchedPool)} USDC
-                    </Box>
-                  </HStack>
-                </VStack>
-                <Stack
-                  align={{ base: 'center', md: 'center' }}
-                  direction={{ base: 'row', md: 'column' }}
+            <VStack align="start" w="full" gap={{ base: '8px', md: '18px' }}>
+              {rounds?.map((round) => (
+                <LinkBox
+                  as={Link}
+                  href={'/grants/' + round.id}
+                  display={'flex'}
+                  flexDirection={{ base: 'column', md: 'row' }}
+                  alignItems={{ base: 'start', md: 'center' }}
+                  justifyContent="space-between"
+                  key={round.id}
+                  border={'2px solid'}
+                  borderColor="#ffffff10"
+                  _hover={{ borderColor: '#31F57920' }}
+                  backgroundColor="#000000"
+                  p={{ base: '16px', md: '32px' }}
+                  w="full"
+                  rounded="20px"
+                  position="relative"
+                  overflow={'hidden'}
+                  textAlign={'start'}
+                  _after={{
+                    content: '""',
+                    zIndex: '1',
+                    position: 'absolute',
+                    bottom: '50%',
+                    left: '0%',
+                    transform: 'translate(0%, -50%)',
+                    width: '8rem',
+                    height: '8rem',
+                    backgroundColor: '#31F579',
+                    filter: 'blur(100px)',
+                    borderRadius: 'full',
+                    // on hover
+                    _hover: {
+                      transform: 'translate(0%, -50%) scale(1.5)',
+                      transition: 'transform 0.5s ease-in-out',
+                    },
+                  }}
                 >
-                  <Center>
-                    <Button
-                      as={Link}
-                      href={'/grants/' + round.id}
-                      variant={'cubikFilled'}
-                      size={'cubikSmall'}
-                      minW="10rem"
-                      rightIcon={
-                        <Icon as={FiChevronRight} width={4} height={4} />
-                      }
+                  <VStack align="start" spacing={{ base: '32px', md: '24px' }}>
+                    <VStack
+                      align="start"
+                      w="full"
+                      spacing={{ base: '12px', md: '12px' }}
                     >
-                      View Details
-                    </Button>
-                  </Center>{' '}
-                  <Center h="full">
-                    {user?.id === round.userId ? (
-                      <Button
-                        variant={'cubikText'}
-                        size={'cubikSmall'}
-                        minW="10rem"
+                      <Stack
+                        direction={{ base: 'row', md: 'row' }}
+                        align="center"
+                        gap={{ base: '0px', md: '16px' }}
+                        alignItems={{ base: 'start', md: 'center' }}
                       >
-                        <Link href={`/grants/admin/${round.id}`}>
-                          Manage Grant
-                        </Link>
-                      </Button>
-                    ) : (
-                      checkRoundStatus(round.startTime, round.endTime) ===
-                        GRANT_STATUS.notStarted && (
+                        <Box
+                          color="neutral.11"
+                          as="p"
+                          textStyle={{ base: 'title3', md: 'title1' }}
+                          textTransform={'capitalize'}
+                        >
+                          {round.roundName}
+                        </Box>
+                        <RoundStatus
+                          show={false}
+                          startDate={round.startTime}
+                          endDate={round.endTime}
+                        />
+                      </Stack>
+                      <Box
+                        as="p"
+                        noOfLines={2}
+                        maxW="38rem"
+                        textStyle={{ base: 'body5', md: 'body4' }}
+                        color="neutral.9"
+                      >
+                        {round.short_description}
+                      </Box>
+                    </VStack>
+                    <HStack
+                      bg="#ffffff08"
+                      rounded="8px"
+                      shadow="0px 4px 24px rgba(0, 0, 0, 0.08)"
+                      outline="1px solid #ffffff16"
+                      p={{ base: '0.6rem 1.2rem', md: '0.8rem 1.5rem' }}
+                    >
+                      <Box
+                        color="#B4B0B2"
+                        textTransform={'uppercase'}
+                        as="p"
+                        textStyle={{ base: 'body6', md: 'overline3' }}
+                      >
+                        Matching Pool
+                      </Box>
+                      <Box as="p" textStyle={{ base: 'body5', md: 'title4' }}>
+                        : {formatNumberWithK(round.matchedPool)} USDC
+                      </Box>
+                    </HStack>
+                  </VStack>
+                  {/* <Stack
+                    align={{ base: 'center', md: 'center' }}
+                    direction={{ base: 'row', md: 'column' }}
+                  >
+                    <Center>
+                      {user?.id === round.userId ? (
                         <Button
-                          onClick={() => {
-                            setSelectedGrantRound(round);
-                            handleApplyForGrant();
-                          }}
-                          variant={'cubikText'}
+                          as={Link}
+                          href={`/grants/admin/${round.id}`}
+                          variant={'cubikFilled'}
                           size={'cubikSmall'}
                           minW="10rem"
+                          rightIcon={
+                            <Box
+                              as={FiChevronRight}
+                              boxSize={{ base: '14px', md: '18px' }}
+                            />
+                          }
                         >
-                          Apply for Grant
+                          Manage Grant
                         </Button>
-                      )
-                    )}
-                  </Center>
-                </Stack>
-              </Stack>
-            ))
+                      ) : (
+                        checkRoundStatus(round.startTime, round.endTime) ===
+                          GRANT_STATUS.notStarted && (
+                          <Button
+                            onClick={() => {
+                              setSelectedGrantRound(round);
+                              handleApplyForGrant();
+                            }}
+                            variant={'cubikFilled'}
+                            size={'cubikSmall'}
+                            minW="10rem"
+                          >
+                            Apply for Grant
+                          </Button>
+                        )
+                      )}
+                    </Center>
+                  </Stack> */}
+                </LinkBox>
+              ))}
+            </VStack>
           )}
         </VStack>
       </Container>
-      <SelectProjectToApplyForGrant
-        isOpen={isOpen}
-        onClose={onClose}
-        selectedGrantRound={selectedGrantRound}
-      />
     </>
   );
 };

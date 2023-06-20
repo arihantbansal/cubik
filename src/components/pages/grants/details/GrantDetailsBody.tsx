@@ -18,9 +18,10 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import GetFormattedLink from '~/components/HOC/GetLink';
+import NoInformation from '~/components/common/empty-state/NoInformation';
+import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { RoundDetailsWithProjectsWithContributionsType } from '~/types/round';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
 
 const ErrorUI = () => {
   return (
@@ -157,9 +158,7 @@ const GrantDetailsBody = ({
         </TabPanel>
         <TabPanel>
           {isError && <ErrorUI />}
-          {
-            // todo: add contributions
-          }
+          <NoInformation />
         </TabPanel>
       </TabPanels>
     </Tabs>

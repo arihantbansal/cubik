@@ -17,6 +17,18 @@ export const textStyles = {
     lineHeight: '50px',
     letterSpacing: '-0.02em',
   },
+  display4: {
+    fontSize: '32px',
+    fontWeight: '700',
+    lineHeight: '40px',
+    letterSpacing: '-0.02em',
+  },
+  display5: {
+    fontSize: '28px',
+    fontWeight: '700',
+    lineHeight: '34px',
+    letterSpacing: '-0.02em',
+  },
   headline1: {
     fontSize: '36px',
     fontWeight: '700',

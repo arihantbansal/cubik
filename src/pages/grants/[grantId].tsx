@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next';
 import SEO from '~/components/SEO';
 import GrantDetailsBody from '~/components/pages/grants/details/GrantDetailsBody';
 import GrantDetailsHeader from '~/components/pages/grants/details/GrantDetailsHeader';
+import { GrantRoundAdminControls } from '~/components/pages/projects/admin/AdminControls';
 import { trpc } from '~/utils/trpc';
 
 interface GrantDetailsProps {
@@ -19,22 +20,28 @@ const GrantDetails: React.FC<GrantDetailsProps> = ({ grantId }) => {
       <SEO
         title={`${data?.roundName || 'Grant'}`}
         description={`${data?.short_description || 'Grant Round on Cubik'}`}
-        image={``}
+        image={`https://res.cloudinary.com/demonicirfan/image/upload/v1687266944/Projects_ozybde.png`}
       />
       <main>
         <Container
-          py="80px"
+          py={{ base: '32px', md: '80px' }}
           maxW="7xl"
           px="1rem"
           display={'flex'}
           flexDir={'column'}
-          gap="60px"
+          gap={{ base: '32px', md: '60px' }}
         >
           <GrantDetailsHeader
             isError={isError}
             data={data}
             isLoading={isLoading}
             error={error}
+          />
+          <GrantRoundAdminControls
+            isLoading={isLoading}
+            roundName={data?.roundName}
+            roundId={data?.id}
+            roundCreatorId={data?.userId}
           />
           <Box h="1px" backgroundColor="#1D1F1E90" w="full" />
           <GrantDetailsBody
