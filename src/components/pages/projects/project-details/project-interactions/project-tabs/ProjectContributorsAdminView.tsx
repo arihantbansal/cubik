@@ -17,7 +17,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { Contribution, UserModel } from '@prisma/client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BiChevronDown, BiChevronRight, BiChevronUp } from 'react-icons/bi';
 import ContributionsEmptyState from '~/components/common/empty-state/ContributionsEmptyState';
 import Pagination from '~/components/common/pagination/Pagination';
@@ -177,11 +177,6 @@ const ProjectContributorsAdminView = ({
   const totalContributors = contributorsData ? contributorsData.length : 0;
   const totalPages = Math.ceil(totalContributors / pageSize);
 
-  useEffect(() => {
-    if (currentPage < 1) setCurrentPage(1);
-    if (currentPage > totalPages) setCurrentPage(totalPages);
-  }, [currentPage, totalPages]);
-
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
 
@@ -330,6 +325,7 @@ const ProjectContributorsAdminView = ({
               siblingCount={siblingCount}
               pageSize={pageSize}
               onPageChange={setCurrentPage}
+              totalPages={totalPages}
             />
           )}
         </>

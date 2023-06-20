@@ -13,6 +13,7 @@ type PaginationProps = {
   siblingCount: number;
   pageSize: number;
   onPageChange: (page: number) => void;
+  totalPages: number;
 };
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -21,6 +22,7 @@ const Pagination: React.FC<PaginationProps> = ({
   siblingCount,
   pageSize,
   onPageChange,
+  totalPages,
 }) => {
   const paginationRange = usePagination({
     currentPage,
@@ -34,10 +36,18 @@ const Pagination: React.FC<PaginationProps> = ({
   }
 
   const onNext = () => {
+    if (currentPage > totalPages) {
+      onPageChange(totalPages);
+      return;
+    }
     onPageChange(currentPage + 1);
   };
 
   const onPrevious = () => {
+    if (currentPage < 1) {
+      onPageChange(1);
+      return null;
+    }
     onPageChange(currentPage - 1);
   };
 
