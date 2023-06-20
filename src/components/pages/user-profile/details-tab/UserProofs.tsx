@@ -17,6 +17,7 @@ import GoogleProof from './proofs/GoogleProof';
 import { UserProof } from '~/types/user';
 import SuperteamProof from './proofs/SuperteamProof';
 import { SuperteamMembers } from '~/utils/data/superteamMembers';
+import GithubProof from './proofs/github';
 
 const MotionBox = motion(Box);
 interface Props {
@@ -119,6 +120,7 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
             />
           </MotionBox>
         </Skeleton>
+
         <Skeleton
           fadeDuration={4}
           isLoaded={!isLoading}
@@ -141,6 +143,31 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
               isClaimAble={
                 SuperteamMembers.find((e) => e === wallet) ? true : false
               }
+            />
+          </MotionBox>
+        </Skeleton>
+        <Skeleton
+          fadeDuration={4}
+          isLoaded={!isLoading}
+          opacity={isLoading ? 0.4 : 1}
+          rounded="12px"
+        >
+          <MotionBox
+            as={Card}
+            cursor="pointer"
+            w={{ base: 'full', sm: 'full', md: '17.8rem' }}
+            height="fit-content"
+            h="full"
+            whileHover={{ y: -8, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <GithubProof
+              minted={
+                proofs?.find((e) => e.name.toLocaleLowerCase() === 'github')
+                  ? true
+                  : false
+              }
+              isLoading={isLoading}
             />
           </MotionBox>
         </Skeleton>

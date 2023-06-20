@@ -17,17 +17,25 @@ export const addProof = protectedProcedure
         'SOCIAL',
         'GOOGLE',
         'DROPS01',
+        'GITHUB',
       ]),
       tx: z.string().nonempty(),
       email: z.string().optional(),
+      githubUsername: z.string().optional(),
     })
   )
   .mutation(async ({ ctx, input }) => {
     const user = ctx.session.user;
     let otherInfo = {};
+    let otherInfoProof = {};
     if (input.name === 'GOOGLE') {
       otherInfo = {
         email: input.email,
+      };
+    }
+    if (input.name === 'GITHUB') {
+      otherInfoProof = {
+        githubUsername: input.githubUsername,
       };
     }
     const alreadyClaimedProofs = ctx.user?.proof as unknown as UserProof[];
@@ -51,6 +59,7 @@ export const addProof = protectedProcedure
                 name: input.name as ProofType,
                 timestamp: new Date(),
                 tx: input.tx,
+                ...otherInfoProof,
               },
             ]
           : [
@@ -58,6 +67,7 @@ export const addProof = protectedProcedure
                 name: input.name as ProofType,
                 timestamp: new Date(),
                 tx: input.tx,
+                otherInfoProof,
               },
             ]) as unknown as Prisma.JsonArray,
       },
