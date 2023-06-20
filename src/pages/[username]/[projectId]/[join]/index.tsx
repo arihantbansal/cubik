@@ -1,4 +1,3 @@
-import { ProjectJoinRoundStatus } from '.prisma/client';
 import { Container, Skeleton, Stack } from '@chakra-ui/react';
 import { isPast } from 'date-fns';
 import { GetServerSideProps } from 'next';
