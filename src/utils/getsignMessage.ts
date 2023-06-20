@@ -24,6 +24,7 @@ export const verifyMessage = async (
   publicKey: anchor.web3.PublicKey,
   id?: string
 ) => {
+  console.log(signature, publicKey, id);
   const message = await createMessage(id);
 
   const result = nacl.sign.detached.verify(

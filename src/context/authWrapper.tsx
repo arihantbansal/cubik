@@ -1,8 +1,8 @@
 import { useDisclosure } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
+import jwt from 'jsonwebtoken';
 import { useEffect } from 'react';
 import WalletVerifyModal from '~/components/app/WalletVerifyWalletModal';
-import jwt from 'jsonwebtoken';
 import { verifyMessage } from '~/utils/getsignMessage';
 
 interface SignatureData {
@@ -42,13 +42,14 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
     if (!localStorage.getItem('anon_sig')) {
       onOpen();
     }
-    const sigCheck = await verifyMessage(
-      localStorage.getItem('anon_sig') as string,
-      publicKey
-    );
-    console.log(sigCheck);
-    if (!sigCheck) {
-      onOpen();
+    if (localStorage.getItem('anon_sig')) {
+      const sigCheck = await verifyMessage(
+        localStorage.getItem('anon_sig') as string,
+        publicKey
+      );
+      if (!sigCheck) {
+        onOpen();
+      }
     }
   };
   useEffect(() => {
