@@ -91,7 +91,7 @@ model ProjectsModel {
   owner_publickey   String
   sig               String              @default("")
   long_description  String              @db.Text
-  industry          String
+  industry          String              @db.VarChar(2000)
   project_link      String              @default("")
   twitter_handle    String              @default("")
   github_link       String              @default("")
