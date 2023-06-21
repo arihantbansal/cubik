@@ -19,7 +19,7 @@ import { BiCheck } from 'react-icons/bi';
 import { SuccessToast } from '~/components/common/toasts/Toasts';
 import { supabase, useUser } from '~/utils/supabase';
 import { trpc } from '~/utils/trpc';
-import GoogleLogo from './SVGs/Google';
+import GranteeLogo from './SVGs/Grantee';
 
 interface Props {
   minted: boolean;
@@ -58,8 +58,8 @@ const CubikGrantee = ({ minted, canMint, isLoading }: Props) => {
         gap="8px"
         align="start"
       >
-        <GoogleLogo size={'60px'} />
-        <HStack spacing="8px">
+        <GranteeLogo size={'60px'} />
+        <HStack spacing="8px" w="max">
           <Box
             as="p"
             textStyle={{ base: 'title4', md: 'title3' }}
@@ -77,19 +77,19 @@ const CubikGrantee = ({ minted, canMint, isLoading }: Props) => {
               rounded="full"
               fontSize={{ base: '10px', sm: '12px', md: '14px' }}
             >
-              {minted ? 'Minted' : 'Mint'}
+              {minted ? 'Claimed' : 'Claim'}
             </Tag>
           ) : (
             <Tag
               size={{ base: 'xs', md: 'sm' }}
               px="12px"
               py="4px"
-              color="surface.yellow.2"
-              background={'surface.yellow.3'}
+              color="surface.green.2"
+              background={'surface.green.3'}
               rounded="full"
               fontSize={{ base: '10px', sm: '12px', md: '14px' }}
             >
-              {"Can't Mint"}
+              {"Can't Claim"}
             </Tag>
           )}
         </HStack>
@@ -98,7 +98,7 @@ const CubikGrantee = ({ minted, canMint, isLoading }: Props) => {
           textStyle={{ base: 'body5', md: 'body5' }}
           color={'neutral.7'}
         >
-          To mint this proof you need a project that have taken part in a grant
+          To claim this proof you need a project that have taken part in a grant
           .
         </Box>
       </VStack>
@@ -155,7 +155,7 @@ const CubikGrantee = ({ minted, canMint, isLoading }: Props) => {
                       style={{ height: `300px`, width: `300px` }}
                     />
                   </Center>
-                  <GoogleLogo size={'60px'} />
+                  <GranteeLogo size={'60px'} />
                 </Center>
                 <Box
                   as="p"
@@ -187,7 +187,7 @@ const CubikGrantee = ({ minted, canMint, isLoading }: Props) => {
                     ) : undefined
                   }
                 >
-                  Minted
+                  Claimed
                 </Button>
               ) : (
                 <Button
@@ -204,7 +204,7 @@ const CubikGrantee = ({ minted, canMint, isLoading }: Props) => {
                     ) : undefined
                   }
                 >
-                  Mint
+                  Claim
                 </Button>
               )}
             </VStack>

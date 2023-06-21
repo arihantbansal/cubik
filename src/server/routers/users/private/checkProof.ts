@@ -20,7 +20,6 @@ export const checkProof = protectedProcedure.query(async ({ ctx, input }) => {
       },
     },
   });
-  console.log(res?.project.length! > 0);
   if (res?.project.length! > 0) {
     return true;
   }

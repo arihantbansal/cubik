@@ -79,20 +79,20 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
               claimed
                 ? 'surface.green.2'
                 : isClaimAble
-                ? 'surface.yellow.2'
+                ? 'surface.green.2'
                 : 'surface.red.2'
             }
             background={
               claimed
                 ? 'surface.green.3'
                 : isClaimAble
-                ? 'surface.yellow.3'
+                ? 'surface.green.3'
                 : 'surface.red.3'
             }
             rounded="full"
             fontSize={{ base: '10px', sm: '12px', md: '14px' }}
           >
-            {claimed ? 'Minted' : isClaimAble ? 'Mint' : 'Can’t Claim'}
+            {claimed ? 'Claimed' : isClaimAble ? 'Claim' : 'Can’t Claim'}
           </Tag>
         </HStack>
         <Box as="p" textStyle={{ base: '', md: 'body5' }} color={'neutral.7'}>

@@ -32,8 +32,8 @@ const LamportDAOProof = () => {
             size={{ base: 'xs', md: 'sm' }}
             px="12px"
             py="4px"
-            color="surface.yellow.1"
-            background={'surface.yellow.3'}
+            color="surface.green.2"
+            background={'surface.green.3'}
             rounded="full"
           >
             Claim

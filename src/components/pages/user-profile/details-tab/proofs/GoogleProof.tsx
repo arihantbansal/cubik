@@ -104,7 +104,7 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
             rounded="full"
             fontSize={{ base: '10px', sm: '12px', md: '14px' }}
           >
-            {minted ? 'Minted' : 'Mint'}
+            {minted ? 'Claimed' : 'Claim'}
           </Tag>
         </HStack>
         <Box
@@ -112,7 +112,7 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
           textStyle={{ base: 'body5', md: 'body5' }}
           color={'neutral.7'}
         >
-          To mint this proof you have to connect your google account .
+          To claim this proof you have to connect your google account .
         </Box>
       </VStack>
       <Modal
