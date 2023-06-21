@@ -195,7 +195,9 @@ const UserContributionTableRow = ({
             textStyle={{ base: 'title4', md: 'title3' }}
             color="neutral.11"
           >
-            $12,248.64
+            {contribution.ProjectsModel.ProjectJoinRound.find(
+              (e) => e.roundId === contribution.roundId
+            )?.amountRaise?.toFixed(2) ?? '00.00'}
           </Box>
         </Skeleton>
       </Td>
