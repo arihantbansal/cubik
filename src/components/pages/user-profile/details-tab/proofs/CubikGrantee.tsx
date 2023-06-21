@@ -17,7 +17,7 @@ import { useRouter } from 'next/router';
 import { useRef } from 'react';
 import { BiCheck } from 'react-icons/bi';
 import { SuccessToast } from '~/components/common/toasts/Toasts';
-import { supabase, useUser } from '~/utils/supabase';
+import { useUserStore } from '~/store/userStore';
 import { trpc } from '~/utils/trpc';
 import GranteeLogo from './SVGs/Grantee';
 
@@ -29,11 +29,11 @@ interface Props {
 const CubikGrantee = ({ minted, canMint, isLoading }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-  const router = useRouter();
   const playerRef = useRef<Player>(null);
-  const { user, loading } = useUser(supabase);
+  const { resetUser } = useUserStore();
   const proofMutation = trpc.user.addProof.useMutation();
-  console.log(canMint, '-------------');
+  const utils = trpc.useContext();
+  const router = useRouter();
   const handleMint = async () => {
     if (minted) return;
     proofMutation.mutate({
@@ -48,6 +48,9 @@ const CubikGrantee = ({ minted, canMint, isLoading }: Props) => {
         message: 'Proof minted successfully',
       });
     }, 2000);
+    utils.user.findOne.invalidate({
+      username: router.query.username as string,
+    });
   };
 
   return (

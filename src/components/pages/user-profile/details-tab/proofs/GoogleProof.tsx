@@ -19,6 +19,7 @@ import { useEffect, useRef } from 'react';
 import { BiCheck } from 'react-icons/bi';
 import { SuccessToast } from '~/components/common/toasts/Toasts';
 import { env } from '~/env.mjs';
+import { useUserStore } from '~/store/userStore';
 import { supabase, useUser } from '~/utils/supabase';
 import { trpc } from '~/utils/trpc';
 import GoogleLogo from './SVGs/Google';
@@ -33,9 +34,14 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
   const router = useRouter();
   const playerRef = useRef<Player>(null);
   const { user, loading } = useUser(supabase);
+  const { resetUser } = useUserStore();
   // const { resetUser } = useUserStore();
-  const proofMutation = trpc.user.addProof.useMutation();
-
+  const proofMutation = trpc.user.addProof.useMutation({
+    onSuccess: () => {
+      // resetUser(localStorage.getItem('anon_id') as string);
+    },
+  });
+  const utils = trpc.useContext();
   const handleMint = async () => {
     if (minted) return;
     if (!user?.data.user?.email) {
@@ -53,15 +59,20 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
       });
 
       await supabase.auth.signOut();
-    }
-    playerRef?.current?.play();
-    setTimeout(() => {
-      onClose();
-      SuccessToast({
-        toast,
-        message: 'Proof minted successfully',
+      playerRef?.current?.play();
+      setTimeout(() => {
+        onClose();
+        SuccessToast({
+          toast,
+          message: 'Proof minted successfully',
+        });
+      }, 2000);
+      utils.user.findOne.invalidate({
+        username: router.query.username as string,
       });
-    }, 2000);
+    }
+
+    // resetUser(localStorage.getItem('anon_id') as string);
   };
   useEffect(() => {
     const checkGoogle = async () => {

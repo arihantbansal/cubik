@@ -6,15 +6,15 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react';
-import { Prisma, ProjectsModel } from '@prisma/client';
-import { FC, Key, memo } from 'react';
+import { ProjectsModel } from '@prisma/client';
+import { FC, Key } from 'react';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import { UserProof, UserWithProjectType } from '~/types/user';
-import ProfileHeader from './ProfileHeader';
 import UserContributions from './contributions-tab/UserContributions';
 import UserDetails from './details-tab/UserDetails';
 import UserProofs from './details-tab/UserProofs';
 import { AdminProjectEmptyState } from './empty-states/ProjectEmptyState';
+import ProfileHeader from './ProfileHeader';
 import ProjectAdminCard from './projects-tab/ProjectAdminCard';
 
 type adminViewType = {
@@ -86,4 +86,4 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
   );
 };
 
-export default memo(AdminView);
+export default AdminView;

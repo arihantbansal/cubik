@@ -13,9 +13,11 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { Player } from '@lottiefiles/react-lottie-player';
+import { useRouter } from 'next/router';
 import { useRef } from 'react';
 import { BiCheck } from 'react-icons/bi';
 import { SuccessToast } from '~/components/common/toasts/Toasts';
+import { useUserStore } from '~/store/userStore';
 import { trpc } from '~/utils/trpc';
 import SuperteamDAO from './SVGs/Superteam';
 
@@ -27,6 +29,9 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const addProof = trpc.user.addProof.useMutation();
   const playerRef = useRef<Player>(null);
+  const router = useRouter();
+  const utils = trpc.useContext();
+  const { resetUser } = useUserStore();
   const toast = useToast();
   const claimProof = () => {
     if (!isClaimAble) return;
@@ -44,6 +49,9 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
           message: 'Proof minted successfully',
         });
       }, 2000);
+      utils.user.findOne.invalidate({
+        username: router.query.username as string,
+      });
     } catch (error) {
       console.log(error);
       onClose();
