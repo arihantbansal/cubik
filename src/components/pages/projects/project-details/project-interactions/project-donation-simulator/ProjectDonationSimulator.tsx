@@ -24,9 +24,9 @@ import { tokens } from '~/components/common/tokens/DonationTokens';
 import { DonationFormType } from '~/interfaces/donationForm';
 import { tokenGroup } from '~/interfaces/token';
 import { useUserStore } from '~/store/userStore';
-import { projectWithFundingRoundType } from '~/types/project';
-import { fetchPrice } from '~/utils/getPrice';
 
+import { ProjectsModel } from '@prisma/client';
+import useCurrentTokenPrice from '~/hooks/useCurrentTokenPrice';
 import {
   connection,
   contributeSOL,
@@ -34,9 +34,6 @@ import {
 } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 import { AmountInput } from './form/DonationAmountInput';
-import { WalletBalanceError } from './form/WalletBalanceError';
-import { ProjectsModel } from '@prisma/client';
-import useCurrentTokenPrice from '~/hooks/useCurrentTokenPrice';
 
 type ProjectDonationSimulatorProps = {
   projectDetails: ProjectsModel;
@@ -410,12 +407,13 @@ export const ProjectDonationSimulator = ({
             </Alert>
           )}
           <Button
-            variant={'connect_wallet'}
+            variant={'cubikFilled'}
             w="full"
             height="44px"
             mt={4}
             colorScheme="teal"
             isLoading={isSubmitting}
+            loadingText="Confirming Transaction"
             type="submit"
           >
             Donate with wallet
