@@ -15,6 +15,7 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
+import { Player } from '@lottiefiles/react-lottie-player';
 import {
   Contribution,
   ProjectsModel,
@@ -35,6 +36,7 @@ import {
 import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
 import { useUserStore } from '~/store/userStore';
 import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
+import { UserProof } from '~/types/user';
 
 interface ProjectCTAsProps {
   projectDetails:
@@ -110,23 +112,72 @@ export const ProjectCTAs = ({
             <RoundEndedBanner endDate={round.endTime} isLoading={isLoading} />
           );
         else if (isFuture(round.endTime))
-          return (
-            <Skeleton
-              opacity={isLoading ? '0.5' : 1}
-              fadeDuration={2}
-              isLoaded={!isLoading}
-              w="full"
-            >
-              <Button
-                onClick={onDonateHandler}
-                variant="cubikFilled"
-                size="md"
+          if (user) {
+            const proof = user.proof as unknown as UserProof[];
+            if (proof.length >= 3) {
+              return (
+                <Skeleton
+                  opacity={isLoading ? '0.5' : 1}
+                  fadeDuration={2}
+                  isLoaded={!isLoading}
+                  w="full"
+                >
+                  <Button
+                    onClick={onDonateHandler}
+                    variant="cubikFilled"
+                    size="md"
+                    w="full"
+                  >
+                    Donate
+                  </Button>
+                </Skeleton>
+              );
+            } else {
+              return (
+                <Skeleton
+                  opacity={isLoading ? '0.5' : 1}
+                  fadeDuration={2}
+                  isLoaded={!isLoading}
+                  w="full"
+                >
+                  <HStack p="16px" rounded="12px" gap="12px" bg="#31F57910">
+                    <Center p="8px" bg="#071A0F" rounded="full">
+                      <Player
+                        autoplay
+                        loop={true}
+                        src={
+                          'https://assets7.lottiefiles.com/packages/lf20_4htoEB.json'
+                        }
+                        style={{ height: `24px`, width: `24px` }}
+                      />
+                    </Center>
+                    <Box
+                      as={'p'}
+                      textStyle={'body5'}
+                      color="white"
+                      textAlign={'start'}
+                    >
+                      Claim 3 Proofs to donate
+                    </Box>
+                  </HStack>
+                </Skeleton>
+              );
+            }
+          } else {
+            return (
+              <Skeleton
+                opacity={isLoading ? '0.5' : 1}
+                fadeDuration={2}
+                isLoaded={!isLoading}
                 w="full"
               >
-                Donate
-              </Button>
-            </Skeleton>
-          );
+                <Button variant="cubikFilled" size="md" w="full">
+                  Donate
+                </Button>
+              </Skeleton>
+            );
+          }
+
         return <></>;
       } else {
         return <></>;
