@@ -272,6 +272,7 @@ const AdminProjectRoundCard = ({
                           direction={{ base: 'column', lg: 'row' }}
                         >
                           <FundingOverview
+                            amountRaise={round?.amountRaise ?? 0}
                             projectId={round.projectId as string}
                             roundId={round.fundingRound.id}
                           />

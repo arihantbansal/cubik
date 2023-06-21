@@ -1,14 +1,16 @@
 import { Box, Center, HStack, Spinner, VStack } from '@chakra-ui/react';
 import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { trpc } from '~/utils/trpc';
-import { FundingChart, IData } from './Charts';
+import { FundingChart } from './Charts';
 
 const FundingOverview = ({
   projectId,
   roundId,
+  amountRaise,
 }: {
   projectId: string;
   roundId: string;
+  amountRaise: number;
 }) => {
   const { data, isError, isLoading, error } =
     trpc.contribution.getProjectContributors.useQuery({
@@ -25,11 +27,7 @@ const FundingOverview = ({
   }
 
   const totalCommunityDonation = data?.reduce(
-    (acc, curr) => acc + curr.currentTotal,
-    0
-  );
-  const estimatedMatchingAmount = data?.reduce(
-    (acc, curr) => acc + curr.currentusdTotal,
+    (acc, curr) => acc + curr.usdTotal,
     0
   );
 
@@ -58,7 +56,10 @@ const FundingOverview = ({
           textStyle={{ base: 'title4', md: 'title3' }}
           color="neutral.11"
         >
-          ${estimatedMatchingAmount.toFixed(2)}
+          $
+          {parseInt(
+            (amountRaise + totalCommunityDonation).toFixed(2)
+          ).toLocaleString()}
         </Box>
       </VStack>
       <Center
@@ -87,7 +88,7 @@ const FundingOverview = ({
             textStyle={{ base: 'title4', md: 'title3' }}
             color="neutral.11"
           >
-            ${estimatedMatchingAmount.toFixed(2)}
+            ${parseInt(amountRaise.toFixed(2)).toLocaleString()}
           </Box>
         </VStack>
       </Center>
