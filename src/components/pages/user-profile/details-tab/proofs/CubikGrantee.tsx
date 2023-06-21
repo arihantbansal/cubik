@@ -187,7 +187,7 @@ const CubikGrantee = ({ minted, canMint, isLoading }: Props) => {
                     ) : undefined
                   }
                 >
-                  Claimed
+                  Proof Collected
                 </Button>
               ) : (
                 <Button

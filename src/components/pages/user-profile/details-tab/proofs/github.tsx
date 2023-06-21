@@ -208,7 +208,7 @@ const GithubProof = ({ minted, isLoading }: Props) => {
                     ) : undefined
                   }
                 >
-                  Claimed
+                  Proof Collected
                 </Button>
               ) : (
                 <>
@@ -231,7 +231,7 @@ const GithubProof = ({ minted, isLoading }: Props) => {
                       }
                     >
                       {user?.data.user?.user_metadata.user_name
-                        ? 'Claimed'
+                        ? 'Claim'
                         : 'Connect github'}
                     </Button>
                   </VStack>

@@ -33,6 +33,7 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
   const router = useRouter();
   const playerRef = useRef<Player>(null);
   const { user, loading } = useUser(supabase);
+  // const { resetUser } = useUserStore();
   const proofMutation = trpc.user.addProof.useMutation();
 
   const handleMint = async () => {
@@ -224,9 +225,7 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
                         ) : undefined
                       }
                     >
-                      {user?.data.user?.email
-                        ? 'Proof Collected'
-                        : 'Connect Google'}
+                      {user?.data.user?.email ? 'Claim' : 'Connect Google'}
                     </Button>
                   </VStack>
                 </>

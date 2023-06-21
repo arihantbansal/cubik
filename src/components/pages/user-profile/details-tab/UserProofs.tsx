@@ -19,7 +19,6 @@ import CivicIDProof from './proofs/CivicIDProof';
 import CubikGrantee from './proofs/CubikGrantee';
 import GithubProof from './proofs/github';
 import GoogleProof from './proofs/GoogleProof';
-import LamportDAOProof from './proofs/LamportDAOProof';
 import MonkeDAOProof from './proofs/MonkeDAOProof';
 import SuperteamProof from './proofs/SuperteamProof';
 
@@ -79,7 +78,7 @@ const ProofsInfoBanner = ({
             color={'sureface.red.1'}
             fontSize={{ base: '10px', md: '14px' }}
           >
-            To start contributing on the platform you need to collect 3 proofs.
+            To start contributing on the platform you need to collect 2 proofs.
             By collecting more proofs your voting power increases.
           </AlertDescription>
         </Alert>
@@ -133,7 +132,7 @@ const ProofsCollectedTag = ({
   color: ColorType;
   proofs: UserProof[];
 }) => {
-  if (proofs?.length <= 3) {
+  if (proofs?.length < 2) {
     return (
       <Tag
         size={{ base: 'sm', md: 'sm' }}
@@ -142,6 +141,20 @@ const ProofsCollectedTag = ({
         fontWeight={'700'}
         color={'surface.red.2'}
         background={'surface.red.3'}
+        rounded="full"
+      >
+        {proofs?.length ?? 0} of 7 Collected
+      </Tag>
+    );
+  } else if (proofs?.length === 2) {
+    return (
+      <Tag
+        size={{ base: 'sm', md: 'sm' }}
+        px="16px"
+        py="6px"
+        fontWeight={'700'}
+        color={'surface.orange.1'}
+        background={'surface.orange.3'}
         rounded="full"
       >
         {proofs?.length ?? 0} of 7 Collected
@@ -228,7 +241,7 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
             />
           </MotionBox>
         </Skeleton>
-        <Skeleton
+        {/* <Skeleton
           fadeDuration={2.5}
           isLoaded={!isLoading}
           opacity={isLoading ? 0.4 : 1}
@@ -245,7 +258,7 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
           >
             <LamportDAOProof />
           </MotionBox>
-        </Skeleton>
+        </Skeleton> */}
         <Skeleton
           fadeDuration={2.5}
           isLoaded={!isLoading}
