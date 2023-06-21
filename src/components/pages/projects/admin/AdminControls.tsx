@@ -105,7 +105,7 @@ export const GrantRoundAdminControls = ({
     <Skeleton
       w="full"
       isLoaded={!isLoading}
-      fadeDuration={6}
+      fadeDuration={2.6}
       opacity={isLoading ? '0.3' : '1'}
     >
       <Flex

@@ -59,7 +59,7 @@ export const ProjectsTabs = ({
             <Stack direction={{ base: 'row', md: 'row' }}>
               <Skeleton
                 isLoaded={!isLoading}
-                fadeDuration={4}
+                fadeDuration={2.5}
                 opacity={isLoading ? '0.3' : '1'}
               >
                 <Box as="p" textStyle="body4" color="neutral.7">

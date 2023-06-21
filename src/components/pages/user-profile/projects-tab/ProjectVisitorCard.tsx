@@ -31,7 +31,7 @@ const ProjectVisitorCard = ({
         />
         <Skeleton
           w="full"
-          fadeDuration={0.4}
+          fadeDuration={0.5}
           opacity={isLoading ? '0.5' : '1'}
           isLoaded={!isLoading}
         >

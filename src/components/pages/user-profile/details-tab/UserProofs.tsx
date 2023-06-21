@@ -22,12 +22,98 @@ import GoogleProof from './proofs/GoogleProof';
 import SuperteamProof from './proofs/SuperteamProof';
 
 const MotionBox = motion(Box);
+
 interface Props {
   isLoading: boolean;
   proofs: UserProof[];
   wallet: string;
 }
+
+type ColorType = {
+  light: string;
+  medium: string;
+  semiDark?: string;
+  dark: string;
+};
+
+const ProofsInfoBanner = ({
+  color,
+  isLoading,
+  proofs,
+}: {
+  color: ColorType;
+  isLoading: boolean;
+  proofs: UserProof[];
+}) => {
+  return (
+    <Skeleton
+      mt={{ base: '16px', sm: '20px', md: '24px' }}
+      fadeDuration={2}
+      isLoaded={!isLoading}
+      opacity={isLoading ? 0.6 : 1}
+      w="full"
+    >
+      <Alert
+        mt={{ base: '16px', sm: '20px', md: '24px' }}
+        w="full"
+        variant={'solid'}
+        backgroundColor={color.dark}
+        border={'2px solid'}
+        borderColor={color.semiDark}
+        rounded="8px"
+        status="info"
+      >
+        <Center h={'1.4rem'}>
+          <Box
+            as={AlertIcon}
+            boxSize={'18px'}
+            pt="3px"
+            color={color.light}
+            background={'transparent'}
+          />
+        </Center>
+        <AlertDescription
+          color={color.light}
+          fontSize={{ base: '10px', md: '14px' }}
+        >
+          To start contributing on the platform you need to collect proofs. By
+          collecting more proofs your voting power increases.
+        </AlertDescription>
+      </Alert>
+    </Skeleton>
+  );
+};
+
+const ProofsCollectedTag = ({
+  color,
+  proofs,
+}: {
+  color: ColorType;
+  proofs: UserProof[];
+}) => {
+  return (
+    <Tag
+      size={{ base: 'sm', md: 'sm' }}
+      px="16px"
+      py="6px"
+      fontWeight={'700'}
+      color={color.medium}
+      background={color.dark}
+      rounded="full"
+    >
+      {proofs?.length ?? 0} of 6 Collected
+    </Tag>
+  );
+};
+
 const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
+  const color = {
+    dark: '#091F12',
+    semiDark: '#31F57940',
+    medium: '#31F579',
+    light: '#D6FFE5',
+  };
+
   const checkProofs = trpc.user.checkProof.useQuery();
   return (
     <VStack align="start" w="full">
@@ -35,7 +121,7 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
         <Skeleton
           isLoaded={!isLoading}
           opacity={isLoading ? '0.6' : 1}
-          fadeDuration={3}
+          fadeDuration={2}
         >
           <Box
             as="p"
@@ -46,60 +132,22 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
           </Box>
         </Skeleton>
         <Skeleton
-          fadeDuration={3}
+          fadeDuration={2}
           isLoaded={!isLoading}
           opacity={isLoading ? 0.6 : 1}
           rounded="full"
         >
-          <Tag
-            size={{ base: 'sm', md: 'sm' }}
-            px="16px"
-            py="6px"
-            fontWeight={'700'}
-            color="surface.yellow.1"
-            background={'surface.yellow.3'}
-            rounded="full"
-          >
-            {proofs?.length ?? 0} / 3 Collected
-          </Tag>
+          <ProofsCollectedTag color={color} proofs={proofs} />
         </Skeleton>
       </HStack>
-      <Skeleton
-        mt={{ base: '16px', sm: '20px', md: '24px' }}
-        fadeDuration={3}
-        isLoaded={!isLoading}
-        opacity={isLoading ? 0.6 : 1}
-        w="full"
-      >
-        <Alert
-          mt={{ base: '16px', sm: '20px', md: '24px' }}
-          w="full"
-          variant={'solid'}
-          rounded="none"
-          backgroundColor={'#31F57910'}
-          borderLeft={'2px solid'}
-          borderColor={'#31F57940'}
-          status="info"
-        >
-          <Center h={'1.4rem'}>
-            <Box as={AlertIcon} boxSize={'12px'} color="#31F579" />
-          </Center>
-          <AlertDescription
-            color="neutral.11"
-            fontSize={{ base: '10px', md: '12px' }}
-          >
-            To start contributing on the platform you need to collect proofs. By
-            collecting more proofs your voting power increases.
-          </AlertDescription>
-        </Alert>
-      </Skeleton>
+      <ProofsInfoBanner color={color} isLoading={isLoading} proofs={proofs} />
       <Wrap
         direction={{ base: 'column', md: 'row' }}
         spacing={{ base: '24px', md: '32px' }}
         pt={{ base: '16px', sm: '20px', md: '24px' }}
       >
         <Skeleton
-          fadeDuration={4}
+          fadeDuration={2.5}
           isLoaded={!isLoading}
           opacity={isLoading ? 0.4 : 1}
           rounded="12px"
@@ -123,9 +171,8 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
             />
           </MotionBox>
         </Skeleton>
-
         <Skeleton
-          fadeDuration={4}
+          fadeDuration={2.5}
           isLoaded={!isLoading}
           opacity={isLoading ? 0.4 : 1}
           rounded="12px"
@@ -150,7 +197,7 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
           </MotionBox>
         </Skeleton>
         <Skeleton
-          fadeDuration={4}
+          fadeDuration={2.5}
           isLoaded={!isLoading}
           opacity={isLoading ? 0.4 : 1}
           rounded="12px"
@@ -175,7 +222,7 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
           </MotionBox>
         </Skeleton>
         <Skeleton
-          fadeDuration={4}
+          fadeDuration={2.6}
           isLoaded={!isLoading}
           opacity={isLoading ? 0.4 : 1}
           rounded="12px"
@@ -203,7 +250,7 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
           </MotionBox>
         </Skeleton>
         <Skeleton
-          fadeDuration={6}
+          fadeDuration={2}
           isLoaded={!isLoading}
           opacity={isLoading ? 0.4 : 1}
           rounded="12px"

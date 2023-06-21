@@ -108,14 +108,14 @@ export const ProjectCreatorSkeleton = ({
       <HStack gap="0.6rem" w="full">
         <Skeleton
           isLoaded={!isLoading}
-          fadeDuration={5}
+          fadeDuration={3}
           width={{ base: '1rem', md: '10' }}
           height={{ base: '1rem', md: '8' }}
           opacity="0.4"
         />
         <SkeletonText
           isLoaded={!isLoading}
-          fadeDuration={6}
+          fadeDuration={2.6}
           spacing="3"
           w={'full'}
           noOfLines={2}

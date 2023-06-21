@@ -3,14 +3,11 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Box,
   Center,
-  Skeleton,
   Flex,
   HStack,
+  Skeleton,
   Stack,
   Tab,
   TabList,
@@ -18,6 +15,7 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react';
+import { Player } from '@lottiefiles/react-lottie-player';
 import {
   Contribution,
   ProjectJoinRound,
@@ -25,19 +23,18 @@ import {
   Round,
   UserModel,
 } from '@prisma/client';
+import { isFuture, isPast } from 'date-fns';
+import { CgMediaLive } from 'react-icons/cg';
 import { FiClock } from 'react-icons/fi';
 import { HiBan } from 'react-icons/hi';
 import { ImCheckboxChecked } from 'react-icons/im';
+import { IoMdDoneAll } from 'react-icons/io';
 import RoundStatus from '~/components/common/dates/Status';
+import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import ProjectContributorsAdminView from '../../projects/project-details/project-interactions/project-tabs/ProjectContributorsAdminView';
+import { CountdownTimer } from '../../projects/project-explorer/header/FundingRoundBanner';
 import FundingOverview from './project-admin-dashboard/FundingOverview';
 import ProjectInsights from './project-admin-dashboard/ProjectInsights';
-import { isFuture, isPast } from 'date-fns';
-import { Player } from '@lottiefiles/react-lottie-player';
-import { CountdownTimer } from '../../projects/project-explorer/header/FundingRoundBanner';
-import { CgMediaLive } from 'react-icons/cg';
-import { IoMdDoneAll } from 'react-icons/io';
-import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 
 export const FundingRoundStatus = ({
   status,
@@ -190,7 +187,7 @@ const AdminProjectRoundCard = ({
       <Skeleton
         key={round.id}
         isLoaded={!isLoading}
-        fadeDuration={4}
+        fadeDuration={2.5}
         opacity={isLoading ? 0.5 : 1}
         w="full"
       >

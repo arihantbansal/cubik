@@ -32,7 +32,7 @@ const UserDetails = ({
       <Skeleton
         isLoaded={!isLoading}
         opacity={isLoading ? '0.5' : 1}
-        fadeDuration={3}
+        fadeDuration={2}
       >
         <Box
           as="p"
@@ -56,7 +56,7 @@ const UserDetails = ({
             <Skeleton
               isLoaded={!isLoading}
               opacity={isLoading ? '0.3' : 1}
-              fadeDuration={3}
+              fadeDuration={2}
             >
               <Box
                 as="p"
@@ -69,7 +69,7 @@ const UserDetails = ({
             <Skeleton
               isLoaded={!isLoading}
               opacity={isLoading ? '0.3' : 1}
-              fadeDuration={3}
+              fadeDuration={2}
             >
               <Box
                 as="p"
@@ -83,7 +83,7 @@ const UserDetails = ({
           <Skeleton
             isLoaded={!isLoading}
             opacity={isLoading ? '0.3' : 1}
-            fadeDuration={3}
+            fadeDuration={2}
           >
             <HStack
               w={{ base: 'full', md: '14.5rem' }}
@@ -117,7 +117,7 @@ const UserDetails = ({
             <Skeleton
               isLoaded={!isLoading}
               opacity={isLoading ? '0.3' : 1}
-              fadeDuration={3}
+              fadeDuration={2}
             >
               <Box
                 as="p"
@@ -130,7 +130,7 @@ const UserDetails = ({
             <Skeleton
               isLoaded={!isLoading}
               opacity={isLoading ? '0.3' : 1}
-              fadeDuration={3}
+              fadeDuration={2}
             >
               <Box
                 as="p"
@@ -143,7 +143,7 @@ const UserDetails = ({
             <Skeleton
               isLoaded={!isLoading}
               opacity={isLoading ? '0.3' : 1}
-              fadeDuration={4}
+              fadeDuration={2.5}
             >
               {/* <Box
                 as="p"
@@ -159,7 +159,7 @@ const UserDetails = ({
           </VStack>
           <VStack align={'start'} gap={{ base: '8px', md: '12px' }}>
             <Skeleton
-              fadeDuration={3}
+              fadeDuration={2}
               isLoaded={!isLoading}
               w="full"
               opacity={isLoading ? '0.3' : 1}
@@ -188,7 +188,7 @@ const UserDetails = ({
             <Skeleton
               isLoaded={!isLoading}
               opacity={isLoading ? '0.3' : 1}
-              fadeDuration={4}
+              fadeDuration={2.5}
               w="full"
             >
               <HStack
@@ -215,7 +215,7 @@ const UserDetails = ({
             <Skeleton
               isLoaded={!isLoading}
               opacity={isLoading ? '0.3' : 1}
-              fadeDuration={5}
+              fadeDuration={3}
               w="full"
             >
               <HStack
@@ -242,7 +242,7 @@ const UserDetails = ({
             <Skeleton
               isLoaded={!isLoading}
               opacity={isLoading ? '0.3' : 1}
-              fadeDuration={6}
+              fadeDuration={2.6}
               w="full"
             >
               <HStack

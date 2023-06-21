@@ -42,7 +42,7 @@ const HackathonInteractions = ({ isLoading }: { isLoading: boolean }) => {
         </Box>
         <Skeleton
           isLoaded={!isLoading}
-          fadeDuration={4}
+          fadeDuration={2.5}
           opacity={isLoading ? 0.4 : 1}
           w="full"
         >
@@ -148,7 +148,7 @@ const HackathonInteractions = ({ isLoading }: { isLoading: boolean }) => {
         </Box>
         <Skeleton
           isLoaded={!isLoading}
-          fadeDuration={4}
+          fadeDuration={2.5}
           opacity={isLoading ? 0.4 : 1}
           w="full"
         >

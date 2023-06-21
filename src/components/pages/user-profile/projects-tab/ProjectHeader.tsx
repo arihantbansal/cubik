@@ -21,7 +21,7 @@ import {
   VStack,
   useDisclosure,
 } from '@chakra-ui/react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { AiOutlineEdit, AiOutlineMore } from 'react-icons/ai';
 import { BiMessageSquareDots } from 'react-icons/bi';
 import { MdDeleteOutline } from 'react-icons/md';
@@ -29,7 +29,6 @@ import { VscPreview } from 'react-icons/vsc';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import { projectWithFundingRoundType } from '~/types/project';
 import { getDomain } from '~/utils/getDomain';
-import { ProjectStatus } from '~/utils/getProjectStatus';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
 import { ProjectLink } from '../../projects/project-details/ProjectDetailsHeader';
 import { ProjectSocials } from '../../projects/project-details/project-interactions/ProjectInteractions';
@@ -251,7 +250,7 @@ const ProjectHeader = ({
         >
           <SkeletonCircle
             isLoaded={!isLoading}
-            fadeDuration={2}
+            fadeDuration={1.5}
             opacity={isLoading ? '0.5' : '1'}
             width={{ base: '36px', sm: '48px', md: '52px' }}
             height={{ base: '36px', sm: '48px', md: '52px' }}
@@ -271,7 +270,7 @@ const ProjectHeader = ({
           >
             <Skeleton
               isLoaded={!isLoading}
-              fadeDuration={3}
+              fadeDuration={2}
               opacity={isLoading ? '0.5' : '1'}
               w={'8rem'}
             >
@@ -294,7 +293,7 @@ const ProjectHeader = ({
         <Center w="full" justifyContent={'end'}>
           <Skeleton
             isLoaded={!isLoading}
-            fadeDuration={4}
+            fadeDuration={2.5}
             opacity={isLoading ? '0.3' : '1'}
             w={{ base: 'full', sm: 'auto' }}
           >

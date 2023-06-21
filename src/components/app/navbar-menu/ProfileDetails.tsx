@@ -9,7 +9,7 @@ const ProfileDetails = () => {
   return (
     <HStack p="8px" rounded="8px" gap="12px">
       <Skeleton
-        fadeDuration={3}
+        fadeDuration={2}
         isLoaded={!!user?.profilePicture}
         width="40px"
         height="40px"

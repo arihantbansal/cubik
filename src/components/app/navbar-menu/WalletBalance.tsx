@@ -99,7 +99,11 @@ const WalletBalance = ({
         Wallet Balance
       </Box>
       {data && (
-        <Skeleton w="full" fadeDuration={6} isLoaded={!solanaTokenPriceLoading}>
+        <Skeleton
+          w="full"
+          fadeDuration={2.6}
+          isLoaded={!solanaTokenPriceLoading}
+        >
           <HStack p="0px 2px" gap="8px" w="full">
             <SOL
               size={

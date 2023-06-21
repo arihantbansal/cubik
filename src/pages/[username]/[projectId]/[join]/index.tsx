@@ -59,7 +59,7 @@ const ProjectDetails = ({
               w="full"
               maxW="7xl"
               mx="auto"
-              fadeDuration={3}
+              fadeDuration={2}
               opacity={isLoading ? 0.3 : 1}
               h={isLoading ? '3rem' : 'auto'}
             >

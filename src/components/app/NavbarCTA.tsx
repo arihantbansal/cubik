@@ -77,7 +77,7 @@ const NavbarCTA = () => {
     return (
       <Skeleton
         isLoaded
-        fadeDuration={1}
+        fadeDuration={0.5}
         startColor="#121219"
         endColor="#37383E"
       />

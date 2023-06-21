@@ -23,7 +23,7 @@ export const ProjectsDonation = ({
         >
           <ModalHeader>
             <HStack gap="0.4rem">
-              <SkeletonCircle fadeDuration={0.8} size="20" isLoaded={loading}>
+              <SkeletonCircle fadeDuration={1.5} size="20" isLoaded={loading}>
                 <Avatar
                   size={{ base: 'sm', md: 'md' }}
                   src={projectDetails.logo}

@@ -1,6 +1,4 @@
-import { Box, HStack, Skeleton } from '@chakra-ui/react';
-import { MdVerified } from 'react-icons/md';
-import useCheckVerifiedProfile from '~/hooks/useCheckVerifiedProfile';
+import { Box, Center, HStack, Icon, Skeleton } from '@chakra-ui/react';
 import { UserProof } from '~/types/user';
 
 type size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined | null;
@@ -12,32 +10,68 @@ type usernameProps = {
   size: size;
 };
 
+const CheckMarkIcon = ({
+  checkColor,
+  bgColor,
+}: {
+  checkColor?: string;
+  bgColor?: string;
+}) => (
+  <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M6.01625 1.7966C6.58251 0.728315 7.70566 0 9 0C10.2943 0 11.4175 0.728315 11.9837 1.79659C13.1395 1.44161 14.4487 1.7208 15.364 2.63604C16.2792 3.55127 16.5584 4.86046 16.2034 6.01625C17.2717 6.58251 18 7.70566 18 9C18 10.2943 17.2717 11.4175 16.2034 11.9837C16.5584 13.1395 16.2792 14.4487 15.364 15.364C14.4487 16.2792 13.1395 16.5584 11.9837 16.2034C11.4175 17.2717 10.2943 18 9 18C7.70566 18 6.58251 17.2717 6.01625 16.2034C4.86046 16.5584 3.55127 16.2792 2.63604 15.364C1.72081 14.4487 1.44162 13.1395 1.7966 11.9838C0.728316 11.4175 0 10.2943 0 9C0 7.70566 0.728315 6.58251 1.79659 6.01625C1.44161 4.86046 1.7208 3.55128 2.63604 2.63604C3.55127 1.7208 4.86046 1.44161 6.01625 1.7966ZM13.2862 6.74152C13.3521 6.80742 13.3521 6.91427 13.2862 6.98017L7.95641 12.31C7.89051 12.3759 7.78366 12.3759 7.71776 12.31L4.77443 9.36665C4.70852 9.30075 4.70852 9.19391 4.77443 9.12801L5.72902 8.17341C5.79492 8.10751 5.90177 8.10751 5.96767 8.17341L7.71776 9.9235C7.78366 9.9894 7.89051 9.9894 7.95641 9.9235L12.093 5.78693C12.1589 5.72102 12.2657 5.72102 12.3316 5.78693L13.2862 6.74152Z"
+      fill={bgColor ? bgColor : 'white'}
+    />
+    <path
+      d="M13.2862 6.98017C13.3521 6.91427 13.3521 6.80742 13.2862 6.74152L12.3316 5.78693C12.2657 5.72102 12.1589 5.72102 12.093 5.78693L7.95641 9.9235C7.89051 9.9894 7.78366 9.9894 7.71776 9.9235L5.96767 8.17341C5.90177 8.10751 5.79492 8.10751 5.72902 8.17341L4.77443 9.12801C4.70852 9.19391 4.70852 9.30075 4.77443 9.36665L7.71776 12.31C7.78366 12.3759 7.89051 12.3759 7.95641 12.31L13.2862 6.98017Z"
+      fill={checkColor ? checkColor : '#14171A'}
+    />
+  </svg>
+);
+
 const Username = ({ isLoading, username, proofs, size }: usernameProps) => {
   const CheckMark = ({ size }: { size?: size }) => {
-    if (proofs?.length === 0) return <></>;
-    else if (proofs?.length === 1) {
-      return <></>;
-    } else if (proofs?.length === 2) {
-      return (
-        <Box
-          as={MdVerified}
-          transform="translateY(0px)"
-          color="surface.yellow.1"
-          boxSize={
-            size === 'xs'
-              ? { base: '8px', sm: '9px', md: '12px' }
-              : size === 'sm'
-              ? { base: '9px', sm: '10px', md: '12px' }
-              : size === 'md'
-              ? { base: '10px', sm: '11px', md: '16px' }
-              : size === 'lg'
-              ? { base: '12px', sm: '14px', md: '18px' }
-              : { base: '11px', sm: '12px', md: '16px' }
-          }
-        />
-      );
+    const boxSize =
+      size === 'xs'
+        ? { base: '8px', sm: '9px', md: '12px' }
+        : size === 'sm'
+        ? { base: '9px', sm: '10px', md: '12px' }
+        : size === 'md'
+        ? { base: '10px', sm: '11px', md: '16px' }
+        : size === 'lg'
+        ? { base: '12px', sm: '14px', md: '18px' }
+        : { base: '11px', sm: '12px', md: '16px' };
+
+    switch (proofs?.length) {
+      case 6:
+        return (
+          <Box as={Icon} boxSize={boxSize}>
+            <CheckMarkIcon checkColor="" bgColor="" />
+          </Box>
+        );
+      case 5:
+        return (
+          <Box as={Icon} boxSize={boxSize}>
+            <CheckMarkIcon checkColor="" bgColor="" />
+          </Box>
+        );
+      case 4:
+        return (
+          <Box as={Icon} boxSize={boxSize}>
+            <CheckMarkIcon checkColor="" bgColor="" />
+          </Box>
+        );
+      case 3:
+        return <></>;
+      case 2:
+        return <></>;
+      case 1:
+        return <></>;
+      default:
+        return <></>;
     }
-    return <></>;
   };
 
   return (
@@ -59,7 +93,7 @@ const Username = ({ isLoading, username, proofs, size }: usernameProps) => {
       }
     >
       <Skeleton
-        fadeDuration={3}
+        fadeDuration={2}
         w={isLoading ? '10rem' : 'fit-content'}
         opacity={isLoading ? '0.6' : '1'}
         isLoaded={!isLoading}
@@ -95,12 +129,14 @@ const Username = ({ isLoading, username, proofs, size }: usernameProps) => {
         </Box>
       </Skeleton>
       <Skeleton
-        fadeDuration={4}
+        fadeDuration={2.5}
         w={isLoading ? '1rem' : 'fit-content'}
         opacity={isLoading ? '0.6' : '1'}
         isLoaded={!isLoading}
       >
-        <CheckMark size={size} />
+        <Center pl="2px">
+          <CheckMark size={size} />
+        </Center>
       </Skeleton>
     </HStack>
   );

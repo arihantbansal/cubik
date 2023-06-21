@@ -131,7 +131,7 @@ export const ProjectsDetailedDescription = ({
       <SkeletonText
         isLoaded={!isLoading}
         w="full"
-        fadeDuration={5}
+        fadeDuration={3}
         noOfLines={5}
         opacity={isLoading ? '0.4' : '1'}
         skeletonHeight="16px"

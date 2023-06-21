@@ -14,7 +14,7 @@ const HackathonHeader = ({ isLoading }: { isLoading: boolean }) => {
     <VStack w="full" gap="24px" align={'start'}>
       <SkeletonCircle
         isLoaded={!isLoading}
-        fadeDuration={3}
+        fadeDuration={2}
         opacity={isLoading ? '0.6' : '1'}
         width={{ base: '5.5rem', md: '7rem' }}
         height={{ base: '5.5rem', md: '7rem' }}
@@ -51,7 +51,7 @@ const HackathonHeader = ({ isLoading }: { isLoading: boolean }) => {
           <SkeletonText
             isLoaded={!isLoading}
             w="full"
-            fadeDuration={5}
+            fadeDuration={3}
             noOfLines={2}
             opacity={isLoading ? '0.5' : '1'}
             skeletonHeight="16px"

@@ -13,16 +13,15 @@ import {
   useToast,
   VStack,
 } from '@chakra-ui/react';
-import GoogleLogo from './SVGs/Google';
-import { BiCheck } from 'react-icons/bi';
-import { trpc } from '~/utils/trpc';
-import { SuccessToast } from '~/components/common/toasts/Toasts';
-import { supabase, useUser } from '~/utils/supabase';
-import { useRouter } from 'next/router';
-import { env } from '~/env.mjs';
-import { useEffect, useRef } from 'react';
-import { useUserStore } from '~/store/userStore';
 import { Player } from '@lottiefiles/react-lottie-player';
+import { useRouter } from 'next/router';
+import { useEffect, useRef } from 'react';
+import { BiCheck } from 'react-icons/bi';
+import { SuccessToast } from '~/components/common/toasts/Toasts';
+import { env } from '~/env.mjs';
+import { supabase, useUser } from '~/utils/supabase';
+import { trpc } from '~/utils/trpc';
+import GithubLogo from './SVGs/Github';
 
 interface Props {
   minted: boolean;
@@ -93,7 +92,7 @@ const GithubProof = ({ minted, isLoading }: Props) => {
         gap="8px"
         align="start"
       >
-        <GoogleLogo size={'60px'} />
+        <GithubLogo size={'60px'} />
         <HStack spacing="8px">
           <Box
             as="p"
@@ -175,7 +174,7 @@ const GithubProof = ({ minted, isLoading }: Props) => {
                       style={{ height: `300px`, width: `300px` }}
                     />
                   </Center>
-                  <GoogleLogo size={'60px'} />
+                  <GithubLogo size={'60px'} />
                 </Center>
                 <Box
                   as="p"

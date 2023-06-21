@@ -1,6 +1,4 @@
-import { HStack, Center, Box, Skeleton } from '@chakra-ui/react';
-import React from 'react';
-import { GoVerified } from 'react-icons/go';
+import { Box, Center, HStack, Skeleton } from '@chakra-ui/react';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { CountdownTimer } from '~/components/pages/projects/project-explorer/header/FundingRoundBanner';
 
@@ -14,7 +12,7 @@ export const RoundEndedBanner = ({
   return (
     <Skeleton
       opacity={isLoading ? '0.5' : 1}
-      fadeDuration={3}
+      fadeDuration={2}
       isLoaded={!isLoading}
       w="full"
     >
@@ -55,7 +53,7 @@ export const RoundStartingSoon = ({
   return (
     <Skeleton
       opacity={isLoading ? '0.5' : 1}
-      fadeDuration={3}
+      fadeDuration={2}
       isLoaded={!isLoading}
       w="full"
     >

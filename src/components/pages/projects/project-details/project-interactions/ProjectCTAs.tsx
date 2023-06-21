@@ -3,7 +3,6 @@ import {
   Button,
   Center,
   HStack,
-  Icon,
   IconProps,
   Modal,
   ModalBody,
@@ -16,28 +15,26 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { useWalletModal } from '@solana/wallet-adapter-react-ui';
-import { useEffect, useState } from 'react';
-import { BsTwitter } from 'react-icons/bs';
-import { MdArrowForward } from 'react-icons/md';
-import { GoVerified } from 'react-icons/go';
-import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
-import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
-import { useUserStore } from '~/store/userStore';
 import {
   Contribution,
-  ProjectJoinRound,
   ProjectsModel,
   Round,
   Team,
   UserModel,
 } from '@prisma/client';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+import { isFuture, isPast } from 'date-fns';
 import { useRouter } from 'next/router';
-import { differenceInDays, isFuture, isPast } from 'date-fns';
+import { useState } from 'react';
+import { BsTwitter } from 'react-icons/bs';
+import { MdArrowForward } from 'react-icons/md';
 import {
   RoundEndedBanner,
   RoundStartingSoon,
 } from '~/components/common/donationCTA/DonationCTA';
+import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
+import { useUserStore } from '~/store/userStore';
+import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
 
 interface ProjectCTAsProps {
   projectDetails:
@@ -116,7 +113,7 @@ export const ProjectCTAs = ({
           return (
             <Skeleton
               opacity={isLoading ? '0.5' : 1}
-              fadeDuration={3}
+              fadeDuration={2}
               isLoaded={!isLoading}
               w="full"
             >
@@ -407,7 +404,7 @@ export const ProjectCTAs = ({
             {joinId && (
               <Skeleton
                 opacity="0.3"
-                fadeDuration={2}
+                fadeDuration={1.5}
                 display={isLoading ? 'block' : 'none'}
                 h="3rem"
                 w="full"
@@ -415,7 +412,7 @@ export const ProjectCTAs = ({
               />
             )}
             <Skeleton
-              fadeDuration={4}
+              fadeDuration={2.5}
               opacity={isLoading ? 0.3 : 1}
               isLoaded={!isLoading}
               w="full"
@@ -503,7 +500,7 @@ export const ProjectCTAsMobile = ({
           return (
             <Skeleton
               opacity={isLoading ? '0.5' : 1}
-              fadeDuration={3}
+              fadeDuration={2}
               isLoaded={!isLoading}
               w="full"
             >
@@ -552,14 +549,14 @@ export const ProjectCTAsMobile = ({
               <Skeleton
                 display={isLoading ? 'block' : 'none'}
                 opacity="0.3"
-                fadeDuration={2}
+                fadeDuration={1.5}
                 h="3rem"
                 w="full"
                 isLoaded={!isLoading}
               />
             )}
             <Skeleton
-              fadeDuration={4}
+              fadeDuration={2.5}
               opacity={isLoading ? '0.3' : 1}
               isLoaded={!isLoading}
               w="full"

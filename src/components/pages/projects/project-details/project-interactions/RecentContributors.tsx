@@ -1,22 +1,20 @@
 import {
   Avatar,
+  AvatarGroup,
   Box,
   Center,
-  HStack,
-  Button,
-  VStack,
   Flex,
+  HStack,
   Skeleton,
-  AvatarGroup,
   SkeletonCircle,
+  VStack,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { formatNumberWithK } from '~/utils/formatWithK';
-import { SOL } from '~/components/common/tokens/token';
-import { BiChevronRight } from 'react-icons/bi';
-import { motion, AnimatePresence } from 'framer-motion';
-import { trpc } from '~/utils/trpc';
 import { Contribution, UserModel } from '@prisma/client';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { SOL } from '~/components/common/tokens/token';
+import { formatNumberWithK } from '~/utils/formatWithK';
+import { trpc } from '~/utils/trpc';
 
 const transition = {
   type: 'spring',
@@ -222,7 +220,7 @@ export const RecentContributions = ({
                 zIndex={'4'}
               >
                 <SkeletonCircle
-                  fadeDuration={2}
+                  fadeDuration={1.5}
                   opacity={0.4}
                   height="2rem"
                   width="2rem"
@@ -235,7 +233,7 @@ export const RecentContributions = ({
                 zIndex={'3'}
               >
                 <SkeletonCircle
-                  fadeDuration={2}
+                  fadeDuration={1.5}
                   opacity={0.4}
                   height="2rem"
                   width="2rem"
@@ -248,7 +246,7 @@ export const RecentContributions = ({
                 zIndex={'2'}
               >
                 <SkeletonCircle
-                  fadeDuration={2}
+                  fadeDuration={1.5}
                   opacity={0.4}
                   height="2rem"
                   width="2rem"
@@ -261,7 +259,7 @@ export const RecentContributions = ({
                 zIndex={'1'}
               >
                 <SkeletonCircle
-                  fadeDuration={2}
+                  fadeDuration={1.5}
                   opacity={0.4}
                   height="2rem"
                   width="2rem"

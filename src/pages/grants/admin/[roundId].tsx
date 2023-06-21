@@ -2,19 +2,19 @@ import {
   Box,
   Container,
   HStack,
+  Skeleton,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
   VStack,
-  Skeleton,
 } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import ErrorBoundary from '~/components/errors/Errorboundary';
-import GrantMatchingPoolAdminPanel from '~/components/pages/grants/admin/fundingPool/GrantMatchingPoolAdminPanel';
-import GrantsDashboardDetails from '~/components/pages/grants/admin/details/GrantsDashboardDetails';
 import RoundAdminSettings from '~/components/pages/grants/admin/RoundAdminSettings';
+import GrantsDashboardDetails from '~/components/pages/grants/admin/details/GrantsDashboardDetails';
+import GrantMatchingPoolAdminPanel from '~/components/pages/grants/admin/fundingPool/GrantMatchingPoolAdminPanel';
 import RoundResults from '~/components/pages/grants/admin/results/RoundResults';
 import { trpc } from '~/utils/trpc';
 
@@ -28,7 +28,7 @@ const RoundAdmin = ({ roundId }: { roundId: string }) => {
       <Container maxW="full" py="40px" px="0">
         <VStack align="start" w="full" gap="40px">
           <VStack mx="auto" maxW="7xl" px="1rem" w="full" align="start">
-            <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+            <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <Box
                 as="p"
                 textStyle={{ base: 'title2', md: 'title1' }}

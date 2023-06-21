@@ -27,7 +27,7 @@ const ProfileHeader: FC<profileHeaderType> = ({
         height={{ base: '56px', sm: '72px', md: '84px' }}
       >
         <SkeletonCircle
-          fadeDuration={3}
+          fadeDuration={2}
           isLoaded={!isLoading}
           borderRadius="12px"
           size={{ base: '56px', sm: '72px', md: '84px' }}
@@ -70,7 +70,7 @@ const ProfileHeader: FC<profileHeaderType> = ({
           <Skeleton
             w="6rem"
             h="16px"
-            fadeDuration={5}
+            fadeDuration={3}
             opacity={isLoading ? '0.5' : '1'}
             isLoaded={!isLoading}
           >

@@ -60,7 +60,7 @@ const GrantDetailsHeader = ({
         <VStack align={'start'} spacing={{ base: '12px', md: '24px' }}>
           <Skeleton
             isLoaded={!isLoading}
-            fadeDuration={1}
+            fadeDuration={0.5}
             opacity={isLoading ? '0.5' : '1'}
             rounded="full"
           >
@@ -69,7 +69,7 @@ const GrantDetailsHeader = ({
           <VStack align={'start'} spacing={{ base: '12px', md: '24px' }}>
             <Skeleton
               isLoaded={!isLoading}
-              fadeDuration={1.2}
+              fadeDuration={2}
               opacity={isLoading ? '0.6' : '1'}
             >
               <Box
@@ -112,7 +112,7 @@ const GrantDetailsHeader = ({
           >
             <Skeleton
               isLoaded={!isLoading}
-              fadeDuration={3}
+              fadeDuration={2}
               opacity={isLoading ? '0.4' : '1'}
             >
               <Stack
@@ -146,7 +146,7 @@ const GrantDetailsHeader = ({
             </Skeleton>
             <Skeleton
               isLoaded={!isLoading}
-              fadeDuration={3}
+              fadeDuration={2}
               opacity={isLoading ? '0.4' : '1'}
             >
               <HStack gap="4px" align="center" justify="start">
@@ -177,7 +177,7 @@ const GrantDetailsHeader = ({
           </Stack>
           <Skeleton
             isLoaded={!isLoading}
-            fadeDuration={4}
+            fadeDuration={2.5}
             opacity={isLoading ? '0.4' : '1'}
           >
             <Button
@@ -204,7 +204,7 @@ const GrantDetailsHeader = ({
       <VStack spacing="16px" align="start">
         <Skeleton
           isLoaded={!isLoading}
-          fadeDuration={4}
+          fadeDuration={2.5}
           opacity={isLoading ? '0.3' : '1'}
         >
           <Box
@@ -218,7 +218,7 @@ const GrantDetailsHeader = ({
         <HStack spacing={'16px'}>
           {/* <Skeleton
             isLoaded={!isLoading}
-            fadeDuration={4}
+            fadeDuration={2.5}
             opacity={isLoading ? '0.4' : '1'}
             rounded="full"
           >
@@ -246,7 +246,7 @@ const GrantDetailsHeader = ({
           </Skeleton>
           <Skeleton
             isLoaded={!isLoading}
-            fadeDuration={4}
+            fadeDuration={2.5}
             opacity={isLoading ? '0.4' : '1'}
             rounded="full"
           >
@@ -274,7 +274,7 @@ const GrantDetailsHeader = ({
           </Skeleton> */}
           <Skeleton
             isLoaded={!isLoading}
-            fadeDuration={4}
+            fadeDuration={2.5}
             opacity={isLoading ? '0.4' : '1'}
             rounded="full"
           >

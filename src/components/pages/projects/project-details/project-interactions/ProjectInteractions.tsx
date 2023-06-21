@@ -63,7 +63,7 @@ export const ProjectFundingData = ({
       </Box>
       <Skeleton
         isLoaded={!isLoading}
-        fadeDuration={4}
+        fadeDuration={2.5}
         opacity={isLoading ? 0.4 : 1}
         w="full"
       >
@@ -167,7 +167,7 @@ export const ProjectFundingData = ({
       </Skeleton>
       <Skeleton
         isLoaded={!isLoading}
-        fadeDuration={4}
+        fadeDuration={2.5}
         opacity={isLoading ? 0.3 : 1}
         w="full"
       >

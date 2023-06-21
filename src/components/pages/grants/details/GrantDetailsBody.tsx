@@ -82,7 +82,7 @@ const GrantDetailsBody = ({
             <Skeleton
               w="full"
               isLoaded={!isLoading}
-              fadeDuration={3}
+              fadeDuration={2}
               opacity={isLoading ? '0.3' : '1'}
               key={round.project.id}
             >

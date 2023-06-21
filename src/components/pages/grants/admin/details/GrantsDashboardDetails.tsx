@@ -1,32 +1,29 @@
 import {
   Box,
   Container,
-  VStack,
+  HStack,
+  Skeleton,
+  Stat,
+  StatLabel,
+  StatNumber,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
   Tag,
-  Stat,
-  StatLabel,
-  StatNumber,
-  HStack,
-  StatArrow,
-  StatGroup,
+  VStack,
   Wrap,
-  Skeleton,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import GrantUnderReviewProjects from '~/components/pages/grants/admin/details/tabs/GrantUnderReviewProjects';
-import React from 'react';
 import { Round } from '@prisma/client';
-import { formatNumberWithK } from '~/utils/formatWithK';
+import { isFuture, isPast } from 'date-fns';
+import React, { useEffect, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import RoundStatus from '~/components/common/dates/Status';
+import GrantUnderReviewProjects from '~/components/pages/grants/admin/details/tabs/GrantUnderReviewProjects';
+import { formatNumberWithK } from '~/utils/formatWithK';
 import GrantAcceptedProjects from './tabs/GrantAcceptedProjects';
 import GrantRejectedProjects from './tabs/GrantRejectedProjects';
-import { isFuture, isPast } from 'date-fns';
 
 interface CountdownTimerProps {
   finalDate: Date;
@@ -173,7 +170,7 @@ const OverviewStatsCard = ({
   return (
     <Stat variant="cubik" overflow="hidden">
       <VStack p="24px" mb="12px" align="start">
-        <Skeleton isLoaded={!isLoading} fadeDuration={0.4}>
+        <Skeleton isLoaded={!isLoading} fadeDuration={0.5}>
           <StatLabel
             whiteSpace={'nowrap'}
             overflow="hidden"
@@ -183,7 +180,7 @@ const OverviewStatsCard = ({
             {title}
           </StatLabel>
         </Skeleton>
-        <Skeleton isLoaded={!isLoading} fadeDuration={0.4}>
+        <Skeleton isLoaded={!isLoading} fadeDuration={0.5}>
           <StatNumber>${formatNumberWithK(value)}</StatNumber>
         </Skeleton>
       </VStack>
@@ -216,7 +213,7 @@ const GrantAdminDashboardOverview = ({
   const today = new Date();
   return (
     <VStack align={'start'} w="full" gap="16px">
-      <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+      <Skeleton isLoaded={!isLoading} fadeDuration={1}>
         <Box textStyle={{ base: 'title3', md: 'title2' }} color="neutral.11">
           Overview
         </Box>
@@ -241,7 +238,7 @@ const GrantAdminDashboardOverview = ({
             background={'#141414'}
             borderTop="1px solid #1D1F1E"
           >
-            <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+            <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <Box
                 as="p"
                 textStyle={{ base: 'overline5', md: 'overline4' }}
@@ -250,7 +247,7 @@ const GrantAdminDashboardOverview = ({
                 Last Contribution
               </Box>
             </Skeleton>
-            <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+            <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <Box
                 as="p"
                 textStyle={{ base: 'title6', md: 'title5' }}
@@ -274,7 +271,7 @@ const GrantAdminDashboardOverview = ({
             background={'#141414'}
             borderTop="1px solid #1D1F1E"
           >
-            <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+            <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <Box
                 as="p"
                 textStyle={{ base: 'overline5', md: 'overline4' }}
@@ -283,7 +280,7 @@ const GrantAdminDashboardOverview = ({
                 Todays Average
               </Box>
             </Skeleton>
-            <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+            <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <Box
                 as="p"
                 textStyle={{ base: 'title6', md: 'title5' }}
@@ -296,7 +293,7 @@ const GrantAdminDashboardOverview = ({
         </OverviewStatsCard>
         <Stat variant="cubik" overflow="hidden">
           <VStack p="24px" mb="12px" align="start">
-            <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+            <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <StatLabel
                 whiteSpace={'nowrap'}
                 overflow="hidden"
@@ -306,7 +303,7 @@ const GrantAdminDashboardOverview = ({
                 Total Contributors
               </StatLabel>
             </Skeleton>
-            <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+            <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <StatNumber>{totalContributors}</StatNumber>
             </Skeleton>
           </VStack>
@@ -318,7 +315,7 @@ const GrantAdminDashboardOverview = ({
             background={'#141414'}
             borderTop="1px solid #1D1F1E"
           >
-            <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+            <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <Box
                 as="p"
                 textStyle={{ base: 'overline5', md: 'overline4' }}
@@ -327,7 +324,7 @@ const GrantAdminDashboardOverview = ({
                 Todays Contributors
               </Box>
             </Skeleton>
-            <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+            <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <Box
                 as="p"
                 textStyle={{ base: 'title6', md: 'title5' }}
@@ -340,13 +337,13 @@ const GrantAdminDashboardOverview = ({
         </Stat>
         <Stat variant="cubik" overflow="hidden">
           <VStack p="24px" mb="18px" align="center" mx="auto" gap="1rem">
-            <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+            <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <RoundStatus
                 startDate={roundStartingDate}
                 endDate={roundEndingDate}
               />
             </Skeleton>
-            <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+            <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <CountdownTimer
                 finalDate={
                   isPast(roundEndingDate as Date)
@@ -378,14 +375,14 @@ const GrantAdminDashboardProjects = ({
   });
   return (
     <VStack align={'start'} w="full" gap="16px">
-      <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+      <Skeleton isLoaded={!isLoading} fadeDuration={1}>
         <Box textStyle={{ base: 'title3', md: 'title2' }} color="neutral.11">
           Projects
         </Box>
       </Skeleton>
       <Tabs variant={'cubik'} alignSelf={'start'} w="full">
         <TabList gap={{ base: '0.5rem', md: '1rem' }}>
-          <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+          <Skeleton isLoaded={!isLoading} fadeDuration={1}>
             <Tab gap="8px" display={'flex'}>
               <Box
                 whiteSpace={'nowrap'}
@@ -403,7 +400,7 @@ const GrantAdminDashboardProjects = ({
               )}
             </Tab>
           </Skeleton>
-          <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+          <Skeleton isLoaded={!isLoading} fadeDuration={1}>
             <Tab gap="8px" display={'flex'}>
               <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
                 Accepted
@@ -420,7 +417,7 @@ const GrantAdminDashboardProjects = ({
               )}
             </Tab>
           </Skeleton>
-          <Skeleton isLoaded={!isLoading} fadeDuration={0.6}>
+          <Skeleton isLoaded={!isLoading} fadeDuration={1}>
             <Tab gap="8px" display={'flex'}>
               <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
                 Rejected

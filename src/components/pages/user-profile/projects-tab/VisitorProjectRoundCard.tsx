@@ -1,9 +1,5 @@
 import { Box, Card, CardBody, HStack, Skeleton, Stack } from '@chakra-ui/react';
-import {
-  ProjectJoinRound,
-  ProjectJoinRoundStatus,
-  Round,
-} from '@prisma/client';
+import { ProjectJoinRound, Round } from '@prisma/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import RoundStatus from '~/components/common/dates/Status';
@@ -28,7 +24,7 @@ const VisitorProjectRoundCard = ({
   return (
     <Skeleton
       isLoaded={!isLoading}
-      fadeDuration={3}
+      fadeDuration={2}
       opacity={isLoading ? '0.5' : '1'}
       w="full"
     >

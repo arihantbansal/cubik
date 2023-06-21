@@ -131,7 +131,7 @@ const MobileOnlyViews = ({
           <Skeleton
             isLoaded={!isLoading}
             opacity={isLoading ? 0.6 : 1}
-            fadeDuration={3}
+            fadeDuration={2}
             w="full"
           >
             <Button
@@ -146,7 +146,7 @@ const MobileOnlyViews = ({
           <Skeleton
             isLoaded={!isLoading}
             opacity={isLoading ? 0.6 : 1}
-            fadeDuration={3}
+            fadeDuration={2}
             w="full"
           >
             <Button

@@ -67,7 +67,7 @@ const ProjectDetailsHeader = ({
     >
       <SkeletonCircle
         isLoaded={!isLoading}
-        fadeDuration={2}
+        fadeDuration={1.5}
         opacity={isLoading ? '0.6' : '1'}
         width={{ base: '4.4rem', md: '6.2rem' }}
         height={{ base: '4.4rem', md: '6.2rem' }}
@@ -89,7 +89,7 @@ const ProjectDetailsHeader = ({
         <Stack direction={'row'} justify={'center'}>
           <Skeleton
             isLoaded={!isLoading}
-            fadeDuration={2}
+            fadeDuration={1.5}
             opacity={isLoading ? '0.6' : '1'}
             minW={isLoading ? '10rem' : 'auto'}
           >
@@ -140,7 +140,7 @@ const ProjectDetailsHeader = ({
           </Skeleton>
           <Skeleton
             isLoaded={!isLoading}
-            fadeDuration={3}
+            fadeDuration={2}
             opacity={isLoading ? '0.4' : '1'}
           >
             <HStack
@@ -165,7 +165,7 @@ const ProjectDetailsHeader = ({
         <SkeletonText
           isLoaded={!isLoading}
           w="full"
-          fadeDuration={4}
+          fadeDuration={2.5}
           noOfLines={2}
           opacity={isLoading ? '0.5' : '1'}
           skeletonHeight="16px"

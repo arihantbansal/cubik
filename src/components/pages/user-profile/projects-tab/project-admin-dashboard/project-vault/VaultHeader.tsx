@@ -1,12 +1,7 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Box,
   Button,
-  Center,
   HStack,
-  Link,
   Modal,
   ModalBody,
   ModalContent,
@@ -19,16 +14,10 @@ import {
   VStack,
   useDisclosure,
 } from '@chakra-ui/react';
+import { HiArrowNarrowDown, HiArrowNarrowUp } from 'react-icons/hi';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
-import Squads from '@sqds/sdk';
-import {
-  HiExternalLink,
-  HiArrowNarrowUp,
-  HiArrowNarrowDown,
-} from 'react-icons/hi';
-import success from '~/pages/api/success';
-import WithdrawFundsTransactionModal from './WithdrawFundsTransactionModal';
 import useGetTotalWalletBalanceInUSDC from '~/utils/wallet/useGetTotalWalletBalanceInUSDC';
+import WithdrawFundsTransactionModal from './WithdrawFundsTransactionModal';
 
 const VaultHeader = ({
   isLoading,
@@ -57,7 +46,7 @@ const VaultHeader = ({
           Project Vault
         </Box>
         <HStack gap="6px" align={{ base: 'center', md: 'center' }}>
-          <Skeleton fadeDuration={4} isLoaded={!isLoading}>
+          <Skeleton fadeDuration={2.5} isLoaded={!isLoading}>
             <Box
               as="p"
               textStyle={{ base: 'title3', sm: 'title2', md: 'title1' }}
@@ -66,7 +55,7 @@ const VaultHeader = ({
               ${balance}
             </Box>
           </Skeleton>
-          <Skeleton fadeDuration={4} isLoaded={!isLoading}>
+          <Skeleton fadeDuration={2.5} isLoaded={!isLoading}>
             <WalletAddress
               walletAddress={multiSigAddress as string}
               size={'sm'}

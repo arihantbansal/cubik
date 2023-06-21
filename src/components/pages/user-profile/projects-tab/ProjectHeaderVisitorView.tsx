@@ -36,7 +36,7 @@ export const ProjectHeaderVisitorView = ({
         >
           <SkeletonCircle
             isLoaded={!isLoading}
-            fadeDuration={2}
+            fadeDuration={1.5}
             opacity={isLoading ? '0.5' : '1'}
             width={{ base: '42px', sm: '48px', md: '52px' }}
             height={{ base: '42px', sm: '48px', md: '52px' }}
@@ -56,7 +56,7 @@ export const ProjectHeaderVisitorView = ({
           >
             <Skeleton
               isLoaded={!isLoading}
-              fadeDuration={3}
+              fadeDuration={2}
               opacity={isLoading ? '0.5' : '1'}
               w={'8rem'}
             >
@@ -83,7 +83,7 @@ export const ProjectHeaderVisitorView = ({
         <Center w="full" justifyContent={'end'}>
           <Skeleton
             isLoaded={!isLoading}
-            fadeDuration={3}
+            fadeDuration={2}
             opacity={isLoading ? '0.3' : '1'}
             w={{ base: 'full', sm: 'auto' }}
           >

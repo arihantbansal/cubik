@@ -66,7 +66,7 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
     >
       <Skeleton
         isLoaded={!isLoading}
-        fadeDuration={2}
+        fadeDuration={1.5}
         opacity={isLoading ? 0.5 : 1}
         w="full"
       >
@@ -87,7 +87,7 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
       )}
       <Skeleton
         isLoaded={!isLoading}
-        fadeDuration={4}
+        fadeDuration={2.5}
         opacity={isLoading ? 0.5 : 1}
         w="full"
       >

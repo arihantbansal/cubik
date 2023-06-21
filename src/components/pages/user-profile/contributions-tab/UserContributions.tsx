@@ -56,7 +56,7 @@ const UserContributionTableRow = ({
           >
             <Skeleton
               isLoaded={!isLoading}
-              fadeDuration={3}
+              fadeDuration={2}
               opacity={isLoading ? 0.5 : 1}
             >
               <Box
@@ -69,7 +69,7 @@ const UserContributionTableRow = ({
             </Skeleton>
             <Skeleton
               isLoaded={!isLoading}
-              fadeDuration={3}
+              fadeDuration={2}
               opacity={isLoading ? 0.5 : 1}
             >
               <Box
@@ -86,7 +86,7 @@ const UserContributionTableRow = ({
       <Td px="12px">
         <Skeleton
           isLoaded={!isLoading}
-          fadeDuration={3}
+          fadeDuration={2}
           opacity={isLoading ? 0.5 : 1}
         >
           <HStack>
@@ -105,7 +105,7 @@ const UserContributionTableRow = ({
         <HStack gap="8px" align={'center'}>
           <Skeleton
             isLoaded={!isLoading}
-            fadeDuration={3}
+            fadeDuration={2}
             opacity={isLoading ? 0.5 : 1}
           >
             <Center>
@@ -124,7 +124,7 @@ const UserContributionTableRow = ({
             <HStack align={'baseline'} color="white">
               <Skeleton
                 isLoaded={!isLoading}
-                fadeDuration={3}
+                fadeDuration={2}
                 opacity={isLoading ? 0.5 : 1}
               >
                 <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
@@ -137,7 +137,7 @@ const UserContributionTableRow = ({
             </HStack>
             <Skeleton
               isLoaded={!isLoading}
-              fadeDuration={3}
+              fadeDuration={2}
               opacity={isLoading ? 0.5 : 1}
             >
               <Box
@@ -155,7 +155,7 @@ const UserContributionTableRow = ({
         <VStack alignItems={'start'} gap="0px" justify="start">
           <Skeleton
             isLoaded={!isLoading}
-            fadeDuration={3}
+            fadeDuration={2}
             opacity={isLoading ? 0.5 : 1}
           >
             <Box
@@ -171,7 +171,7 @@ const UserContributionTableRow = ({
           </Skeleton>
           <Skeleton
             isLoaded={!isLoading}
-            fadeDuration={3}
+            fadeDuration={2}
             opacity={isLoading ? 0.5 : 1}
           >
             <Box
@@ -187,7 +187,7 @@ const UserContributionTableRow = ({
       <Td px="12px">
         <Skeleton
           isLoaded={!isLoading}
-          fadeDuration={3}
+          fadeDuration={2}
           opacity={isLoading ? 0.5 : 1}
         >
           <Box

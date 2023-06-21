@@ -41,7 +41,7 @@ const UserNavMenu = () => {
       <>
         <Skeleton
           opacity={!user?.username ? 0.5 : 1}
-          fadeDuration={4}
+          fadeDuration={2.5}
           isLoaded={!!user?.username}
           w="full"
         >
@@ -83,7 +83,7 @@ const UserNavMenu = () => {
         <Skeleton
           w="full"
           opacity={!user?.username ? 0.3 : 1}
-          fadeDuration={4}
+          fadeDuration={2.5}
           isLoaded={!!user?.username}
         >
           <Button
@@ -122,7 +122,7 @@ const UserNavMenu = () => {
         <Skeleton
           w="full"
           opacity={!user?.username ? 0.1 : 1}
-          fadeDuration={4}
+          fadeDuration={2.5}
           isLoaded={!!user?.username}
         >
           <Button
@@ -165,7 +165,7 @@ const UserNavMenu = () => {
   return (
     <>
       <Skeleton
-        fadeDuration={2}
+        fadeDuration={1.5}
         isLoaded={!!user?.profilePicture}
         width={{ base: '30px', md: '36px' }}
         height={{ base: '30px', md: '36px' }}
@@ -221,7 +221,7 @@ const UserNavMenu = () => {
           rightIcon={<BiChevronDown size={26} color="#A8F0E6" />}
         >
           <Skeleton
-            fadeDuration={4}
+            fadeDuration={2.5}
             isLoaded={!!user?.profilePicture}
             width={{ base: '28px', md: '40px' }}
             height={{ base: '28px', md: '40px' }}
@@ -246,7 +246,7 @@ const UserNavMenu = () => {
           <ProfileDetails />
           <Skeleton
             opacity={!user?.profilePicture ? 0.6 : 1}
-            fadeDuration={3}
+            fadeDuration={2}
             isLoaded={!!user?.profilePicture}
             width={'full'}
             height={!user?.profilePicture ? '3rem' : 'auto'}
