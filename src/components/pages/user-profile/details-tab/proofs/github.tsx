@@ -110,7 +110,7 @@ const GithubProof = ({ minted, isLoading }: Props) => {
             rounded="full"
             fontSize={{ base: '10px', sm: '12px', md: '14px' }}
           >
-            {minted ? 'Minted' : 'Mint'}
+            {minted ? 'Claimed' : 'Claim'}
           </Tag>
         </HStack>
         <Box
@@ -118,7 +118,7 @@ const GithubProof = ({ minted, isLoading }: Props) => {
           textStyle={{ base: 'body5', md: 'body5' }}
           color={'neutral.7'}
         >
-          To mint this proof you have to connect your github account .
+          To claim this proof you have to connect your github account .
         </Box>
       </VStack>
       <Modal
@@ -208,7 +208,7 @@ const GithubProof = ({ minted, isLoading }: Props) => {
                     ) : undefined
                   }
                 >
-                  Minted
+                  Claimed
                 </Button>
               ) : (
                 <>
@@ -231,7 +231,7 @@ const GithubProof = ({ minted, isLoading }: Props) => {
                       }
                     >
                       {user?.data.user?.user_metadata.user_name
-                        ? 'Mint'
+                        ? 'Claimed'
                         : 'Connect github'}
                     </Button>
                   </VStack>

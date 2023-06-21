@@ -17,11 +17,11 @@ import { SuperteamMembers } from '~/utils/data/superteamMembers';
 import { trpc } from '~/utils/trpc';
 import CivicIDProof from './proofs/CivicIDProof';
 import CubikGrantee from './proofs/CubikGrantee';
+import GithubProof from './proofs/github';
 import GoogleProof from './proofs/GoogleProof';
 import LamportDAOProof from './proofs/LamportDAOProof';
 import MonkeDAOProof from './proofs/MonkeDAOProof';
 import SuperteamProof from './proofs/SuperteamProof';
-import GithubProof from './proofs/github';
 
 const MotionBox = motion(Box);
 
@@ -47,43 +47,83 @@ const ProofsInfoBanner = ({
   isLoading: boolean;
   proofs: UserProof[];
 }) => {
-  return (
-    <Skeleton
-      mt={{ base: '16px', sm: '20px', md: '24px' }}
-      fadeDuration={2}
-      isLoaded={!isLoading}
-      opacity={isLoading ? 0.6 : 1}
-      w="full"
-    >
-      <Alert
+  if (proofs?.length <= 3) {
+    return (
+      <Skeleton
         mt={{ base: '16px', sm: '20px', md: '24px' }}
+        fadeDuration={2}
+        isLoaded={!isLoading}
+        opacity={isLoading ? 0.6 : 1}
         w="full"
-        variant={'solid'}
-        backgroundColor={color.dark}
-        border={'2px solid'}
-        borderColor={color.semiDark}
-        rounded="8px"
-        status="info"
       >
-        <Center h={'1.4rem'}>
-          <Box
-            as={AlertIcon}
-            boxSize={'18px'}
-            pt="3px"
-            color={color.light}
-            background={'transparent'}
-          />
-        </Center>
-        <AlertDescription
-          color={color.light}
-          fontSize={{ base: '10px', md: '14px' }}
+        <Alert
+          mt={{ base: '16px', sm: '20px', md: '24px' }}
+          w="full"
+          variant={'solid'}
+          backgroundColor={'surface.red.3'}
+          border={'2px solid'}
+          borderColor={'whiteAlpha.200'}
+          rounded="8px"
+          status="info"
         >
-          To start contributing on the platform you need to collect proofs. By
-          collecting more proofs your voting power increases.
-        </AlertDescription>
-      </Alert>
-    </Skeleton>
-  );
+          <Center h={'1.4rem'}>
+            <Box
+              as={AlertIcon}
+              boxSize={'18px'}
+              pt="3px"
+              color={'sureface.red.1'}
+              background={'transparent'}
+            />
+          </Center>
+          <AlertDescription
+            color={'sureface.red.1'}
+            fontSize={{ base: '10px', md: '14px' }}
+          >
+            To start contributing on the platform you need to collect 3 proofs.
+            By collecting more proofs your voting power increases.
+          </AlertDescription>
+        </Alert>
+      </Skeleton>
+    );
+  } else {
+    return (
+      <Skeleton
+        mt={{ base: '16px', sm: '20px', md: '24px' }}
+        fadeDuration={2}
+        isLoaded={!isLoading}
+        opacity={isLoading ? 0.6 : 1}
+        w="full"
+      >
+        <Alert
+          mt={{ base: '16px', sm: '20px', md: '24px' }}
+          w="full"
+          variant={'solid'}
+          backgroundColor={color.dark}
+          border={'2px solid'}
+          borderColor={color.semiDark}
+          rounded="8px"
+          status="info"
+        >
+          <Center h={'1.4rem'}>
+            <Box
+              as={AlertIcon}
+              boxSize={'18px'}
+              pt="3px"
+              color={color.light}
+              background={'transparent'}
+            />
+          </Center>
+          <AlertDescription
+            color={color.light}
+            fontSize={{ base: '10px', md: '14px' }}
+          >
+            To start contributing on the platform you need to collect proofs. By
+            collecting more proofs your voting power increases.
+          </AlertDescription>
+        </Alert>
+      </Skeleton>
+    );
+  }
 };
 
 const ProofsCollectedTag = ({
@@ -93,19 +133,35 @@ const ProofsCollectedTag = ({
   color: ColorType;
   proofs: UserProof[];
 }) => {
-  return (
-    <Tag
-      size={{ base: 'sm', md: 'sm' }}
-      px="16px"
-      py="6px"
-      fontWeight={'700'}
-      color={color.medium}
-      background={color.dark}
-      rounded="full"
-    >
-      {proofs?.length ?? 0} of 6 Collected
-    </Tag>
-  );
+  if (proofs?.length <= 3) {
+    return (
+      <Tag
+        size={{ base: 'sm', md: 'sm' }}
+        px="16px"
+        py="6px"
+        fontWeight={'700'}
+        color={'surface.red.2'}
+        background={'surface.red.3'}
+        rounded="full"
+      >
+        {proofs?.length ?? 0} of 7 Collected
+      </Tag>
+    );
+  } else {
+    return (
+      <Tag
+        size={{ base: 'sm', md: 'sm' }}
+        px="16px"
+        py="6px"
+        fontWeight={'700'}
+        color={color.medium}
+        background={color.dark}
+        rounded="full"
+      >
+        {proofs?.length ?? 0} of 6 Collected
+      </Tag>
+    );
+  }
 };
 
 const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
@@ -115,7 +171,6 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
     medium: '#31F579',
     light: '#D6FFE5',
   };
-
   const checkProofs = trpc.user.checkProof.useQuery();
   return (
     <VStack align="start" w="full">
@@ -299,7 +354,7 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
             w={{ base: 'full', sm: 'full', md: '17.8rem' }}
             height="fit-content"
             h="full"
-            whileHover={{ y: -8, scale: 1 }}
+            // whileHover={{ y: -8, scale: 1 }}
             transition={{ duration: 0.3 }}
           >
             <MonkeDAOProof />
