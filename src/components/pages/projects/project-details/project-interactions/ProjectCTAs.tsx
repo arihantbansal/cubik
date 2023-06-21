@@ -115,6 +115,9 @@ export const ProjectCTAs = ({
           if (user) {
             const proof = user.proof as unknown as UserProof[];
             if (proof.length >= 3) {
+              if (projectDetails?.owner_publickey === user?.mainWallet) {
+                return <></>;
+              }
               return (
                 <Skeleton
                   opacity={isLoading ? '0.5' : 1}
