@@ -17,9 +17,11 @@ import { SuperteamMembers } from '~/utils/data/superteamMembers';
 import { trpc } from '~/utils/trpc';
 import CivicIDProof from './proofs/CivicIDProof';
 import CubikGrantee from './proofs/CubikGrantee';
-import GithubProof from './proofs/github';
 import GoogleProof from './proofs/GoogleProof';
+import LamportDAOProof from './proofs/LamportDAOProof';
+import MonkeDAOProof from './proofs/MonkeDAOProof';
 import SuperteamProof from './proofs/SuperteamProof';
+import GithubProof from './proofs/github';
 
 const MotionBox = motion(Box);
 
@@ -186,6 +188,24 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
             whileHover={{ y: -8, scale: 1 }}
             transition={{ duration: 0.3 }}
           >
+            <LamportDAOProof />
+          </MotionBox>
+        </Skeleton>
+        <Skeleton
+          fadeDuration={2.5}
+          isLoaded={!isLoading}
+          opacity={isLoading ? 0.4 : 1}
+          rounded="12px"
+        >
+          <MotionBox
+            as={Card}
+            cursor="pointer"
+            w={{ base: 'full', sm: 'full', md: '17.8rem' }}
+            height="fit-content"
+            h="full"
+            whileHover={{ y: -8, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <SuperteamProof
               claimed={
                 proofs?.find((e) => e.name === 'SUPERTEAM') ? true : false
@@ -247,6 +267,42 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
               }
               isLoading={isLoading}
             />
+          </MotionBox>
+        </Skeleton>
+        {/* <Skeleton
+          fadeDuration={2.6}
+          isLoaded={!isLoading}
+          opacity={isLoading ? 0.4 : 1}
+          rounded="12px"
+        >
+          <MotionBox
+            as={Card}
+            cursor="pointer"
+            w={{ base: 'full', sm: 'full', md: '17.8rem' }}
+            height="fit-content"
+            h="full"
+            whileHover={{ y: -8, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <DripProof />
+          </MotionBox>
+        </Skeleton> */}
+        <Skeleton
+          fadeDuration={2.6}
+          isLoaded={!isLoading}
+          opacity={isLoading ? 0.4 : 1}
+          rounded="12px"
+        >
+          <MotionBox
+            as={Card}
+            cursor="pointer"
+            w={{ base: 'full', sm: 'full', md: '17.8rem' }}
+            height="fit-content"
+            h="full"
+            whileHover={{ y: -8, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <MonkeDAOProof />
           </MotionBox>
         </Skeleton>
         <Skeleton

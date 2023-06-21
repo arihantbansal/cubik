@@ -19,7 +19,7 @@ import { BiCheck } from 'react-icons/bi';
 import { SuccessToast } from '~/components/common/toasts/Toasts';
 import { supabase, useUser } from '~/utils/supabase';
 import { trpc } from '~/utils/trpc';
-import GoogleLogo from './SVGs/Google';
+import GranteeLogo from './SVGs/Grantee';
 
 interface Props {
   minted: boolean;
@@ -58,7 +58,7 @@ const CubikGrantee = ({ minted, canMint, isLoading }: Props) => {
         gap="8px"
         align="start"
       >
-        <GoogleLogo size={'60px'} />
+        <GranteeLogo size={'60px'} />
         <HStack spacing="8px">
           <Box
             as="p"
@@ -155,7 +155,7 @@ const CubikGrantee = ({ minted, canMint, isLoading }: Props) => {
                       style={{ height: `300px`, width: `300px` }}
                     />
                   </Center>
-                  <GoogleLogo size={'60px'} />
+                  <GranteeLogo size={'60px'} />
                 </Center>
                 <Box
                   as="p"
