@@ -17,10 +17,10 @@ import { SuperteamMembers } from '~/utils/data/superteamMembers';
 import { trpc } from '~/utils/trpc';
 import CivicIDProof from './proofs/CivicIDProof';
 import CubikGrantee from './proofs/CubikGrantee';
-import GithubProof from './proofs/github';
 import GoogleProof from './proofs/GoogleProof';
 import MonkeDAOProof from './proofs/MonkeDAOProof';
 import SuperteamProof from './proofs/SuperteamProof';
+import GithubProof from './proofs/github';
 
 const MotionBox = motion(Box);
 
@@ -55,33 +55,37 @@ const ProofsInfoBanner = ({
         opacity={isLoading ? 0.6 : 1}
         w="full"
       >
-        <Alert
-          mt={{ base: '16px', sm: '20px', md: '24px' }}
-          w="full"
-          variant={'solid'}
-          backgroundColor={'surface.red.3'}
-          border={'2px solid'}
-          borderColor={'whiteAlpha.200'}
-          rounded="8px"
-          status="info"
-        >
-          <Center h={'1.4rem'}>
-            <Box
-              as={AlertIcon}
-              boxSize={'18px'}
-              pt="3px"
-              color={'sureface.red.1'}
-              background={'transparent'}
-            />
-          </Center>
-          <AlertDescription
-            color={'sureface.red.1'}
-            fontSize={{ base: '10px', md: '14px' }}
+        {proofs?.length > 2 ? (
+          <></>
+        ) : (
+          <Alert
+            mt={{ base: '16px', sm: '20px', md: '24px' }}
+            w="full"
+            variant={'solid'}
+            backgroundColor={'surface.red.3'}
+            border={'2px solid'}
+            borderColor={'whiteAlpha.200'}
+            rounded="8px"
+            status="info"
           >
-            To start contributing on the platform you need to collect 2 proofs.
-            By collecting more proofs your voting power increases.
-          </AlertDescription>
-        </Alert>
+            <Center h={'1.4rem'}>
+              <Box
+                as={AlertIcon}
+                boxSize={'18px'}
+                pt="3px"
+                color={'sureface.red.1'}
+                background={'transparent'}
+              />
+            </Center>
+            <AlertDescription
+              color={'sureface.red.1'}
+              fontSize={{ base: '10px', md: '14px' }}
+            >
+              To start contributing on the platform you need to collect 2
+              proofs. By collecting more proofs your voting power increases.
+            </AlertDescription>
+          </Alert>
+        )}
       </Skeleton>
     );
   } else {
