@@ -46,7 +46,7 @@ const ProofsInfoBanner = ({
   isLoading: boolean;
   proofs: UserProof[];
 }) => {
-  if (proofs?.length <= 3) {
+  if (proofs?.length < 3) {
     return (
       <Skeleton
         mt={{ base: '16px', sm: '20px', md: '24px' }}
