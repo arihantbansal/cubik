@@ -39,7 +39,18 @@ export const addProof = protectedProcedure
         githubUsername: input.githubUsername,
       };
     }
-    const alreadyClaimedProofs = ctx.user?.proof as unknown as UserProof[];
+    const res = await prisma.userModel.findUnique({
+      where: {
+        id: user.id,
+      },
+    });
+    if (!res) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'User not found',
+      });
+    }
+    const alreadyClaimedProofs = res?.proof as unknown as UserProof[];
 
     if (alreadyClaimedProofs.find((e) => e.name === input.name)) {
       throw new TRPCError({
