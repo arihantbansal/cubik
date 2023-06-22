@@ -47,7 +47,7 @@ export const verifiedProjects = publicProcedure
       return array;
     }
 
-    const result = await prisma.projectJoinRound.findMany({
+    const res = await prisma.projectJoinRound.findMany({
       where: {
         status: 'APPROVED',
       },
@@ -65,7 +65,7 @@ export const verifiedProjects = publicProcedure
         },
       },
     });
-    const res = shuffle(result);
+    // const res = shuffle(result);
     // when both filter are working
     if (input.filter && input.round && input.round?.length > 0) {
       console.log('Inside the both');
