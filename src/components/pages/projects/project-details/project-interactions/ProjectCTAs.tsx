@@ -15,7 +15,6 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { Player } from '@lottiefiles/react-lottie-player';
 import {
   Contribution,
   ProjectsModel,
@@ -30,6 +29,7 @@ import { useState } from 'react';
 import { BsTwitter } from 'react-icons/bs';
 import { MdArrowForward } from 'react-icons/md';
 import {
+  ProofsValidation,
   RoundEndedBanner,
   RoundStartingSoon,
 } from '~/components/common/donationCTA/DonationCTA';
@@ -137,33 +137,10 @@ export const ProjectCTAs = ({
               );
             } else {
               return (
-                <Skeleton
-                  opacity={isLoading ? '0.5' : 1}
-                  fadeDuration={2}
-                  isLoaded={!isLoading}
-                  w="full"
-                >
-                  <HStack p="16px" rounded="12px" gap="12px" bg="#31F57910">
-                    <Center p="8px" bg="#071A0F" rounded="full">
-                      <Player
-                        autoplay
-                        loop={true}
-                        src={
-                          'https://assets7.lottiefiles.com/packages/lf20_4htoEB.json'
-                        }
-                        style={{ height: `24px`, width: `24px` }}
-                      />
-                    </Center>
-                    <Box
-                      as={'p'}
-                      textStyle={'body5'}
-                      color="white"
-                      textAlign={'start'}
-                    >
-                      Claim 3 Proofs to donate
-                    </Box>
-                  </HStack>
-                </Skeleton>
+                <ProofsValidation
+                  username={user.username}
+                  isLoading={isLoading}
+                />
               );
             }
           } else {
