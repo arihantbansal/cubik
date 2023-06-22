@@ -23,15 +23,15 @@ import { RxCross1 } from 'react-icons/rx';
 import CategoryTag from '~/components/common/tags/CategoryTags';
 import { useFilteredProjects } from '~/hooks/projects/useFilteredProjects';
 import ProjectListLoadingSkeleton from '../../skeletons/ProjectListLoadingSkeleton';
-import ProjectsList from './ProjectsList';
 import EmptyProjectsState from './empty-state/ProjectsEmptyState';
+import ProjectsList from './ProjectsList';
 
 const showCasedCategories = [
   { value: 'defi', label: 'defi' },
   { value: 'solana_infrastructure', label: 'Solana Infrastructure' },
-  { value: 'social', label: 'Social' },
-  { value: 'dao', label: 'DAO' },
-  { value: 'dev_tooling', label: 'Dev Tooling' },
+  { value: 'sdk', label: 'SDK' },
+  { value: 'consumer', label: 'Consumer' },
+  { value: 'developer_tools', label: 'Developer Tools' },
 ];
 
 export type RoundTypes = {

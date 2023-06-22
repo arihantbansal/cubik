@@ -25,6 +25,8 @@ export const useFilteredProjects = () => {
     },
     {
       enabled: !roundsLoading,
+      refetchInterval: 20000,
+      staleTime: 10000,
     }
   );
 

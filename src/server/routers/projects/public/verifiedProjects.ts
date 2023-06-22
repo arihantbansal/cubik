@@ -1,3 +1,10 @@
+import {
+  Contribution,
+  ProjectJoinRound,
+  ProjectsModel,
+  Round,
+  UserModel,
+} from '@prisma/client';
 import { z } from 'zod';
 import { publicProcedure } from '~/server/trpc';
 import { prisma } from '~/server/utils/prisma';
@@ -10,7 +17,37 @@ export const verifiedProjects = publicProcedure
     })
   )
   .query(async ({ input }) => {
-    const res = await prisma.projectJoinRound.findMany({
+    function shuffle(
+      array: (ProjectJoinRound & {
+        project: ProjectsModel & {
+          Contribution: (Contribution & {
+            user: UserModel;
+          })[];
+          owner: UserModel;
+        };
+        fundingRound: Round;
+      })[]
+    ) {
+      let currentIndex = array.length,
+        randomIndex;
+
+      // While there remain elements to shuffle.
+      while (currentIndex != 0) {
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+          array[randomIndex],
+          array[currentIndex],
+        ];
+      }
+
+      return array;
+    }
+
+    const result = await prisma.projectJoinRound.findMany({
       include: {
         fundingRound: true,
         project: {
@@ -25,7 +62,7 @@ export const verifiedProjects = publicProcedure
         },
       },
     });
-
+    const res = shuffle(result);
     // when both filter are working
     if (input.filter && input.round && input.round?.length > 0) {
       console.log('Inside the both');
