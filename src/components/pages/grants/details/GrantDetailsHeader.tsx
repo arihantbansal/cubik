@@ -16,7 +16,6 @@ import { useState } from 'react';
 import RoundStatus from '~/components/common/dates/Status';
 import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { RoundDetailsWithProjectsWithContributionsType } from '~/types/round';
-import { checkRoundStatus, GRANT_STATUS } from '~/utils/round/checkRoundStatus';
 import SelectProjectToApplyForGrant from '../SelectProjectToApplyForGrant';
 
 const GrantDetailsHeader = ({
@@ -183,14 +182,14 @@ const GrantDetailsHeader = ({
             opacity={isLoading ? '0.4' : '1'}
           >
             <Button
-              display={
-                checkRoundStatus(
-                  data?.startTime as Date,
-                  data?.endTime as Date
-                ) === GRANT_STATUS.notStarted
-                  ? 'block'
-                  : 'none'
-              }
+              // display={
+              //   checkRoundStatus(
+              //     data?.startTime as Date,
+              //     data?.endTime as Date
+              //   ) === GRANT_STATUS.notStarted
+              //     ? 'block'
+              //     : 'none'
+              // }
               variant={'cubikFilled'}
               size={{ base: 'cubikSmall', md: 'cubikMedium' }}
               onClick={() => {
