@@ -1,12 +1,13 @@
 import { Round } from '@prisma/client';
 import { isPast } from 'date-fns';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { category } from '~/components/pages/create-project/projectCategories';
 import { CategoryType } from '~/components/pages/projects/project-explorer/body/ProjectListWithFilter';
 import { trpc } from '~/utils/trpc';
 isPast;
 export const useFilteredProjects = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const shuffleSeed = useMemo(() => Math.round(Math.random() * 10), []);
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryType | null>();
   const [selectedRounds, setSelectedRounds] = useState<Round[] | null>();
@@ -22,6 +23,7 @@ export const useFilteredProjects = () => {
     {
       filter: selectedCategory?.value ?? undefined,
       round: selectedRounds?.map((round) => round.id) ?? [],
+      seed: shuffleSeed,
     },
     {
       enabled: !roundsLoading,

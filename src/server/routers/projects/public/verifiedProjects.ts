@@ -14,10 +14,20 @@ export const verifiedProjects = publicProcedure
     z.object({
       filter: z.string().optional(),
       round: z.array(z.string()).optional(),
+      seed: z.number().optional(),
     })
   )
   .query(async ({ input }) => {
-    function shuffle(
+    function seededRandom(seed: number) {
+      var m = 25;
+      var a = 11;
+      var c = 17;
+
+      seed = (a * seed + c) % m;
+      return seed / m; // returns a float between 0 and 1
+    }
+
+    function shuffleArray(
       array: (ProjectJoinRound & {
         project: ProjectsModel & {
           Contribution: (Contribution & {
@@ -26,28 +36,25 @@ export const verifiedProjects = publicProcedure
           owner: UserModel;
         };
         fundingRound: Round;
-      })[]
+      })[],
+      seed: number
     ) {
-      let currentIndex = array.length,
-        randomIndex;
-
-      // While there remain elements to shuffle.
-      while (currentIndex != 0) {
-        // Pick a remaining element.
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-
-        // And swap it with the current element.
-        [array[currentIndex], array[randomIndex]] = [
-          array[randomIndex],
-          array[currentIndex],
-        ];
+      var count = array.length,
+        randomnumber,
+        temp;
+      while (count) {
+        randomnumber = Math.floor(seededRandom(seed) * count);
+        count--;
+        temp = array[count];
+        array[count] = array[randomnumber];
+        array[randomnumber] = temp;
+        seed++;
       }
 
       return array;
     }
 
-    const res = await prisma.projectJoinRound.findMany({
+    const result = await prisma.projectJoinRound.findMany({
       where: {
         status: 'APPROVED',
       },
@@ -65,7 +72,7 @@ export const verifiedProjects = publicProcedure
         },
       },
     });
-    // const res = shuffle(result);
+    const res = shuffleArray(result, (input.seed as number) ?? 0);
     // when both filter are working
     if (input.filter && input.round && input.round?.length > 0) {
       console.log('Inside the both');
