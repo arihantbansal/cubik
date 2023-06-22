@@ -236,7 +236,7 @@ export const ProjectDonationSimulator = ({
     }
   };
   const EstimatedAmmount = trpc.pool.findEstimated.useQuery({
-    amount: watch('amount'),
+    amount: (watch('amount') * priceSol.data!) as number,
     projectId: projectDetails.id,
     roundId: roundId,
   });
