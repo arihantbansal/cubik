@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { useAnchorWallet } from '@solana/wallet-adapter-react';
+import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
 import { useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import { useForm } from 'react-hook-form';
@@ -26,6 +26,8 @@ import { tokenGroup } from '~/interfaces/token';
 import { useUserStore } from '~/store/userStore';
 
 import { ProjectsModel } from '@prisma/client';
+import { LAMPORTS_PER_SOL } from '@solana/web3.js';
+import axios from 'axios';
 import useCurrentTokenPrice from '~/hooks/useCurrentTokenPrice';
 import {
   connection,
@@ -74,9 +76,9 @@ export const ProjectDonationSimulator = ({
       matchingPoolDonation: 10,
     },
   });
-  console.log('token 0 -', token[0]);
   const { user } = useUserStore();
   const donation: number = watch('amount');
+  const { publicKey } = useWallet();
   const selectedToken: tokenGroup = watch('token');
 
   const setDonationAndAmount = (donation: number) => {
@@ -96,7 +98,6 @@ export const ProjectDonationSimulator = ({
 
   const createContributionMutation = trpc.contribution.create.useMutation({
     onSuccess: async (data: any) => {
-      console.log('🤤 success - ', data);
       setDonationSuccessful(true);
 
       SuccessToast({ toast, message: 'Donation Successful' });
@@ -110,7 +111,6 @@ export const ProjectDonationSimulator = ({
       });
     },
     onError: (error) => {
-      console.log('there was some error', error);
       setTxnError('Trpc returned an error');
       FailureToast({ toast, message: 'Donation Failed' });
     },
@@ -120,6 +120,12 @@ export const ProjectDonationSimulator = ({
   async function onSubmit(_values: any) {
     if (!priceSol.data) return;
     let sig: string | null = null;
+    const balance = await getBalances(publicKey?.toBase58() as string);
+
+    console.log('balance --------- ', balance);
+    if (balance.nativeBalance < _values.amount * LAMPORTS_PER_SOL) {
+      return setTxnError('Insufficient balance');
+    }
     if (String(_values.token.value).includes('sol')) {
       sig = await donateSOL(
         roundName as string,
@@ -130,7 +136,6 @@ export const ProjectDonationSimulator = ({
         _values.amount * priceSol.data * 100 // multiply by 100 because of 2 decimal places
       );
     } else {
-      console.log('----------------------------');
       sig = await donateSPL(
         roundName as string,
         '',
@@ -141,11 +146,7 @@ export const ProjectDonationSimulator = ({
         _values.amount * priceSol.data * 100 // multiply by 100 because of 2 decimal places
       );
     }
-    console.log(
-      'donation number - ',
-      donation,
-      parseInt((_values.amount * priceSol.data).toFixed(2))
-    );
+
     if (!sig) return;
 
     createContributionMutation.mutate({
@@ -196,7 +197,12 @@ export const ProjectDonationSimulator = ({
       return null;
     }
   };
-
+  const getBalances = async (address: string) => {
+    const { data } = await axios.get(
+      `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${process.env.NEXT_PUBLIC_HELIUS_API_KEY}`
+    );
+    return data;
+  };
   const donateSOL = async (
     roundId: string,
     owner: string,
@@ -225,8 +231,6 @@ export const ProjectDonationSimulator = ({
 
       return txid;
     } catch (error: any) {
-      console.log();
-
       setTxnError(error.message || 'There was some error');
       return null;
     }
