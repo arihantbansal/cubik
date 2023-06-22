@@ -12,11 +12,12 @@ import {
   findManyProjects,
   findManyReview,
   findManyVerified,
+  findManyVerifiedUser,
   findOneJoinRound,
   findPubkey,
+  findSimilar,
   projectGraph,
   updateProjectStatus,
-  findSimilar,
 } from './projects/public';
 import { findManyRejected } from './projects/public/findManyRejected';
 import { findManyVerifiedWithContributions } from './projects/public/findManyVerifiedWithContributions';
@@ -41,4 +42,5 @@ export const projectsRouter = router({
   count: projectCount,
   findOneJoinRound: findOneJoinRound,
   findSimilarProjects: findSimilar,
+  findManyVerifiedUser: findManyVerifiedUser,
 });
