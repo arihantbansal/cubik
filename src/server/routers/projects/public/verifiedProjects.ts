@@ -48,6 +48,9 @@ export const verifiedProjects = publicProcedure
     }
 
     const result = await prisma.projectJoinRound.findMany({
+      where: {
+        status: 'APPROVED',
+      },
       include: {
         fundingRound: true,
         project: {
