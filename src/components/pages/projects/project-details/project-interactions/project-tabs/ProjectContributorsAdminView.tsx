@@ -17,6 +17,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { Contribution, UserModel } from '@prisma/client';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { BiChevronDown, BiChevronRight, BiChevronUp } from 'react-icons/bi';
 import ContributionsEmptyState from '~/components/common/empty-state/ContributionsEmptyState';
@@ -82,8 +83,14 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
   user,
   ...contribution
 }) => {
+  const router = useRouter();
   return (
-    <Tr>
+    <Tr
+      onClick={() => {
+        router.push(`/${user.username}`);
+      }}
+      cursor="pointer"
+    >
       <Td p={{ base: '10px', md: '16px' }}>
         <HStack align={'start'} gap={{ base: '8px', md: '16px' }}>
           <Avatar
@@ -117,7 +124,7 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
       <Td p={{ base: '10px', md: '16px' }}>
         <HStack gap="8px" align={'center'}>
           <Center>
-            {contribution.token === 'sol' ? (
+            {contribution.token.includes('sol') ? (
               <SOL size={'28px'} />
             ) : (
               <USDC size={'28px'} />

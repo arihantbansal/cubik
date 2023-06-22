@@ -6,8 +6,8 @@ import {
   HStack,
   Skeleton,
   Stack,
-  VStack,
   useDisclosure,
+  VStack,
 } from '@chakra-ui/react';
 import { Round } from '@prisma/client';
 import { useWallet } from '@solana/wallet-adapter-react';
@@ -16,7 +16,7 @@ import { useState } from 'react';
 import RoundStatus from '~/components/common/dates/Status';
 import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { RoundDetailsWithProjectsWithContributionsType } from '~/types/round';
-import { GRANT_STATUS, checkRoundStatus } from '~/utils/round/checkRoundStatus';
+import { checkRoundStatus, GRANT_STATUS } from '~/utils/round/checkRoundStatus';
 import SelectProjectToApplyForGrant from '../SelectProjectToApplyForGrant';
 
 const GrantDetailsHeader = ({
@@ -162,7 +162,9 @@ const GrantDetailsHeader = ({
                     textStyle={{ base: 'title5', md: 'title4' }}
                     color={'neutral.8'}
                   >
-                    {data?.projectCount}
+                    {data?.ProjectJoinRound.filter(
+                      (e) => e.status === 'APPROVED'
+                    ).length ?? 0}
                   </Box>
                   <Box
                     as="p"

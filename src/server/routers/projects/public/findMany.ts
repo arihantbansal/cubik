@@ -1,7 +1,6 @@
-import { procedure } from '~/server/trpc';
-import { z } from 'zod';
-import { prisma } from '~/server/utils/prisma';
 import { ProjectJoinRoundStatus } from '@prisma/client';
+import { procedure } from '~/server/trpc';
+import { prisma } from '~/server/utils/prisma';
 
 export const findManyProjects = procedure.query(async () => {
   try {
@@ -19,7 +18,11 @@ export const findManyProjects = procedure.query(async () => {
             },
           },
         },
-        project: true,
+        project: {
+          include: {
+            owner: true,
+          },
+        },
       },
     });
     return res;

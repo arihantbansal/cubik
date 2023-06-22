@@ -247,7 +247,7 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
                               fontSize={'11px'}
                               lineHeight="12px"
                             >
-                              by @irffan
+                              by @{projectjoinround.project.owner.username}
                             </Box>
                           </HStack>
                         </HStack>

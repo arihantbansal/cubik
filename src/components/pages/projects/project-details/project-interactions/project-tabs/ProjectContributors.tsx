@@ -16,6 +16,7 @@ import {
   Tr,
   VStack,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { BiChevronDown, BiChevronRight, BiChevronUp } from 'react-icons/bi';
 import ContributionsEmptyState from '~/components/common/empty-state/ContributionsEmptyState';
@@ -101,8 +102,16 @@ export const TableLoading = () => {
 export const ContributorRow: React.FC<ContributorRowProps> = ({
   contributor,
 }) => {
+  const router = useRouter();
   return (
-    <Tr _hover={{ backgroundColor: '#0C0D0D' }}>
+    <Tr
+      w={'full'}
+      onClick={() => {
+        router.push(`/${contributor.username}`);
+      }}
+      cursor="pointer"
+      _hover={{ backgroundColor: '#0C0D0D' }}
+    >
       <Td p="18px">
         <HStack align={'start'} gap={{ base: '8px', md: '16px' }}>
           <Avatar
