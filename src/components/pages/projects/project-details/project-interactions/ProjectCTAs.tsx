@@ -149,8 +149,13 @@ export const ProjectCTAs = ({
                 isLoaded={!isLoading}
                 w="full"
               >
-                <Button variant="cubikFilled" size="md" w="full">
-                  Donate
+                <Button
+                  onClick={() => setVisible(true)}
+                  variant="cubikFilled"
+                  size="md"
+                  w="full"
+                >
+                  Connect Wallet
                 </Button>
               </Skeleton>
             );
@@ -499,7 +504,6 @@ export const ProjectCTAsMobile = ({
   const router = useRouter();
   const { setVisible } = useWalletModal();
   const [isHovered, setIsHovered] = useState(false);
-
   const onDonateHandler = () => {
     if (user?.id) {
       onOpen();
@@ -565,8 +569,13 @@ export const ProjectCTAsMobile = ({
                 isLoaded={!isLoading}
                 w="full"
               >
-                <Button variant="cubikFilled" size="cubikSmall" w="full">
-                  Donate
+                <Button
+                  onClick={() => setVisible(true)}
+                  variant="cubikFilled"
+                  size="cubikSmall"
+                  w="full"
+                >
+                  Connect Wallet
                 </Button>
               </Skeleton>
             );
