@@ -372,7 +372,7 @@ export const ProjectDonationSimulator = ({
                 />
               </Center>
             </HStack>
-            <HStack w="full" justify={'space-between'}>
+            {/* <HStack w="full" justify={'space-between'}>
               <Box as="p" textStyle={'body5'} color="neutral.8">
                 Matching pool contribution
               </Box>
@@ -393,7 +393,7 @@ export const ProjectDonationSimulator = ({
                   }
                 />
               </Center>
-            </HStack>
+            </HStack> */}
           </VStack>
           {txnError && (
             <Alert status="error" variant="cubik">
