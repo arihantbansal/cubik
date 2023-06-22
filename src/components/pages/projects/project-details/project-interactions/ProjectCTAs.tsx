@@ -79,12 +79,10 @@ export const ProjectCTAs = ({
   roundId: string;
 }) => {
   const { user } = useUserStore();
-  const router = useRouter();
   const { setVisible } = useWalletModal();
   const [isHovered, setIsHovered] = useState(false);
   const [donationSuccessful, setDonationSuccessful] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [showDonation, setShowDonation] = useState(false);
 
   const onDonateHandler = () => {
     if (user?.id) {
@@ -528,23 +526,68 @@ export const ProjectCTAsMobile = ({
             <RoundEndedBanner endDate={round.endTime} isLoading={isLoading} />
           );
         else if (isFuture(round.endTime))
-          return (
-            <Skeleton
-              opacity={isLoading ? '0.5' : 1}
-              fadeDuration={2}
-              isLoaded={!isLoading}
-              w="full"
-            >
-              <Button
-                onClick={onDonateHandler}
-                variant="cubikFilled"
-                size="cubikSmall"
+          if (user) {
+            const proof = user.proof as unknown as UserProof[];
+            if (proof.length >= 2) {
+              if (projectDetails?.owner_publickey === user?.mainWallet) {
+                return <></>;
+              }
+              return (
+                <Skeleton
+                  opacity={isLoading ? '0.5' : 1}
+                  fadeDuration={2}
+                  isLoaded={!isLoading}
+                  w="full"
+                >
+                  <Button
+                    onClick={onDonateHandler}
+                    variant="cubikFilled"
+                    size="cubikSmall"
+                    w="full"
+                  >
+                    Donate
+                  </Button>
+                </Skeleton>
+              );
+            } else {
+              return (
+                <ProofsValidation
+                  username={user.username}
+                  isLoading={isLoading}
+                />
+              );
+            }
+          } else {
+            return (
+              <Skeleton
+                opacity={isLoading ? '0.5' : 1}
+                fadeDuration={2}
+                isLoaded={!isLoading}
                 w="full"
               >
-                Donate
-              </Button>
-            </Skeleton>
-          );
+                <Button variant="cubikFilled" size="cubikSmall" w="full">
+                  Donate
+                </Button>
+              </Skeleton>
+            );
+          }
+        // return (
+        //   <Skeleton
+        //     opacity={isLoading ? '0.5' : 1}
+        //     fadeDuration={2}
+        //     isLoaded={!isLoading}
+        //     w="full"
+        //   >
+        //     <Button
+        //       onClick={onDonateHandler}
+        //       variant="cubikFilled"
+        //       size="cubikSmall"
+        //       w="full"
+        //     >
+        //       Donate
+        //     </Button>
+        //   </Skeleton>
+        // );
         return <></>;
       } else {
         return <></>;
