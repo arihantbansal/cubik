@@ -1,5 +1,7 @@
 import { Box, Center, HStack, Skeleton } from '@chakra-ui/react';
 import { Player } from '@lottiefiles/react-lottie-player';
+import Link from 'next/link';
+import { CgShapeHexagon } from 'react-icons/cg';
 import { CountdownTimer } from '~/components/pages/projects/project-explorer/header/FundingRoundBanner';
 
 export const RoundEndedBanner = ({
@@ -38,6 +40,40 @@ export const RoundEndedBanner = ({
         <Box as={'p'} textStyle={'body5'} color="white" textAlign={'start'}>
           Current Round has ended! Stay tuned till the next round starts.{' '}
           <b style={{ textDecoration: 'underline' }}>Learn more</b>
+        </Box>
+      </HStack>
+    </Skeleton>
+  );
+};
+export const ProofsValidation = ({
+  username,
+  isLoading,
+}: {
+  username: string;
+  isLoading: boolean;
+}) => {
+  return (
+    <Skeleton
+      opacity={isLoading ? '0.5' : 1}
+      fadeDuration={2}
+      isLoaded={!isLoading}
+      w="full"
+    >
+      <HStack p="16px" rounded="12px" gap="12px" bg="#2D2A14">
+        <Center p="8px" bg="#FFD83D20" rounded="full">
+          <Center>
+            <Box as={CgShapeHexagon} boxSize={'20px'} color="#FFD83D" />
+          </Center>
+        </Center>{' '}
+        <Box as={'p'} textStyle={'body5'} color="#FEF08A" textAlign={'start'}>
+          At least two proofs are need to contribute to a project in this round.
+          <Box
+            as={Link}
+            href={`/${username}`}
+            style={{ textDecoration: 'underline' }}
+          >
+            collect Proofs
+          </Box>
         </Box>
       </HStack>
     </Skeleton>
