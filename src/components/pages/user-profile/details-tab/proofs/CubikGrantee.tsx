@@ -56,7 +56,12 @@ const CubikGrantee = ({ minted, canMint, isLoading }: Props) => {
   return (
     <>
       <VStack
-        onClick={onOpen}
+        onClick={() => {
+          if (!canMint) {
+            return;
+          }
+          onOpen();
+        }}
         p={{ base: '24px', md: '32px' }}
         gap="8px"
         align="start"
@@ -75,8 +80,20 @@ const CubikGrantee = ({ minted, canMint, isLoading }: Props) => {
               size={{ base: 'xs', md: 'sm' }}
               px="12px"
               py="4px"
-              color="surface.green.2"
-              background={'surface.green.3'}
+              color={
+                minted
+                  ? 'surface.green.2'
+                  : canMint
+                  ? 'surface.green.2'
+                  : 'surface.red.2'
+              }
+              background={
+                minted
+                  ? 'surface.green.3'
+                  : canMint
+                  ? 'surface.green.3'
+                  : 'surface.red.3'
+              }
               rounded="full"
               fontSize={{ base: '10px', sm: '12px', md: '14px' }}
             >
@@ -87,8 +104,20 @@ const CubikGrantee = ({ minted, canMint, isLoading }: Props) => {
               size={{ base: 'xs', md: 'sm' }}
               px="12px"
               py="4px"
-              color="surface.green.2"
-              background={'surface.green.3'}
+              color={
+                minted
+                  ? 'surface.green.2'
+                  : canMint
+                  ? 'surface.green.2'
+                  : 'surface.red.2'
+              }
+              background={
+                minted
+                  ? 'surface.green.3'
+                  : canMint
+                  ? 'surface.green.3'
+                  : 'surface.red.3'
+              }
               rounded="full"
               fontSize={{ base: '10px', sm: '12px', md: '14px' }}
             >
