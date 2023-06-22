@@ -282,7 +282,7 @@ const ApplyForGrant: React.FC<{
       });
     });
 
-    if (filteredRoundData?.length === 0) {
+    if (roundData?.length === 0) {
       // there is no round to be applied for then show there is no acitve round currently
       return (
         <Center
@@ -302,8 +302,8 @@ const ApplyForGrant: React.FC<{
     } // there is a round to be applied for then show the round tiles
     else {
       return (
-        <VStack border="1px solid red" w="full" spacing="24px">
-          {filteredRoundData?.map((round: Round) => {
+        <VStack w="full" spacing="24px">
+          {roundData?.map((round: Round) => {
             return <Tile tileIndex={round.id} round={round} key={round.id} />;
           })}
         </VStack>

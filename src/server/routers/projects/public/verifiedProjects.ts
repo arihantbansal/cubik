@@ -25,7 +25,6 @@ export const verifiedProjects = publicProcedure
         },
       },
     });
-    console.log('Inside', input);
 
     // when both filter are working
     if (input.filter && input.round && input.round?.length > 0) {
