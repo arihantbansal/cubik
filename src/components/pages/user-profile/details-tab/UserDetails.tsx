@@ -11,7 +11,10 @@ const UserDetails = ({
 }) => {
   const { data, error, isError } =
     trpc.contribution.getUserContributions.useQuery({ userId: userId });
-
+  const { data: amountRaiseCount, isLoading: isLoadingAmountRaise } =
+    trpc.project.findManyVerifiedUser.useQuery({
+      id: userId ?? '',
+    });
   if (isError) {
     return <ComponentErrors error={error} />;
   }
@@ -107,45 +110,50 @@ const UserDetails = ({
             </HStack>
           </Skeleton>
         </Card>
-        <Card
-          p={{ base: '16px', md: '24px' }}
-          flexDirection={{ base: 'column', md: 'row' }}
-          gap={{ base: '48px', md: '80px' }}
-          w={{ base: '100%', md: 'auto' }}
-        >
-          <VStack align={'start'} gap="8px">
-            <Skeleton
-              isLoaded={!isLoading}
-              opacity={isLoading ? '0.3' : 1}
-              fadeDuration={2}
+        {!isLoadingAmountRaise && (
+          <>
+            <Card
+              p={{ base: '16px', md: '24px' }}
+              flexDirection={{ base: 'column', md: 'row' }}
+              gap={{ base: '48px', md: '80px' }}
+              w={{ base: '100%', md: 'auto' }}
             >
-              <Box
-                as="p"
-                color="neutral.8"
-                textStyle={{ base: 'body5', md: 'body4' }}
-              >
-                Funds Raised
-              </Box>
-            </Skeleton>
-            <Skeleton
-              isLoaded={!isLoading}
-              opacity={isLoading ? '0.3' : 1}
-              fadeDuration={2}
-            >
-              <Box
-                as="p"
-                color="neutral.11"
-                textStyle={{ base: 'title3', sm: 'title2', md: 'title1' }}
-              >
-                $0.00
-              </Box>
-            </Skeleton>
-            <Skeleton
-              isLoaded={!isLoading}
-              opacity={isLoading ? '0.3' : 1}
-              fadeDuration={2.5}
-            >
-              {/* <Box
+              <VStack align={'start'} gap="8px">
+                <Skeleton
+                  isLoaded={!isLoading}
+                  opacity={isLoading ? '0.3' : 1}
+                  fadeDuration={2}
+                >
+                  <Box
+                    as="p"
+                    color="neutral.8"
+                    textStyle={{ base: 'body5', md: 'body4' }}
+                  >
+                    Funds Raised
+                  </Box>
+                </Skeleton>
+                <Skeleton
+                  isLoaded={!isLoading}
+                  opacity={isLoading ? '0.3' : 1}
+                  fadeDuration={2}
+                >
+                  <Box
+                    as="p"
+                    color="neutral.11"
+                    textStyle={{ base: 'title3', sm: 'title2', md: 'title1' }}
+                  >
+                    $
+                    {parseFloat(
+                      (amountRaiseCount![0] ?? 0)?.toFixed(2) as string
+                    ).toLocaleString()}
+                  </Box>
+                </Skeleton>
+                <Skeleton
+                  isLoaded={!isLoading}
+                  opacity={isLoading ? '0.3' : 1}
+                  fadeDuration={2.5}
+                >
+                  {/* <Box
                 as="p"
                 color="#73FF9A"
                 backgroundColor={'#042919'}
@@ -155,119 +163,127 @@ const UserDetails = ({
               >
                 + $00
               </Box> */}
-            </Skeleton>
-          </VStack>
-          <VStack align={'start'} gap={{ base: '8px', md: '12px' }}>
-            <Skeleton
-              fadeDuration={2}
-              isLoaded={!isLoading}
-              w="full"
-              opacity={isLoading ? '0.3' : 1}
-            >
-              <HStack
-                w={{ base: 'full', md: '14rem' }}
-                justifyContent={'space-between'}
-                alignItems="end"
-              >
-                <Box
-                  as="p"
-                  color="neutral.8"
-                  textStyle={{ base: 'body6', md: 'body5' }}
+                </Skeleton>
+              </VStack>
+              <VStack align={'start'} gap={{ base: '8px', md: '12px' }}>
+                <Skeleton
+                  fadeDuration={2}
+                  isLoaded={!isLoading}
+                  w="full"
+                  opacity={isLoading ? '0.3' : 1}
                 >
-                  Grants
-                </Box>
-                <Box
-                  as="p"
-                  color="neutral.11"
-                  textStyle={{ base: 'title6', sm: 'title5', md: 'title4' }}
+                  <HStack
+                    w={{ base: 'full', md: '14rem' }}
+                    justifyContent={'space-between'}
+                    alignItems="end"
+                  >
+                    <Box
+                      as="p"
+                      color="neutral.8"
+                      textStyle={{ base: 'body6', md: 'body5' }}
+                    >
+                      Grants
+                    </Box>
+                    <Box
+                      as="p"
+                      color="neutral.11"
+                      textStyle={{ base: 'title6', sm: 'title5', md: 'title4' }}
+                    >
+                      $
+                      {parseFloat(
+                        (
+                          ((amountRaiseCount![0] ?? 0) as number) -
+                          ((amountRaiseCount![1] ?? 0) as number)
+                        ).toFixed(2)
+                      )}
+                    </Box>
+                  </HStack>
+                </Skeleton>
+                <Skeleton
+                  isLoaded={!isLoading}
+                  opacity={isLoading ? '0.3' : 1}
+                  fadeDuration={2.5}
+                  w="full"
                 >
-                  -
-                </Box>
-              </HStack>
-            </Skeleton>
-            <Skeleton
-              isLoaded={!isLoading}
-              opacity={isLoading ? '0.3' : 1}
-              fadeDuration={2.5}
-              w="full"
-            >
-              <HStack
-                w={{ base: 'full', md: '14rem' }}
-                justifyContent={'space-between'}
-                alignItems="end"
-              >
-                <Box
-                  as="p"
-                  color="neutral.8"
-                  textStyle={{ base: 'body6', md: 'body5' }}
+                  <HStack
+                    w={{ base: 'full', md: '14rem' }}
+                    justifyContent={'space-between'}
+                    alignItems="end"
+                  >
+                    <Box
+                      as="p"
+                      color="neutral.8"
+                      textStyle={{ base: 'body6', md: 'body5' }}
+                    >
+                      Community
+                    </Box>
+                    <Box
+                      as="p"
+                      color="neutral.11"
+                      textStyle={{ base: 'title6', sm: 'title5', md: 'title4' }}
+                    >
+                      $ {(amountRaiseCount![1] ?? 0)?.toFixed(2)}
+                    </Box>
+                  </HStack>
+                </Skeleton>
+                <Skeleton
+                  isLoaded={!isLoading}
+                  opacity={isLoading ? '0.3' : 1}
+                  fadeDuration={3}
+                  w="full"
                 >
-                  Community
-                </Box>
-                <Box
-                  as="p"
-                  color="neutral.11"
-                  textStyle={{ base: 'title6', sm: 'title5', md: 'title4' }}
+                  <HStack
+                    w={{ base: 'full', md: '14rem' }}
+                    justifyContent={'space-between'}
+                    alignItems="end"
+                  >
+                    <Box
+                      as="p"
+                      color="neutral.8"
+                      textStyle={{ base: 'body6', md: 'body5' }}
+                    >
+                      Tipping
+                    </Box>
+                    <Box
+                      as="p"
+                      color="neutral.11"
+                      textStyle={{ base: 'title6', sm: 'title5', md: 'title4' }}
+                    >
+                      -
+                    </Box>
+                  </HStack>
+                </Skeleton>
+                <Skeleton
+                  isLoaded={!isLoading}
+                  opacity={isLoading ? '0.3' : 1}
+                  fadeDuration={2.6}
+                  w="full"
                 >
-                  -
-                </Box>
-              </HStack>
-            </Skeleton>
-            <Skeleton
-              isLoaded={!isLoading}
-              opacity={isLoading ? '0.3' : 1}
-              fadeDuration={3}
-              w="full"
-            >
-              <HStack
-                w={{ base: 'full', md: '14rem' }}
-                justifyContent={'space-between'}
-                alignItems="end"
-              >
-                <Box
-                  as="p"
-                  color="neutral.8"
-                  textStyle={{ base: 'body6', md: 'body5' }}
-                >
-                  Tipping
-                </Box>
-                <Box
-                  as="p"
-                  color="neutral.11"
-                  textStyle={{ base: 'title6', sm: 'title5', md: 'title4' }}
-                >
-                  -
-                </Box>
-              </HStack>
-            </Skeleton>
-            <Skeleton
-              isLoaded={!isLoading}
-              opacity={isLoading ? '0.3' : 1}
-              fadeDuration={2.6}
-              w="full"
-            >
-              <HStack
-                w={{ base: 'full', md: '14rem' }}
-                justifyContent={'space-between'}
-                alignItems="end"
-              >
-                <Box
-                  as="p"
-                  color="neutral.8"
-                  textStyle={{ base: 'body6', md: 'body5' }}
-                >
-                  Hackathons
-                </Box>
-                <Box
-                  as="p"
-                  color="neutral.11"
-                  textStyle={{ base: 'title6', sm: 'title5', md: 'title4' }}
-                >
-                  -
-                </Box>
-              </HStack>
-            </Skeleton>
-          </VStack>
-        </Card>
+                  <HStack
+                    w={{ base: 'full', md: '14rem' }}
+                    justifyContent={'space-between'}
+                    alignItems="end"
+                  >
+                    <Box
+                      as="p"
+                      color="neutral.8"
+                      textStyle={{ base: 'body6', md: 'body5' }}
+                    >
+                      Hackathons
+                    </Box>
+                    <Box
+                      as="p"
+                      color="neutral.11"
+                      textStyle={{ base: 'title6', sm: 'title5', md: 'title4' }}
+                    >
+                      -
+                    </Box>
+                  </HStack>
+                </Skeleton>
+              </VStack>
+            </Card>
+          </>
+        )}
       </Stack>
     </VStack>
   );
