@@ -606,10 +606,7 @@ export const ProjectCTAsMobile = ({
         >
           <Stack
             direction={{
-              base:
-                round && isPast(round.startTime) && isFuture(round.endTime)
-                  ? 'row'
-                  : 'column',
+              base: 'column',
               lg: 'column',
             }}
             gap="16px"
