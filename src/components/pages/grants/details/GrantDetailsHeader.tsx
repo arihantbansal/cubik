@@ -197,7 +197,7 @@ const GrantDetailsHeader = ({
                 handleApplyForGrant();
               }}
             >
-              Apply For Grant
+              Apply For Grants
             </Button>
           </Skeleton>
         </Stack>

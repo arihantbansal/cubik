@@ -26,7 +26,7 @@ import {
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { ProjectsModel } from '@prisma/client';
+import { ProjectJoinRoundStatus, ProjectsModel } from '@prisma/client';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -146,10 +146,11 @@ const SelectProjectToApplyForGrant = ({
     onModalOpen();
   };
 
-  const Tile: React.FC<{ tileIndex: string; project: ProjectsModel }> = ({
-    tileIndex,
-    project,
-  }) => {
+  const Tile: React.FC<{
+    tileIndex: string;
+    project: ProjectsModel;
+    joinRoundStatus: ProjectJoinRoundStatus | undefined;
+  }> = ({ tileIndex, project, joinRoundStatus }) => {
     const isSelected = selectedProjectId === tileIndex;
 
     return (
@@ -164,7 +165,13 @@ const SelectProjectToApplyForGrant = ({
         justify={'space-between'}
         align="center"
         direction={{ base: 'column', md: 'row' }}
-        onClick={() => setSelectedProjectId(tileIndex)}
+        onClick={() => {
+          if (project.status === 'VERIFIED' || !joinRoundStatus) {
+            setSelectedProjectId(tileIndex);
+          } else {
+            return;
+          }
+        }}
         position="relative"
         overflow={'hidden'}
         _after={{
@@ -262,9 +269,11 @@ const SelectProjectToApplyForGrant = ({
                 ).length > 0 ? (
                   userDataWithProjectsAndRoundDetails?.project
                     .filter((project) => {
-                      return !project.ProjectJoinRound.some(
-                        (projectJoinRound) =>
-                          projectJoinRound?.roundId === selectedGrantRound?.id
+                      return (
+                        !project.ProjectJoinRound.some(
+                          (projectJoinRound) =>
+                            projectJoinRound?.roundId === selectedGrantRound?.id
+                        ) && project.status === 'VERIFIED'
                       );
                     })
                     .map((project, index) => (
@@ -272,6 +281,13 @@ const SelectProjectToApplyForGrant = ({
                         key={project.id}
                         tileIndex={project.id}
                         project={project}
+                        joinRoundStatus={
+                          project.ProjectJoinRound.find(() =>
+                            project.ProjectJoinRound.find(
+                              (e) => e.roundId === selectedGrantRound?.id
+                            )
+                          )?.status
+                        }
                       />
                     ))
                 ) : (
