@@ -292,6 +292,7 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
               justify="space-between"
             >
               <Box
+                overflow="hidden"
                 w="full"
                 flex="4"
                 minWidth="0"
@@ -310,7 +311,7 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
               >
                 <HStack
                   overflow="clip"
-                  w="full"
+                  w="200%"
                   mt="auto"
                   justify="start"
                   whiteSpace="nowrap" // Set whiteSpace to nowrap

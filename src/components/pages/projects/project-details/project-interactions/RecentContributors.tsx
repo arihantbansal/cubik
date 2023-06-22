@@ -56,8 +56,10 @@ export const RecentContributions = ({
   >([]);
 
   useEffect(() => {
-    if (contributorsData && contributorsData.length >= displayedItemsCount) {
-      setVisibleContributors(contributorsData?.slice(0, displayedItemsCount));
+    console.log('useEffect ⚡️ contributors data - ', contributorsData);
+    if (contributorsData) {
+      const itemsToDisplay = contributorsData.slice(0, displayedItemsCount);
+      setVisibleContributors(itemsToDisplay);
     }
   }, [contributorsData]);
 
@@ -70,6 +72,7 @@ export const RecentContributions = ({
           ) +
             1) %
           contributorsData.length; // loop back to the start
+        console.log('2nd use effect called - ', nextContributorIndex);
         setVisibleContributors((prevVisibleContributors) => [
           ...prevVisibleContributors.slice(1),
           contributorsData[nextContributorIndex],
