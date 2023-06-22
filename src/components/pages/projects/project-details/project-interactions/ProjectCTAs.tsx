@@ -114,7 +114,7 @@ export const ProjectCTAs = ({
         else if (isFuture(round.endTime))
           if (user) {
             const proof = user.proof as unknown as UserProof[];
-            if (proof.length >= 3) {
+            if (proof.length >= 2) {
               if (projectDetails?.owner_publickey === user?.mainWallet) {
                 return <></>;
               }

@@ -17,10 +17,10 @@ import { SuperteamMembers } from '~/utils/data/superteamMembers';
 import { trpc } from '~/utils/trpc';
 import CivicIDProof from './proofs/CivicIDProof';
 import CubikGrantee from './proofs/CubikGrantee';
+import GithubProof from './proofs/github';
 import GoogleProof from './proofs/GoogleProof';
 import MonkeDAOProof from './proofs/MonkeDAOProof';
 import SuperteamProof from './proofs/SuperteamProof';
-import GithubProof from './proofs/github';
 
 const MotionBox = motion(Box);
 
@@ -46,7 +46,7 @@ const ProofsInfoBanner = ({
   isLoading: boolean;
   proofs: UserProof[];
 }) => {
-  if (proofs?.length < 3) {
+  if (proofs?.length < 2) {
     return (
       <Skeleton
         mt={{ base: '16px', sm: '20px', md: '24px' }}
