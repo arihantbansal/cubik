@@ -16,6 +16,7 @@ import {
   Tag,
   VStack,
 } from '@chakra-ui/react';
+import { ProjectJoinRoundStatus } from '@prisma/client';
 import Link from 'next/link';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import NoInformation from '~/components/common/empty-state/NoInformation';
@@ -60,7 +61,11 @@ const GrantDetailsBody = ({
           </Box>
           {data && data?.ProjectJoinRound.length ? (
             <Tag rounded="full" variant="colorful" color="#FFF066" bg="#2D2A14">
-              {data?.ProjectJoinRound.length}
+              {
+                data?.ProjectJoinRound.filter(
+                  (round) => round.status === ProjectJoinRoundStatus.APPROVED
+                ).length
+              }
             </Tag>
           ) : (
             ''
@@ -78,7 +83,9 @@ const GrantDetailsBody = ({
         </TabPanel>
         <TabPanel>
           {isError && <ErrorUI />}
-          {data?.ProjectJoinRound.map((round) => (
+          {data?.ProjectJoinRound.filter(
+            (round) => round.status === ProjectJoinRoundStatus.APPROVED
+          ).map((round) => (
             <Skeleton
               w="full"
               isLoaded={!isLoading}
