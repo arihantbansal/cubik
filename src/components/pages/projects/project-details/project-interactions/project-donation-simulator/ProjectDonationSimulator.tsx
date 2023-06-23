@@ -133,7 +133,7 @@ export const ProjectDonationSimulator = ({
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
         _values.amount,
-        _values.amount * priceSol.data * 100 // multiply by 100 because of 2 decimal places
+        _values.amount * priceSol.data // multiply by 100 because of 2 decimal places
       );
     } else {
       sig = await donateSPL(
@@ -143,7 +143,7 @@ export const ProjectDonationSimulator = ({
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
         _values.amount, // token value direct because form is not taking near 0 values
-        _values.amount * priceSol.data * 100 // multiply by 100 because of 2 decimal places
+        _values.amount * priceSol.data // multiply by 100 because of 2 decimal places
       );
     }
 
