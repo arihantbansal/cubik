@@ -14,7 +14,6 @@ import {
   Stack,
   VStack,
 } from '@chakra-ui/react';
-import { Round } from '@prisma/client';
 import React, { useRef } from 'react';
 import { BiCheck, BiSearch } from 'react-icons/bi';
 import { MdClear } from 'react-icons/md';
@@ -53,7 +52,7 @@ export const ProjectListWithFilter: React.FC = () => {
     roundsData,
     selectedCategory,
     setSelectedCategory,
-    selectedRounds,
+    roundIds,
     filteredProjectsFromServer,
     searchTerm,
     setSearchTerm,
@@ -316,7 +315,7 @@ export const ProjectListWithFilter: React.FC = () => {
                   <Skeleton width="full" height="1.4rem" opacity="0.5" />
                 </VStack>
               ) : (
-                roundsData?.map((round: Round) => (
+                roundsData?.map((round) => (
                   <MenuItem
                     backgroundColor={'#0C0D0D'}
                     _hover={{
@@ -325,7 +324,10 @@ export const ProjectListWithFilter: React.FC = () => {
                     rounded="8px"
                     key={round.id}
                   >
-                    <HStack as="button" onClick={() => handleRoundClick(round)}>
+                    <HStack
+                      as="button"
+                      onClick={() => handleRoundClick(round.id)}
+                    >
                       <Center
                         w="20px"
                         height="20px"
@@ -333,21 +335,21 @@ export const ProjectListWithFilter: React.FC = () => {
                         border={'1px solid'}
                         borderColor={`surface.${round.colorScheme}.1`}
                         bg={
-                          isRoundSelected(round)
-                            ? `surface.${round.colorScheme}.1`
+                          isRoundSelected(round?.id)
+                            ? `surface.${round?.colorScheme}.1`
                             : 'transparent'
                         }
                       >
-                        {isRoundSelected(round) && (
+                        {isRoundSelected(round?.id) && (
                           <BiCheck size="1rem" color="#0C0D0D" />
                         )}
                       </Center>
                       <Box
                         as="p"
                         textStyle={{ base: 'body6', md: 'body5' }}
-                        color={`surface.${round.colorScheme}.1`}
+                        color={`surface.${round?.colorScheme}.1`}
                       >
-                        {round.roundName}
+                        {round?.roundName}
                       </Box>
                     </HStack>
                   </MenuItem>
@@ -360,7 +362,7 @@ export const ProjectListWithFilter: React.FC = () => {
       <VStack w="full" align={'start'} gap="16px">
         {filteredProjectsLoading ? (
           <ProjectListLoadingSkeleton />
-        ) : selectedRounds &&
+        ) : roundIds &&
           filteredProjectsFromServer &&
           filteredProjectsFromServer.length > 0 ? (
           <ProjectsList allProjectsData={filteredProjectsFromServer} />

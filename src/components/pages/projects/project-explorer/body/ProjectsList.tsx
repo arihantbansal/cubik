@@ -28,6 +28,7 @@ import CustomTag from '~/components/common/tags/CustomTag';
 import { RemoveToast, SuccessToast } from '~/components/common/toasts/Toasts';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import useListStore from '~/store/listStore';
+import { verifiedProjectsType } from '~/types/projects';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import ProjectsContributorsNumber from './ProjectsContributorsNumber';
 
@@ -44,31 +45,28 @@ type PropsType = {
 
 // In the ProjectsList component
 type ProjectsListProps = {
-  allProjectsData: (ProjectJoinRound & {
-    project: ProjectsModel & {
-      Contribution: (Contribution & {
-        user: UserModel;
-      })[];
-      owner: UserModel;
-    };
-    fundingRound: Round;
-  })[];
+  allProjectsData: verifiedProjectsType[];
   owner?: UserModel;
 };
 
 type ProjectCardProps = {
-  projectJoinRound: ProjectJoinRound & {
-    project: ProjectsModel & {
-      Contribution: (Contribution & {
-        user: UserModel;
-      })[];
-      owner: UserModel;
-    };
-    fundingRound: Round;
-  };
+  industry: string;
+  projectId: string;
+  ownerUsername: string;
+  status: ProjectJoinRoundStatus;
+  joinRoundId: string;
+  startTime: Date;
+  endTime: Date;
+  colorScheme: string;
+  roundName: string;
+  projectName: string;
+  projectLogo: string;
+  projectDescription: string;
+  amountRaised: number;
+  project_link: string;
 };
 
-const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
+const ProjectCard = (props: ProjectCardProps) => {
   const toast = useToast();
   const addProject = useListStore((state) => state.addProject);
   const removeProject = useListStore((state) => state.removeProject);
@@ -76,10 +74,10 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
 
   const [isHovered, setIsHovered] = useState(false);
   const [addedToList, setAddedToList] = useState(
-    !!projectList.find((item) => item.id === projectJoinRound.project.id)
+    !!projectList.find((item) => item.id === props?.projectId)
   );
 
-  const industry = JSON.parse(projectJoinRound.project?.industry);
+  const industry = JSON.parse(props?.industry);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -90,30 +88,25 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
   };
   const handleAddOrRemoveProject = () => {
     if (addedToList) {
-      removeProject(projectJoinRound.project.id);
+      removeProject(props.projectId);
       setAddedToList(false);
       RemoveToast({ toast, message: 'Project removed from list' });
     } else {
-      addProject(projectJoinRound.project);
+      // addProject(projectJoinRound.project);
       setAddedToList(true);
       SuccessToast({ toast, message: 'Project added to list' });
     }
   };
 
   useEffect(() => {
-    setAddedToList(
-      !!projectList.find((item) => item.id === projectJoinRound.projectId)
-    );
+    setAddedToList(!!projectList.find((item) => item.id === props.projectId));
   }, [projectList]);
-  console.log('projectJoinRound', projectJoinRound);
   return (
     <LinkBox
       as={Link}
-      href={`/${projectJoinRound.project.owner.username}/${
-        projectJoinRound.project.id
-      }${
-        projectJoinRound.status === ProjectJoinRoundStatus.APPROVED
-          ? `/${projectJoinRound.id}`
+      href={`/${props.ownerUsername}/${props.projectId}${
+        props.status === ProjectJoinRoundStatus.APPROVED
+          ? `/${props.joinRoundId}`
           : ``
       }`}
       w="100%"
@@ -163,53 +156,50 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
           </Center>
         )}
         {/* card Header */}
-        {isPast(projectJoinRound.fundingRound.startTime) &&
-          !isPast(projectJoinRound.fundingRound.endTime) && (
-            // if project is participating in a round then make it visible else don't show it
-            <Center
-              display={
-                projectJoinRound.status === ProjectJoinRoundStatus.APPROVED
-                  ? 'flex'
-                  : 'none'
-              }
+        {isPast(props.startTime) && !isPast(props.endTime) && (
+          // if project is participating in a round then make it visible else don't show it
+          <Center
+            display={
+              props.status === ProjectJoinRoundStatus.APPROVED ? 'flex' : 'none'
+            }
+            w="full"
+            bg={`surface.${props.colorScheme}.3`}
+            borderTopRadius={'16px'}
+          >
+            <HStack
               w="full"
-              bg={`surface.${projectJoinRound.fundingRound.colorScheme}.3`}
+              gap="8px"
+              borderColor="red"
+              borderBottom={'red'}
+              padding={'12px 24px'}
               borderTopRadius={'16px'}
+              justifyContent="space-between"
             >
-              <HStack
+              <Box
                 w="full"
-                gap="8px"
-                borderColor="red"
-                borderBottom={'red'}
-                padding={'12px 24px'}
-                borderTopRadius={'16px'}
-                justifyContent="space-between"
+                as="p"
+                noOfLines={1}
+                whiteSpace={'nowrap'}
+                color={`surface.${props.colorScheme}.1`}
+                textStyle={'overline4'}
+                textTransform="uppercase"
+                letterSpacing={'0.2em'}
+                fontSize={{ base: '8px', md: '10px' }}
               >
-                <Box
-                  w="full"
-                  as="p"
-                  noOfLines={1}
-                  whiteSpace={'nowrap'}
-                  color={`surface.${projectJoinRound.fundingRound.colorScheme}.1`}
-                  textStyle={'overline4'}
-                  textTransform="uppercase"
-                  letterSpacing={'0.2em'}
-                  fontSize={{ base: '8px', md: '10px' }}
-                >
-                  Participating In
-                </Box>
-                <Box
-                  as="p"
-                  w="fit-content"
-                  whiteSpace={'nowrap'}
-                  textStyle={{ base: 'title6', md: 'title5' }}
-                  color={`surface.${projectJoinRound.fundingRound.colorScheme}.1`}
-                >
-                  {projectJoinRound.fundingRound.roundName}
-                </Box>
-              </HStack>
-            </Center>
-          )}
+                Participating In
+              </Box>
+              <Box
+                as="p"
+                w="fit-content"
+                whiteSpace={'nowrap'}
+                textStyle={{ base: 'title6', md: 'title5' }}
+                color={`surface.${props.colorScheme}.1`}
+              >
+                {props.roundName}
+              </Box>
+            </HStack>
+          </Center>
+        )}
         {/* cards footer */}
         <VStack
           w="full"
@@ -225,7 +215,7 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
           >
             <HStack justifyContent={'space-between'}>
               <Avatar
-                src={projectJoinRound.project.logo}
+                src={props.projectLogo}
                 name="anchor"
                 borderRadius={'8px'}
                 size={{ base: 'md', md: 'lg' }}
@@ -234,7 +224,7 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
             <VStack gap="0" spacing="0" w="full">
               <HStack align={'end'} w="full" justify="space-between">
                 <Box as="p" textStyle={{ base: 'title4', md: 'title3' }}>
-                  {projectJoinRound.project.name}
+                  {props.projectName}
                 </Box>
                 <Box
                   as="p"
@@ -244,16 +234,14 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
                   $
                   {formatNumberWithK(
                     (parseInt(
-                      projectJoinRound.amountRaise?.toFixed(2) as string
+                      props.amountRaised?.toFixed(2) as string
                     ) as number) ?? 0
                   )}
                 </Box>
               </HStack>
               <HStack w="full" justify="space-between">
                 <Center>
-                  <GetFormattedLink
-                    link={projectJoinRound.project.project_link}
-                  />
+                  <GetFormattedLink link={props.project_link} />
                 </Center>
                 <Box
                   color="neutral8"
@@ -275,7 +263,7 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
               alignItems={'start'}
               textAlign={'start'}
             >
-              {projectJoinRound.project.short_description}
+              {props.projectDescription}
             </Box>
           </VStack>
           {/* card footer */}
@@ -326,14 +314,8 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
                 </HStack>
               </Box>
               <ProjectsContributorsNumber
-                projectId={projectJoinRound.project.id}
-                contributorsList={projectJoinRound.project.Contribution.filter(
-                  (e, index) => {
-                    if (e.roundId === projectJoinRound.roundId) {
-                      return projectJoinRound.project.Contribution[index];
-                    }
-                  }
-                )}
+                projectId={props.projectId}
+                contributorsList={[]}
               />
             </HStack>
             <SlideFade in={isHovered} offsetY="0px" reverse>
@@ -351,11 +333,9 @@ const ProjectCard = ({ projectJoinRound }: ProjectCardProps) => {
               >
                 <Button
                   as={Link}
-                  href={`/${projectJoinRound.project.owner.username}/${
-                    projectJoinRound.project.id
-                  }${
-                    projectJoinRound.status === ProjectJoinRoundStatus.APPROVED
-                      ? `/${projectJoinRound.id}`
+                  href={`/${props?.ownerUsername}/${props?.projectId}${
+                    props.status === ProjectJoinRoundStatus.APPROVED
+                      ? `/${props.joinRoundId}`
                       : ``
                   }`}
                   background={'#1D1F1E'}
@@ -405,9 +385,25 @@ const ProjectsList = ({ allProjectsData }: ProjectsListProps) => {
         direction={{ base: 'column', sm: 'row', md: 'row' }}
       >
         {allProjectsData.map(
-          (projectJoinRound: any, key: React.Key | null | undefined) => {
+          (projectJoinRound, key: React.Key | null | undefined) => {
             return (
-              <ProjectCard key={key} projectJoinRound={projectJoinRound} />
+              <ProjectCard
+                key={key}
+                endTime={projectJoinRound.fundingRound.endTime}
+                industry={projectJoinRound.project.industry}
+                projectId={projectJoinRound.project.id}
+                joinRoundId={projectJoinRound.id}
+                ownerUsername={projectJoinRound.project.owner.username}
+                status={projectJoinRound.status}
+                startTime={projectJoinRound.fundingRound.startTime}
+                amountRaised={projectJoinRound.amountRaise ?? 0}
+                projectDescription={projectJoinRound.project.short_description}
+                projectLogo={projectJoinRound.project.logo}
+                projectName={projectJoinRound.project.name}
+                project_link={projectJoinRound.project.project_link}
+                colorScheme={projectJoinRound.fundingRound.colorScheme}
+                roundName={projectJoinRound.fundingRound.roundName}
+              />
             );
           }
         )}

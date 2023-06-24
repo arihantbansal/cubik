@@ -27,7 +27,7 @@ import {
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { ProjectsModel, Round } from '@prisma/client';
+import { ProjectsModel } from '@prisma/client';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
@@ -53,7 +53,8 @@ const ApplyForGrant: React.FC<{
     data: roundData,
     isLoading,
     isError,
-  } = trpc.round.findActivePresentAndFutureRounds.useQuery();
+  } = trpc.round.findActive.useQuery();
+
   const { hasError, ErrorBoundaryWrapper } = useErrorBoundary();
   const [signTxnLoading, setSignTxnLoading] = useState(false);
   const [transactionSignError, setTransactionSignError] = useState<
@@ -133,12 +134,15 @@ const ApplyForGrant: React.FC<{
       </Center>
     );
   }
-
-  const Tile: React.FC<{ tileIndex: string; round: Round }> = ({
-    tileIndex,
-    round,
-  }) => {
-    const isSelected = selectRoundId === tileIndex;
+  interface TileType {
+    tileIndex: string;
+    roundName: string;
+    startTime: Date;
+    short_description: string;
+    matchedPool: number;
+  }
+  const Tile: React.FC<TileType> = (props) => {
+    const isSelected = selectRoundId === props.tileIndex;
 
     return (
       <HStack
@@ -152,7 +156,7 @@ const ApplyForGrant: React.FC<{
         justify={'space-between'}
         align="center"
         direction={{ base: 'column', md: 'row' }}
-        onClick={() => setSelectRoundId(tileIndex)}
+        onClick={() => setSelectRoundId(props.tileIndex)}
         position="relative"
         overflow={'hidden'}
         _after={{
@@ -177,7 +181,7 @@ const ApplyForGrant: React.FC<{
                 as="p"
                 textStyle={{ base: 'title2', md: 'title1' }}
               >
-                {round.roundName}
+                {props.roundName}
               </Box>
               <HStack
                 rounded="full"
@@ -193,12 +197,12 @@ const ApplyForGrant: React.FC<{
                   color="neutral.11"
                   textStyle={{ base: 'body6', md: 'body5' }}
                 >
-                  Start - {formateDateInMonths(round.startTime)}
+                  Start - {formateDateInMonths(props.startTime)}
                 </Box>
               </HStack>
             </HStack>
             <Box as="p" textStyle={'body4'} color="neutral.9">
-              {round.short_description}
+              {props.short_description}
             </Box>
           </VStack>
           <HStack
@@ -217,7 +221,7 @@ const ApplyForGrant: React.FC<{
               Matching Pool
             </Box>
             <Box as="p" textStyle={{ base: 'body3', md: 'title4' }}>
-              : {formatNumberWithK(round.matchedPool)} USDC
+              : {formatNumberWithK(props.matchedPool)} USDC
             </Box>
           </HStack>
         </VStack>{' '}
@@ -273,15 +277,6 @@ const ApplyForGrant: React.FC<{
   };
 
   const FilteredRoundTiles = () => {
-    const filteredRoundData = roundData?.filter((round) => {
-      // add this after this round return isFuture(round.startTime);
-      // we have to just chekc if the project is already applied to the round or not
-      return round.ProjectJoinRound.find((projectJoinRound) => {
-        // return only rounds where the current project id is not there
-        if (!projectJoinRound.projectId) return true;
-      });
-    });
-
     if (roundData?.length === 0) {
       // there is no round to be applied for then show there is no acitve round currently
       return (
@@ -303,8 +298,17 @@ const ApplyForGrant: React.FC<{
     else {
       return (
         <VStack w="full" spacing="24px">
-          {roundData?.map((round: Round) => {
-            return <Tile tileIndex={round.id} round={round} key={round.id} />;
+          {roundData?.map((round) => {
+            return (
+              <Tile
+                tileIndex={round.id}
+                matchedPool={round.matchedPool}
+                roundName={round.roundName}
+                short_description={round.short_description}
+                key={round.id}
+                startTime={round.startTime}
+              />
+            );
           })}
         </VStack>
       );

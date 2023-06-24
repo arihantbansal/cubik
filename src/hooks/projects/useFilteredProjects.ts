@@ -1,6 +1,5 @@
-import { Round } from '@prisma/client';
 import { isPast } from 'date-fns';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { category } from '~/components/pages/create-project/projectCategories';
 import { CategoryType } from '~/components/pages/projects/project-explorer/body/ProjectListWithFilter';
 import { trpc } from '~/utils/trpc';
@@ -8,13 +7,13 @@ isPast;
 export const useFilteredProjects = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const shuffleSeed = useMemo(() => Math.round(Math.random() * 10), []);
+  const [roundIds, setRoundIds] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryType | null>();
-  const [selectedRounds, setSelectedRounds] = useState<Round[] | null>();
 
   // trpc calls
   const { data: roundsData, isLoading: roundsLoading } =
-    trpc.round.findOngoingRounds.useQuery();
+    trpc.round.findActive.useQuery();
 
   const {
     data: filteredProjectsFromServer,
@@ -22,7 +21,7 @@ export const useFilteredProjects = () => {
   } = trpc.project.verifiedProjects.useQuery(
     {
       filter: selectedCategory?.value ?? undefined,
-      round: selectedRounds?.map((round) => round.id) ?? [],
+      round: roundIds, // need to change this later
       seed: shuffleSeed,
     },
     {
@@ -32,14 +31,6 @@ export const useFilteredProjects = () => {
     }
   );
 
-  useEffect(() => {
-    if (roundsData) {
-      console.log('roundsData', roundsData);
-
-      setSelectedRounds(roundsData);
-    }
-  }, [roundsData]);
-
   const handleCategoryClick = (category?: CategoryType) => {
     if (category && isCategorySelected(category)) {
       setSelectedCategory(undefined);
@@ -48,21 +39,18 @@ export const useFilteredProjects = () => {
     setSelectedCategory(category);
   };
 
-  const handleRoundClick = (round: Round) => {
-    setSelectedRounds((prevRounds) => {
-      let newRounds;
-      if (prevRounds?.includes(round)) {
-        newRounds = prevRounds.filter((r) => r !== round);
-      } else {
-        newRounds = [...(prevRounds ?? []), round];
-      }
-      return newRounds;
-    });
+  const handleRoundClick = (roundid: string) => {
+    if (roundIds.includes(roundid)) {
+      setRoundIds(roundIds.filter((r) => r !== roundid));
+    } else {
+      setRoundIds([...roundIds, roundid]);
+    }
   };
 
   const isCategorySelected = (category: CategoryType) =>
     selectedCategory?.value === category.value;
-  const isRoundSelected = (round: Round) => selectedRounds?.includes(round);
+
+  const isRoundSelected = (roundId: string) => !roundIds?.includes(roundId);
 
   const filteredCategories = category.filter((cat) =>
     cat.label.toLowerCase().includes(searchTerm.toLowerCase())
@@ -74,8 +62,7 @@ export const useFilteredProjects = () => {
     roundsLoading,
     selectedCategory,
     setSelectedCategory,
-    selectedRounds,
-    setSelectedRounds,
+    roundIds,
     filteredProjectsFromServer,
     filteredCategories,
     searchTerm,

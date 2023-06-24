@@ -1,13 +1,7 @@
-import {
-  Contribution,
-  ProjectJoinRound,
-  ProjectsModel,
-  Round,
-  UserModel,
-} from '@prisma/client';
 import { z } from 'zod';
 import { publicProcedure } from '~/server/trpc';
 import { prisma } from '~/server/utils/prisma';
+import { verifiedProjectsType } from '~/types/projects';
 
 export const verifiedProjects = publicProcedure
   .input(
@@ -27,18 +21,7 @@ export const verifiedProjects = publicProcedure
       return seed / m; // returns a float between 0 and 1
     }
 
-    function shuffleArray(
-      array: (ProjectJoinRound & {
-        project: ProjectsModel & {
-          Contribution: (Contribution & {
-            user: UserModel;
-          })[];
-          owner: UserModel;
-        };
-        fundingRound: Round;
-      })[],
-      seed: number
-    ) {
+    function shuffleArray(array: verifiedProjectsType[], seed: number) {
       var count = array.length,
         randomnumber,
         temp;
@@ -58,14 +41,36 @@ export const verifiedProjects = publicProcedure
       where: {
         status: 'APPROVED',
       },
-      include: {
-        fundingRound: true,
+      select: {
+        id: true,
+        status: true,
+        amountRaise: true,
+        fundingRound: {
+          select: {
+            id: true,
+            colorScheme: true,
+            active: true,
+            endTime: true,
+            roundName: true,
+            startTime: true,
+          },
+        },
         project: {
-          include: {
+          select: {
+            id: true,
+            industry: true,
+            logo: true,
+            name: true,
+            project_link: true,
+            short_description: true,
             owner: true,
             Contribution: {
-              include: {
-                user: true,
+              select: {
+                user: {
+                  select: {
+                    profilePicture: true,
+                  },
+                },
               },
             },
           },

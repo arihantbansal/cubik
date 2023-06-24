@@ -82,33 +82,8 @@ export const roundRouter = router({
       return roundRes;
     }),
 
-  findActive: procedure.query(async ({ ctx }) => {
-    const roundRes = await prisma.round.findMany({
-      where: {
-        active: true,
-        endTime: {
-          gte: new Date(),
-        },
-      },
-    });
-    return roundRes;
-  }),
-  findActivePresentAndFutureRounds: procedure.query(async ({ ctx }) => {
-    const roundRes = await prisma.round.findMany({
-      where: {
-        active: true,
-      },
-      include: {
-        ProjectJoinRound: {
-          include: {
-            project: true,
-          },
-        },
-      },
-    });
-    return roundRes;
-  }),
-  findOngoingRounds: activeRounds,
+  findActive: activeRounds,
+
   findInReview: procedure
     .input(
       z.object({
