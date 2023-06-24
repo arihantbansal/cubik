@@ -21,7 +21,7 @@ export const useFilteredProjects = () => {
   } = trpc.project.verifiedProjects.useQuery(
     {
       filter: selectedCategory?.value ?? undefined,
-      round: roundIds, // need to change this later
+      round: [], // need to change this later
       seed: shuffleSeed,
     },
     {

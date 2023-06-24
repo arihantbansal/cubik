@@ -2,14 +2,9 @@ import {
   Box,
   Center,
   HStack,
-  IconButton,
   Input,
   InputGroup,
   InputRightElement,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Skeleton,
   Stack,
   VStack,
@@ -17,7 +12,6 @@ import {
 import React, { useRef } from 'react';
 import { BiCheck, BiSearch } from 'react-icons/bi';
 import { MdClear } from 'react-icons/md';
-import { RiFilter3Fill } from 'react-icons/ri';
 import { RxCross1 } from 'react-icons/rx';
 import CategoryTag from '~/components/common/tags/CategoryTags';
 import { useFilteredProjects } from '~/hooks/projects/useFilteredProjects';
@@ -270,7 +264,7 @@ export const ProjectListWithFilter: React.FC = () => {
               </VStack>
             )}
           </InputGroup>
-          <Menu closeOnSelect={false}>
+          {/* <Menu closeOnSelect={false}>
             <MenuButton
               as={IconButton}
               aria-label="Options"
@@ -356,7 +350,7 @@ export const ProjectListWithFilter: React.FC = () => {
                 ))
               )}
             </MenuList>
-          </Menu>
+          </Menu> */}
         </HStack>
       </Stack>
       <VStack w="full" align={'start'} gap="16px">
