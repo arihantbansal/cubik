@@ -10,9 +10,9 @@ import {
   HStack,
   Icon,
   Stack,
-  VStack,
   useDisclosure,
   useMediaQuery,
+  VStack,
 } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
@@ -22,7 +22,6 @@ import React, { memo, useState } from 'react';
 import { MdClear } from 'react-icons/md';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import Logo from '~/components/common/logo/Logo';
-import { SearchBar } from '~/components/common/searchbar';
 import { MobileNavCollapsible } from './MobileNav';
 
 export const Header = memo(function Header({
@@ -88,10 +87,10 @@ export const Header = memo(function Header({
   const DeskNavbarItems = () => {
     return isDesktop && isCreateProfilePage ? (
       <>
-        <SearchBar
+        {/* <SearchBar
           display={landingPage ? 'none' : 'flex'}
           width={{ base: 'full', sm: 'full', md: '8rem', lg: '14rem' }}
-        />
+        /> */}
         <HStack
           gap={{ base: '28px', lg: '32px' }}
           alignItems={'center'}
