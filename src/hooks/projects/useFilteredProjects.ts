@@ -12,8 +12,8 @@ export const useFilteredProjects = () => {
     useState<CategoryType | null>();
 
   // trpc calls
-  const { data: roundsData, isLoading: roundsLoading } =
-    trpc.round.findActive.useQuery();
+  // const { data: roundsData, isLoading: roundsLoading } =
+  //   trpc.round.findActive.useQuery();
 
   const {
     data: filteredProjectsFromServer,
@@ -25,7 +25,6 @@ export const useFilteredProjects = () => {
       seed: shuffleSeed,
     },
     {
-      enabled: !roundsLoading,
       refetchInterval: 20000,
       staleTime: 10000,
     }
@@ -58,8 +57,6 @@ export const useFilteredProjects = () => {
 
   return {
     filteredProjectsLoading,
-    roundsData,
-    roundsLoading,
     selectedCategory,
     setSelectedCategory,
     roundIds,

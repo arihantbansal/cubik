@@ -43,7 +43,6 @@ export const ProjectListWithFilter: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const {
     filteredProjectsLoading,
-    roundsData,
     selectedCategory,
     setSelectedCategory,
     roundIds,
