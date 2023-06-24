@@ -14,7 +14,6 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { SOL } from '~/components/common/tokens/token';
 import { formatNumberWithK } from '~/utils/formatWithK';
-import { trpc } from '~/utils/trpc';
 
 const transition = {
   type: 'spring',
@@ -43,12 +42,13 @@ export const RecentContributions = ({
   roundId: string;
   isLoading?: boolean;
 }) => {
-  const {
-    data: contributorsData,
-    isLoading: loadingContributors,
-    isError,
-    error,
-  } = trpc.contribution.getProjectContributors.useQuery({ projectId, roundId });
+  // const {
+  //   data: contributorsData,
+  //   isLoading: loadingContributors,
+  //   isError,
+  //   error,
+  // } = trpc.contribution.getProjectContributors.useQuery({ projectId, roundId });
+  const contributorsData: any[] = [];
   const [visibleContributors, setVisibleContributors] = useState<
     (Contribution & {
       user: UserModel;

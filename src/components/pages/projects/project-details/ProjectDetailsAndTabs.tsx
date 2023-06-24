@@ -28,7 +28,6 @@ import {
   ProjectOwner,
   ProjectSocials,
 } from './project-interactions/ProjectInteractions';
-import { RecentContributions } from './project-interactions/RecentContributors';
 import ProjectDetailsHeader from './ProjectDetailsHeader';
 import { ProjectsTabs } from './ProjectTabs';
 
@@ -174,11 +173,11 @@ const MobileOnlyViews = ({
             ...project!!,
           }}
         />
-        <RecentContributions
+        {/* <RecentContributions
           projectId={project?.id as string}
           roundId={roundId as string}
           isLoading={isLoading}
-        />
+        /> */}
         <ProjectFundingData
           isLoading={isLoading}
           contributors={contributions || 0}

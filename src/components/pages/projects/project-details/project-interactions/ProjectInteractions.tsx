@@ -12,8 +12,8 @@ import {
 } from '@chakra-ui/react';
 import {
   Contribution,
-  ProjectVerifyStatus,
   ProjectsModel,
+  ProjectVerifyStatus,
   Round,
   Team,
   UserModel,
@@ -37,7 +37,6 @@ import {
   ProjectSocialsSkeleton,
 } from '../skeletons/ProjectPageLoadingSkeleton';
 import { ProjectCTAs } from './ProjectCTAs';
-import { RecentContributions } from './RecentContributors';
 
 type ProjectCreatorTeamMemberProps = {
   teamMember: Team[] & {
@@ -502,11 +501,11 @@ export const ProjectCreatorAndLinks = ({
       display={{ base: 'none', lg: 'flex' }}
     >
       <ProjectSocials isLoading={isLoading} projectDetails={projectDetails} />
-      <RecentContributions
+      {/* <RecentContributions
         projectId={projectDetails?.id || ''}
         roundId={roundId as string}
         isLoading={isLoading}
-      />
+      /> */}
       {!preview && (
         <ProjectFundingData
           isLoading={isLoading}

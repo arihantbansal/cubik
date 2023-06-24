@@ -17,9 +17,16 @@ const ProjectDetails = ({
   joinId: string;
 }) => {
   const { data, isLoading, isError, error } =
-    trpc.project.findOneJoinRound.useQuery({
-      id: joinId as string,
-    });
+    trpc.project.findOneJoinRound.useQuery(
+      {
+        id: joinId as string,
+      },
+      {
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        refetchOnWindowFocus: false,
+      }
+    );
 
   Mixpanel.track('project_page_load', {
     id: projectId,
