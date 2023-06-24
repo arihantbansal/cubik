@@ -11,7 +11,7 @@ const ExplorePageHeader = () => {
     data: roundData,
     isLoading,
     isError,
-  } = trpc.round.findActivePresentAndFutureRounds.useQuery();
+  } = trpc.round.findActive.useQuery();
   // filter round data with only active rounds and future rounds
   const activeAndFutureRounds = roundData?.filter(
     (round: { endTime: number | Date }) =>

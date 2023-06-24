@@ -10,6 +10,15 @@ export const activeRounds = publicProcedure.query(async ({ ctx }) => {
           gte: new Date(),
         },
       },
+      select: {
+        id: true,
+        endTime: true,
+        startTime: true,
+        matchedPool: true,
+        colorScheme: true,
+        short_description: true,
+        roundName: true,
+      },
     });
     return res;
   } catch (error) {
