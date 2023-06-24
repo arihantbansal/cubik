@@ -66,9 +66,11 @@ export const verifiedProjects = publicProcedure
             owner: true,
             Contribution: {
               select: {
+                id: true,
                 user: {
                   select: {
                     profilePicture: true,
+                    username: true,
                   },
                 },
               },

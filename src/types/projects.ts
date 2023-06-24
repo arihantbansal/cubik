@@ -26,13 +26,28 @@ export type verifiedProjectsType = Prisma.ProjectJoinRoundGetPayload<{
         owner: true;
         Contribution: {
           select: {
+            id: true;
             user: {
               select: {
                 profilePicture: true;
+                username: true;
               };
             };
           };
         };
+      };
+    };
+  };
+}>;
+
+export type searchProjectsType = Prisma.ProjectsModelGetPayload<{
+  select: {
+    id: true;
+    name: true;
+    logo: true;
+    owner: {
+      select: {
+        username: true;
       };
     };
   };

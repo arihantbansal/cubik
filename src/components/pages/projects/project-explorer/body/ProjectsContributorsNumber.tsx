@@ -1,32 +1,33 @@
 import { Avatar, AvatarGroup, Box, Flex } from '@chakra-ui/react';
-import { Contribution, UserModel } from '@prisma/client';
 import { useEffect, useState } from 'react';
+
+export type ContributionType = {
+  id: string;
+  user: {
+    profilePicture: string;
+    username: string;
+  };
+};
 
 const ProjectsContributorsNumber = ({
   projectId,
   contributorsList,
 }: {
   projectId: string;
-  contributorsList:
-    | (Contribution & {
-        user: UserModel;
-      })[]
-    | undefined;
+  contributorsList: ContributionType[];
 }) => {
   const [contributors, setContributors] = useState<
-    | (Contribution & {
-        user: UserModel;
-      })[]
-    | undefined
-  >();
+    {
+      id: string;
+      user: {
+        profilePicture: string;
+        username: string;
+      };
+    }[]
+  >([]);
 
   useEffect(() => {
-    let contributorsData = [] as
-      | (Contribution & {
-          user: UserModel;
-        })[]
-      | undefined;
-    console.log(contributorsList);
+    let contributorsData = [] as ContributionType[];
 
     // filter out duplicate donations from the same user
     const userNames: { [key: string]: boolean } = {};

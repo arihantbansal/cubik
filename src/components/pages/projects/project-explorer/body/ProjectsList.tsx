@@ -12,14 +12,7 @@ import {
   VStack,
   Wrap,
 } from '@chakra-ui/react';
-import {
-  Contribution,
-  ProjectJoinRound,
-  ProjectJoinRoundStatus,
-  ProjectsModel,
-  Round,
-  UserModel,
-} from '@prisma/client';
+import { ProjectJoinRoundStatus, UserModel } from '@prisma/client';
 import { isPast } from 'date-fns';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -30,18 +23,9 @@ import GetFormattedLink from '~/components/HOC/GetLink';
 import useListStore from '~/store/listStore';
 import { verifiedProjectsType } from '~/types/projects';
 import { formatNumberWithK } from '~/utils/formatWithK';
-import ProjectsContributorsNumber from './ProjectsContributorsNumber';
-
-type PropsType = {
-  projectJoinRound: ProjectJoinRound & {
-    project: ProjectsModel;
-    fundingRound: Round & {
-      Contribution: (Contribution & {
-        user: UserModel;
-      })[];
-    };
-  };
-};
+import ProjectsContributorsNumber, {
+  ContributionType,
+} from './ProjectsContributorsNumber';
 
 // In the ProjectsList component
 type ProjectsListProps = {
@@ -64,6 +48,7 @@ type ProjectCardProps = {
   projectDescription: string;
   amountRaised: number;
   project_link: string;
+  contributions: ContributionType[];
 };
 
 const ProjectCard = (props: ProjectCardProps) => {
@@ -315,7 +300,7 @@ const ProjectCard = (props: ProjectCardProps) => {
               </Box>
               <ProjectsContributorsNumber
                 projectId={props.projectId}
-                contributorsList={[]}
+                contributorsList={props.contributions}
               />
             </HStack>
             <SlideFade in={isHovered} offsetY="0px" reverse>
@@ -403,6 +388,7 @@ const ProjectsList = ({ allProjectsData }: ProjectsListProps) => {
                 project_link={projectJoinRound.project.project_link}
                 colorScheme={projectJoinRound.fundingRound.colorScheme}
                 roundName={projectJoinRound.fundingRound.roundName}
+                contributions={projectJoinRound.project.Contribution}
               />
             );
           }

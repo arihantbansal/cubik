@@ -16,8 +16,9 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
+import { searchProjectsType } from '~/types/projects';
 import { trpc } from '~/utils/trpc';
 
 type SearchBarProps = {
@@ -27,70 +28,19 @@ type SearchBarProps = {
 export const SearchBar = ({ display, width }: SearchBarProps) => {
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const {
-    data: projectJoinRound,
-    isLoading: projectsLoading,
-    isError: projectsIsError,
-    error: projectsError,
-  } = trpc.project.findMany.useQuery();
 
-  const {
-    data: people,
-    isLoading: peopleLoading,
-    isError: peopleIsError,
-    error: peopleError,
-  } = {
-    data: [],
-    isLoading: false,
-    isError: false,
-    error: undefined,
-  };
-  const {
-    data: grants,
-    isLoading: grantsLoading,
-    isError: grantsIsError,
-    error: grantsError,
-  } = {
-    data: [],
-    isLoading: false,
-    isError: false,
-    error: undefined,
-  };
-  const {
-    data: hackathons,
-    isLoading: hackathonsLoading,
-    isError: hackathonsIsError,
-    error: hackathonsError,
-  } = {
-    data: [],
-    isLoading: false,
-    isError: false,
-    error: undefined,
-  };
   const initialRef = useRef(null);
 
   const [searchInput, setSearchInput] = useState('');
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
-
-  const filteredProjects = useMemo(() => {
-    if (!projectJoinRound || searchInput.trim() === '') {
-      return [];
-    }
-    const matchingProjects = projectJoinRound
-      .filter((projectjoinRound) =>
-        projectjoinRound.project.name
-          .toLowerCase()
-          .includes(searchInput.toLowerCase())
-      )
-      .sort((a, b) => {
-        if (a.project.name.toLowerCase() === searchInput.toLowerCase())
-          return -1;
-        if (b.project.name.toLowerCase() === searchInput.toLowerCase())
-          return 1;
-        return a.project.name.localeCompare(b.project.name);
-      });
-    return matchingProjects;
-  }, [projectJoinRound, searchInput]);
+  const [filteredProjects, setFilterdProjects] = useState<searchProjectsType[]>(
+    []
+  );
+  const searchProjectMutation = trpc.project.searchProjects.useMutation({
+    onSuccess: async (data) => {
+      setFilterdProjects(data as searchProjectsType[]);
+    },
+  });
 
   useEffect(() => {
     if (!isOpen) {
@@ -98,20 +48,11 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
     }
   }, [isOpen]);
 
-  useEffect(() => {
-    setSelectedProjectIndex(0);
-  }, [filteredProjects]);
-
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Tab') {
       event.preventDefault();
 
-      // Loop through each type
-      if (filteredProjects.length > 0) {
-        setSelectedProjectIndex((prevIndex) =>
-          prevIndex + 1 >= filteredProjects.length ? 0 : prevIndex + 1
-        );
-      } //  else if (filteredPeople.length > 0) {
+      //  else if (filteredPeople.length > 0) {
       //   setSelectedPeopleIndex(prevIndex => prevIndex + 1 >= filteredPeople.length ? 0 : prevIndex + 1);
       // } else if (filteredGrants.length > 0) {
       //   setSelectedGrantIndex(prevIndex => prevIndex + 1 >= filteredGrants.length ? 0 : prevIndex + 1);
@@ -122,11 +63,7 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
 
     if (event.key === 'Enter') {
       // Modify this part to handle navigation to different routes depending on the selected type
-      if (filteredProjects.length > 0) {
-        router.prefetch(
-          `/projects/${filteredProjects[selectedProjectIndex].id}`
-        );
-      } // else if (filteredPeople.length > 0) {
+      // else if (filteredPeople.length > 0) {
       //   router.prefetch(`/people/${filteredPeople[selectedPeopleIndex].id}`);
       // } else if (filteredGrants.length > 0) {
       //   router.prefetch(`/grants/${filteredGrants[selectedGrantIndex].id}`);
@@ -143,7 +80,7 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
 
   return (
     <>
-      {!projectsIsError && (
+      {!searchProjectMutation.isError && (
         <Modal
           initialFocusRef={initialRef}
           //variant={'cubik'}
@@ -185,7 +122,13 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
                     background="#05060F"
                     bg="transparent"
                     placeholder="Search Projects, Grants, Hackathons & People... "
-                    onChange={(e) => setSearchInput(e.target.value)}
+                    onChange={(e) => {
+                      if (e.target.value.length > 3) return;
+
+                      searchProjectMutation.mutate({
+                        name: e.target.value,
+                      });
+                    }}
                     onKeyDown={handleKeyDown}
                     _placeholder={{
                       color: '#75757550',
@@ -201,11 +144,10 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
                 </InputGroup>
                 <VStack p="12px" pt="0px" w="full" rounded="8px">
                   <Box w="full" h="1px" bg="neutral.4" />
-                  {/* Call to actions */}
-                  {/* Projects */}
-                  {projectsLoading ? (
+
+                  {searchProjectMutation.isLoading ? (
                     <Spinner color="purple.500" size="xl" />
-                  ) : projectsIsError ? (
+                  ) : searchProjectMutation.isError ? (
                     <Box p="16px">Error: {'Something went wrong.'}</Box>
                   ) : filteredProjects.length === 0 &&
                     searchInput.trim() !== '' ? (
@@ -228,18 +170,18 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
                               ? 'neutral.5'
                               : 'transparent'
                           }
-                          href={`/project/${projectjoinround.project?.id}`} // @irfan check if the route is correct once
+                          href={`/project/${projectjoinround?.id}`} // @irfan check if the route is correct once
                         >
                           <Avatar
-                            src={projectjoinround.project.logo}
-                            name={projectjoinround.project.name}
+                            src={projectjoinround.logo}
+                            name={projectjoinround.name}
                             width={{ base: '20px', md: '28px' }}
                             height={{ base: '20px', md: '28px' }}
                             rounded="full"
                           />
                           <HStack justify={'start'} gap="0" align={'center'}>
                             <Box as="p" color="white" textStyle="title5">
-                              {projectjoinround.project.name}
+                              {projectjoinround.name}
                             </Box>
                             <Box
                               as="p"
@@ -247,7 +189,7 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
                               fontSize={'11px'}
                               lineHeight="12px"
                             >
-                              by @{projectjoinround.project.owner.username}
+                              by @{projectjoinround.owner.username}
                             </Box>
                           </HStack>
                         </HStack>

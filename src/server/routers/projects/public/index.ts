@@ -8,5 +8,6 @@ export * from './findOneJoinRound';
 export * from './findPubkey';
 export * from './findSimilar';
 export * from './projectGraph';
+export * from './searchProjects';
 export * from './updateProjectStatus';
 export * from './verifiedProjects';
