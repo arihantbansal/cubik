@@ -48,12 +48,14 @@ interface Props {
   isLoading: boolean;
   funding: number;
   contributors: number;
+  communityContributions: number;
 }
 
 export const ProjectFundingData = ({
   isLoading,
   funding,
   contributors,
+  communityContributions,
 }: Props) => {
   return (
     <VStack gap="16px" align={'start'} w="full">
@@ -102,7 +104,6 @@ export const ProjectFundingData = ({
                 Estimated Matching Funds
               </Box>
             </VStack>
-
             <Center
               position={'absolute'}
               right="0"
@@ -159,6 +160,68 @@ export const ProjectFundingData = ({
                     />
                   </filter>
                 </defs>
+              </svg>
+            </Center>
+          </HStack>
+        </VStack>
+      </Skeleton>
+      <Skeleton
+        isLoaded={!isLoading}
+        fadeDuration={2.5}
+        opacity={isLoading ? 0.3 : 1}
+        w="full"
+      >
+        <VStack
+          border="1px solid"
+          borderColor={'neutral.4'}
+          rounded="16px"
+          backgroundColor={'neutral.1'}
+          w="full"
+          p="24px 32px"
+          overflow={'hidden'}
+          position={'relative'}
+        >
+          <Box
+            border={'1px solid red'}
+            as="svg"
+            position="absolute"
+            top="50%"
+            left="0%"
+            transform="translate(-50%, -50%)"
+            zIndex={0}
+            width="22rem"
+            height="22rem"
+            viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{
+              filter: 'blur(45px)',
+            }}
+          >
+            <circle cx="50" cy="50" r="50" fill="#ADB8B640" />
+          </Box>
+          <HStack zIndex={1} w="full" align={'start'}>
+            <VStack align={'start'} gap="8px">
+              <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
+                ${communityContributions}
+              </Box>
+              <Box as="p" textStyle={'body4'} color={'neutral.8'}>
+                Community Contributions
+              </Box>
+            </VStack>
+            <Center position={'absolute'} right="0" bottom="0">
+              <svg
+                width="104"
+                height="95"
+                viewBox="0 0 104 95"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g style={{ mixBlendMode: 'soft-light' }}>
+                  <path
+                    d="M29.6296 29.6296C33.5588 29.6296 37.327 28.0688 40.1053 25.2905C42.8836 22.5122 44.4444 18.7439 44.4444 14.8148C44.4444 10.8857 42.8836 7.11747 40.1053 4.33916C37.327 1.56084 33.5588 0 29.6296 0C25.7005 0 21.9323 1.56084 19.154 4.33916C16.3757 7.11747 14.8148 10.8857 14.8148 14.8148C14.8148 18.7439 16.3757 22.5122 19.154 25.2905C21.9323 28.0688 25.7005 29.6296 29.6296 29.6296ZM0 46.2963C0 43.8406 0.975526 41.4855 2.71197 39.749C4.44842 38.0126 6.80355 37.037 9.25926 37.037H32.8704C31.9497 39.398 31.4786 41.9103 31.4815 44.4444C31.4815 51.3333 34.9 57.4259 40.137 61.1111H31.4815C28.7731 61.1108 26.1164 61.8529 23.8002 63.2568C21.4841 64.6607 19.5971 66.6727 18.3444 69.0741C11.2481 67.2481 6.70741 63.6963 3.9037 59.6667C-4.76837e-07 54.0556 0 48.2444 0 47.2222V46.2963ZM85.3593 69.0741C92.4555 67.2481 96.9963 63.6963 99.8 59.6667C103.704 54.0556 103.704 48.2407 103.704 47.2222V46.2963C103.704 43.8406 102.728 41.4855 100.992 39.749C99.2553 38.0126 96.9001 37.037 94.4444 37.037H70.8333C71.7296 39.3333 72.2222 41.8296 72.2222 44.4444C72.2222 51.3333 68.8037 57.4259 63.5667 61.1111H72.2222C74.9306 61.1108 77.5873 61.8529 79.9035 63.2568C82.2196 64.6607 84.1066 66.6727 85.3593 69.0741ZM88.8889 14.8148C88.8889 18.7439 87.328 22.5122 84.5497 25.2905C81.7714 28.0688 78.0032 29.6296 74.0741 29.6296C70.1449 29.6296 66.3767 28.0688 63.5984 25.2905C60.8201 22.5122 59.2593 18.7439 59.2593 14.8148C59.2593 10.8857 60.8201 7.11747 63.5984 4.33916C66.3767 1.56084 70.1449 0 74.0741 0C78.0032 0 81.7714 1.56084 84.5497 4.33916C87.328 7.11747 88.8889 10.8857 88.8889 14.8148ZM22.2222 75.9259C22.2222 73.4702 23.1977 71.1151 24.9342 69.3786C26.6706 67.6422 29.0258 66.6667 31.4815 66.6667H72.2222C73.4382 66.6667 74.6422 66.9062 75.7656 67.3715C76.889 67.8368 77.9097 68.5188 78.7695 69.3786C79.6293 70.2384 80.3113 71.2592 80.7766 72.3826C81.242 73.5059 81.4815 74.71 81.4815 75.9259V76.8519C81.4815 77.8704 81.4815 83.6852 77.5778 89.2963C73.5037 95.1519 65.763 100 51.8518 100C37.9444 100 30.2 95.1519 26.1259 89.2963C22.2222 83.6852 22.2222 77.8741 22.2222 76.8519V75.9259ZM51.8518 59.2593C55.781 59.2593 59.5492 57.6984 62.3275 54.9201C65.1058 52.1418 66.6667 48.3736 66.6667 44.4444C66.6667 40.5153 65.1058 36.7471 62.3275 33.9688C59.5492 31.1905 55.781 29.6296 51.8518 29.6296C47.9227 29.6296 44.1545 31.1905 41.3762 33.9688C38.5979 36.7471 37.037 40.5153 37.037 44.4444C37.037 48.3736 38.5979 52.1418 41.3762 54.9201C44.1545 57.6984 47.9227 59.2593 51.8518 59.2593Z"
+                    fill="#ADB8B630"
+                  />
+                </g>
               </svg>
             </Center>
           </HStack>
@@ -479,6 +542,7 @@ export const ProjectCreatorAndLinks = ({
   preview,
   team,
   contributors,
+  communityContributions,
   funding,
 }: {
   projectDetails: ProjectsModel;
@@ -489,6 +553,7 @@ export const ProjectCreatorAndLinks = ({
     user: UserModel;
   })[];
   contributors: number;
+  communityContributions: number;
   funding: number;
 }) => {
   return (
@@ -510,6 +575,7 @@ export const ProjectCreatorAndLinks = ({
         <ProjectFundingData
           isLoading={isLoading}
           contributors={contributors}
+          communityContributions={communityContributions}
           funding={funding}
         />
       )}
@@ -568,6 +634,11 @@ export const ProjectInteractions = ({
         isLoading={isLoading}
         preview={preview}
         contributors={contributors?.length || 0}
+        communityContributions={Number(
+          (
+            contributors?.reduce((acc, curr) => acc + curr.usdTotal, 0) || 0
+          ).toFixed(2)
+        )}
         funding={funding || 0}
       />
     </Stack>

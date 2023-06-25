@@ -20,15 +20,15 @@ type TokenInfo = {
 
 const filterTokens = (tokens: TokenInfo[]) => {
   const tokenAddressesToFilter = [
-    'BYgQgaAcgxmAHh7iAYeyV2V1RVTd9edvesrQbSiAYKET', // bonk
-    'CG8TA4H9dysAaXS9hTAnhgWXUcJmoHZYK4oKDJqYcFSE', // usdc
+    'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', //usdc
+    'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263', //bonk
     // Add more token addresses here if needed
   ];
 
   // filter all the tokens which contains tokenAccount of the array
   return tokens.filter((token) => {
     // if the tokenAccount is not in the array, return true
-    return tokenAddressesToFilter.includes(token.tokenAccount);
+    return tokenAddressesToFilter.includes(token.mint);
   });
 };
 
@@ -36,6 +36,7 @@ const getBalances = async (address: string) => {
   const { data } = await axios.get(
     `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${env.NEXT_PUBLIC_HELIUS_API_KEY}`
   );
+  console.log('data - ', data);
   return data;
 };
 
@@ -51,6 +52,13 @@ const WalletBalance = ({
     isLoading: solanaTokenPriceLoading,
     error: solanaTokenPriceFetchingError,
   } = useCurrentTokenPrice('solana');
+
+  const {
+    data: bonkCurrentPrice,
+    isLoading: bonkCurrentPriceLoading,
+    error: bonkCurrentPriceFetchingError,
+  } = useCurrentTokenPrice('bonk');
+
   const { user } = useUserStore();
   const { publicKey } = useWallet();
 
@@ -67,9 +75,7 @@ const WalletBalance = ({
           : (publicKey?.toBase58() as string)
       ),
     {
-      // // Cache data for 5 minutes (in milliseconds)
       staleTime: 3 * 60 * 1000,
-      // // Don't automatically refetch data in the background
       refetchIntervalInBackground: false,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
@@ -86,8 +92,23 @@ const WalletBalance = ({
   }
 
   const filteredData = filterTokens(data.tokens);
+
+  console.log('filtered balance - ', filteredData);
+
   return (
-    <VStack gap="0px" px="8px" w="full">
+    <VStack
+      gap={
+        size
+          ? size === 'sm'
+            ? { base: '2px', md: '4px' }
+            : size === 'md'
+            ? { base: '6px', md: '10px' }
+            : { base: '8px', md: '12px' }
+          : { base: '2px', md: '2px' }
+      }
+      px="8px"
+      w="full"
+    >
       <Box
         display={size === 'lg' ? 'none' : 'block'}
         w="full"
@@ -184,9 +205,7 @@ const WalletBalance = ({
       )}
       {filteredData?.map((token) => {
         const tokenBalance = token.amount / 10 ** token.decimals;
-
-        return token.tokenAccount ==
-          'BYgQgaAcgxmAHh7iAYeyV2V1RVTd9edvesrQbSiAYKET' ? (
+        return token.mint == 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263' ? (
           <HStack p="0px 2px" gap="8px" w="full" key={token.tokenAccount}>
             <BONK
               size={
@@ -213,6 +232,77 @@ const WalletBalance = ({
               BONK
             </Box>
             <HStack alignItems={'end'} justify={'end'} w="full">
+              <Skeleton isLoaded={!bonkCurrentPriceLoading}>
+                <Box
+                  display={size === 'lg' ? 'block' : 'none'}
+                  textAlign={'end'}
+                  as="p"
+                  textStyle={
+                    size
+                      ? size === 'md'
+                        ? { base: 'body5', md: 'body4' }
+                        : { base: 'body4', md: 'body3' }
+                      : { base: 'body5', md: 'body4' }
+                  }
+                  color="neutral.7"
+                >
+                  $
+                  {tokenBalance === 0
+                    ? 0
+                    : tokenBalance < 0.01
+                    ? (tokenBalance * (bonkCurrentPrice as number)).toFixed(2)
+                    : (tokenBalance * (bonkCurrentPrice as number)).toFixed(2)}
+                </Box>
+              </Skeleton>
+              <Skeleton isLoaded={!solanaTokenPriceLoading}>
+                <Box
+                  textAlign={'end'}
+                  as="p"
+                  textStyle={
+                    size
+                      ? size === 'md'
+                        ? { base: 'title4', md: 'title3' }
+                        : { base: 'title3', md: 'title2' }
+                      : { base: 'title6', md: 'title5' }
+                  }
+                  color="neutral.11"
+                >
+                  {tokenBalance === 0
+                    ? 0
+                    : tokenBalance < 0.01
+                    ? tokenBalance.toFixed(4)
+                    : formatNumberWithK(+tokenBalance.toFixed(1))}
+                </Box>
+              </Skeleton>
+            </HStack>
+          </HStack>
+        ) : token.mint == 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v' ? (
+          <HStack p="0px 2px" gap="8px" w="full" key={token.tokenAccount}>
+            <USDC
+              size={
+                size
+                  ? size === 'sm'
+                    ? { base: '18px', md: '20px' }
+                    : size === 'md'
+                    ? { base: '24px', md: '30px' }
+                    : { base: '28px', md: '38px' }
+                  : { base: '18px', md: '20px' }
+              }
+            />
+            <Box
+              as="p"
+              textStyle={
+                size
+                  ? size === 'md'
+                    ? { base: 'body4', md: 'body3' }
+                    : { base: 'body3', md: 'body2' }
+                  : { base: 'body5', md: 'body4' }
+              }
+              color="neutral.11"
+            >
+              USDC
+            </Box>
+            <HStack alignItems={'end'} justify={'end'} w="full">
               <Skeleton isLoaded={!solanaTokenPriceLoading}>
                 <Box
                   display={size === 'lg' ? 'block' : 'none'}
@@ -235,51 +325,27 @@ const WalletBalance = ({
                     : formatNumberWithK(+tokenBalance.toFixed(1))}
                 </Box>
               </Skeleton>
-              <Box
-                w="full"
-                textAlign={'end'}
-                as="p"
-                textStyle={'title5'}
-                color="neutral.11"
-              >
-                {tokenBalance === 0
-                  ? 0
-                  : tokenBalance < 0.01
-                  ? tokenBalance.toFixed(4)
-                  : formatNumberWithK(+tokenBalance.toFixed(1))}
-              </Box>
+              <Skeleton isLoaded={!solanaTokenPriceLoading}>
+                <Box
+                  textAlign={'end'}
+                  as="p"
+                  textStyle={
+                    size
+                      ? size === 'md'
+                        ? { base: 'title4', md: 'title3' }
+                        : { base: 'title3', md: 'title2' }
+                      : { base: 'title6', md: 'title5' }
+                  }
+                  color="neutral.11"
+                >
+                  {tokenBalance === 0
+                    ? 0
+                    : tokenBalance < 0.01
+                    ? tokenBalance.toFixed(4)
+                    : formatNumberWithK(+tokenBalance.toFixed(1))}
+                </Box>
+              </Skeleton>
             </HStack>
-          </HStack>
-        ) : token.tokenAccount ==
-          'CG8TA4H9dysAaXS9hTAnhgWXUcJmoHZYK4oKDJqYcFSE' ? (
-          <HStack p="0px 2px" gap="8px" w="full" key={token.tokenAccount}>
-            <USDC size={'20px'} />
-            <Box
-              as="p"
-              textStyle={
-                size
-                  ? size === 'md'
-                    ? { base: 'body4', md: 'body3' }
-                    : { base: 'body3', md: 'body2' }
-                  : { base: 'body5', md: 'body4' }
-              }
-              color="neutral.11"
-            >
-              USDC
-            </Box>
-            <Box
-              w="full"
-              textAlign={'end'}
-              as="p"
-              textStyle={'title5'}
-              color="neutral.11"
-            >
-              {tokenBalance === 0
-                ? 0
-                : tokenBalance < 0.01
-                ? tokenBalance.toFixed(4)
-                : formatNumberWithK(+tokenBalance.toFixed(1))}
-            </Box>
           </HStack>
         ) : null;
       })}

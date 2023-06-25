@@ -94,6 +94,14 @@ const ProjectDetails = ({
                 ...data?.project!!,
               }}
               contributions={data?.project.Contribution.length ?? 0}
+              communityContributions={Number(
+                (
+                  data?.project.Contribution.reduce(
+                    (acc, curr) => acc + curr.usdTotal,
+                    0
+                  ) || 0
+                ).toFixed(2)
+              )}
             />
             <ProjectInteractions
               joinId={joinId}

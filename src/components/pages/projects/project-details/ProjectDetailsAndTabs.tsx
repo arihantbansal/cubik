@@ -98,6 +98,7 @@ const MobileOnlyViews = ({
   roundId,
   amountRaise,
   contributions,
+  communityContributions,
 }: {
   joinId?: string;
   isLoading: boolean;
@@ -105,6 +106,7 @@ const MobileOnlyViews = ({
   roundId: string;
   amountRaise: number;
   contributions: number;
+  communityContributions: number;
   project:
     | (ProjectsModel & {
         Team: (Team & {
@@ -123,40 +125,6 @@ const MobileOnlyViews = ({
   return (
     <>
       <VStack gap="32px" w="full" display={{ base: 'flex', lg: 'none' }}>
-        {/* <HStack w="full">
-          <Skeleton
-            isLoaded={!isLoading}
-            opacity={isLoading ? 0.6 : 1}
-            fadeDuration={2}
-            w="full"
-          >
-            <Button
-              w="full"
-              fontSize={'16px'}
-              onClick={onOpen}
-              variant="connect_wallet"
-            >
-              Donate
-            </Button>
-          </Skeleton>
-          <Skeleton
-            isLoaded={!isLoading}
-            opacity={isLoading ? 0.6 : 1}
-            fadeDuration={2}
-            w="full"
-          >
-            <Button
-              w="full"
-              h="40px"
-              borderRadius={'8px'}
-              variant="secondary"
-              fontSize="14px"
-              pb="8px"
-            >
-              Visit Project
-            </Button>
-          </Skeleton>
-        </HStack>{' '} */}
         <ProjectCTAsMobile
           joinId={joinId}
           round={fundingRound}
@@ -179,6 +147,7 @@ const MobileOnlyViews = ({
           isLoading={isLoading}
           contributors={contributions || 0}
           funding={(amountRaise as number) || 0}
+          communityContributions={communityContributions}
         />
         <ProjectOwner isLoading={isLoading} team={project?.Team} />
       </VStack>
@@ -206,6 +175,7 @@ export const ProjectDetailsAndTabs = ({
   amountRaise,
   fundingRound,
   contributions,
+  communityContributions,
 }: {
   joinId?: string;
   isLoading: boolean;
@@ -213,6 +183,7 @@ export const ProjectDetailsAndTabs = ({
   amountRaise: number;
   contributions: number;
   fundingRound?: Round;
+  communityContributions: number;
   projectDetails:
     | (ProjectsModel & {
         Team: (Team & {
@@ -248,6 +219,7 @@ export const ProjectDetailsAndTabs = ({
         joinId={joinId}
         amountRaise={amountRaise}
         contributions={contributions as number}
+        communityContributions={communityContributions as number}
         fundingRound={fundingRound as Round}
         isLoading={isLoading}
         project={projectDetails}

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { Button } from '@chakra-ui/button';
 import { useDisclosure } from '@chakra-ui/hooks';
 import { Box, HStack, Stack, VStack } from '@chakra-ui/layout';
@@ -11,7 +12,11 @@ import {
 } from '@chakra-ui/modal';
 import { Skeleton } from '@chakra-ui/skeleton';
 import { Tooltip } from '@chakra-ui/tooltip';
-import { HiArrowNarrowDown, HiArrowNarrowUp } from 'react-icons/hi';
+import {
+  HiArrowNarrowDown,
+  HiArrowNarrowUp,
+  HiExternalLink,
+} from 'react-icons/hi';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import useGetTotalWalletBalanceInUSDC from '~/utils/wallet/useGetTotalWalletBalanceInUSDC';
 import WithdrawFundsTransactionModal from './WithdrawFundsTransactionModal';
@@ -26,6 +31,10 @@ const VaultHeader = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { balance } = useGetTotalWalletBalanceInUSDC(multiSigAddress as string);
 
+  let squadsURL: string = '';
+
+  squadsURL = `https://v3.squads.so/dashboard`;
+
   return (
     <Stack
       key={multiSigAddress}
@@ -35,13 +44,25 @@ const VaultHeader = ({
       justify={'space-between'}
     >
       <VStack alignItems={'start'}>
-        <Box
-          as="p"
-          textStyle={{ base: 'title6', sm: 'title6', md: 'title5' }}
-          color={'neutral.8'}
-        >
-          Project Vault
-        </Box>
+        {multiSigAddress && (
+          <Button
+            as="a"
+            href={squadsURL}
+            p="0 !important"
+            color={'neutral.8'}
+            size={{ base: 'cubikMini', md: 'cubikSmall' }}
+            variant={'cubikText'}
+            iconSpacing={{ base: '0px', md: '4px' }}
+            _hover={{
+              bg: 'transparent',
+            }}
+            rightIcon={
+              <Box as={HiExternalLink} boxSize={{ base: '14px', md: '16px' }} />
+            }
+          >
+            Project Vault
+          </Button>
+        )}
         <HStack gap="6px" align={{ base: 'center', md: 'center' }}>
           <Skeleton fadeDuration={2.5} isLoaded={!isLoading}>
             <Box
@@ -126,33 +147,6 @@ const VaultHeader = ({
             }
           />
         </Tooltip>
-        {multiSigAddress && (
-          <Button
-            as="a"
-            href={`https://v3.squads.so/dashboard/${Buffer.from(
-              multiSigAddress as string
-            ).toString('base64')}`}
-            ml="auto"
-            w={['full', '10rem']}
-            size={{ base: 'cubikMini', md: 'cubikSmall' }}
-            variant={'cubikText'}
-            background={'neutral.2'}
-            border="2px solid"
-            borderColor="neutral.4"
-            color="neutral.7"
-            _hover={{
-              color: 'neutral.8',
-              borderColor: 'neutral.6',
-            }}
-            iconSpacing={{ base: '0px', md: '4px' }}
-            rounded="8px"
-            // rightIcon={
-            //   <Box as={HiExternalLink} boxSize={{ base: '14px', md: '16px' }} />
-            // }
-          >
-            Open Multisig
-          </Button>
-        )}
       </HStack>
       <Modal variant={'cubik'} size="md" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

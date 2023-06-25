@@ -57,6 +57,7 @@ const ProjectDetails = ({
               isLoading={isLoading}
               amountRaise={0}
               contributions={0}
+              communityContributions={0}
             />
 
             <ProjectInteractions

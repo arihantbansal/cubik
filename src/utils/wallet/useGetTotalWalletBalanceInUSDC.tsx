@@ -1,6 +1,5 @@
-import { Skeleton } from '@chakra-ui/react';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
 interface BalanceData {
@@ -38,6 +37,7 @@ export const fetchPrice = async (
 
 const useGetTotalWalletBalanceInUSDC = (walletAddress: string) => {
   const [balance, setBalance] = useState<number | null>(null);
+
   const { isLoading, data, isError, error } = useQuery<BalanceData>(
     ['balances', walletAddress], // make the query key unique for each wallet address
     () => getBalances(walletAddress),
@@ -55,13 +55,11 @@ const useGetTotalWalletBalanceInUSDC = (walletAddress: string) => {
     if (!isLoading && !isError && data) {
       const calculateBalance = async () => {
         let totalBalance = 0;
-
         // Calculate balance for tokens
         for (const item of data.tokens) {
           const price = await fetchPrice(item.mint);
           totalBalance += (price ?? 0) * item.amount;
         }
-
         // Add the balance in solana
         const solPrice = await fetchPrice('solana');
         totalBalance += ((solPrice ?? 0) * data.nativeBalance) / 10 ** 9; // Convert lamports to SOL
