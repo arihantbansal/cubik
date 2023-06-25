@@ -5,7 +5,6 @@ const useCheckVerifiedProfile = () => {
   const [verifiedProfile, setverifiedProfile] = useState(false);
   const { user } = useUserStore();
   const userProofs = JSON.stringify(user?.proof);
-  console.log('user proofs - ', userProofs);
 
   return verifiedProfile;
 };

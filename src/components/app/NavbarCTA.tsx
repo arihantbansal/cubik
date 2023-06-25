@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useUserStore } from '~/store/userStore';
-import ComponentErrors from '../errors/ComponenetErrors';
+import ComponentErrors from '../errors/ComponentErrors';
 import UserNavMenu from './navbar-menu/UserNavMenu';
 
 export interface UserContextProps {

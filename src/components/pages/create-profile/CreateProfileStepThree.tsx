@@ -142,7 +142,6 @@ const CreateProfileStepThree = ({
 
   useEffect(() => {
     // reset error on open
-    console.log('⛔️ clear error called');
     setTransactionError(null);
   }, [isTransactionModalOpen]);
 

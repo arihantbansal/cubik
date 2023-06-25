@@ -1,14 +1,6 @@
-import {
-  Avatar,
-  AvatarGroup,
-  Box,
-  Center,
-  Flex,
-  HStack,
-  Skeleton,
-  SkeletonCircle,
-  VStack,
-} from '@chakra-ui/react';
+import { Avatar, AvatarGroup } from '@chakra-ui/avatar';
+import { Box, Center, Flex, HStack, VStack } from '@chakra-ui/layout';
+import { Skeleton, SkeletonCircle } from '@chakra-ui/skeleton';
 import { Contribution, UserModel } from '@prisma/client';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
@@ -56,7 +48,6 @@ export const RecentContributions = ({
   >([]);
 
   useEffect(() => {
-    console.log('useEffect ⚡️ contributors data - ', contributorsData);
     if (contributorsData) {
       const itemsToDisplay = contributorsData.slice(0, displayedItemsCount);
       setVisibleContributors(itemsToDisplay);
@@ -72,7 +63,6 @@ export const RecentContributions = ({
           ) +
             1) %
           contributorsData.length; // loop back to the start
-        console.log('2nd use effect called - ', nextContributorIndex);
         setVisibleContributors((prevVisibleContributors) => [
           ...prevVisibleContributors.slice(1),
           contributorsData[nextContributorIndex],

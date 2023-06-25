@@ -1,16 +1,15 @@
 import {
-  Table,
-  Button,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Checkbox,
-  Td,
   Avatar,
   Box,
-  HStack,
   Center,
+  Checkbox,
+  HStack,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
 } from '@chakra-ui/react';
 import {
   Contribution,
@@ -19,7 +18,7 @@ import {
   UserModel,
 } from '@prisma/client';
 import React, { ReactElement, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
 type TFormValues = Record<string, boolean>;
 
@@ -66,8 +65,6 @@ const ProjectsFundsPayout = ({
       );
       setAllChecked(isEveryChecked);
     };
-
-  console.log('percentage - ', matchingPoolAmount);
 
   const onSubmit = handleSubmit((data) => {
     console.log('submit data', data);

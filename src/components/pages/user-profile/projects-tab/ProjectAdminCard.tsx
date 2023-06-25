@@ -1,14 +1,8 @@
-import {
-  Accordion,
-  Box,
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Center,
-  Skeleton,
-} from '@chakra-ui/react';
+import { Accordion } from '@chakra-ui/accordion';
+import { Button } from '@chakra-ui/button';
+import { Card, CardBody, CardFooter, CardHeader } from '@chakra-ui/card';
+import { Box, Center } from '@chakra-ui/layout';
+import { Skeleton } from '@chakra-ui/skeleton';
 import {
   Contribution,
   ProjectJoinRound,
@@ -19,9 +13,7 @@ import {
 } from '@prisma/client';
 import { useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
-import { projectWithFundingRoundType } from '~/types/project';
-import { ProjectStatus } from '~/utils/getProjectStatus';
+import ComponentErrors from '~/components/errors/ComponentErrors';
 import { trpc } from '~/utils/trpc';
 import AdminProjectRoundCard from './AdminProjectRoundCard';
 import ProjectHeader from './ProjectHeader';
@@ -37,10 +29,6 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
     error,
   } = trpc.project.projectAdminDetails.useQuery({
     id: project.id,
-  });
-
-  const { startTime, endTime, status, round } = ProjectStatus({
-    projectData: projectData as projectWithFundingRoundType,
   });
 
   if (isError) {
@@ -59,7 +47,6 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
   return (
     <Card
       px="0px"
-      pb={{ base: '16px', sm: '20px', md: '24px' }}
       gap={{ base: '16px', sm: '20px', md: '24px' }}
       w="100%"
       border={'none'}
@@ -91,7 +78,15 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
         opacity={isLoading ? 0.5 : 1}
         w="full"
       >
-        <CardBody gap={{ base: '16px', md: '24px' }}>
+        <CardBody
+          display={
+            projectData && projectData?.ProjectJoinRound?.length > 0
+              ? 'flex'
+              : 'none'
+          }
+          pb={{ base: '16px', sm: '20px', md: '24px' }}
+          gap={{ base: '16px', md: '24px' }}
+        >
           <Accordion
             px={{ base: '12px', md: '16px' }}
             w="full"

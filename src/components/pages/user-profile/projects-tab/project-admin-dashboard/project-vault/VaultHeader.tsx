@@ -1,19 +1,16 @@
+import { Button } from '@chakra-ui/button';
+import { useDisclosure } from '@chakra-ui/hooks';
+import { Box, HStack, Stack, VStack } from '@chakra-ui/layout';
 import {
-  Box,
-  Button,
-  HStack,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Skeleton,
-  Stack,
-  Tooltip,
-  VStack,
-  useDisclosure,
-} from '@chakra-ui/react';
+} from '@chakra-ui/modal';
+import { Skeleton } from '@chakra-ui/skeleton';
+import { Tooltip } from '@chakra-ui/tooltip';
 import { HiArrowNarrowDown, HiArrowNarrowUp } from 'react-icons/hi';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import useGetTotalWalletBalanceInUSDC from '~/utils/wallet/useGetTotalWalletBalanceInUSDC';

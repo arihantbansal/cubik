@@ -1,4 +1,5 @@
-import { Avatar, AvatarGroup, Box, Flex } from '@chakra-ui/react';
+import { Avatar, AvatarGroup } from '@chakra-ui/avatar';
+import { Box, Flex } from '@chakra-ui/layout';
 import { useEffect, useState } from 'react';
 
 export type ContributionType = {
@@ -52,7 +53,7 @@ const ProjectsContributorsNumber = ({
           justify="end"
           align={'center'}
           flex="1"
-          w={'full'}
+          w={'fit-content'}
           gap="4px"
           position="relative"
           zIndex="1"

@@ -1,7 +1,8 @@
-import { Container, Skeleton, Stack } from '@chakra-ui/react';
+import { Container, Stack } from '@chakra-ui/layout';
+import { Skeleton } from '@chakra-ui/skeleton';
 import { isPast } from 'date-fns';
 import { GetServerSideProps } from 'next';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
+import ComponentErrors from '~/components/errors/ComponentErrors';
 import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';
 import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-details/ProjectDetailsAndTabs';
 import ProjectDetailsLiveRoundStatus from '~/components/pages/projects/project-details/ProjectDetailsLiveRoundStatus';

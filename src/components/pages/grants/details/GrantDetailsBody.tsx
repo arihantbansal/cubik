@@ -20,7 +20,7 @@ import { ProjectJoinRoundStatus } from '@prisma/client';
 import Link from 'next/link';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import NoInformation from '~/components/common/empty-state/NoInformation';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
+import ComponentErrors from '~/components/errors/ComponentErrors';
 import { RoundDetailsWithProjectsWithContributionsType } from '~/types/round';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
 

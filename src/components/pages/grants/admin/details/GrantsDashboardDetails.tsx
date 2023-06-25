@@ -19,9 +19,9 @@ import { Round } from '@prisma/client';
 import { isFuture, isPast } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
+import { OverviewStatsCard } from '~/components/common/card/OverviewStatsCard';
 import RoundStatus from '~/components/common/dates/Status';
 import GrantUnderReviewProjects from '~/components/pages/grants/admin/details/tabs/GrantUnderReviewProjects';
-import { formatNumberWithK } from '~/utils/formatWithK';
 import GrantAcceptedProjects from './tabs/GrantAcceptedProjects';
 import GrantRejectedProjects from './tabs/GrantRejectedProjects';
 
@@ -153,39 +153,6 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
         )}
       </HStack>
     </Box>
-  );
-};
-
-const OverviewStatsCard = ({
-  children,
-  title,
-  value,
-  isLoading,
-}: {
-  title: string;
-  value: number;
-  isLoading?: boolean;
-  children?: JSX.Element;
-}) => {
-  return (
-    <Stat variant="cubik" overflow="hidden">
-      <VStack p="24px" mb="12px" align="start">
-        <Skeleton isLoaded={!isLoading} fadeDuration={0.5}>
-          <StatLabel
-            whiteSpace={'nowrap'}
-            overflow="hidden"
-            textStyle={{ base: 'title6', md: 'title5' }}
-            color="neutral8"
-          >
-            {title}
-          </StatLabel>
-        </Skeleton>
-        <Skeleton isLoaded={!isLoading} fadeDuration={0.5}>
-          <StatNumber>${formatNumberWithK(value)}</StatNumber>
-        </Skeleton>
-      </VStack>
-      {children}
-    </Stat>
   );
 };
 

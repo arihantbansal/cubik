@@ -1,18 +1,10 @@
-import {
-  Box,
-  Container,
-  Skeleton,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  VStack,
-} from '@chakra-ui/react';
-import VaultHeader from './VaultHeader';
+import { Box, VStack } from '@chakra-ui/layout';
+import { Skeleton } from '@chakra-ui/skeleton';
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
 import WalletBalance from '~/components/app/navbar-menu/WalletBalance';
-import MultisigTransactions from './project-vault-tabs/Transactions';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
+import VaultHeader from './VaultHeader';
+import MultisigTransactions from './project-vault-tabs/Transactions';
 
 const Vault = ({
   isLoading,

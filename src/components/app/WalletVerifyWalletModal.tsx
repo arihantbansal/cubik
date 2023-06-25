@@ -71,7 +71,6 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
       });
 
       if (status === 204) {
-        console.log('this is data indeix', data);
         router.push('/create-profile');
         setVerifying(false);
         onClose();
@@ -88,8 +87,6 @@ const WalletVerifyModal = ({ isOpen, onClose }: Props) => {
       onClose();
       SuccessToast({ toast, message: 'Wallet Verified' });
     } catch (error) {
-      console.log(error);
-
       if ((error as Error).message === 'User rejected the request.') {
         setVerifying(false);
         setVerifyWalletError(`Error: ${(error as Error).message}`);

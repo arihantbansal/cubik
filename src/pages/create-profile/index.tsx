@@ -1,23 +1,14 @@
-import {
-  Box,
-  Card,
-  CardHeader,
-  Container,
-  HStack,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/hooks';
+import { Box, Container } from '@chakra-ui/layout';
+import { Card, CardHeader } from '@chakra-ui/react';
 import { useState } from 'react';
-import CustomStepper from '~/components/common/stepper/CustomStepper';
-import CreateProfileStepOne from '~/components/pages/create-profile/CreateProfileStepOne';
-import CreateProfileStepThree from '~/components/pages/create-profile/CreateProfileStepThree';
-import CreateProfileStepTwo from '~/components/pages/create-profile/CreateProfileStepTwo';
 import SEO from '~/components/SEO';
+import CreateProfileStepThree from '~/components/pages/create-profile/CreateProfileStepThree';
 
 const CreateProfile = () => {
   const [activeStep, setActiveStep] = useState(2);
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const goToNextStep = () => setActiveStep(activeStep + 1);
   const goToPreviousStep = () => setActiveStep(activeStep - 1);
 
   return (

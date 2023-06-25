@@ -1,7 +1,7 @@
 import { Box, Center, Container, Heading } from '@chakra-ui/layout';
 import Link from 'next/link';
 import SEO from 'src/components/SEO';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
+import ComponentErrors from '~/components/errors/ComponentErrors';
 import AdminView from '~/components/pages/user-profile/AdminView';
 import VisitorView from '~/components/pages/user-profile/VisitorView';
 import { useUserStore } from '~/store/userStore';
@@ -31,10 +31,15 @@ const ProfilePage = ({ username }: { username: string }) => {
         <Container maxW="full">
           <Center gap="16px" flexDir={'column'} maxW="4xl" mx="auto" py="14rem">
             <Heading fontSize="9xl">404</Heading>
-            <Box as="p" textStyle={'title1'}>
+            <Box as="p" textStyle={{ base: 'title3', md: 'title1' }}>
               Page Not Found
             </Box>
-            <Box textAlign={'center'} maxW="22rem" as="p" textStyle={'body2'}>
+            <Box
+              textAlign={'center'}
+              maxW="22rem"
+              as="p"
+              textStyle={{ base: 'body4', md: 'body2' }}
+            >
               The page you are looking for does not exist. Go back
               <Box
                 as={Link}

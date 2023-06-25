@@ -1,4 +1,4 @@
-import { Center, Container, VStack } from '@chakra-ui/react';
+import { Center, Container, VStack } from '@chakra-ui/layout';
 import Image from 'next/image';
 import HackathonDetails from '~/components/pages/hackathons/hackathonDetails/HackathonDetails';
 

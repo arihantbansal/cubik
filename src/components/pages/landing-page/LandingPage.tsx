@@ -1,9 +1,11 @@
-import { Box, Button, Center, Container, Flex, VStack } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/button';
+import { Box, Center, Container, Flex, VStack } from '@chakra-ui/layout';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { motion } from 'framer-motion';
 import Image from 'next/legacy/image';
 import Link from 'next/link';
+
 import {
   MouseParallaxChild,
   MouseParallaxContainer,

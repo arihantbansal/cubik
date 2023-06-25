@@ -1,4 +1,4 @@
-import { Container } from '@chakra-ui/react';
+import { Container } from '@chakra-ui/layout';
 import SEO from '~/components/SEO';
 import AdminControls from '~/components/pages/projects/admin/AdminControls';
 import ProjectsExplorer from '~/components/pages/projects/project-explorer/ProjectsExplorer';

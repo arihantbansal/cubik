@@ -1,24 +1,23 @@
+import { Alert, AlertDescription, AlertIcon } from '@chakra-ui/alert';
+import { Button } from '@chakra-ui/button';
+import { Card, CardFooter } from '@chakra-ui/card';
+import { useDisclosure } from '@chakra-ui/hooks';
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Box,
-  Button,
-  Card,
-  CardFooter,
   Center,
   Container,
   HStack,
   Link,
+  VStack,
+} from '@chakra-ui/layout';
+import {
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
-  VStack,
-} from '@chakra-ui/react';
+} from '@chakra-ui/modal';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -28,7 +27,7 @@ import enGB from 'date-fns/locale/en-GB';
 import { useState } from 'react';
 import { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useForm, UseFormGetValues } from 'react-hook-form';
+import { UseFormGetValues, useForm } from 'react-hook-form';
 import { BiChevronLeft } from 'react-icons/bi';
 import * as yup from 'yup';
 import GrantStepOne from '~/components/pages/grants/create-grant/GrantStepOne';
@@ -208,15 +207,12 @@ const CreateGrantRound = () => {
   });
 
   const onSubmit = async () => {
-    console.log('step - ', step);
     if (step === 0) {
       setStep(1);
     } else if (step === 1) {
       // validate before submitting
-      console.log('next step - ', isValid);
       trigger();
       if (isValid) {
-        console.log('valid');
         setStep(2);
       }
     } else if (step === 2) {

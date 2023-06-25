@@ -3,19 +3,11 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box,
-  Center,
-  Flex,
-  HStack,
-  Skeleton,
-  Stack,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from '@chakra-ui/react';
-import { Player } from '@lottiefiles/react-lottie-player';
+} from '@chakra-ui/accordion';
+import { Box, Center, Flex, HStack, Stack } from '@chakra-ui/layout';
+import { Skeleton } from '@chakra-ui/skeleton';
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
+import { Player } from '@lottiefiles/react-lottie-player'; // todo: package size is too big
 import {
   Contribution,
   ProjectJoinRound,

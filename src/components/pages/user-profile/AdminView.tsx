@@ -1,20 +1,14 @@
-import {
-  Flex,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/layout';
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
 import { ProjectsModel } from '@prisma/client';
 import { FC, Key } from 'react';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import { UserProof, UserWithProjectType } from '~/types/user';
+import ProfileHeader from './ProfileHeader';
 import UserContributions from './contributions-tab/UserContributions';
 import UserDetails from './details-tab/UserDetails';
 import UserProofs from './details-tab/UserProofs';
 import { AdminProjectEmptyState } from './empty-states/ProjectEmptyState';
-import ProfileHeader from './ProfileHeader';
 import ProjectAdminCard from './projects-tab/ProjectAdminCard';
 
 type adminViewType = {

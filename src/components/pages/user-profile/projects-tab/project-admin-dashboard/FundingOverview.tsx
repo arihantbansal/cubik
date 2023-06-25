@@ -1,5 +1,6 @@
-import { Box, Center, HStack, Spinner, VStack } from '@chakra-ui/react';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
+import { Box, Center, HStack, VStack } from '@chakra-ui/layout';
+import { Spinner } from '@chakra-ui/spinner';
+import ComponentErrors from '~/components/errors/ComponentErrors';
 import { trpc } from '~/utils/trpc';
 import { FundingChart } from './Charts';
 
@@ -47,8 +48,12 @@ const FundingOverview = ({
       </Box>
       <VStack align={'start'} w="full">
         <HStack>
-          <Box as="p" textStyle="body5" color={'neutral.8'}>
-            Amount Raised
+          <Box
+            as="p"
+            textStyle={{ base: 'body5', md: 'body4' }}
+            color={'neutral.8'}
+          >
+            Total Amount Raised
           </Box>
         </HStack>
         <Box
@@ -68,8 +73,12 @@ const FundingOverview = ({
         flexDir={{ base: 'column', md: 'row' }}
       >
         <VStack align={'start'} flex="50%" w="full">
-          <Box as="p" textStyle="body5" color={'neutral.8'}>
-            Total Community Donation
+          <Box
+            as="p"
+            textStyle={{ base: 'body5', md: 'body4' }}
+            color={'neutral.8'}
+          >
+            Community Donation
           </Box>
           <Box
             as="p"
@@ -80,8 +89,12 @@ const FundingOverview = ({
           </Box>
         </VStack>
         <VStack align={'start'} flex="50%" w="full">
-          <Box as="p" textStyle="body5" color={'neutral.8'}>
-            Estimated Matching Amount
+          <Box
+            as="p"
+            textStyle={{ base: 'body5', md: 'body4' }}
+            color={'neutral.8'}
+          >
+            Estimated Match
           </Box>
           <Box
             as="p"

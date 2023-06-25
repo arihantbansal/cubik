@@ -1,11 +1,7 @@
-import {
-  Avatar,
-  Button,
-  HStack,
-  Text,
-  Textarea,
-  VStack,
-} from '@chakra-ui/react';
+import { Avatar } from '@chakra-ui/avatar';
+import { Button } from '@chakra-ui/button';
+import { HStack, Text, VStack } from '@chakra-ui/layout';
+import { Textarea } from '@chakra-ui/textarea';
 import { useState } from 'react';
 import { useUserStore } from '~/store/userStore';
 interface CommentType {

@@ -1,21 +1,16 @@
-import {
-  Box,
-  Card,
-  CardHeader,
-  Container,
-  HStack,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Card, CardHeader } from '@chakra-ui/card';
+import { useDisclosure } from '@chakra-ui/hooks';
+import { Box, Container, HStack } from '@chakra-ui/layout';
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { ProjectsModel } from '@prisma/client';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { array, object, string } from 'yup';
-import CustomStepper from '~/components/common/stepper/CustomStepper';
 import withAuth from '~/components/HOC/WithAuth';
+import SEO from '~/components/SEO';
+import CustomStepper from '~/components/common/stepper/CustomStepper';
 import { StepOne, StepThree, StepTwo } from '~/components/pages/create-project';
 import CreateProjectTransactionModal from '~/components/pages/create-project/TransactionSignModal';
-import SEO from '~/components/SEO';
 import { uploadToCloudinary } from '~/utils/upload';
 
 type SubmitProjectProps = {

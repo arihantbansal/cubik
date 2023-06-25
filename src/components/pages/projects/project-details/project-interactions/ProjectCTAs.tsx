@@ -467,7 +467,7 @@ export const ProjectCTAs = ({
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                Visit Project
+                Visit
               </Button>
             </Skeleton>
           </VStack>
@@ -499,7 +499,6 @@ export const ProjectCTAsMobile = ({
   isLoading: boolean;
   onOpen: () => void;
 }) => {
-  console.log('3 - projectDetails and round details', projectDetails, round);
   const { user } = useUserStore();
   const router = useRouter();
   const { setVisible } = useWalletModal();
@@ -658,7 +657,7 @@ export const ProjectCTAsMobile = ({
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                Visit Project
+                Visit
               </Button>
             </Skeleton>
           </Stack>

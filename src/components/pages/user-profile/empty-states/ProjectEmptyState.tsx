@@ -1,4 +1,5 @@
-import { Box, Button, Center, VStack } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/button';
+import { Center } from '@chakra-ui/layout';
 import Link from 'next/link';
 import EmptyStateHOC from '~/components/HOC/EmptyState';
 

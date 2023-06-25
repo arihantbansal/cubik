@@ -1,14 +1,6 @@
-import {
-  Box,
-  Container,
-  HStack,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Tag,
-} from '@chakra-ui/react';
+import { Box, Container, HStack } from '@chakra-ui/layout';
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
+import { Tag } from '@chakra-ui/tag';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useState } from 'react';
 import CustomTag from '~/components/common/tags/CustomTag';

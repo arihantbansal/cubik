@@ -4,7 +4,7 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
+import ComponentErrors from '~/components/errors/ComponentErrors';
 import { env } from '~/env.mjs';
 import useCurrentTokenPrice from '~/hooks/useCurrentTokenPrice';
 import { useUserStore } from '~/store/userStore';

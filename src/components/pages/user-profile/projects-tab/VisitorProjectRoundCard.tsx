@@ -1,4 +1,6 @@
-import { Box, Card, CardBody, HStack, Skeleton, Stack } from '@chakra-ui/react';
+import { Card, CardBody } from '@chakra-ui/card';
+import { Box, HStack, Stack } from '@chakra-ui/layout';
+import { Skeleton } from '@chakra-ui/skeleton';
 import { ProjectJoinRound, Round } from '@prisma/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';

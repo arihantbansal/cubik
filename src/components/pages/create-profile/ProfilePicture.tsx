@@ -1,4 +1,4 @@
-import { Avatar as ChakraAvatar, Center } from '@chakra-ui/react';
+import { Center, Avatar as ChakraAvatar } from '@chakra-ui/react';
 import { BiUpArrowAlt } from 'react-icons/bi';
 
 const ProfilePicture = ({
@@ -12,7 +12,6 @@ const ProfilePicture = ({
   isOpen: boolean;
   pfp: string;
 }) => {
-  console.log('passed profile picture - ', pfp);
   return (
     <Center
       cursor={'pointer'}

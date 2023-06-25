@@ -1,4 +1,4 @@
-import { Box, Container } from '@chakra-ui/react';
+import { Box, Container } from '@chakra-ui/layout';
 import { GetServerSideProps } from 'next';
 import SEO from '~/components/SEO';
 import GrantDetailsBody from '~/components/pages/grants/details/GrantDetailsBody';
@@ -57,8 +57,6 @@ const GrantDetails: React.FC<GrantDetailsProps> = ({ grantId }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const grantId = context.query.grantId as string;
-  console.log(grantId);
-
   return {
     props: { grantId }, // will be passed to the page component as props
   };

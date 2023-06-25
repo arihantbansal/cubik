@@ -69,7 +69,7 @@ const ProfileHeader: FC<profileHeaderType> = ({
         <Center marginInline={'0 !important'} margin="0 !important">
           <Skeleton
             w="6rem"
-            h="16px"
+            h="18px"
             fadeDuration={3}
             opacity={isLoading ? '0.5' : '1'}
             isLoaded={!isLoading}

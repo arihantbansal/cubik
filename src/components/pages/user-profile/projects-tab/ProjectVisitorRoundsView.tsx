@@ -1,6 +1,6 @@
-import { VStack } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/layout';
 import { ProjectJoinRoundStatus, ProjectsModel } from '@prisma/client';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
+import ComponentErrors from '~/components/errors/ComponentErrors';
 import { trpc } from '~/utils/trpc';
 import VisitorProjectRoundCard from './VisitorProjectRoundCard';
 

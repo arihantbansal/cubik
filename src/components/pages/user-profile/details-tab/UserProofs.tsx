@@ -1,26 +1,18 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  Box,
-  Card,
-  Center,
-  HStack,
-  Skeleton,
-  Tag,
-  VStack,
-  Wrap,
-} from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertIcon } from '@chakra-ui/alert';
+import { Card } from '@chakra-ui/card';
+import { Box, Center, HStack, VStack, Wrap } from '@chakra-ui/layout';
+import { Skeleton } from '@chakra-ui/skeleton';
+import { Tag } from '@chakra-ui/tag';
 import { motion } from 'framer-motion';
 import { UserProof } from '~/types/user';
 import { SuperteamMembers } from '~/utils/data/superteamMembers';
 import { trpc } from '~/utils/trpc';
 import CivicIDProof from './proofs/CivicIDProof';
 import CubikGrantee from './proofs/CubikGrantee';
-import GithubProof from './proofs/github';
 import GoogleProof from './proofs/GoogleProof';
 import MonkeDAOProof from './proofs/MonkeDAOProof';
 import SuperteamProof from './proofs/SuperteamProof';
+import GithubProof from './proofs/github';
 
 const MotionBox = motion(Box);
 
@@ -189,6 +181,7 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
     light: '#D6FFE5',
   };
   const checkProofs = trpc.user.checkProof.useQuery();
+
   return (
     <VStack align="start" w="full">
       <HStack gap="8px">

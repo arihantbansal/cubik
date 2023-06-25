@@ -3,7 +3,9 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": true,
-    "source.organizeImports": true
+    "source.organizeImports": true,
+    "source.addMissingImports": true,
+    "source.fixAll.eslint": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "workbench.colorCustomizations": {},

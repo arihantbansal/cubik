@@ -27,13 +27,11 @@ const CreateProfileStepTwo = ({
   };
 
   useEffect(() => {
-    console.log('inside use effect ', user?.data?.user?.email);
     const checkEmail = async () => {
       if (user?.data?.user?.email) {
         const res = await checkEmailMutation.mutateAsync({
           email: user?.data?.user?.email,
         });
-        console.log('is email unique - ', res);
         setEmailUnique(res);
       }
     };

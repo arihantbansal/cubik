@@ -37,7 +37,7 @@ const FramerCarousel = memo(function FramerCarousel({
     data: nftsData,
     isLoading,
     error,
-  } = useGetUserAssets(publicKey?.toBase58() as string);
+  } = useGetUserAssets('8cRrU1NzNpjL3k2BwjW3VixAcX6VFc29KHr4KZg8cs2Y');
 
   useEffect(() => {
     if (carousel.current) {
@@ -155,7 +155,9 @@ const FramerCarousel = memo(function FramerCarousel({
             >
               <Center pb="0.5rem">{/* <CiImageOn size="26px" /> */}</Center>
               {isLoading ? (
-                <Spinner />
+                <Center h="full">
+                  <Spinner />
+                </Center>
               ) : (
                 <VStack gap="4px" p="0">
                   <BsImage size="22" />

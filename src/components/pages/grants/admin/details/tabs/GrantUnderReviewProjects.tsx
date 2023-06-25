@@ -13,7 +13,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Spinner,
   Stack,
   useDisclosure,
   useToast,
@@ -25,16 +24,16 @@ import { ProjectsModel } from '@prisma/client';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import { useEffect, useState } from 'react';
 import { FailureToast, SuccessToast } from '~/components/common/toasts/Toasts';
+import ComponentErrors from '~/components/errors/ComponentErrors';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import {
   connection,
   updateProjectRoundVerified,
 } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
-import ProjectRoundManagerCardPendingStatus from '../../ProjectCard';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
 import { ProjectEmptyState } from '../../../../user-profile/empty-states/ProjectEmptyState';
 import ProjectsLoadingState from '../../loadingState/ProjectsLoadingState';
+import ProjectRoundManagerCardPendingStatus from '../../ProjectCard';
 
 const GrantUnderReviewProjects = ({
   roundId,

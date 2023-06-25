@@ -1,4 +1,4 @@
-import { Box, Center, HStack } from '@chakra-ui/react';
+import { Box, Center, HStack } from '@chakra-ui/layout';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import CustomTag from '~/components/common/tags/CustomTag';
 

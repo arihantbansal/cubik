@@ -30,6 +30,51 @@ const Carousel = memo(function Carousel({
     return <div>Error: No NFT data available</div>;
   }
 
+  const NFTImg = ({ nft }: { nft: any }) => (
+    <Box
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+      rounded="6px"
+      minW="5rem"
+      minH="5rem"
+      as={motion.div}
+      _hover={{
+        outline: '1px solid #fff',
+      }}
+      onClick={() => {
+        if (!isDragging) {
+          setPFP(nft.image);
+        }
+      }}
+      pointerEvents={isDragging ? 'none' : 'all'}
+    >
+      <Skeleton
+        isLoaded={!isDragging}
+        startColor="gray.900"
+        endColor="gray.700"
+        w="5rem"
+        h="5rem"
+        borderRadius="6px"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={nft.image}
+          alt={nft.image}
+          loading="lazy"
+          style={{
+            outline:
+              user?.profilePicture === nft.image ? '1px solid #fff' : 'none',
+            pointerEvents: 'none',
+            borderRadius: '6px',
+            width: '5rem',
+            height: '5rem',
+            objectFit: 'cover',
+          }}
+        />
+      </Skeleton>
+    </Box>
+  );
+
   return (
     <Flex
       flexDir="row"
@@ -44,53 +89,10 @@ const Carousel = memo(function Carousel({
       as={motion.div}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
+      px={'6px'}
     >
       {nftsData.map((nft: any, key: Key) => (
-        <Box
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
-          rounded="6px"
-          minW="5rem"
-          minH="5rem"
-          as={motion.div}
-          key={key}
-          _hover={{
-            outline: '1px solid #fff',
-          }}
-          onClick={() => {
-            if (!isDragging) {
-              setPFP(nft.image);
-            }
-          }}
-          pointerEvents={isDragging ? 'none' : 'all'}
-        >
-          <Skeleton
-            isLoaded={!isDragging}
-            startColor="gray.900"
-            endColor="gray.700"
-            w="5rem"
-            h="5rem"
-            borderRadius="6px"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={nft.image}
-              alt={nft.image}
-              loading="lazy"
-              style={{
-                outline:
-                  user?.profilePicture === nft.image
-                    ? '1px solid #fff'
-                    : 'none',
-                pointerEvents: 'none',
-                borderRadius: '6px',
-                width: '5rem',
-                height: '5rem',
-                objectFit: 'cover',
-              }}
-            />
-          </Skeleton>
-        </Box>
+        <NFTImg nft={nft} key={key} />
       ))}
     </Flex>
   );

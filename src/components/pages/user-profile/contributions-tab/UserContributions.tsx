@@ -1,31 +1,25 @@
+import { Box, Center, HStack, VStack } from '@chakra-ui/layout';
+import { Avatar } from '@chakra-ui/react';
+import { Skeleton, SkeletonCircle } from '@chakra-ui/skeleton';
 import {
-  Avatar,
-  Box,
-  Center,
-  HStack,
-  Skeleton,
-  SkeletonCircle,
   Table,
   TableContainer,
   Tbody,
   Td,
-  Text,
   Th,
   Thead,
   Tr,
-  VStack,
-} from '@chakra-ui/react';
+} from '@chakra-ui/table';
 import { Key, ReactChild } from 'react';
 import { BiChevronRight } from 'react-icons/bi';
 import ContributionsEmptyState from '~/components/common/empty-state/ContributionsEmptyState';
 import CustomTag from '~/components/common/tags/CustomTag';
 import { BONK, SOL, USDC } from '~/components/common/tokens/token';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
+import ComponentErrors from '~/components/errors/ComponentErrors';
 import { UserContributionsWithProjectOwnerAndProjectRound } from '~/types/contribution';
 import { formatNumberWithK } from '~/utils/formatWithK';
 import { timeSince } from '~/utils/gettimeSince';
 import { trpc } from '~/utils/trpc';
-
 const UserContributionTableRow = ({
   isLoading,
   contribution,
@@ -235,54 +229,55 @@ const UserContributions = ({
         <Thead>
           <Tr>
             <Th w="20%" px="12px">
-              <Text
+              <Box
+                as="p"
                 color="#ADB8B6"
-                size={{ base: '14px', md: '16px' }}
+                textStyle={{ base: 'body4', md: 'body3' }}
                 textTransform={'capitalize'}
-                fontWeight="500"
               >
                 Projects
-              </Text>
+              </Box>
             </Th>
             <Th w="25%" px="12px">
-              <Text
+              <Box
+                as="p"
                 color="#ADB8B6"
-                size={{ base: '14px', md: '16px' }}
+                textStyle={{ base: 'body4', md: 'body3' }}
                 textTransform={'capitalize'}
-                fontWeight="500"
               >
                 Category
-              </Text>
+              </Box>
             </Th>
             <Th w="15%" px="12px">
-              <Text
+              <Box
+                as="p"
                 color="#ADB8B6"
-                size={{ base: '14px', md: '16px' }}
+                textStyle={{ base: 'body4', md: 'body3' }}
                 textTransform={'capitalize'}
-                fontWeight="500"
               >
                 Amount Contributed
-              </Text>
+              </Box>
             </Th>
             <Th w="20%" px="12px">
-              <Text
+              <Box
+                as="p"
                 color="#ADB8B6"
-                size={{ base: '14px', md: '16px' }}
+                textStyle={{ base: 'body4', md: 'body3' }}
                 textTransform={'capitalize'}
-                fontWeight="500"
               >
                 Round
-              </Text>
+              </Box>
             </Th>
             <Th w="15%" px="12px">
-              <Text
+              <Box
+                as="p"
                 color="#ADB8B6"
-                size={{ base: '14px', md: '16px' }}
+                textStyle={{ base: 'body4', md: 'body3' }}
                 textTransform={'capitalize'}
                 fontWeight="500"
               >
                 Total Amount Raised
-              </Text>
+              </Box>
             </Th>
             <Th w="5%" px="12px"></Th>
           </Tr>

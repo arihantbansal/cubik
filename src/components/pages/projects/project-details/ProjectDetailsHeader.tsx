@@ -1,18 +1,8 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  HStack,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
-  Stack,
-  VStack,
-} from '@chakra-ui/react';
+import { Avatar } from '@chakra-ui/avatar';
+import { Button } from '@chakra-ui/button';
+import { Box, HStack, Stack, VStack } from '@chakra-ui/layout';
+import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/menu';
+import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/skeleton';
 import React from 'react';
 import { BiChevronDown } from 'react-icons/bi';
 import {

@@ -14,7 +14,7 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { useState } from 'react';
 import RoundStatus from '~/components/common/dates/Status';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
+import ComponentErrors from '~/components/errors/ComponentErrors';
 import { RoundDetailsWithProjectsWithContributionsType } from '~/types/round';
 import SelectProjectToApplyForGrant from '../SelectProjectToApplyForGrant';
 

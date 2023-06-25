@@ -13,7 +13,6 @@ export const DescriptionPreview = ({
 }) => {
   //const projectDescription = description[0] === '"' ? JSON.parse(description) : description;
   const { isOpen, onToggle } = useDisclosure();
-  console.log('description', description);
   const newTheme = {
     a: (props: LinkProps) => {
       const { children } = props;

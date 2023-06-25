@@ -1,4 +1,4 @@
-import { Box, Center, Container, Flex, HStack } from '@chakra-ui/react';
+import { Box, Center, Container, Flex, HStack } from '@chakra-ui/layout';
 import { ProjectJoinRoundStatus, ProjectVerifyStatus } from '@prisma/client';
 import { isFuture, isPast } from 'date-fns';
 import { AiOutlineWarning } from 'react-icons/ai';

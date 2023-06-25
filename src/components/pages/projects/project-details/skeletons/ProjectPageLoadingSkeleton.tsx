@@ -1,13 +1,5 @@
-import {
-  Box,
-  HStack,
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
-  Stack,
-  VStack,
-  Wrap,
-} from '@chakra-ui/react';
+import { Box, HStack, Stack, VStack, Wrap } from '@chakra-ui/layout';
+import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/skeleton';
 
 export const ProjectSocialsSkeleton = ({
   isLoading,

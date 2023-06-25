@@ -12,8 +12,8 @@ import {
 } from '@chakra-ui/react';
 import {
   Contribution,
-  ProjectsModel,
   ProjectVerifyStatus,
+  ProjectsModel,
   Round,
   Team,
   UserModel,
@@ -29,7 +29,7 @@ import {
 } from 'react-icons/fa';
 import { HiLink } from 'react-icons/hi';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
+import ComponentErrors from '~/components/errors/ComponentErrors';
 import { ProjectCreatorTeamType } from '~/types/IProjectDetails';
 import { trpc } from '~/utils/trpc';
 import {
@@ -99,7 +99,7 @@ export const ProjectFundingData = ({
                 ${funding.toFixed(2)}
               </Box>
               <Box as="p" textStyle={'body4'} color={'neutral.8'}>
-                Estimated Funds Raised
+                Estimated Matching Funds
               </Box>
             </VStack>
 

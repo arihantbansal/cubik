@@ -1,4 +1,5 @@
-import { Card, CardHeader, Skeleton } from '@chakra-ui/react';
+import { Card, CardHeader } from '@chakra-ui/card';
+import { Skeleton } from '@chakra-ui/skeleton';
 import { ProjectVerifyStatus, ProjectsModel } from '@prisma/client';
 
 import ProjectHeaderVisitorView from './ProjectHeaderVisitorView';

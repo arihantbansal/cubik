@@ -79,7 +79,7 @@ const SelectProjectToApplyForGrant = ({
 
   const joinRoundMutation = trpc.project.joinRound.useMutation({
     onSuccess: () => {
-      console.log('success');
+      ('success');
     },
   });
 
@@ -130,7 +130,7 @@ const SelectProjectToApplyForGrant = ({
       onClose();
       SuccessToast({ toast, message: 'Submission Successful' });
     } catch (error) {
-      console.log(error);
+      error;
       setsignTransactionLoading(false);
       onClose();
     }

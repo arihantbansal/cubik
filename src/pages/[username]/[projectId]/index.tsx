@@ -1,16 +1,12 @@
-import { ProjectJoinRoundStatus } from '.prisma/client';
-import { Container, Stack } from '@chakra-ui/react';
-import { GetServerSideProps } from 'next';
-import { join } from 'path';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
-import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';
-import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-details/ProjectDetailsAndTabs';
-import ProjectDetailsLiveRoundStatus from '~/components/pages/projects/project-details/ProjectDetailsLiveRoundStatus';
-import SEO from '~/components/SEO';
-import { Mixpanel } from '~/utils/mixpanel';
-import { ProjectJoinRound } from '~/utils/program/contract';
-import { trpc } from '~/utils/trpc';
+import { Container, Stack } from '@chakra-ui/layout';
 import { ProjectsModel } from '@prisma/client';
+import { GetServerSideProps } from 'next';
+import SEO from '~/components/SEO';
+import ComponentErrors from '~/components/errors/ComponentErrors';
+import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-details/ProjectDetailsAndTabs';
+import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';
+import { Mixpanel } from '~/utils/mixpanel';
+import { trpc } from '~/utils/trpc';
 
 const ProjectDetails = ({
   projectId,

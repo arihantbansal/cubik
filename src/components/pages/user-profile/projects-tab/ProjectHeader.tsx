@@ -1,26 +1,22 @@
+import { Avatar } from '@chakra-ui/avatar';
+import { Button, IconButton } from '@chakra-ui/button';
+import { useDisclosure } from '@chakra-ui/hooks';
+import { Box, Center, HStack, Stack, VStack } from '@chakra-ui/layout';
 import {
-  Avatar,
-  Box,
-  Button,
-  Center,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerOverlay,
-  HStack,
-  IconButton,
   Menu,
   MenuButton,
   MenuDivider,
   MenuItem,
   MenuList,
-  Skeleton,
-  SkeletonCircle,
-  Stack,
-  VStack,
-  useDisclosure,
-} from '@chakra-ui/react';
+} from '@chakra-ui/menu';
+import {
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerOverlay,
+} from '@chakra-ui/modal';
+import { Skeleton, SkeletonCircle } from '@chakra-ui/skeleton';
 import { useRef, useState } from 'react';
 import { AiOutlineEdit, AiOutlineMore } from 'react-icons/ai';
 import { BiMessageSquareDots } from 'react-icons/bi';

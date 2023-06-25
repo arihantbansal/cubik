@@ -53,7 +53,6 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
         username: router.query.username as string,
       });
     } catch (error) {
-      console.log(error);
       onClose();
     }
   };

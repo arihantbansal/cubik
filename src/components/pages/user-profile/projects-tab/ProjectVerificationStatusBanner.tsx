@@ -1,4 +1,4 @@
-import { Box, Flex, HStack } from '@chakra-ui/react';
+import { Box, Flex, HStack } from '@chakra-ui/layout';
 import { ProjectVerifyStatus } from '@prisma/client';
 import Link from 'next/link';
 import { AiOutlineWarning } from 'react-icons/ai';

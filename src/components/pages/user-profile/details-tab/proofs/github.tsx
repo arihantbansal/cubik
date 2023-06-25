@@ -47,7 +47,6 @@ const GithubProof = ({ minted, isLoading }: Props) => {
         },
       });
     } else {
-      console.log(user.data.user);
       proofMutation.mutate({
         name: 'GITHUB',
         tx: '0x123',

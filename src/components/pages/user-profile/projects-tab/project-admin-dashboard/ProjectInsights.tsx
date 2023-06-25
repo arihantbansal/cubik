@@ -1,7 +1,8 @@
-import { Box, Center, Spinner, VStack } from '@chakra-ui/react';
+import { Box, Center, VStack } from '@chakra-ui/layout';
+import { Spinner } from '@chakra-ui/spinner';
+import ComponentErrors from '~/components/errors/ComponentErrors';
 import { trpc } from '~/utils/trpc';
 import { VisitorsChart } from './Charts';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
 
 const ProjectInsights = ({
   projectId,
@@ -27,7 +28,6 @@ const ProjectInsights = ({
     const contributors = data.map((item) => item.userId);
     const uniqueContributors = new Set(contributors);
     // now calculate no of unique ids
-    console.log('unique contributors', uniqueContributors);
     return uniqueContributors.size;
   };
 
@@ -39,7 +39,7 @@ const ProjectInsights = ({
       gap={{ base: '16px', sm: '20px', md: '24px' }}
       position={'relative'}
     >
-      <Box
+      {/* <Box
         zIndex="8"
         h="full"
         w="full"
@@ -55,7 +55,7 @@ const ProjectInsights = ({
             Coming Soon...
           </Box>
         </Center>{' '}
-      </Box>
+      </Box> */}
       <Box
         as="p"
         textStyle={{ base: 'title3', md: 'title2' }}

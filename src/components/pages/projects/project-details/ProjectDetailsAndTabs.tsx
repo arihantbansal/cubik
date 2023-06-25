@@ -1,17 +1,14 @@
+import { Avatar } from '@chakra-ui/avatar';
+import { useDisclosure } from '@chakra-ui/hooks';
+import { Box, Container, HStack, VStack } from '@chakra-ui/layout';
 import {
-  Avatar,
-  Box,
-  Container,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  HStack,
-  useDisclosure,
-  VStack,
-} from '@chakra-ui/react';
+} from '@chakra-ui/modal';
 import {
   Contribution,
   ProjectsModel,
@@ -21,15 +18,15 @@ import {
 } from '@prisma/client';
 import { useState } from 'react';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
-import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
+import ProjectDetailsHeader from './ProjectDetailsHeader';
+import { ProjectsTabs } from './ProjectTabs';
 import { ProjectCTAsMobile } from './project-interactions/ProjectCTAs';
 import {
   ProjectFundingData,
   ProjectOwner,
   ProjectSocials,
 } from './project-interactions/ProjectInteractions';
-import ProjectDetailsHeader from './ProjectDetailsHeader';
-import { ProjectsTabs } from './ProjectTabs';
+import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
 
 type MobileDrawerTypes = {
   logo: string;

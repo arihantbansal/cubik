@@ -8,12 +8,12 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import GraphProps from '~/types/graphProps';
+import { calculateProjectMatchingFund } from '~/utils/calculateProjectMatchingFund';
 import { trpc } from '~/utils/trpc';
 import { GraphLine } from './GraphLines';
-import { useState, useEffect } from 'react';
-import { calculateProjectMatchingFund } from '~/utils/calculateProjectMatchingFund';
 
 const Graph: React.FC<GraphProps> = ({
   width,
@@ -54,7 +54,6 @@ const Graph: React.FC<GraphProps> = ({
     }
   }, [graphData]);
 
-  console.log('graphData', data);
   return (
     <VStack flex="1" p="1rem" width={'100%'} gap="0">
       <Box

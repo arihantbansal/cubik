@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { Center } from '@chakra-ui/react';
-import { UserModel, Contribution } from '@prisma/client';
+import { Center } from '@chakra-ui/layout';
+import { Contribution, UserModel } from '@prisma/client';
 import dynamic from 'next/dynamic';
 import React, { useEffect } from 'react';
 const ReactApexChart = dynamic(() => import('react-apexcharts'), {
@@ -259,9 +259,9 @@ export const FundingChart = ({
           date.toISOString().split('T')[0]
         ).getTime(); // get the time in milliseconds without the milliseconds part
         if (acc[formattedDate]) {
-          acc[formattedDate] += curr.currentTotal;
+          acc[formattedDate] += curr.usdTotal;
         } else {
-          acc[formattedDate] = curr.currentTotal;
+          acc[formattedDate] = curr.usdTotal;
         }
         return acc;
       },

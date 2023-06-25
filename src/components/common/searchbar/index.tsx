@@ -1,19 +1,9 @@
-import {
-  Avatar,
-  Box,
-  Center,
-  HStack,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalOverlay,
-  Spinner,
-  useDisclosure,
-  VStack,
-} from '@chakra-ui/react';
+import { Avatar } from '@chakra-ui/avatar';
+import { useDisclosure } from '@chakra-ui/hooks';
+import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input';
+import { Box, Center, HStack, VStack } from '@chakra-ui/layout';
+import { Modal, ModalBody, ModalContent, ModalOverlay } from '@chakra-ui/modal';
+import { Skeleton } from '@chakra-ui/skeleton';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
@@ -26,11 +16,10 @@ type SearchBarProps = {
   width: any;
 };
 export const SearchBar = ({ display, width }: SearchBarProps) => {
-  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const router = useRouter();
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const initialRef = useRef(null);
-
   const [searchInput, setSearchInput] = useState('');
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
   const [filteredProjects, setFilterdProjects] = useState<searchProjectsType[]>(
@@ -38,6 +27,7 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
   );
   const searchProjectMutation = trpc.project.searchProjects.useMutation({
     onSuccess: async (data) => {
+      console.log('search is called');
       setFilterdProjects(data as searchProjectsType[]);
     },
   });
@@ -48,28 +38,34 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    itemRefs.current[selectedProjectIndex]?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+    });
+  }, [selectedProjectIndex]);
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Tab') {
+    if (event.key === 'Tab' || event.key === 'ArrowDown') {
       event.preventDefault();
-
-      //  else if (filteredPeople.length > 0) {
-      //   setSelectedPeopleIndex(prevIndex => prevIndex + 1 >= filteredPeople.length ? 0 : prevIndex + 1);
-      // } else if (filteredGrants.length > 0) {
-      //   setSelectedGrantIndex(prevIndex => prevIndex + 1 >= filteredGrants.length ? 0 : prevIndex + 1);
-      // } else if (filteredHackathons.length > 0) {
-      //   setSelectedHackathonIndex(prevIndex => prevIndex + 1 >= filteredHackathons.length ? 0 : prevIndex + 1);
-      // }
+      if (filteredProjects.length > 0) {
+        setSelectedProjectIndex((prevIndex) =>
+          prevIndex + 1 >= filteredProjects.length ? 0 : prevIndex + 1
+        );
+      }
     }
-
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (filteredProjects.length > 0) {
+        setSelectedProjectIndex((prevIndex) =>
+          prevIndex - 1 < 0 ? filteredProjects.length - 1 : prevIndex - 1
+        );
+      }
+    }
     if (event.key === 'Enter') {
-      // Modify this part to handle navigation to different routes depending on the selected type
-      // else if (filteredPeople.length > 0) {
-      //   router.prefetch(`/people/${filteredPeople[selectedPeopleIndex].id}`);
-      // } else if (filteredGrants.length > 0) {
-      //   router.prefetch(`/grants/${filteredGrants[selectedGrantIndex].id}`);
-      // } else if (filteredHackathons.length > 0) {
-      //   router.prefetch(`/hackathons/${filteredHackathons[selectedHackathonIndex].id}`);
-      // }
+      if (filteredProjects.length > 0) {
+        router.push(`/people/${filteredProjects[selectedProjectIndex].id}`);
+      }
     }
   };
 
@@ -142,21 +138,52 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
                     }}
                   />
                 </InputGroup>
-                <VStack p="12px" pt="0px" w="full" rounded="8px">
-                  <Box w="full" h="1px" bg="neutral.4" />
-
+                <VStack
+                  p="12px"
+                  pt="0px"
+                  w="full"
+                  rounded="8px"
+                  display={filteredProjects.length > 0 ? 'block' : 'none'}
+                >
+                  <Box w="full" h="1px" bg="neutral.4" />{' '}
+                  <Box py="8px" as="p" textStyle={'body4'} color="neutral.8">
+                    Projects
+                  </Box>
                   {searchProjectMutation.isLoading ? (
-                    <Spinner color="purple.500" size="xl" />
+                    <VStack w="full">
+                      <Skeleton height="2.4rem" w="full" opacity={0.7} />
+                      <Skeleton height="2.4rem" w="full" opacity={0.5} />
+                      <Skeleton height="2.4rem" w="full" opacity={0.3} />
+                    </VStack>
                   ) : searchProjectMutation.isError ? (
                     <Box p="16px">Error: {'Something went wrong.'}</Box>
                   ) : filteredProjects.length === 0 &&
                     searchInput.trim() !== '' ? (
                     <Box p="16px">No results found for {searchInput}.</Box>
                   ) : (
-                    <VStack align="start" w="full" spacing="8px">
-                      <Box as="p" textStyle={'body5'} color="neutral.8">
-                        Projects
-                      </Box>
+                    <VStack
+                      maxH={'12rem'}
+                      overflowY={'scroll'}
+                      align="start"
+                      w="full"
+                      spacing="8px"
+                      sx={{
+                        scrollbarWidth: 'wide !important',
+                        scrollbarColor: 'rebeccapurple green',
+
+                        // For Webkit browsers
+                        '&::-webkit-scrollbar': {
+                          width: '12px',
+                        },
+                        '&::-webkit-scrollbar-track': {
+                          background: 'green',
+                        },
+                        '&::-webkit-scrollbar-thumb': {
+                          backgroundColor: 'rebeccapurple',
+                          borderRadius: '6px',
+                        },
+                      }}
+                    >
                       {filteredProjects.map((projectjoinround, index) => (
                         <HStack
                           key={projectjoinround?.id}
@@ -171,6 +198,7 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
                               : 'transparent'
                           }
                           href={`/project/${projectjoinround?.id}`} // @irfan check if the route is correct once
+                          ref={(element) => (itemRefs.current[index] = element)}
                         >
                           <Avatar
                             src={projectjoinround.logo}

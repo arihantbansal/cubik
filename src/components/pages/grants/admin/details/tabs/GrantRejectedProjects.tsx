@@ -1,23 +1,21 @@
 import {
-  Center,
-  VStack,
-  Spinner,
-  HStack,
-  Skeleton,
   Avatar,
   Box,
   Button,
   Card,
   CardBody,
+  Center,
+  HStack,
   Stack,
+  VStack,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { trpc } from '~/utils/trpc';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
-import { ProjectEmptyState } from '../../../../user-profile/empty-states/ProjectEmptyState';
-import { useErrorBoundary } from '~/hooks/useErrorBoundary';
-import GetFormattedLink from '~/components/HOC/GetLink';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import GetFormattedLink from '~/components/HOC/GetLink';
+import ComponentErrors from '~/components/errors/ComponentErrors';
+import { useErrorBoundary } from '~/hooks/useErrorBoundary';
+import { trpc } from '~/utils/trpc';
+import { ProjectEmptyState } from '../../../../user-profile/empty-states/ProjectEmptyState';
 import ProjectsLoadingState from '../../loadingState/ProjectsLoadingState';
 
 const GrantAcceptedProjects = ({
@@ -41,7 +39,6 @@ const GrantAcceptedProjects = ({
     error,
   } = trpc.round.findRejectedGrants.useQuery({ id: roundId });
 
-  console.log('roundData - ', roundData);
   useEffect(() => {
     if (!roundData) return;
     if (roundData?.ProjectJoinRound?.length > 0) {

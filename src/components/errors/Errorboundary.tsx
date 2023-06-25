@@ -1,7 +1,7 @@
 // components/ErrorBoundary.tsx
-import { Component, ErrorInfo, ReactNode } from 'react';
-import ComponentErrors from './ComponenetErrors';
 import { Center } from '@chakra-ui/react';
+import { Component, ErrorInfo, ReactNode } from 'react';
+import ComponentErrors from './ComponentErrors';
 
 interface Props {
   children: ReactNode;

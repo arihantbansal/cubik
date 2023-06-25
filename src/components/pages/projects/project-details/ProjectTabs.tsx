@@ -1,13 +1,6 @@
-import {
-  Box,
-  Skeleton,
-  Stack,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from '@chakra-ui/react';
+import { Box, Stack } from '@chakra-ui/layout';
+import { Skeleton } from '@chakra-ui/skeleton';
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
 import { Contribution, ProjectsModel, Team, UserModel } from '@prisma/client';
 import { formateDateInMonths } from '~/utils/formatDates';
 import { ProjectsDetailedDescription } from './ProjectDetailedDescription';

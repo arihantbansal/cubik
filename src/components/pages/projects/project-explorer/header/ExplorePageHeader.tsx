@@ -1,6 +1,6 @@
 import { Center, Skeleton, VStack } from '@chakra-ui/react';
 import { isPast } from 'date-fns';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
+import ComponentErrors from '~/components/errors/ComponentErrors';
 import { trpc } from '~/utils/trpc';
 import FundingRoundBanner from './FundingRoundBanner';
 import GrantsCarousel from './GrantsCaruosel';

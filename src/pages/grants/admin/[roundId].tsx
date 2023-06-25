@@ -1,15 +1,6 @@
-import {
-  Box,
-  Container,
-  HStack,
-  Skeleton,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Container, HStack, VStack } from '@chakra-ui/layout';
+import { Skeleton } from '@chakra-ui/skeleton';
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
 import { GetServerSideProps } from 'next';
 import ErrorBoundary from '~/components/errors/Errorboundary';
 import RoundAdminSettings from '~/components/pages/grants/admin/RoundAdminSettings';
@@ -22,7 +13,6 @@ const RoundAdmin = ({ roundId }: { roundId: string }) => {
   const { data, isLoading } = trpc.round.findOneAdmin.useQuery({
     id: roundId,
   });
-  console.log('data for grant admin - ', data);
   return (
     <ErrorBoundary>
       <Container maxW="full" py="40px" px="0">

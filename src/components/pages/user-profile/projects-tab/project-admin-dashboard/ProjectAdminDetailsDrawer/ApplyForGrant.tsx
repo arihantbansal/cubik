@@ -3,13 +3,13 @@ import {
   AlertDescription,
   AlertIcon,
   AlertTitle,
-  Avatar,
-  Box,
-  Button,
-  Center,
-  Checkbox,
-  HStack,
-  Icon,
+} from '@chakra-ui/alert';
+import { Avatar } from '@chakra-ui/avatar';
+import { Button } from '@chakra-ui/button';
+import { Checkbox } from '@chakra-ui/checkbox';
+import { useDisclosure } from '@chakra-ui/hooks';
+import { Box, Center, HStack, Stack, VStack } from '@chakra-ui/layout';
+import {
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -17,14 +17,9 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
-  Stack,
-  useDisclosure,
-  useToast,
-  VStack,
-} from '@chakra-ui/react';
+} from '@chakra-ui/modal';
+import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/skeleton';
+import { useToast } from '@chakra-ui/toast';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { ProjectsModel } from '@prisma/client';
@@ -38,7 +33,7 @@ import { SuccessToast } from '~/components/common/toasts/Toasts';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import { formateDateInMonths } from '~/utils/formatDates';
 import { formatNumberWithK } from '~/utils/formatWithK';
-import { connection, ProjectJoinRound } from '~/utils/program/contract';
+import { ProjectJoinRound, connection } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 import { drawerBodyViewEnum } from '../../ProjectHeader';
 type FormData = {
@@ -123,7 +118,6 @@ const ApplyForGrant: React.FC<{
       onClose();
     } catch (error) {
       setSignTxnLoading(false);
-      console.log(error);
     }
   };
 
@@ -390,7 +384,12 @@ const ApplyForGrant: React.FC<{
               onClick={() =>
                 setDrawerBodyView(drawerBodyViewEnum.PROJECT_DETAILS)
               }
-              leftIcon={<Icon as={FiChevronLeft} width={5} height={5} />}
+              leftIcon={
+                <Box
+                  as={FiChevronLeft}
+                  boxSize={{ base: '12px', md: '18px' }}
+                />
+              }
             >
               Back
             </Button>

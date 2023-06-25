@@ -1,18 +1,12 @@
-import {
-  Box,
-  Center,
-  SkeletonText,
-  Stack,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Center, Stack, Text, VStack } from '@chakra-ui/layout';
+import { SkeletonText } from '@chakra-ui/skeleton';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 
 import { Link, LinkProps } from '@chakra-ui/react';
-import ComponentErrors from '~/components/errors/ComponenetErrors';
+import ComponentErrors from '~/components/errors/ComponentErrors';
 
 const ErrorUI = () => {
   return (

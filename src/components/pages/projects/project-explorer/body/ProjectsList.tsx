@@ -19,7 +19,6 @@ import { useEffect, useState } from 'react';
 import { HiCheck } from 'react-icons/hi';
 import CustomTag from '~/components/common/tags/CustomTag';
 import { RemoveToast, SuccessToast } from '~/components/common/toasts/Toasts';
-import GetFormattedLink from '~/components/HOC/GetLink';
 import useListStore from '~/store/listStore';
 import { verifiedProjectsType } from '~/types/projects';
 import { formatNumberWithK } from '~/utils/formatWithK';
@@ -47,7 +46,6 @@ type ProjectCardProps = {
   projectLogo: string;
   projectDescription: string;
   amountRaised: number;
-  project_link: string;
   contributions: ContributionType[];
 };
 
@@ -226,19 +224,33 @@ const ProjectCard = (props: ProjectCardProps) => {
               </HStack>
               <HStack w="full" justify="space-between">
                 <Center>
-                  <GetFormattedLink link={props.project_link} />
+                  <Box
+                    noOfLines={1}
+                    textAlign="start"
+                    as="p"
+                    whiteSpace={'nowrap'}
+                    textStyle={{ base: 'title6', sm: 'title6', md: 'title5' }}
+                    color={'brand.teal5'}
+                    textTransform="lowercase"
+                    w="full"
+                  >
+                    <Box as="span" color="neutral.7">
+                      by
+                    </Box>{' '}
+                    @{props.ownerUsername}
+                  </Box>
                 </Center>
                 <Box
                   color="neutral8"
                   as="p"
                   textStyle={{ base: 'body6', md: 'body5' }}
                 >
-                  Raised
+                  Est. Match
                 </Box>
               </HStack>
             </VStack>
             <Box
-              color="neutral8"
+              color="neutral.8"
               as="p"
               textStyle={{ base: 'body5', md: 'body4' }}
               sx={{
@@ -385,7 +397,6 @@ const ProjectsList = ({ allProjectsData }: ProjectsListProps) => {
                 projectDescription={projectJoinRound.project.short_description}
                 projectLogo={projectJoinRound.project.logo}
                 projectName={projectJoinRound.project.name}
-                project_link={projectJoinRound.project.project_link}
                 colorScheme={projectJoinRound.fundingRound.colorScheme}
                 roundName={projectJoinRound.fundingRound.roundName}
                 contributions={projectJoinRound.project.Contribution}

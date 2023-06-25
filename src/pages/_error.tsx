@@ -1,4 +1,4 @@
-import { Box, Center, Container, Heading, Text } from '@chakra-ui/react';
+import { Box, Center, Container, Heading, Text } from '@chakra-ui/layout';
 import { useRouter } from 'next/router';
 
 const Error = () => {

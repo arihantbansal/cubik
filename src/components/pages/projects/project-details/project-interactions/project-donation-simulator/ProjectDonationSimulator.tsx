@@ -122,7 +122,6 @@ export const ProjectDonationSimulator = ({
     let sig: string | null = null;
     const balance = await getBalances(publicKey?.toBase58() as string);
 
-    console.log('balance --------- ', balance);
     if (balance.nativeBalance < _values.amount * LAMPORTS_PER_SOL) {
       return setTxnError('Insufficient balance');
     }
