@@ -3,6 +3,7 @@ import { Center } from '@chakra-ui/layout';
 import { Contribution, UserModel } from '@prisma/client';
 import dynamic from 'next/dynamic';
 import React, { useEffect } from 'react';
+import { getProjectContributorsType } from '~/types/contribution';
 const ReactApexChart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
 });
@@ -92,9 +93,7 @@ const generateLast15Days = () => {
 export const FundingChart = ({
   data,
 }: {
-  data: (Contribution & {
-    user: UserModel;
-  })[];
+  data: getProjectContributorsType[];
 }) => {
   const [chartData, setChartData] = React.useState<IChartData>({
     series: [{ name: '', data: [] }],
@@ -252,7 +251,7 @@ export const FundingChart = ({
 
   const distributeData = () => {
     const contributionsByDate: { [key: string]: number } = data.reduce(
-      (acc: { [key: string]: number }, curr: ContributionWithUser) => {
+      (acc: { [key: string]: number }, curr) => {
         const date = new Date(curr.createdAt);
         date.setUTCHours(0, 0, 0, 0); // set the time to start of the day (midnight)
         const formattedDate = new Date(
@@ -331,11 +330,7 @@ export const FundingChart = ({
 export const VisitorsChart = ({
   data,
 }: {
-  data:
-    | (Contribution & {
-        user: UserModel;
-      })[]
-    | undefined;
+  data: getProjectContributorsType[];
 }) => {
   const [chartData, setChartData] =
     React.useState<IChartContributorsAndVisitorsData>({
@@ -473,22 +468,19 @@ export const VisitorsChart = ({
 
   const distributeData = () => {
     const noOfContributorsByDate: { [key: string]: Set<string> } =
-      data?.reduce(
-        (acc: { [key: string]: Set<string> }, curr: ContributionWithUser) => {
-          const date = new Date(curr.createdAt);
-          date.setUTCHours(0, 0, 0, 0); // set the time to start of the day (midnight)
-          const formattedDate = new Date(
-            date.toISOString().split('T')[0]
-          ).getTime(); // get the time in milliseconds without the milliseconds part
-          if (acc[formattedDate]) {
-            acc[formattedDate].add(curr.user.id); // Add unique contributor
-          } else {
-            acc[formattedDate] = new Set([curr.user.id]); // Start new set of unique contributors
-          }
-          return acc;
-        },
-        {}
-      ) || {};
+      data?.reduce((acc: { [key: string]: Set<string> }, curr) => {
+        const date = new Date(curr.createdAt);
+        date.setUTCHours(0, 0, 0, 0); // set the time to start of the day (midnight)
+        const formattedDate = new Date(
+          date.toISOString().split('T')[0]
+        ).getTime(); // get the time in milliseconds without the milliseconds part
+        if (acc[formattedDate]) {
+          acc[formattedDate].add(curr.user.id); // Add unique contributor
+        } else {
+          acc[formattedDate] = new Set([curr.user.id]); // Start new set of unique contributors
+        }
+        return acc;
+      }, {}) || {};
 
     const sortedData: { date: number; total: number }[] = Object.entries(
       noOfContributorsByDate

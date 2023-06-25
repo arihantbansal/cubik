@@ -29,39 +29,16 @@ import { formatNumberWithK } from '~/utils/formatWithK';
 import { timeSince } from '~/utils/gettimeSince';
 import { trpc } from '~/utils/trpc';
 
-type Contributor = {
+type Props = {
   id: string;
   avatar: string;
   username: string;
   walletAddress: string;
   amount: number;
-  currentusdTotal: number;
-  timestamp: string;
+  timestamp: Date;
   token: string;
-  [key: string]: any;
-};
-
-type ContributorRowProps = {
-  contributor: Contributor;
-};
-
-const formatContributorData = (data: any): Contributor[] => {
-  const finalData: Contributor[] = [];
-
-  data?.forEach((contributor: any) => {
-    finalData.push({
-      id: contributor.id,
-      avatar: contributor.user.profilePicture,
-      username: contributor.user.username,
-      walletAddress: contributor.user.mainWallet,
-      amount: contributor.total,
-      currentusdTotal: contributor.usdTotal,
-      timestamp: contributor.createdAt,
-      token: contributor.token,
-    });
-  });
-
-  return finalData;
+  usd: number;
+  proof: UserProof[];
 };
 
 export const TableLoading = () => {
@@ -99,15 +76,13 @@ export const TableLoading = () => {
   );
 };
 
-export const ContributorRow: React.FC<ContributorRowProps> = ({
-  contributor,
-}) => {
+export const ContributorRow: React.FC<Props> = (props) => {
   const router = useRouter();
   return (
     <Tr
       w={'full'}
       onClick={() => {
-        router.push(`/${contributor.username}`);
+        router.push(`/${props?.username}`);
       }}
       cursor="pointer"
       _hover={{ backgroundColor: '#0C0D0D' }}
@@ -117,7 +92,7 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
           <Avatar
             width={{ base: '36px', md: '44px' }}
             height={{ base: '36px', md: '44px' }}
-            src={contributor.avatar}
+            src={props.avatar}
           />
           <VStack
             align={'start'}
@@ -126,8 +101,8 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
           >
             <Username
               isLoading={false}
-              username={contributor?.username}
-              proofs={(contributor?.proof as unknown as UserProof[]) ?? []}
+              username={props?.username}
+              proofs={(props?.proof as unknown as UserProof[]) ?? []}
               size="sm"
             />
             <Box
@@ -136,7 +111,7 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
               color="neutral.7"
             >
               {TruncatedAddr({
-                walletAddress: contributor.walletAddress,
+                walletAddress: props.walletAddress,
               })}
             </Box>
           </VStack>
@@ -145,7 +120,7 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
       <Td p="18px">
         <HStack gap="8px" align={'center'}>
           <Center>
-            {contributor.token.includes('sol') ? (
+            {props.token.includes('sol') ? (
               <SOL size={'28px'} />
             ) : (
               <USDC size={'28px'} />
@@ -154,10 +129,10 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
           <VStack justify={'center'} spacing="2px" align={'start'}>
             <HStack align={'baseline'} color="white">
               <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
-                {formatNumberWithK(contributor.amount)}
+                {formatNumberWithK(props.amount)}
               </Box>
               <Box as="p" textStyle={{ base: 'title6', md: 'title7' }}>
-                {contributor.token.toUpperCase()}
+                {props.token.toUpperCase()}
               </Box>
             </HStack>
 
@@ -166,7 +141,7 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
               color="neutral.8"
               textStyle={{ base: 'body6', md: 'body5' }}
             >
-              ${formatNumberWithK(contributor.currentusdTotal)}
+              ${formatNumberWithK(props.usd)}
             </Box>
           </VStack>
         </HStack>
@@ -177,7 +152,7 @@ export const ContributorRow: React.FC<ContributorRowProps> = ({
           textStyle={{ base: 'body5', md: 'body4' }}
           color="neutral.11"
         >
-          {timeSince(new Date(contributor.timestamp))}
+          {timeSince(new Date(props.timestamp))}
         </Box>
       </Td>
       <Td p="18px">
@@ -216,17 +191,17 @@ const ProjectContributors = ({
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
 
-  const sortedAndFormattedContributors = contributorsData
-    ? formatContributorData(contributorsData).sort((a, b) => {
-        if (a[sortField] < b[sortField]) {
-          return sortDirection === 'asc' ? -1 : 1;
-        }
-        if (a[sortField] > b[sortField]) {
-          return sortDirection === 'asc' ? 1 : -1;
-        }
-        return 0;
-      })
-    : [];
+  const sortedAndFormattedContributors = contributorsData;
+  // ? formatContributorData(contributorsData).sort((a, b) => {
+  //     if (a[sortField] < b[sortField]) {
+  //       return sortDirection === 'asc' ? -1 : 1;
+  //     }
+  //     if (a[sortField] > b[sortField]) {
+  //       return sortDirection === 'asc' ? 1 : -1;
+  //     }
+  //     return 0;
+  //   })
+  // : [];
 
   const currentContributors = sortedAndFormattedContributors
     ? sortedAndFormattedContributors.slice(startIndex, endIndex)
@@ -337,10 +312,18 @@ const ProjectContributors = ({
                 {currentContributors.length === 0 ? (
                   <></>
                 ) : (
-                  currentContributors.map((contributor: Contributor) => (
+                  currentContributors.map((contributor) => (
                     <ContributorRow
                       key={contributor.id}
-                      contributor={contributor}
+                      amount={contributor.total}
+                      token={contributor.token}
+                      timestamp={contributor.createdAt}
+                      avatar={contributor.user.profilePicture}
+                      usd={contributor.usdTotal}
+                      username={contributor.user.username}
+                      walletAddress={contributor.user.mainWallet}
+                      id={contributor.user.id}
+                      proof={contributor.user.proof as unknown as UserProof[]}
                     />
                   ))
                 )}

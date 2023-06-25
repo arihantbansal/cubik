@@ -25,7 +25,7 @@ const ProjectInsights = ({
   }
   // calculate total no of unique contributors
   const totalNoOfUniqueContributors = () => {
-    const contributors = data.map((item) => item.userId);
+    const contributors = data.map((item) => item.user.id);
     const uniqueContributors = new Set(contributors);
     // now calculate no of unique ids
     return uniqueContributors.size;

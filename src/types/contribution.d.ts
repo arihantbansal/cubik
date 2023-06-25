@@ -16,3 +16,15 @@ export type UserContributionsWithProjectOwnerAndProjectRound =
       };
     };
   }>;
+
+export type getProjectContributorsType = Prisma.ContributionGetPayload<{
+  select: {
+    id: true;
+    total: true;
+    usdTotal: true;
+    createdAt: true;
+    token: true;
+    count: true;
+    user: true;
+  };
+}>;
