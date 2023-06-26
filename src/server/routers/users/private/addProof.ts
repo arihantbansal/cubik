@@ -33,28 +33,42 @@ export const addProof = protectedProcedure
       otherInfo = {
         email: input.email,
       };
+      const check = await prisma.userModel.findFirst({
+        where: {
+          email: input.email,
+        },
+      });
+      if (check) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          cause: 'The Google Account is Already linked by another user',
+          message: 'The Google Account is Already linked by another user',
+        });
+      }
     }
     if (input.name === 'GITHUB') {
       otherInfoProof = {
         githubUsername: input.githubUsername,
       };
-    }
-    const check = await prisma.userModel.findFirst({
-      where: {
-        ...otherInfo,
-        proof: {
-          path: '$[*].name',
-          array_contains: input.name,
+
+      const check = await prisma.userModel.findFirst({
+        where: {
+          proof: {
+            path: '$[*].githubUsername',
+            array_contains: input.githubUsername,
+          },
         },
-      },
-    });
-    if (check) {
-      throw new TRPCError({
-        code: 'BAD_REQUEST',
-        cause: 'The Proof is Already claimed by another user',
-        message: 'The Proof is Already claimed by another user',
       });
+
+      if (check) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          cause: 'The Github Account is Already linked by another user',
+          message: 'The Github Account is Already linked by another user',
+        });
+      }
     }
+
     const res = await prisma.userModel.findUnique({
       where: {
         id: user.id,
