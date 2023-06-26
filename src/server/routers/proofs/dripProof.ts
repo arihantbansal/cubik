@@ -7,21 +7,22 @@ import { ProofType } from '~/utils/program/contract';
 
 export const dripProof = protectedProcedure.mutation(async ({ ctx }) => {
   try {
-    const check = await prisma.userModel.findMany({
-      where: {
-        proof: {
-          path: '$[*].name',
-          array_contains: 'DRIPDS1',
-        },
-      },
-    });
-    if (check.length > 0) {
-      throw new TRPCError({
-        code: 'BAD_REQUEST',
-        cause: 'NFT is Already claimed by another user',
-        message: 'NFT is Already claimed by another user',
-      });
-    }
+    // const check = await prisma.userModel.findMany({
+    //   where: {
+
+    //     proof: {
+    //       path: '$[*].name',
+    //       array_contains: 'DRIPDS1',
+    //     },
+    //   },
+    // });
+    // if (check.length > 0) {
+    //   throw new TRPCError({
+    //     code: 'BAD_REQUEST',
+    //     cause: 'NFT is Already claimed by another user',
+    //     message: 'NFT is Already claimed by another user',
+    //   });
+    // }
     const fetchLatestUser = await prisma.userModel.findUnique({
       where: {
         id: ctx.user?.id,

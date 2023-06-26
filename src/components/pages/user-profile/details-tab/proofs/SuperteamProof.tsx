@@ -30,8 +30,10 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
   const addProof = trpc.user.addProof.useMutation();
   const playerRef = useRef<Player>(null);
   const router = useRouter();
+
   const utils = trpc.useContext();
-  const { resetUser } = useUserStore();
+
+  const authUser = useUserStore();
   const toast = useToast();
   const claimProof = () => {
     if (!isClaimAble) return;
@@ -50,7 +52,7 @@ const SuperteamProof = ({ isClaimAble, claimed }: Props) => {
         });
       }, 2000);
       utils.user.findOne.invalidate({
-        username: router.query.username as string,
+        username: authUser.user?.username,
       });
     } catch (error) {
       onClose();

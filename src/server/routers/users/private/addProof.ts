@@ -33,12 +33,42 @@ export const addProof = protectedProcedure
       otherInfo = {
         email: input.email,
       };
+      const check = await prisma.userModel.findFirst({
+        where: {
+          email: input.email,
+        },
+      });
+      if (check) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          cause: 'The Google Account is Already linked by another user',
+          message: 'The Google Account is Already linked by another user',
+        });
+      }
     }
     if (input.name === 'GITHUB') {
       otherInfoProof = {
         githubUsername: input.githubUsername,
       };
+
+      const check = await prisma.userModel.findFirst({
+        where: {
+          proof: {
+            path: '$[*].githubUsername',
+            array_contains: input.githubUsername,
+          },
+        },
+      });
+
+      if (check) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          cause: 'The Github Account is Already linked by another user',
+          message: 'The Github Account is Already linked by another user',
+        });
+      }
     }
+
     const res = await prisma.userModel.findUnique({
       where: {
         id: user.id,
@@ -50,6 +80,7 @@ export const addProof = protectedProcedure
         message: 'User not found',
       });
     }
+
     const alreadyClaimedProofs = res?.proof as unknown as UserProof[];
 
     if (alreadyClaimedProofs.find((e) => e.name === input.name)) {
@@ -64,9 +95,9 @@ export const addProof = protectedProcedure
       },
       data: {
         ...otherInfo,
-        proof: (user.proof
+        proof: (alreadyClaimedProofs
           ? [
-              ...(user.proof as unknown as ProofType[]),
+              ...(alreadyClaimedProofs as unknown as ProofType[]),
               {
                 name: input.name as ProofType,
                 timestamp: new Date(),
