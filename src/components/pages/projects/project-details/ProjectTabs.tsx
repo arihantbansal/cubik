@@ -1,11 +1,14 @@
-import { Box, Stack } from '@chakra-ui/layout';
+import { Box, Stack, VStack } from '@chakra-ui/layout';
 import { Skeleton } from '@chakra-ui/skeleton';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
 import { Contribution, ProjectsModel, Team, UserModel } from '@prisma/client';
 import { formateDateInMonths } from '~/utils/formatDates';
 import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
 import Discussions from './ProjectDiscussion';
+import { ProjectDiscussion } from './discussion/ProjectDiscussion';
 import ProjectContributors from './project-interactions/project-tabs/ProjectContributors';
+import { Button, Center } from '@chakra-ui/react';
+import { BiChevronDown } from 'react-icons/bi';
 
 export const ProjectsTabs = ({
   projectDetails,
@@ -39,30 +42,36 @@ export const ProjectsTabs = ({
       >
         <Tab>Details</Tab>
         <Tab>Contributors</Tab>
-        <Tab isDisabled>Discussion</Tab>
+        <Tab>Discussion</Tab>
         <Tab isDisabled>Updates</Tab>
       </TabList>
       <TabPanels p="0">
         <TabPanel>
-          <ProjectsDetailedDescription
-            isLoading={isLoading}
-            description={projectDetails?.long_description}
-          />
-          {projectDetails && (
-            <Stack direction={{ base: 'row', md: 'row' }}>
-              <Skeleton
-                isLoaded={!isLoading}
-                fadeDuration={2.5}
-                opacity={isLoading ? '0.3' : '1'}
-              >
-                <Box as="p" textStyle="body4" color="neutral.7">
-                  Project Created:{' '}
-                  {formateDateInMonths(projectDetails?.createdAt ?? Date.now())}
-                  {''} by @{ownerName}
-                </Box>
-              </Skeleton>
-            </Stack>
-          )}
+          <VStack w="full" align="start" gap="1rem">
+            <VStack gap="12px" overflow="hidden" align={'start'}>
+              <ProjectsDetailedDescription
+                isLoading={isLoading}
+                description={projectDetails?.long_description}
+              />
+            </VStack>
+            {projectDetails && (
+              <Stack direction={{ base: 'row', md: 'row' }}>
+                <Skeleton
+                  isLoaded={!isLoading}
+                  fadeDuration={2.5}
+                  opacity={isLoading ? '0.1' : '1'}
+                >
+                  <Box as="p" textStyle="body4" color="neutral.7">
+                    Project Created:{' '}
+                    {formateDateInMonths(
+                      projectDetails?.createdAt ?? Date.now()
+                    )}
+                    {''} by @{ownerName}
+                  </Box>
+                </Skeleton>
+              </Stack>
+            )}
+          </VStack>
         </TabPanel>
         <TabPanel overflowX="scroll">
           {projectDetails?.id && (
@@ -73,7 +82,16 @@ export const ProjectsTabs = ({
             />
           )}
         </TabPanel>
-        <TabPanel>{isLoading ? <></> : <Discussions />}</TabPanel>
+        <TabPanel>
+          {isLoading ? (
+            <></>
+          ) : (
+            <ProjectDiscussion
+              ownerName={ownerName}
+              projectId={projectDetails?.id as string}
+            />
+          )}
+        </TabPanel>
       </TabPanels>
     </Tabs>
   );

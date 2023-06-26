@@ -1,3 +1,4 @@
+import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { procedure, protectedProcedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
@@ -20,6 +21,8 @@ export const commentRouter = router({
           id: input.id,
           userId: session?.user.id as string,
           projectsModelId: input.project,
+          reactions: [],
+          isArchive: false,
         },
       });
 
@@ -30,25 +33,76 @@ export const commentRouter = router({
     .input(
       z.object({
         id: z.string().nonempty(),
+        page: z.number().int().default(0),
       })
     )
     .query(async ({ input }) => {
-      const res = await prisma.comments.findMany({
-        where: {
-          projectsModelId: input.id,
-        },
-        include: {
-          Reply: {
-            include: {
-              user: true,
-            },
+      try {
+        const res = await prisma.comments.findMany({
+          where: {
+            projectsModelId: input.id,
+            isArchive: false,
           },
-          user: true,
-        },
-      });
-      return res;
+          take: 10,
+          skip: input.page * 10,
+          select: {
+            _count: true,
+            comment: true,
+            id: true,
+            reactions: true,
+            user: true,
+            createdAt: true,
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
+        });
+        return res;
+      } catch (error) {
+        console.log(error);
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Something went wrong',
+        });
+      }
     }),
-
+  getCommetsLoadMore: procedure
+    .input(
+      z.object({
+        id: z.string().nonempty(),
+        page: z.number().int().default(0),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        const res = await prisma.comments.findMany({
+          where: {
+            projectsModelId: input.id,
+            isArchive: false,
+          },
+          take: 10,
+          skip: input.page * 10,
+          select: {
+            _count: true,
+            comment: true,
+            id: true,
+            reactions: true,
+            user: true,
+            createdAt: true,
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
+        });
+        return res;
+      } catch (error) {
+        console.log(error);
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Something went wrong',
+        });
+      }
+    }),
   createReply: protectedProcedure
     .input(
       z.object({
