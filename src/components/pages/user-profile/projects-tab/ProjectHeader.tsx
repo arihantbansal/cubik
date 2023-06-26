@@ -122,15 +122,19 @@ const ProjectDetails = ({
             gap="8px"
             h="fit-content"
           >
-            <Button
-              variant="cubikFilled"
-              size="cubikSmall"
-              onClick={() => {
-                setDrawerBodyView(drawerBodyViewEnum.GRANTS);
-              }}
-            >
-              Apply For Grant
-            </Button>
+            {project.status === 'VERIFIED' && (
+              <>
+                <Button
+                  variant="cubikFilled"
+                  size="cubikSmall"
+                  onClick={() => {
+                    setDrawerBodyView(drawerBodyViewEnum.GRANTS);
+                  }}
+                >
+                  Apply For Grant
+                </Button>
+              </>
+            )}
             <ProjectOptionsMenu />
           </Stack>
         </HStack>
