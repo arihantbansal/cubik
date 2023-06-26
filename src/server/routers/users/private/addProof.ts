@@ -39,6 +39,22 @@ export const addProof = protectedProcedure
         githubUsername: input.githubUsername,
       };
     }
+    const check = await prisma.userModel.findFirst({
+      where: {
+        ...otherInfo,
+        proof: {
+          path: '$[*].name',
+          array_contains: input.name,
+        },
+      },
+    });
+    if (check) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        cause: 'The Proof is Already claimed by another user',
+        message: 'The Proof is Already claimed by another user',
+      });
+    }
     const res = await prisma.userModel.findUnique({
       where: {
         id: user.id,
@@ -50,22 +66,7 @@ export const addProof = protectedProcedure
         message: 'User not found',
       });
     }
-    const check = await prisma.userModel.findMany({
-      where: {
-        ...otherInfo,
-        proof: {
-          path: '$[*].name',
-          array_contains: input.name,
-        },
-      },
-    });
-    if (check.length > 0) {
-      throw new TRPCError({
-        code: 'BAD_REQUEST',
-        cause: 'The Proof is Already claimed by another user',
-        message: 'The Proof is Already claimed by another user',
-      });
-    }
+
     const alreadyClaimedProofs = res?.proof as unknown as UserProof[];
 
     if (alreadyClaimedProofs.find((e) => e.name === input.name)) {
