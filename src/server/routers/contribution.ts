@@ -132,6 +132,7 @@ export const contributionRouter = router({
       z.object({
         projectId: z.string().nonempty(),
         roundId: z.string(),
+        skip: z.number().default(0),
       })
     )
     .query(async ({ input }) => {
@@ -141,7 +142,17 @@ export const contributionRouter = router({
           projectId: input.projectId,
           roundId: input.roundId,
         },
-        include: {
+        orderBy: {
+          createdAt: 'desc',
+        },
+        skip: input.skip,
+        select: {
+          id: true,
+          total: true,
+          usdTotal: true,
+          createdAt: true,
+          token: true,
+          count: true,
           user: true,
         },
       });
