@@ -24,7 +24,10 @@ import { tokens } from '~/components/common/tokens/DonationTokens';
 import { DonationFormType } from '~/interfaces/donationForm';
 import { tokenGroup } from '~/interfaces/token';
 import { useUserStore } from '~/store/userStore';
-
+import {
+  AmountReceivedPopover,
+  CubikMatchingPoolDonationPopover,
+} from '~/components/common/popovers/InfoPopover';
 import { ProjectsModel } from '@prisma/client';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import axios from 'axios';
@@ -242,7 +245,7 @@ export const ProjectDonationSimulator = ({
 
   return (
     <Stack
-      w={{ base: '20rem', sm: '22rem', md: 'full' }}
+      w={{ base: '20rem', sm: '22rem', md: '26rem' }}
       gap="40px"
       h="full"
       direction={'row'}
@@ -287,14 +290,19 @@ export const ProjectDonationSimulator = ({
             {/* <WalletBalanceError selectedToken={selectedToken} data={data} /> */}
           </FormControl>
           <FormControl>
-            <FormLabel
-              textStyle={{ base: 'title6', md: 'title5' }}
-              color="neutral.8"
-              htmlFor="donation_to_matching_pool"
-              pb="12px"
-            >
-              Donate to Cubik Matching Pool.
-            </FormLabel>
+            <HStack pb="10px" spacing="0" align={'top'} justify="start">
+              <FormLabel
+                textStyle={{ base: 'title6', md: 'title5' }}
+                color="neutral.8"
+                htmlFor="donation_to_matching_pool"
+                mr="8px"
+              >
+                Donate to Cubik Matching Pool
+              </FormLabel>
+              <Center h="fit-content">
+                <CubikMatchingPoolDonationPopover />
+              </Center>
+            </HStack>
             <HStack gap="0.1rem">
               {Array.from([0, 10, 15, 30]).map((percentage, key) => {
                 return (
@@ -359,9 +367,12 @@ export const ProjectDonationSimulator = ({
         <VStack w="full" gap="16px">
           <VStack w="full" align="center" gap="8px">
             <HStack w="full" justify={'space-between'}>
-              <Box as="p" textStyle={'body4'}>
-                Estimated Match
-              </Box>
+              <HStack>
+                <Box as="p" textStyle={'body4'}>
+                  Final Amount Received
+                </Box>
+                <AmountReceivedPopover />
+              </HStack>
               <Center color="#A8F0E6" fontWeight="700">
                 <FlipNumbers
                   height={20}
@@ -370,7 +381,13 @@ export const ProjectDonationSimulator = ({
                   play
                   perspective={700}
                   numbers={
-                    '$' + String((EstimatedAmmount.data ?? 0).toFixed(3))
+                    '$' +
+                    String(
+                      (
+                        (EstimatedAmmount.data ?? 0) +
+                        (priceSol.data ?? 0) * donation
+                      ).toFixed(3)
+                    )
                   }
                 />
               </Center>
