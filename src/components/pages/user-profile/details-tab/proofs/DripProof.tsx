@@ -53,6 +53,8 @@ const DripProof = ({ claimed }: Props) => {
   const handleDripProof = trpc.user.dripProof.useMutation({
     onSuccess: () => {
       console.log('success');
+      /// add confettie and everything here
+      onClose();
     },
   });
   return (
@@ -75,7 +77,7 @@ const DripProof = ({ claimed }: Props) => {
             background={'surface.green.3'}
             rounded="full"
           >
-            Claim
+            {claimed ? 'Claimed' : 'claim'}
           </Tag>
         </HStack>
         <Box as="p" textStyle={{ base: '', md: 'body5' }} color={'neutral.7'}>
@@ -137,7 +139,14 @@ const DripProof = ({ claimed }: Props) => {
                     drip s1 NFTs.
                   </Box>
                 </VStack>
-                {canClaim ? (
+
+                {claimed ? (
+                  <>
+                    <Button isDisabled variant={'connect_wallet'} w="12rem">
+                      Proof Collected
+                    </Button>
+                  </>
+                ) : canClaim ? (
                   <>
                     {handleDripProof.isError && (
                       <>

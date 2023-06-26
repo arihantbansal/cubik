@@ -10,7 +10,7 @@ export const dripProof = protectedProcedure.mutation(async ({ ctx }) => {
     const check = await prisma.userModel.findMany({
       where: {
         proof: {
-          path: '',
+          path: '$[*].name',
           array_contains: 'DRIPDS1',
         },
       },
