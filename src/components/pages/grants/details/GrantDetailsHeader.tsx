@@ -217,7 +217,7 @@ const GrantDetailsHeader = ({
           </Box>
         </Skeleton>
         <HStack spacing={'16px'}>
-          {/* <Skeleton
+         <Skeleton
             isLoaded={!isLoading}
             fadeDuration={2.5}
             opacity={isLoading ? '0.4' : '1'}
@@ -245,7 +245,7 @@ const GrantDetailsHeader = ({
               </Box>
             </HStack>
           </Skeleton>
-          <Skeleton
+           {/* <Skeleton
             isLoaded={!isLoading}
             fadeDuration={2.5}
             opacity={isLoading ? '0.4' : '1'}
