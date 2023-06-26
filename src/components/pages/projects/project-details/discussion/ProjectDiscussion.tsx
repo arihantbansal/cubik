@@ -34,14 +34,42 @@ import { trpc } from '~/utils/trpc';
 const HighlightedCommentBox = ({ text }: { text: string }) => {
   const hasSpecialChar = text && (text.includes('@') || text.includes('#'));
 
+  // Split text into words
+  const words = text.split(' ');
+
   return (
-    <Box
-      as="p"
-      textStyle={{ base: 'body4', md: 'body3' }}
-      color="neutral.8"
-      backgroundColor={hasSpecialChar ? 'blue.100' : 'transparent'}
-    >
-      {text}
+    <Box as="p" textStyle={{ base: 'body4', md: 'body3' }} color="neutral.8">
+      {words.map((word, index) => {
+        // Check if the word starts with '@'
+        if (word.startsWith('@')) {
+          // Remove '@' and use the rest as the username
+          const username = word.slice(1);
+
+          // Return an anchor tag with the username
+          return (
+            <Box as="span" key={index}>
+              <Box
+                as={Link}
+                href={`/profile/${username}`}
+                color="surface.yellow.1"
+                backgroundColor={'surface.yellow.3'}
+                rounded="full"
+                px="8px"
+                pb="4px"
+                transform={'translateY(-2px)'}
+              >
+                {word}
+              </Box>{' '}
+            </Box>
+          );
+        }
+        // If it's not a mention, return the word as is
+        return (
+          <Box as="span" key={index}>
+            {word}{' '}
+          </Box>
+        );
+      })}
     </Box>
   );
 };
