@@ -8,13 +8,44 @@ import {
   ModalContent,
   ModalOverlay,
   Tag,
+  Text,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
+import axios from 'axios';
+import { useState } from 'react';
+import { useUserStore } from '~/store/userStore';
 import DripHauz from './SVGs/DripHauz';
 
 const DripProof = () => {
+  const { user } = useUserStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [canClaim, setCanClaimed] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleClaim = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.post('/api/info/nft', {
+        address: user?.mainWallet,
+        collection: 'F8FdDYD3PWndYoae9TrBcucXDWFwDvm6bZU2LQT1PwyB',
+      });
+      console.log(res.data);
+      if (res.data.data > 0) {
+        setCanClaimed(true);
+      } else {
+        setError("You don't have any drip s1 NFTs");
+        setCanClaimed(false);
+      }
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setCanClaimed(false);
+      setError('Something went wrong, please try again later.');
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -32,8 +63,8 @@ const DripProof = () => {
             size={{ base: 'xs', md: 'sm' }}
             px="12px"
             py="4px"
-            color="surface.yellow.1"
-            background={'surface.yellow.3'}
+            color="surface.green.2"
+            background={'surface.green.3'}
             rounded="full"
           >
             Claim
@@ -97,10 +128,28 @@ const DripProof = () => {
                     Claim your drip proof by verifying your wallet that holds
                     drip s1 NFTs.
                   </Box>
-                </VStack>{' '}
-                <Button variant={'connect_wallet'} w="12rem">
-                  Verify Wallet
-                </Button>
+                </VStack>
+                {canClaim ? (
+                  <Button variant={'connect_wallet'} w="12rem">
+                    Claim
+                  </Button>
+                ) : (
+                  <>
+                    {error && (
+                      <>
+                        <Text>{error}</Text>
+                      </>
+                    )}
+                    <Button
+                      onClick={handleClaim}
+                      variant={'connect_wallet'}
+                      w="12rem"
+                      isLoading={loading}
+                    >
+                      Verify Wallet
+                    </Button>
+                  </>
+                )}
               </VStack>
             </ModalBody>
           </ModalContent>
