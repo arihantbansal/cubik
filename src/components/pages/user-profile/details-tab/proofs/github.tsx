@@ -33,6 +33,7 @@ const GithubProof = ({ minted, isLoading }: Props) => {
   const toast = useToast();
   const router = useRouter();
   const playerRef = useRef<Player>(null);
+  const authUser = useUserStore();
   const { user, loading } = useUser(supabase);
   const proofMutation = trpc.user.addProof.useMutation();
   const utils = trpc.useContext();
@@ -64,7 +65,7 @@ const GithubProof = ({ minted, isLoading }: Props) => {
         });
       }, 2000);
       utils.user.findOne.invalidate({
-        username: router.query.username as string,
+        username: authUser.user?.username,
       });
     }
 

@@ -31,6 +31,7 @@ interface Props {
 const GoogleProof = ({ minted, isLoading }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+  const authUser = useUserStore();
   const router = useRouter();
   const playerRef = useRef<Player>(null);
   const { user, loading } = useUser(supabase);
@@ -68,7 +69,7 @@ const GoogleProof = ({ minted, isLoading }: Props) => {
         });
       }, 2000);
       utils.user.findOne.invalidate({
-        username: router.query.username as string,
+        username: authUser.user?.username,
       });
     }
 
