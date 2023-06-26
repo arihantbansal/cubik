@@ -50,6 +50,22 @@ export const addProof = protectedProcedure
         message: 'User not found',
       });
     }
+    const check = await prisma.userModel.findMany({
+      where: {
+        ...otherInfo,
+        proof: {
+          path: '$[*].name',
+          array_contains: input.name,
+        },
+      },
+    });
+    if (check.length > 0) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        cause: 'The Proof is Already claimed by another user',
+        message: 'The Proof is Already claimed by another user',
+      });
+    }
     const alreadyClaimedProofs = res?.proof as unknown as UserProof[];
 
     if (alreadyClaimedProofs.find((e) => e.name === input.name)) {
@@ -64,9 +80,9 @@ export const addProof = protectedProcedure
       },
       data: {
         ...otherInfo,
-        proof: (user.proof
+        proof: (alreadyClaimedProofs
           ? [
-              ...(user.proof as unknown as ProofType[]),
+              ...(alreadyClaimedProofs as unknown as ProofType[]),
               {
                 name: input.name as ProofType,
                 timestamp: new Date(),
