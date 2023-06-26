@@ -1,4 +1,5 @@
 import { router } from '../trpc';
+import { dripProof } from './proofs';
 import {
   addProof,
   checkEmail,
@@ -21,4 +22,5 @@ export const userRouter = router({
   getMe: getMe,
   checkEmail: checkEmail,
   checkProof: checkProof,
+  dripProof: dripProof,
 });

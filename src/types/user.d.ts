@@ -26,4 +26,5 @@ export type UserProof = {
   timestamp: Date;
   tx: string;
   githubUsername?: string;
+  verificationId?: string;
 };

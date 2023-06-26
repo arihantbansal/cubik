@@ -1,12 +1,12 @@
+import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
 import { protectedProcedure } from '~/server/trpc';
 import { prisma } from '~/server/utils/prisma';
 import { UserProof } from '~/types/user';
+import { ProofType } from '~/utils/program/contract';
 
-export const dripProof = protectedProcedure
-  .input(z.object())
-  .mutation(async ({ ctx, input }) => {
+export const dripProof = protectedProcedure.mutation(async ({ ctx }) => {
+  try {
     const check = await prisma.userModel.findMany({
       where: {
         proof: {
@@ -37,14 +37,32 @@ export const dripProof = protectedProcedure
         id: ctx.user?.id,
       },
       data: {
-        proof: [
-          ...userProofs,
-          {
-            name: 'DRIPDS1',
-          },
-        ],
+        proof: (userProofs
+          ? [
+              ...(userProofs as unknown as ProofType[]),
+              {
+                name: 'DRIPS01' as ProofType,
+                timestamp: new Date(),
+                tx: '',
+              },
+            ]
+          : [
+              {
+                name: 'DRIPS01' as ProofType,
+                timestamp: new Date(),
+                tx: '',
+              },
+            ]) as unknown as Prisma.JsonArray,
       },
     });
 
     return user;
-  });
+  } catch (e) {
+    console.log(e);
+    throw new TRPCError({
+      code: 'INTERNAL_SERVER_ERROR',
+      cause: 'Internal Server Error',
+      message: 'Internal Server Error',
+    });
+  }
+});

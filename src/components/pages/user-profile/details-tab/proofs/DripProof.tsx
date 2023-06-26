@@ -15,9 +15,13 @@ import {
 import axios from 'axios';
 import { useState } from 'react';
 import { useUserStore } from '~/store/userStore';
+import { trpc } from '~/utils/trpc';
 import DripHauz from './SVGs/DripHauz';
 
-const DripProof = () => {
+interface Props {
+  claimed: boolean;
+}
+const DripProof = ({ claimed }: Props) => {
   const { user } = useUserStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [canClaim, setCanClaimed] = useState<boolean>(false);
@@ -46,7 +50,11 @@ const DripProof = () => {
       setLoading(false);
     }
   };
-
+  const handleDripProof = trpc.user.dripProof.useMutation({
+    onSuccess: () => {
+      console.log('success');
+    },
+  });
   return (
     <>
       <VStack onClick={onOpen} p="32px" gap="8px" align="start">
@@ -130,9 +138,22 @@ const DripProof = () => {
                   </Box>
                 </VStack>
                 {canClaim ? (
-                  <Button variant={'connect_wallet'} w="12rem">
-                    Claim
-                  </Button>
+                  <>
+                    {handleDripProof.isError && (
+                      <>
+                        <Text>{handleDripProof.error.message}</Text>
+                      </>
+                    )}
+                    <Button
+                      onClick={() => {
+                        handleDripProof.mutate();
+                      }}
+                      variant={'connect_wallet'}
+                      w="12rem"
+                    >
+                      Claim
+                    </Button>
+                  </>
                 ) : (
                   <>
                     {error && (
