@@ -56,7 +56,6 @@ const DripProof = ({ claimed }: Props) => {
         address: user?.mainWallet,
         collection: 'F8FdDYD3PWndYoae9TrBcucXDWFwDvm6bZU2LQT1PwyB',
       });
-      console.log(res.data);
       if (res.data.data > 0) {
         setCanClaimed(true);
         handleDripProof.mutate();

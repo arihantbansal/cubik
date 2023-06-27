@@ -46,7 +46,7 @@ export default async function handler(
       },
       env.NEXTAUTH_SECRET as string,
       {
-        expiresIn: '1d',
+        expiresIn: '6h',
       }
     );
 

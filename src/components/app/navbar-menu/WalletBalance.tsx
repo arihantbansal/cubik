@@ -36,7 +36,6 @@ const getBalances = async (address: string) => {
   const { data } = await axios.get(
     `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${env.NEXT_PUBLIC_HELIUS_API_KEY}`
   );
-  console.log('data - ', data);
   return data;
 };
 
@@ -92,8 +91,6 @@ const WalletBalance = ({
   }
 
   const filteredData = filterTokens(data.tokens);
-
-  console.log('filtered balance - ', filteredData);
 
   return (
     <VStack

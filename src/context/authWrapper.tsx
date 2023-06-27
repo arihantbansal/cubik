@@ -28,10 +28,9 @@ export const AuthWrapper: React.FC<Props> = ({ children }) => {
       const walletAuth = localStorage.getItem('wallet_auth') as string;
 
       const payload = jwt.decode(walletAuth) as jwt.JwtPayload;
-
       if (
         payload.wallet !== publicKey.toBase58() ||
-        payload.exp! < Date.now() / 1000
+        payload.exp! * 1000 < Date.now()
       ) {
         onOpen();
         return;

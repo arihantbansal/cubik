@@ -19,7 +19,7 @@ const NavbarCTA = () => {
   const [currentPath, setCurrentPath] = useState('');
   const [error, setError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { setUser } = useUserStore();
+  const { setUser, user } = useUserStore();
   const { publicKey, disconnect, connected, disconnecting, connecting } =
     useWallet();
   const router = useRouter();
@@ -59,8 +59,8 @@ const NavbarCTA = () => {
         }
       } catch (error) {
         console.log(error);
-        setIsLoading(false);
         setError(true);
+        setIsLoading(false);
         return null;
       }
     };
@@ -84,7 +84,7 @@ const NavbarCTA = () => {
     );
   }
 
-  if (connected && publicKey) {
+  if (connected && publicKey && user) {
     return (
       <HStack gap={{ base: '2px', md: '16px' }}>
         {/* <MemoizedIconButtonBadge /> */}
@@ -94,7 +94,7 @@ const NavbarCTA = () => {
   }
 
   // Default case
-  return publicKey && !isLoading ? (
+  return publicKey && !isLoading && !user ? (
     <Center
       as="button"
       onClick={() => {

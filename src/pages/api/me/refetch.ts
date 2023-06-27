@@ -15,7 +15,6 @@ export default async function handler(
   const token = authorization.split(' ')[1];
 
   const payload = jwt.decode(token) as jwt.JwtPayload;
-  console.log(payload);
   const user = await prisma.userModel.findUnique({
     where: {
       id: payload.id,
