@@ -3,11 +3,11 @@ import { procedure } from '~/server/trpc';
 import { prisma } from '~/server/utils/prisma';
 
 export const get = procedure
-  .input(z.object({ id: z.string().nonempty() }))
+  .input(z.object({ name: z.string().nonempty() }))
   .query(async ({ input }) => {
-    const res = await prisma.hackathon.findUnique({
+    const res = await prisma.hackathon.findFirst({
       where: {
-        id: input.id,
+        name: input.name,
       },
     });
 

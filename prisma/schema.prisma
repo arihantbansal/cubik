@@ -11,20 +11,37 @@ datasource db {
 }
 
 model Hackathon {
-  id                String   @id @default(uuid()) @map("_id")
+  id                String                  @id @default(uuid()) @map("_id")
   name              String
-  logo              String   @db.VarChar(500)
-  background        String   @db.VarChar(500)
-  short_description String   @db.VarChar(2000)
-  description       String   @db.Text
-  host              Json?
-  prize_pool        Int      @default(0)
-  prize             Json?
-  timeline          Json?
-  social            Json?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  logo              String                  @db.VarChar(500)
+  background        String                  @db.VarChar(500)
+  short_description String                  @db.VarChar(2000)
+  description       String                  @db.Text
+  host              Json? // ts-> HackathonHost[]
+  prize_pool        Int                     @default(0)
+  prize             Json? // ts-> HackathonPrize[]
+  timeline          Json? // ts-> HackathonSchedule
+  social            Json? // ts-> HackathonSocial
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
   team              Team[]
+  projectJoinRound  ProjectJoinHackathons[]
+}
+
+model ProjectJoinHackathons {
+  id          String   @id @default(uuid()) @map("_id")
+  hackathonId String
+  projectId   String
+  amount      Float    @default(0)
+  isArchive   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Hackathon     Hackathon     @relation(fields: [hackathonId], references: [id])
+  ProjectsModel ProjectsModel @relation(fields: [projectId], references: [id])
+
+  @@index([hackathonId])
+  @@index([projectId])
 }
 
 model UserModel {
@@ -84,31 +101,32 @@ model VerificationToken {
 }
 
 model ProjectsModel {
-  id                String              @id @default(uuid()) @map("_id")
+  id                String                  @id @default(uuid()) @map("_id")
   name              String
-  short_description String              @db.VarChar(2000)
-  logo              String              @db.VarChar(1000)
+  short_description String                  @db.VarChar(2000)
+  logo              String                  @db.VarChar(1000)
   owner_publickey   String
-  sig               String              @default("")
-  long_description  String              @db.Text
-  industry          String              @db.VarChar(2000)
-  project_link      String              @default("")
-  twitter_handle    String              @default("")
-  github_link       String              @default("")
-  discord_link      String              @default("")
-  telegram_link     String              @default("")
-  projectUserCount  Int                 @default(0)
-  status            ProjectVerifyStatus @default(REVIEW)
-  failedReason      String?             @default("")
-  mutliSigAddress   String?             @default("")
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  email             String              @default("")
-  isActive          Boolean             @default(true)
-  isArchive         Boolean             @default(false)
+  sig               String                  @default("")
+  long_description  String                  @db.Text
+  industry          String                  @db.VarChar(2000)
+  project_link      String                  @default("")
+  twitter_handle    String                  @default("")
+  github_link       String                  @default("")
+  discord_link      String                  @default("")
+  telegram_link     String                  @default("")
+  projectUserCount  Int                     @default(0)
+  status            ProjectVerifyStatus     @default(REVIEW)
+  failedReason      String?                 @default("")
+  mutliSigAddress   String?                 @default("")
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
+  email             String                  @default("")
+  isActive          Boolean                 @default(true)
+  isArchive         Boolean                 @default(false)
   comments          Comments[]
   ProjectJoinRound  ProjectJoinRound[]
-  owner             UserModel           @relation(fields: [owner_publickey], references: [mainWallet])
+  projectJoinRound  ProjectJoinHackathons[]
+  owner             UserModel               @relation(fields: [owner_publickey], references: [mainWallet])
   Team              Team[]
   Contribution      Contribution[]
 
