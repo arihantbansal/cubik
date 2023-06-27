@@ -37,11 +37,19 @@ export const createProject = protectedProcedure
         };
       });
     }
-    const teamOwner: Prisma.TeamCreateManyInput = {
-      id: uuid(),
-      projectsModelId: input.id,
-      userId: ctx.session.user.id,
-    };
+    let finalTeam: Prisma.TeamCreateManyInput[] = [
+      {
+        id: uuid(),
+        projectsModelId: input.id,
+        userId: ctx.session.user.id,
+      },
+    ];
+    team.map((team) => {
+      if (!finalTeam.findIndex((t) => t.userId === team.userId)) {
+        finalTeam.push(team);
+      }
+    });
+
     try {
       const res = await prisma.projectsModel.create({
         data: {
@@ -64,7 +72,7 @@ export const createProject = protectedProcedure
         },
       });
       await prisma.team.createMany({
-        data: [teamOwner, ...team],
+        data: finalTeam,
       });
       return res;
     } catch (error) {
