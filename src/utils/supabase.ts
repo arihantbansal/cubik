@@ -15,7 +15,6 @@ const useUser = (client: SupabaseClient) => {
   const [loading, setIsLoading] = useState<boolean>(true);
   const fetchUser = async () => {
     const user = await client.auth.getUser();
-    console.log(user);
 
     if (user) {
       setUser(user);

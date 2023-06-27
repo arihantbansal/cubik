@@ -67,7 +67,7 @@ const ProjectsFundsPayout = ({
     };
 
   const onSubmit = handleSubmit((data) => {
-    console.log('submit data', data);
+    // console.log('submit data', data);
   });
 
   return (

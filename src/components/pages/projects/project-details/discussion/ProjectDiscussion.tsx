@@ -189,7 +189,6 @@ export const ProjectDiscussion = ({
   });
 
   function onSubmit(values: { comment: any }) {
-    console.log(values);
     if (!publicKey) {
       setVisible(true);
       return;

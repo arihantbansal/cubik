@@ -19,7 +19,6 @@ export const useUserStore = create<State>((set) => ({
     });
 
     const user = res.data.data as UserModel;
-    console.log(user);
     set({ user });
   },
 }));

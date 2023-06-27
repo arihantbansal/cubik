@@ -23,7 +23,6 @@ import WalletBalance from './WalletBalance';
 
 const UserNavMenu = () => {
   const { disconnect } = useWallet();
-  const { setKey } = useAuthStore();
   const { setUser } = useUserStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
