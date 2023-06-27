@@ -10,6 +10,9 @@ export const findSimilar = procedure
   )
   .query(async ({ ctx, input }) => {
     const projects = await prisma?.projectsModel.findMany({
+      where: {
+        isArchive: false,
+      },
       orderBy: {
         createdAt: 'desc',
       },
