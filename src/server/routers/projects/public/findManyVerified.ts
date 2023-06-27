@@ -14,6 +14,7 @@ export const findManyVerified = procedure.query(async () => {
       },
       where: {
         status: 'VERIFIED',
+        isArchive: false,
       },
     });
     return res;

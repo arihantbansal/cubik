@@ -14,6 +14,7 @@ export const findManyRejected = procedure.query(async () => {
       },
       where: {
         status: 'FAILED',
+        isArchive: false,
       },
     });
     return res;

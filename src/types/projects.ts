@@ -24,6 +24,7 @@ export type verifiedProjectsType = Prisma.ProjectJoinRoundGetPayload<{
         project_link: true;
         short_description: true;
         owner: true;
+        isArchive: true;
         Contribution: {
           select: {
             id: true;

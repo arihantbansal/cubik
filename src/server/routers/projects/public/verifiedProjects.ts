@@ -45,6 +45,7 @@ export const verifiedProjects = publicProcedure
         id: true,
         status: true,
         amountRaise: true,
+
         fundingRound: {
           select: {
             id: true,
@@ -64,6 +65,7 @@ export const verifiedProjects = publicProcedure
             project_link: true,
             short_description: true,
             owner: true,
+            isArchive: true,
             Contribution: {
               select: {
                 id: true,
@@ -79,7 +81,11 @@ export const verifiedProjects = publicProcedure
         },
       },
     });
-    const res = shuffleArray(result, (input.seed as number) ?? 0);
+
+    const res = shuffleArray(result, (input.seed as number) ?? 0).filter(
+      (e) => e.project.isArchive === false
+    );
+
     // when both filter are working
     if (input.filter && input.round && input.round?.length > 0) {
       const active = res.filter((e) => {

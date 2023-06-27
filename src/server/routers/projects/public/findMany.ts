@@ -8,7 +8,6 @@ export const findManyProjects = procedure.query(async () => {
       where: {
         status: ProjectJoinRoundStatus.APPROVED,
       },
-
       include: {
         fundingRound: {
           include: {
