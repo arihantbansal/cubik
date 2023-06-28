@@ -11,8 +11,8 @@ interface AppLayoutProps {
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const router = useRouter();
-  const { hackathonId } = router.query;
-  const mtValue = hackathonId ? '0' : { base: '4.2rem', md: '5.2rem' };
+  const { hackathon_slug } = router.query;
+  const mtValue = hackathon_slug ? '0' : { base: '4.2rem', md: '5.2rem' };
 
   return (
     <Container maxW="full" p="0">

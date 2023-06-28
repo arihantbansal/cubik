@@ -1,20 +1,20 @@
 import { Container } from '@chakra-ui/react';
 import HackathonBody from './HackathonBody';
 import HackathonHeader from './HackathonHeader';
+import { JSONValue } from 'superjson/dist/types';
 
 type HackathonDetailsPropsType = {
   isLoading: boolean;
-  logo: string;
-  name: string;
-  short_description: string;
-  background: string;
-  description: string;
-  host: string;
-  prize_pool: string;
-  prize: string;
-  timeline: string;
-  social: string;
-  team: string;
+  logo?: string;
+  name?: string;
+  short_description?: string;
+  background?: string;
+  description?: string;
+  host?: JSONValue;
+  prize_pool?: number;
+  prize?: JSONValue;
+  timeline?: JSONValue;
+  social?: JSONValue;
 };
 
 const HackathonDetails = (props: HackathonDetailsPropsType) => {
@@ -29,12 +29,20 @@ const HackathonDetails = (props: HackathonDetailsPropsType) => {
       px={{ base: '2rem', md: '3rem', xl: '1rem' }}
     >
       <HackathonHeader
-        isLoading={false}
+        isLoading={props.isLoading}
         logo={props.logo}
         name={props.name}
         short_description={props.short_description}
       />
-      <HackathonBody isLoading={false} />
+      <HackathonBody
+        isLoading={props.isLoading}
+        description={props.description}
+        host={props.host}
+        prize_pool={props.prize_pool}
+        prize={props.prize}
+        timeline={props.timeline}
+        social={props.social}
+      />
     </Container>
   );
 };

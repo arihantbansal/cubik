@@ -118,7 +118,7 @@ export const Header = memo(function Header({
               Grants
             </Box>
           </Button>
-          <Button as={Link} href="/hackathons" h="full" variant={'unstyled'}>
+          {/* <Button as={Link} href="/hackathons" h="full" variant={'unstyled'}>
             <Box
               as="p"
               textStyle={'title4'}
@@ -127,7 +127,7 @@ export const Header = memo(function Header({
             >
               Hackathons
             </Box>
-          </Button>
+          </Button> */}
         </HStack>
       </>
     ) : (

@@ -119,7 +119,7 @@ const HackathonsPage = () => {
               <LinkBox
                 maxW="40rem"
                 as={Link}
-                href={'/hackathons/' + hackathon.id}
+                href={'/hackathons/' + hackathon.slug}
                 display={'flex'}
                 flexDirection={{ base: 'column', md: 'row' }}
                 alignItems={{ base: 'start', md: 'center' }}
