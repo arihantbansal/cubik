@@ -5,7 +5,7 @@ import { userRouter } from './user';
 import { roundRouter } from './round';
 import { poolRouter } from './pool';
 import { contributionRouter } from './contribution';
-import { hackathonRouter } from './hackathons';
+import { hackathonRouter } from './hackathon';
 
 export const appRouter = router({
   ping: procedure.query(() => 'Its working 🚀'),
