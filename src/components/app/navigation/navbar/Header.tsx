@@ -25,6 +25,7 @@ import Logo from '~/components/common/logo/Logo';
 import { SearchBar } from '~/components/common/searchbar';
 import { MobileNavCollapsible } from './MobileNav';
 import { set } from 'nprogress';
+import SEO from '~/components/SEO';
 
 export const Header = memo(function Header({
   children,
@@ -117,7 +118,7 @@ export const Header = memo(function Header({
               Grants
             </Box>
           </Button>
-          {/* <Button as={Link} href="/hackathons" h="full" variant={'unstyled'}>
+          <Button as={Link} href="/hackathons" h="full" variant={'unstyled'}>
             <Box
               as="p"
               textStyle={'title4'}
@@ -126,7 +127,7 @@ export const Header = memo(function Header({
             >
               Hackathons
             </Box>
-          </Button> */}
+          </Button>
         </HStack>
       </>
     ) : (
@@ -136,41 +137,48 @@ export const Header = memo(function Header({
 
   return (
     <>
-      <Container
-        w="full"
-        zIndex="10"
-        maxW={'full'}
-        position="fixed"
-        top="0px"
-        minH="4rem"
-        p="0"
-        bg="transparent"
-        sx={{
-          backdropFilter: 'blur(20px)',
-          margin: '0px !important',
-          marginTop: '0px !important',
-        }}
-      >
-        <Flex
-          mx="auto"
-          p={{ base: '14px 12px', sm: '16px 24px', md: '20px 20px' }}
-          maxW="7xl"
-          alignItems={'center'}
-          justifyContent={'space-between'}
-          gap={'24px'}
+      <SEO
+        title={`Cubik`}
+        description={`Fund What Matters on Solana Through Community Voting`}
+        image={`https://res.cloudinary.com/demonicirfan/image/upload/v1687261386/OG_Image_-_Landing_page_5_-min_lxcnes.png`}
+      />
+      <main>
+        <Container
+          w="full"
+          zIndex="10"
+          maxW={'full'}
+          position="fixed"
+          top="0px"
+          minH="4rem"
+          p="0"
+          bg="transparent"
+          sx={{
+            backdropFilter: 'blur(20px)',
+            margin: '0px !important',
+            marginTop: '0px !important',
+          }}
         >
-          <HStack w="full" gap={{ base: '28px', lg: '32px' }}>
-            <Logo />
-            <DeskNavbarItems />
-          </HStack>
-          <NavbarCTA>{children}</NavbarCTA>
-        </Flex>
-        <MobileNavCollapsible
-          onClose={onClose}
-          isOpen={isOpen}
-          onToggle={onToggle}
-        />
-      </Container>
+          <Flex
+            mx="auto"
+            p={{ base: '14px 12px', sm: '16px 24px', md: '20px 20px' }}
+            maxW="7xl"
+            alignItems={'center'}
+            justifyContent={'space-between'}
+            gap={'24px'}
+          >
+            <HStack w="full" gap={{ base: '28px', lg: '32px' }}>
+              <Logo />
+              <DeskNavbarItems />
+            </HStack>
+            <NavbarCTA>{children}</NavbarCTA>
+          </Flex>
+          <MobileNavCollapsible
+            onClose={onClose}
+            isOpen={isOpen}
+            onToggle={onToggle}
+          />
+        </Container>
+      </main>
       {/* {router.pathname === '/' ? (
         ''
       ) : (

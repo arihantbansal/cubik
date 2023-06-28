@@ -9,7 +9,17 @@ import {
   VStack,
 } from '@chakra-ui/react';
 
-const HackathonHeader = ({ isLoading }: { isLoading: boolean }) => {
+const HackathonHeader = ({
+  isLoading,
+  logo,
+  name,
+  short_description,
+}: {
+  isLoading: boolean;
+  logo: string;
+  name: string;
+  short_description: string;
+}) => {
   return (
     <VStack w="full" gap="24px" align={'start'}>
       <SkeletonCircle
@@ -22,9 +32,7 @@ const HackathonHeader = ({ isLoading }: { isLoading: boolean }) => {
         <Avatar
           borderRadius="12px"
           backgroundColor={'#1C1C1C'}
-          src={
-            'https://res.cloudinary.com/demonicirfan/image/upload/v1685650786/Property_1_Default_qwohel.png'
-          }
+          src={logo}
           width={{ base: '5.5rem', md: '7rem' }}
           height={{ base: '5.5rem', md: '7rem' }}
         />
@@ -46,7 +54,7 @@ const HackathonHeader = ({ isLoading }: { isLoading: boolean }) => {
             whiteSpace="nowrap"
             textOverflow="ellipsis"
           >
-            Solana Speedrun
+            {name}
           </Box>
           <SkeletonText
             isLoaded={!isLoading}
@@ -64,8 +72,7 @@ const HackathonHeader = ({ isLoading }: { isLoading: boolean }) => {
               noOfLines={2}
               textOverflow="ellipsis"
             >
-              A Community run Hackathon organized by Lamport DAO to build the
-              next generation of decentralized applications on Solana.
+              {short_description}
             </Box>
           </SkeletonText>
         </VStack>
