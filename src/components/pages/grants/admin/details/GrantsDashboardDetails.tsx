@@ -258,22 +258,11 @@ const GrantAdminDashboardOverview = ({
             </Skeleton>
           </HStack>
         </OverviewStatsCard>
-        <Stat variant="cubik" overflow="hidden">
-          <VStack p="24px" mb="12px" align="start">
-            <Skeleton isLoaded={!isLoading} fadeDuration={1}>
-              <StatLabel
-                whiteSpace={'nowrap'}
-                overflow="hidden"
-                textStyle={{ base: 'title6', md: 'title5' }}
-                color="neutral8"
-              >
-                Total Contributors
-              </StatLabel>
-            </Skeleton>
-            <Skeleton isLoaded={!isLoading} fadeDuration={1}>
-              <StatNumber>{totalContributors}</StatNumber>
-            </Skeleton>
-          </VStack>
+        <OverviewStatsCard
+          title={'Total Contributors'}
+          value={totalContributors}
+          isLoading={isLoading}
+        >
           <HStack
             w="full"
             justify={'space-between'}
@@ -301,13 +290,20 @@ const GrantAdminDashboardOverview = ({
               </Box>
             </Skeleton>
           </HStack>
-        </Stat>
-        <Stat variant="cubik" overflow="hidden">
+        </OverviewStatsCard>
+        <Stat
+          w={'full'}
+          maxW={{ base: '88vw', sm: 'full', md: 'full' }}
+          minW="12rem"
+          variant="cubik"
+          overflow="hidden"
+        >
           <VStack p="24px" mb="18px" align="center" mx="auto" gap="1rem">
             <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <RoundStatus
                 startDate={roundStartingDate}
                 endDate={roundEndingDate}
+                show={true}
               />
             </Skeleton>
             <Skeleton isLoaded={!isLoading} fadeDuration={1}>
@@ -360,7 +356,11 @@ const GrantAdminDashboardProjects = ({
                 Under Review
               </Box>
               {projectsNumberByStatus.review > 0 && (
-                <Tag rounded="full" variant="colorful">
+                <Tag
+                  fontSize={{ base: '10px', md: '12px' }}
+                  rounded="full"
+                  variant="colorful"
+                >
                   {projectsNumberByStatus.review &&
                     projectsNumberByStatus.review}
                 </Tag>
@@ -374,6 +374,7 @@ const GrantAdminDashboardProjects = ({
               </Box>
               {projectsNumberByStatus.accepted > 0 && (
                 <Tag
+                  fontSize={{ base: '10px', md: '12px' }}
                   rounded="full"
                   variant="colorful"
                   color="#FFF066"
@@ -391,6 +392,7 @@ const GrantAdminDashboardProjects = ({
               </Box>
               {projectsNumberByStatus.rejected > 0 && (
                 <Tag
+                  fontSize={{ base: '10px', md: '12px' }}
                   rounded="full"
                   variant="colorful"
                   color="#FF1F1F"

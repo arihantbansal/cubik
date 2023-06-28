@@ -24,6 +24,7 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import Logo from '~/components/common/logo/Logo';
 import { SearchBar } from '~/components/common/searchbar';
 import { MobileNavCollapsible } from './MobileNav';
+import { set } from 'nprogress';
 
 export const Header = memo(function Header({
   children,
@@ -52,26 +53,24 @@ export const Header = memo(function Header({
     return (
       <Center
         h={{ base: '2rem', md: '2.6rem' }}
-        justifyContent="end"
+        justifyContent="flex-end"
+        alignItems="end"
+        w="full"
         zIndex="99"
       >
         {isDesktop ? (
           <Center w="fit-content">{children}</Center>
         ) : (
-          <HStack gap="0">
-            {connected ? (
-              <Center w={'100%'} display={{ base: 'flex', md: 'none' }} gap="0">
-                {children}
-              </Center>
-            ) : (
-              ''
-            )}
-            <Box
-              as={RxHamburgerMenu}
-              boxSize={'26px'}
-              color="white"
-              onClick={onToggle}
-            />
+          <HStack justify="end" align="center" w="full" gap="12px">
+            <Center display={{ base: 'flex', md: 'none' }} gap="12px">
+              {children}
+              <Box
+                as={RxHamburgerMenu}
+                boxSize={'26px'}
+                color="white"
+                onClick={onToggle}
+              />{' '}
+            </Center>
           </HStack>
         )}
       </Center>
@@ -172,7 +171,7 @@ export const Header = memo(function Header({
           onToggle={onToggle}
         />
       </Container>
-      {router.pathname === '/' ? (
+      {/* {router.pathname === '/' ? (
         ''
       ) : (
         <Drawer
@@ -292,7 +291,7 @@ export const Header = memo(function Header({
                       />
                     </svg>
                   </Center>
-                  {/* <Center
+                 <Center
                     as="button" // todo use
                     width={'3rem'}
                     height={'2.5rem'}
@@ -314,13 +313,13 @@ export const Header = memo(function Header({
                         fill="white"
                       />
                     </svg>
-                  </Center> */}
+                  </Center>  
                 </Stack>
               </VStack>
             </Container>
           </DrawerContent>
         </Drawer>
-      )}
+      )} */}
     </>
   );
 });

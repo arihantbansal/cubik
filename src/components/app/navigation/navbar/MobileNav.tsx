@@ -69,7 +69,7 @@ export const MobileNavCollapsible = memo(function MobileNavCollapsible({
         >
           Grants
         </Box>
-        {/* <Box
+        <Box
           ps="6px"
           as={Link}
           href="/hackathons"
@@ -84,7 +84,7 @@ export const MobileNavCollapsible = memo(function MobileNavCollapsible({
           }}
         >
           Hackathons
-        </Box> */}
+        </Box>
       </Flex>
     </Collapse>
   );

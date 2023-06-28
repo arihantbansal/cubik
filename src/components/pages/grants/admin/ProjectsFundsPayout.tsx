@@ -44,10 +44,9 @@ const ProjectsFundsPayout = ({
   })[];
 }) => {
   const [isAllChecked, setAllChecked] = useState(false);
-  const { handleSubmit, control, reset, setValue, getValues } =
-    useForm<TFormValues>({
-      defaultValues,
-    });
+  const { handleSubmit, control, setValue, getValues } = useForm<TFormValues>({
+    defaultValues,
+  });
 
   const handleCheckAll = (isChecked: boolean) => {
     ProjectJoinRound.forEach((project) => {
@@ -124,7 +123,7 @@ const ProjectsFundsPayout = ({
                         control={control}
                         name={String(projectJoinRound.id)}
                         defaultValue={false}
-                        render={({ field: { onChange, value, ref } }) => (
+                        render={({ field: { value, ref } }) => (
                           <Checkbox
                             colorScheme="teal"
                             onChange={handleSingleCheck(

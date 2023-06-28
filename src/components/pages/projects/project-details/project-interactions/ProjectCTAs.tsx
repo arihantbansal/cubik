@@ -53,7 +53,6 @@ const AnimatedArrowIcon = (props: IconProps & { animate: boolean }) => {
   return (
     <Box
       as={MdArrowForward}
-      boxSize={{ base: '12px', md: '16px' }}
       transition={transition}
       transform={transform}
       {...props}
@@ -523,6 +522,7 @@ export const ProjectCTAsMobile = ({
             isLoading={isLoading}
           />
         );
+      // all conditions after the round start time
       else if (isPast(round.startTime)) {
         if (isPast(round.endTime))
           return (
@@ -571,10 +571,11 @@ export const ProjectCTAsMobile = ({
                 <Button
                   onClick={() => setVisible(true)}
                   variant="cubikFilled"
-                  size="cubikSmall"
+                  size={{ base: 'cubikMini', md: 'cubikSmall' }}
                   w="full"
+                  minH="2.5rem"
                 >
-                  Connect Wallet
+                  Donate
                 </Button>
               </Skeleton>
             );
@@ -623,7 +624,6 @@ export const ProjectCTAsMobile = ({
             w="full"
             pb="0.5rem"
           >
-            <DonationStatus />
             {joinId && (
               <Skeleton
                 display={isLoading ? 'block' : 'none'}
@@ -633,7 +633,8 @@ export const ProjectCTAsMobile = ({
                 w="full"
                 isLoaded={!isLoading}
               />
-            )}
+            )}{' '}
+            <DonationStatus />
             <Skeleton
               fadeDuration={2.5}
               opacity={isLoading ? '0.3' : 1}
@@ -641,16 +642,11 @@ export const ProjectCTAsMobile = ({
               w="full"
             >
               <Button
-                rightIcon={
-                  <AnimatedArrowIcon
-                    animate={isHovered}
-                    width={18}
-                    height={18}
-                  />
-                }
+                rightIcon={<Box as={MdArrowForward} boxSize={'16px'} />}
                 variant="cubikOutlined"
                 w="full"
                 as="a"
+                h="2.5rem"
                 size="cubikMini"
                 href={projectDetails?.project_link}
                 target="_blank"

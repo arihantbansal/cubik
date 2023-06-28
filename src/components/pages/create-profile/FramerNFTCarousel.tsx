@@ -37,7 +37,7 @@ const FramerCarousel = memo(function FramerCarousel({
     data: nftsData,
     isLoading,
     error,
-  } = useGetUserAssets('8cRrU1NzNpjL3k2BwjW3VixAcX6VFc29KHr4KZg8cs2Y');
+  } = useGetUserAssets(publicKey?.toBase58() ?? '');
 
   useEffect(() => {
     if (carousel.current) {

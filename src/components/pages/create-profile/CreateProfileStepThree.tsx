@@ -267,6 +267,7 @@ const CreateProfileStepThree = ({
                     {...field}
                     autoComplete="false"
                     placeholder="@username"
+                    aria-autocomplete="none"
                     onChange={({ target: { value } }) => {
                       setUserNameIsAvailable(false);
                       onChange(value);

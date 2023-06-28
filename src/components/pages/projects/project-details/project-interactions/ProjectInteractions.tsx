@@ -412,7 +412,8 @@ export const ProjectCreatorTeamMember = ({
       <HStack gap="0.6rem">
         <Avatar
           borderRadius={'8px'}
-          size={{ base: 'xs', md: 'sm' }}
+          width={{ base: '32px', md: '38px' }}
+          height={{ base: '32px', md: '38px' }}
           src={teamMember.user.profilePicture}
         />
         <Box color={'white'} as="p" textStyle={{ base: 'body4', md: 'body3' }}>
