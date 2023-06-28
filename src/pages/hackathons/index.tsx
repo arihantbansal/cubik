@@ -20,9 +20,8 @@ import Image from 'next/image';
 // todo make upcoming live grants separate
 
 const HackathonsPage = () => {
-  const isLoading = false;
-  const isError = false;
-  const error = undefined;
+  const { data, isLoading, isError, error } = trpc.hackathon.getAll.useQuery();
+
   return (
     <Container maxW="7xl" py={{ base: '48px', md: '64px' }}>
       <Stack
@@ -116,30 +115,11 @@ const HackathonsPage = () => {
           </Container>
         ) : (
           <VStack align="start" w="full" gap={{ base: '8px', md: '18px' }}>
-            {[
-              {
-                // add fake data to object
-                id: 1,
-                name: 'Solana Speedrun Hackathon',
-                alias: 'speedrun',
-                logo: 'https://res.cloudinary.com/demonicirfan/image/upload/v1687869347/Frame_236_kac5mk.png',
-                background:
-                  'https://res.cloudinary.com/demonicirfan/image/upload/v1687936886/Frame_236_2_-min_gzlyed.png',
-                short_description:
-                  'First ever Solana Virtual Game Jam hosted by Lamport DAO and Solana Graming Community',
-                description: '',
-                host: '',
-                prize_pool: '',
-                prize: '',
-                timeline: '',
-                social: '',
-                team: '',
-              },
-            ]?.map((hackathon) => (
+            {data?.map((hackathon) => (
               <LinkBox
                 maxW="40rem"
                 as={Link}
-                href={'/hackathons/' + hackathon.alias}
+                href={'/hackathons/' + hackathon.id}
                 display={'flex'}
                 flexDirection={{ base: 'column', md: 'row' }}
                 alignItems={{ base: 'start', md: 'center' }}
