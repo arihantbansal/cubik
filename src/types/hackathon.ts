@@ -1,3 +1,5 @@
+import { Prisma } from '@prisma/client';
+
 export type HackathonHost = {
   name: string;
   wallet: string;
@@ -30,8 +32,20 @@ export type HackathonPrize = {
   type: 'BANNER' | 'SPONSOR';
 };
 
-export type HackathonSocails = {
+export type HackathonSocial = {
   type: 'TWITTER' | 'DISCORD' | 'GITHUB' | 'LINKEDIN' | 'OTHER';
   icon_link: string;
   link: string;
 };
+
+export type HackathonGetAll = Prisma.HackathonGetPayload<{
+  select: {
+    name: true;
+    id: true;
+    background: true;
+    logo: true;
+    short_description: true;
+    prize_pool: true;
+    timeline: true;
+  };
+}>;
