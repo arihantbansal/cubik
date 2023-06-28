@@ -9,6 +9,7 @@ export const getAll = procedure.query(async () => {
         id: true,
         background: true,
         logo: true,
+        slug: true,
         short_description: true,
         prize_pool: true,
         timeline: true,

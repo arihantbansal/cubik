@@ -14,18 +14,6 @@ export const participants = procedure
         where: {
           hackathonId: input.hackathonId,
         },
-        select: {
-          ProjectsModel: {
-            select: {
-              id: true,
-              owner: {
-                select: {
-                  profilePicture: true,
-                },
-              },
-            },
-          },
-        },
       });
 
       return result;

@@ -11,58 +11,78 @@ datasource db {
 }
 
 model Hackathon {
-  id                String                  @id @default(uuid()) @map("_id")
-  name              String
-  logo              String                  @db.VarChar(500)
-  background        String                  @db.VarChar(500)
-  short_description String                  @db.VarChar(2000)
-  description       String                  @db.Text
-  host              Json? // ts-> HackathonHost[]
-  prize_pool        Int                     @default(0)
-  prize             Json? // ts-> HackathonPrize[]
-  timeline          Json? // ts-> HackathonSchedule
-  social            Json? // ts-> HackathonSocial
-  createdAt         DateTime                @default(now())
-  updatedAt         DateTime                @updatedAt
-  team              Team[]
-  projectJoinRound  ProjectJoinHackathons[]
+  id                     String                   @id @default(uuid()) @map("_id")
+  name                   String
+  slug                   String                   @unique
+  logo                   String                   @db.VarChar(500)
+  background             String                   @db.VarChar(500)
+  short_description      String                   @db.VarChar(2000)
+  description            String                   @db.Text
+  host                   Json? // ts-> HackathonHost[]
+  prize_pool             Int                      @default(0)
+  prize                  Json? // ts-> HackathonPrize[]
+  timeline               Json? // ts-> HackathonSchedule
+  social                 Json? // ts-> HackathonSocial
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  team                   Team[]
+  projectJoinRound       ProjectJoinHackathons[]
+  HackathonRegistrations HackathonRegistrations[]
+}
+
+model HackathonRegistrations {
+  id                    String                  @id @default(uuid()) @map("_id")
+  hackathonId           String
+  userId                String
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  Hackathon             Hackathon               @relation(fields: [hackathonId], references: [id])
+  User                  UserModel               @relation(fields: [userId], references: [id])
+  ProjectJoinHackathons ProjectJoinHackathons[]
+
+  @@index([hackathonId])
+  @@index([userId])
 }
 
 model ProjectJoinHackathons {
-  id          String   @id @default(uuid()) @map("_id")
-  hackathonId String
-  projectId   String
-  amount      Float    @default(0)
-  isArchive   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id             String   @id @default(uuid()) @map("_id")
+  hackathonId    String
+  projectId      String
+  registrationId String
+  amount         Float    @default(0)
+  isArchive      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
-  Hackathon     Hackathon     @relation(fields: [hackathonId], references: [id])
-  ProjectsModel ProjectsModel @relation(fields: [projectId], references: [id])
+  hackathon              Hackathon              @relation(fields: [hackathonId], references: [id])
+  projectsModel          ProjectsModel          @relation(fields: [projectId], references: [id])
+  hackathonRegistrations HackathonRegistrations @relation(fields: [registrationId], references: [id])
 
   @@index([hackathonId])
   @@index([projectId])
+  @@index([registrationId])
 }
 
 model UserModel {
-  id             String          @id @default(uuid()) @map("_id")
-  username       String          @unique
-  mainWallet     String          @unique
-  proof          Json?
-  email          String?
-  profilePicture String          @db.VarChar(500)
-  tx             String          @db.VarChar(500)
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  isActive       Boolean         @default(true)
-  isArchive      Boolean         @default(false)
-  team           Team[]
-  Session        Session[]
-  project        ProjectsModel[]
-  Reply          Reply[]
-  Comments       Comments[]
-  Contribution   Contribution[]
-  Round          Round[]
+  id                     String                   @id @default(uuid()) @map("_id")
+  username               String                   @unique
+  mainWallet             String                   @unique
+  proof                  Json?
+  email                  String?
+  profilePicture         String                   @db.VarChar(500)
+  tx                     String                   @db.VarChar(500)
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  isActive               Boolean                  @default(true)
+  isArchive              Boolean                  @default(false)
+  team                   Team[]
+  Session                Session[]
+  project                ProjectsModel[]
+  Reply                  Reply[]
+  Comments               Comments[]
+  Contribution           Contribution[]
+  Round                  Round[]
+  HackathonRegistrations HackathonRegistrations[]
 
   @@fulltext([username])
 }
