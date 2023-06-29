@@ -8,6 +8,7 @@ import {
   HStack,
   LinkBox,
   SlideFade,
+  useMediaQuery,
   useToast,
   VStack,
   Wrap,
@@ -50,6 +51,8 @@ type ProjectCardProps = {
 };
 
 const ProjectCard = (props: ProjectCardProps) => {
+  // use media query to detect mobile screen
+  const [isLargerThan767] = useMediaQuery('(min-width: 767px)');
   const toast = useToast();
   const addProject = useListStore((state) => state.addProject);
   const removeProject = useListStore((state) => state.removeProject);
@@ -121,8 +124,16 @@ const ProjectCard = (props: ProjectCardProps) => {
         onMouseLeave={handleMouseLeave}
         gap="0"
         background={'#0C0D0D'}
-        _hover={{}}
-        //  position={'relative'}
+        _hover={{
+          border: '2px solid',
+          background: 'neutral.3',
+          borderColor: `surface.${props.colorScheme}.3`,
+        }}
+        _active={{
+          border: '2px solid',
+          background: 'neutral.3',
+          borderColor: `surface.${props.colorScheme}.3`,
+        }}
       >
         {/* card outline */}
         {addedToList && (
@@ -271,7 +282,7 @@ const ProjectCard = (props: ProjectCardProps) => {
             position={'relative'}
           >
             <HStack
-              display={isHovered ? 'none' : 'flex'}
+              display={isLargerThan767 && isHovered ? 'none' : 'flex'}
               overflowX="hidden"
               w="full"
               justify="space-between"
@@ -315,38 +326,39 @@ const ProjectCard = (props: ProjectCardProps) => {
                 contributorsList={props.contributions}
               />
             </HStack>
-            <SlideFade in={isHovered} offsetY="0px" reverse>
-              <HStack
-                zIndex={'9'}
-                w="full"
-                justifyContent="start"
-                position="absolute"
-                left="0"
-                p="8px 24px 24px 24px"
-                bottom="0px"
-                backgroundColor={'#0C0D0D'}
-                borderRadius="36px"
-                justify={'space-between'}
-              >
-                <Button
-                  as={Link}
-                  href={`/${props?.ownerUsername}/${props?.projectId}${
-                    props.status === ProjectJoinRoundStatus.APPROVED
-                      ? `/${props.joinRoundId}`
-                      : ``
-                  }`}
-                  background={'#1D1F1E'}
-                  color="white"
-                  fontWeight={'700'}
-                  borderColor="transparent"
-                  outline="none"
-                  //  w="calc(100% - 2.2rem)"
-                  w="calc(100% )"
-                  variant="connect_wallet"
+            {isLargerThan767 && (
+              <SlideFade in={isHovered} offsetY="0px" reverse>
+                <HStack
+                  zIndex={'9'}
+                  w="full"
+                  justifyContent="start"
+                  position="absolute"
+                  left="0"
+                  p="8px 24px 24px 24px"
+                  bottom="0px"
+                  backgroundColor={isHovered ? 'neutral.3' : '#0C0D0D'}
+                  borderRadius="36px"
+                  justify={'space-between'}
                 >
-                  View Details
-                </Button>
-                {/* <IconButton
+                  <Button
+                    as={Link}
+                    href={`/${props?.ownerUsername}/${props?.projectId}${
+                      props.status === ProjectJoinRoundStatus.APPROVED
+                        ? `/${props.joinRoundId}`
+                        : ``
+                    }`}
+                    background={'#1D1F1E'}
+                    color="white"
+                    fontWeight={'700'}
+                    borderColor="transparent"
+                    outline="none"
+                    //  w="calc(100% - 2.2rem)"
+                    w="calc(100% )"
+                    variant="connect_wallet"
+                  >
+                    View Details
+                  </Button>
+                  {/* <IconButton
                   background={'#1D1F1E'}
                   color="white"
                   fontWeight={'700'}
@@ -359,8 +371,9 @@ const ProjectCard = (props: ProjectCardProps) => {
                     addedToList ? <MdRemove size={26} /> : <BsPlus size={26} />
                   }
                 /> */}
-              </HStack>
-            </SlideFade>
+                </HStack>
+              </SlideFade>
+            )}
           </VStack>
         </VStack>
       </Card>

@@ -19,6 +19,9 @@ export const OverviewStatsCard = ({
   return (
     <Stat
       variant="cubik"
+      w={'full'}
+      maxW={{ base: '88vw', sm: '90vw' }}
+      minW="12rem"
       overflow="hidden"
       h={height ? height : 'auto'}
       justifyContent={'space-between'}

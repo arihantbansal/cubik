@@ -36,6 +36,7 @@ const RoundAdmin = ({ roundId }: { roundId: string }) => {
                 w="full"
                 mx="auto"
                 gap={{ base: '0.5rem', md: '1rem' }}
+                overflowY='scroll'
               >
                 <Tab whiteSpace={'nowrap'} gap="8px" display={'flex'}>
                   Round Details

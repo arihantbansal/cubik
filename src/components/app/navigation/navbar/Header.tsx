@@ -24,6 +24,8 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import Logo from '~/components/common/logo/Logo';
 import { SearchBar } from '~/components/common/searchbar';
 import { MobileNavCollapsible } from './MobileNav';
+import { set } from 'nprogress';
+import SEO from '~/components/SEO';
 
 export const Header = memo(function Header({
   children,
@@ -52,26 +54,24 @@ export const Header = memo(function Header({
     return (
       <Center
         h={{ base: '2rem', md: '2.6rem' }}
-        justifyContent="end"
+        justifyContent="flex-end"
+        alignItems="end"
+        w="full"
         zIndex="99"
       >
         {isDesktop ? (
           <Center w="fit-content">{children}</Center>
         ) : (
-          <HStack gap="0">
-            {connected ? (
-              <Center w={'100%'} display={{ base: 'flex', md: 'none' }} gap="0">
-                {children}
-              </Center>
-            ) : (
-              ''
-            )}
-            <Box
-              as={RxHamburgerMenu}
-              boxSize={'26px'}
-              color="white"
-              onClick={onToggle}
-            />
+          <HStack justify="end" align="center" w="full" gap="12px">
+            <Center display={{ base: 'flex', md: 'none' }} gap="12px">
+              {children}
+              <Box
+                as={RxHamburgerMenu}
+                boxSize={'26px'}
+                color="white"
+                onClick={onToggle}
+              />{' '}
+            </Center>
           </HStack>
         )}
       </Center>
@@ -137,42 +137,49 @@ export const Header = memo(function Header({
 
   return (
     <>
-      <Container
-        w="full"
-        zIndex="10"
-        maxW={'full'}
-        position="fixed"
-        top="0px"
-        minH="4rem"
-        p="0"
-        bg="transparent"
-        sx={{
-          backdropFilter: 'blur(20px)',
-          margin: '0px !important',
-          marginTop: '0px !important',
-        }}
-      >
-        <Flex
-          mx="auto"
-          p={{ base: '14px 12px', sm: '16px 24px', md: '20px 20px' }}
-          maxW="7xl"
-          alignItems={'center'}
-          justifyContent={'space-between'}
-          gap={'24px'}
+      <SEO
+        title={`Cubik`}
+        description={`Fund What Matters on Solana Through Community Voting`}
+        image={`https://res.cloudinary.com/demonicirfan/image/upload/v1687261386/OG_Image_-_Landing_page_5_-min_lxcnes.png`}
+      />
+      <main>
+        <Container
+          w="full"
+          zIndex="10"
+          maxW={'full'}
+          position="fixed"
+          top="0px"
+          minH="4rem"
+          p="0"
+          bg="transparent"
+          sx={{
+            backdropFilter: 'blur(20px)',
+            margin: '0px !important',
+            marginTop: '0px !important',
+          }}
         >
-          <HStack w="full" gap={{ base: '28px', lg: '32px' }}>
-            <Logo />
-            <DeskNavbarItems />
-          </HStack>
-          <NavbarCTA>{children}</NavbarCTA>
-        </Flex>
-        <MobileNavCollapsible
-          onClose={onClose}
-          isOpen={isOpen}
-          onToggle={onToggle}
-        />
-      </Container>
-      {router.pathname === '/' ? (
+          <Flex
+            mx="auto"
+            p={{ base: '14px 12px', sm: '16px 24px', md: '20px 20px' }}
+            maxW="7xl"
+            alignItems={'center'}
+            justifyContent={'space-between'}
+            gap={'24px'}
+          >
+            <HStack w="full" gap={{ base: '28px', lg: '32px' }}>
+              <Logo />
+              <DeskNavbarItems />
+            </HStack>
+            <NavbarCTA>{children}</NavbarCTA>
+          </Flex>
+          <MobileNavCollapsible
+            onClose={onClose}
+            isOpen={isOpen}
+            onToggle={onToggle}
+          />
+        </Container>
+      </main>
+      {/* {router.pathname === '/' ? (
         ''
       ) : (
         <Drawer
@@ -292,7 +299,7 @@ export const Header = memo(function Header({
                       />
                     </svg>
                   </Center>
-                  {/* <Center
+                 <Center
                     as="button" // todo use
                     width={'3rem'}
                     height={'2.5rem'}
@@ -314,13 +321,13 @@ export const Header = memo(function Header({
                         fill="white"
                       />
                     </svg>
-                  </Center> */}
+                  </Center>  
                 </Stack>
               </VStack>
             </Container>
           </DrawerContent>
         </Drawer>
-      )}
+      )} */}
     </>
   );
 });

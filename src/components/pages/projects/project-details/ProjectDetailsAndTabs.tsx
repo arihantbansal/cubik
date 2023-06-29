@@ -74,9 +74,9 @@ const MobileDrawer = ({
             </VStack>
           </HStack>
         </DrawerHeader>
-        <DrawerBody mx="auto">
+        <DrawerBody mx="auto" w="full">
           <ProjectDonationSimulator
-            height={80}
+            height={88}
             width={120}
             roundName={roundName}
             projectDetails={projectDetails}

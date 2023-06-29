@@ -245,12 +245,13 @@ export const ProjectDonationSimulator = ({
 
   return (
     <Stack
-      w={{ base: '20rem', sm: '22rem', md: '26rem' }}
+      w={{ base: '22rem', sm: '22rem', md: '26rem' }}
       gap="40px"
       h="full"
       direction={'row'}
       overflow={'hidden'}
-      maxW="90vw"
+      maxW="98vw"
+      mx="auto"
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -258,7 +259,7 @@ export const ProjectDonationSimulator = ({
           width: 'full',
           height: '100%',
           display: 'flex',
-          gap: '52px',
+          gap: '80px',
           flex: '1',
           flexDirection: 'column',
           justifyContent: 'space-between',
@@ -269,7 +270,7 @@ export const ProjectDonationSimulator = ({
             <FormLabel
               pb="12px"
               htmlFor="name"
-              textStyle={{ base: 'title5', md: 'title4' }}
+              textStyle={{ base: 'body6', md: 'title4' }}
               color="neutral.11"
             >
               Enter Donation Amount
@@ -292,8 +293,8 @@ export const ProjectDonationSimulator = ({
           <FormControl>
             <HStack pb="10px" spacing="0" align={'top'} justify="start">
               <FormLabel
-                textStyle={{ base: 'title6', md: 'title5' }}
-                color="neutral.8"
+                textStyle={{ base: 'body6', md: 'title4' }}
+                color="neutral.11"
                 htmlFor="donation_to_matching_pool"
                 mr="8px"
               >
@@ -322,14 +323,18 @@ export const ProjectDonationSimulator = ({
                     }
                     rounded="8px"
                     w="full"
-                    h="2.5rem"
+                    h={{ base: '2.2rem', md: '2.5rem' }}
                     align={'center'}
                     justify="center"
                     onClick={() => {
                       setValue('matchingPoolDonation', percentage);
                     }}
                   >
-                    <Box as="p" textStyle={'body4'} color="#E0FFFD">
+                    <Box
+                      as="p"
+                      textStyle={{ base: 'body5', md: 'body4' }}
+                      color="#E0FFFD"
+                    >
                       {percentage}%
                     </Box>
                     {percentage === 10 ? (
@@ -339,8 +344,8 @@ export const ProjectDonationSimulator = ({
                         bg="red"
                         rounded="full"
                         as="p"
-                        fontSize="10px"
-                        p="2px 8px"
+                        fontSize={{ base: '8px', md: '10px' }}
+                        p={{ base: '2px 6px', md: '2px 8px' }}
                         fontWeight={'500'}
                         color="#14665B"
                         background="#E0FFFD"
