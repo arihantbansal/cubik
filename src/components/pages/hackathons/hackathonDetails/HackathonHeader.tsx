@@ -1,16 +1,40 @@
 import { Avatar, Box, Button, Center, Stack, VStack } from '@chakra-ui/react';
 import { SkeletonCircle, Skeleton, SkeletonText } from '@chakra-ui/skeleton';
+import { useUserStore } from '~/store/userStore';
+import { trpc } from '~/utils/trpc';
 const HackathonHeader = ({
   isLoading,
   logo,
   name,
   short_description,
+  hackathonId,
 }: {
   isLoading: boolean;
   logo?: string;
   name?: string;
   short_description?: string;
+  hackathonId: string;
 }) => {
+  const utils = trpc.useContext();
+  const registrationMutation = trpc.hackathon.registration.useMutation({
+    onSuccess: () => {
+      console.log('success');
+      utils.hackathon.haveRegistered.invalidate({
+        hackathonId,
+      });
+    },
+  });
+  const { user } = useUserStore();
+  const hasRegistered = trpc.hackathon.haveRegistered.useQuery(
+    {
+      hackathonId,
+    },
+    {
+      enabled: !!user?.id,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+    }
+  );
   return (
     <VStack w="full" gap="24px" align={'start'}>
       <SkeletonCircle
@@ -87,8 +111,15 @@ const HackathonHeader = ({
               variant="cubikFilled"
               size={{ base: 'cubikSmall', md: 'cubikMedium' }}
               w="full"
+              isLoading={registrationMutation.isLoading}
+              isDisabled={hasRegistered.data ?? true}
+              onClick={() => {
+                registrationMutation.mutate({
+                  hackathonId: hackathonId,
+                });
+              }}
             >
-              Register
+              {hasRegistered.data ? 'Registered' : 'Register'}
             </Button>
           </Skeleton>
         </Center>

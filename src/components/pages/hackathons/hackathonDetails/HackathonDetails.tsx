@@ -4,6 +4,7 @@ import HackathonHeader from './HackathonHeader';
 import { JSONValue } from 'superjson/dist/types';
 
 type HackathonDetailsPropsType = {
+  id: string;
   isLoading: boolean;
   logo?: string;
   name?: string;
@@ -29,6 +30,7 @@ const HackathonDetails = (props: HackathonDetailsPropsType) => {
       px={{ base: '2rem', md: '3rem', xl: '1rem' }}
     >
       <HackathonHeader
+        hackathonId={props.id}
         isLoading={props.isLoading}
         logo={props.logo}
         name={props.name}

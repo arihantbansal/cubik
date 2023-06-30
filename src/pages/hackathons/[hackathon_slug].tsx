@@ -55,6 +55,7 @@ const HackathonDetail = (props: { slug: string }) => {
           </Center>
         </Skeleton>
         <HackathonDetails
+          id={(data?.id as string) ?? ''}
           isLoading={isLoading}
           logo={data?.logo}
           name={data?.name}

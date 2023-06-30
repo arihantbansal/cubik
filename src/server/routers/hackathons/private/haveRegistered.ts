@@ -1,24 +1,27 @@
-import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
 import { protectedProcedure } from '~/server/trpc';
 import { prisma } from '~/server/utils/prisma';
-
-export const registration = protectedProcedure
+import { z } from 'zod';
+import { TRPCError } from '@trpc/server';
+export const haveRegistered = protectedProcedure
   .input(
     z.object({
       hackathonId: z.string(),
     })
   )
-  .mutation(async ({ input, ctx }) => {
+  .query(async ({ input, ctx }) => {
     try {
-      const res = prisma?.hackathonRegistrations.create({
-        data: {
+      const res = await prisma?.hackathonRegistrations.findFirst({
+        where: {
           userId: ctx.user?.id as string,
           hackathonId: input.hackathonId,
         },
       });
 
-      return res;
+      if (res) {
+        return true;
+      }
+
+      return false;
     } catch (error) {
       console.log(error);
       throw new TRPCError({
