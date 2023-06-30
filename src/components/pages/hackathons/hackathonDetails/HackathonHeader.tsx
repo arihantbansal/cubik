@@ -12,6 +12,8 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { SkeletonCircle, Skeleton, SkeletonText } from '@chakra-ui/skeleton';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { BsTwitter } from 'react-icons/bs';
 import { useUserStore } from '~/store/userStore';
 import { trpc } from '~/utils/trpc';
@@ -204,7 +206,8 @@ export const HackathonRegistrationSuccess = ({ isOpen, onClose }: Props) => {
               textStyle={{ base: 'title4', md: 'title3' }}
               color="white"
             >
-              Congratulations, your donation has been successfully processed!
+              Congratulations, your have succesfully registered for the
+              hackathon
             </Box>
             <VStack
               backgroundColor="#0C0D0D"
@@ -239,8 +242,9 @@ export const HackathonRegistrationSuccess = ({ isOpen, onClose }: Props) => {
                 }}
                 p="12px"
                 as="a"
-                href="https://twitter.com/intent/tweet?text=Just%20made%20my%20contribution%20on%20the%20%40_cubik%20Dev%20Tooling%20Grants%20Round.%20%0A%20%0AJoin%20me%20in%20driving%20innovation%20on%20Solana.%20Let%27s%20grow%20the%20Solana%20ecosystem%20together%3A%20https%3A%2F%2Fcubik.so%2Fprojects"
+                href="https://twitter.com/intent/tweet?text=Just%20registered%20to%20Solana%20Speedrun!%20%F0%9F%8F%83%E2%80%8D%E2%99%82%EF%B8%8F%F0%9F%8E%AE%0A%0AJoin%20the%20ultimate%20game-building%20competition%20to%20have%20fun%20and%20contribute%20to%20the%20next%20wave%20of%20OPOS%20games!%20%40lamportdao%20%40_cubik%20%40magicblock%20%E2%86%92%20https%3A%2F%2Fcubik.so%2Fhackathons%2Fspeedrun%20https://pbs.twimg.com/media/Fz5KxN0WwAAxf2L"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <BsTwitter size={20} color="#1D9BF0" />
                 <Box as="p" fontStyle={'body6'}>
@@ -269,6 +273,8 @@ const HackathonHeader = ({
   hackathonId: string;
 }) => {
   const utils = trpc.useContext();
+  const { connected } = useWallet();
+  const { setVisible } = useWalletModal();
   const registrationMutation = trpc.hackathon.registration.useMutation({
     onSuccess: () => {
       utils.hackathon.haveRegistered.invalidate({
@@ -278,6 +284,9 @@ const HackathonHeader = ({
         hackathonId,
       });
       onOpen();
+    },
+    onError: (error) => {
+      console.log('error - ', error.message);
     },
   });
   const { user } = useUserStore();
@@ -291,6 +300,7 @@ const HackathonHeader = ({
       refetchOnMount: false,
     }
   );
+  console.log('has registered - ', hasRegistered.data);
   const { isOpen, onClose, onOpen } = useDisclosure();
   return (
     <>
@@ -373,8 +383,13 @@ const HackathonHeader = ({
                 size={{ base: 'cubikSmall', md: 'cubikMedium' }}
                 w="full"
                 isLoading={registrationMutation.isLoading}
-                isDisabled={hasRegistered.data ?? true}
+                disabled={hasRegistered.data ? false : true}
                 onClick={() => {
+                  console.log('click on register');
+                  if (!connected) {
+                    setVisible(true);
+                    return;
+                  }
                   registrationMutation.mutate({
                     hackathonId: hackathonId,
                   });

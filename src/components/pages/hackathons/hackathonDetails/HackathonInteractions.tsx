@@ -29,11 +29,12 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
         <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
           Organizer
         </Box>
-        <HStack cursor="pointer" w="full" justify="space-between">
-          <HStack gap="0.6rem">
+        <VStack align="start" w="full" gap="12px" justify="space-between">
+          <HStack w="full" gap="0.6rem">
             <Avatar
+              border="2px solid #FFFFFF10"
               borderRadius={'8px'}
-              size={{ base: 'sm', md: 'sm' }}
+              size={{ base: 'sm', md: 'md' }}
               src={
                 'https://pbs.twimg.com/profile_images/1669101939164954624/AROCJGg5_400x400.jpg'
               }
@@ -46,12 +47,13 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
               Lamport DAO
             </Box>
           </HStack>
-          <HStack gap="0.6rem">
+          <HStack w="full" gap="0.6rem">
             <Avatar
+              border="2px solid #FFFFFF10"
               borderRadius={'8px'}
-              size={{ base: 'sm', md: 'sm' }}
+              size={{ base: 'sm', md: 'md' }}
               src={
-                'https://pbs.twimg.com/profile_images/1660729165245448192/vEETX8mc_400x400.png'
+                'https://res.cloudinary.com/demonicirfan/image/upload/v1687866008/Frame_232_zhelfd.png'
               }
             />
             <Box
@@ -62,7 +64,7 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
               Magic Block
             </Box>
           </HStack>
-        </HStack>
+        </VStack>
       </VStack>
       <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
         <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
@@ -220,43 +222,46 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
         <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
           Hosts
         </Box>
-        {props.team.map((team) => {
-          return (
-            <>
-              <HStack
-                as={Link}
-                cursor="pointer"
-                href={''}
-                w="full"
-                justify="space-between"
-              >
-                <HStack gap="0.6rem">
-                  <Avatar
-                    borderRadius={'8px'}
-                    size={{ base: 'xs', md: 'sm' }}
-                    src={team.user.profilePicture}
-                  />
+        <VStack gap={'2px'} align="start" w="full">
+          {props.team.map((team) => {
+            return (
+              <>
+                <HStack
+                  py="8px"
+                  as={Link}
+                  href={''}
+                  w="full"
+                  justify="space-between"
+                >
+                  <HStack gap="0.6rem">
+                    <Avatar
+                      borderRadius={'8px'}
+                      size={{ base: 'sm', md: 'sm' }}
+                      border="1px solid #FFFFFF10"
+                      src={team.user.profilePicture}
+                    />
+                    <Box
+                      color={'white'}
+                      as="p"
+                      textStyle={{ base: 'body4', md: 'body3' }}
+                    >
+                      @{team.user.username}
+                    </Box>
+                  </HStack>
                   <Box
-                    color={'white'}
+                    color="#B4B0B2"
                     as="p"
-                    textStyle={{ base: 'body4', md: 'body3' }}
+                    textStyle={{ base: 'body5', md: 'body4' }}
                   >
-                    @{team.user.username}
+                    {TruncatedAddr({
+                      walletAddress: team.user.mainWallet,
+                    })}
                   </Box>
                 </HStack>
-                <Box
-                  color="#B4B0B2"
-                  as="p"
-                  textStyle={{ base: 'body5', md: 'body4' }}
-                >
-                  {TruncatedAddr({
-                    walletAddress: team.user.mainWallet,
-                  })}
-                </Box>
-              </HStack>
-            </>
-          );
-        })}
+              </>
+            );
+          })}
+        </VStack>
       </VStack>
     </VStack>
   );

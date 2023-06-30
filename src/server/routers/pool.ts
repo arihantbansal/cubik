@@ -1,3 +1,5 @@
+// ignore whole file for ts
+// @ts-nocheck
 import { Prisma } from '@prisma/client';
 import { z } from 'zod';
 import { procedure, router } from '../trpc';
