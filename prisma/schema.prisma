@@ -181,6 +181,7 @@ model ProjectJoinRound {
   updatedAt     DateTime               @updatedAt
   amountRaise   Float?                 @default(0)
   contributions Int                    @default(0)
+  isArchive     Boolean                @default(false)
   contributors  Contribution[]
   project       ProjectsModel          @relation(fields: [projectId], references: [id])
   fundingRound  Round                  @relation(fields: [roundId], references: [id])
