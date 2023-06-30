@@ -277,6 +277,7 @@ const HackathonHeader = ({
       utils.hackathon.participants.invalidate({
         hackathonId,
       });
+      onOpen();
     },
   });
   const { user } = useUserStore();
