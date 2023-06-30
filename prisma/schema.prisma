@@ -48,11 +48,11 @@ model ProjectJoinHackathons {
   id                     String                 @id @default(uuid()) @map("_id")
   hackathonId            String
   projectId              String
+  registrationId         String
   amount                 Float                  @default(0)
   isArchive              Boolean                @default(false)
   createdAt              DateTime               @default(now())
   updatedAt              DateTime               @updatedAt
-  registrationId         String
   hackathon              Hackathon              @relation(fields: [hackathonId], references: [id])
   projectsModel          ProjectsModel          @relation(fields: [projectId], references: [id])
   hackathonRegistrations HackathonRegistrations @relation(fields: [registrationId], references: [id])
@@ -263,8 +263,8 @@ model Comments {
   projectsModelId String
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
-  reactions       Json
   isArchive       Boolean       @default(false)
+  reactions       Json
   Reply           Reply[]
   user            UserModel     @relation(fields: [userId], references: [id])
   ProjectsModel   ProjectsModel @relation(fields: [projectsModelId], references: [id])

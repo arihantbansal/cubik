@@ -26,11 +26,6 @@ const MyApp: AppType = ({
 
   return (
     <>
-      <SEO
-        title={`Cubik`}
-        description={`Fund What Matters on Solana Through Community Voting`}
-        image={`https://res.cloudinary.com/demonicirfan/image/upload/v1687261386/OG_Image_-_Landing_page_5_-min_lxcnes.png`}
-      />
       <QueryClientProvider client={queryClient}>
         <WalletContext>
           <ChakraProvider theme={theme}>

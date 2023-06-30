@@ -23,6 +23,8 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
   const participants = trpc.hackathon.participants.useQuery({
     hackathonId: props.hackathonId,
   });
+
+  console.log('partiicpants - ', participants);
   return (
     <VStack w="full" gap="48px">
       <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">

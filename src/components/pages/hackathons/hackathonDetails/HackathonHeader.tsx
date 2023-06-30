@@ -12,8 +12,10 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { SkeletonCircle, Skeleton, SkeletonText } from '@chakra-ui/skeleton';
+import { Player } from '@lottiefiles/react-lottie-player';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+import { useEffect, useRef } from 'react';
 import { BsTwitter } from 'react-icons/bs';
 import { useUserStore } from '~/store/userStore';
 import { trpc } from '~/utils/trpc';
@@ -33,6 +35,7 @@ export const HackathonRegistrationSuccess = ({ isOpen, onClose }: Props) => {
         }}
       >
         <ModalOverlay />
+
         <ModalContent
           width="fit-content"
           padding="40px"
@@ -206,8 +209,7 @@ export const HackathonRegistrationSuccess = ({ isOpen, onClose }: Props) => {
               textStyle={{ base: 'title4', md: 'title3' }}
               color="white"
             >
-              Congratulations, your have succesfully registered for the
-              hackathon
+              Congratulations, your have succesfully registered for the Game Jam
             </Box>
             <VStack
               backgroundColor="#0C0D0D"
@@ -216,17 +218,19 @@ export const HackathonRegistrationSuccess = ({ isOpen, onClose }: Props) => {
               maxW="22rem"
               p="24px"
               alignItems={'start'}
+              position={'relative'}
             >
               <VStack spacing="12px" align="start">
                 <Box as="p" textStyle={'title4'} color="white">
                   Spread the word!
                 </Box>
                 <Box as="p" textStyle={'body5'} color="neutral.8">
-                  Share your contribution with others and inspire more support
-                  for this project.
+                  Share with others and inspire more more people to participate
+                  in the Game Jam.
                 </Box>
               </VStack>
               <HStack
+                zIndex="1"
                 rounded="12px"
                 border="1px solid"
                 w="full"
@@ -242,8 +246,7 @@ export const HackathonRegistrationSuccess = ({ isOpen, onClose }: Props) => {
                 }}
                 p="12px"
                 as="a"
-                href="https://twitter.com/intent/tweet?text=Just%20registered%20to%20Solana%20Speedrun!%20%F0%9F%8F%83%E2%80%8D%E2%99%82%EF%B8%8F%F0%9F%8E%AE%0A%0AJoin%20the%20ultimate%20game-building%20competition%20to%20have%20fun%20and%20contribute%20to%20the%20next%20wave%20of%20OPOS%20games!%20%40lamportdao%20%40_cubik%20%40magicblock%20%E2%86%92%20https%3A%2F%2Fcubik.so%2Fhackathons%2Fspeedrun%20https://pbs.twimg.com/media/Fz5KxN0WwAAxf2L"
-                target="_blank"
+                href="https://twitter.com/intent/tweet?text=Just%20registered%20to%20Solana%20Speedrun!%20%F0%9F%8F%83%E2%80%8D%E2%99%82%EF%B8%8F%F0%9F%8E%AE%0A%0AJoin%20the%20ultimate%20game-building%20competition%20to%20have%20fun%20and%20contribute%20to%20the%20next%20wave%20of%20OPOS%20games!%20%40lamportdao%20%40_cubik%20%40magicblock%20%E2%86%92%20https%3A%2F%2Fcubik.so%2Fhackathons%2Fspeedrun%3Fshare%3Dtrue"
                 rel="noopener noreferrer"
               >
                 <BsTwitter size={20} color="#1D9BF0" />
@@ -251,6 +254,24 @@ export const HackathonRegistrationSuccess = ({ isOpen, onClose }: Props) => {
                   Share on Twitter
                 </Box>
               </HStack>
+              <Center
+                zIndex="0"
+                h="0rem"
+                w="80%"
+                overflow="visible"
+                bottom="50%"
+                position="absolute"
+              >
+                <Player
+                  loop={false}
+                  autoplay={true}
+                  speed={0.7}
+                  src={
+                    'https://assets4.lottiefiles.com/packages/lf20_obhph3sh.json'
+                  }
+                  style={{ height: `400px`, width: `400px` }}
+                />
+              </Center>
             </VStack>
           </VStack>
         </ModalContent>

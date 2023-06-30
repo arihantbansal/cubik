@@ -6,7 +6,7 @@ import HackathonDetails from '~/components/pages/hackathons/hackathonDetails/Hac
 import SEO from '~/components/SEO';
 import { trpc } from '~/utils/trpc';
 
-const HackathonDetail = (props: { slug: string }) => {
+const HackathonDetail = (props: { slug: string; share: boolean }) => {
   console.log(props);
   const { data, isLoading } = trpc.hackathon.get.useQuery(
     {
@@ -25,7 +25,9 @@ const HackathonDetail = (props: { slug: string }) => {
         title={`Speedrun`}
         description={`First ever Solana Virtual Game Jam hosted by Lamport DAO and Solana Graming Community`}
         image={
-          'https://res.cloudinary.com/demonicirfan/image/upload/v1688128772/OG-Grant_10_jlqdjx.png'
+          props.share
+            ? 'https://res.cloudinary.com/demonicirfan/image/upload/v1688145530/OG-Grant_11_mchdyq.png'
+            : 'https://res.cloudinary.com/demonicirfan/image/upload/v1688128772/OG-Grant_10_jlqdjx.png'
         }
       />
       <Container p={'0'} maxW={'full'}>
@@ -85,10 +87,12 @@ const HackathonDetail = (props: { slug: string }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const hackathon_slug = context.params?.hackathon_slug;
+  const hasShare = context.query.share;
 
   return {
     props: {
       slug: hackathon_slug,
+      share: hasShare,
     },
   };
 };
