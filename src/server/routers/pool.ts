@@ -32,7 +32,11 @@ export const poolRouter = router({
               ProjectsModel: true,
             },
           },
-          ProjectJoinRound: true,
+          ProjectJoinRound: {
+            where: {
+              isArchive: false,
+            },
+          },
         },
       });
       if (!res) return null;
@@ -67,7 +71,11 @@ export const poolRouter = router({
               ProjectsModel: true,
             },
           },
-          ProjectJoinRound: true,
+          ProjectJoinRound: {
+            where: {
+              isArchive: false,
+            },
+          },
         },
       });
       if (!res) return null;
