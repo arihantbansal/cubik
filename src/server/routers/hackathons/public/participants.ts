@@ -10,9 +10,17 @@ export const participants = procedure
   )
   .query(async ({ input }) => {
     try {
-      const result = await prisma.projectJoinHackathons.findMany({
+      const result = await prisma.hackathonRegistrations.findMany({
         where: {
           hackathonId: input.hackathonId,
+        },
+        select: {
+          User: {
+            select: {
+              id: true,
+              profilePicture: true,
+            },
+          },
         },
       });
 

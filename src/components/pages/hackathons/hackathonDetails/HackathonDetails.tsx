@@ -2,6 +2,7 @@ import { Container } from '@chakra-ui/react';
 import HackathonBody from './HackathonBody';
 import HackathonHeader from './HackathonHeader';
 import { JSONValue } from 'superjson/dist/types';
+import { Team, UserModel } from '@prisma/client';
 
 type HackathonDetailsPropsType = {
   id: string;
@@ -16,6 +17,9 @@ type HackathonDetailsPropsType = {
   prize?: JSONValue;
   timeline?: JSONValue;
   social?: JSONValue;
+  team: (Team & {
+    user: UserModel;
+  })[];
 };
 
 const HackathonDetails = (props: HackathonDetailsPropsType) => {
@@ -37,6 +41,7 @@ const HackathonDetails = (props: HackathonDetailsPropsType) => {
         short_description={props.short_description}
       />
       <HackathonBody
+        team={props.team}
         isLoading={props.isLoading}
         description={props.description}
         host={props.host}

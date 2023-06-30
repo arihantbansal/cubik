@@ -12,6 +12,7 @@ import HackathonInteractions from './HackathonInteractions';
 import { JSONValue } from 'superjson/dist/types';
 import HackathonSchedule from './HackathonSchedule';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
+import { Team, UserModel } from '@prisma/client';
 
 const HackathonBody = ({
   isLoading,
@@ -21,6 +22,8 @@ const HackathonBody = ({
   prize,
   timeline,
   social,
+  team,
+  hackathonId,
 }: {
   isLoading: boolean;
   description?: string;
@@ -29,6 +32,10 @@ const HackathonBody = ({
   prize?: JSONValue;
   timeline?: JSONValue;
   social?: JSONValue;
+  team: (Team & {
+    user: UserModel;
+  })[];
+  hackathonId?: string;
 }) => {
   return (
     <Container p="0px" maxW="full">
@@ -46,7 +53,7 @@ const HackathonBody = ({
               gap={{ base: '24px', md: '32px' }}
             >
               <Tab>Details</Tab>
-              <Tab>Prizes</Tab>
+              {/* <Tab>Prizes</Tab> */}
               <Tab>Schedule</Tab>
             </TabList>
             <TabPanels p="0">
@@ -56,7 +63,7 @@ const HackathonBody = ({
                   description={description}
                 />
               </TabPanel>
-              <TabPanel overflowX="scroll"></TabPanel>
+              {/* <TabPanel overflowX="scroll"></TabPanel> */}
               <TabPanel>
                 <HackathonSchedule />
               </TabPanel>
@@ -64,7 +71,12 @@ const HackathonBody = ({
           </Tabs>
         </Center>
         <Center w="full" h="full" flex={1.5}>
-          <HackathonInteractions isLoading={isLoading} />
+          <HackathonInteractions
+            hackathonId={hackathonId as string}
+            prizePool={prize_pool?.toLocaleString() ?? '0'}
+            isLoading={isLoading}
+            team={team}
+          />
         </Center>
       </Stack>
     </Container>

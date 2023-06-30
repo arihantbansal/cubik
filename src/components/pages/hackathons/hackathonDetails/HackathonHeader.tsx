@@ -18,8 +18,10 @@ const HackathonHeader = ({
   const utils = trpc.useContext();
   const registrationMutation = trpc.hackathon.registration.useMutation({
     onSuccess: () => {
-      console.log('success');
       utils.hackathon.haveRegistered.invalidate({
+        hackathonId,
+      });
+      utils.hackathon.participants.invalidate({
         hackathonId,
       });
     },

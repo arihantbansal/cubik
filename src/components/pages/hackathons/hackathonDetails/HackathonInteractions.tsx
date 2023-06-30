@@ -8,9 +8,21 @@ import {
   Skeleton,
   VStack,
 } from '@chakra-ui/react';
+import { Team, UserModel } from '@prisma/client';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
-
-const HackathonInteractions = ({ isLoading }: { isLoading: boolean }) => {
+import { trpc } from '~/utils/trpc';
+interface HackathonInteractionsProps {
+  isLoading: boolean;
+  prizePool: string;
+  hackathonId: string;
+  team: (Team & {
+    user: UserModel;
+  })[];
+}
+const HackathonInteractions = (props: HackathonInteractionsProps) => {
+  const participants = trpc.hackathon.participants.useQuery({
+    hackathonId: props.hackathonId,
+  });
   return (
     <VStack w="full" gap="48px">
       <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
@@ -23,7 +35,7 @@ const HackathonInteractions = ({ isLoading }: { isLoading: boolean }) => {
               borderRadius={'8px'}
               size={{ base: 'sm', md: 'sm' }}
               src={
-                'https://pbs.twimg.com/profile_images/1612482190327283713/8m9b-fYT_400x400.jpg'
+                'https://pbs.twimg.com/profile_images/1669101939164954624/AROCJGg5_400x400.jpg'
               }
             />
             <Box
@@ -34,6 +46,22 @@ const HackathonInteractions = ({ isLoading }: { isLoading: boolean }) => {
               Lamport DAO
             </Box>
           </HStack>
+          <HStack gap="0.6rem">
+            <Avatar
+              borderRadius={'8px'}
+              size={{ base: 'sm', md: 'sm' }}
+              src={
+                'https://pbs.twimg.com/profile_images/1660729165245448192/vEETX8mc_400x400.png'
+              }
+            />
+            <Box
+              color={'white'}
+              as="p"
+              textStyle={{ base: 'title5', md: 'title4' }}
+            >
+              Magic Block
+            </Box>
+          </HStack>
         </HStack>
       </VStack>
       <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
@@ -41,9 +69,9 @@ const HackathonInteractions = ({ isLoading }: { isLoading: boolean }) => {
           Prize Pool
         </Box>
         <Skeleton
-          isLoaded={!isLoading}
+          isLoaded={!props.isLoading}
           fadeDuration={2.5}
-          opacity={isLoading ? 0.4 : 1}
+          opacity={props.isLoading ? 0.4 : 1}
           w="full"
         >
           <VStack
@@ -77,7 +105,7 @@ const HackathonInteractions = ({ isLoading }: { isLoading: boolean }) => {
             <HStack w="full" align={'start'}>
               <VStack align={'start'} gap="8px">
                 <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
-                  $50,000
+                  ${props.prizePool}
                 </Box>
               </VStack>
               <Center
@@ -142,147 +170,93 @@ const HackathonInteractions = ({ isLoading }: { isLoading: boolean }) => {
           </VStack>
         </Skeleton>
       </VStack>
-      <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
-        <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
-          Participants
-        </Box>
-        <Skeleton
-          isLoaded={!isLoading}
-          fadeDuration={2.5}
-          opacity={isLoading ? 0.4 : 1}
-          w="full"
-        >
-          <HStack justify={'space-between'}>
-            <AvatarGroup
-              size={{ base: 'sm', md: 'md' }}
-              max={7}
-              spacing={'-24px'}
-            >
-              <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
-              <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
-              <Avatar name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
-              <Avatar
-                name="Prosper Otemuyiwa"
-                src="https://bit.ly/prosper-baba"
-              />
-              <Avatar name="Christian Nwamba" src="https://bit.ly/code-beast" />
-              <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
-              <Avatar name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
-            </AvatarGroup>
-            <Box
-              color="neutral.9"
-              px="8px"
-              as="p"
-              textStyle={{ base: 'title5', md: 'title4' }}
-            >
-              <b>+12</b> Participants
-            </Box>
-          </HStack>
-        </Skeleton>
-      </VStack>
+      {participants.data?.length! > 0 && (
+        <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
+          <Box
+            as="p"
+            textStyle={{ base: 'title4', md: 'title3' }}
+            color="white"
+          >
+            Participants
+          </Box>
+          <Skeleton
+            isLoaded={!props.isLoading}
+            fadeDuration={2.5}
+            opacity={props.isLoading ? 0.4 : 1}
+            w="full"
+          >
+            <HStack justify={'space-between'}>
+              <AvatarGroup
+                size={{ base: 'sm', md: 'md' }}
+                max={7}
+                spacing={'-24px'}
+              >
+                {participants.data?.map((participant) => {
+                  return (
+                    <>
+                      <Avatar
+                        name="Ryan Florence"
+                        src={participant.User.profilePicture}
+                      />
+                    </>
+                  );
+                })}
+              </AvatarGroup>
+              {participants.data?.length! > 7 && (
+                <Box
+                  color="neutral.9"
+                  px="8px"
+                  as="p"
+                  textStyle={{ base: 'title5', md: 'title4' }}
+                >
+                  <b>+{participants.data?.length}</b> Participants
+                </Box>
+              )}
+            </HStack>
+          </Skeleton>
+        </VStack>
+      )}
       <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
         <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
           Hosts
         </Box>
-        <HStack
-          as={Link}
-          cursor="pointer"
-          href={''}
-          w="full"
-          justify="space-between"
-        >
-          <HStack gap="0.6rem">
-            <Avatar
-              borderRadius={'8px'}
-              size={{ base: 'xs', md: 'sm' }}
-              src={
-                'https://pbs.twimg.com/profile_images/1642692955684352000/z-TxRMgD_400x400.jpg'
-              }
-            />
-            <Box
-              color={'white'}
-              as="p"
-              textStyle={{ base: 'body4', md: 'body3' }}
-            >
-              @mert
-            </Box>
-          </HStack>
-          <Box
-            color="#B4B0B2"
-            as="p"
-            textStyle={{ base: 'body5', md: 'body4' }}
-          >
-            {TruncatedAddr({
-              walletAddress: 'Arn8xBydNXLVDwTQBLmBFVh3okAnwr2merqnZMDUa1Wa',
-            })}
-          </Box>
-        </HStack>
-        <HStack
-          as={Link}
-          cursor="pointer"
-          href={''}
-          w="full"
-          justify="space-between"
-        >
-          <HStack gap="0.6rem">
-            <Avatar
-              borderRadius={'8px'}
-              size={{ base: 'xs', md: 'sm' }}
-              src={
-                'https://pbs.twimg.com/profile_images/1659482380459991040/w9kL_NYC_400x400.jpg'
-              }
-            />
-            <Box
-              color={'white'}
-              as="p"
-              textStyle={{ base: 'body4', md: 'body3' }}
-            >
-              @thales
-            </Box>
-          </HStack>
-          <Box
-            color="#B4B0B2"
-            as="p"
-            textStyle={{ base: 'body5', md: 'body4' }}
-          >
-            {TruncatedAddr({
-              walletAddress: '4evSGzFrqoBGxi526mWpXi4oWNJfMDJpFBipdmotYQWv',
-            })}
-          </Box>
-        </HStack>
-        <HStack
-          as={Link}
-          cursor="pointer"
-          href={''}
-          w="full"
-          justify="space-between"
-        >
-          <HStack gap="0.6rem">
-            <Avatar
-              borderRadius={'8px'}
-              size={{ base: 'xs', md: 'sm' }}
-              src={
-                'https://pbs.twimg.com/profile_images/1659819813437333504/IxNycU4N_400x400.jpg'
-              }
-            />
-            <Box
-              color={'white'}
-              as="p"
-              textStyle={{ base: 'body4', md: 'body3' }}
-            >
-              @irfan
-            </Box>
-          </HStack>
-          <Box
-            color="#B4B0B2"
-            as="p"
-            textStyle={{ base: 'body5', md: 'body4' }}
-          >
-            {TruncatedAddr({
-              walletAddress: 'rik6lFrqoBGxi526mWpXi4oWNJfMDJpFBipdmo6kov',
-            })}
-          </Box>
-        </HStack>
+        {props.team.map((team) => {
+          return (
+            <>
+              <HStack
+                as={Link}
+                cursor="pointer"
+                href={''}
+                w="full"
+                justify="space-between"
+              >
+                <HStack gap="0.6rem">
+                  <Avatar
+                    borderRadius={'8px'}
+                    size={{ base: 'xs', md: 'sm' }}
+                    src={team.user.profilePicture}
+                  />
+                  <Box
+                    color={'white'}
+                    as="p"
+                    textStyle={{ base: 'body4', md: 'body3' }}
+                  >
+                    @{team.user.username}
+                  </Box>
+                </HStack>
+                <Box
+                  color="#B4B0B2"
+                  as="p"
+                  textStyle={{ base: 'body5', md: 'body4' }}
+                >
+                  {TruncatedAddr({
+                    walletAddress: team.user.mainWallet,
+                  })}
+                </Box>
+              </HStack>
+            </>
+          );
+        })}
       </VStack>
     </VStack>
   );

@@ -9,6 +9,13 @@ export const get = procedure
       where: {
         slug: input.slug,
       },
+      include: {
+        team: {
+          include: {
+            user: true,
+          },
+        },
+      },
     });
 
     return res;
