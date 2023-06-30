@@ -10,7 +10,7 @@ export const projectVisitorsDetail = procedure
   )
   .query(async ({ input }) => {
     const response = prisma.projectsModel.findFirst({
-      where: { id: input.id },
+      where: { id: input.id, isArchive: false },
       include: {
         ProjectJoinRound: {
           include: {

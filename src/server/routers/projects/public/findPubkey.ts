@@ -18,6 +18,7 @@ export const findPubkey = procedure
     const res = await prisma.projectsModel.findMany({
       where: {
         owner_publickey: input.publickey,
+        isArchive: false,
       },
     });
 

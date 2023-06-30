@@ -51,7 +51,9 @@ const ProjectDetails = ({
       );
     } else return <></>;
   };
-
+  if (data?.project.isArchive === true) {
+    return <ComponentErrors error={{ message: 'This project is been ban' }} />;
+  }
   return (
     <>
       <SEO

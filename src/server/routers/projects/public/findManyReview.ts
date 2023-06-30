@@ -14,6 +14,7 @@ export const findManyReview = procedure.query(async () => {
       },
       where: {
         status: ProjectVerifyStatus.REVIEW,
+        isArchive: false,
       },
     });
     return res;

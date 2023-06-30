@@ -16,6 +16,7 @@ export const searchProjects = procedure
             contains: input.name,
           },
           status: ProjectVerifyStatus.VERIFIED,
+          isArchive: false,
         },
         select: {
           id: true,

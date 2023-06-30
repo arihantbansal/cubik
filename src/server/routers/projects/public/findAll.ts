@@ -4,6 +4,9 @@ import { prisma } from '~/server/utils/prisma';
 export const findAllProject = procedure.query(async () => {
   try {
     const res = await prisma.projectsModel.findMany({
+      where: {
+        isArchive: false,
+      },
       include: {
         ProjectJoinRound: {
           include: {
