@@ -289,6 +289,34 @@ const GrantDetailsHeader = ({
               <Avatar
                 size="sm"
                 src={
+                  'https://pbs.twimg.com/profile_images/1650368880454377472/CaLpt63o_400x400.jpg'
+                }
+              />
+              <Box
+                as="p"
+                textStyle={{ base: 'title5', md: 'title4' }}
+                color="neutral.11"
+              >
+                Symmetry
+              </Box>
+            </HStack>
+          </Skeleton>  
+          <Skeleton
+            isLoaded={!isLoading}
+            fadeDuration={2.5}
+            opacity={isLoading ? '0.4' : '1'}
+            rounded="full"
+          >
+            <HStack
+              rounded="full"
+              backgroundColor={'neutral.4'}
+              p="8px"
+              spacing="16px"
+              pe="24px"
+            >
+              <Avatar
+                size="sm"
+                src={
                   'https://pbs.twimg.com/profile_images/1505359960942657539/sMjuxRcg_400x400.jpg'
                 }
               />
