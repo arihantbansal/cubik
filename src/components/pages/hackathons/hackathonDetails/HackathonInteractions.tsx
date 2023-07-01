@@ -197,12 +197,11 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
               >
                 {participants.data?.map((participant) => {
                   return (
-                    <>
-                      <Avatar
-                        name="Ryan Florence"
-                        src={participant.User.profilePicture}
-                      />
-                    </>
+                    <Avatar
+                      key={participant.User.id}
+                      name={participant.User.username}
+                      src={participant.User.profilePicture}
+                    />
                   );
                 })}
               </AvatarGroup>

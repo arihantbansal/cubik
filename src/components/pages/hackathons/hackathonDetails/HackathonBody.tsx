@@ -35,7 +35,7 @@ const HackathonBody = ({
   team: (Team & {
     user: UserModel;
   })[];
-  hackathonId?: string;
+  hackathonId: string;
 }) => {
   return (
     <Container p="0px" maxW="full">

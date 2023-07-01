@@ -41,6 +41,7 @@ const HackathonDetails = (props: HackathonDetailsPropsType) => {
         short_description={props.short_description}
       />
       <HackathonBody
+        hackathonId={props.id}
         team={props.team}
         isLoading={props.isLoading}
         description={props.description}

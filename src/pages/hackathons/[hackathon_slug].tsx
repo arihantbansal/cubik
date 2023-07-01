@@ -92,7 +92,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       slug: hackathon_slug,
-      share: hasShare,
+      share: hasShare ?? false,
     },
   };
 };

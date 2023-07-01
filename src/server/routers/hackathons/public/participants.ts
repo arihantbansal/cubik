@@ -19,6 +19,7 @@ export const participants = procedure
             select: {
               id: true,
               profilePicture: true,
+              username: true,
             },
           },
         },
