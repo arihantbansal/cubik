@@ -142,6 +142,7 @@ model ProjectsModel {
   email             String                  @default("")
   isActive          Boolean                 @default(true)
   isArchive         Boolean                 @default(false)
+  ogImage           String                  @default("")
   comments          Comments[]
   ProjectJoinRound  ProjectJoinRound[]
   projectJoinRound  ProjectJoinHackathons[]
@@ -180,6 +181,7 @@ model ProjectJoinRound {
   updatedAt     DateTime               @updatedAt
   amountRaise   Float?                 @default(0)
   contributions Int                    @default(0)
+  isArchive     Boolean                @default(false)
   contributors  Contribution[]
   project       ProjectsModel          @relation(fields: [projectId], references: [id])
   fundingRound  Round                  @relation(fields: [roundId], references: [id])
