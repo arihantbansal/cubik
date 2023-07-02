@@ -48,16 +48,15 @@ export default async function handler(req: NextRequest) {
             height: '8rem',
             color: '#FFFFFF',
             position: 'absolute',
-            bottom: descriptionsize ? '38%' : '30%',
+            bottom: descriptionsize ? '50%' : '44%',
             left: '6.2%',
             display: 'flex',
             alignItems: 'center',
-            border: '2px solid #FFFFFF7A',
-            borderRadius: '0.7rem',
             gap: '0.7rem',
           }}
         >
           <img
+            // style={{ borderRadius: '0.8rem', border: '2px solid #FFFFFF7A' }}
             src="https://res.cloudinary.com/demonicirfan/image/upload/v1687169182/vckp0atyxrtrgw37kiup.jpg"
             alt="dasf"
           />
@@ -67,7 +66,7 @@ export default async function handler(req: NextRequest) {
             width: '80%',
             color: '#FFFFFF',
             position: 'absolute',
-            bottom: descriptionsize ? '22%' : '15%',
+            bottom: descriptionsize ? '32%' : '25%',
             left: '6.2%',
             display: 'flex',
             alignItems: 'center',
@@ -111,10 +110,10 @@ export default async function handler(req: NextRequest) {
         </div>
         <div
           style={{
-            width: '80%',
+            width: '90%',
             color: '#FFFFFF',
             position: 'absolute',
-            bottom: '10%',
+            bottom: '17%',
             left: '6.2%',
             display: 'flex',
             alignItems: 'center',
@@ -124,8 +123,7 @@ export default async function handler(req: NextRequest) {
           }}
         >
           wallet & dApps improve their payment experience wallet & dApps improve
-          their payment experience wallet & dApps improve their payment
-          experience
+          wallet & dApps improve their payment experience wallet & dApps improve
         </div>
       </div>
     ),
