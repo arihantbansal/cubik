@@ -97,7 +97,11 @@ export const contributionRouter = router({
               ProjectsModel: true,
             },
           },
-          ProjectJoinRound: true,
+          ProjectJoinRound: {
+            where: {
+              isArchive: false,
+            },
+          },
         },
       });
       if (!res) return null;
@@ -106,6 +110,7 @@ export const contributionRouter = router({
       const allProjects = await prisma.projectJoinRound.findMany({
         where: {
           roundId: input.roundId,
+          isArchive: false,
         },
       });
       const updatePromise: Prisma.Prisma__ProjectJoinRoundClient<
