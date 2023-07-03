@@ -116,6 +116,7 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
           {showVault && (
             <Vault
               isLoading={isLoading}
+              createKey={projectData?.createKey as string}
               multisigAddress={projectData?.mutliSigAddress}
             />
           )}

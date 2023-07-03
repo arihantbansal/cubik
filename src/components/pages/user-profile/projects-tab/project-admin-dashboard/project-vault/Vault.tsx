@@ -5,15 +5,31 @@ import WalletBalance from '~/components/app/navbar-menu/WalletBalance';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import VaultHeader from './VaultHeader';
 import MultisigTransactions from './project-vault-tabs/Transactions';
+import { useEffect } from 'react';
+import { getAllTx } from '~/utils/vault';
+import { useAnchorWallet } from '@solana/wallet-adapter-react';
+import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 
 const Vault = ({
   isLoading,
   multisigAddress,
+  createKey,
 }: {
   isLoading: boolean;
   multisigAddress: string | null | undefined;
+  createKey: string;
 }) => {
+  const anchorWallet = useAnchorWallet();
   const { ErrorBoundaryWrapper } = useErrorBoundary();
+
+  useEffect(() => {
+    const fetchTx = async () => {
+      const tx = await getAllTx(anchorWallet as NodeWallet, createKey);
+    };
+
+    fetchTx();
+  }, []);
+
   return (
     <ErrorBoundaryWrapper>
       <VStack
