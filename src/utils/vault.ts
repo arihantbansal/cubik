@@ -27,16 +27,17 @@ export const createVault = async (
   image: string
 ) => {
   const squads = await getSquads(wallet);
+  const createKey = anchor.web3.Keypair.generate();
   const ix = await squads.buildCreateMultisig(
     2,
-    anchor.web3.Keypair.generate().publicKey,
+    createKey.publicKey,
     [wallet.publicKey, new anchor.web3.PublicKey(env.NEXT_PUBLIC_ADMIN_VAULT)],
     `Cubik Vault`,
     `This treasured holds the funds raised on cubik by @${username} for @${name}`,
     image
   );
 
-  return { ix: ix, key: ix.keys[0].pubkey };
+  return { ix: ix, key: ix.keys[0].pubkey, createKey: createKey.publicKey };
 };
 export const getVault = async (
   wallet: NodeWallet,

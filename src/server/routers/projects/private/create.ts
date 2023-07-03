@@ -24,6 +24,7 @@ export const createProject = protectedProcedure
       sig: z.string().nonempty(),
       email: z.string().nonempty(),
       multiSigAddress: z.string().nonempty(),
+      createKey: z.string().nonempty(),
     })
   )
   .mutation(async ({ input, ctx }) => {
@@ -69,6 +70,7 @@ export const createProject = protectedProcedure
           twitter_handle: input.twitter_handle,
           github_link: input.github_link,
           mutliSigAddress: input.multiSigAddress,
+          createKey: input.createKey,
         },
       });
       await prisma.team.createMany({

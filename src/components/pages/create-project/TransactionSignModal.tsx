@@ -101,7 +101,11 @@ const CreateProjectTransactionModal: React.FC<
     if (!user) return;
     const id = uuidV4();
     try {
-      const { ix: valutIx, key } = await createVault(
+      const {
+        ix: valutIx,
+        key,
+        createKey,
+      } = await createVault(
         user?.username as string,
         anchorWallet as NodeWallet,
         getValues().projectName,
@@ -140,6 +144,7 @@ const CreateProjectTransactionModal: React.FC<
         projectUserCount: (projectCount.data?._count.project as number) + 1,
         team: getValues()?.team?.map((member) => member.value) ?? [],
         multiSigAddress: vaultAuth,
+        createKey: createKey.toBase58(),
         email: getValues().email,
       });
       setProjectId(id);
