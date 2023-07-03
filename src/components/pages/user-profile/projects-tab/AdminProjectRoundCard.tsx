@@ -267,10 +267,14 @@ const AdminProjectRoundCard = ({
                             amountRaise={round?.amountRaise ?? 0}
                             projectId={round.projectId as string}
                             roundId={round.fundingRound.id}
+                            roundStartDate={round.fundingRound.startTime}
+                            roundEndDate={round.fundingRound.endTime}
                           />
                           <ProjectInsights
                             projectId={round.projectId as string}
                             roundId={round.fundingRound.id}
+                            roundStartDate={round.fundingRound.startTime}
+                            roundEndDate={round.fundingRound.endTime}
                           />
                         </Stack>
                       }

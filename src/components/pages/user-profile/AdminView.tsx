@@ -61,9 +61,13 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
               >
                 {user?.project.length ? (
                   user?.project.map(
-                    (project: ProjectsModel, key: Key | null | undefined) => (
-                      <ProjectAdminCard project={project} key={key} />
-                    )
+                    (project: ProjectsModel, key: Key | null | undefined) => {
+                      return !project.isArchive ? (
+                        <ProjectAdminCard project={project} key={key} />
+                      ) : (
+                        <></>
+                      );
+                    }
                   )
                 ) : (
                   <AdminProjectEmptyState />

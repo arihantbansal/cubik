@@ -4,6 +4,7 @@ import { Contribution, UserModel } from '@prisma/client';
 import dynamic from 'next/dynamic';
 import React, { useEffect } from 'react';
 import { getProjectContributorsType } from '~/types/contribution';
+import { formateDateInMonths } from '~/utils/formatDates';
 const ReactApexChart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
 });
@@ -70,14 +71,13 @@ type ContributionWithUser = Contribution & {
 };
 
 const generateDateRange = (start: Date, end: Date): Date[] => {
-  let currentDate = start;
+  let currentDate = new Date(start); // Create a new Date object
   const dates = [];
 
   while (currentDate <= end) {
-    dates.push(new Date(currentDate));
-    currentDate.setDate(currentDate.getDate() + 1);
+    dates.push(new Date(currentDate)); // Push a new Date object to the array
+    currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1)); // Create a new Date object for the next day
   }
-
   return dates;
 };
 
@@ -92,18 +92,22 @@ const generateLast15Days = () => {
 
 export const FundingChart = ({
   data,
+  startDate,
+  endDate,
 }: {
   data: getProjectContributorsType[];
+  startDate: Date;
+  endDate: Date;
 }) => {
   const [chartData, setChartData] = React.useState<IChartData>({
     series: [{ name: '', data: [] }],
     options: {
-      grid: { show: false },
+      grid: { show: true, borderColor: '#1D1F1E80' },
       chart: {
         height: 100,
         width: 520,
         toolbar: {
-          show: false,
+          show: true,
           tools: {
             download: false,
             selection: false,
@@ -113,6 +117,44 @@ export const FundingChart = ({
             pan: false,
             reset: false,
           },
+        },
+      },
+      tooltip: {
+        enabled: true,
+        theme: 'dark',
+        followCursor: true,
+        x: {
+          show: false, // This hides the x-axis tooltip
+        },
+        custom: ({ series, seriesIndex, dataPointIndex, w }: any) => {
+          const data = series[seriesIndex][dataPointIndex];
+          const timestamp = w.globals.seriesX[seriesIndex][dataPointIndex];
+          const date = new Date(timestamp)
+            .toLocaleDateString(undefined, {
+              day: 'numeric',
+              month: 'long',
+            })
+            .replace(/\s\d{4}$/, ''); // Removes the year part
+
+          return `
+            <div class="arrow_box" style="display: flex; flex-direction: column; background-color: white; padding: 6px; align-items: center;">
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: black;">${date}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: black; fontWeight: 600;"><strong>$${data}</strong></span>
+              </div>
+            </div>
+          `;
+        },
+        onDatasetHover: {
+          highlightDataSeries: true,
+        },
+        style: {
+          size: 6,
+          fillColor: '#000',
+          strokeColor: '#1CEB68',
+          radius: 4,
         },
       },
       stroke: {
@@ -125,10 +167,11 @@ export const FundingChart = ({
         type: 'gradient',
         gradient: {
           shade: 'dark',
-          shadeIntensity: 1,
+          gradientToColors: ['#141414'],
+          shadeIntensity: 2,
           opacityFrom: 0,
-          opacityTo: 0.3,
-          stops: [0, 90, 100],
+          opacityTo: 0.5,
+          stops: [0, 100],
         },
       },
       dataLabels: {
@@ -136,14 +179,20 @@ export const FundingChart = ({
       },
       xaxis: {
         show: false,
+        max: new Date().getTime(), // Set this to the future date till which you want the graph to extend
         axisTicks: {
+          show: true,
+          color: '#272929',
+        },
+        axisBorder: {
           show: false,
+          color: '#272929',
         },
         tooltip: {
-          enabled: true,
+          enabled: false,
         },
         crosshairs: {
-          show: true,
+          show: false,
         },
         labels: {
           show: false,
@@ -155,49 +204,31 @@ export const FundingChart = ({
             hour: 'HH:mm',
           },
         },
+
         type: xaxisType.DATETIME,
       },
       yaxis: {
         show: false,
-        labels: {
-          show: false,
-          offsetX: -10,
-        },
       },
-      tooltip: {
-        enabled: true,
-        theme: 'dark',
-        custom: function ({ series, seriesIndex, dataPointIndex }: any) {
-          return (
-            '<div class="arrow_box">' +
-            '<span style="background-color: white; color: black; padding: 10px;">' +
-            'Donation: ' +
-            series[seriesIndex][dataPointIndex] +
-            '$' +
-            '</span>' +
-            '</div>'
-          );
-        },
-        style: {
-          fontSize: '12px',
-          shadow: '0px',
-        },
-        x: {
-          show: false,
-          format: 'dd MMM yyyy',
-        },
-        y: {
-          show: false,
-          formatter: function (
-            value: any,
-            { series, seriesIndex, dataPointIndex, w }: any
-          ) {
-            return value;
+      annotations: {
+        xaxis: [
+          {
+            x: new Date().getTime(), // This sets the x position to today's date.
+            borderColor: '#1CEB6800', // Set the color of the line.
           },
-        },
-        marker: {
-          show: false,
-        },
+        ],
+        points: [
+          {
+            x: new Date().getTime(), // This sets the x position to today's date.
+            y: 1, // This sets the y position (value) for today's date.
+            marker: {
+              size: 6,
+              fillColor: '#000',
+              strokeColor: '#1CEB68',
+              radius: 4,
+            },
+          },
+        ],
       },
       responsive: [
         {
@@ -254,9 +285,7 @@ export const FundingChart = ({
       (acc: { [key: string]: number }, curr) => {
         const date = new Date(curr.createdAt);
         date.setUTCHours(0, 0, 0, 0); // set the time to start of the day (midnight)
-        const formattedDate = new Date(
-          date.toISOString().split('T')[0]
-        ).getTime(); // get the time in milliseconds without the milliseconds part
+        const formattedDate = date.getTime(); // get the time in milliseconds without the milliseconds part
         if (acc[formattedDate]) {
           acc[formattedDate] += curr.usdTotal;
         } else {
@@ -275,10 +304,6 @@ export const FundingChart = ({
     }));
 
     sortedData.sort((a, b) => a.date - b.date);
-    const endDate = new Date();
-    endDate.setUTCHours(23, 59, 59, 999); // set the time to end of the day
-    const startDate = new Date();
-    startDate.setUTCDate(endDate.getUTCDate() - 14);
     const dateRange = generateDateRange(startDate, endDate).map(
       (date) => new Date(date.toISOString().split('T')[0])
     );
@@ -318,7 +343,7 @@ export const FundingChart = ({
           padding={{ left: 0, right: 0 }}
           type="area"
           width={'520px'}
-          height="100rem"
+          height="150rem"
           options={chartData.options}
           series={chartData.series}
         />
@@ -329,8 +354,12 @@ export const FundingChart = ({
 
 export const VisitorsChart = ({
   data,
+  startDate,
+  endDate,
 }: {
   data: getProjectContributorsType[];
+  startDate: Date;
+  endDate: Date;
 }) => {
   const [chartData, setChartData] =
     React.useState<IChartContributorsAndVisitorsData>({
@@ -345,7 +374,10 @@ export const VisitorsChart = ({
         },
       ],
       options: {
-        grid: { show: false, padding: { left: -5, right: 0 } },
+        grid: {
+          show: true,
+          borderColor: '#1D1F1E80',
+        },
         chart: {
           height: 100,
           width: 510,
@@ -367,27 +399,62 @@ export const VisitorsChart = ({
           },
         },
         tooltip: {
+          enabled: true,
           theme: 'dark',
+          followCursor: true,
+          x: {
+            show: false, // This hides the x-axis tooltip
+          },
+          custom: ({ series, seriesIndex, dataPointIndex, w }: any) => {
+            const data = series[seriesIndex][dataPointIndex];
+            const timestamp = w.globals.seriesX[seriesIndex][dataPointIndex];
+            const date = new Date(timestamp)
+              .toLocaleDateString(undefined, {
+                day: 'numeric',
+                month: 'long',
+              })
+              .replace(/\s\d{4}$/, ''); // Removes the year part
+
+            return `
+              <div class="arrow_box" style="display: flex; flex-direction: column; background-color: white; padding: 6px; align-items: center;">
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: black;">${date}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: black; fontWeight: 600;"><strong>${data}</strong></span>
+                </div>
+              </div>
+            `;
+          },
+          onDatasetHover: {
+            highlightDataSeries: true,
+          },
+          style: {
+            size: 6,
+            fillColor: '#000',
+            strokeColor: '#1CEB68',
+            radius: 4,
+          },
         },
         plotOptions: {
           bar: {
             borderRadius: 2.5,
             columnWidth: '90%',
             endingShape: 'rounded',
+            borderRadiusApplication: 'around',
+            borderRadiusWhenStacked: 'first',
           },
         },
         xaxis: {
           show: true,
+          max: new Date().getTime(), // Set this to the future date till which you want the graph to extend
           axisTicks: {
-            show: false,
+            show: true,
+            color: '#272929',
           },
           axisBorder: {
-            show: true,
-            color: '#78909C',
-            height: 1,
-            width: '100%',
-            offsetX: 0,
-            offsetY: 0,
+            show: false,
+            color: '#272929',
           },
           tooltip: {
             enabled: false,
@@ -491,10 +558,6 @@ export const VisitorsChart = ({
 
     sortedData.sort((a, b) => a.date - b.date);
 
-    const endDate = new Date();
-    endDate.setUTCHours(23, 59, 59, 999); // set the time to end of the day
-    const startDate = new Date();
-    startDate.setUTCDate(endDate.getUTCDate() - 14);
     const dateRange = generateDateRange(startDate, endDate).map(
       (date) => new Date(date.toISOString().split('T')[0])
     );
@@ -524,7 +587,8 @@ export const VisitorsChart = ({
         },
         {
           name: 'Viewers',
-          data: Array.from({ length: 15 }, () => Math.floor(Math.random() * 6)), // todo: remove this and add real data
+          //  data: Array.from({ length: 15 }, () => Math.floor(Math.random() * 6)), // todo: remove this and add real data
+          data: Array.from({ length: 15 }, () => 0), // todo: remove this and add real data
         },
       ],
     }));
@@ -542,8 +606,8 @@ export const VisitorsChart = ({
         <ReactApexChart
           padding={{ left: 0, right: 0 }}
           type="bar"
-          width={'560px'}
-          height="100rem"
+          width={'520px'}
+          height="150rem"
           options={chartData.options}
           series={chartData.series}
         />

@@ -143,7 +143,7 @@ model ProjectsModel {
   isActive          Boolean                 @default(true)
   isArchive         Boolean                 @default(false)
   ogImage           String                  @default("")
-  squads            String                  @default("")
+  createKey         String?                  @default("")
   comments          Comments[]
   ProjectJoinRound  ProjectJoinRound[]
   projectJoinRound  ProjectJoinHackathons[]
