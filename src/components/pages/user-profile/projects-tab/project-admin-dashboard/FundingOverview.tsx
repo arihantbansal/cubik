@@ -7,10 +7,14 @@ import { FundingChart } from './Charts';
 const FundingOverview = ({
   projectId,
   roundId,
+  roundStartDate,
+  roundEndDate,
   amountRaise,
 }: {
   projectId: string;
   roundId: string;
+  roundStartDate: Date;
+  roundEndDate: Date;
   amountRaise: number;
 }) => {
   const { data, isError, isLoading, error } =
@@ -18,7 +22,6 @@ const FundingOverview = ({
       projectId,
       roundId,
     });
-
   if (isLoading) {
     return <Spinner />;
   }
@@ -105,7 +108,11 @@ const FundingOverview = ({
           </Box>
         </VStack>
       </Center>
-      <FundingChart data={data} />
+      <FundingChart
+        data={data}
+        startDate={roundStartDate}
+        endDate={roundEndDate}
+      />
     </VStack>
   );
 };

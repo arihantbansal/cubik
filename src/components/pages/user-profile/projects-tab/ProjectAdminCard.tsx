@@ -21,7 +21,7 @@ import ProjectVerificationStatusBanner from './ProjectVerificationStatusBanner';
 import Vault from './project-admin-dashboard/project-vault/Vault';
 
 const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
-  const [showVault, setShowVault] = useState(false);
+  const [showVault, setShowVault] = useState(true);
   const {
     data: projectData,
     isLoading,

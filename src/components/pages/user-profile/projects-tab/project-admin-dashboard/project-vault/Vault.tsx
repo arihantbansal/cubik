@@ -41,6 +41,7 @@ const Vault = ({
             </TabPanel>
             <TabPanel w="full">
               <MultisigTransactions />
+              <MultisigTransactions />
             </TabPanel>
           </TabPanels>
         </Tabs>

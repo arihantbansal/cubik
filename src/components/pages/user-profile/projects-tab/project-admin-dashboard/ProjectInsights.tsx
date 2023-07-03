@@ -7,9 +7,13 @@ import { VisitorsChart } from './Charts';
 const ProjectInsights = ({
   projectId,
   roundId,
+  roundStartDate,
+  roundEndDate,
 }: {
   projectId: string;
   roundId: string;
+  roundStartDate: Date;
+  roundEndDate: Date;
 }) => {
   const { data, isError, isLoading, error } =
     trpc.contribution.getProjectContributors.useQuery({
@@ -111,7 +115,11 @@ const ProjectInsights = ({
           </Box>
         </VStack>
       </Center>
-      <VisitorsChart data={data} />
+      <VisitorsChart
+        data={data}
+        startDate={roundStartDate}
+        endDate={roundEndDate}
+      />
     </VStack>
   );
 };
