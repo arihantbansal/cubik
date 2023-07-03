@@ -1,11 +1,18 @@
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import { PublicKey } from '@solana/web3.js';
 import Squads from '@sqds/sdk';
 import { env } from '~/env.mjs';
 
+const RPC_URL =
+  env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta'
+    ? env.NEXT_PUBLIC_RPC_MAINNET_URL
+    : env.NEXT_PUBLIC_RPC_DEVNET_URL;
+
 const getSquads = async (wallet: NodeWallet): Promise<Squads> => {
   if (env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta') {
-    const squads = Squads.mainnet(wallet);
+    const squads = Squads.endpoint(RPC_URL, wallet);
+
     return squads;
   }
   const squads = Squads.devnet(wallet);
@@ -49,13 +56,13 @@ export const getVault = async (
 
   return authority.toBase58();
 };
-export const getAllTx = async (
-  wallet: NodeWallet,
-  vault: anchor.web3.PublicKey
-) => {
-  const squads = Squads.devnet(wallet);
+export const getAllTx = async (wallet: NodeWallet) => {
+  const squads = await getSquads(wallet);
 
-  const txs = await squads.getTransactions([]);
+  const nextIndex = await squads.getMultisig(
+    new PublicKey('GUCkibGfD47txHXeu65vHSJoz1spTEKBgoHBUfb68LM5'),
+    'confimed'
+  );
 
-  return txs;
+  console.log(nextIndex, '---');
 };
