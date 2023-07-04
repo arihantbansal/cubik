@@ -42,7 +42,7 @@ export const GrantDetailsLeaderboard = (props: Props) => {
           <Tr>
             <Th textAlign={'center'}>Rank</Th>
             <Th>User</Th>
-            <Th textAlign={'center'}>Count</Th>
+            <Th textAlign={'center'}>Project</Th>
             <Th textAlign={'center'}>Total</Th>
           </Tr>
         </Thead>

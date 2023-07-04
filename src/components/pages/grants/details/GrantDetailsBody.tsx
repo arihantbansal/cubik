@@ -72,7 +72,7 @@ const GrantDetailsBody = ({
             ''
           )}
         </Tab>
-        <Tab>Contributions</Tab>
+        <Tab>Leaderboard</Tab>
       </TabList>
       <TabPanels p="0">
         <TabPanel>
