@@ -66,7 +66,7 @@ export const ProofsValidation = ({
           </Center>
         </Center>{' '}
         <Box as={'p'} textStyle={'body5'} color="#FEF08A" textAlign={'start'}>
-          At least two proofs are need to contribute to a project in this round.
+          At least one proofs are need to contribute to a project in this round.
           <Box
             as={Link}
             href={`/${username}`}

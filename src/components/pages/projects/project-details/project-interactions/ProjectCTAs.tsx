@@ -111,7 +111,7 @@ export const ProjectCTAs = ({
         else if (isFuture(round.endTime))
           if (user) {
             const proof = user.proof as unknown as UserProof[];
-            if (proof.length >= 2) {
+            if (proof.length >= 1) {
               if (projectDetails?.owner_publickey === user?.mainWallet) {
                 return <></>;
               }
@@ -531,7 +531,7 @@ export const ProjectCTAsMobile = ({
         else if (isFuture(round.endTime))
           if (user) {
             const proof = user.proof as unknown as UserProof[];
-            if (proof.length >= 2) {
+            if (proof.length >= 1) {
               if (projectDetails?.owner_publickey === user?.mainWallet) {
                 return <></>;
               }
