@@ -23,6 +23,7 @@ import NoInformation from '~/components/common/empty-state/NoInformation';
 import ComponentErrors from '~/components/errors/ComponentErrors';
 import { RoundDetailsWithProjectsWithContributionsType } from '~/types/round';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
+import { GrantDetailsLeaderboard } from './GrantDetailsLeaderboard';
 
 const ErrorUI = () => {
   return (
@@ -165,7 +166,7 @@ const GrantDetailsBody = ({
         </TabPanel>
         <TabPanel>
           {isError && <ErrorUI />}
-          <NoInformation />
+          <GrantDetailsLeaderboard id={data?.id as string} />
         </TabPanel>
       </TabPanels>
     </Tabs>

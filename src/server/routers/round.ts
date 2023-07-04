@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
 import { procedure, protectedProcedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';
-import { activeRounds } from './rounds';
+import { activeRounds, leaderBoard } from './rounds';
 
 export const roundRouter = router({
   create: protectedProcedure
@@ -71,19 +71,13 @@ export const roundRouter = router({
               },
             },
           },
-          Contribution: {
-            include: {
-              ProjectsModel: true,
-              user: true,
-            },
-          },
         },
       });
       return roundRes;
     }),
 
   findActive: activeRounds,
-
+  leaderboard: leaderBoard,
   findInReview: procedure
     .input(
       z.object({
