@@ -95,6 +95,7 @@
     "tweetnacl": "^1.0.3",
     "tweetnacl-util": "^0.15.1",
     "uuid": "^9.0.0",
+    "web3.storage": "^4.5.4",
     "yup": "^1.2.0",
     "zod": "^3.21.4",
     "zustand": "^4.3.8"

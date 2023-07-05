@@ -13,12 +13,24 @@ import {
 } from '@chakra-ui/react';
 import { SkeletonCircle, Skeleton, SkeletonText } from '@chakra-ui/skeleton';
 import { Player } from '@lottiefiles/react-lottie-player';
-import { useWallet } from '@solana/wallet-adapter-react';
+import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BsTwitter } from 'react-icons/bs';
 import { useUserStore } from '~/store/userStore';
 import { trpc } from '~/utils/trpc';
+import * as anchor from '@coral-xyz/anchor';
+import { Web3Storage } from 'web3.storage';
+import {
+  checkParticipant,
+  createParticipant,
+  HackathonInit,
+  connection,
+} from '~/utils/hackathon/contract';
+import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import axios from 'axios';
+import { env } from '~/env.mjs';
+
 interface Props {
   isOpen: boolean;
   onClose: () => void;
@@ -294,8 +306,15 @@ const HackathonHeader = ({
   hackathonId: string;
 }) => {
   const utils = trpc.useContext();
-  const { connected } = useWallet();
+  const anchorWallet = useAnchorWallet();
+  const { connected, publicKey } = useWallet();
+  const [minted, setMinted] = useState<boolean>(true);
   const { setVisible } = useWalletModal();
+  const [update, setUpdate] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const clientStorage = new Web3Storage({
+    token: env.NEXT_PUBLIC_WEB3STORAGE_TOKEN ?? '',
+  });
   const registrationMutation = trpc.hackathon.registration.useMutation({
     onSuccess: () => {
       utils.hackathon.haveRegistered.invalidate({
@@ -304,6 +323,7 @@ const HackathonHeader = ({
       utils.hackathon.participants.invalidate({
         hackathonId,
       });
+      setLoading(false);
       onOpen();
     },
     onError: (error) => {
@@ -316,13 +336,141 @@ const HackathonHeader = ({
       hackathonId,
     },
     {
-      enabled: !!user?.id,
       refetchOnWindowFocus: false,
-      refetchOnMount: false,
     }
   );
-  console.log('has registered - ', hasRegistered.data);
   const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const hackathonInit = async () => {
+    const tx = new anchor.web3.Transaction();
+
+    const ix = await HackathonInit(anchorWallet as NodeWallet, 1);
+
+    tx.add(ix);
+    const { blockhash } = await connection.getLatestBlockhash();
+    tx.recentBlockhash = blockhash;
+    tx.feePayer = anchorWallet?.publicKey;
+    const signed = await anchorWallet?.signTransaction(tx);
+    const txid = await connection.sendRawTransaction(signed?.serialize()!);
+
+    // console.log('txid', txid);
+  };
+  const uploadJSON = async (metadata: string, address: string) => {
+    // const blob = new Blob([metadata], {
+    //   type: 'application/json',
+    // });
+    // const metadataFile = new File([blob], 'metadata.json');
+    // const meta_cid = await clientStorage.put([metadataFile]);
+    // return `https://cloudflare-ipfs.com/ipfs/${meta_cid}/metadata.json`;
+
+    const { data } = await axios.post(
+      `${env.NEXT_PUBLIC_IMAGE_SERVER_URL}/api/v1/metadata/${address}`,
+      {
+        metadata: JSON.parse(metadata),
+      }
+    );
+
+    return data.Location;
+  };
+  const CreateParticipant = async () => {
+    if (!publicKey) return;
+    setLoading(true);
+    try {
+      const link = await uploadJSON(
+        JSON.stringify({
+          name: 'Solana Speedrun',
+          symbol: 'SPED',
+          description:
+            'The first community-run Game Jam on Solana, presented by LamportDAO, Magicblock and Solana Foundation.',
+          seller_fee_basis_points: 1000,
+          image:
+            'https://cubik-open-cdn.s3.ap-south-1.amazonaws.com/78a4d2be-6c9d-4b0a-8bd2-aae012160e35.png',
+          external_url: 'https://solanaspeedrun.com/',
+          attributes: [],
+          properties: {
+            files: [
+              {
+                uri: 'https://cubik-open-cdn.s3.ap-south-1.amazonaws.com/78a4d2be-6c9d-4b0a-8bd2-aae012160e35.png',
+                type: 'image/png',
+              },
+            ],
+            category: 'image',
+            creators: [
+              {
+                address: 'A8jqb4ntQBKTBUE7EJCEU5VP25oDyJ31ccRws3bHkX2h',
+                share: 100,
+              },
+            ],
+          },
+        }),
+        anchorWallet?.publicKey?.toBase58()!
+      );
+      // console.log('link', link);
+      if (!link) return;
+
+      const tx = new anchor.web3.Transaction();
+      const nftMint = new anchor.web3.Keypair();
+      const ix = await createParticipant(
+        anchorWallet as NodeWallet,
+        1,
+        'Solana Speedrun',
+        'SPED',
+        link,
+        nftMint,
+        'AhFfjBPCoNRDExEDFYuNK2NXCWNa1gi2VUbdA7cF19CD' //
+      );
+
+      tx.add(ix);
+      const modifyComputeUnits =
+        anchor.web3.ComputeBudgetProgram.setComputeUnitLimit({
+          units: 1000000,
+        });
+      const addPriorityFee =
+        anchor.web3.ComputeBudgetProgram.setComputeUnitPrice({
+          microLamports: 1,
+        });
+      const { blockhash } = await connection.getLatestBlockhash();
+      tx.feePayer = anchorWallet?.publicKey;
+      tx.recentBlockhash = blockhash;
+      tx.add(modifyComputeUnits).add(addPriorityFee);
+      tx.partialSign(nftMint);
+      const signed = await anchorWallet?.signTransaction(tx);
+      const txid = await connection.sendRawTransaction(signed?.serialize()!);
+      // setUpdate(!update);
+      setMinted(true);
+      setLoading(false);
+      return txid;
+    } catch (error) {
+      setLoading(false);
+      console.log('error - ', error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const checkNFT = async () => {
+      try {
+        if (connected && user?.id && publicKey) {
+          const check = await checkParticipant(
+            anchorWallet as NodeWallet,
+            1,
+            'AhFfjBPCoNRDExEDFYuNK2NXCWNa1gi2VUbdA7cF19CD' //
+          );
+
+          if (check) {
+            setMinted(true);
+          } else {
+            setMinted(false);
+          }
+        }
+      } catch (error) {
+        console.log('error - ', error);
+        setMinted(false);
+      }
+    };
+    checkNFT();
+  }, [publicKey, update]);
+
   return (
     <>
       <VStack w="full" gap="24px" align={'start'}>
@@ -391,34 +539,100 @@ const HackathonHeader = ({
               </Box>
             </SkeletonText>
           </VStack>
+          {/* <Button onClick={hackathonInit}>Init</Button> */}
           <Center w="full" alignItems="end" flex={1.5}>
-            <Skeleton
-              isLoaded={!isLoading}
-              fadeDuration={1}
-              borderRadius={'12px'}
-              opacity={isLoading ? '0.5' : '1'}
-              w="full"
-            >
-              <Button
-                variant="cubikFilled"
-                size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+            {hasRegistered.data ? (
+              <>
+                {minted ? (
+                  <>
+                    <Skeleton
+                      isLoaded={!isLoading}
+                      fadeDuration={1}
+                      borderRadius={'12px'}
+                      opacity={isLoading ? '0.5' : '1'}
+                      w="full"
+                    >
+                      <Button
+                        variant="cubikFilled"
+                        size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+                        w="full"
+                        isLoading={loading}
+                        disabled={!hasRegistered.data ? false : true}
+                        isDisabled={!hasRegistered.data ? false : true}
+                        onClick={async () => {
+                          if (!connected) {
+                            setVisible(true);
+                            return;
+                          }
+                          const sig = await CreateParticipant();
+                          if (!sig) return;
+                          registrationMutation.mutate({
+                            hackathonId: hackathonId,
+                          });
+                        }}
+                      >
+                        {hasRegistered.data ? 'Registered' : 'Register'}
+                      </Button>
+                    </Skeleton>
+                  </>
+                ) : (
+                  <Skeleton
+                    isLoaded={!isLoading}
+                    fadeDuration={1}
+                    borderRadius={'12px'}
+                    opacity={isLoading ? '0.5' : '1'}
+                    w="full"
+                  >
+                    <Button
+                      variant="cubikFilled"
+                      size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+                      w="full"
+                      isLoading={loading}
+                      onClick={async () => {
+                        if (!connected) {
+                          setVisible(true);
+                          return;
+                        }
+                        const sig = await CreateParticipant();
+                      }}
+                    >
+                      Claim
+                    </Button>
+                  </Skeleton>
+                )}
+              </>
+            ) : (
+              <Skeleton
+                isLoaded={!isLoading}
+                fadeDuration={1}
+                borderRadius={'12px'}
+                opacity={isLoading ? '0.5' : '1'}
                 w="full"
-                isLoading={registrationMutation.isLoading}
-                disabled={hasRegistered.data ? false : true}
-                onClick={() => {
-                  console.log('click on register');
-                  if (!connected) {
-                    setVisible(true);
-                    return;
-                  }
-                  registrationMutation.mutate({
-                    hackathonId: hackathonId,
-                  });
-                }}
               >
-                {hasRegistered.data ? 'Registered' : 'Register'}
-              </Button>
-            </Skeleton>
+                <Button
+                  variant="cubikFilled"
+                  size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+                  w="full"
+                  isLoading={loading}
+                  disabled={!hasRegistered.data ? false : true}
+                  isDisabled={!hasRegistered.data ? false : true}
+                  onClick={async () => {
+                    // console.log('click on register');
+                    if (!connected) {
+                      setVisible(true);
+                      return;
+                    }
+                    const sig = await CreateParticipant();
+                    if (!sig) return;
+                    registrationMutation.mutate({
+                      hackathonId: hackathonId,
+                    });
+                  }}
+                >
+                  {hasRegistered.data ? 'Registered' : 'Register'}{' '}
+                </Button>
+              </Skeleton>
+            )}
           </Center>
         </Stack>
       </VStack>
