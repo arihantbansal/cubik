@@ -384,13 +384,13 @@ const HackathonHeader = ({
             'The first community-run Game Jam on Solana, presented by LamportDAO, Magicblock and Solana Foundation.',
           seller_fee_basis_points: 1000,
           image:
-            'https://cubik-open-cdn.s3.ap-south-1.amazonaws.com/78a4d2be-6c9d-4b0a-8bd2-aae012160e35.png',
+            'https://cubik-open-cdn.s3.ap-south-1.amazonaws.com/square.png',
           external_url: 'https://solanaspeedrun.com/',
           attributes: [],
           properties: {
             files: [
               {
-                uri: 'https://cubik-open-cdn.s3.ap-south-1.amazonaws.com/78a4d2be-6c9d-4b0a-8bd2-aae012160e35.png',
+                uri: 'https://cubik-open-cdn.s3.ap-south-1.amazonaws.com/square.png',
                 type: 'image/png',
               },
             ],
