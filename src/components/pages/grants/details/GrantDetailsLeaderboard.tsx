@@ -4,6 +4,7 @@ import {
   Center,
   HStack,
   Table,
+  TableContainer,
   Tbody,
   Td,
   Text,
@@ -31,77 +32,82 @@ export const GrantDetailsLeaderboard = (props: Props) => {
   const router = useRouter();
   return (
     <>
-      <Table
-        bg={''}
-        w="full"
-        minW="34rem"
-        overflowX="scroll"
-        variant="unstyled"
-      >
-        <Thead>
-          <Tr>
-            <Th textAlign={'center'}>Rank</Th>
-            <Th>User</Th>
-            <Th textAlign={'center'}>Project</Th>
-            <Th textAlign={'center'}>Total</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {data?.map((item, index) => {
-            return (
-              <>
-                <Tr
-                  _hover={{
-                    background: 'rgba(255, 255, 255, 0.05)',
-                  }}
-                  onClick={() => {
-                    router.push(`/${item.username}`);
-                  }}
-                  cursor="pointer"
-                >
-                  <Td textAlign="center" width={'10rem'}>
-                    {index + 1}
-                  </Td>
-                  <Td>
-                    <HStack align={'center'} gap={{ base: '8px', md: '16px' }}>
-                      <Avatar
-                        width={{ base: '36px', md: '44px' }}
-                        height={{ base: '36px', md: '44px' }}
-                        src={item.profilePicture}
-                      />
+      <TableContainer>
+        <Table
+          bg={''}
+          w="full"
+          minW="34rem"
+          overflowX="scroll"
+          variant="unstyled"
+        >
+          <Thead>
+            <Tr>
+              <Th textAlign={'center'}>Rank</Th>
+              <Th>User</Th>
+              <Th textAlign={'center'}>Project</Th>
+              <Th textAlign={'center'}>Total</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {data?.map((item, index) => {
+              return (
+                <>
+                  <Tr
+                    _hover={{
+                      background: 'rgba(255, 255, 255, 0.05)',
+                    }}
+                    onClick={() => {
+                      router.push(`/${item.username}`);
+                    }}
+                    cursor="pointer"
+                  >
+                    <Td textAlign="center" width={'10rem'}>
+                      {index + 1}
+                    </Td>
+                    <Td>
+                      <HStack
+                        align={'center'}
+                        gap={{ base: '8px', md: '16px' }}
+                      >
+                        <Avatar
+                          width={{ base: '36px', md: '44px' }}
+                          height={{ base: '36px', md: '44px' }}
+                          src={item.profilePicture}
+                        />
 
-                      <Username
-                        proofs={[]}
-                        isLoading={isLoading}
-                        username={item?.username}
-                        size="sm"
-                      />
-                    </HStack>
-                  </Td>
-                  <Td width={52} textAlign={'center'}>
-                    <Box
-                      as="p"
-                      textAlign={'center'}
-                      textStyle={{ base: 'title5', md: 'title4' }}
-                    >
-                      {formatNumberWithK(item.counter)}
-                    </Box>
-                  </Td>
-                  <Td textAlign={'center'} width={52}>
-                    <Box
-                      as="p"
-                      textAlign={'center'}
-                      textStyle={{ base: 'title5', md: 'title4' }}
-                    >
-                      {formatNumberWithK(item.total)}
-                    </Box>
-                  </Td>
-                </Tr>
-              </>
-            );
-          })}
-        </Tbody>
-      </Table>
+                        <Username
+                          proofs={[]}
+                          isLoading={isLoading}
+                          username={item?.username}
+                          size="sm"
+                        />
+                      </HStack>
+                    </Td>
+                    <Td width={52} textAlign={'center'}>
+                      <Box
+                        as="p"
+                        textAlign={'center'}
+                        textStyle={{ base: 'title5', md: 'title4' }}
+                      >
+                        {formatNumberWithK(item.counter)}
+                      </Box>
+                    </Td>
+                    <Td textAlign={'center'} width={52}>
+                      <Box
+                        as="p"
+                        textAlign={'center'}
+                        textStyle={{ base: 'title5', md: 'title4' }}
+                      >
+                        {formatNumberWithK(item.total)}
+                      </Box>
+                    </Td>
+                  </Tr>
+                </>
+              );
+            })}
+          </Tbody>
+        </Table>
+      </TableContainer>
     </>
   );
 };

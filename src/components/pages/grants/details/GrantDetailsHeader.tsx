@@ -216,8 +216,18 @@ const GrantDetailsHeader = ({
             Grant Sponsors
           </Box>
         </Skeleton>
-        <HStack spacing={'16px'}>
-         <Skeleton
+        <HStack
+          flexWrap={'wrap'}
+          spacing={{
+            md: '16px',
+            base: 0,
+          }}
+          gap={{
+            md: '0',
+            base: 3,
+          }}
+        >
+          <Skeleton
             isLoaded={!isLoading}
             fadeDuration={2.5}
             opacity={isLoading ? '0.4' : '1'}
@@ -245,7 +255,7 @@ const GrantDetailsHeader = ({
               </Box>
             </HStack>
           </Skeleton>
-           {/* <Skeleton
+          {/* <Skeleton
             isLoaded={!isLoading}
             fadeDuration={2.5}
             opacity={isLoading ? '0.4' : '1'}
@@ -300,7 +310,7 @@ const GrantDetailsHeader = ({
                 Symmetry
               </Box>
             </HStack>
-          </Skeleton>  
+          </Skeleton>
           <Skeleton
             isLoaded={!isLoading}
             fadeDuration={2.5}
