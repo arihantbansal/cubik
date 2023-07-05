@@ -191,16 +191,12 @@ const DripProof = ({ claimed }: Props) => {
                   </>
                 ) : (
                   <>
-                    {handleDripProof.isError && (
+                    {!error && handleDripProof.error && (
+                      <Text>{handleDripProof.error.message}</Text>
+                    )}
+                    {error && (
                       <>
-                        {!error && handleDripProof.error && (
-                          <Text>{handleDripProof.error.message}</Text>
-                        )}
-                        {error && (
-                          <>
-                            <Text>{error}</Text>
-                          </>
-                        )}
+                        <Text>{error}</Text>
                       </>
                     )}
                   </>
