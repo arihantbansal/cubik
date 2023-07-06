@@ -63,7 +63,11 @@ const GrantDetailsHeader = ({
             opacity={isLoading ? '0.5' : '1'}
             rounded="full"
           >
-            <RoundStatus startDate={data?.startTime} endDate={data?.endTime} />
+            <RoundStatus
+              show={true}
+              startDate={data?.startTime}
+              endDate={data?.endTime}
+            />
           </Skeleton>
           <VStack align={'start'} spacing={{ base: '12px', md: '24px' }}>
             <Skeleton
@@ -176,7 +180,7 @@ const GrantDetailsHeader = ({
               </HStack>
             </Skeleton>
           </Stack>
-          <Skeleton
+          {/* <Skeleton
             isLoaded={!isLoading}
             fadeDuration={2.5}
             opacity={isLoading ? '0.4' : '1'}
@@ -199,7 +203,7 @@ const GrantDetailsHeader = ({
             >
               Apply For Grants
             </Button>
-          </Skeleton>
+          </Skeleton> */}
         </Stack>
       </VStack>
       <VStack spacing="16px" align="start">

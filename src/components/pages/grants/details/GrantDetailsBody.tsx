@@ -55,7 +55,8 @@ const GrantDetailsBody = ({
         overflowX={{ base: 'scroll', md: 'inherit' }}
         gap={{ base: '24px', md: '32px' }}
       >
-        <Tab>Overview</Tab>
+        <Tab>Leaderboard</Tab>
+        <Tab>About</Tab>
         <Tab gap="8px" display={'flex'}>
           <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
             Participants
@@ -72,9 +73,12 @@ const GrantDetailsBody = ({
             ''
           )}
         </Tab>
-        <Tab>Leaderboard</Tab>
       </TabList>
       <TabPanels p="0">
+        <TabPanel>
+          {isError && <ErrorUI />}
+          <GrantDetailsLeaderboard id={data?.id as string} />
+        </TabPanel>{' '}
         <TabPanel>
           <ProjectsDetailedDescription
             isError={isError}
@@ -163,10 +167,6 @@ const GrantDetailsBody = ({
               </Card>
             </Skeleton>
           ))}
-        </TabPanel>
-        <TabPanel>
-          {isError && <ErrorUI />}
-          <GrantDetailsLeaderboard id={data?.id as string} />
         </TabPanel>
       </TabPanels>
     </Tabs>

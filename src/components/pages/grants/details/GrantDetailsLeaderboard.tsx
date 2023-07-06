@@ -32,7 +32,7 @@ export const GrantDetailsLeaderboard = (props: Props) => {
   const router = useRouter();
   return (
     <>
-      <TableContainer>
+      <TableContainer w="full">
         <Table
           bg={''}
           w="full"
@@ -40,12 +40,18 @@ export const GrantDetailsLeaderboard = (props: Props) => {
           overflowX="scroll"
           variant="unstyled"
         >
-          <Thead>
+          <Thead bg="neutral.3">
             <Tr>
-              <Th textAlign={'center'}>Rank</Th>
-              <Th>User</Th>
-              <Th textAlign={'center'}>Project</Th>
-              <Th textAlign={'center'}>Total</Th>
+              <Th width="10%" textAlign={'center'}>
+                Rank
+              </Th>
+              <Th width="35%">Contributor</Th>
+              <Th width="15%" textAlign={'center'}>
+                No. of Projects
+              </Th>
+              <Th width="15%" textAlign={'center'}>
+                Total Contribution
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -98,7 +104,7 @@ export const GrantDetailsLeaderboard = (props: Props) => {
                         textAlign={'center'}
                         textStyle={{ base: 'title5', md: 'title4' }}
                       >
-                        {formatNumberWithK(item.total)}
+                        ${formatNumberWithK(Number(item.total.toFixed(2)))}
                       </Box>
                     </Td>
                   </Tr>

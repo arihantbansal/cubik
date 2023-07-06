@@ -61,5 +61,5 @@ export const leaderBoard = procedure
       }
     });
     userBased.sort((a, b) => b.total - a.total);
-    return userBased.slice(0, 10);
+    return userBased.slice(0, 20);
   });
