@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <p align="center">
   <a href="https://github.com/cubik-so/cubik">
-   <img src="https://res.cloudinary.com/demonicirfan/image/upload/v1688641282/Frame_39599_2_ge24t2.png" alt="Banner">
+   <img src="https://res.cloudinary.com/demonicirfan/image/upload/v1688641791/Frame_39599_4_g9o4mg.png" alt="Banner">
   </a>
 
   <h3 align="center">CUBIK</h3>
