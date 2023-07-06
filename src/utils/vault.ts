@@ -1,13 +1,14 @@
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { PublicKey } from '@solana/web3.js';
-import Squads from '@sqds/sdk';
+import Squads, { getTxPDA } from '@sqds/sdk';
 import { env } from '~/env.mjs';
 
 const RPC_URL =
   env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta'
     ? env.NEXT_PUBLIC_RPC_MAINNET_URL
     : env.NEXT_PUBLIC_RPC_DEVNET_URL;
+
 
 const getSquads = async (wallet: NodeWallet): Promise<Squads> => {
   if (env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta') {
@@ -57,13 +58,52 @@ export const getVault = async (
 
   return authority.toBase58();
 };
-export const getAllTx = async (wallet: NodeWallet) => {
+
+
+export const getMsAddress = async (wallet: NodeWallet, createKey: string) => {
   const squads = await getSquads(wallet);
 
-  const nextIndex = await squads.getMultisig(
-    new PublicKey('GUCkibGfD47txHXeu65vHSJoz1spTEKBgoHBUfb68LM5'),
-    'confimed'
+  const [multiSigAccount] = anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      anchor.utils.bytes.utf8.encode('squad'),
+      new anchor.web3.PublicKey(createKey).toBuffer(),
+      anchor.utils.bytes.utf8.encode('multisig'),
+    ],
+    squads.multisigProgramId
   );
 
-  console.log(nextIndex, '---');
+  return multiSigAccount.toBase58();
+};
+
+export const getAllTx = async (wallet: NodeWallet, createKey: string) => {
+  try {
+    const squads = await getSquads(wallet);
+
+    const [multiSigAccount] = anchor.web3.PublicKey.findProgramAddressSync(
+      [
+        anchor.utils.bytes.utf8.encode('squad'),
+        new anchor.web3.PublicKey(createKey).toBuffer(),
+        anchor.utils.bytes.utf8.encode('multisig'),
+      ],
+      squads.multisigProgramId
+    );
+
+    const nextIndex = await squads.getNextTransactionIndex(multiSigAccount);
+    const txsPDA: PublicKey[] = [];
+    for (let index = 0; index < nextIndex - 1; index++) {
+      const [txPDA] = await getTxPDA(
+        multiSigAccount,
+        new anchor.BN(index + 1, 10),
+        squads.multisigProgramId
+      );
+      txsPDA.push(txPDA);
+    }
+    const txsAccount = await squads.getTransactions(txsPDA);
+
+    console.log(txsAccount);
+    return txsAccount;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
