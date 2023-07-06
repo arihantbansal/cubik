@@ -58,6 +58,23 @@ export const getVault = async (
 
   return authority.toBase58();
 };
+
+
+export const getMsAddress = async (wallet: NodeWallet, createKey: string) => {
+  const squads = await getSquads(wallet);
+
+  const [multiSigAccount] = anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      anchor.utils.bytes.utf8.encode('squad'),
+      new anchor.web3.PublicKey(createKey).toBuffer(),
+      anchor.utils.bytes.utf8.encode('multisig'),
+    ],
+    squads.multisigProgramId
+  );
+
+  return multiSigAccount.toBase58();
+};
+
 export const getAllTx = async (wallet: NodeWallet, createKey: string) => {
   try {
     const squads = await getSquads(wallet);
