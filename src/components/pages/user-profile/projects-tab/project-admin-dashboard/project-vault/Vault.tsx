@@ -5,10 +5,11 @@ import WalletBalance from '~/components/app/navbar-menu/WalletBalance';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import VaultHeader from './VaultHeader';
 import MultisigTransactions from './project-vault-tabs/Transactions';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getAllTx } from '~/utils/vault';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import { TransactionAccount } from '@sqds/sdk';
 
 const Vault = ({
   isLoading,
@@ -21,14 +22,19 @@ const Vault = ({
 }) => {
   const anchorWallet = useAnchorWallet();
   const { ErrorBoundaryWrapper } = useErrorBoundary();
-
+  const [tx, setTx] = useState<(TransactionAccount | null)[]>([]);
   useEffect(() => {
     const fetchTx = async () => {
       const tx = await getAllTx(anchorWallet as NodeWallet, createKey);
+      if (tx) {
+        setTx(tx);
+      } else {
+        setTx([]);
+      }
     };
 
     fetchTx();
-  }, []);
+  }, [createKey]);
 
   return (
     <ErrorBoundaryWrapper>
@@ -56,8 +62,16 @@ const Vault = ({
               </Skeleton>
             </TabPanel>
             <TabPanel w="full">
-              <MultisigTransactions />
-              <MultisigTransactions />
+              {tx.map((t, index) => {
+                if (t) {
+                  return (
+                    <MultisigTransactions
+                      txAccount={t}
+                      key={index.toString() + '000'}
+                    />
+                  );
+                }
+              })}
             </TabPanel>
           </TabPanels>
         </Tabs>

@@ -9,6 +9,7 @@ const RPC_URL =
     ? env.NEXT_PUBLIC_RPC_MAINNET_URL
     : env.NEXT_PUBLIC_RPC_DEVNET_URL;
 
+
 const getSquads = async (wallet: NodeWallet): Promise<Squads> => {
   if (env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta') {
     const squads = Squads.endpoint(RPC_URL, wallet);
@@ -81,6 +82,7 @@ export const getAllTx = async (wallet: NodeWallet, createKey: string) => {
       txsPDA.push(txPDA);
     }
     const txsAccount = await squads.getTransactions(txsPDA);
+
     console.log(txsAccount);
     return txsAccount;
   } catch (error) {

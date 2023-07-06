@@ -12,6 +12,7 @@ import {
   Stack,
   VStack,
 } from '@chakra-ui/react';
+import { TransactionAccount } from '@sqds/sdk';
 import { HiArrowNarrowUp } from 'react-icons/hi';
 import NoInformation from '~/components/common/empty-state/NoInformation';
 import { SOL, USDC } from '~/components/common/tokens/token';
@@ -21,7 +22,10 @@ import { formatNumberWithK } from '~/utils/formatWithK';
 {
   /* <NoInformation /> */
 }
-const MultisigTransactions = () => {
+interface Props {
+  txAccount: TransactionAccount | null;
+}
+const MultisigTransactions = (props: Props) => {
   const { ErrorBoundaryWrapper } = useErrorBoundary();
   const isLoading = false;
   return (
