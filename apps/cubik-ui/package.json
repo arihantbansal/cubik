@@ -17,6 +17,7 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
+    "database": "workspace:*",
     "@chakra-ui/react": "^2.5.1",
     "@coral-xyz/anchor": "^0.27.0",
     "@emotion/react": "^11.10.6",
