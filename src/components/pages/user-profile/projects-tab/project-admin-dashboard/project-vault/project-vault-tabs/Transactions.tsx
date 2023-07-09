@@ -12,6 +12,8 @@ import {
   Stack,
   VStack,
 } from '@chakra-ui/react';
+import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import { TransactionAccount } from '@sqds/sdk';
 import { HiArrowNarrowUp } from 'react-icons/hi';
 import NoInformation from '~/components/common/empty-state/NoInformation';
@@ -19,15 +21,53 @@ import { SOL, USDC } from '~/components/common/tokens/token';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import { formatNumberWithK } from '~/utils/formatWithK';
+import { VaultTx, approveTxVault, exceuteTxVault } from '~/utils/vault';
+import * as anchor from '@coral-xyz/anchor';
+import { connection } from '~/utils/program/contract';
+import { Dispatch, SetStateAction, useState } from 'react';
+import {
+  decodeInstruction,
+  decodeSyncNativeInstruction,
+  decodeTransferInstruction,
+} from '@solana/spl-token';
+import { Message, SystemProgram, VersionedMessage } from '@solana/web3.js';
 {
   /* <NoInformation /> */
 }
+
 interface Props {
-  txAccount: TransactionAccount | null;
+  tx: VaultTx;
+  wallet: string;
+  ms: string;
+  setUpdate: Dispatch<SetStateAction<boolean>>;
+  usdcAmount: string | number;
 }
 const MultisigTransactions = (props: Props) => {
   const { ErrorBoundaryWrapper } = useErrorBoundary();
   const isLoading = false;
+  const [loading, setLoading] = useState<boolean>(false);
+  const anchorWallet = useAnchorWallet();
+  const handleConfirm = async () => {
+    try {
+      setLoading(true);
+      if (props.tx.tx.status.active) {
+        await approveTxVault(
+          anchorWallet as NodeWallet,
+          new anchor.web3.PublicKey(props.ms),
+          props.tx.tx.transactionIndex
+        );
+      } else if (props.tx.tx.status.executeReady) {
+        await exceuteTxVault(anchorWallet as NodeWallet, props.tx.tx.publicKey);
+      } else {
+        return;
+      }
+      props.setUpdate((prev) => !prev);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
   return (
     <Accordion
       w="full"
@@ -100,7 +140,7 @@ const MultisigTransactions = (props: Props) => {
                 </HStack>
                 <HStack gap="8px" align={'center'}>
                   <Center>
-                    <SOL size={'28px'} />
+                    <USDC size={'28px'} />
                   </Center>
                   <VStack align="start" justify="center" spacing="4px">
                     <HStack align={'baseline'} color="white">
@@ -109,14 +149,16 @@ const MultisigTransactions = (props: Props) => {
                         textStyle={{ base: 'title5', md: 'title4' }}
                         color="neutral.11"
                       >
-                        {formatNumberWithK(1)}
+                        {typeof props.usdcAmount === 'string'
+                          ? props.usdcAmount
+                          : formatNumberWithK(props.usdcAmount)}
                       </Box>
                       <Box
                         as="p"
                         textStyle={{ base: 'title5', md: 'title4' }}
                         color="neutral.11"
                       >
-                        SOL
+                        USDC
                       </Box>
                     </HStack>
                     <Box
@@ -136,7 +178,7 @@ const MultisigTransactions = (props: Props) => {
                   >
                     {TruncatedAddr({
                       walletAddress:
-                        '8Fy7yHo7Sn7anUtG7VANLEDxCWbLjku1oBVa4VouEVVP',
+                        props.tx.ix.keys[1].pubkey.toBase58() as string,
                     })}
                   </Box>
                   <Box
@@ -147,15 +189,59 @@ const MultisigTransactions = (props: Props) => {
                     Recipient Address
                   </Box>
                 </VStack>
-                <HStack align="start" justify="center" spacing="16px">
-                  <VStack align="start" justify="center" spacing="4px">
-                    <Box
-                      as="p"
-                      textStyle={{ base: 'title5', md: 'title4' }}
-                      color="surface.green.2"
-                    >
-                      Active
-                    </Box>
+                <HStack
+                  w="full"
+                  maxW="12rem"
+                  align="end"
+                  justify="end"
+                  spacing="16px"
+                >
+                  <VStack align="end" justify="center" spacing="4px">
+                    {props.tx.tx.status.rejected && (
+                      <>
+                        <Box
+                          as="p"
+                          textStyle={{ base: 'title5', md: 'title4' }}
+                          color="surface.red.2"
+                        >
+                          Rejected
+                        </Box>
+                      </>
+                    )}
+                    {props.tx.tx.status.executed && (
+                      <>
+                        <Box
+                          as="p"
+                          textStyle={{ base: 'title5', md: 'title4' }}
+                          color="surface.green.2"
+                        >
+                          Executed
+                        </Box>
+                      </>
+                    )}
+                    {props.tx.tx.status.active && (
+                      <>
+                        <Box
+                          as="p"
+                          textStyle={{ base: 'title5', md: 'title4' }}
+                          color="surface.teal.2"
+                        >
+                          Active
+                        </Box>
+                      </>
+                    )}
+                    {props.tx.tx.status.executeReady && (
+                      <>
+                        <Box
+                          as="p"
+                          textStyle={{ base: 'title5', md: 'title4' }}
+                          color="surface.yellow.2"
+                        >
+                          Ready
+                        </Box>
+                      </>
+                    )}
+
                     <Box
                       as="p"
                       textStyle={{ base: 'body4', md: 'body5' }}
@@ -216,8 +302,7 @@ const MultisigTransactions = (props: Props) => {
                         color="neutral.11"
                       >
                         {TruncatedAddr({
-                          walletAddress:
-                            '8Fy7yHo7Sn7anUtG7VANLEDxCWbLjku1oBVa4VouEVVP',
+                          walletAddress: props.tx.tx.creator.toBase58(),
                         })}
                       </Box>
                     </HStack>
@@ -303,7 +388,7 @@ const MultisigTransactions = (props: Props) => {
                         textStyle={{ base: 'title3', md: 'title2' }}
                         color="surface.green.2"
                       >
-                        1
+                        {props.tx.tx.approved.length || 0}
                       </Box>
                     </VStack>
                     <VStack justify={'space-between'} align="end">
@@ -319,7 +404,7 @@ const MultisigTransactions = (props: Props) => {
                         textStyle={{ base: 'title3', md: 'title2' }}
                         color="surface.red.2"
                       >
-                        0
+                        {props.tx.tx.rejected.length || 0}
                       </Box>
                     </VStack>
                     <VStack justify={'space-between'} align="end">
@@ -338,15 +423,76 @@ const MultisigTransactions = (props: Props) => {
                         2/2
                       </Box>
                     </VStack>
-                  </HStack>{' '}
-                  <HStack justify={'space-between'} w="full">
-                    <Button w="full" variant="cubikOutlined">
-                      Reject
-                    </Button>
-                    <Button w="full" variant={'cubikFilled'}>
-                      Confirm
-                    </Button>
                   </HStack>
+                  {props.tx.tx.status.executed && (
+                    <>
+                      <HStack justify={'space-between'} w="full">
+                        <Button
+                          w="full"
+                          variant={'cubikFilled'}
+                          isDisabled
+                          disabled={true}
+                        >
+                          Executed
+                        </Button>
+                      </HStack>
+                    </>
+                  )}
+                  {props.tx.tx.status.executeReady && (
+                    <HStack justify={'space-between'} w="full">
+                      <Button
+                        isDisabled
+                        disabled
+                        w="full"
+                        variant="cubikOutlined"
+                      >
+                        Reject
+                      </Button>
+                      <Button
+                        onClick={handleConfirm}
+                        w="full"
+                        variant={'cubikFilled'}
+                        isLoading={loading}
+                      >
+                        {props.tx.tx.status.active && 'Confirm'}
+                        {props.tx.tx.status.executeReady && 'Execute'}
+                      </Button>
+                    </HStack>
+                  )}
+                  {props.tx.tx.status.active ? (
+                    <>
+                      <HStack justify={'space-between'} w="full">
+                        <Button
+                          isDisabled
+                          disabled
+                          w="full"
+                          variant="cubikOutlined"
+                        >
+                          Reject
+                        </Button>
+                        <Button
+                          onClick={handleConfirm}
+                          w="full"
+                          variant={'cubikFilled'}
+                          isLoading={
+                            props.tx.tx.approved.find(
+                              (e) =>
+                                e.toBase58() ===
+                                anchorWallet?.publicKey.toBase58()
+                            )
+                              ? true
+                              : loading
+                          }
+                          loadingText={'Waiting to confirm'}
+                        >
+                          {props.tx.tx.status.active && 'Confirm'}
+                          {props.tx.tx.status.executeReady && 'Execute'}
+                        </Button>
+                      </HStack>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </VStack>
               </Stack>
             </AccordionPanel>
