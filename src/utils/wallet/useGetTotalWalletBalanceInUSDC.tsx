@@ -18,6 +18,7 @@ const getBalances = async (address: string): Promise<BalanceData> => {
     // todo: change api-devnet to api when using mainet
     `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${process.env.NEXT_PUBLIC_HELIUS_API_KEY}`
   );
+  console.log('data from getBalances - ', data);
   return data;
 };
 
@@ -56,15 +57,18 @@ const useGetTotalWalletBalanceInUSDC = (walletAddress: string) => {
       const calculateBalance = async () => {
         let totalBalance = 0;
         // Calculate balance for tokens
-        for (const item of data.tokens) {
-          const price = await fetchPrice(item.mint);
-          totalBalance += (price ?? 0) * item.amount;
-        }
+
         // Add the balance in solana
         const solPrice = await fetchPrice('solana');
         totalBalance += ((solPrice ?? 0) * data.nativeBalance) / 10 ** 9; // Convert lamports to SOL
 
-        setBalance(totalBalance);
+        const usdc = data.tokens.reduce((acc, token) => {
+          let dec = 10 ** token.decimals;
+          if (token.mint !== 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v')
+            return acc;
+          return token.amount / dec + acc;
+        }, 0);
+        setBalance(totalBalance + usdc);
       };
 
       calculateBalance();

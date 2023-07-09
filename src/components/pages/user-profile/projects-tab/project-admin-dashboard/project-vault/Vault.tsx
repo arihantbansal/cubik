@@ -14,6 +14,7 @@ import { Button } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import { useUserStore } from '~/store/userStore';
 import useGetTotalWalletBalanceInUSDC from '~/utils/wallet/useGetTotalWalletBalanceInUSDC';
+import NoInformation from '~/components/common/empty-state/NoInformation';
 const Vault = ({
   isLoading,
   multisigAddress,
@@ -75,30 +76,24 @@ const Vault = ({
           </TabList>
           <TabPanels w="full" p={'0'}>
             <TabPanel w="full">
-              <Flex w="full" justify={'center'} align="center">
-                {/* <Link
-                  isExternal
-                  border={'1px solid #8FFFF0'}
-                  paddingY={2}
-                  paddingX={4}
-                  borderRadius={7}
-                  href={'https://v3.squads.so/dashboard/' + key}
-                >
-                  Visit Squads
-                </Link> */}
-              </Flex>
-              {tx.map((t, index) => {
-                return (
-                  <MultisigTransactions
-                    usdcAmount={balance}
-                    setUpdate={setUpdate}
-                    ms={ms}
-                    wallet={user?.mainWallet as string}
-                    tx={t}
-                    key={index.toString() + '000'}
-                  />
-                );
-              })}
+              <VStack w="full" gap="12px">
+                {tx.length > 0 ? (
+                  tx.map((t, index) => {
+                    return (
+                      <MultisigTransactions
+                        usdcAmount={balance}
+                        setUpdate={setUpdate}
+                        ms={ms}
+                        wallet={user?.mainWallet as string}
+                        tx={t}
+                        key={index.toString() + '000'}
+                      />
+                    );
+                  })
+                ) : (
+                  <NoInformation />
+                )}
+              </VStack>
             </TabPanel>
             <TabPanel w="full">
               <Skeleton w="full" isLoaded={!isLoading}>

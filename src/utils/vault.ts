@@ -137,7 +137,6 @@ export const getAllIxAcc = async (
     const nextIndex = await squads.getNextTransactionIndex(multiSigAccount);
     const IxsPDA: PublicKey[] = [];
     for (let index = 0; index < nextIndex - 1; index++) {
-      console.log(txPDA, index, new anchor.BN(index + 1));
       const [pda] = getIxPDA(
         txPDA[index],
         new anchor.BN(1),
@@ -146,10 +145,8 @@ export const getAllIxAcc = async (
       IxsPDA.push(pda);
     }
     const ix = await squads.getInstructions(IxsPDA);
-    console.log(ix, '-----------');
     return ix;
   } catch (error) {
-    console.log(error, '-----------');
     return null;
   }
 };
