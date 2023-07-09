@@ -60,7 +60,7 @@ const useGetTotalWalletBalanceInUSDC = (walletAddress: string) => {
 
         // Add the balance in solana
         const solPrice = await fetchPrice('solana');
-        totalBalance += ((solPrice ?? 0) * data.nativeBalance) / 10 ** 9; // Convert lamports to SOL
+        totalBalance += ((solPrice ?? 21) * data.nativeBalance) / 10 ** 9; // Convert lamports to SOL
 
         const usdc = data.tokens.reduce((acc, token) => {
           let dec = 10 ** token.decimals;
