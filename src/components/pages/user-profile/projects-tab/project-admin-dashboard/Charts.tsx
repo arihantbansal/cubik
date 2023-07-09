@@ -90,53 +90,61 @@ const generateLast15Days = () => {
   return dates.reverse();
 };
 
-export const FundingChart = ({
-  data,
-  startDate,
-  endDate,
-}: {
-  data: getProjectContributorsType[];
-  startDate: Date;
-  endDate: Date;
-}) => {
-  const [chartData, setChartData] = React.useState<IChartData>({
-    series: [{ name: '', data: [] }],
-    options: {
-      grid: { show: true, borderColor: '#1D1F1E80' },
-      chart: {
-        height: 100,
-        width: 520,
-        toolbar: {
-          show: true,
-          tools: {
-            download: false,
-            selection: false,
-            zoom: false,
-            zoomin: false,
-            zoomout: false,
-            pan: false,
-            reset: false,
-          },
-        },
-      },
-      tooltip: {
-        enabled: true,
-        theme: 'dark',
-        followCursor: true,
-        x: {
-          show: false, // This hides the x-axis tooltip
-        },
-        custom: ({ series, seriesIndex, dataPointIndex, w }: any) => {
-          const data = series[seriesIndex][dataPointIndex];
-          const timestamp = w.globals.seriesX[seriesIndex][dataPointIndex];
-          const date = new Date(timestamp)
-            .toLocaleDateString(undefined, {
-              day: 'numeric',
-              month: 'long',
-            })
-            .replace(/\s\d{4}$/, ''); // Removes the year part
+ const findDonationOnDate = (
+   data: getProjectContributorsType[],
+   date: Date
+ ) => {
+   const donation = data.find((item) => {});
+   return donation ? donation.usdTotal : 0;
+ };
 
-          return `
+ export const FundingChart = ({
+   data,
+   startDate,
+   endDate,
+ }: {
+   data: getProjectContributorsType[];
+   startDate: Date;
+   endDate: Date;
+ }) => {
+   const [chartData, setChartData] = React.useState<IChartData>({
+     series: [{ name: '', data: [] }],
+     options: {
+       grid: { show: true, borderColor: '#1D1F1E80' },
+       chart: {
+         height: 100,
+         width: 520,
+         toolbar: {
+           show: false,
+           tools: {
+             download: false,
+             selection: false,
+             zoom: false,
+             zoomin: false,
+             zoomout: false,
+             pan: false,
+             reset: false,
+           },
+         },
+       },
+       tooltip: {
+         enabled: true,
+         theme: 'dark',
+         followCursor: true,
+         x: {
+           show: false, // This hides the x-axis tooltip
+         },
+         custom: ({ series, seriesIndex, dataPointIndex, w }: any) => {
+           const data = series[seriesIndex][dataPointIndex];
+           const timestamp = w.globals.seriesX[seriesIndex][dataPointIndex];
+           const date = new Date(timestamp)
+             .toLocaleDateString(undefined, {
+               day: 'numeric',
+               month: 'long',
+             })
+             .replace(/\s\d{4}$/, ''); // Removes the year part
+
+           return `
             <div class="arrow_box" style="display: flex; flex-direction: column; background-color: white; padding: 6px; align-items: center;">
               <div style="display: flex; justify-content: space-between;">
                 <span style="color: black;">${date}</span>
@@ -146,211 +154,210 @@ export const FundingChart = ({
               </div>
             </div>
           `;
-        },
-        onDatasetHover: {
-          highlightDataSeries: true,
-        },
-        style: {
-          size: 6,
-          fillColor: '#000',
-          strokeColor: '#1CEB68',
-          radius: 4,
-        },
-      },
-      stroke: {
-        colors: ['#1CEB68'],
-        curve: curveEnum.SMOOTH,
-        width: 2,
-      },
-      fill: {
-        colors: ['#1CEB68'],
-        type: 'gradient',
-        gradient: {
-          shade: 'dark',
-          gradientToColors: ['#141414'],
-          shadeIntensity: 2,
-          opacityFrom: 0,
-          opacityTo: 0.5,
-          stops: [0, 100],
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      xaxis: {
-        show: false,
-        max: new Date().getTime(), // Set this to the future date till which you want the graph to extend
-        axisTicks: {
-          show: true,
-          color: '#272929',
-        },
-        axisBorder: {
-          show: false,
-          color: '#272929',
-        },
-        tooltip: {
-          enabled: false,
-        },
-        crosshairs: {
-          show: false,
-        },
-        labels: {
-          show: false,
-          datetimeUTC: true,
-          datetimeFormatter: {
-            year: 'yyyy',
-            month: "MMM 'yy",
-            day: 'dd MMM',
-            hour: 'HH:mm',
-          },
-        },
+         },
+         onDatasetHover: {
+           highlightDataSeries: true,
+         },
+         style: {
+           size: 6,
+           fillColor: '#000',
+           strokeColor: '#1CEB68',
+           radius: 4,
+         },
+       },
+       stroke: {
+         colors: ['#1CEB68'],
+         curve: curveEnum.SMOOTH,
+         width: 2,
+       },
+       fill: {
+         colors: ['#1CEB68'],
+         type: 'gradient',
+         gradient: {
+           shade: 'dark',
+           gradientToColors: ['#141414'],
+           shadeIntensity: 2,
+           opacityFrom: 0,
+           opacityTo: 0.5,
+           stops: [0, 100],
+         },
+       },
+       dataLabels: {
+         enabled: false,
+       },
+       xaxis: {
+         show: false,
+         max: new Date(endDate).getTime(), // Set this to the future date till which you want the graph to extend
+         axisTicks: {
+           show: true,
+           color: '#272929',
+         },
+         axisBorder: {
+           show: false,
+           color: '#272929',
+         },
+         tooltip: {
+           enabled: false,
+         },
+         crosshairs: {
+           show: false,
+         },
+         labels: {
+           show: false,
+           datetimeUTC: true,
+           datetimeFormatter: {
+             year: 'yyyy',
+             month: "MMM 'yy",
+             day: 'dd MMM',
+             hour: 'HH:mm',
+           },
+         },
 
-        type: xaxisType.DATETIME,
-      },
-      yaxis: {
-        show: false,
-      },
-      annotations: {
-        xaxis: [
-          {
-            x: new Date().getTime(), // This sets the x position to today's date.
-            borderColor: '#1CEB6800', // Set the color of the line.
-          },
-        ],
-        points: [
-          {
-            x: new Date().getTime(), // This sets the x position to today's date.
-            y: 1, // This sets the y position (value) for today's date.
-            marker: {
-              size: 6,
-              fillColor: '#000',
-              strokeColor: '#1CEB68',
-              radius: 4,
-            },
-          },
-        ],
-      },
-      responsive: [
-        {
-          breakpoint: 1200,
-          options: {
-            chart: {
-              width: '420px',
-              height: '100%',
-            },
-          },
-        },
-        {
-          breakpoint: 992,
-          options: {
-            chart: {
-              height: '100%',
-              width: '620px',
-            },
-          },
-        },
-        {
-          breakpoint: 768,
-          options: {
-            chart: {
-              height: '100%',
-              width: '560px',
-            },
-          },
-        },
-        {
-          breakpoint: 630,
-          options: {
-            chart: {
-              height: '80%',
-              width: '400px',
-            },
-          },
-        },
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              height: '80%',
-              width: '300px',
-            },
-          },
-        },
-      ],
-    },
-  });
+         type: xaxisType.DATETIME,
+       },
+       yaxis: {
+         show: false,
+       },
+       //  annotations: {
+       //    xaxis: [
+       //      {
+       //        x: new Date(endDate).getTime(), // This sets the x position to today's date.
+       //        borderColor: '#1CEB6800', // Set the color of the line.
+       //      },
+       //    ],
+       //    points: [
+       //      {
+       //        x: new Date(endDate).getTime(), // This sets the x position to today's date.
+       //        y: findDonationOnDate(data, endDate), // This sets the y position (value) for today's date.
+       //        marker: {
+       //          size: 6,
+       //          fillColor: '#000',
+       //          strokeColor: '#1CEB68',
+       //          radius: 4,
+       //        },
+       //      },
+       //    ],
+       //  },
+       responsive: [
+         {
+           breakpoint: 1200,
+           options: {
+             chart: {
+               width: '420px',
+               height: '100%',
+             },
+           },
+         },
+         {
+           breakpoint: 992,
+           options: {
+             chart: {
+               height: '100%',
+               width: '620px',
+             },
+           },
+         },
+         {
+           breakpoint: 768,
+           options: {
+             chart: {
+               height: '100%',
+               width: '560px',
+             },
+           },
+         },
+         {
+           breakpoint: 630,
+           options: {
+             chart: {
+               height: '80%',
+               width: '400px',
+             },
+           },
+         },
+         {
+           breakpoint: 480,
+           options: {
+             chart: {
+               height: '80%',
+               width: '300px',
+             },
+           },
+         },
+       ],
+     },
+   });
 
-  const distributeData = () => {
-    const contributionsByDate: { [key: string]: number } = data.reduce(
-      (acc: { [key: string]: number }, curr) => {
-        const date = new Date(curr.createdAt);
-        date.setUTCHours(0, 0, 0, 0); // set the time to start of the day (midnight)
-        const formattedDate = date.getTime(); // get the time in milliseconds without the milliseconds part
-        if (acc[formattedDate]) {
-          acc[formattedDate] += curr.usdTotal;
-        } else {
-          acc[formattedDate] = curr.usdTotal;
-        }
-        return acc;
-      },
-      {}
-    );
+   const distributeData = () => {
+     const contributionsByDate: { [key: string]: number } = data.reduce(
+       (acc: { [key: string]: number }, curr) => {
+         const date = new Date(curr.createdAt);
+         date.setUTCHours(0, 0, 0, 0); // set the time to start of the day (midnight)
+         const formattedDate = date.getTime(); // get the time in milliseconds without the milliseconds part
+         if (acc[formattedDate]) {
+           acc[formattedDate] += curr.usdTotal;
+         } else {
+           acc[formattedDate] = curr.usdTotal;
+         }
+         return acc;
+       },
+       {}
+     );
 
-    const sortedData: { date: number; total: number }[] = Object.entries(
-      contributionsByDate
-    ).map(([date, total]) => ({
-      date: Number(date),
-      total: Number(total),
-    }));
+     const sortedData: { date: number; total: number }[] = Object.entries(
+       contributionsByDate
+     ).map(([date, total]) => ({
+       date: Number(date),
+       total: Number(total),
+     }));
 
-    sortedData.sort((a, b) => a.date - b.date);
-    const dateRange = generateDateRange(startDate, endDate).map(
-      (date) => new Date(date.toISOString().split('T')[0])
-    );
+     sortedData.sort((a, b) => a.date - b.date);
+     const dateRange = generateDateRange(startDate, endDate).map(
+       (date) => new Date(date.toISOString().split('T')[0])
+     );
+     const dataMap = new Map();
+     sortedData.forEach((item) => {
+       const date = new Date(item.date);
+       date.setUTCHours(0, 0, 0, 0); // set the time to start of the day (midnight)
+       dataMap.set(
+         new Date(date.toISOString().split('T')[0]).getTime(),
+         item.total
+       ); // use the time in milliseconds as the key
+     });
 
-    const dataMap = new Map();
-    sortedData.forEach((item) => {
-      const date = new Date(item.date);
-      date.setUTCHours(0, 0, 0, 0); // set the time to start of the day (midnight)
-      dataMap.set(
-        new Date(date.toISOString().split('T')[0]).getTime(),
-        item.total
-      ); // use the time in milliseconds as the key
-    });
+     const finalData: [number, number][] = dateRange.map((date) => {
+       const time = date.getTime();
+       const total = dataMap.get(time) || 0;
+       return [time, parseFloat(total.toFixed(2))];
+     });
 
-    const finalData: [number, number][] = dateRange.map((date) => {
-      const time = date.getTime();
-      const total = dataMap.get(time) || 0;
-      return [time, parseFloat(total.toFixed(2))];
-    });
+     setChartData((prevState: IChartData) => ({
+       ...prevState,
+       series: [{ name: 'Donations', data: finalData }],
+     }));
+   };
 
-    setChartData((prevState: IChartData) => ({
-      ...prevState,
-      series: [{ name: 'Donations', data: finalData }],
-    }));
-  };
+   useEffect(() => {
+     if (data) {
+       distributeData();
+     }
+   }, [data]);
 
-  useEffect(() => {
-    if (data) {
-      distributeData();
-    }
-  }, [data]);
-
-  return (
-    <Center w={'full'} justifyContent={'start'}>
-      {typeof window !== 'undefined' ? (
-        <ReactApexChart
-          padding={{ left: 0, right: 0 }}
-          type="area"
-          width={'520px'}
-          height="150rem"
-          options={chartData.options}
-          series={chartData.series}
-        />
-      ) : null}
-    </Center>
-  );
-};
+   return (
+     <Center w={'full'} justifyContent={'start'}>
+       {typeof window !== 'undefined' ? (
+         <ReactApexChart
+           padding={{ left: 0, right: 0 }}
+           type="area"
+           width={'520px'}
+           height="150rem"
+           options={chartData.options}
+           series={chartData.series}
+         />
+       ) : null}
+     </Center>
+   );
+ };
 
 export const VisitorsChart = ({
   data,
