@@ -47,6 +47,7 @@ const MultisigTransactions = (props: Props) => {
   const isLoading = false;
   const [loading, setLoading] = useState<boolean>(false);
   const anchorWallet = useAnchorWallet();
+  
   const handleConfirm = async () => {
     try {
       setLoading(true);
@@ -175,7 +176,7 @@ const MultisigTransactions = (props: Props) => {
                   >
                     {TruncatedAddr({
                       walletAddress:
-                        props.tx.ix.keys[1].pubkey.toBase58() as string,
+                        anchorWallet?.publicKey.toBase58() as string,
                     })}
                   </Box>
                   <Box
