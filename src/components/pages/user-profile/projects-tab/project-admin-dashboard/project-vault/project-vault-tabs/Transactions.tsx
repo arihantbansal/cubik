@@ -139,12 +139,9 @@ const MultisigTransactions = (props: Props) => {
                   </VStack>
                 </HStack>
                 <HStack gap="8px" align={'center'}>
-                  <Center>
-                    <USDC size={'28px'} />
-                  </Center>
                   <VStack align="start" justify="center" spacing="4px">
                     <HStack align={'baseline'} color="white">
-                      <Box
+                      {/* <Box
                         as="p"
                         textStyle={{ base: 'title5', md: 'title4' }}
                         color="neutral.11"
@@ -152,13 +149,13 @@ const MultisigTransactions = (props: Props) => {
                         {typeof props.usdcAmount === 'string'
                           ? props.usdcAmount
                           : formatNumberWithK(props.usdcAmount)}
-                      </Box>
+                      </Box>*/}
                       <Box
                         as="p"
                         textStyle={{ base: 'title5', md: 'title4' }}
                         color="neutral.11"
                       >
-                        USDC
+                        2
                       </Box>
                     </HStack>
                     <Box
@@ -166,7 +163,7 @@ const MultisigTransactions = (props: Props) => {
                       textStyle={{ base: 'body4', md: 'body5' }}
                       color="neutral.7"
                     >
-                      Amount
+                      Assets
                     </Box>
                   </VStack>
                 </HStack>

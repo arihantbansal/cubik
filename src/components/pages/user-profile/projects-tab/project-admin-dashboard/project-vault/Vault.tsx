@@ -87,7 +87,7 @@ const Vault = ({
                   Visit Squads
                 </Link> */}
               </Flex>
-              {tx.slice(tx.length - 1, tx.length).map((t, index) => {
+              {tx.map((t, index) => {
                 return (
                   <MultisigTransactions
                     usdcAmount={balance}
