@@ -3,7 +3,7 @@ import {
   ProjectJoinRoundStatus,
   ProjectVerifyStatus,
   Round,
-} from '@prisma/client';
+} from 'database';
 import { isFuture, isPast } from 'date-fns';
 import { projectWithFundingRoundType } from '~/types/project';
 

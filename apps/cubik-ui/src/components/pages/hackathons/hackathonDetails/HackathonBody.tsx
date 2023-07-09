@@ -12,7 +12,7 @@ import HackathonInteractions from './HackathonInteractions';
 import { JSONValue } from 'superjson/dist/types';
 import HackathonSchedule from './HackathonSchedule';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
-import { Team, UserModel } from '@prisma/client';
+import { Team, UserModel } from 'database';
 
 const HackathonBody = ({
   isLoading,

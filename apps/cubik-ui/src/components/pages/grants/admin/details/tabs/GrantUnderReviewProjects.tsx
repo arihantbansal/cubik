@@ -20,7 +20,7 @@ import {
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { ProjectsModel } from '@prisma/client';
+import { ProjectsModel } from 'database';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import { useEffect, useState } from 'react';
 import { FailureToast, SuccessToast } from '~/components/common/toasts/Toasts';

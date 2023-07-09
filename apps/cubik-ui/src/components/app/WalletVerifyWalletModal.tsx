@@ -26,7 +26,7 @@ import { createMessage } from '~/utils/getsignMessage';
 import { FailureToast, SuccessToast } from '../common/toasts/Toasts';
 import { WalletAddress } from '../common/wallet/WalletAdd';
 
-import { UserModel } from '@prisma/client';
+import { UserModel } from 'database';
 import axios from 'axios';
 import { useUserStore } from '~/store/userStore';
 

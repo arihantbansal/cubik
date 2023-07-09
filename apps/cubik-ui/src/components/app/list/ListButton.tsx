@@ -19,7 +19,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
+import { ProjectsModel } from 'database';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useForm, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { AiOutlineDelete } from 'react-icons/ai';

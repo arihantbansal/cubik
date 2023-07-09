@@ -1,4 +1,4 @@
-import { ProjectJoinRoundStatus } from '@prisma/client';
+import { ProjectJoinRoundStatus } from 'database';
 import { procedure } from '~/server/trpc';
 import { prisma } from '~/server/utils/prisma';
 

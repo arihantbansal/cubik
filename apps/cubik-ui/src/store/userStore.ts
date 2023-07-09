@@ -1,4 +1,4 @@
-import { UserModel } from '@prisma/client';
+import { UserModel } from 'database';
 import axios from 'axios';
 import { create } from 'zustand';
 

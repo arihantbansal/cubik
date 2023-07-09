@@ -17,7 +17,7 @@ import {
   Round,
   Team,
   UserModel,
-} from '@prisma/client';
+} from 'database';
 import Link from 'next/link';
 import { Key } from 'react';
 import {

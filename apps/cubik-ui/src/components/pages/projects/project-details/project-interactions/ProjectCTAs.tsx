@@ -15,13 +15,7 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import {
-  Contribution,
-  ProjectsModel,
-  Round,
-  Team,
-  UserModel,
-} from '@prisma/client';
+import { Contribution, ProjectsModel, Round, Team, UserModel } from 'database';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { isFuture, isPast } from 'date-fns';
 import { useRouter } from 'next/router';

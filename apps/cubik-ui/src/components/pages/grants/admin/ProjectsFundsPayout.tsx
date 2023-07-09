@@ -16,7 +16,7 @@ import {
   ProjectJoinRound,
   ProjectsModel,
   UserModel,
-} from '@prisma/client';
+} from 'database';
 import React, { ReactElement, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 

@@ -1,4 +1,4 @@
-import { ProjectsModel } from '@prisma/client';
+import { ProjectsModel } from 'database';
 import { tokenGroup } from './token';
 
 export interface DonationFormType {

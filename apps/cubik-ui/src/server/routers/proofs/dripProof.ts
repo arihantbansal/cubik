@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma } from 'database';
 import { TRPCError } from '@trpc/server';
 import { protectedProcedure } from '~/server/trpc';
 import { prisma } from '~/server/utils/prisma';

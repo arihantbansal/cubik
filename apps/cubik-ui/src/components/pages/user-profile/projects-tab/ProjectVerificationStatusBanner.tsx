@@ -1,5 +1,5 @@
 import { Box, Flex, HStack } from '@chakra-ui/layout';
-import { ProjectVerifyStatus } from '@prisma/client';
+import { ProjectVerifyStatus } from 'database';
 import Link from 'next/link';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { MdVerified } from 'react-icons/md';

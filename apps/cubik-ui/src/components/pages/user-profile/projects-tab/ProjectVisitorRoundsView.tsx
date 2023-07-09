@@ -1,5 +1,5 @@
 import { VStack } from '@chakra-ui/layout';
-import { ProjectJoinRoundStatus, ProjectsModel } from '@prisma/client';
+import { ProjectJoinRoundStatus, ProjectsModel } from 'database';
 import ComponentErrors from '~/components/errors/ComponentErrors';
 import { trpc } from '~/utils/trpc';
 import VisitorProjectRoundCard from './VisitorProjectRoundCard';

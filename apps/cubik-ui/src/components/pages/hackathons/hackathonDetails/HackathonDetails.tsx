@@ -2,7 +2,7 @@ import { Container } from '@chakra-ui/react';
 import HackathonBody from './HackathonBody';
 import HackathonHeader from './HackathonHeader';
 import { JSONValue } from 'superjson/dist/types';
-import { Team, UserModel } from '@prisma/client';
+import { Team, UserModel } from 'database';
 
 type HackathonDetailsPropsType = {
   id: string;

@@ -16,7 +16,7 @@ import {
   Tag,
 } from '@chakra-ui/react';
 import { Textarea } from '@chakra-ui/textarea';
-import { Comments } from '@prisma/client';
+import { Comments } from 'database';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { register } from 'mixpanel-browser';

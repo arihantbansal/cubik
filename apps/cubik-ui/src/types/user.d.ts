@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma } from 'database';
 import { ProofType } from '~/utils/program/contract';
 
 export type UserWithProjectType = Prisma.UserModelGetPayload<{

@@ -13,7 +13,7 @@ import {
   VStack,
   Wrap,
 } from '@chakra-ui/react';
-import { ProjectJoinRoundStatus, UserModel } from '@prisma/client';
+import { ProjectJoinRoundStatus, UserModel } from 'database';
 import { isPast } from 'date-fns';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';

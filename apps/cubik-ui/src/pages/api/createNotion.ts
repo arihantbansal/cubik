@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { ProjectsModel } from '@prisma/client';
+import { ProjectsModel } from 'database';
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { env } from '~/env.mjs';

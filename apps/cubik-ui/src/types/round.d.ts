@@ -1,18 +1,19 @@
-import { Prisma } from '@prisma/client';
+import { Prisma } from 'database';
 
-export type RoundDetailsWithProjectsWithContributionsType = Prisma.RoundGetPayload<{
-  include: {
-    ProjectJoinRound: {
-      include: {
-        project: {
-          include: {
-            owner: true;
+export type RoundDetailsWithProjectsWithContributionsType =
+  Prisma.RoundGetPayload<{
+    include: {
+      ProjectJoinRound: {
+        include: {
+          project: {
+            include: {
+              owner: true;
+            };
           };
         };
       };
     };
-  };
-}>;
+  }>;
 
 export type RoundDetailsWithShortInfoType = Prisma.RoundGetPayload<{
   select: {

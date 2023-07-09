@@ -1,7 +1,7 @@
 import { Box, Stack, VStack } from '@chakra-ui/layout';
 import { Skeleton } from '@chakra-ui/skeleton';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
-import { Contribution, ProjectsModel, Team, UserModel } from '@prisma/client';
+import { Contribution, ProjectsModel, Team, UserModel } from 'database';
 import { formateDateInMonths } from '~/utils/formatDates';
 import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
 import Discussions from './ProjectDiscussion';

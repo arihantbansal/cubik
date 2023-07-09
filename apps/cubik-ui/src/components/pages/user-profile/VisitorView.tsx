@@ -1,6 +1,6 @@
 import { Flex } from '@chakra-ui/layout';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
-import { ProjectVerifyStatus } from '@prisma/client';
+import { ProjectVerifyStatus } from 'database';
 import { FC, memo } from 'react';
 import { UserWithProjectType } from '~/types/user';
 import ProfileHeader from './ProfileHeader';

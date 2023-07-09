@@ -1,24 +1,17 @@
 {
-  "name": "cubik",
+  "name": "cubik-ui",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=8.0.0",
-    "yarn": "please-use-npm"
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "prebuild": "prisma generate",
-    "postinstall": "prisma generate",
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --write ."
   },
   "dependencies": {
     "database": "workspace:*",
-    "@chakra-ui/react": "^2.5.1",
+    "@chakra-ui/react": "^2.7.0",
     "@coral-xyz/anchor": "^0.27.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
@@ -26,7 +19,6 @@
     "@hookform/resolvers": "^2.9.11",
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "@metaplex-foundation/js": "^0.18.3",
-    "@prisma/client": "^4.11.0",
     "@solana/pay": "^0.2.5",
     "@solana/spl-token": "^0.3.7",
     "@solana/wallet-adapter-base": "^0.9.18",
@@ -74,7 +66,6 @@
     "moment": "^2.29.4",
     "next": "13.2.4",
     "nprogress": "^0.2.0",
-    "prisma": "^4.11.0",
     "qrcode.react": "^3.1.0",
     "react": "18.2.0",
     "react-apexcharts": "^1.4.0",

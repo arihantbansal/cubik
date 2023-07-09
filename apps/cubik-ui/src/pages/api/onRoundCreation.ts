@@ -1,4 +1,4 @@
-import { ProjectsModel } from '@prisma/client';
+import { ProjectsModel } from 'database';
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from '~/env.mjs';

@@ -2,8 +2,6 @@ import {
   Box,
   HStack,
   Step,
-  StepDescription,
-  StepIcon,
   StepIndicator,
   StepNumber,
   StepSeparator,
@@ -15,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { BiCalendar } from 'react-icons/bi';
-import { BsCheck, BsCheck2Circle, BsCheckCircle } from 'react-icons/bs';
+import { BsCheckCircle } from 'react-icons/bs';
 import { CgTimelapse } from 'react-icons/cg';
 import { formateDateInMonths } from '~/utils/formatDates';
 

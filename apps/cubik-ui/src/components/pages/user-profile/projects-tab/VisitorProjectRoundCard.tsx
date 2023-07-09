@@ -1,7 +1,7 @@
 import { Card, CardBody } from '@chakra-ui/card';
 import { Box, HStack, Stack } from '@chakra-ui/layout';
 import { Skeleton } from '@chakra-ui/skeleton';
-import { ProjectJoinRound, Round } from '@prisma/client';
+import { ProjectJoinRound, Round } from 'database';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import RoundStatus from '~/components/common/dates/Status';

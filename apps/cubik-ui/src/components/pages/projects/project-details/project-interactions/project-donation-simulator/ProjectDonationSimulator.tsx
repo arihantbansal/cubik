@@ -28,7 +28,7 @@ import {
   AmountReceivedPopover,
   CubikMatchingPoolDonationPopover,
 } from '~/components/common/popovers/InfoPopover';
-import { ProjectsModel } from '@prisma/client';
+import { ProjectsModel } from 'database';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import axios from 'axios';
 import useCurrentTokenPrice from '~/hooks/useCurrentTokenPrice';

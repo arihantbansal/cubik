@@ -2,14 +2,11 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { AppProps, AppType } from 'next/app';
 import dynamic from 'next/dynamic';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import SEO from '~/components/SEO';
 import AppLayout from '~/components/app';
 import theme from '~/config/chakra.config';
 import { Mixpanel } from '~/utils/mixpanel';
 import { trpc } from '../utils/trpc';
-const ChakraProvider = dynamic(() =>
-  import('@chakra-ui/provider').then((mod) => mod.ChakraProvider)
-);
+import { ChakraProvider } from '@chakra-ui/react';
 
 require('@solana/wallet-adapter-react-ui/styles.css');
 
@@ -26,16 +23,16 @@ const MyApp: AppType = ({
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <WalletContext>
-          <ChakraProvider theme={theme}>
+      <ChakraProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+          <WalletContext>
             <AppLayout>
               <Component {...pageProps} />
             </AppLayout>
-          </ChakraProvider>
-        </WalletContext>
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-      </QueryClientProvider>
+          </WalletContext>
+          <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        </QueryClientProvider>
+      </ChakraProvider>
     </>
   );
 };

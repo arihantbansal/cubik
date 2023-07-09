@@ -1,4 +1,4 @@
-import { ProjectVerifyStatus } from '@prisma/client';
+import { ProjectVerifyStatus } from 'database';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 

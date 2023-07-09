@@ -25,7 +25,7 @@ import { Collapse } from '@chakra-ui/transition';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { UserModel } from '@prisma/client';
+import { UserModel } from 'database';
 import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import axios from 'axios';

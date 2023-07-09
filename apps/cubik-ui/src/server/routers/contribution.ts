@@ -1,4 +1,4 @@
-import { Prisma, ProjectJoinRound } from '@prisma/client';
+import { Prisma, ProjectJoinRound } from 'database';
 import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
 import { procedure, protectedProcedure, router } from '../trpc';

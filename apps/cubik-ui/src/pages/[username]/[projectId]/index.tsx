@@ -1,5 +1,5 @@
 import { Container, Stack } from '@chakra-ui/layout';
-import { ProjectsModel } from '@prisma/client';
+import { ProjectsModel } from 'database';
 import { GetServerSideProps } from 'next';
 import SEO from '~/components/SEO';
 import ComponentErrors from '~/components/errors/ComponentErrors';

@@ -14,7 +14,7 @@ import {
   ProjectJoinRoundStatus,
   Round,
   UserModel,
-} from '@prisma/client';
+} from 'database';
 import { isFuture, isPast } from 'date-fns';
 import { CgMediaLive } from 'react-icons/cg';
 import { FiClock } from 'react-icons/fi';

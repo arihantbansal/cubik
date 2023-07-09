@@ -10,7 +10,7 @@ import {
   ProjectsModel,
   Round,
   UserModel,
-} from '@prisma/client';
+} from 'database';
 import { useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import ComponentErrors from '~/components/errors/ComponentErrors';

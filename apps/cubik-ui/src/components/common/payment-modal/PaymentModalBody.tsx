@@ -1,5 +1,5 @@
 import { Stack } from '@chakra-ui/react';
-import { ProjectsModel } from '@prisma/client';
+import { ProjectsModel } from 'database';
 import { ProjectDonationSimulator } from '~/components/pages/projects/project-details/project-interactions/project-donation-simulator/ProjectDonationSimulator';
 // import { ProjectDonationSimulator } from '~/components/pages/projects/project-details/project-interactions/project-donation-simulator/ProjectDonationSimulator';
 import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';

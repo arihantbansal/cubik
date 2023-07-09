@@ -1,7 +1,7 @@
 import { Avatar, AvatarGroup } from '@chakra-ui/avatar';
 import { Box, Center, Flex, HStack, VStack } from '@chakra-ui/layout';
 import { Skeleton, SkeletonCircle } from '@chakra-ui/skeleton';
-import { Contribution, UserModel } from '@prisma/client';
+import { Contribution, UserModel } from 'database';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { SOL } from '~/components/common/tokens/token';

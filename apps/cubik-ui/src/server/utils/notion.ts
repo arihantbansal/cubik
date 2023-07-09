@@ -1,4 +1,4 @@
-import { ProjectsModel } from '@prisma/client';
+import { ProjectsModel } from 'database';
 import axios from 'axios';
 import { env } from '~/env.mjs';
 import { NotionConfig, NotionTable, ProjectStatus } from '../enums/notion';
