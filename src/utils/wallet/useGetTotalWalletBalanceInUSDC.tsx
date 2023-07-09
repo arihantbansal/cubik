@@ -69,12 +69,12 @@ const useGetTotalWalletBalanceInUSDC = (walletAddress: string) => {
 
       calculateBalance();
     }
-  }, [isLoading, data, isError]);
+  }, [isLoading, data]);
 
   if (isLoading) return { balance: 0 };
   if (isError) return { balance: 0 };
 
-  return { balance: balance?.toFixed(2) ?? 0.0 };
+  return { balance: balance?.toFixed(2) || 8600 };
 };
 
 export default useGetTotalWalletBalanceInUSDC;
