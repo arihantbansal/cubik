@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { publicProcedure } from '~/trpc';
-import type { verifiedProjectsType } from '@cubik/types';
+import type { verifiedProjectsType } from '~/types';
 
 export const verifiedProjects = publicProcedure
   .input(
