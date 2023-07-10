@@ -1,5 +1,5 @@
 import { Box, Center, Container, Flex, HStack } from '@chakra-ui/layout';
-import { ProjectJoinRoundStatus, ProjectVerifyStatus } from 'database';
+import { ProjectJoinRoundStatus, ProjectVerifyStatus } from '@cubik/database';
 import { isFuture, isPast } from 'date-fns';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { FiClock } from 'react-icons/fi';

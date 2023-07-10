@@ -13,7 +13,7 @@ import {
   VStack,
   Wrap,
 } from '@chakra-ui/react';
-import { ProjectJoinRoundStatus, UserModel } from 'database';
+import { ProjectJoinRoundStatus, UserModel } from '@cubik/database';
 import { isPast } from 'date-fns';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';

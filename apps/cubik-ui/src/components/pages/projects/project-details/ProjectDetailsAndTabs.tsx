@@ -9,7 +9,13 @@ import {
   DrawerHeader,
   DrawerOverlay,
 } from '@chakra-ui/modal';
-import { Contribution, ProjectsModel, Round, Team, UserModel } from 'database';
+import {
+  Contribution,
+  ProjectsModel,
+  Round,
+  Team,
+  UserModel,
+} from '@cubik/database';
 import { useState } from 'react';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import ProjectDetailsHeader from './ProjectDetailsHeader';

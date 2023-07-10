@@ -1,0 +1,25 @@
+{
+  "name": "@cubik/api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cubik/database": "workspace:*",
+    "@trpc/server": "^10.16.0",
+    "jsonwebtoken": "^9.0.0",
+    "superjson": "^1.12.2",
+    "tsc": "^2.0.4",
+    "typescript": "4.9.5",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.2"
+  }
+}

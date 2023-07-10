@@ -1,4 +1,4 @@
-import { Prisma } from 'database';
+import { Prisma } from '@cubik/database';
 import { TRPCError } from '@trpc/server';
 import { protectedProcedure } from '~/server/trpc';
 import { prisma } from '~/server/utils/prisma';

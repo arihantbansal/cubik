@@ -1,5 +1,5 @@
 import { Container, Stack } from '@chakra-ui/layout';
-import { ProjectsModel } from 'database';
+import { ProjectsModel } from '@cubik/database';
 import { GetServerSideProps } from 'next';
 import SEO from '~/components/SEO';
 import ComponentErrors from '~/components/errors/ComponentErrors';

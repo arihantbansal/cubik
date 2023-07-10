@@ -22,7 +22,7 @@ import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/skeleton';
 import { useToast } from '@chakra-ui/toast';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { ProjectsModel } from 'database';
+import { ProjectsModel } from '@cubik/database';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';

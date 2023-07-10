@@ -8,7 +8,7 @@ import {
   Skeleton,
   VStack,
 } from '@chakra-ui/react';
-import { Team, UserModel } from 'database';
+import { Team, UserModel } from '@cubik/database';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import { trpc } from '~/utils/trpc';
 interface HackathonInteractionsProps {

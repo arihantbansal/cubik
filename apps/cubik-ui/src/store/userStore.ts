@@ -1,4 +1,4 @@
-import { UserModel } from 'database';
+import { UserModel } from '@cubik/database';
 import axios from 'axios';
 import { create } from 'zustand';
 

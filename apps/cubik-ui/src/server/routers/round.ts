@@ -1,4 +1,4 @@
-import { ProjectJoinRoundStatus } from 'database';
+import { ProjectJoinRoundStatus } from '@cubik/database';
 import { TRPCError } from '@trpc/server';
 import { v4 as uuid } from 'uuid';
 import { z } from 'zod';

@@ -15,7 +15,7 @@ import {
   VStack,
   Wrap,
 } from '@chakra-ui/react';
-import { Round } from 'database';
+import { Round } from '@cubik/database';
 import { isFuture, isPast } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';

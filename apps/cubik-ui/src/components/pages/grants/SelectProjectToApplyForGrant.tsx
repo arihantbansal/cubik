@@ -26,7 +26,7 @@ import {
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { ProjectJoinRoundStatus, ProjectsModel } from 'database';
+import { ProjectJoinRoundStatus, ProjectsModel } from '@cubik/database';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import Link from 'next/link';
 import { useState } from 'react';

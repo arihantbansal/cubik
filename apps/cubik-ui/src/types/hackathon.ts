@@ -1,4 +1,4 @@
-import { Prisma } from 'database';
+import { Prisma } from '@cubik/database';
 
 export type HackathonHost = {
   name: string;

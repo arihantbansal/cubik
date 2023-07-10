@@ -2,7 +2,7 @@ import { Avatar } from '@chakra-ui/avatar';
 import { Button } from '@chakra-ui/button';
 import { Box, Center, Stack, VStack } from '@chakra-ui/layout';
 import { Skeleton, SkeletonCircle } from '@chakra-ui/skeleton';
-import { ProjectsModel } from 'database';
+import { ProjectsModel } from '@cubik/database';
 import Link from 'next/link';
 import GetFormattedLink from '~/components/HOC/GetLink';
 

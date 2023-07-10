@@ -1,6 +1,6 @@
 import { Flex } from '@chakra-ui/layout';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
-import { ProjectsModel } from 'database';
+import { ProjectsModel } from '@cubik/database';
 import { FC, Key } from 'react';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import { UserProof, UserWithProjectType } from '~/types/user';

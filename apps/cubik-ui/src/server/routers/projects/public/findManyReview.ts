@@ -1,4 +1,4 @@
-import { ProjectVerifyStatus } from 'database';
+import { ProjectVerifyStatus } from '@cubik/database';
 import { procedure } from '~/server/trpc';
 import { prisma } from '~/server/utils/prisma';
 export const findManyReview = procedure.query(async () => {

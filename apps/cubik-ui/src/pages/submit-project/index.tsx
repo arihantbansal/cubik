@@ -2,7 +2,7 @@ import { Card, CardHeader } from '@chakra-ui/card';
 import { useDisclosure } from '@chakra-ui/hooks';
 import { Box, Container, HStack } from '@chakra-ui/layout';
 import { yupResolver } from '@hookform/resolvers/yup';
-import type { ProjectsModel } from 'database';
+import type { ProjectsModel } from '@cubik/database';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { array, object, string } from 'yup';

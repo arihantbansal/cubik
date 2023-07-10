@@ -1,5 +1,5 @@
 import { Box, Flex, HStack } from '@chakra-ui/layout';
-import { ProjectVerifyStatus } from 'database';
+import { ProjectVerifyStatus } from '@cubik/database';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { MdVerified } from 'react-icons/md';
 import { TbListSearch } from 'react-icons/tb';

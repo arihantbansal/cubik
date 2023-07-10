@@ -16,7 +16,7 @@ import {
   ProjectJoinRound,
   ProjectsModel,
   UserModel,
-} from 'database';
+} from '@cubik/database';
 import React, { ReactElement, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 

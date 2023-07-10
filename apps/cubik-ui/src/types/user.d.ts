@@ -1,4 +1,4 @@
-import { Prisma } from 'database';
+import { Prisma } from '@cubik/database';
 import { ProofType } from '~/utils/program/contract';
 
 export type UserWithProjectType = Prisma.UserModelGetPayload<{

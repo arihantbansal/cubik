@@ -17,7 +17,7 @@ import {
   Round,
   Team,
   UserModel,
-} from 'database';
+} from '@cubik/database';
 import Link from 'next/link';
 import { Key } from 'react';
 import {

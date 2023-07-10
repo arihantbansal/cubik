@@ -1,4 +1,4 @@
-import { ProjectsModel } from 'database';
+import { ProjectsModel } from '@cubik/database';
 import { produce } from 'immer';
 import { create } from 'zustand';
 

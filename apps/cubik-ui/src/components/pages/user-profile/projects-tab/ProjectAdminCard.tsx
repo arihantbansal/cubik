@@ -10,7 +10,7 @@ import {
   ProjectsModel,
   Round,
   UserModel,
-} from 'database';
+} from '@cubik/database';
 import { useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import ComponentErrors from '~/components/errors/ComponentErrors';

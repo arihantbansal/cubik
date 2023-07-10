@@ -12,7 +12,7 @@ import HackathonInteractions from './HackathonInteractions';
 import { JSONValue } from 'superjson/dist/types';
 import HackathonSchedule from './HackathonSchedule';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
-import { Team, UserModel } from 'database';
+import { Team, UserModel } from '@cubik/database';
 
 const HackathonBody = ({
   isLoading,

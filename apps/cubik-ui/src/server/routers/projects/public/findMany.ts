@@ -1,4 +1,4 @@
-import { ProjectJoinRoundStatus } from 'database';
+import { ProjectJoinRoundStatus } from '@cubik/database';
 import { procedure } from '~/server/trpc';
 import { prisma } from '~/server/utils/prisma';
 

@@ -1,6 +1,6 @@
 import { Card, CardHeader } from '@chakra-ui/card';
 import { Skeleton } from '@chakra-ui/skeleton';
-import { ProjectVerifyStatus, ProjectsModel } from 'database';
+import { ProjectVerifyStatus, ProjectsModel } from '@cubik/database';
 
 import ProjectHeaderVisitorView from './ProjectHeaderVisitorView';
 import ProjectBanner from './ProjectStatusBanner';

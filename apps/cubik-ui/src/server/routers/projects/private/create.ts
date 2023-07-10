@@ -1,6 +1,6 @@
 import { protectedProcedure } from '~/server/trpc';
 import { z } from 'zod';
-import { Prisma, ProjectVerifyStatus } from 'database';
+import { Prisma, ProjectVerifyStatus } from '@cubik/database';
 import { prisma } from '../../../utils/prisma';
 import { TRPCError } from '@trpc/server';
 import { v4 as uuid } from 'uuid';

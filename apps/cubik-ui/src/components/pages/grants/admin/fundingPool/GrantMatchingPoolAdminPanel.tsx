@@ -17,7 +17,7 @@ import {
   ProjectsModel,
   Round,
   UserModel,
-} from 'database';
+} from '@cubik/database';
 import React from 'react';
 import { BiPlus } from 'react-icons/bi';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';

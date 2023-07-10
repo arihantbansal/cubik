@@ -1,4 +1,4 @@
-import { Prisma, ProjectJoinRound } from 'database';
+import { Prisma, ProjectJoinRound } from '@cubik/database';
 import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
 import { procedure, protectedProcedure, router } from '../trpc';

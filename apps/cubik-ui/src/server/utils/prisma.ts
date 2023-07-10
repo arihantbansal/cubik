@@ -1,4 +1,4 @@
-import { PrismaClient } from 'database';
+import { PrismaClient } from '@cubik/database';
 import { env } from '~/env.mjs';
 declare global {
   var prisma: PrismaClient | undefined;

@@ -1,4 +1,4 @@
-import { Prisma } from 'database';
+import { Prisma } from '@cubik/database';
 
 export type verifiedProjectsType = Prisma.ProjectJoinRoundGetPayload<{
   select: {

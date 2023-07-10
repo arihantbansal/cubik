@@ -1,12 +1,12 @@
 {
-  "name":"database",
+  "name": "@cubik/database",
   "main": "./index.ts",
   "types": "./index.ts",
   "scripts": {
     "db:generate": "prisma generate",
     "db:push": "prisma db push --skip-generate"
   },
- "dependencies": {
+  "dependencies": {
     "@prisma/client": "latest"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 // ignore whole file for ts
 // @ts-nocheck
-import { Prisma } from 'database';
+import { Prisma } from '@cubik/database';
 import { z } from 'zod';
 import { procedure, router } from '../trpc';
 import { prisma } from '../utils/prisma';

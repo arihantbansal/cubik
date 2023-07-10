@@ -16,7 +16,7 @@ import {
   Tag,
   VStack,
 } from '@chakra-ui/react';
-import { ProjectJoinRoundStatus } from 'database';
+import { ProjectJoinRoundStatus } from '@cubik/database';
 import Link from 'next/link';
 import GetFormattedLink from '~/components/HOC/GetLink';
 import NoInformation from '~/components/common/empty-state/NoInformation';

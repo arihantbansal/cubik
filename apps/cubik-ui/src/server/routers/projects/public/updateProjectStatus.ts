@@ -1,4 +1,4 @@
-import { ProjectVerifyStatus } from 'database';
+import { ProjectVerifyStatus } from '@cubik/database';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Center } from '@chakra-ui/layout';
-import { Contribution, UserModel } from 'database';
+import { Contribution, UserModel } from '@cubik/database';
 import dynamic from 'next/dynamic';
 import React, { useEffect } from 'react';
 import { getProjectContributorsType } from '~/types/contribution';

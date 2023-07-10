@@ -2,7 +2,7 @@ import { Container } from '@chakra-ui/react';
 import HackathonBody from './HackathonBody';
 import HackathonHeader from './HackathonHeader';
 import { JSONValue } from 'superjson/dist/types';
-import { Team, UserModel } from 'database';
+import { Team, UserModel } from '@cubik/database';
 
 type HackathonDetailsPropsType = {
   id: string;
