@@ -1,4 +1,4 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "@cubik/tsconfig/react-library.json",
   "include": ["src", "index.ts"]
 }

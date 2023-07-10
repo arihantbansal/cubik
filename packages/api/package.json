@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@cubik/database": "workspace:*",
+    "@cubik/tsconfig": "workspace:*",
     "@trpc/server": "^10.16.0",
     "jsonwebtoken": "^9.0.0",
     "superjson": "^1.12.2",
