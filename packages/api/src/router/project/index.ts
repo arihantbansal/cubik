@@ -1,3 +1,3 @@
-import { createTRPCRouter } from './../../trpc';
+import { createTRPCRouter } from '~/trpc';
 
 export const projectRouter = createTRPCRouter({});
