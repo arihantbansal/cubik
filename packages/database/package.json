@@ -3,11 +3,12 @@
   "main": "./index.ts",
   "types": "./index.ts",
   "scripts": {
-    "db:generate": "prisma generate",
+    "db:generate": "prisma generate && prisma format",
     "db:push": "prisma db push --skip-generate"
   },
   "dependencies": {
-    "@prisma/client": "latest"
+    "@prisma/client": "latest",
+    "dotenv-cli": "latest"
   },
   "devDependencies": {
     "prisma": "latest"

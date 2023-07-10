@@ -12,6 +12,7 @@ const nextConfig = {
 
     return config;
   },
+  transpilePackages: ['@cubik/api'],
   images: {
     domains: [
       'd1yweukyu067aq.cloudfront.net',

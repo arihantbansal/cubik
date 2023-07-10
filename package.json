@@ -5,9 +5,13 @@
     "dev": "dotenv -- turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "generate": "dotenv --  db:generate",
+    "generate": "dotenv -- turbo run db:generate",
     "ui:dev": "pnpm run dev --filter cubik-ui"
   },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "devDependencies": {
     "@turbo/gen": "^1.9.7",
     "eslint": "^7.32.0",
