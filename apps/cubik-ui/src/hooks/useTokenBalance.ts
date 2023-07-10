@@ -19,9 +19,8 @@ async function fetchTokenBalance(
     }>(
       `https://api.helius.xyz/v0/addresses/${walletAddress}/balances?api-key=${env.NEXT_PUBLIC_HELIUS_API_KEY}`
     );
+    console.log('data', data);
     if (tokenAddress === '') {
-      // todo: add solana add here
-      // return the total nativeBalance
       return data.nativeBalance;
     }
     const token = data.tokens.find(

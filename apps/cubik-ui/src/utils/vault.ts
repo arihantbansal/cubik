@@ -1,14 +1,19 @@
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { PublicKey } from '@solana/web3.js';
-import Squads, { getTxPDA } from '@sqds/sdk';
+import Squads, {
+  getTxPDA,
+  getIxPDA,
+  TransactionAccount,
+  InstructionAccount,
+} from '@sqds/sdk';
+import { create } from 'domain';
 import { env } from '~/env.mjs';
 
 const RPC_URL =
   env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta'
     ? env.NEXT_PUBLIC_RPC_MAINNET_URL
     : env.NEXT_PUBLIC_RPC_DEVNET_URL;
-
 
 const getSquads = async (wallet: NodeWallet): Promise<Squads> => {
   if (env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta') {
@@ -59,7 +64,6 @@ export const getVault = async (
   return authority.toBase58();
 };
 
-
 export const getMsAddress = async (wallet: NodeWallet, createKey: string) => {
   const squads = await getSquads(wallet);
 
@@ -74,9 +78,13 @@ export const getMsAddress = async (wallet: NodeWallet, createKey: string) => {
 
   return multiSigAccount.toBase58();
 };
-
+export type VaultTx = {
+  tx: TransactionAccount;
+  ix: InstructionAccount;
+};
 export const getAllTx = async (wallet: NodeWallet, createKey: string) => {
   try {
+    if (!createKey) return [];
     const squads = await getSquads(wallet);
 
     const [multiSigAccount] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -91,19 +99,92 @@ export const getAllTx = async (wallet: NodeWallet, createKey: string) => {
     const nextIndex = await squads.getNextTransactionIndex(multiSigAccount);
     const txsPDA: PublicKey[] = [];
     for (let index = 0; index < nextIndex - 1; index++) {
-      const [txPDA] = await getTxPDA(
+      const [txPDA] = getTxPDA(
         multiSigAccount,
         new anchor.BN(index + 1, 10),
         squads.multisigProgramId
       );
       txsPDA.push(txPDA);
     }
+    const ixAccount = await getAllIxAcc(wallet, multiSigAccount, txsPDA);
     const txsAccount = await squads.getTransactions(txsPDA);
-
-    console.log(txsAccount);
-    return txsAccount;
+    const final: VaultTx[] = [];
+    txsAccount.forEach((tx, index) => {
+      if (!ixAccount) return;
+      final.push({
+        tx: tx as TransactionAccount,
+        ix: ixAccount![index] as InstructionAccount,
+      });
+    });
+    final.sort((a, b) => {
+      return b.tx.transactionIndex - a.tx.transactionIndex;
+    });
+    return final;
   } catch (error) {
     console.log(error);
     return [];
+  }
+};
+
+export const getAllIxAcc = async (
+  wallet: NodeWallet,
+  multiSigAccount: anchor.web3.PublicKey,
+  txPDA: anchor.web3.PublicKey[]
+) => {
+  try {
+    const squads = await getSquads(wallet);
+
+    const nextIndex = await squads.getNextTransactionIndex(multiSigAccount);
+    const IxsPDA: PublicKey[] = [];
+    for (let index = 0; index < nextIndex - 1; index++) {
+      const [pda] = getIxPDA(
+        txPDA[index],
+        new anchor.BN(1),
+        squads.multisigProgramId
+      );
+      IxsPDA.push(pda);
+    }
+    const ix = await squads.getInstructions(IxsPDA);
+    return ix;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const approveTxVault = async (
+  wallet: NodeWallet,
+  multiSig: anchor.web3.PublicKey,
+  index: number
+) => {
+  try {
+    const squads = await getSquads(wallet);
+    const [txPDA] = getTxPDA(
+      multiSig,
+      new anchor.BN(index),
+      squads.multisigProgramId
+    );
+    const tx = await squads.approveTransaction(txPDA);
+
+    return tx;
+  } catch (error) {
+    console.log(error);
+
+    return null;
+  }
+};
+export const exceuteTxVault = async (
+  wallet: NodeWallet,
+  txPDA: anchor.web3.PublicKey
+) => {
+  try {
+    const squads = await getSquads(wallet);
+
+    const tx = await squads.executeTransaction(txPDA, wallet.publicKey);
+
+    return tx;
+  } catch (error) {
+    console.log(error);
+
+    return null;
   }
 };

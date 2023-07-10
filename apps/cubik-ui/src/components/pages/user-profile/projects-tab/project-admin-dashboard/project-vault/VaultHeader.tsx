@@ -24,12 +24,13 @@ import WithdrawFundsTransactionModal from './WithdrawFundsTransactionModal';
 const VaultHeader = ({
   isLoading,
   multiSigAddress,
+  balance,
 }: {
   isLoading: boolean;
+  balance: string | number;
   multiSigAddress: string | null | undefined;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { balance } = useGetTotalWalletBalanceInUSDC(multiSigAddress as string);
 
   let squadsURL: string = '';
 
