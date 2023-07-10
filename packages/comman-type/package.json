@@ -2,7 +2,10 @@
   "name": "@cubik/comman-type",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.d.ts",
+  "type": "module",
+  "types": "index.d.ts",
+  "author": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
