@@ -1,3 +1,45 @@
 import { createTRPCRouter } from '~/trpc';
-
-export const projectRouter = createTRPCRouter({});
+import {
+  findAllProject,
+  findManyProjects,
+  findManyReview,
+  findManyVerified,
+  findManyVerifiedUser,
+  findOneJoinRound,
+  findPubkey,
+  findSimilar,
+  searchProjects,
+  updateProjectStatus,
+  findOneProject,
+  verifiedProjects,
+  findManyRejected,
+  findManyVerifiedWithContributions,
+  projectVisitorsDetail,
+} from './public';
+import {
+  createProject,
+  joinRound,
+  projectAdminDetails,
+  projectCount,
+} from './protected';
+export const projectRouter = createTRPCRouter({
+  findAll: findAllProject,
+  findMany: findManyProjects,
+  findManyReview: findManyReview,
+  findManyVerified: findManyVerified,
+  findPubkey: findPubkey,
+  findManyRejected: findManyRejected,
+  create: createProject,
+  findManyVerifiedWithContributions: findManyVerifiedWithContributions,
+  findOne: findOneProject,
+  joinRound: joinRound,
+  projectAdminDetails: projectAdminDetails,
+  projectVisitorsDetail: projectVisitorsDetail,
+  count: projectCount,
+  updateProjectStatus: updateProjectStatus,
+  verifiedProjects: verifiedProjects,
+  findOneJoinRound: findOneJoinRound,
+  findSimilarProjects: findSimilar,
+  findManyVerifiedUser: findManyVerifiedUser,
+  searchProjects: searchProjects,
+});
