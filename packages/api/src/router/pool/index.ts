@@ -1,3 +1,3 @@
 import { createTRPCRouter } from './../../trpc';
 
-export const userRouter = createTRPCRouter({});
+export const poolRouter = createTRPCRouter({});
