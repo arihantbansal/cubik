@@ -23,16 +23,16 @@ const MyApp: AppType = ({
 
   return (
     <>
-      <ChakraProvider theme={theme}>
-        <QueryClientProvider client={queryClient}>
-          <WalletContext>
+      <QueryClientProvider client={queryClient}>
+        <WalletContext>
+          <ChakraProvider theme={theme}>
             <AppLayout>
               <Component {...pageProps} />
             </AppLayout>
-          </WalletContext>
-          <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-        </QueryClientProvider>
-      </ChakraProvider>
+          </ChakraProvider>
+        </WalletContext>
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      </QueryClientProvider>
     </>
   );
 };

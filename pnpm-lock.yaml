@@ -26,7 +26,7 @@ importers:
   apps/cubik-ui:
     dependencies:
       '@chakra-ui/react':
-        specifier: ^2.7.0
+        specifier: ^2.5.1
         version: 2.7.1(@emotion/react@11.10.6)(@emotion/styled@11.10.6)(@types/react@18.0.28)(framer-motion@10.3.2)(react-dom@18.2.0)(react@18.2.0)
       '@coral-xyz/anchor':
         specifier: ^0.27.0
