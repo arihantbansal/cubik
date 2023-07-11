@@ -1,1 +1,1 @@
-export type * from './project';
+export * from './project';

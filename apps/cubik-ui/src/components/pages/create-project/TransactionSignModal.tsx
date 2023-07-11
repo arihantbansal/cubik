@@ -81,9 +81,9 @@ const CreateProjectTransactionModal: React.FC<
 
   const createProjectMutation = trpc.project.create.useMutation({
     onSuccess: async (data) => {
-      const a = await axios.post('/api/createNotion', {
-        data: data,
-      });
+      // const a = await axios.post('/api/createNotion', {
+      //   data: data,
+      // });
       setProjectId(data.id);
       SuccessToast({ toast, message: 'Project Submitted Succesfully' });
       setProjectSubmitted(true);

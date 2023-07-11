@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { publicProcedure } from '~/trpc';
-import type { verifiedProjectsType } from '~/types';
+import { publicProcedure } from '../../../trpc';
+import type { verifiedProjectsType } from '../../../types';
 
 export const verifiedProjects = publicProcedure
   .input(

@@ -1,4 +1,4 @@
-import { createTRPCRouter } from '~/trpc';
+import { createTRPCRouter } from '../../trpc';
 import { get, getAll, participants } from './public';
 import { haveRegistered, registration } from './protected';
 

@@ -25,9 +25,9 @@ const Graph: React.FC<GraphProps> = ({
   const router = useRouter();
   const [data, setData] = useState<any>([]);
   const [value, setValue] = useState(100);
-  const { data: graphData } = trpc.project.projectGraph.useQuery({
-    id: router.query.projectId as string,
-  });
+  // const { data: graphData } = trpc.project.projectGraph.useQuery({
+  //   id: router.query.projectId as string,
+  // });
 
   const { data: contributionMutationData } =
     trpc.contribution.create.useMutation();
@@ -36,23 +36,23 @@ const Graph: React.FC<GraphProps> = ({
     setValue(Math.round(value));
   };
 
-  useEffect(() => {
-    // contribution: number[] | undefined;
-    // round: Grant[];
-    // matchingPool: number | undefined;
+  // useEffect(() => {
+  // contribution: number[] | undefined;
+  // round: Grant[];
+  // matchingPool: number | undefined;
 
-    if (graphData) {
-      setData(
-        calculateProjectMatchingFund(
-          projectId,
-          10,
-          1,
-          graphData.round,
-          graphData.matchingPool as number
-        )
-      );
-    }
-  }, [graphData]);
+  //   if (graphData) {
+  //     setData(
+  //       calculateProjectMatchingFund(
+  //         projectId,
+  //         10,
+  //         1,
+  //         graphData.round,
+  //         graphData.matchingPool as number
+  //       )
+  //     );
+  //   }
+  // }, [graphData]);
 
   return (
     <VStack flex="1" p="1rem" width={'100%'} gap="0">

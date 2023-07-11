@@ -1,4 +1,8 @@
-import { createTRPCRouter, protectedProcedure, publicProcedure } from '~/trpc';
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from '../../trpc';
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
@@ -123,3 +127,4 @@ export const commentRouter = createTRPCRouter({
       return res;
     }),
 });
+export type CommentRouter = typeof commentRouter;

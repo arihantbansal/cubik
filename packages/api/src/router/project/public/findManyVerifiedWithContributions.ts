@@ -1,4 +1,4 @@
-import { publicProcedure } from '~/trpc';
+import { publicProcedure } from '../../../trpc';
 
 export const findManyVerifiedWithContributions = publicProcedure.query(
   async ({ ctx: { prisma } }) => {

@@ -1,5 +1,5 @@
 import { ProjectJoinRoundStatus } from '@cubik/database';
-import { publicProcedure } from '~/trpc';
+import { publicProcedure } from '../../../trpc';
 
 export const findManyProjects = publicProcedure.query(
   async ({ ctx: { prisma } }) => {

@@ -1,5 +1,5 @@
 import { TRPCError } from '@trpc/server';
-import { publicProcedure } from '~/trpc';
+import { publicProcedure } from '../../../trpc';
 export const getAll = publicProcedure.query(async ({ ctx: { prisma } }) => {
   try {
     const res = await prisma.hackathon.findMany({

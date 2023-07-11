@@ -1,4 +1,4 @@
-import { publicProcedure } from '~/trpc';
+import { publicProcedure } from '../../../trpc';
 import { z } from 'zod';
 
 export const projectVisitorsDetail = publicProcedure

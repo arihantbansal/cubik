@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { publicProcedure } from '~/trpc';
+import { publicProcedure } from '../../../trpc';
 import { TRPCError } from '@trpc/server';
 
 export const search = publicProcedure

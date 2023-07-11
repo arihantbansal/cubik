@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { publicProcedure } from '~/trpc';
+import { publicProcedure } from '../../../trpc';
 export const leaderBoard = publicProcedure
   .input(
     z.object({

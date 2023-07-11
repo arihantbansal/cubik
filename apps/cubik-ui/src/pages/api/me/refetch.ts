@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '~/server/utils/prisma';
+import { prisma } from '@cubik/database';
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

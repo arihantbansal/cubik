@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from '~/env.mjs';
-import { prisma } from '~/server/utils/prisma';
+import { prisma } from '@cubik/database';
 import jwt from 'jsonwebtoken';
 import { verifyMessage } from '~/utils/getsignMessage';
 import * as anchor from '@coral-xyz/anchor';

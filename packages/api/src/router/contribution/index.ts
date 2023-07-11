@@ -1,7 +1,11 @@
-import { createTRPCRouter, protectedProcedure, publicProcedure } from '~/trpc';
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from '../../trpc';
 import { z } from 'zod';
 import { v4 as uuid } from 'uuid';
-import { qfV1 } from '~/utils/qf';
+import { qfV1 } from '../../utils/qf';
 import { Prisma, ProjectJoinRound } from '@cubik/database';
 export const contributionRouter = createTRPCRouter({
   create: protectedProcedure

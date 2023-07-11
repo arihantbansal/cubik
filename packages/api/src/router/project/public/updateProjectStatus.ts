@@ -2,7 +2,7 @@ import { ProjectVerifyStatus } from '@cubik/database';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { publicProcedure } from '~/trpc';
+import { publicProcedure } from '../../../trpc';
 
 export const updateProjectStatus = publicProcedure
   .input(

@@ -1,7 +1,7 @@
 import { Prisma } from '@cubik/database';
-import { createTRPCRouter, publicProcedure } from '~/trpc';
+import { createTRPCRouter, publicProcedure } from '../../trpc';
 import { z } from 'zod';
-import { qfV1, qfEstimated } from '~/utils/qf';
+import { qfV1, qfEstimated } from '../../utils/qf';
 type RoundAllType = Prisma.RoundGetPayload<{
   include: {
     Contribution: {

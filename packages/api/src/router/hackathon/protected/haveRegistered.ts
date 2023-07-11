@@ -1,4 +1,4 @@
-import { protectedProcedure } from '~/trpc';
+import { protectedProcedure } from '../../../trpc';
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 export const haveRegistered = protectedProcedure

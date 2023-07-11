@@ -1,4 +1,4 @@
-import { protectedProcedure } from '~/trpc';
+import { protectedProcedure } from '../../../trpc';
 import { z } from 'zod';
 
 export const projectAdminDetails = protectedProcedure

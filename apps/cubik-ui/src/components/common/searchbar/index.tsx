@@ -26,8 +26,8 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
     []
   );
   const searchProjectMutation = trpc.project.searchProjects.useMutation({
-    onSuccess: async (data: searchProjectsType[]) => {
-      setFilterdProjects(data);
+    onSuccess: async (data) => {
+      setFilterdProjects(data as searchProjectsType[]);
     },
   });
 

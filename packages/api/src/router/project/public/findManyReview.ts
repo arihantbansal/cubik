@@ -1,5 +1,5 @@
 import { ProjectVerifyStatus } from '@cubik/database';
-import { publicProcedure } from '~/trpc';
+import { publicProcedure } from '../../../trpc';
 export const findManyReview = publicProcedure.query(
   async ({ ctx: { prisma } }) => {
     try {
