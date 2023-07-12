@@ -4,20 +4,20 @@ import { PrismaClient } from '@prisma/client';
 import { config } from 'dotenv';
 
 config();
-const globalForPrisma = globalThis as { prisma?: PrismaClient };
-const url = process.env.PROD_DATABASE_URL as string;
-export const prisma =
-  globalForPrisma.prisma ||
-  new PrismaClient({
-    log:
-      process.env.NODE_ENV === 'development'
-        ? ['query', 'error', 'warn']
-        : ['error'],
-    datasources: {
-      db: {
-        url: url,
-      },
-    },
-  });
+declare global {
+  var prisma: PrismaClient;
+}
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+let prisma: PrismaClient;
+if (typeof window === 'undefined') {
+  if (process.env.NODE_ENV === 'production') {
+    prisma = new PrismaClient();
+  } else {
+    if (!global.prisma) {
+      global.prisma = new PrismaClient();
+    }
+    prisma = global.prisma;
+  }
+}
+
+export { prisma };  

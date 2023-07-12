@@ -1,4 +1,4 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../tsconfig/react-library.json",
   "include": ["index.ts"]
 }
