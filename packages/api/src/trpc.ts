@@ -6,6 +6,8 @@ import { ZodError } from 'zod';
 import { authHandler } from './auth';
 import { prisma, UserModel } from '@cubik/database';
 
+
+
 type CreateContextOptions = {
   user: UserModel | null;
 };

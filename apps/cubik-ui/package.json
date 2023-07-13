@@ -10,8 +10,6 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
-    "@cubik/database": "workspace:*",
-    "@cubik/api": "*",
     "@chakra-ui/accordion": "^2.2.0",
     "@chakra-ui/alert": "^2.1.0",
     "@chakra-ui/anatomy": "^2.1.1",
@@ -39,12 +37,15 @@
     "@chakra-ui/tooltip": "^2.2.9",
     "@chakra-ui/transition": "^2.0.16",
     "@coral-xyz/anchor": "^0.27.0",
+    "@cubik/api": "*",
+    "@cubik/database": "workspace:*",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fontsource/plus-jakarta-sans": "^4.5.11",
     "@hookform/resolvers": "^2.9.11",
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "@metaplex-foundation/js": "^0.18.3",
+    "@prisma/client": "^5.0.0",
     "@solana/pay": "^0.2.5",
     "@solana/spl-token": "^0.3.7",
     "@solana/wallet-adapter-base": "^0.9.18",
@@ -92,6 +93,7 @@
     "moment": "^2.29.4",
     "next": "13.2.4",
     "nprogress": "^0.2.0",
+    "prisma": "^5.0.0",
     "qrcode.react": "^3.1.0",
     "react": "18.2.0",
     "react-apexcharts": "^1.4.0",
@@ -119,6 +121,7 @@
     "zustand": "^4.3.8"
   },
   "devDependencies": {
+    "@prisma/nextjs-monorepo-workaround-plugin": "^5.0.0",
     "@types/d3": "^7.4.0",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/markdown-it": "^12.2.3",

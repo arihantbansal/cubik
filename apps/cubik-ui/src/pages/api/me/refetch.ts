@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import { decode, type JwtPayload } from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@cubik/database';
 export default async function handler(
@@ -14,7 +14,7 @@ export default async function handler(
   }
   const token = authorization.split(' ')[1];
 
-  const payload = jwt.decode(token) as jwt.JwtPayload;
+  const payload = decode(token) as JwtPayload;
   const user = await prisma.userModel.findUnique({
     where: {
       id: payload.id,

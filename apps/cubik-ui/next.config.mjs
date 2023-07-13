@@ -1,4 +1,5 @@
 await import('./src/env.mjs');
+import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
 
 /** @type {import('next').NextConfig} */
 
@@ -9,7 +10,9 @@ const nextConfig = {
     if (!isServer) {
       config.resolve.fallback.fs = false;
     }
-
+    if (isServer) {
+      config.plugins = [...config.plugins, new PrismaPlugin()];
+    }
     return config;
   },
   transpilePackages: ['@cubik/api', '@cubik/database'],
