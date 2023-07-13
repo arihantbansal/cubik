@@ -121,6 +121,7 @@
     "zustand": "^4.3.8"
   },
   "devDependencies": {
+    "@prisma/nextjs-monorepo-workaround-plugin": "^5.0.0",
     "@types/d3": "^7.4.0",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/markdown-it": "^12.2.3",
