@@ -64,7 +64,8 @@ Here is what you need to be able to run cubik.so.
 ### Folder 
        .
     ├── app            
-    │   ├── cubik-ui  # Frontend for cubik app          
+    │   ├── cubik-ui                        # Frontend for cubik app          
+    │   ├── backend                         # Backend for cubik app          
     ├── packages  
     │   ├── api (@cubik/api)                # TRPC based API service
     │   ├── database (@cubik/database)      # Prisma base database config
