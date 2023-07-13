@@ -4,9 +4,7 @@
   "include": ["src", "index.ts"],
    "compilerOptions": {
     "strict": true,
-    "paths": {
-     "~/*": ["./src/*"]
-    }
    }
+
 }
  
