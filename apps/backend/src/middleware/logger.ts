@@ -18,6 +18,8 @@ const logger = createLogger({
   transports: [
     new transports.Console({
       stderrLevels: ['error'],
+      level: 'debug',
+      handleExceptions: true,
     }),
     new transports.File({
       filename: 'logs/error.log',
