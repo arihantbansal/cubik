@@ -330,6 +330,9 @@ importers:
       '@prisma/client':
         specifier: ^5.0.0
         version: 5.0.0(prisma@5.0.0)
+      '@prisma/nextjs-monorepo-workaround-plugin':
+        specifier: ^5.0.0
+        version: 5.0.0
       '@solana/pay':
         specifier: ^0.2.5
         version: 0.2.5
@@ -550,9 +553,6 @@ importers:
         specifier: ^4.3.8
         version: 4.3.8(immer@9.0.21)(react@18.2.0)
     devDependencies:
-      '@prisma/nextjs-monorepo-workaround-plugin':
-        specifier: ^5.0.0
-        version: 5.0.0
       '@types/d3':
         specifier: ^7.4.0
         version: 7.4.0
@@ -5766,7 +5766,7 @@ packages:
 
   /@prisma/nextjs-monorepo-workaround-plugin@5.0.0:
     resolution: {integrity: sha512-9iPBVd2Mz29QzJccyLJforZb/oWCLAS/5Ky6ZVtV5iST/kcDdCL+R+fllzNBltwywPrNwGorUx4C8Ps6WFZaiA==}
-    dev: true
+    dev: false
 
   /@project-serum/sol-wallet-adapter@0.2.6(@solana/web3.js@1.74.0):
     resolution: {integrity: sha512-cpIb13aWPW8y4KzkZAPDgw+Kb+DXjCC6rZoH74MGm3I/6e/zKyGnfAuW5olb2zxonFqsYgnv7ev8MQnvSgJ3/g==}
