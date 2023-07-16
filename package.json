@@ -7,6 +7,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "generate": "dotenv -- turbo run db:generate",
     "ui:dev": "pnpm run dev --filter cubik-ui",
+    "grants:dev": "pnpm run dev --filter cubik-grants",
     "backend": "pnpm run dev --filter backend"
   },
   "workspaces": [
