@@ -17,16 +17,14 @@ const Projects = (_props: projectsPropsType) => {
         description={`Browse projects and Cubik and support them`}
         image={`https://res.cloudinary.com/demonicirfan/image/upload/v1684179451/cubik%20og.png`}
       />
-      <main>
-        <Container
-          px={{ base: '0.8rem', sm: '1rem', md: '2rem', xl: '0px' }}
-          maxW="7xl"
-          py={{ base: '24px', md: '40px' }}
-        >
-          <AdminControls />
-          <ProjectsExplorer />
-        </Container>
-      </main>
+      <Container
+        px={{ base: '0.6rem', sm: '0.8rem', md: '2rem', xl: '0px' }}
+        maxW="7xl"
+        py={{ base: '24px', md: '40px' }}
+      >
+        <AdminControls />
+        <ProjectsExplorer />
+      </Container>
     </>
   );
 };

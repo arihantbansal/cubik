@@ -1,45 +1,56 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, ProjectJoinRoundStatus } from '@prisma/client';
 
-export type verifiedProjectsType = Prisma.ProjectJoinRoundGetPayload<{
-  select: {
-    id: true;
-    status: true;
-    amountRaise: true;
-    fundingRound: {
-      select: {
-        id: true;
-        colorScheme: true;
-        active: true;
-        endTime: true;
-        roundName: true;
-        startTime: true;
-      };
-    };
-    project: {
-      select: {
-        id: true;
-        industry: true;
-        logo: true;
-        name: true;
-        project_link: true;
-        short_description: true;
-        owner: true;
-        isArchive: true;
-        Contribution: {
-          select: {
-            id: true;
-            user: {
-              select: {
-                profilePicture: true;
-                username: true;
-              };
-            };
-          };
-        };
-      };
-    };
+type ProjectCommon = {
+  id: string;
+  status: ProjectJoinRoundStatus;
+  amountRaise: number | null;
+  fundingRound: {
+    id: string;
+    colorScheme: string;
+    active: boolean;
+    endTime: Date;
+    roundName: string;
+    startTime: Date;
   };
-}>;
+};
+
+type ProjectNonMobile = ProjectCommon & {
+  project: {
+    id: string;
+    name: string;
+    industry: string;
+    logo: string;
+    project_link: string;
+    owner: {
+      username: string;
+    };
+    isArchive: boolean;
+    short_description: string;
+    Contribution: {
+      id: string;
+      user: {
+        profilePicture: string;
+        username: string;
+      };
+    }[];
+  };
+};
+
+type ProjectMobile = ProjectCommon & {
+  project: {
+    id: string;
+    name: string;
+    industry: string;
+    logo: string;
+    project_link: string;
+    owner: {
+      username: string;
+    };
+    isArchive: boolean;
+  };
+};
+
+export type verifiedProjectsType = ProjectNonMobile[] | ProjectMobile[];
 
 export type searchProjectsType = Prisma.ProjectsModelGetPayload<{
   select: {

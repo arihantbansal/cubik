@@ -8,6 +8,7 @@ import {
   HStack,
   LinkBox,
   SlideFade,
+  Stack,
   useMediaQuery,
   useToast,
   VStack,
@@ -28,10 +29,7 @@ import ProjectsContributorsNumber, {
 } from './ProjectsContributorsNumber';
 
 // In the ProjectsList component
-type ProjectsListProps = {
-  allProjectsData: verifiedProjectsType[];
-  owner?: UserModel;
-};
+type ProjectsListProps = verifiedProjectsType[];
 
 type ProjectCardProps = {
   industry: string;
@@ -45,9 +43,9 @@ type ProjectCardProps = {
   roundName: string;
   projectName: string;
   projectLogo: string;
-  projectDescription: string;
+  projectDescription?: string;
   amountRaised: number;
-  contributions: ContributionType[];
+  contributions?: ContributionType[];
 };
 
 const ProjectCard = (props: ProjectCardProps) => {
@@ -95,7 +93,7 @@ const ProjectCard = (props: ProjectCardProps) => {
           ? `/${props.joinRoundId}`
           : ``
       }`}
-      w="100%"
+      w="full"
       maxW={{
         base: '92vw',
         sm: '87vw',
@@ -106,31 +104,31 @@ const ProjectCard = (props: ProjectCardProps) => {
       position={'relative'}
     >
       <Card
-        border={addedToList ? '2px solid #659C95' : '2px solid transparent'}
-        borderRadius="16px"
+        //  border={addedToList ? '2px solid #659C95' : '2px solid transparent'}
+        border="none"
         p="0"
-        h={{ base: '20rem', md: '23rem' }}
+        h={{ base: 'fit-content', md: '23rem' }}
         cursor="pointer"
         w="100%"
         maxW={{
-          base: '92vw',
-          sm: '87vw',
+          base: 'full',
+          sm: 'full',
           md: '44vw',
           lg: '29.5vw',
           xl: '25.5rem',
         }}
-        onTouchStart={() => setIsHovered((prevState) => !prevState)}
+        //  onTouchStart={() => setIsHovered((prevState) => !prevState)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         gap="0"
         background={'#0C0D0D'}
         _hover={{
-          border: '2px solid',
+          border: 'none',
           background: 'neutral.3',
-          borderColor: `surface.${props.colorScheme}.3`,
+          //  borderColor: `surface.${props.colorScheme}.3`,
         }}
         _active={{
-          border: '2px solid',
+          // border: '2px solid',
           background: 'neutral.3',
           borderColor: `surface.${props.colorScheme}.3`,
         }}
@@ -202,163 +200,184 @@ const ProjectCard = (props: ProjectCardProps) => {
           h="full"
         >
           <VStack
-            p="24px"
+            p={{ base: '14px', md: '24px' }}
             gap={{ base: '12px', md: '16px' }}
             w="full"
             alignItems={'start'}
           >
-            <HStack justifyContent={'space-between'}>
+            <Stack
+              spacing={{ base: '14px', md: '16px' }}
+              direction={{ base: 'row', md: 'column' }}
+              align={{ base: 'center', md: 'start' }}
+              w="full"
+              justifyContent={'space-between'}
+            >
               <Avatar
                 src={props.projectLogo}
-                name="anchor"
+                name={props.projectName}
                 borderRadius={'8px'}
-                size={{ base: 'md', md: 'lg' }}
+                width={{ base: '3.4rem', md: '4rem' }}
+                height={{ base: '3.4rem', md: '4rem' }}
               />
-            </HStack>
-            <VStack gap="0" spacing="0" w="full">
-              <HStack align={'end'} w="full" justify="space-between">
-                <Box as="p" textStyle={{ base: 'title4', md: 'title3' }}>
-                  {props.projectName}
-                </Box>
-                <Box
-                  as="p"
-                  color="#A8F0E6"
-                  textStyle={{ base: 'title4', md: 'title3' }}
+              <VStack spacing="4px" w="full">
+                <HStack
+                  w="full"
+                  align="start"
+                  gap="14px"
+                  justify="space-between"
                 >
-                  $
-                  {formatNumberWithK(
-                    (parseInt(
-                      props.amountRaised?.toFixed(2) as string
-                    ) as number) ?? 0
-                  )}
-                </Box>
-              </HStack>
-              <HStack w="full" justify="space-between">
-                <Center>
                   <Box
-                    noOfLines={1}
-                    textAlign="start"
                     as="p"
-                    whiteSpace={'nowrap'}
-                    textStyle={{ base: 'title6', sm: 'title6', md: 'title5' }}
-                    color={'brand.teal5'}
-                    textTransform="lowercase"
-                    w="full"
+                    color="neutral.11"
+                    textStyle={{ base: 'title4', md: 'title3' }}
                   >
-                    <Box as="span" color="neutral.7">
-                      by
-                    </Box>{' '}
-                    @{props.ownerUsername}
+                    {props.projectName}
                   </Box>
-                </Center>
-                <Box
-                  color="neutral8"
-                  as="p"
-                  textStyle={{ base: 'body6', md: 'body5' }}
+                  <Box
+                    as="p"
+                    color="#A8F0E6"
+                    textStyle={{ base: 'title4', md: 'title3' }}
+                  >
+                    $
+                    {formatNumberWithK(
+                      (parseInt(
+                        props.amountRaised?.toFixed(2) as string
+                      ) as number) ?? 0
+                    )}
+                  </Box>
+                </HStack>
+                <HStack
+                  w="full"
+                  align="start"
+                  gap="14px"
+                  justify="space-between"
                 >
-                  Est. Match
-                </Box>
-              </HStack>
-            </VStack>
-            <Box
-              color="neutral.8"
-              as="p"
-              textStyle={{ base: 'body5', md: 'body4' }}
-              sx={{
-                noOfLines: '3',
-              }}
-              alignContent="start"
-              alignItems={'start'}
-              textAlign={'start'}
-            >
-              {props.projectDescription}
-            </Box>
+                  <Center>
+                    <Box
+                      noOfLines={1}
+                      textAlign="start"
+                      as="p"
+                      whiteSpace={'nowrap'}
+                      textStyle={{ base: 'title6', md: 'title5' }}
+                      color="neutral.7"
+                      textTransform="lowercase"
+                      w="full"
+                    >
+                      by @{props.ownerUsername}
+                    </Box>
+                  </Center>
+                  <Box
+                    color="neutral.8"
+                    as="p"
+                    textStyle={{ base: 'body6', md: 'body5' }}
+                  >
+                    Est. Match
+                  </Box>
+                </HStack>
+              </VStack>{' '}
+            </Stack>
+            {props.projectDescription && (
+              <Box
+                color="neutral.9"
+                as="p"
+                textStyle={{ base: 'body5', md: 'body4' }}
+                sx={{
+                  noOfLines: { base: '4', md: '3' },
+                }}
+                alignContent="start"
+                alignItems={'start'}
+                textAlign={'start'}
+              >
+                {props.projectDescription}
+              </Box>
+            )}
           </VStack>
           {/* card footer */}
-          <VStack
-            marginTop={'0px !important'}
-            p="8px 24px 24px 24px"
-            w="full"
-            position={'relative'}
-          >
-            <HStack
-              display={isLargerThan767 && isHovered ? 'none' : 'flex'}
-              overflowX="hidden"
+          {props.contributions && (
+            <VStack
+              marginTop={'0px !important'}
+              p="8px 24px 24px 24px"
               w="full"
-              justify="space-between"
+              position={'relative'}
             >
-              <Box
-                overflow="hidden"
+              <HStack
+                display={isLargerThan767 && isHovered ? 'none' : 'flex'}
+                overflowX="hidden"
                 w="full"
-                flex="4"
-                minWidth="0"
-                position="relative"
-                _after={{
-                  content: '""',
-                  position: 'absolute',
-                  top: '45%',
-                  right: '0%',
-                  transform: 'translateY(-50%)',
-                  height: '2.2rem',
-                  width: '3rem',
-                  background:
-                    'linear-gradient(90deg, #0C0D0D00 0%, #0C0D0D 80%)',
-                }}
+                justify="space-between"
               >
-                <HStack
-                  overflow="clip"
-                  w="200%"
-                  mt="auto"
-                  justify="start"
-                  whiteSpace="nowrap" // Set whiteSpace to nowrap
-                >
-                  {industry.map((tag: any, key: any) => {
-                    return (
-                      <CustomTag color={tag.label} key={key}>
-                        {tag.label}
-                      </CustomTag>
-                    );
-                  })}
-                </HStack>
-              </Box>
-              <ProjectsContributorsNumber
-                projectId={props.projectId}
-                contributorsList={props.contributions}
-              />
-            </HStack>
-            {isLargerThan767 && (
-              <SlideFade in={isHovered} offsetY="0px" reverse>
-                <HStack
-                  zIndex={'9'}
+                <Box
+                  overflow="hidden"
                   w="full"
-                  justifyContent="start"
-                  position="absolute"
-                  left="0"
-                  p="8px 24px 24px 24px"
-                  bottom="0px"
-                  backgroundColor={isHovered ? 'neutral.3' : '#0C0D0D'}
-                  borderRadius="36px"
-                  justify={'space-between'}
+                  flex="4"
+                  minWidth="0"
+                  position="relative"
+                  _after={{
+                    content: '""',
+                    position: 'absolute',
+                    top: '45%',
+                    right: '0%',
+                    transform: 'translateY(-50%)',
+                    height: '2.2rem',
+                    width: '3rem',
+                    background:
+                      'linear-gradient(90deg, #0C0D0D00 0%, #0C0D0D 80%)',
+                  }}
                 >
-                  <Button
-                    as={Link}
-                    href={`/${props?.ownerUsername}/${props?.projectId}${
-                      props.status === ProjectJoinRoundStatus.APPROVED
-                        ? `/${props.joinRoundId}`
-                        : ``
-                    }`}
-                    background={'#1D1F1E'}
-                    color="white"
-                    fontWeight={'700'}
-                    borderColor="transparent"
-                    outline="none"
-                    //  w="calc(100% - 2.2rem)"
-                    w="calc(100% )"
-                    variant="connect_wallet"
+                  <HStack
+                    overflow="clip"
+                    w="200%"
+                    mt="auto"
+                    justify="start"
+                    whiteSpace="nowrap" // Set whiteSpace to nowrap
                   >
-                    View Details
-                  </Button>
-                  {/* <IconButton
+                    {industry.map((tag: any, key: any) => {
+                      return (
+                        <CustomTag color={tag.label} key={key}>
+                          {tag.label}
+                        </CustomTag>
+                      );
+                    })}
+                  </HStack>
+                </Box>
+                <ProjectsContributorsNumber
+                  projectId={props.projectId}
+                  contributorsList={props.contributions}
+                />
+              </HStack>
+              {isLargerThan767 && (
+                <SlideFade in={isHovered} offsetY="0px" reverse>
+                  <HStack
+                    zIndex={'9'}
+                    w="full"
+                    justifyContent="start"
+                    position="absolute"
+                    left="0"
+                    p="8px 24px 24px 24px"
+                    bottom="0px"
+                    backgroundColor={isHovered ? 'neutral.3' : '#0C0D0D'}
+                    borderRadius="36px"
+                    justify={'space-between'}
+                  >
+                    <Button
+                      as={Link}
+                      href={`/${props?.ownerUsername}/${props?.projectId}${
+                        props.status === ProjectJoinRoundStatus.APPROVED
+                          ? `/${props.joinRoundId}`
+                          : ``
+                      }`}
+                      background={'#1D1F1E'}
+                      color="white"
+                      fontWeight={'700'}
+                      borderColor="transparent"
+                      outline="none"
+                      //  w="calc(100% - 2.2rem)"
+                      w="calc(100% )"
+                      variant="connect_wallet"
+                    >
+                      View Details
+                    </Button>
+                    {/* <IconButton
                   background={'#1D1F1E'}
                   color="white"
                   fontWeight={'700'}
@@ -371,23 +390,28 @@ const ProjectCard = (props: ProjectCardProps) => {
                     addedToList ? <MdRemove size={26} /> : <BsPlus size={26} />
                   }
                 /> */}
-                </HStack>
-              </SlideFade>
-            )}
-          </VStack>
+                  </HStack>
+                </SlideFade>
+              )}
+            </VStack>
+          )}
         </VStack>
       </Card>
     </LinkBox>
   );
 };
 
-const ProjectsList = ({ allProjectsData }: ProjectsListProps) => {
+const ProjectsList = ({
+  allProjectsData,
+}: {
+  allProjectsData: verifiedProjectsType;
+}) => {
   return (
     <Container maxW="7xl" overflow={'visible'} p="0">
       <Wrap
         overflow={'visible'}
         py="8px"
-        spacing="1.5rem"
+        spacing={{ base: '1.8rem', md: '1.5rem' }}
         w="100%"
         margin="0"
         justify={'center'}
@@ -399,20 +423,24 @@ const ProjectsList = ({ allProjectsData }: ProjectsListProps) => {
             return (
               <ProjectCard
                 key={key}
-                endTime={projectJoinRound.fundingRound.endTime}
-                industry={projectJoinRound.project.industry}
-                projectId={projectJoinRound.project.id}
-                joinRoundId={projectJoinRound.id}
-                ownerUsername={projectJoinRound.project.owner.username}
-                status={projectJoinRound.status}
-                startTime={projectJoinRound.fundingRound.startTime}
-                amountRaised={projectJoinRound.amountRaise ?? 0}
-                projectDescription={projectJoinRound.project.short_description}
-                projectLogo={projectJoinRound.project.logo}
-                projectName={projectJoinRound.project.name}
-                colorScheme={projectJoinRound.fundingRound.colorScheme}
-                roundName={projectJoinRound.fundingRound.roundName}
-                contributions={projectJoinRound.project.Contribution}
+                endTime={projectJoinRound?.fundingRound.endTime}
+                industry={projectJoinRound?.project.industry}
+                projectId={projectJoinRound?.project.id}
+                joinRoundId={projectJoinRound?.id}
+                ownerUsername={projectJoinRound?.project.owner.username}
+                status={projectJoinRound?.status}
+                startTime={projectJoinRound?.fundingRound.startTime}
+                amountRaised={projectJoinRound?.amountRaise ?? 0}
+                projectDescription={
+                  projectJoinRound?.project?.short_description || undefined
+                }
+                projectLogo={projectJoinRound?.project.logo}
+                projectName={projectJoinRound?.project.name}
+                colorScheme={projectJoinRound?.fundingRound.colorScheme}
+                roundName={projectJoinRound?.fundingRound.roundName}
+                contributions={
+                  projectJoinRound?.project?.Contribution || undefined
+                }
               />
             );
           }

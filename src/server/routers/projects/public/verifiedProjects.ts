@@ -9,78 +9,122 @@ export const verifiedProjects = publicProcedure
       filter: z.string().optional(),
       round: z.array(z.string()).optional(),
       seed: z.number().optional(),
+      mobile: z.boolean().optional(),
     })
   )
-  .query(async ({ input }) => {
+  .query(async ({ input }): Promise<verifiedProjectsType> => {
     function seededRandom(seed: number) {
       var m = 25;
       var a = 11;
       var c = 17;
 
       seed = (a * seed + c) % m;
-      return seed / m; // returns a float between 0 and 1
+      return seed / m;
     }
 
-    function shuffleArray(array: verifiedProjectsType[], seed: number) {
+    function shuffleArray(array: any[], seed: number) {
       var count = array.length,
-        randomnumber,
+        randomNumber,
         temp;
       while (count) {
-        randomnumber = Math.floor(seededRandom(seed) * count);
+        randomNumber = Math.floor(seededRandom(seed) * count);
         count--;
         temp = array[count];
-        array[count] = array[randomnumber];
-        array[randomnumber] = temp;
+        array[count] = array[randomNumber];
+        array[randomNumber] = temp;
         seed++;
       }
 
       return array;
     }
 
-    const result = await prisma.projectJoinRound.findMany({
-      where: {
-        status: 'APPROVED',
-      },
-      select: {
-        id: true,
-        status: true,
-        amountRaise: true,
+    let result: verifiedProjectsType;
 
-        fundingRound: {
-          select: {
-            id: true,
-            colorScheme: true,
-            active: true,
-            endTime: true,
-            roundName: true,
-            startTime: true,
-          },
+    if (!input.mobile) {
+      result = await prisma.projectJoinRound.findMany({
+        where: {
+          status: 'APPROVED',
         },
-        project: {
-          select: {
-            id: true,
-            industry: true,
-            logo: true,
-            name: true,
-            project_link: true,
-            short_description: true,
-            owner: true,
-            isArchive: true,
-            Contribution: {
-              select: {
-                id: true,
-                user: {
-                  select: {
-                    profilePicture: true,
-                    username: true,
+        select: {
+          id: true,
+          status: true,
+          amountRaise: true,
+          fundingRound: {
+            select: {
+              id: true,
+              colorScheme: true,
+              active: true,
+              endTime: true,
+              roundName: true,
+              startTime: true,
+            },
+          },
+          project: {
+            select: {
+              id: true,
+              industry: true,
+              logo: true,
+              name: true,
+              project_link: true,
+              short_description: true,
+              owner: {
+                select: {
+                  username: true,
+                },
+              },
+              isArchive: true,
+              Contribution: {
+                select: {
+                  id: true,
+                  user: {
+                    select: {
+                      profilePicture: true,
+                      username: true,
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    });
+      });
+    } else {
+      result = await prisma.projectJoinRound.findMany({
+        where: {
+          status: 'APPROVED',
+        },
+        select: {
+          id: true,
+          status: true,
+          amountRaise: true,
+          fundingRound: {
+            select: {
+              id: true,
+              colorScheme: true,
+              active: true,
+              endTime: true,
+              roundName: true,
+              startTime: true,
+            },
+          },
+          project: {
+            select: {
+              id: true,
+              industry: true,
+              logo: true,
+              name: true,
+              project_link: true,
+              owner: {
+                select: {
+                  username: true,
+                },
+              },
+              isArchive: true,
+            },
+          },
+        },
+      });
+    }
 
     const res = shuffleArray(result, (input.seed as number) ?? 0).filter(
       (e) => e.project.isArchive === false
