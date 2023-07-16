@@ -432,6 +432,7 @@ const ProjectsList = ({
                 startTime={projectJoinRound?.fundingRound.startTime}
                 amountRaised={projectJoinRound?.amountRaise ?? 0}
                 projectDescription={
+                  // @ts-ignore
                   projectJoinRound?.project?.short_description || undefined
                 }
                 projectLogo={projectJoinRound?.project.logo}
@@ -439,6 +440,7 @@ const ProjectsList = ({
                 colorScheme={projectJoinRound?.fundingRound.colorScheme}
                 roundName={projectJoinRound?.fundingRound.roundName}
                 contributions={
+                  // @ts-ignore
                   projectJoinRound?.project?.Contribution || undefined
                 }
               />
