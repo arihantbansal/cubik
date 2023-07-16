@@ -37,7 +37,7 @@ Cubik is built on the Solana blockchain, which allows for fast, secure, and low-
 
 **Decentralized Grant Allocation**: The platform conducts decentralized grant rounds, which allows the community to collectively decide on resource allocation, encouraging collective decision-making.
 
-### Built with
+### Built With
 
 - [Next.js](https://nextjs.org/?ref=cal.com)
 - [tRPC](https://trpc.io/?ref=cal.com)
@@ -54,42 +54,19 @@ To get a local copy up and running, please follow these simple steps.
 Here is what you need to be able to run cubik.so.
 
 - Node.js (Version: >=18.x)
-- mySQL (plantscale)
-- pnpm _(recommended)_
+- PostgreSQL
+- npm _(recommended)_
 
-
+> If you want to enable any of the available integrations, you may want to obtain additional credentials for each one. More details on this can be found below under the [integrations section](#integrations).
 
 ## Development
 
-### Folder 
-       .
-    ├── app            
-    │   ├── cubik-ui                        # Frontend for cubik app          
-    │   ├── backend                         # Shared backend for cubik app          
-    ├── packages  
-    │   ├── api (@cubik/api)                # TRPC based API service
-    │   ├── database (@cubik/database)      # Prisma base database config
-    │   ├── eslint-config-custom            # eslint config
-    │   ├── tsconfig                        # base tsconfig 
-    ├── LICENSE
-    └── README.md
-
 ### Setup
 
-1. Fork and clone the repository.
+#### Quick start with `yarn dx`
 
-2. Install dependencies:
-```bash
-    pnpm install  
-```
-3. Genrate prisma schema.
-``` bash
-    pnpm run generate 
-```
-4. Run the frontend 
-```bash
-    pnpm run ui:dev
-```
+#### Development tip
+## Deployment
 
 ### Vercel
 
@@ -101,7 +78,8 @@ Currently Vercel Pro Plan is required to be able to Deploy this application with
 
 ## Repo Activity
 
-![Alt](https://repobeats.axiom.co/api/embed/3d7d0cecfd3695e0560746ed790462b97aa860a7.svg "Repobeats analytics image")
+<img width="100%" src="https://repobeats.axiom.co/api/embed/5478ea14354f21550fab8ef0125fb7636580bb57.svg"/>
+
 <!-- CONTRIBUTING -->
 
 ## Contributing

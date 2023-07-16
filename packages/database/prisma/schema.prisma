@@ -1,0 +1,304 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("PROD_DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  directUrl         = env("DIRECT_DATABASE_URL")
+  relationMode      = "prisma"
+}
+
+model Hackathon {
+  id                     String                   @id @default(uuid()) @map("_id")
+  name                   String
+  logo                   String                   @db.VarChar(500)
+  background             String                   @db.VarChar(500)
+  short_description      String                   @db.VarChar(2000)
+  description            String                   @db.Text
+  host                   Json?
+  prize_pool             Int                      @default(0)
+  prize                  Json?
+  timeline               Json?
+  social                 Json?
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  slug                   String                   @unique
+  team                   Team[]
+  projectJoinRound       ProjectJoinHackathons[]
+  HackathonRegistrations HackathonRegistrations[]
+}
+
+model HackathonRegistrations {
+  id                    String                  @id @default(uuid()) @map("_id")
+  hackathonId           String
+  userId                String
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  Hackathon             Hackathon               @relation(fields: [hackathonId], references: [id])
+  User                  UserModel               @relation(fields: [userId], references: [id])
+  ProjectJoinHackathons ProjectJoinHackathons[]
+
+  @@index([hackathonId])
+  @@index([userId])
+}
+
+model ProjectJoinHackathons {
+  id                     String                 @id @default(uuid()) @map("_id")
+  hackathonId            String
+  projectId              String
+  registrationId         String
+  amount                 Float                  @default(0)
+  isArchive              Boolean                @default(false)
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+  hackathon              Hackathon              @relation(fields: [hackathonId], references: [id])
+  projectsModel          ProjectsModel          @relation(fields: [projectId], references: [id])
+  hackathonRegistrations HackathonRegistrations @relation(fields: [registrationId], references: [id])
+
+  @@index([hackathonId])
+  @@index([projectId])
+  @@index([registrationId])
+}
+
+model UserModel {
+  id                     String                   @id @default(uuid()) @map("_id")
+  username               String                   @unique
+  mainWallet             String                   @unique
+  proof                  Json?
+  email                  String?
+  profilePicture         String                   @db.VarChar(500)
+  tx                     String                   @db.VarChar(500)
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  isActive               Boolean                  @default(true)
+  isArchive              Boolean                  @default(false)
+  team                   Team[]
+  Session                Session[]
+  project                ProjectsModel[]
+  Reply                  Reply[]
+  Comments               Comments[]
+  Contribution           Contribution[]
+  Round                  Round[]
+  HackathonRegistrations HackathonRegistrations[]
+
+  @@fulltext([username])
+}
+
+model UserKeys {
+  id        String   @id @default(uuid()) @map("_id")
+  publicKey String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isActive  Boolean  @default(true)
+  isArchive Boolean  @default(false)
+
+  @@index([id])
+}
+
+model Session {
+  id           String    @id @default(uuid())
+  sessionToken String    @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  user         UserModel @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, token])
+}
+
+model ProjectsModel {
+  id                String                  @id @default(uuid()) @map("_id")
+  name              String
+  short_description String                  @db.VarChar(2000)
+  logo              String                  @db.VarChar(1000)
+  owner_publickey   String
+  sig               String                  @default("")
+  long_description  String                  @db.Text
+  industry          String                  @db.VarChar(2000)
+  project_link      String                  @default("")
+  twitter_handle    String                  @default("")
+  github_link       String                  @default("")
+  discord_link      String                  @default("")
+  telegram_link     String                  @default("")
+  projectUserCount  Int                     @default(0)
+  status            ProjectVerifyStatus     @default(REVIEW)
+  failedReason      String?                 @default("")
+  mutliSigAddress   String?                 @default("")
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
+  email             String                  @default("")
+  isActive          Boolean                 @default(true)
+  isArchive         Boolean                 @default(false)
+  ogImage           String                  @default("")
+  createKey         String?                 @default("")
+  comments          Comments[]
+  ProjectJoinRound  ProjectJoinRound[]
+  projectJoinRound  ProjectJoinHackathons[]
+  owner             UserModel               @relation(fields: [owner_publickey], references: [mainWallet])
+  Team              Team[]
+  Contribution      Contribution[]
+
+  @@index([owner_publickey])
+}
+
+model Team {
+  id              String        @id @default(uuid()) @map("_id")
+  userId          String
+  projectsModelId String
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  isActive        Boolean       @default(true)
+  isArchive       Boolean       @default(false)
+  hackathonId     String?
+  user            UserModel     @relation(fields: [userId], references: [id])
+  ProjectsModel   ProjectsModel @relation(fields: [projectsModelId], references: [id])
+  Hackathon       Hackathon?    @relation(fields: [hackathonId], references: [id])
+
+  @@index([projectsModelId])
+  @@index([userId])
+  @@index([hackathonId])
+}
+
+model ProjectJoinRound {
+  id            String                 @id @default(uuid()) @map("_id")
+  projectId     String
+  tx            String                 @db.VarChar(500)
+  roundId       String
+  status        ProjectJoinRoundStatus @default(PENDING)
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+  amountRaise   Float?                 @default(0)
+  contributions Int                    @default(0)
+  isArchive     Boolean                @default(false)
+  contributors  Contribution[]
+  project       ProjectsModel          @relation(fields: [projectId], references: [id])
+  fundingRound  Round                  @relation(fields: [roundId], references: [id])
+
+  @@index([projectId])
+  @@index([roundId])
+}
+
+model Round {
+  id                    String             @id @default(uuid()) @map("_id")
+  roundName             String
+  matchedPool           Float              @default(0)
+  notionPage            String             @db.VarChar(500)
+  projectCount          Int                @default(0)
+  active                Boolean            @default(true)
+  userId                String
+  description           String             @default(dbgenerated("(_utf8mb4\\'\\')")) @db.Text
+  endTime               DateTime           @default(now())
+  startTime             DateTime           @default(now())
+  registrationEndDate   DateTime           @default(now())
+  registrationStartDate DateTime           @default(now())
+  tx                    String             @db.VarChar(500)
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+  colorScheme           String             @default("teal")
+  short_description     String             @default("") @db.VarChar(2000)
+  contributions         Float              @default(0)
+  manager               String             @default("")
+  sponsor               Sponsor[]
+  User                  UserModel          @relation(fields: [userId], references: [id])
+  ProjectJoinRound      ProjectJoinRound[]
+  Contribution          Contribution[]
+
+  @@index([userId])
+}
+
+model Sponsor {
+  id        String   @id @default(uuid()) @map("_id")
+  name      String
+  logo      String   @db.VarChar(500)
+  roundId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Round     Round    @relation(fields: [roundId], references: [id])
+
+  @@index([roundId])
+}
+
+model Contribution {
+  id                 String            @id @default(uuid()) @map("_id")
+  tx                 String            @db.VarChar(500)
+  token              String
+  split              Float
+  roundId            String
+  projectId          String
+  userId             String
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  count              Int               @default(0)
+  currentTotal       Float
+  currentusdTotal    Float
+  isLatest           Boolean           @default(true)
+  total              Float
+  usdTotal           Float
+  projectJoinRoundId String?
+  user               UserModel         @relation(fields: [userId], references: [id])
+  ProjectsModel      ProjectsModel     @relation(fields: [projectId], references: [id])
+  Round              Round             @relation(fields: [roundId], references: [id])
+  ProjectJoinRound   ProjectJoinRound? @relation(fields: [projectJoinRoundId], references: [id])
+
+  @@index([projectId])
+  @@index([roundId])
+  @@index([userId])
+  @@index([projectJoinRoundId])
+}
+
+model Comments {
+  id              String        @id @default(uuid()) @map("_id")
+  comment         String        @db.Text
+  userId          String
+  projectsModelId String
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  isArchive       Boolean       @default(false)
+  reactions       Json
+  Reply           Reply[]
+  user            UserModel     @relation(fields: [userId], references: [id])
+  ProjectsModel   ProjectsModel @relation(fields: [projectsModelId], references: [id])
+
+  @@index([userId])
+  @@index([projectsModelId])
+}
+
+model Reply {
+  id          String     @id @default(uuid()) @map("_id")
+  reply       String     @db.Text
+  commentId   String
+  replyUserId String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  comment     Comments?  @relation(fields: [commentId], references: [id])
+  user        UserModel? @relation(fields: [replyUserId], references: [id])
+
+  @@index([commentId])
+  @@index([replyUserId])
+}
+
+enum ProjectVerifyStatus {
+  REVIEW
+  VERIFIED
+  FAILED
+}
+
+enum ProjectJoinRoundStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
