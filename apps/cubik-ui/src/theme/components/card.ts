@@ -47,8 +47,8 @@ const variants = {
       color: 'neutral.11',
       //padding: { base: '24px', md: '40px' },
       border: '1px solid #FFFFFF10',
-      rounded: '16px',
-      gap: '2.2rem',
+      rounded: { base: '12px', md: '16px' },
+      gap: { base: '1.8rem', md: '2.2rem' },
     },
     header: {
       maxW: 'full',

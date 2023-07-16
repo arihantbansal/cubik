@@ -1,4 +1,5 @@
 import { Box, HStack, Stack, VStack } from '@chakra-ui/react';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
 import RoundStatus from '~/components/common/dates/Status';
@@ -191,7 +192,13 @@ const FundingRoundBanner = ({
   matchingPool: number;
 }) => {
   return (
-    <Stack w="full" direction={{ base: 'column', md: 'row' }}>
+    <Stack
+      as={Link}
+      href={`/grants/${roundId}`}
+      cursor={'pointer'}
+      w="full"
+      direction={{ base: 'column', md: 'row' }}
+    >
       <Stack
         maxW={'full'}
         p={{ base: '16px', md: '32px' }}

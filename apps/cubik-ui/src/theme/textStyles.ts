@@ -136,27 +136,27 @@ export const textStyles = {
   body1: {
     fontWeight: '400',
     fontSize: '24px',
-    lineHeight: '30px',
+    lineHeight: '32px',
   },
   body2: {
     fontWeight: '400',
     fontSize: '18px',
-    lineHeight: '24px',
+    lineHeight: '26px',
   },
   body3: {
-    fontWeight: '500', //todo: confirm from designer
+    fontWeight: '400', //todo: confirm from designer
     fontSize: '16px',
-    lineHeight: '22px',
+    lineHeight: '24px',
   },
   body4: {
-    fontWeight: '500',
+    fontWeight: '400',
     fontSize: '14px',
-    lineHeight: '18px',
+    lineHeight: '20px',
   },
   body5: {
     fontWeight: '400',
     fontSize: '12px',
-    lineHeight: '16px',
+    lineHeight: '18px',
   },
   body6: {
     fontWeight: '400',

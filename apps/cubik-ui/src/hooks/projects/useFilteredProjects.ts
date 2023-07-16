@@ -1,9 +1,15 @@
-import { isPast } from 'date-fns';
 import { useMemo, useState } from 'react';
 import { category } from '~/components/pages/create-project/projectCategories';
 import { CategoryType } from '~/components/pages/projects/project-explorer/body/ProjectListWithFilter';
 import { trpc } from '~/utils/trpc';
-isPast;
+
+function isMobileDevice() {
+  return (
+    typeof window.orientation !== 'undefined' ||
+    navigator.userAgent.indexOf('IEMobile') !== -1
+  );
+}
+
 export const useFilteredProjects = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const shuffleSeed = useMemo(() => Math.round(Math.random() * 10), []);
@@ -11,24 +17,21 @@ export const useFilteredProjects = () => {
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryType | null>();
 
-  // trpc calls
-  // const { data: roundsData, isLoading: roundsLoading } =
-  //   trpc.round.findActive.useQuery();
+  const isMobileScreen = isMobileDevice();
+  const trpcParams = {
+    filter: selectedCategory?.value ?? undefined,
+    round: [], // need to change this later
+    seed: shuffleSeed,
+    mobile: isMobileScreen,
+  };
 
   const {
     data: filteredProjectsFromServer,
     isLoading: filteredProjectsLoading,
-  } = trpc.project.verifiedProjects.useQuery(
-    {
-      filter: selectedCategory?.value ?? undefined,
-      round: [], // need to change this later
-      seed: shuffleSeed,
-    },
-    {
-      refetchInterval: 20000,
-      staleTime: 10000,
-    }
-  );
+  } = trpc.project.verifiedProjects.useQuery(trpcParams, {
+    refetchInterval: 20000,
+    staleTime: 10000,
+  });
 
   const handleCategoryClick = (category?: CategoryType) => {
     if (category && isCategorySelected(category)) {
@@ -51,9 +54,10 @@ export const useFilteredProjects = () => {
 
   const isRoundSelected = (roundId: string) => !roundIds?.includes(roundId);
 
-  const filteredCategories = category.filter((cat) =>
-    cat.label.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredCategories = category.filter((cat) => {
+    console.log(cat);
+    return cat.label.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   return {
     filteredProjectsLoading,

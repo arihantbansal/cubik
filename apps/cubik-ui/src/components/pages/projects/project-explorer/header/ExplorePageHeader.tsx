@@ -11,12 +11,13 @@ const ExplorePageHeader = () => {
     data: roundData,
     isLoading,
     isError,
-  } = trpc.round.findActive.useQuery();
-  // filter round data with only active rounds and future rounds
+  } = trpc.round.findActive.useQuery(); // optimise this
   const activeAndFutureRounds = roundData?.filter(
     (round: { endTime: number | Date }) =>
       isPast(round.endTime) ? null : round
   );
+
+  console.log('rounds data - ', roundData);
 
   if (isError) {
     return (
