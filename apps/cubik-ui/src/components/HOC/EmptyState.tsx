@@ -1,5 +1,5 @@
 import { Box, Center, VStack } from '@chakra-ui/react';
-import React from 'react';
+import { ReactNode } from 'react';
 
 const EmptyStateHOC = ({
   heading,
@@ -10,8 +10,8 @@ const EmptyStateHOC = ({
 }: {
   heading: string;
   subHeading: string;
-  children?: React.ReactNode;
-  CTA?: React.ReactNode;
+  children?: ReactNode;
+  CTA?: ReactNode;
   margin?: string;
 }) => {
   return (

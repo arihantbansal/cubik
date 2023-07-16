@@ -118,16 +118,16 @@
     "web3.storage": "^4.5.4",
     "yup": "^1.2.0",
     "zod": "^3.21.4",
-    "zustand": "^4.3.8"
+    "zustand": "^4.3.8",
+    "@prisma/nextjs-monorepo-workaround-plugin": "^5.0.0"
   },
   "devDependencies": {
-    "@prisma/nextjs-monorepo-workaround-plugin": "^5.0.0",
     "@types/d3": "^7.4.0",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/markdown-it": "^12.2.3",
     "@types/mixpanel-browser": "^2.38.1",
-    "@types/node": "18.15.3",
     "@types/nprogress": "^0.2.0",
+    "@types/node": "18.15.3",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "@types/uuid": "^9.0.1",
