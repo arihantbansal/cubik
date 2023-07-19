@@ -6,6 +6,7 @@
     "lint": "dotenv -- turbo run lint --filter cubik-ui",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "generate": "dotenv -- turbo run db:generate",
+    "db:push": "dotenv -- turbo run db:push",
     "ui:dev": "pnpm run dev --filter cubik-ui",
     "grants:dev": "pnpm run dev --filter cubik-grants",
     "backend": "pnpm run dev --filter backend"
