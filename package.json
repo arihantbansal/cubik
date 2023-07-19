@@ -8,7 +8,9 @@
     "generate": "dotenv -- turbo run db:generate",
     "ui:dev": "pnpm run dev --filter cubik-ui",
     "grants:dev": "pnpm run dev --filter cubik-grants",
-    "backend": "pnpm run dev --filter backend"
+    "backend": "pnpm run dev --filter backend",
+    "backend:build": "pnpm run build --filter backend",
+    "backend:start": "pnpm run start --filter backend"
   },
   "workspaces": [
     "apps/*",
