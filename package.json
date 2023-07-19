@@ -10,7 +10,7 @@
     "grants:dev": "pnpm run dev --filter cubik-grants",
     "backend": "pnpm run dev --filter backend",
     "backend:build": "turbo run build --filter backend",
-    "backend:start": "pnpm run start --filter backend"
+    "backend:start": "pnpm --filter backend run start"
   },
   "workspaces": [
     "apps/*",
@@ -24,7 +24,7 @@
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
     "prettier": "^2.5.1",
-    "turbo": "latest"
+    "turbo": "^1.10.8"
   },
   "packageManager": "pnpm@7.15.0",
   "name": "cubik"
