@@ -8,6 +8,11 @@ import {
   SkeletonText,
   Stack,
   VStack,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import RoundStatus from '~/components/common/dates/Status';
@@ -40,15 +45,14 @@ const RoundPage = () => {
               as="p"
               textStyle={{ base: 'display5', md: 'display3' }}
             >
-              Grow Public Good with Decentralized Grants
+              Quadratic Funding Grants
             </Box>{' '}
             <Box
               color="neutral.9"
               as="p"
               textStyle={{ base: 'body4', md: 'body3' }}
             >
-              Participate in Engaging Community Grant Rounds to Propel Your
-              Public Good Project
+              Participate in Engaging Community Grant Rounds
             </Box>
           </VStack>
           {/* <Button variant="close_modal" rightIcon={<BiPlus />}>
@@ -61,13 +65,28 @@ const RoundPage = () => {
           align="start"
           spacing="32px"
         >
-          <Box
-            color="neutral.11"
-            as="p"
-            textStyle={{ base: 'title3', md: 'title2' }}
+          {' '}
+          <Tabs
+            w="full"
+            border="1px solid red"
+            variant="soft-rounded"
+            colorScheme="green"
           >
-            Grant Rounds
-          </Box>{' '}
+            <HStack w="full" justify="space-between">
+              <Box
+                color="neutral.11"
+                as="p"
+                textStyle={{ base: 'title3', md: 'title2' }}
+              >
+                Grant Rounds
+              </Box>
+
+              <TabList>
+                <Tab>Tab 1</Tab>
+                <Tab>Tab 2</Tab>
+              </TabList>
+            </HStack>
+          </Tabs>
           {isLoading ? (
             [0, 1, 2].map((index) => (
               <HStack
@@ -118,100 +137,107 @@ const RoundPage = () => {
           ) : (
             <VStack align="start" w="full" gap={{ base: '8px', md: '18px' }}>
               {rounds?.map((round) => (
-                <LinkBox
-                  as={Link}
-                  href={'/grants/' + round.id}
-                  display={'flex'}
-                  flexDirection={{ base: 'column', md: 'row' }}
-                  alignItems={{ base: 'start', md: 'center' }}
-                  justifyContent="space-between"
-                  key={round.id}
-                  border={'2px solid'}
-                  borderColor="#ffffff10"
-                  _hover={{ borderColor: '#31F57920' }}
-                  backgroundColor="#000000"
-                  p={{ base: '16px', md: '32px' }}
-                  w="full"
-                  rounded="20px"
-                  position="relative"
-                  overflow={'hidden'}
-                  textAlign={'start'}
-                  _after={{
-                    content: '""',
-                    zIndex: '1',
-                    position: 'absolute',
-                    bottom: '50%',
-                    left: '0%',
-                    transform: 'translate(0%, -50%)',
-                    width: '8rem',
-                    height: '8rem',
-                    backgroundColor: '#31F579',
-                    filter: 'blur(100px)',
-                    borderRadius: 'full',
-                    // on hover
-                    _hover: {
-                      transform: 'translate(0%, -50%) scale(1.5)',
-                      transition: 'transform 0.5s ease-in-out',
-                    },
+                <Link
+                  style={{
+                    width: '100%',
                   }}
+                  href={'/grants/' + round.id}
                 >
-                  <VStack align="start" spacing={{ base: '32px', md: '24px' }}>
+                  <Box
+                    display={'flex'}
+                    flexDirection={{ base: 'column', md: 'row' }}
+                    alignItems={{ base: 'start', md: 'center' }}
+                    justifyContent="space-between"
+                    key={round.id}
+                    border={'2px solid'}
+                    borderColor="#ffffff10"
+                    _hover={{ borderColor: '#31F57920' }}
+                    backgroundColor="#000000"
+                    p={{ base: '16px', md: '32px' }}
+                    w="full"
+                    rounded="20px"
+                    position="relative"
+                    overflow={'hidden'}
+                    textAlign={'start'}
+                    _after={{
+                      content: '""',
+                      zIndex: '1',
+                      position: 'absolute',
+                      bottom: '50%',
+                      left: '0%',
+                      transform: 'translate(0%, -50%)',
+                      width: '8rem',
+                      height: '8rem',
+                      backgroundColor: '#31F579',
+                      filter: 'blur(100px)',
+                      borderRadius: 'full',
+                      // on hover
+                      _hover: {
+                        transform: 'translate(0%, -50%) scale(1.5)',
+                        transition: 'transform 0.5s ease-in-out',
+                      },
+                    }}
+                  >
                     <VStack
                       align="start"
-                      w="full"
-                      spacing={{ base: '12px', md: '12px' }}
+                      spacing={{ base: '32px', md: '24px' }}
                     >
-                      <Stack
-                        direction={{ base: 'row', md: 'row' }}
-                        align="center"
-                        gap={{ base: '0px', md: '16px' }}
-                        alignItems={{ base: 'start', md: 'center' }}
+                      <VStack
+                        align="start"
+                        w="full"
+                        spacing={{ base: '12px', md: '12px' }}
+                      >
+                        <Stack
+                          direction={{ base: 'row', md: 'row' }}
+                          align="center"
+                          gap={{ base: '0px', md: '16px' }}
+                          alignItems={{ base: 'start', md: 'center' }}
+                        >
+                          <Box
+                            color="neutral.11"
+                            as="p"
+                            textStyle={{ base: 'title3', md: 'title1' }}
+                            textTransform={'capitalize'}
+                          >
+                            {round.roundName}
+                          </Box>
+                          <RoundStatus
+                            show={false}
+                            startDate={round.startTime}
+                            endDate={round.endTime}
+                          />
+                        </Stack>
+                        <Box
+                          as="p"
+                          noOfLines={2}
+                          maxW="38rem"
+                          textStyle={{ base: 'body5', md: 'body4' }}
+                          color="neutral.9"
+                        >
+                          {round.short_description}
+                        </Box>
+                      </VStack>
+                      <HStack
+                        bg="#ffffff08"
+                        rounded="8px"
+                        shadow="0px 4px 24px rgba(0, 0, 0, 0.08)"
+                        outline="1px solid #ffffff16"
+                        p={{ base: '0.6rem 1.2rem', md: '0.8rem 1.5rem' }}
                       >
                         <Box
-                          color="neutral.11"
+                          color="#B4B0B2"
+                          textTransform={'uppercase'}
                           as="p"
-                          textStyle={{ base: 'title3', md: 'title1' }}
-                          textTransform={'capitalize'}
+                          textStyle={{ base: 'body6', md: 'overline3' }}
                         >
-                          {round.roundName}
+                          Matching Pool
                         </Box>
-                        <RoundStatus
-                          show={false}
-                          startDate={round.startTime}
-                          endDate={round.endTime}
-                        />
-                      </Stack>
-                      <Box
-                        as="p"
-                        noOfLines={2}
-                        maxW="38rem"
-                        textStyle={{ base: 'body5', md: 'body4' }}
-                        color="neutral.9"
-                      >
-                        {round.short_description}
-                      </Box>
+                        <Box as="p" textStyle={{ base: 'body5', md: 'title4' }}>
+                          : {formatNumberWithK(round.matchedPool)} USDC
+                        </Box>
+                      </HStack>
                     </VStack>
-                    <HStack
-                      bg="#ffffff08"
-                      rounded="8px"
-                      shadow="0px 4px 24px rgba(0, 0, 0, 0.08)"
-                      outline="1px solid #ffffff16"
-                      p={{ base: '0.6rem 1.2rem', md: '0.8rem 1.5rem' }}
-                    >
-                      <Box
-                        color="#B4B0B2"
-                        textTransform={'uppercase'}
-                        as="p"
-                        textStyle={{ base: 'body6', md: 'overline3' }}
-                      >
-                        Matching Pool
-                      </Box>
-                      <Box as="p" textStyle={{ base: 'body5', md: 'title4' }}>
-                        : {formatNumberWithK(round.matchedPool)} USDC
-                      </Box>
-                    </HStack>
-                  </VStack>
-                  {/* <Stack
+                    {/* <Stack
                     align={{ base: 'center', md: 'center' }}
                     direction={{ base: 'row', md: 'column' }}
                   >
@@ -250,7 +276,8 @@ const RoundPage = () => {
                       )}
                     </Center>
                   </Stack> */}
-                </LinkBox>
+                  </Box>
+                </Link>
               ))}
             </VStack>
           )}

@@ -277,8 +277,8 @@ export const ProjectDonationSimulator = ({
             </FormLabel>
             <HStack>
               <AmountInput
-                donation={donation}
-                setDonation={setDonationAndAmount}
+                value={donation}
+                setValue={setDonationAndAmount}
                 register={register}
                 errors={errors}
                 token={tokens}

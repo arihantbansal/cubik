@@ -225,9 +225,12 @@ model Sponsor {
   name      String
   logo      String   @db.VarChar(500)
   roundId   String
+  tx        String   @db.VarChar(500)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Round     Round    @relation(fields: [roundId], references: [id])
+  isActive  Boolean  @default(true)
+  isArchive Boolean  @default(false)
 
   @@index([roundId])
 }
