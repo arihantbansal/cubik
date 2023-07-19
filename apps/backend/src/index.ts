@@ -16,6 +16,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.get('/', (req, res) => {
+  res.send('Server is running');
+});
 app.use(basePath + '/token', tokenRouter);
 
 const server = app.listen(PORT, () => {
