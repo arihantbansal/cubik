@@ -33,7 +33,7 @@ const cubik = definePartsStyle({
 });
 
 const variants = {
-  circular: cubik,
+  cubik: cubik,
 };
 
 const sizes = {

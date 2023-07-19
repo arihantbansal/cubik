@@ -8,6 +8,11 @@ import {
   SkeletonText,
   Stack,
   VStack,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import RoundStatus from '~/components/common/dates/Status';
@@ -40,15 +45,14 @@ const RoundPage = () => {
               as="p"
               textStyle={{ base: 'display5', md: 'display3' }}
             >
-              Grow Public Good with Decentralized Grants
+              Quadratic Funding Grants
             </Box>{' '}
             <Box
               color="neutral.9"
               as="p"
               textStyle={{ base: 'body4', md: 'body3' }}
             >
-              Participate in Engaging Community Grant Rounds to Propel Your
-              Public Good Project
+              Participate in Engaging Community Grant Rounds
             </Box>
           </VStack>
           {/* <Button variant="close_modal" rightIcon={<BiPlus />}>
@@ -61,13 +65,28 @@ const RoundPage = () => {
           align="start"
           spacing="32px"
         >
-          <Box
-            color="neutral.11"
-            as="p"
-            textStyle={{ base: 'title3', md: 'title2' }}
+          {' '}
+          <Tabs
+            w="full"
+            border="1px solid red"
+            variant="soft-rounded"
+            colorScheme="green"
           >
-            Grant Rounds
-          </Box>{' '}
+            <HStack w="full" justify="space-between">
+              <Box
+                color="neutral.11"
+                as="p"
+                textStyle={{ base: 'title3', md: 'title2' }}
+              >
+                Grant Rounds
+              </Box>
+
+              <TabList>
+                <Tab>Tab 1</Tab>
+                <Tab>Tab 2</Tab>
+              </TabList>
+            </HStack>
+          </Tabs>
           {isLoading ? (
             [0, 1, 2].map((index) => (
               <HStack
