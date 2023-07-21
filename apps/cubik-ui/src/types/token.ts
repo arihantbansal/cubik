@@ -19,3 +19,7 @@ export interface BalanceDataType {
   }>;
   nativeBalance: number;
 }
+export interface PriceReturnType {
+  token: string;
+  price: number;
+}
