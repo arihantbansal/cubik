@@ -18,7 +18,7 @@ import {
   HiExternalLink,
 } from 'react-icons/hi';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
-import useGetTotalWalletBalanceInUSDC from '~/utils/wallet/useGetTotalWalletBalanceInUSDC';
+
 import WithdrawFundsTransactionModal from './WithdrawFundsTransactionModal';
 
 const VaultHeader = ({

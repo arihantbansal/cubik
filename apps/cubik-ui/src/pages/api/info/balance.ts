@@ -23,13 +23,14 @@ export default async function handler(
       const solPrice = await tokenPrice("SOL") || 0
 
 
-
+    const bal = solPrice * data.nativeBalance + usdcToken?.amount! ? usdcToken?.amount : 0
+    
     return res.status(200).json({
-        balance: solPrice * data.nativeBalance + usdcToken?.amount! ?? 0
+        balance:  bal
     });
   } catch (e) {
     const error = e as Error;
-
+    console.log(e)
     return res.status(500).json({
       error: error.message || 'Internal server error',
     });
