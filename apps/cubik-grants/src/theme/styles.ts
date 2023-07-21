@@ -24,6 +24,7 @@ export const styles = {
     body: {
       bg: mode('#000000', '#000000')(props),
       color: mode('#E0FFFD', '#E0FFFD')(props),
+      
     },
     option: {
       background: 'red !important',

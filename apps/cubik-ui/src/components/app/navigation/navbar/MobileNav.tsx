@@ -39,52 +39,49 @@ export const MobileNavCollapsible = memo(function MobileNavCollapsible({
         gap={{ base: '16px', sm: '24px' }}
       >
         <Center w="full">{children}</Center>
-        <Box
-          ps="6px"
-          as={Link}
-          passHref
-          href="/projects"
-          display="flex"
-          alignItems={'start'}
-          w="100%"
-          onClick={() => onToggle()}
-          fontSize="14px"
-          fontWeight="500"
-        >
-          Projects
-        </Box>
-        <Box
-          ps="6px"
-          as={Link}
-          href="/grants"
-          passHref
-          display="flex"
-          alignItems={'start'}
-          w="100%"
-          fontSize="14px"
-          fontWeight="500"
-          onClick={() => {
-            onClose();
-          }}
-        >
-          Grants
-        </Box>
-        <Box
-          ps="6px"
-          as={Link}
-          href="/hackathons"
-          passHref
-          display="flex"
-          alignItems={'start'}
-          w="100%"
-          fontSize="14px"
-          fontWeight="500"
-          onClick={() => {
-            onClose();
-          }}
-        >
-          Hackathons
-        </Box>
+        <Link href="/projects">
+          <Box
+            ps="6px"
+            display="flex"
+            alignItems={'start'}
+            w="100%"
+            onClick={() => onToggle()}
+            fontSize="14px"
+            fontWeight="500"
+          >
+            Projects
+          </Box>
+        </Link>
+        <Link href="/grants">
+          <Box
+            ps="6px"
+            display="flex"
+            alignItems={'start'}
+            w="100%"
+            fontSize="14px"
+            fontWeight="500"
+            onClick={() => {
+              onClose();
+            }}
+          >
+            Grants
+          </Box>
+        </Link>
+        <Link href="/hackathons">
+          <Box
+            ps="6px"
+            display="flex"
+            alignItems={'start'}
+            w="100%"
+            fontSize="14px"
+            fontWeight="500"
+            onClick={() => {
+              onClose();
+            }}
+          >
+            Hackathons
+          </Box>
+        </Link>
       </Flex>
     </Collapse>
   );

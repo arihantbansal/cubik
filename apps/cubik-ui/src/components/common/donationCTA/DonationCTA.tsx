@@ -67,13 +67,9 @@ export const ProofsValidation = ({
         </Center>{' '}
         <Box as={'p'} textStyle={'body5'} color="#FEF08A" textAlign={'start'}>
           At least one proofs are need to contribute to a project in this round.
-          <Box
-            as={Link}
-            href={`/${username}`}
-            style={{ textDecoration: 'underline' }}
-          >
-            collect Proofs
-          </Box>
+          <Link href={`/${username}`}>
+            <Box style={{ textDecoration: 'underline' }}>collect Proofs</Box>
+          </Link>
         </Box>
       </HStack>
     </Skeleton>

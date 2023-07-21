@@ -16,14 +16,14 @@ const ContributionsEmptyState = () => {
           'This project hasn`t received any contributions yet. Be the first to support this project!'
         }
         CTA={
-          <Button
-            as={Link}
-            href="/projects"
-            variant="cubikFilled"
-            size={{ base: 'cubikMini', md: 'cubikSmall' }}
-          >
-            Make a contribution
-          </Button>
+          <Link href="/projects">
+            <Button
+              variant="cubikFilled"
+              size={{ base: 'cubikMini', md: 'cubikSmall' }}
+            >
+              Make a contribution
+            </Button>{' '}
+          </Link>
         }
       />
     </Center>

@@ -573,14 +573,14 @@ const CreateProfileStepThree = ({
                     You are all set to help your favorite projects.
                   </Box>
                 </VStack>
-                <Button
-                  as={Link}
-                  href={`/${userName}`}
-                  size={{ base: 'cubikMini', md: 'cubikSmall' }}
-                  variant="cubikFilled"
-                >
-                  Go to profile
-                </Button>
+                <Link href={`/${userName}`}>
+                  <Button
+                    size={{ base: 'cubikMini', md: 'cubikSmall' }}
+                    variant="cubikFilled"
+                  >
+                    Go to profile
+                  </Button>
+                </Link>
               </VStack>
             ) : (
               <VStack
