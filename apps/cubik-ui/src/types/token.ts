@@ -1,16 +1,3 @@
-export type Token = {
-  address: string;
-  chainId: number;
-  decimals: number;
-  name: string;
-  symbol: string;
-  logoURI: string;
-  tags: string[];
-  extensions: {
-    coingeckoId: string;
-  };
-};
-
 export type TokenPriceResponse = {
   data: {
     [key: string]: {
