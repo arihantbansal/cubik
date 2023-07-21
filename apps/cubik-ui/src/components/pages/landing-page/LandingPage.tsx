@@ -213,14 +213,11 @@ const LandingPage = () => {
                     Connect Wallet
                   </Button>
                 )}
-                <Button
-                  as={Link}
-                  href="/projects"
-                  variant="secondary"
-                  maxW="18rem"
-                >
-                  Explore Projects
-                </Button>
+                <Link href="/projects">
+                  <Button variant="secondary" maxW="18rem">
+                    Explore Projects
+                  </Button>
+                </Link>
               </MotionBox>
               <Center
                 transform={{
