@@ -98,7 +98,7 @@ export const Header = memo(function Header({
           justifyContent={landingPage ? 'center' : 'flex-start'}
           mx="auto"
         >
-          <Button h="full" variant={'unstyled'} as={Link} href="/projects">
+          <Link href="/projects">
             <Box
               as="p"
               textStyle={'title4'}
@@ -107,8 +107,8 @@ export const Header = memo(function Header({
             >
               Projects
             </Box>
-          </Button>
-          <Button as={Link} href="/grants" h="full" variant={'unstyled'}>
+          </Link>
+          <Link href="/grants">
             <Box
               as="p"
               textStyle={'title4'}
@@ -117,8 +117,8 @@ export const Header = memo(function Header({
             >
               Grants
             </Box>
-          </Button>
-          <Button as={Link} href="/hackathons" h="full" variant={'unstyled'}>
+          </Link>
+          <Link href="/hackathons">
             <Box
               as="p"
               textStyle={'title4'}
@@ -127,7 +127,7 @@ export const Header = memo(function Header({
             >
               Hackathons
             </Box>
-          </Button>
+          </Link>
         </HStack>
       </>
     ) : (

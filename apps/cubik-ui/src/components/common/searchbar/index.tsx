@@ -184,42 +184,46 @@ export const SearchBar = ({ display, width }: SearchBarProps) => {
                       }}
                     >
                       {filteredProjects.map((projectjoinround, index) => (
-                        <HStack
+                        <Link
                           key={projectjoinround?.id}
-                          as={Link}
-                          gap="8px"
-                          rounded="8px"
-                          w="full"
-                          p="8px"
-                          bg={
-                            index === selectedProjectIndex
-                              ? 'neutral.5'
-                              : 'transparent'
-                          }
-                          href={`/project/${projectjoinround?.id}`} // @irfan check if the route is correct once
-                          ref={(element) => (itemRefs.current[index] = element)}
+                          href={`/project/${projectjoinround?.id}`}
                         >
-                          <Avatar
-                            src={projectjoinround.logo}
-                            name={projectjoinround.name}
-                            width={{ base: '20px', md: '28px' }}
-                            height={{ base: '20px', md: '28px' }}
-                            rounded="full"
-                          />
-                          <HStack justify={'start'} gap="0" align={'center'}>
-                            <Box as="p" color="white" textStyle="title5">
-                              {projectjoinround.name}
-                            </Box>
-                            <Box
-                              as="p"
-                              color="neutral.8"
-                              fontSize={'11px'}
-                              lineHeight="12px"
-                            >
-                              by @{projectjoinround.owner.username}
-                            </Box>
+                          <HStack
+                            gap="8px"
+                            rounded="8px"
+                            w="full"
+                            p="8px"
+                            bg={
+                              index === selectedProjectIndex
+                                ? 'neutral.5'
+                                : 'transparent'
+                            }
+                            ref={(element) =>
+                              (itemRefs.current[index] = element)
+                            }
+                          >
+                            <Avatar
+                              src={projectjoinround.logo}
+                              name={projectjoinround.name}
+                              width={{ base: '20px', md: '28px' }}
+                              height={{ base: '20px', md: '28px' }}
+                              rounded="full"
+                            />
+                            <HStack justify={'start'} gap="0" align={'center'}>
+                              <Box as="p" color="white" textStyle="title5">
+                                {projectjoinround.name}
+                              </Box>
+                              <Box
+                                as="p"
+                                color="neutral.8"
+                                fontSize={'11px'}
+                                lineHeight="12px"
+                              >
+                                by @{projectjoinround.owner.username}
+                              </Box>
+                            </HStack>
                           </HStack>
-                        </HStack>
+                        </Link>
                       ))}
                     </VStack>
                   )}

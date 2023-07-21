@@ -109,17 +109,21 @@ const RoundStatus = ({
       <HStack
         rounded="full"
         backgroundColor="#1D1F1E"
-        p="8px 12px"
+        p={{ base: '7px', md: '8px 12px' }}
         spacing="8px"
         mx={1}
       >
-        <BiInfoCircle color="white" size={18} />
+        <Box
+          as={BiInfoCircle}
+          color="white"
+          boxSize={['12px', '14px', '18px']}
+        />
         <Box
           as="p"
           whiteSpace="pre"
           color="neutral.11"
           textStyle={{ base: 'body6', md: 'body5' }}
-          display={{ base: 'none', md: 'block' }}
+          display={{ base: show ? 'block' : 'none', md: 'block' }}
         >
           {daysSinceEnd > 1
             ? `Round ended ${daysSinceEnd} days ago`

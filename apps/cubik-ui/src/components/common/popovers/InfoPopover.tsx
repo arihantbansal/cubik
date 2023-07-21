@@ -94,14 +94,14 @@ export const InfoPopover = () => {
           </PopoverHeader>
           <PopoverBody>
             <Box as="p" textStyle={{ base: 'body6', md: 'body5' }}>
-              You are now eligible for{' '}
-              <Box as={Link} href={'/grants'} color="#FFD83D">
-                grant round
-              </Box>{' '}
-              and hackathons. Make the most of{' '}
-              <Box as={Link} href={'/qf'} color="#A8F0E6">
-                Quadratic Funding
-              </Box>{' '}
+              You are now eligible for
+              <Link href={'/grants'}>
+                <Box color="#FFD83D">grant round</Box>
+              </Link>
+              and hackathons. Make the most of
+              <Link href={'/qf'}>
+                <Box color="#A8F0E6">Quadratic Funding</Box>
+              </Link>
               to optimize your fundraising efforts.
             </Box>
           </PopoverBody>

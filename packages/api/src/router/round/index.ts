@@ -6,7 +6,7 @@ import {
 import { z } from 'zod';
 import { v4 as uuid } from 'uuid';
 import { Prisma, ProjectJoinRoundStatus } from '@cubik/database';
-import { activeRounds, leaderBoard } from './public';
+import { activeRounds, findPastRound, leaderBoard } from './public';
 import { TRPCError } from '@trpc/server';
 import { createSponsor } from './protected';
 export const roundRouter = createTRPCRouter({
@@ -82,6 +82,7 @@ export const roundRouter = createTRPCRouter({
     }),
 
   findActive: activeRounds,
+  findPast: findPastRound,
   leaderboard: leaderBoard,
   createSponsor: createSponsor,
   findInReview: publicProcedure

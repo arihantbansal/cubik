@@ -128,16 +128,18 @@ const GrantAcceptedProjects = ({
                       </VStack>
                     </Stack>
                     <HStack justifyContent={'end'}>
-                      <Button
-                        as={Link}
+                      <Link
                         href={`/${projectJoinRound.project.owner.username}/${projectJoinRound.id}/${projectJoinRound.roundId}`}
-                        variant={'cubikOutlined'}
-                        size={{ base: 'cubikMini', md: 'CubikSmall' }}
-                        w={{ base: 'full', sm: '8rem', md: '10rem' }}
-                        h="3rem"
                       >
-                        View Details
-                      </Button>
+                        <Button
+                          variant={'cubikOutlined'}
+                          size={{ base: 'cubikMini', md: 'CubikSmall' }}
+                          w={{ base: 'full', sm: '8rem', md: '10rem' }}
+                          h="3rem"
+                        >
+                          View Details
+                        </Button>
+                      </Link>
                     </HStack>
                   </Stack>
                 </CardBody>

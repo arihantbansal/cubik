@@ -9,45 +9,44 @@ const Logo = () => {
       alignItems={'center'}
       justify="space-between"
     >
-      <Button
-        as={Link}
-        display="flex"
-        flexDir={'row'}
-        gap="12px"
-        alignContent={'center'}
-        justifyContent={'center'}
-        variant="unstyled"
-        href="/"
-      >
-        <Center
-          width={{ base: '1.5rem', sm: '1.6rem' }}
-          height={{ base: '1.5rem', sm: '1.6rem' }}
+      <Link href="/">
+        <Box
+          display="flex"
+          flexDir={'row'}
+          gap="12px"
+          alignContent={'center'}
+          justifyContent={'center'}
         >
-          <svg
-            width="101"
-            height="120"
-            viewBox="0 0 101 120"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+          <Center
+            width={{ base: '1.5rem', sm: '1.6rem' }}
+            height={{ base: '1.5rem', sm: '1.6rem' }}
           >
-            <path
-              d="M97 52.3137V31.451L50.5 4L4 31.451V87.451M97 52.3137L50.5 24.8627L23.0227 40.2353V55.6078L35.7045 48.006L50.5 39.1373L85.0368 60M97 52.3137L85.0368 60M95.9432 87.451V66.5882L85.0368 60M95.9432 87.451L50.5 61.098L4 87.451M95.9432 87.451L50.5 116L4 87.451"
-              stroke="white"
-              strokeWidth="8"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </Center>
-        <Text
-          letterSpacing={'0.12em'}
-          fontWeight={'800'}
-          fontSize={{ base: '18px', sm: '20px' }}
-          color="white"
-          display={{ base: 'block', sm: 'block', lg: 'block' }}
-        >
-          CUBIK
-        </Text>
-      </Button>
+            <svg
+              width="101"
+              height="120"
+              viewBox="0 0 101 120"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M97 52.3137V31.451L50.5 4L4 31.451V87.451M97 52.3137L50.5 24.8627L23.0227 40.2353V55.6078L35.7045 48.006L50.5 39.1373L85.0368 60M97 52.3137L85.0368 60M95.9432 87.451V66.5882L85.0368 60M95.9432 87.451L50.5 61.098L4 87.451M95.9432 87.451L50.5 116L4 87.451"
+                stroke="white"
+                strokeWidth="8"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Center>
+          <Text
+            letterSpacing={'0.12em'}
+            fontWeight={'800'}
+            fontSize={{ base: '18px', sm: '20px' }}
+            color="white"
+            display={{ base: 'block', sm: 'block', lg: 'block' }}
+          >
+            CUBIK
+          </Text>
+        </Box>
+      </Link>
       {beta ? (
         <Tag
           rounded="full"

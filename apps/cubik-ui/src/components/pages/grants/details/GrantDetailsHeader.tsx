@@ -49,12 +49,16 @@ import ProfilePicture from '../../create-profile/ProfilePicture';
 import UploadImageInput from '~/components/common/inputs/UploadImageInput';
 import { AmountInput } from '../../projects/project-details/project-interactions/project-donation-simulator/form/DonationAmountInput';
 import { tokens } from '~/components/common/tokens/DonationTokens';
+<<<<<<< HEAD
 import { trpc } from '~/utils/trpc';
 import FlipNumbers from 'react-flip-numbers';
 import { uploadToCloudinary } from '~/utils/upload';
 import { sendSPL } from '~/utils/spl';
 import { PublicKey, Transaction } from '@solana/web3.js';
 import { connection } from '~/utils/program/contract';
+=======
+import { isPast } from 'date-fns';
+>>>>>>> a3c9337 (fix: grant explorer)
 
 const sponsors = [
   {
@@ -177,7 +181,7 @@ const GrantSponsors = ({
       <HStack
         flexWrap={'wrap'}
         gap={{
-          sm: '0',
+          base: '12px',
           md: '12px',
         }}
       >
@@ -187,7 +191,7 @@ const GrantSponsors = ({
           rounded="full"
           backgroundColor={'neutral.4'}
           p={['6px', '6px', '8px']}
-          spacing={['12px', '14px', '16px']}
+          spacing={['10px', '14px', '16px']}
           pe={['12px', '16px', '24px']}
         >
           <Center
@@ -200,7 +204,7 @@ const GrantSponsors = ({
           </Center>
           <Box
             as="p"
-            textStyle={{ base: 'title5', md: 'title4' }}
+            textStyle={{ base: 'title6', md: 'title4' }}
             color="neutral.11"
           >
             Become a Sponsor
@@ -218,7 +222,7 @@ const GrantSponsors = ({
                 rounded="full"
                 backgroundColor={'neutral.4'}
                 p={['6px', '6px', '8px']}
-                spacing={['12px', '14px', '16px']}
+                spacing={['10px', '14px', '16px']}
                 pe={['12px', '16px', '24px']}
               >
                 <Avatar
@@ -229,7 +233,7 @@ const GrantSponsors = ({
                 />
                 <Box
                   as="p"
-                  textStyle={{ base: 'title5', md: 'title4' }}
+                  textStyle={{ base: 'title6', md: 'title4' }}
                   color="neutral.11"
                 >
                   {sponsor.name}
@@ -604,7 +608,7 @@ const GrantDetailsHeader = ({
             flexDir={{ base: 'column', md: 'row' }}
             pt="12px"
             pb={{ base: '12px', md: '0px' }}
-            gap={{ base: '0px', md: '24px' }}
+            gap={{ base: '12px', md: '24px' }}
           >
             <Skeleton
               isLoaded={!isLoading}
@@ -616,7 +620,7 @@ const GrantDetailsHeader = ({
                 spacing="4px"
                 align={'baseline'}
               >
-                <HStack gap="4px" align="center" justify="start">
+                <HStack gap="12px" align="center" justify="start">
                   <Center
                     w="10px"
                     h="10px"
@@ -645,7 +649,7 @@ const GrantDetailsHeader = ({
               fadeDuration={2}
               opacity={isLoading ? '0.4' : '1'}
             >
-              <HStack gap="4px" align="center" justify="start">
+              <HStack gap="12px" align="center" justify="start">
                 <Center
                   w="10px"
                   h="10px"
@@ -667,7 +671,10 @@ const GrantDetailsHeader = ({
                     textStyle={{ base: 'overline4', md: 'overline3' }}
                     color={'neutral.8'}
                   >
-                    Projects Participating
+                    Projects{' '}
+                    {isPast(data?.endTime as Date)
+                      ? 'Participated'
+                      : 'Participating'}
                   </Box>
                 </HStack>
               </HStack>

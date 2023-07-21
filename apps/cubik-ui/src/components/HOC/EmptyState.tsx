@@ -103,7 +103,7 @@ const EmptyStateHOC = ({
           textAlign="center"
           mx="auto"
           as="p"
-          textStyle={{ base: 'body4', md: 'body4' }}
+          textStyle={{ base: 'body5', md: 'body4' }}
           color="neutral.7"
         >
           {subHeading}

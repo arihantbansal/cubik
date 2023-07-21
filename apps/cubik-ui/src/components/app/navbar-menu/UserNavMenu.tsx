@@ -44,40 +44,41 @@ const UserNavMenu = () => {
           isLoaded={!!user?.username}
           w="full"
         >
-          <Button
-            bg="transparent"
-            w="full"
-            rounded="md"
-            textStyle={'body4'}
-            color="white"
-            display={'flex'}
-            alignItems="center"
-            justifyContent={'start'}
-            leftIcon={
-              <Box
-                as={BiUser}
-                boxSize={{ base: '16px', sm: '18px', md: '20px' }}
-                color={'#ADB8B6'}
-              />
-            }
-            iconSpacing="8px"
-            p={{ base: '12px', md: '8px' }}
-            sx={{
-              width: '-webkit-fill-available',
-            }}
-            _hover={{
-              backgroundColor: '#141414',
-            }}
-            _active={{
-              backgroundColor: '#141414',
-            }}
-            as={Link}
-            href={'/' + user?.username}
-          >
-            <Box as="p" textStyle={{ base: 'body5', md: 'body4' }}>
-              Profile
+          <Link href={'/' + user?.username}>
+            <Box
+              as={Button}
+              bg="transparent"
+              w="full"
+              rounded="md"
+              textStyle={'body4'}
+              color="white"
+              display={'flex'}
+              alignItems="center"
+              justifyContent={'start'}
+              leftIcon={
+                <Box
+                  as={BiUser}
+                  boxSize={{ base: '16px', sm: '18px', md: '20px' }}
+                  color={'#ADB8B6'}
+                />
+              }
+              iconSpacing="8px"
+              p={{ base: '12px', md: '8px' }}
+              sx={{
+                width: '-webkit-fill-available',
+              }}
+              _hover={{
+                backgroundColor: '#141414',
+              }}
+              _active={{
+                backgroundColor: '#141414',
+              }}
+            >
+              <Box as="p" textStyle={{ base: 'body5', md: 'body4' }}>
+                Profile
+              </Box>
             </Box>
-          </Button>
+          </Link>
         </Skeleton>
         <Skeleton
           w="full"
@@ -85,38 +86,41 @@ const UserNavMenu = () => {
           fadeDuration={2.5}
           isLoaded={!!user?.username}
         >
-          <Button
-            bg="transparent"
-            rounded="md"
-            w="full"
-            textStyle={'body4'}
-            color="white"
-            display={'flex'}
-            alignItems="center"
-            justifyContent={'start'}
-            leftIcon={
-              <Box
-                as={MdUpload}
-                boxSize={{ base: '16px', sm: '18px', md: '20px' }}
-                color={'#ADB8B6'}
-              />
-            }
-            iconSpacing="8px"
-            p={{ base: '12px', md: '8px' }}
-            sx={{
-              width: '-webkit-fill-available',
-            }}
-            _hover={{
-              backgroundColor: '#141414',
-            }}
-            _active={{
-              backgroundColor: '#141414',
-            }}
-            as={Link}
-            href={'/submit-project'}
-          >
-            <Box textStyle={{ base: 'body5', md: 'body4' }}>Submit Project</Box>
-          </Button>
+          <Link href={'/submit-project'}>
+            <Box
+              as={Button}
+              bg="transparent"
+              rounded="md"
+              w="full"
+              textStyle={'body4'}
+              color="white"
+              display={'flex'}
+              alignItems="center"
+              justifyContent={'start'}
+              leftIcon={
+                <Box
+                  as={MdUpload}
+                  boxSize={{ base: '16px', sm: '18px', md: '20px' }}
+                  color={'#ADB8B6'}
+                />
+              }
+              iconSpacing="8px"
+              p={{ base: '12px', md: '8px' }}
+              sx={{
+                width: '-webkit-fill-available',
+              }}
+              _hover={{
+                backgroundColor: '#141414',
+              }}
+              _active={{
+                backgroundColor: '#141414',
+              }}
+            >
+              <Box textStyle={{ base: 'body5', md: 'body4' }}>
+                Submit Project
+              </Box>
+            </Box>
+          </Link>
         </Skeleton>
         <Skeleton
           w="full"

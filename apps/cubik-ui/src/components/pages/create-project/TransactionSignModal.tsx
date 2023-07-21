@@ -351,16 +351,17 @@ const CreateProjectTransactionModal: React.FC<
                     Your project is under review and you will be notified soon.
                   </Box>
                 </VStack>
-                <Button
-                  as={Link}
-                  href={`/${user?.username}/${projectId}`}
-                  mx="auto"
-                  variant="cubikFilled"
-                  size={{ based: 'cubikMini', md: 'cubikSmall' }}
-                  w="12rem"
-                >
-                  View Project
-                </Button>
+                <Box mx="auto">
+                  <Link href={`/${user?.username}/${projectId}`}>
+                    <Button
+                      variant="cubikFilled"
+                      size={{ based: 'cubikMini', md: 'cubikSmall' }}
+                      w="12rem"
+                    >
+                      View Project
+                    </Button>
+                  </Link>
+                </Box>
               </ModalHeader>
             </>
           ) : (
