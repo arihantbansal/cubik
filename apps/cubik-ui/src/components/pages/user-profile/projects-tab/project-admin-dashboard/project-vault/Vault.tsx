@@ -9,12 +9,11 @@ import { useEffect, useState } from 'react';
 import { VaultTx, getAllTx, getMsAddress } from '~/utils/vault';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { TransactionAccount } from '@sqds/sdk';
-import { Button } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import { useUserStore } from '~/store/userStore';
-import useGetTotalWalletBalanceInUSDC from '~/utils/wallet/useGetTotalWalletBalanceInUSDC';
 import NoInformation from '~/components/common/empty-state/NoInformation';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 const Vault = ({
   isLoading,
   multisigAddress,
@@ -31,7 +30,22 @@ const Vault = ({
   const [key, setKey] = useState<string>('');
   const { user } = useUserStore();
   const [update, setUpdate] = useState<boolean>(false);
-  const { balance } = useGetTotalWalletBalanceInUSDC(multisigAddress as string);
+
+  const usdcBalance = useQuery({
+    queryKey: ['usdcBalance', multisigAddress],
+    queryFn: async (): Promise<number> => {
+      const { data } = await axios.post('/api/info/balance', {
+        address: multisigAddress,
+      });
+      return data.balance as number;
+    },
+    enabled: multisigAddress ? true : false,
+    staleTime: 1000 * 60 * 2,
+    cacheTime: 1000 * 60 * 2,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
 
   useEffect(() => {
     const fetchTx = async () => {
@@ -64,7 +78,7 @@ const Vault = ({
         gap={{ base: '16px', sm: '20px', md: '24px' }}
       >
         <VaultHeader
-          balance={balance}
+          balance={usdcBalance.data || 0}
           isLoading={isLoading}
           multiSigAddress={multisigAddress}
         />
@@ -81,7 +95,7 @@ const Vault = ({
                   tx.map((t, index) => {
                     return (
                       <MultisigTransactions
-                        usdcAmount={balance}
+                        usdcAmount={usdcBalance.data || 0}
                         setUpdate={setUpdate}
                         ms={ms}
                         wallet={user?.mainWallet as string}

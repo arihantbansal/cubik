@@ -14,12 +14,12 @@ export type Token = {
 export type TokenPriceResponse = {
   data: {
     [key: string]: {
-      id: 'So11111111111111111111111111111111111111112';
-      mintSymbol: 'SOL';
-      vsToken: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
-      vsTokenSymbol: 'USDC';
-      price: 27.794443666;
+      id: string;
+      mintSymbol: string;
+      vsToken: string;
+      vsTokenSymbol: string;
+      price: number;
     };
   };
-  timeTaken: 0.00037357999985943025;
+  timeTaken: number;
 };

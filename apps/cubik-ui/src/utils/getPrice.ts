@@ -1,15 +1,16 @@
 import axios from 'axios';
+import { PriceReturnType } from '~/types/token';
 
 export const fetchPrice = async (
-  type: 'solana' | 'usd' | 'bonk'
-): Promise<number | null> => {
+  type: ('solana' | 'bonk')[]
+): Promise<PriceReturnType[]> => {
   try {
-    const { data } = await axios.get(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${type}&vs_currencies=usd`
-    );
+    const { data } = await axios.post('/api/info/price', {
+      tokens: type || [],
+    });
 
-    return data[type].usd;
+    return data.prices;
   } catch (error) {
-    return null;
+    return [];
   }
 };
