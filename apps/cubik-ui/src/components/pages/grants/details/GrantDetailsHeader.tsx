@@ -15,7 +15,6 @@ import {
   HStack,
   Input,
   InputGroup,
-  InputRightAddon,
   InputRightElement,
   Modal,
   ModalBody,
@@ -30,7 +29,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { Round } from '@cubik/database';
-import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
+import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import React, { useState } from 'react';
 import RoundStatus from '~/components/common/dates/Status';
@@ -49,16 +48,7 @@ import ProfilePicture from '../../create-profile/ProfilePicture';
 import UploadImageInput from '~/components/common/inputs/UploadImageInput';
 import { AmountInput } from '../../projects/project-details/project-interactions/project-donation-simulator/form/DonationAmountInput';
 import { tokens } from '~/components/common/tokens/DonationTokens';
-<<<<<<< HEAD
-import { trpc } from '~/utils/trpc';
-import FlipNumbers from 'react-flip-numbers';
-import { uploadToCloudinary } from '~/utils/upload';
-import { sendSPL } from '~/utils/spl';
-import { PublicKey, Transaction } from '@solana/web3.js';
-import { connection } from '~/utils/program/contract';
-=======
 import { isPast } from 'date-fns';
->>>>>>> a3c9337 (fix: grant explorer)
 
 const sponsors = [
   {
@@ -87,13 +77,6 @@ const sponsors = [
   },
 ];
 
-type GrantSponsorsForm = {
-  name: string;
-  amount: number;
-  public: boolean;
-  logo: any;
-};
-
 const GrantSponsors = ({
   grantName,
   grantId,
@@ -112,68 +95,12 @@ const GrantSponsors = ({
     getValues,
     setError,
     register,
-    watch,
     formState: { errors },
-  } = useForm<GrantSponsorsForm>({
-    defaultValues: {
-      amount: 500,
-      name: '',
-      public: true,
-    },
-  });
-  const [loading, setLoading] = useState(false);
-  const anchorWallet = useAnchorWallet();
+  } = useForm({});
+
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const createSponsorMutation = trpc.round.createSponsor.useMutation({
-    onSuccess: () => {
-      // TODO: Add toast
-    },
-  });
-
-  const onSubmit = async (data: any) => {
-    try {
-      setLoading(true);
-      const imageUrl = await uploadToCloudinary(getValues('logo')).catch(
-        (error) => {
-          throw new Error(
-            `Error uploading image to Cloudinary: ${error.message}`
-          );
-        }
-      );
-      if (!imageUrl) return;
-      if (!anchorWallet?.publicKey) return;
-      if (!grantId) return;
-      console.log('token', data.amount);
-      const ix = await sendSPL(
-        'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
-        anchorWallet?.publicKey,
-        new PublicKey('5bn8VFUS2UKZ1uAR1tSsmq67GvxKFpNB87WSiRHhq2Vs'),
-        data.amount
-      );
-      if (!ix) return;
-      const tx = new Transaction();
-      tx.add(...ix);
-      const { blockhash } = await connection.getLatestBlockhash();
-      tx.recentBlockhash = blockhash;
-      tx.feePayer = anchorWallet?.publicKey;
-
-      const txSigned = await anchorWallet?.signTransaction(tx);
-      const txId = await connection.sendRawTransaction(txSigned.serialize());
-
-      if (!txId) return;
-      createSponsorMutation.mutate({
-        amount: data.amount as number,
-        name: data.name as string,
-        logo: imageUrl,
-        roundId: grantId,
-        tx: txId,
-      });
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      return null;
-    }
+  const onSubmit = (data: any) => {
+    console.log(data);
   };
 
   return (
@@ -277,17 +204,30 @@ const GrantSponsors = ({
                 </FormLabel>
 
                 <InputGroup>
-                  <Input
-                    {...register('name')}
-                    autoComplete="false"
-                    placeholder="Sponsor Organization Name"
-                    aria-autocomplete="none"
+                  <Controller
+                    name="name"
+                    control={control}
+                    rules={{
+                      required: true,
+                    }}
+                    render={({
+                      field: { onChange, ...field },
+                    }: {
+                      field: any;
+                    }) => (
+                      <Input
+                        {...field}
+                        autoComplete="false"
+                        placeholder="Sponsor Organization Name"
+                        aria-autocomplete="none"
+                      />
+                    )}
                   />
                 </InputGroup>
-                {errors.name ? (
+                {errors.Name ? (
                   <>
                     <FormErrorMessage textAlign={'start'}>
-                      {errors.name && <>{errors.name.message}</>}
+                      {errors.Name && <>{errors.Name.message}</>}
                     </FormErrorMessage>
                   </>
                 ) : (
@@ -316,10 +256,10 @@ const GrantSponsors = ({
                   getValues={getValues}
                   errors={errors}
                 />
-                {errors.name ? (
+                {errors.Name ? (
                   <>
                     <FormErrorMessage textAlign={'start'}>
-                      {errors.name && <>{errors.name.message}</>}
+                      {errors.Name && <>{errors.Name.message}</>}
                     </FormErrorMessage>
                   </>
                 ) : (
@@ -341,96 +281,19 @@ const GrantSponsors = ({
                   Amount
                 </FormLabel>
                 <HStack>
-                  <InputGroup border="1px solid #141414" rounded={'8px'}>
-                    <Input
-                      {...register('amount', {
-                        required: true,
-                        valueAsNumber: true,
-                      })}
-                      type="number"
-                      step="any"
-                      color="white"
-                      fontWeight="600"
-                      border="1px solid #141414"
-                      px="0.7rem"
-                      boxShadow={'none'}
-                      borderRight={'none'}
-                      _hover={{
-                        outline: 'none',
-                        boxShadow: 'none',
-                        border: '1px solid #141414',
-                        borderRight: 'none',
-                      }}
-                      _active={{
-                        outline: 'none',
-                        boxShadow: 'none',
-                        border: '1px solid #141414',
-                        borderRight: 'none',
-                      }}
-                      _focus={{
-                        outline: 'none',
-                        boxShadow: 'none',
-                        border: '1px solid #141414',
-                        borderRight: 'none',
-                      }}
-                      _focusVisible={{
-                        outline: 'none',
-                        boxShadow: 'none',
-                        border: '1px solid #141414',
-                        borderRight: 'none',
-                      }}
-                      _visited={{
-                        outline: 'none',
-                        boxShadow: 'none',
-                        border: '1px solid #141414',
-                        borderRight: 'none',
-                      }}
-                      _placeholder={{
-                        fontWeight: '500',
-                        color: '#636666',
-                      }}
-                      id="amount"
-                      placeholder="Amount"
-                      value={watch('amount')}
-                      min={500}
-                      // value={value} // Here's the change
-                      // onChange={(e: any) => {
-                      //   console.log('on change');
-                      //   setDonation(e.target.value);
-                      // }}
-                      // onBlur={({ target: { value } }) => {
-                      //   if (value !== '') {
-                      //     setDonation(parseFloat(value));
-                      //   } else {
-                      //     setDonation(0); // or whatever default value you want when input is empty
-                      //   }
-                      // }}
-                    />
-
-                    <InputRightAddon
-                      textAlign={'end'}
-                      justifyContent={'end'}
-                      borderLeft={'none'}
-                      outline="none"
-                      minWidth="1.5rem"
-                    >
-                      $
-                      <FlipNumbers
-                        height={15}
-                        width={10}
-                        color="#636666"
-                        //background="black"
-                        play
-                        perspective={700}
-                        numbers={watch('amount').toFixed(2)}
-                      />
-                    </InputRightAddon>
-                  </InputGroup>
+                  <AmountInput
+                    value={100}
+                    setValue={() => {}}
+                    register={register}
+                    errors={errors}
+                    token={tokens}
+                    control={control}
+                  />
                 </HStack>
                 {errors.amount ? (
                   <>
                     <FormErrorMessage textAlign={'start'}>
-                      {errors.amount && <>{errors.amount.message}</>}
+                      {errors.Name && <>{errors.Name.message}</>}
                     </FormErrorMessage>
                   </>
                 ) : (
@@ -454,13 +317,8 @@ const GrantSponsors = ({
                 <Controller
                   name="public"
                   control={control}
-                  render={({ field }: { field: any }) => (
-                    <Checkbox
-                      {...field}
-                      size="lg"
-                      colorScheme={'teal'}
-                      defaultChecked={watch('public')}
-                    />
+                  render={({ field: { ref, ...rest } }) => (
+                    <Checkbox size="lg" colorScheme={'teal'} value="public" />
                   )}
                 />
                 <Box as="p" textStyle="body4" color="neutral.9">
@@ -475,6 +333,7 @@ const GrantSponsors = ({
                 justify="space-between"
                 gap={{ base: '8px', md: '18px' }}
               >
+                {' '}
                 <Button
                   w="10rem"
                   size={{ base: 'cubikMini', md: 'cubikSmall' }}
@@ -491,7 +350,6 @@ const GrantSponsors = ({
                   variant="cubikFilled"
                   loadingText="Submitting"
                   type="submit"
-                  isLoading={loading}
                 >
                   Sign Transaction
                 </Button>
