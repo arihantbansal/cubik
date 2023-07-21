@@ -2,18 +2,9 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { env } from '~/env.mjs';
+import { BalanceDataType } from '~/types/token';
 
-interface BalanceData {
-  tokens: Array<{
-    tokenAccount: string;
-    mint: string;
-    amount: number;
-    decimals: number;
-  }>;
-  nativeBalance: number;
-}
-
-const getBalances = async (address: string): Promise<BalanceData> => {
+const getBalances = async (address: string): Promise<BalanceDataType> => {
   if (!address) throw new Error('No address provided.');
   const { data } = await axios.get(
     // todo: change api-devnet to api when using mainet
@@ -40,7 +31,7 @@ export const fetchPrice = async (
 const useGetTotalWalletBalanceInUSDC = (walletAddress: string) => {
   const [balance, setBalance] = useState<number | null>(null);
 
-  const { isLoading, data, isError, error } = useQuery<BalanceData>(
+  const { isLoading, data, isError, error } = useQuery<BalanceDataType>(
     ['balances', walletAddress], // make the query key unique for each wallet address
     () => getBalances(walletAddress),
     {

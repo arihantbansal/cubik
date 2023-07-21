@@ -1,19 +1,7 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { TokenPriceResponse } from '~/types/token';
+import { tokenPrice } from '~/utils/price';
 
-export const tokenPrice = async (token: string) => {
-  try {
-    const response = await axios.get<TokenPriceResponse>(
-      `https://price.jup.ag/v4/price?ids=${token}`
-    );
-    const price = response.data.data[token].price;
-    return price;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
 
 export default async function handler(
   req: NextApiRequest,

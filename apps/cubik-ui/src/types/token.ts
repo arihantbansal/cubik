@@ -10,3 +10,12 @@ export type TokenPriceResponse = {
   };
   timeTaken: number;
 };
+export interface BalanceDataType {
+  tokens: Array<{
+    tokenAccount: string;
+    mint: string;
+    amount: number;
+    decimals: number;
+  }>;
+  nativeBalance: number;
+}
