@@ -39,6 +39,7 @@ import {
 } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 import { AmountInput } from './form/DonationAmountInput';
+import { env } from '~/env.mjs';
 
 type ProjectDonationSimulatorProps = {
   projectDetails: ProjectsModel;
@@ -63,7 +64,7 @@ export const ProjectDonationSimulator = ({
 }: ProjectDonationSimulatorProps) => {
   const [txnError, setTxnError] = useState<string | null>(null);
   const toast = useToast();
-  const priceSol = useCurrentTokenPrice('solana');
+  const { data: price } = useCurrentTokenPrice(['solana']);
   const {
     handleSubmit,
     setValue,
@@ -118,10 +119,17 @@ export const ProjectDonationSimulator = ({
       FailureToast({ toast, message: 'Donation Failed' });
     },
   });
+  const getBalances = async (address: string) => {
+    const { data } = await axios.get(
+      `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${env.NEXT_PUBLIC_HELIUS_API_KEY}`
+    );
+    return data;
+  };
   const anchorWallet = useAnchorWallet();
-
+  const priceSol = price![0].price;
   async function onSubmit(_values: any) {
-    if (!priceSol.data) return;
+    if (!price![0]?.price) return;
+
     let sig: string | null = null;
     const balance = await getBalances(publicKey?.toBase58() as string);
 
@@ -135,7 +143,7 @@ export const ProjectDonationSimulator = ({
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
         _values.amount,
-        _values.amount * priceSol.data // multiply by 100 because of 2 decimal places
+        _values.amount * priceSol // multiply by 100 because of 2 decimal places
       );
     } else {
       sig = await donateSPL(
@@ -145,7 +153,7 @@ export const ProjectDonationSimulator = ({
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
         _values.amount, // token value direct because form is not taking near 0 values
-        _values.amount * priceSol.data // multiply by 100 because of 2 decimal places
+        _values.amount * priceSol // multiply by 100 because of 2 decimal places
       );
     }
 
@@ -157,7 +165,7 @@ export const ProjectDonationSimulator = ({
       split: _values.matchingPoolDonation,
       token: _values.token.value,
       totalAmount: _values.amount,
-      usd: _values.amount * priceSol.data,
+      usd: _values.amount * priceSol,
       tx: sig as string,
       userId: user?.id as string,
       projectJoinRoundId: projectJoinRoundId,
@@ -199,12 +207,7 @@ export const ProjectDonationSimulator = ({
       return null;
     }
   };
-  const getBalances = async (address: string) => {
-    const { data } = await axios.get(
-      `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${process.env.NEXT_PUBLIC_HELIUS_API_KEY}`
-    );
-    return data;
-  };
+
   const donateSOL = async (
     roundId: string,
     owner: string,
@@ -238,7 +241,7 @@ export const ProjectDonationSimulator = ({
     }
   };
   const EstimatedAmmount = trpc.pool.findEstimated.useQuery({
-    amount: (watch('amount') * priceSol.data!) as number,
+    amount: (watch('amount') * priceSol) as number,
     projectId: projectDetails.id,
     roundId: roundId,
   });
@@ -277,6 +280,7 @@ export const ProjectDonationSimulator = ({
             </FormLabel>
             <HStack>
               <AmountInput
+                seletedToken={selectedToken.label}
                 value={donation}
                 setValue={setDonationAndAmount}
                 register={register}
@@ -390,7 +394,7 @@ export const ProjectDonationSimulator = ({
                     String(
                       (
                         (EstimatedAmmount.data ?? 0) +
-                        (priceSol.data ?? 0) * donation
+                        (priceSol ?? 0) * donation
                       ).toFixed(3)
                     )
                   }

@@ -12,6 +12,7 @@ type AmountInputProps = {
   register: UseFormRegister<DonationFormType | any>;
   errors: FieldErrors<DonationFormType>;
   token: tokenGroup[];
+  seletedToken: string;
   control: Control<DonationFormType | any>;
 };
 
@@ -22,9 +23,16 @@ export const AmountInput = ({
   errors,
   token,
   control,
+  seletedToken,
 }: AmountInputProps) => {
-  const { data: price, isLoading, error } = useCurrentTokenPrice('solana');
-
+  const { data: price, isLoading, error } = useCurrentTokenPrice(['solana']);
+  const handlePrice = (): number => {
+    if (seletedToken.includes('SOL')) {
+      return price ? price[0].price * value : 0;
+    } else {
+      return value;
+    }
+  };
   return (
     <>
       <InputGroup border="1px solid #141414" rounded={'8px'}>
@@ -173,10 +181,9 @@ export const AmountInput = ({
               height={15}
               width={10}
               color="#636666"
-              //background="black"
               play
               perspective={700}
-              numbers={String((value * price).toFixed(2))}
+              numbers={handlePrice().toString()}
             />
           </InputRightAddon>
         ) : (
