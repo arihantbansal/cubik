@@ -12,7 +12,6 @@ import {
   Stack,
   useDisclosure,
   useMediaQuery,
-  VStack,
 } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
