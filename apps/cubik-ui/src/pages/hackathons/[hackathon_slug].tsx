@@ -4,6 +4,12 @@ import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import HackathonDetails from '~/components/pages/hackathons/hackathonDetails/HackathonDetails';
 import SEO from '~/components/SEO';
+import {
+  HackathonHost,
+  HackathonSchedule,
+  HackathonSocial,
+  HackathonTracks,
+} from '~/types/hackathon';
 import { trpc } from '~/utils/trpc';
 
 const HackathonDetail = (props: { slug: string; share: boolean }) => {
@@ -73,11 +79,11 @@ const HackathonDetail = (props: { slug: string; share: boolean }) => {
             short_description={data?.short_description}
             background={data?.background}
             description={data?.description}
-            host={data?.host}
+            host={data?.host as unknown as HackathonHost[]}
             prize_pool={data?.prize_pool}
-            prize={data?.prize}
-            timeline={data?.timeline}
-            social={data?.social}
+            timeline={data?.timeline as unknown as HackathonSchedule}
+            social={data?.social as unknown as HackathonSocial[]}
+            tracks={data?.track as unknown as HackathonTracks[]}
           />
         </VStack>
       </Container>

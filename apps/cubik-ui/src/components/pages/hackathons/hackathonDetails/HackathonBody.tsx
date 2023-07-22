@@ -9,29 +9,34 @@ import {
   Tabs,
 } from '@chakra-ui/react';
 import HackathonInteractions from './HackathonInteractions';
-import { JSONValue } from 'superjson/dist/types';
-import HackathonSchedule from './HackathonSchedule';
 import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
 import { Team, UserModel } from '@cubik/database';
+import {
+  HackathonHost,
+  HackathonSchedule as HackathonScheduleType,
+  HackathonSocial,
+  HackathonTracks,
+} from '~/types/hackathon';
+import HackathonSchedule from './HackathonSchedule';
 
 const HackathonBody = ({
   isLoading,
   description,
   host,
   prize_pool,
-  prize,
   timeline,
   social,
   team,
   hackathonId,
+  tracks,
 }: {
   isLoading: boolean;
   description?: string;
-  host?: JSONValue;
   prize_pool?: number;
-  prize?: JSONValue;
-  timeline?: JSONValue;
-  social?: JSONValue;
+  tracks: HackathonTracks[];
+  host?: HackathonHost[];
+  timeline?: HackathonScheduleType;
+  social?: HackathonSocial[];
   team: (Team & {
     user: UserModel;
   })[];
@@ -76,7 +81,7 @@ const HackathonBody = ({
             prizePool={prize_pool?.toLocaleString() ?? '0'}
             isLoading={isLoading}
             team={team}
-            sponsors={prize}
+            sponsors={[]}
           />
         </Center>
       </Stack>
