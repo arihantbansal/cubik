@@ -111,9 +111,6 @@ const RoundPage = () => {
             Participate in Community driven Grants
           </Box>
         </VStack>
-        {/* <Button variant="close_modal" rightIcon={<BiPlus />}>
-            <Link href="/grants/new-grant">Create Grant Round</Link>
-          </Button> */}
       </Stack>
       <VStack
         py={{ base: '32px', md: '64px' }}
@@ -450,7 +447,9 @@ const RoundPage = () => {
                         pastRounds?.map((round) => (
                           <Link
                             key={round.id}
-                            style={{ width: 'full' }}
+                            style={{
+                              width: '100%',
+                            }}
                             href={'/grants/' + round.id}
                           >
                             <LinkBox

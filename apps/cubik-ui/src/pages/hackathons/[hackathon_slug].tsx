@@ -7,7 +7,6 @@ import SEO from '~/components/SEO';
 import { trpc } from '~/utils/trpc';
 
 const HackathonDetail = (props: { slug: string; share: boolean }) => {
-  console.log(props);
   const { data, isLoading } = trpc.hackathon.get.useQuery(
     {
       slug: props.slug,
@@ -22,12 +21,13 @@ const HackathonDetail = (props: { slug: string; share: boolean }) => {
   return (
     <>
       <SEO
-        title={`Speedrun`}
-        description={`First ever Solana Virtual Game Jam hosted by Lamport DAO and Solana Graming Community`}
+        title={data?.name || 'Hackathon'}
+        description={data?.short_description || 'Quadratically Voted Hackathon'}
         image={
           props.share
             ? 'https://res.cloudinary.com/demonicirfan/image/upload/v1688145530/OG-Grant_11_mchdyq.png'
-            : 'https://res.cloudinary.com/demonicirfan/image/upload/v1688128772/OG-Grant_10_jlqdjx.png'
+            : data?.background ||
+              'https://res.cloudinary.com/demonicirfan/image/upload/v1688128772/OG-Grant_10_jlqdjx.png'
         }
       />
       <Container p={'0'} maxW={'full'}>

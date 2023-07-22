@@ -53,8 +53,8 @@ const HackathonBody = ({
               gap={{ base: '24px', md: '32px' }}
             >
               <Tab>Details</Tab>
-              {/* <Tab>Prizes</Tab> */}
               <Tab>Schedule</Tab>
+              <Tab>Tracks</Tab>
             </TabList>
             <TabPanels p="0">
               <TabPanel>
@@ -63,10 +63,10 @@ const HackathonBody = ({
                   description={description}
                 />
               </TabPanel>
-              {/* <TabPanel overflowX="scroll"></TabPanel> */}
               <TabPanel>
                 <HackathonSchedule />
               </TabPanel>
+              <TabPanel overflowX="scroll"></TabPanel>
             </TabPanels>
           </Tabs>
         </Center>
@@ -76,6 +76,7 @@ const HackathonBody = ({
             prizePool={prize_pool?.toLocaleString() ?? '0'}
             isLoading={isLoading}
             team={team}
+            sponsors={prize}
           />
         </Center>
       </Stack>

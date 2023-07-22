@@ -11,10 +11,14 @@ import {
 import { Team, UserModel } from '@cubik/database';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import { trpc } from '~/utils/trpc';
+import { GrantSponsors } from '../../grants/details/GrantDetailsHeader';
+import { JSONValue } from 'superjson/dist/types';
+
 interface HackathonInteractionsProps {
   isLoading: boolean;
   prizePool: string;
   hackathonId: string;
+  sponsors?: JSONValue;
   team: (Team & {
     user: UserModel;
   })[];
@@ -24,7 +28,7 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
     hackathonId: props.hackathonId,
   });
 
-  console.log('partiicpants - ', participants);
+  console.log('props - ', props);
   return (
     <VStack w="full" gap="48px">
       <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
@@ -263,6 +267,51 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
             );
           })}
         </VStack>
+      </VStack>
+      <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
+        <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
+          Sponsors
+        </Box>
+        <HStack
+          flexWrap={'wrap'}
+          gap={{
+            base: '12px',
+            md: '12px',
+          }}
+        >
+          {/* {Json.parse(sponsors).map((sponsor) => (
+            <React.Fragment key={sponsor.name}>
+              <Skeleton
+                isLoaded={!isLoading}
+                fadeDuration={2.5}
+                opacity={isLoading ? '0.4' : '1'}
+                rounded="full"
+              >
+                <HStack
+                  rounded="full"
+                  backgroundColor={'neutral.4'}
+                  p={['6px', '6px', '8px']}
+                  spacing={['10px', '14px', '16px']}
+                  pe={['12px', '16px', '24px']}
+                >
+                  <Avatar
+                    width={[6, 8, 10]}
+                    height={[6, 8, 10]}
+                    src={sponsor.logo}
+                    name={sponsor.name}
+                  />
+                  <Box
+                    as="p"
+                    textStyle={{ base: 'title6', md: 'title4' }}
+                    color="neutral.11"
+                  >
+                    {sponsor.name}
+                  </Box>
+                </HStack>
+              </Skeleton>
+            </React.Fragment>
+          ))} */}
+        </HStack>
       </VStack>
     </VStack>
   );

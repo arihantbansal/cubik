@@ -1,7 +1,4 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Avatar,
   Box,
   Button,
@@ -55,6 +52,7 @@ import { uploadToCloudinary } from '~/utils/upload';
 import { sendSPL } from '~/utils/spl';
 import { PublicKey, Transaction } from '@solana/web3.js';
 import { connection } from '~/utils/program/contract';
+import { isFuture } from 'date-fns';
 
 const sponsors = [
   {
@@ -91,10 +89,12 @@ type GrantSponsorsForm = {
 };
 
 const GrantSponsors = ({
+  endDate,
   grantName,
   grantId,
   isLoading,
 }: {
+  endDate: Date | undefined | null;
   grantName: string | undefined | null;
   grantId: string | undefined | null;
   isLoading: boolean;
@@ -182,6 +182,7 @@ const GrantSponsors = ({
         }}
       >
         <HStack
+          display={isFuture(endDate as Date) ? 'flex' : 'none'}
           cursor={'pointer'}
           onClick={onOpen}
           rounded="full"
@@ -724,6 +725,7 @@ const GrantDetailsHeader = ({
           </Box>
         </Skeleton>
         <GrantSponsors
+          endDate={data?.endTime}
           isLoading={false}
           grantName={data?.roundName}
           grantId={data?.id}
