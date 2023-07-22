@@ -27,9 +27,19 @@ export type HackathonSchedule = {
 
 export type HackathonPrize = {
   name: string;
-  description: string;
+  logo: string;
   amount: number;
-  type: 'BANNER' | 'SPONSOR';
+};
+export type HackathonPoolSponsors = {
+  name: string;
+  logo: string;
+  amount: number;
+};
+
+export type HackathonTracks = {
+  trackName: string;
+  trackDescription: string;
+  trackPrizes: HackathonPrize[];
 };
 
 export type HackathonSocial = {
@@ -49,3 +59,4 @@ export type HackathonGetAll = Prisma.HackathonGetPayload<{
     timeline: true;
   };
 }>;
+
