@@ -69,6 +69,7 @@ model UserModel {
   mainWallet             String                   @unique
   proof                  Json?
   email                  String?
+  profileNft            Json?
   profilePicture         String                   @db.VarChar(500)
   tx                     String                   @db.VarChar(500)
   createdAt              DateTime                 @default(now())
