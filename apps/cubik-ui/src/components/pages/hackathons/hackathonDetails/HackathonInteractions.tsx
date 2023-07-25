@@ -11,12 +11,12 @@ import {
 import { Team, UserModel } from '@cubik/database';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import { trpc } from '~/utils/trpc';
-import { HackathonPoolSponsors } from '~/types/hackathon';
+import { HackathonPoolSponsors, HackathonSponsor } from '~/types/hackathon';
 interface HackathonInteractionsProps {
   isLoading: boolean;
   prizePool: string;
   hackathonId: string;
-  sponsors?: HackathonPoolSponsors[];
+  sponsors?: HackathonSponsor[];
   team: (Team & {
     user: UserModel;
   })[];
