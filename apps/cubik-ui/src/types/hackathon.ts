@@ -42,7 +42,7 @@ export interface HackathonSponsor {
 
 export interface HackathonLinks {
   label: string;
-  link: string;
+  url: string;
 }
 
 export interface HackathonTracks {

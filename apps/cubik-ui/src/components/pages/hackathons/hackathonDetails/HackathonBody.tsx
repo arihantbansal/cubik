@@ -191,7 +191,7 @@ const HackathonBody = ({
                                 <Tag
                                   as="a"
                                   cursor={'pointer'}
-                                  href={link.link}
+                                  href={link.url}
                                   target="_blank"
                                   p="8px 12px"
                                 >
