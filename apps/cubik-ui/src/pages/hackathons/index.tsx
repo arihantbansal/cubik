@@ -24,6 +24,8 @@ import { trpc } from '~/utils/trpc';
 import Image from 'next/image';
 import { useErrorBoundary } from '~/hooks/useErrorBoundary';
 import EmptyStateHOC from '~/components/HOC/EmptyState';
+import HackathonStatus from '~/components/pages/hackathons/HackathonStatus';
+import { HackathonSchedule } from '~/types/hackathon';
 
 const HackathonsPage = () => {
   const { ErrorBoundaryWrapper } = useErrorBoundary();
@@ -34,7 +36,6 @@ const HackathonsPage = () => {
     error: upcomingHackathonsError,
   } = trpc.hackathon.getAll.useQuery();
 
-  console.log('upcoming hackathons - ', upcomingHackathons);
   return (
     <Container maxW="7xl" py={{ base: '48px', md: '64px' }}>
       <Stack
@@ -86,36 +87,18 @@ const HackathonsPage = () => {
         }}
       >
         <VStack align={'start'} gap="8px">
-          <Box
-            color="neutral.11"
-            as="p"
-            textStyle={{ base: 'display5', md: 'display3' }}
-          >
+          <Box color="neutral.11" as="p" textStyle={{ base: 'display5', md: 'display3' }}>
             Solana Ecosystem Hackathons
           </Box>{' '}
-          <Box
-            color="neutral.9"
-            as="p"
-            textStyle={{ base: 'body4', md: 'body3' }}
-          >
-            Participate in community run Hackathons and build the next big thing
-            on Solana
+          <Box color="neutral.9" as="p" textStyle={{ base: 'body4', md: 'body3' }}>
+            Participate in community run Hackathons and build the next big thing on Solana
           </Box>
         </VStack>
       </Stack>
-      <VStack
-        py={{ base: '32px', md: '64px' }}
-        w="full"
-        align="start"
-        spacing="32px"
-      >
+      <VStack py={{ base: '32px', md: '64px' }} w="full" align="start" spacing="32px">
         <Tabs w="full" variant="unstyled" position={'relative'}>
           <HStack pb="1rem" w="full" justify="space-between">
-            <Box
-              color="neutral.11"
-              as="p"
-              textStyle={{ base: 'title2', md: 'title1' }}
-            >
+            <Box color="neutral.11" as="p" textStyle={{ base: 'title2', md: 'title1' }}>
               Hackathons
             </Box>
             <TabList
@@ -126,20 +109,12 @@ const HackathonsPage = () => {
               p="4px"
               rounded="12px"
             >
-              <Tab
-                zIndex="1"
-                color="neutral.7"
-                _selected={{ color: 'neutral.10' }}
-              >
+              <Tab zIndex="1" color="neutral.7" _selected={{ color: 'neutral.10' }}>
                 <Box as="p" textStyle={{ base: 'title6', md: 'title4' }}>
                   Upcoming
                 </Box>
               </Tab>
-              <Tab
-                zIndex="1"
-                color="neutral.7"
-                _selected={{ color: 'neutral.10' }}
-              >
+              <Tab zIndex="1" color="neutral.7" _selected={{ color: 'neutral.10' }}>
                 <Box as="p" textStyle={{ base: 'title6', md: 'title4' }}>
                   Past
                 </Box>
@@ -159,7 +134,7 @@ const HackathonsPage = () => {
           <TabPanels px="0" py={{ base: '12px', md: '16px' }}>
             <TabPanel p="0">
               {upcomingHackathonsIsLoading ? (
-                [0, 1, 2].map((index) => (
+                [0, 1, 2].map(index => (
                   <HStack
                     key={index}
                     border="2px solid"
@@ -176,24 +151,16 @@ const HackathonsPage = () => {
                     <VStack align={'start'} width="full" spacing="24px">
                       <VStack align="start" width="full" spacing="12px">
                         <Skeleton height="2rem" width="10rem" />
-                        <SkeletonText
-                          noOfLines={2}
-                          skeletonHeight={2}
-                          width={'full'}
-                        />
+                        <SkeletonText noOfLines={2} skeletonHeight={2} width={'full'} />
                       </VStack>
                       <Skeleton py="24px" height="1rem" width="18rem" />
                     </VStack>{' '}
                   </HStack>
                 ))
               ) : (
-                <VStack
-                  align="start"
-                  w="full"
-                  gap={{ base: '8px', md: '18px' }}
-                >
+                <VStack align="start" w="full" gap={{ base: '8px', md: '18px' }}>
                   <ErrorBoundaryWrapper>
-                    {upcomingHackathons?.map((hackathon) => (
+                    {upcomingHackathons?.map(hackathon => (
                       <Link
                         key={hackathon.id}
                         style={{
@@ -254,8 +221,7 @@ const HackathonsPage = () => {
                                   right: 0,
                                   height: '14rem',
                                   w: '40rem',
-                                  background:
-                                    'linear-gradient(90deg, #080808 0%, #08080800 100%)',
+                                  background: 'linear-gradient(90deg, #080808 0%, #08080800 100%)',
                                   zIndex: 1,
                                 }}
                               >
@@ -297,6 +263,7 @@ const HackathonsPage = () => {
                               <VStack
                                 zIndex="3"
                                 align="start"
+                                w="full"
                                 spacing={{ base: '32px', md: '32px' }}
                               >
                                 <VStack
@@ -304,15 +271,26 @@ const HackathonsPage = () => {
                                   w="full"
                                   spacing={{ base: '12px', md: '12px' }}
                                 >
-                                  <Box
-                                    color="neutral.11"
-                                    as="p"
-                                    noOfLines={1}
-                                    textStyle={{ base: 'title3', md: 'title1' }}
-                                    textTransform={'capitalize'}
+                                  <HStack
+                                    w="full"
+                                    gap="8px"
+                                    align={'flex-end'}
+                                    justify={'space-between'}
                                   >
-                                    {hackathon.name}
-                                  </Box>
+                                    <Box
+                                      color="neutral.11"
+                                      as="p"
+                                      noOfLines={1}
+                                      textStyle={{ base: 'title3', md: 'title1' }}
+                                      textTransform={'capitalize'}
+                                    >
+                                      {hackathon.name}
+                                    </Box>
+                                    <HackathonStatus
+                                      show={true}
+                                      timeline={hackathon.timeline as unknown as HackathonSchedule}
+                                    />
+                                  </HStack>
                                   <Box
                                     as="p"
                                     noOfLines={2}
@@ -350,8 +328,7 @@ const HackathonsPage = () => {
                                     color="neutral.11"
                                     textStyle={{ base: 'body5', md: 'title4' }}
                                   >
-                                    {formatNumberWithK(hackathon.prize_pool)}{' '}
-                                    USDC
+                                    {formatNumberWithK(hackathon.prize_pool)} USDC
                                   </Box>
                                 </HStack>
                               </VStack>

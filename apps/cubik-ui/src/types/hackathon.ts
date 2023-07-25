@@ -6,24 +6,12 @@ export interface HackathonHost {
   avatar: string;
 }
 
-export interface HackathonSchedule {
-  registration: {
-    start: Date;
-    end: Date;
-  };
-  hackathon: {
-    start: Date;
-    end: Date;
-  };
-  voting: {
-    start: Date;
-    end: Date;
-  };
-  results: {
-    start: Date;
-    end: Date;
-  };
-}
+export type HackathonSchedule = {
+  index: number;
+  name: string;
+  start?: Date;
+  end?: Date;
+}[];
 
 export interface HackathonPrize {
   name: string;

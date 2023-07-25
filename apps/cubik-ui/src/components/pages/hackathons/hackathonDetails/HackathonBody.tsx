@@ -97,7 +97,10 @@ const HackathonBody = ({
                 <ProjectsDetailedDescription isLoading={isLoading} description={description} />
               </TabPanel>
               <TabPanel>
-                <HackathonSchedule />
+                <HackathonSchedule
+                  isLoading={isLoading}
+                  timeline={timeline as HackathonScheduleType}
+                />
               </TabPanel>
               <TabPanel p="0 !important" overflowX="scroll">
                 <Accordion m="0" border="none" gap="1rem" width="full" allowToggle>
