@@ -20,7 +20,7 @@ export const useFilteredProjects = () => {
   const isMobileScreen = isMobileDevice();
   const trpcParams = {
     filter: selectedCategory?.value ?? undefined,
-    round: [], // need to change this later
+    round: [],
     seed: shuffleSeed,
     mobile: isMobileScreen,
   };

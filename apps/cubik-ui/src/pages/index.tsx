@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 import LandingPage from '~/components/pages/landing-page/LandingPage';
 import SEO from '~/components/SEO';
 
@@ -14,5 +14,10 @@ const Home: NextPage = () => {
     </>
   );
 };
-
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {},
+    revalidate: 10 * 60 * 60,
+  };
+};
 export default Home;
