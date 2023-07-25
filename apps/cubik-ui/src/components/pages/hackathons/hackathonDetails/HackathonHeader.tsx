@@ -20,7 +20,6 @@ import { BsTwitter } from 'react-icons/bs';
 import { useUserStore } from '~/store/userStore';
 import { trpc } from '~/utils/trpc';
 import * as anchor from '@coral-xyz/anchor';
-import { Web3Storage } from 'web3.storage';
 import {
   checkParticipant,
   createParticipant,
@@ -304,9 +303,7 @@ const HackathonHeader = ({
   const [update, setUpdate] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const timelineValues = timeline?.sort((a, b) => a.index - b.index);
-  const clientStorage = new Web3Storage({
-    token: env.NEXT_PUBLIC_WEB3STORAGE_TOKEN ?? '',
-  });
+
   const registrationMutation = trpc.hackathon.registration.useMutation({
     onSuccess: () => {
       utils.hackathon.haveRegistered.invalidate({
@@ -353,13 +350,6 @@ const HackathonHeader = ({
     // console.log('txid', txid);
   };
   const uploadJSON = async (metadata: string, address: string) => {
-    // const blob = new Blob([metadata], {
-    //   type: 'application/json',
-    // });
-    // const metadataFile = new File([blob], 'metadata.json');
-    // const meta_cid = await clientStorage.put([metadataFile]);
-    // return `https://cloudflare-ipfs.com/ipfs/${meta_cid}/metadata.json`;
-
     const { data } = await axios.post(
       `${env.NEXT_PUBLIC_IMAGE_SERVER_URL}/api/v1/metadata/${address}`,
       {
@@ -553,7 +543,13 @@ const HackathonHeader = ({
                       isLoading={loading}
                       disabled={!hasSubmitted ? false : true}
                       isDisabled={!hasSubmitted ? false : true}
-                      onClick={submitForHackathonOnOpen}
+                      onClick={() => {
+                        if (!connected) {
+                          setVisible(true);
+                          return;
+                        }
+                        submitForHackathonOnOpen();
+                      }}
                     >
                       {hasSubmitted ? 'Submitted' : 'Submit Project'}
                     </Button>
@@ -653,9 +649,10 @@ const HackathonHeader = ({
         </Stack>
       </VStack>
       <SelectProjectToSubmitToHackathon
+        hackathonName={name || ''}
         isOpen={submitForHackathonIsOpen}
         onClose={submitForHackathonOnClose}
-        selectedHackathonId={hackathonId}
+        hackathonId={hackathonId}
       />
     </>
   );

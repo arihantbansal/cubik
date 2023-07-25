@@ -26,7 +26,7 @@ import {
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { ProjectJoinRoundStatus, ProjectsModel } from '@cubik/database';
+import { ProjectJoinRoundStatus, ProjectsModel, ProjectVerifyStatus } from '@cubik/database';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -43,34 +43,41 @@ import { trpc } from '~/utils/trpc';
 type FormData = {
   selectedProjectId: string | null;
 };
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+  hackathonId: string;
+  hackathonName: string;
+}
 // todo make upcoming live grants separate
-const SelectProjectToSubmitToHackathon = ({ isOpen, onClose, selectedGrantRound }: any) => {
+const SelectProjectToSubmitToHackathon = ({
+  isOpen,
+  onClose,
+  hackathonId,
+  hackathonName,
+}: Props) => {
   const { user } = useUserStore();
   const toast = useToast();
   const anchorWallet = useAnchorWallet();
   const { handleSubmit } = useForm<FormData>();
 
-  const {
-    data: userDataWithProjectsAndRoundDetails,
-    isLoading: userProjectsLoading,
-    error: userProjectsError,
-    isError: userProjectsIsError,
-  } = trpc.user.findOneWithProjectAndRoundDetails.useQuery({
-    username: user?.username as string,
-  });
-
   const [signTransactionLoading, setsignTransactionLoading] = useState(false);
   const [transactionSignError, setTransactionSignError] = useState(null);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
-  const [selectedProject, setSelectedProject] = useState<ProjectsModel | null>(null);
+  const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
 
-  const joinRoundMutation = trpc.project.joinRound.useMutation({
+  const joinHackathonMutation = trpc.hackathon.projectJoinHackathon.useMutation({
     onSuccess: () => {
       ('success');
     },
   });
-
+  const userProjects = trpc.project.projectsHackathonSubmit.useQuery(undefined, {
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+  });
+  // todo: update this
   const sendTransaction = async (roundName: string, projectUserCount: number) => {
     try {
       const tx = new anchor.web3.Transaction();
@@ -94,18 +101,14 @@ const SelectProjectToSubmitToHackathon = ({ isOpen, onClose, selectedGrantRound 
   const signTransactionHandler = async () => {
     try {
       setsignTransactionLoading(true);
-      if (!selectedGrantRound) return;
+      if (!hackathonId) return;
 
-      const sig = await sendTransaction(
-        selectedGrantRound.roundName,
-        selectedProject?.projectUserCount as number,
-      );
+      const sig = await sendTransaction('', 0);
       if (!sig) return;
-      joinRoundMutation.mutate({
-        roundId: selectedGrantRound.id as string,
-        projectId: selectedProject?.id as string,
+      joinHackathonMutation.mutate({
+        hackathonId: hackathonId as string,
+        projectId: selectedProject as string,
         tx: sig,
-        id: uuidV4(),
       });
       setsignTransactionLoading(false);
       onClose();
@@ -118,20 +121,21 @@ const SelectProjectToSubmitToHackathon = ({ isOpen, onClose, selectedGrantRound 
   };
 
   const onSubmit: SubmitHandler<FormData> = async () => {
-    const project = userDataWithProjectsAndRoundDetails?.project?.find(
-      project => project.id === selectedProjectId,
-    );
+    const project = userProjects?.data?.find(project => project.id === selectedProjectId);
     if (!project) return;
 
-    setSelectedProject(project);
+    setSelectedProject(project.id);
     onModalOpen();
   };
 
   const Tile: React.FC<{
     tileIndex: string;
-    project: ProjectsModel;
-    joinRoundStatus: ProjectJoinRoundStatus | undefined;
-  }> = ({ tileIndex, project, joinRoundStatus }) => {
+    joinRoundStatus?: ProjectJoinRoundStatus | undefined;
+    isHackathon: boolean | undefined;
+    name: string;
+    logo: string;
+    status: ProjectVerifyStatus;
+  }> = ({ tileIndex, logo, joinRoundStatus, isHackathon = false, name }) => {
     const isSelected = selectedProjectId === tileIndex;
 
     return (
@@ -147,7 +151,12 @@ const SelectProjectToSubmitToHackathon = ({ isOpen, onClose, selectedGrantRound 
         align="center"
         direction={{ base: 'column', md: 'row' }}
         onClick={() => {
-          if (project.status === 'VERIFIED' || !joinRoundStatus) {
+          if (isHackathon) {
+            setSelectedProjectId(tileIndex);
+
+            return;
+          }
+          if (status === 'VERIFIED' || !joinRoundStatus) {
             setSelectedProjectId(tileIndex);
           } else {
             return;
@@ -178,8 +187,8 @@ const SelectProjectToSubmitToHackathon = ({ isOpen, onClose, selectedGrantRound 
               align="center"
             >
               <Avatar
-                src={project.logo}
-                name={project.name}
+                src={logo}
+                name={name}
                 width={{ base: '36px', sm: '48px', md: '52px' }}
                 height={{ base: '36px', sm: '48px', md: '52px' }}
               />
@@ -190,7 +199,7 @@ const SelectProjectToSubmitToHackathon = ({ isOpen, onClose, selectedGrantRound 
                 textAlign="left"
                 color="white"
               >
-                {project.name}
+                {name}
               </Box>
             </Stack>
           </VStack>
@@ -230,41 +239,23 @@ const SelectProjectToSubmitToHackathon = ({ isOpen, onClose, selectedGrantRound 
 
           <DrawerBody p="40px" minH={'20rem'}>
             {/* select project to apply for grant */}
-            {userProjectsLoading ? (
+            {userProjects.isLoading ? (
               <>is loading</>
-            ) : userDataWithProjectsAndRoundDetails &&
-              userDataWithProjectsAndRoundDetails.project.length > 0 ? (
+            ) : userProjects.data && userProjects.data.length > 0 ? (
               <VStack gap="24px">
-                {userDataWithProjectsAndRoundDetails?.project.filter(project => {
-                  return !project.ProjectJoinRound.some(
-                    projectJoinRound => projectJoinRound?.roundId === selectedGrantRound?.id,
-                  );
-                }).length > 0 ? (
-                  userDataWithProjectsAndRoundDetails?.project
-                    .filter(project => {
-                      return (
-                        !project.ProjectJoinRound.some(
-                          projectJoinRound => projectJoinRound?.roundId === selectedGrantRound?.id,
-                        ) && project.status === 'VERIFIED'
-                      );
-                    })
-                    .map((project, index) => (
-                      <Tile
-                        key={project.id}
-                        tileIndex={project.id}
-                        project={project}
-                        joinRoundStatus={
-                          project.ProjectJoinRound.find(() =>
-                            project.ProjectJoinRound.find(
-                              e => e.roundId === selectedGrantRound?.id,
-                            ),
-                          )?.status
-                        }
-                      />
-                    ))
-                ) : (
-                  <NoInformation />
-                )}
+                {userProjects.data?.map((project, index) => (
+                  <Tile
+                    key={project.id}
+                    tileIndex={project.id}
+                    logo={project.logo}
+                    name={project.name}
+                    status={project.status}
+                    isHackathon={true}
+                    joinRoundStatus={'APPROVED'}
+                  />
+                ))}
+                : (
+                <NoInformation />)
               </VStack>
             ) : (
               <VStack py="4rem" justify={'center'}>
@@ -339,18 +330,18 @@ const SelectProjectToSubmitToHackathon = ({ isOpen, onClose, selectedGrantRound 
               <VStack align={'start'} spacing="16px">
                 <HStack align={'start'} gap="16px">
                   <Avatar
-                    src={selectedProject?.logo}
-                    name={selectedProject?.name}
+                    src={userProjects.data?.find(e => e.id === selectedProject)?.logo}
+                    name={userProjects.data?.find(e => e.id === selectedProject)?.name}
                     borderRadius="8px"
                     width={{ base: '60px', md: '80px' }}
                     height={{ base: '60px', md: '80px' }}
                   />
                   <VStack textAlign={'start'} align={'start'} gap="8px">
                     <Box as="p" textStyle={{ base: 'title3', md: 'title2' }} color="neutral.11">
-                      {selectedProject?.name}
+                      {userProjects.data?.find(e => e.id === selectedProject)?.name}
                     </Box>
                     <Box as="p" textStyle={{ base: 'title6', md: 'title5' }} color="neutral.8">
-                      {selectedProject?.short_description}
+                      {userProjects.data?.find(e => e.id === selectedProject)?.short_description}
                     </Box>
                   </VStack>
                 </HStack>
@@ -366,7 +357,7 @@ const SelectProjectToSubmitToHackathon = ({ isOpen, onClose, selectedGrantRound 
                     Applying For Grant Round
                   </Box>
                   <Box as="p" textStyle={{ base: 'title6', md: 'title5' }} color="neutral.11">
-                    {selectedGrantRound?.roundName}
+                    {hackathonName}
                   </Box>
                 </VStack>
               </Stack>
@@ -412,6 +403,6 @@ const SelectProjectToSubmitToHackathon = ({ isOpen, onClose, selectedGrantRound 
       </Modal>
     </>
   );
-};
+};;;;;;;;;;
 
 export default SelectProjectToSubmitToHackathon;
