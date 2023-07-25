@@ -17,6 +17,8 @@ import type { FC, ReactNode } from 'react';
 import { useMemo } from 'react';
 import { env } from '~/env.mjs';
 
+require('@solana/wallet-adapter-react-ui/styles.css');
+
 const WalletContext: FC<{ children: ReactNode }> = ({ children }) => {
   const network =
     env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta'
@@ -33,7 +35,6 @@ const WalletContext: FC<{ children: ReactNode }> = ({ children }) => {
       new SolletExtensionWalletAdapter(),
       new TorusWalletAdapter(),
       new TokenaryWalletAdapter(),
-      new UnsafeBurnerWalletAdapter(),
     ],
     [],
   );
