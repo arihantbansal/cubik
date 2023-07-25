@@ -1,16 +1,9 @@
 import { Container } from '@chakra-ui/layout';
-import { GetStaticProps } from 'next';
+import React from 'react';
 import SEO from '~/components/SEO';
 import AdminControls from '~/components/pages/projects/admin/AdminControls';
-import ProjectsExplorer from '~/components/pages/projects/project-explorer/ProjectsExplorer';
 
-type projectsPropsType = {
-  allProjectsData: {
-    data: any;
-  };
-};
-
-const Projects = (_props: projectsPropsType) => {
+const Admin = () => {
   return (
     <>
       <SEO
@@ -24,15 +17,9 @@ const Projects = (_props: projectsPropsType) => {
         py={{ base: '24px', md: '40px' }}
       >
         <AdminControls />
-        <ProjectsExplorer />
       </Container>
     </>
   );
 };
-export const getStaticProps: GetStaticProps = async () => {
-  return {
-    props: {},
-    revalidate: 1 * 60 * 60,
-  };
-}; 
-export default Projects;
+
+export default Admin;
