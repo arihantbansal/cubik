@@ -45,6 +45,7 @@ const HackathonDetails = (props: HackathonDetailsPropsType) => {
         isLoading={props.isLoading}
         logo={props.logo}
         name={props.name}
+        tracks={props.tracks}
         short_description={props.short_description}
       />
       <HackathonBody

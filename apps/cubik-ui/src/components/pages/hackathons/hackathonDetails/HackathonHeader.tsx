@@ -32,6 +32,7 @@ import { env } from '~/env.mjs';
 import HackathonSchedule from './HackathonSchedule';
 import { isPast } from 'date-fns';
 import SelectProjectToSubmitToHackathon from '../SelectProjectToSubmitToHackathon';
+import { HackathonTracks } from '~/types/hackathon';
 
 interface Props {
   isOpen: boolean;
@@ -286,6 +287,7 @@ const HackathonHeader = ({
   logo,
   name,
   short_description,
+  tracks,
   hackathonId,
 }: {
   timeline: HackathonSchedule;
@@ -293,6 +295,7 @@ const HackathonHeader = ({
   logo?: string;
   name?: string;
   short_description?: string;
+  tracks?: HackathonTracks[];
   hackathonId: string;
 }) => {
   const utils = trpc.useContext();
@@ -652,6 +655,9 @@ const HackathonHeader = ({
         hackathonName={name || ''}
         isOpen={submitForHackathonIsOpen}
         onClose={submitForHackathonOnClose}
+        hackathonLogo={logo || ''}
+        hackathonDescription={short_description || ''}
+        hackathonTracks={tracks as HackathonTracks}
         hackathonId={hackathonId}
       />
     </>

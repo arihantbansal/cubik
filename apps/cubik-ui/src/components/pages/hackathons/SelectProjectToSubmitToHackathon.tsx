@@ -19,34 +19,48 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Spinner,
   Stack,
   useDisclosure,
+  DrawerHeader,
   useToast,
   VStack,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 import { ProjectJoinRoundStatus, ProjectsModel, ProjectVerifyStatus } from '@cubik/database';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
+import { watch } from 'fs';
 import Link from 'next/link';
 import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { BsPlus } from 'react-icons/bs';
 import { v4 as uuidV4 } from 'uuid';
 import NoInformation from '~/components/common/empty-state/NoInformation';
 import { SuccessToast } from '~/components/common/toasts/Toasts';
 import EmptyStateHOC from '~/components/HOC/EmptyState';
 import { useUserStore } from '~/store/userStore';
+import { HackathonTracks } from '~/types/hackathon';
 import { connection, ProjectJoinRound } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
+import { GroupBase, OptionsOrGroups, Select } from 'chakra-react-select';
+import { track } from 'mixpanel-browser';
 
 type FormData = {
   selectedProjectId: string | null;
+  tracks: HackathonTracks[];
 };
+
 interface Props {
   isOpen: boolean;
   onClose: () => void;
   hackathonId: string;
+  hackathonLogo: string;
+  hackathonDescription: string;
+  hackathonTracks?: HackathonTracks[];
   hackathonName: string;
 }
 // todo make upcoming live grants separate
@@ -54,12 +68,27 @@ const SelectProjectToSubmitToHackathon = ({
   isOpen,
   onClose,
   hackathonId,
+  hackathonLogo,
+  hackathonDescription,
+  hackathonTracks,
   hackathonName,
 }: Props) => {
+  console.log('hackathonTracks', hackathonTracks);
   const { user } = useUserStore();
   const toast = useToast();
   const anchorWallet = useAnchorWallet();
-  const { handleSubmit } = useForm<FormData>();
+  const {
+    control,
+    register,
+    handleSubmit,
+    watch,
+    trigger,
+    formState: { errors },
+    setValue,
+    getValues,
+    setError,
+    getFieldState,
+  } = useForm<FormData>();
 
   const [signTransactionLoading, setsignTransactionLoading] = useState(false);
   const [transactionSignError, setTransactionSignError] = useState(null);
@@ -72,6 +101,7 @@ const SelectProjectToSubmitToHackathon = ({
       ('success');
     },
   });
+
   const userProjects = trpc.project.projectsHackathonSubmit.useQuery(undefined, {
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
@@ -140,9 +170,9 @@ const SelectProjectToSubmitToHackathon = ({
 
     return (
       <HStack
-        border={'2px solid'}
+        border={isSelected ? '2px solid' : '2px dashed'}
         borderColor={isSelected ? '#14665B' : '#ffffff10'}
-        backgroundColor={isSelected ? '#010F0D' : '#000000'}
+        backgroundColor={isSelected ? '#010F0D' : 'transparent'}
         p={{ base: '16px', md: '32px' }}
         w="full"
         gap="24px"
@@ -189,6 +219,7 @@ const SelectProjectToSubmitToHackathon = ({
               <Avatar
                 src={logo}
                 name={name}
+                borderRadius={'8px'}
                 width={{ base: '36px', sm: '48px', md: '52px' }}
                 height={{ base: '36px', sm: '48px', md: '52px' }}
               />
@@ -236,58 +267,252 @@ const SelectProjectToSubmitToHackathon = ({
             rounded="full"
             backgroundColor="#141414"
           />
-
-          <DrawerBody p="40px" minH={'20rem'}>
-            {/* select project to apply for grant */}
-            {userProjects.isLoading ? (
-              <>is loading</>
-            ) : userProjects.data && userProjects.data.length > 0 ? (
-              <VStack gap="24px">
-                {userProjects.data?.map((project, index) => (
-                  <Tile
-                    key={project.id}
-                    tileIndex={project.id}
-                    logo={project.logo}
-                    name={project.name}
-                    status={project.status}
-                    isHackathon={true}
-                    joinRoundStatus={'APPROVED'}
+          <DrawerHeader roundedTop={'24px'} bg="neutral.3" px="40px">
+            <HStack gap="18px">
+              <Avatar borderRadius="8px" size="lg" src={hackathonLogo} />
+              <VStack gap="8xp" align={'start'}>
+                <Box as="p" textStyle="title2" color="neutral.11">
+                  {hackathonName}
+                </Box>
+                <Box as="p" textStyle="body4" color="neutral.9" noOfLines={1} maxW="80%">
+                  {hackathonDescription}
+                </Box>
+              </VStack>
+            </HStack>{' '}
+          </DrawerHeader>
+          <DrawerBody px="40px" pb="40px" pt="20px" minH={'20rem'}>
+            <VStack align={'start'} spacing="24px" w="full">
+              <Box
+                fontSize={{ base: '16px', md: '18px' }}
+                as="p"
+                textStyle="title2"
+                color="neutral.11"
+              >
+                Choose Project
+              </Box>
+              {userProjects.isLoading ? (
+                <Center w="full" height="10rem">
+                  <Spinner />
+                </Center>
+              ) : userProjects.data && userProjects.data.length > 0 ? (
+                <VStack w="full" gap="24px">
+                  {userProjects.data?.map((project, index) => (
+                    <Tile
+                      key={project.id}
+                      tileIndex={project.id}
+                      logo={project.logo}
+                      name={project.name}
+                      status={project.status}
+                      isHackathon={true}
+                      joinRoundStatus={'APPROVED'}
+                    />
+                  ))}
+                </VStack>
+              ) : (
+                <VStack py="4rem" justify={'center'}>
+                  <EmptyStateHOC
+                    heading={'No Project Found'}
+                    subHeading={
+                      'You have not submitted any project and you can not apply for grant'
+                    }
+                    margin={'1rem'}
                   />
-                ))}
-                : (
-                <NoInformation />)
-              </VStack>
-            ) : (
-              <VStack py="4rem" justify={'center'}>
-                <EmptyStateHOC
-                  heading={'No Project Found'}
-                  subHeading={'You have not submitted any project and you can not apply for grant'}
-                  margin={'1rem'}
+                  <Button
+                    variant="cubikFilled"
+                    size={'cubikSmall'}
+                    as={Link}
+                    href="/submit-project"
+                    leftIcon={<BsPlus width={20} height={20} />}
+                  >
+                    New Project
+                  </Button>
+                </VStack>
+              )}
+              <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
+                <Controller
+                  control={control}
+                  name="tracks"
+                  render={({
+                    field: { onChange, onBlur, value, name, ref },
+                    fieldState: { error },
+                  }) => (
+                    <FormControl isInvalid={Boolean(errors.tracks)} id="tracks">
+                      <HStack w="full" pb="0.5rem" justify={'space-between'}>
+                        <FormLabel
+                          fontSize={{ base: '16px', md: '18px' }}
+                          pb="0.5rem"
+                          htmlFor="tracks"
+                          color="neutral.11"
+                        >
+                          Choose Categories
+                        </FormLabel>
+                        <Box
+                          as="p"
+                          fontSize={{ base: '10px', md: '12px' }}
+                          color={'neutral.7'}
+                          fontWeight={'600'}
+                        >
+                          {watch('tracks') ? watch('tracks').length : '0'}
+                        </Box>
+                      </HStack>
+                      <Select
+                        isMulti
+                        name={name}
+                        ref={ref}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        value={value}
+                        //@ts-ignore
+                        options={
+                          hackathonTracks?.map(track => ({
+                            value: track.trackName,
+                            label: track.trackName,
+                          })) || []
+                        }
+                        placeholder="Search Categories..."
+                        closeMenuOnSelect={false}
+                        selectedOptionStyle="check"
+                        variant="unstyled"
+                        focusBorderColor="transparent"
+                        chakraStyles={{
+                          container: (provided, state) => ({
+                            ...provided,
+                            border: 'none',
+                            background: 'surface.input_field',
+                            outline: '0px !important',
+                            borderRadius: '8px',
+                            height: '40px',
+                            boxShadow: errors.tracks ? '0 0 0 2px #E53E3E' : '0',
+                            ps: '0rem',
+                            w: 'full',
+                            ':focus': {
+                              outline: 'none',
+                              boxShadow: '0',
+                              border: 'none',
+                            },
+                            ':hover': {
+                              outline: 'none',
+                              boxShadow: '0 !important',
+                              border: 'none !important',
+                            },
+                            ':active': {
+                              outline: 'none',
+                              boxShadow: '0',
+                              border: 'none',
+                            },
+                            ':selected': {
+                              outline: 'none',
+                              boxShadow: '0',
+                              border: 'none',
+                            },
+                            ':invalid': {
+                              boxShadow: '0 0 0 2px #E53E3E',
+                            },
+                          }),
+                          inputContainer: (provided, state) => ({
+                            ...provided,
+                            ps: '8px',
+                            fontSize: { base: '12px', md: '14px' },
+                            backgroundColor: 'transparent',
+                            //  border: 'none',
+                            boxShadow: 'none',
+                            outline: 'none',
+                          }),
+                          valueContainer: (provided, state) => ({
+                            ...provided,
+                            ps: '8px',
+                            border: 'none',
+                            backgroundColor: 'transparent',
+                            boxShadow: 'none',
+                            outline: 'none',
+                          }),
+
+                          clearIndicator: (provided, state) => ({
+                            ...provided,
+                            display: 'none',
+                          }),
+                          dropdownIndicator: (provided, state) => ({
+                            ...provided,
+                            background: '',
+                            borderColor: 'transparent !important',
+                            outline: '0px !important',
+                            boxShadow: '0',
+                            p: 0,
+                            w: '60px',
+                          }),
+                          indicatorSeparator: (provided, state) => ({
+                            ...provided,
+                            display: 'none',
+                          }),
+                          menu: (provided, state) => ({
+                            ...provided,
+                            //border: 'none',
+                            transform: 'translateY(-10px)',
+                            backgroundColor: '#0F0F0F',
+                          }),
+                          menuList: (provided, state) => ({
+                            ...provided,
+                            backgroundColor: '#0F0F0F',
+                            border: '1px solid #141414',
+                            borderTop: 'none',
+                            borderTopRadius: 'none',
+                            boxShadow: 'none',
+                            padding: '0px',
+                          }),
+                          option: (provided, state) => ({
+                            ...provided,
+                            color: 'neutral.11',
+                            fontSize: { base: '12px', md: '14px' },
+                            fontWeight: '400',
+                            backgroundColor: state.isSelected
+                              ? '#010F0D'
+                              : state.isFocused
+                              ? '#010F0D'
+                              : '#0F0F0F',
+                            _hover: {
+                              backgroundColor: '#010F0D',
+                            },
+                            ':active': {
+                              backgroundColor: '#0F0F0F',
+                            },
+                          }),
+                          control: (provided, state) => ({
+                            ...provided,
+                            border: 'none',
+                            backgroundColor: '#0F0F0F',
+                            boxShadow: 'none',
+                            outline: 'none',
+                            ':hover': {
+                              border: 'none',
+                              backgroundColor: '#0F0F0F',
+                            },
+                          }),
+                          placeholder: (provided, state) => ({
+                            ...provided,
+                            textAlign: 'start',
+                            fontSize: { base: '12px', md: '14px' },
+                            color: '#3B3D3D',
+                            px: '1rem',
+                          }),
+                        }}
+                      />
+                      <FormErrorMessage>{errors.tracks && errors.tracks.message}</FormErrorMessage>
+                    </FormControl>
+                  )}
                 />
-                <Button
-                  variant="cubikFilled"
-                  size={'cubikSmall'}
-                  as={Link}
-                  href="/submit-project"
-                  leftIcon={<BsPlus width={20} height={20} />}
-                >
-                  New Project
-                </Button>
-              </VStack>
-            )}
-            <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
-              <VStack py="24px" w={'full'}>
-                <Button
-                  w="8rem"
-                  ms={'auto'}
-                  variant="cubikFilled"
-                  type="submit"
-                  isDisabled={selectedProjectId === null}
-                >
-                  Apply
-                </Button>
-              </VStack>
-            </form>
+                <VStack py="24px" w={'full'}>
+                  <Button
+                    w="8rem"
+                    ms={'auto'}
+                    variant="cubikFilled"
+                    type="submit"
+                    isDisabled={selectedProjectId === null}
+                  >
+                    Submit
+                  </Button>
+                </VStack>
+              </form>
+            </VStack>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
@@ -403,6 +628,6 @@ const SelectProjectToSubmitToHackathon = ({
       </Modal>
     </>
   );
-};;;;;;;;;;
+};
 
 export default SelectProjectToSubmitToHackathon;
