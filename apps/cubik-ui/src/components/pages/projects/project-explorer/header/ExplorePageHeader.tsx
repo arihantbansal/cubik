@@ -7,17 +7,11 @@ import GrantsCarousel from './GrantsCaruosel';
 import RoundsCarouselLoadingState from './LoadingState';
 
 const ExplorePageHeader = () => {
-  const {
-    data: roundData,
-    isLoading,
-    isError,
-  } = trpc.round.findActive.useQuery(); // optimise this
-  const activeAndFutureRounds = roundData?.filter(
-    (round: { endTime: number | Date }) =>
-      isPast(round.endTime) ? null : round
-  );
+  const { data: roundData, isLoading, isError } = trpc.round.findActive.useQuery(); // optimise this
 
-  console.log('rounds data - ', roundData);
+  const activeAndFutureRounds = roundData?.filter((round: { endTime: number | Date }) =>
+    isPast(round.endTime) ? null : round,
+  );
 
   if (isError) {
     return (
@@ -34,25 +28,15 @@ const ExplorePageHeader = () => {
   }
 
   return (
-    <VStack
-      // display={
-      //   activeAndFutureRounds && activeAndFutureRounds?.length > 0
-      //     ? 'flex'
-      //     : 'none'
-      // }
-      w="full"
-    >
+    <VStack w="full">
       {isLoading ? (
         <>
           <RoundsCarouselLoadingState />
-          {/* <Center w="full" py="16px">
-            <Skeleton w="12rem" height="6px" />
-          </Center> */}
         </>
       ) : (
         <GrantsCarousel>
           {activeAndFutureRounds ? (
-            activeAndFutureRounds?.map((round) => (
+            activeAndFutureRounds?.map(round => (
               <FundingRoundBanner
                 key={round.id}
                 startDate={round.startTime}
