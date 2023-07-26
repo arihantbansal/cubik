@@ -6,24 +6,12 @@ export interface HackathonHost {
   avatar: string;
 }
 
-export interface HackathonSchedule {
-  registration: {
-    start: Date;
-    end: Date;
-  };
-  hackathon: {
-    start: Date;
-    end: Date;
-  };
-  voting: {
-    start: Date;
-    end: Date;
-  };
-  results: {
-    start: Date;
-    end: Date;
-  };
-}
+export type HackathonSchedule = {
+  index: number;
+  name: string;
+  start?: Date;
+  end?: Date;
+}[];
 
 export interface HackathonPrize {
   name: string;
@@ -41,15 +29,20 @@ export interface HackathonSponsor {
 }
 
 export interface HackathonLinks {
-  label: string;
-  url: string;
+  title: string;
+  link: string;
 }
 
 export interface HackathonTracks {
-  trackName: string;
-  trackDescription: string;
+  id: string;
+  name: string;
+  prizeWorth: number;
+  sponsor: HackathonSponsor[];
+  prizeUnit: string;
+  description: string;
+  ideas: string[];
+  judges: string[];
   links: HackathonLinks[];
-  trackPrizes: HackathonPrize[];
 }
 
 export interface HackathonSocial {

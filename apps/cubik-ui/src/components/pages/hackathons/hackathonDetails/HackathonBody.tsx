@@ -57,22 +57,8 @@ const HackathonBody = ({
   })[];
   hackathonId: string;
 }) => {
-  const sponsors = tracks?.reduce<HackathonSponsor[]>((acc, curr) => {
-    const track_sponsors = curr.trackPrizes.map(track_sponsor => ({
-      name: track_sponsor.name,
-      logo: track_sponsor.logo,
-    }));
-    return [...acc, ...track_sponsors];
-  }, []);
-
-  const uniqueSponsors: HackathonSponsor[] =
-    sponsors &&
-    Array?.from(
-      sponsors
-        ?.reduce((map, sponsor) => map.set(sponsor.name + '|' + sponsor.logo, sponsor), new Map())
-        .values(),
-    );
-
+  // get all the sponsors array with name and logo from sponsor array
+  const sponsors = tracks?.map(track => track.sponsor).flat();
   return (
     <Container p="0px" maxW="full">
       <Stack
@@ -97,7 +83,10 @@ const HackathonBody = ({
                 <ProjectsDetailedDescription isLoading={isLoading} description={description} />
               </TabPanel>
               <TabPanel>
-                <HackathonSchedule />
+                <HackathonSchedule
+                  isLoading={isLoading}
+                  timeline={timeline as HackathonScheduleType}
+                />
               </TabPanel>
               <TabPanel p="0 !important" overflowX="scroll">
                 <Accordion m="0" border="none" gap="1rem" width="full" allowToggle>
@@ -105,7 +94,7 @@ const HackathonBody = ({
                     tracks?.map(track => (
                       <>
                         <AccordionItem
-                          id={track.trackName}
+                          id={track.name}
                           my="32px"
                           rounded="16px"
                           border="1px solid"
@@ -121,12 +110,12 @@ const HackathonBody = ({
                             }}
                           >
                             <HStack gap={'16px'} w="full">
-                              {track.trackPrizes.map(track_sponsor => (
+                              {track.sponsor.map(track_sponsor => (
                                 <Avatar size="lg" borderRadius="12px" src={track_sponsor.logo} />
                               ))}
                               <VStack color="neutral.11" align="start">
                                 <Box as="p" textStyle={'title2'} textAlign="left">
-                                  {track.trackName}
+                                  {track.name}
                                 </Box>
                                 <Box
                                   as="p"
@@ -135,7 +124,7 @@ const HackathonBody = ({
                                   noOfLines={1}
                                   maxW={'80%'}
                                 >
-                                  {track.trackDescription}
+                                  {track.description}
                                 </Box>
                                 {/* <HStack
                                   bg="#ffffff08"
@@ -182,23 +171,25 @@ const HackathonBody = ({
                           <AccordionPanel pb={4}>
                             <VStack color="white" align="start" gap="18px" p="12px">
                               <Box pb="4px" as="p" textStyle={'title1'} textAlign="left">
-                                {track.trackPrizes.reduce((acc, curr) => acc + curr.amount, 0)} USDC
+                                {track.prizeWorth} {track.prizeUnit}
                               </Box>
                               <Box as="p" textStyle={'body4'} textAlign="left">
-                                {track.trackDescription}
+                                {track.description}
                               </Box>
-                              {track.links.map(link => (
-                                <Tag
-                                  as="a"
-                                  cursor={'pointer'}
-                                  href={link.url}
-                                  target="_blank"
-                                  p="8px 12px"
-                                >
-                                  <TagLabel fontWeight="700">{link.label}</TagLabel>
-                                  <TagRightIcon boxSize="12px" as={CgExternal} />
-                                </Tag>
-                              ))}
+                              <HStack gap="8px">
+                                {track.links.map(link => (
+                                  <Tag
+                                    as="a"
+                                    cursor={'pointer'}
+                                    href={link.link}
+                                    target="_blank"
+                                    p="8px 12px"
+                                  >
+                                    <TagLabel fontWeight="700">{link.title}</TagLabel>
+                                    <TagRightIcon boxSize="12px" as={CgExternal} />
+                                  </Tag>
+                                ))}
+                              </HStack>
                             </VStack>
                           </AccordionPanel>
                         </AccordionItem>
@@ -215,7 +206,7 @@ const HackathonBody = ({
             prizePool={prize_pool?.toLocaleString() ?? '0'}
             isLoading={isLoading}
             team={team}
-            sponsors={uniqueSponsors}
+            sponsors={sponsors}
           />
         </Center>
       </Stack>

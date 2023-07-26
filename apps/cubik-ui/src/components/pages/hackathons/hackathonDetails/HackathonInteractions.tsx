@@ -1,22 +1,15 @@
-import {
-  Avatar,
-  AvatarGroup,
-  Box,
-  Center,
-  HStack,
-  Link,
-  Skeleton,
-  VStack,
-} from '@chakra-ui/react';
+import { Avatar, AvatarGroup, Box, Center, HStack, Link, Skeleton, VStack } from '@chakra-ui/react';
 import { Team, UserModel } from '@cubik/database';
 import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
 import { trpc } from '~/utils/trpc';
 import { HackathonPoolSponsors, HackathonSponsor } from '~/types/hackathon';
+import React from 'react';
+
 interface HackathonInteractionsProps {
   isLoading: boolean;
   prizePool: string;
   hackathonId: string;
-  sponsors?: HackathonSponsor[];
+  sponsors: HackathonSponsor[];
   team: (Team & {
     user: UserModel;
   })[];
@@ -39,15 +32,9 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
               border="2px solid #FFFFFF10"
               borderRadius={'8px'}
               size={{ base: 'sm', md: 'md' }}
-              src={
-                'https://pbs.twimg.com/profile_images/1669101939164954624/AROCJGg5_400x400.jpg'
-              }
+              src={'https://pbs.twimg.com/profile_images/1669101939164954624/AROCJGg5_400x400.jpg'}
             />
-            <Box
-              color={'white'}
-              as="p"
-              textStyle={{ base: 'title5', md: 'title4' }}
-            >
+            <Box color={'white'} as="p" textStyle={{ base: 'title5', md: 'title4' }}>
               Lamport DAO
             </Box>
           </HStack>
@@ -60,11 +47,7 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
                 'https://res.cloudinary.com/demonicirfan/image/upload/v1687866008/Frame_232_zhelfd.png'
               }
             />
-            <Box
-              color={'white'}
-              as="p"
-              textStyle={{ base: 'title5', md: 'title4' }}
-            >
+            <Box color={'white'} as="p" textStyle={{ base: 'title5', md: 'title4' }}>
               Magic Block
             </Box>
           </HStack>
@@ -178,11 +161,7 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
       </VStack>
       {participants.data?.length! > 0 && (
         <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
-          <Box
-            as="p"
-            textStyle={{ base: 'title4', md: 'title3' }}
-            color="white"
-          >
+          <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
             Participants
           </Box>
           <Skeleton
@@ -192,12 +171,8 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
             w="full"
           >
             <HStack justify={'space-between'}>
-              <AvatarGroup
-                size={{ base: 'sm', md: 'md' }}
-                max={7}
-                spacing={'-24px'}
-              >
-                {participants.data?.map((participant) => {
+              <AvatarGroup size={{ base: 'sm', md: 'md' }} max={7} spacing={'-24px'}>
+                {participants.data?.map(participant => {
                   return (
                     <Avatar
                       key={participant.User.id}
@@ -208,12 +183,7 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
                 })}
               </AvatarGroup>
               {participants.data?.length! > 7 && (
-                <Box
-                  color="neutral.9"
-                  px="8px"
-                  as="p"
-                  textStyle={{ base: 'title5', md: 'title4' }}
-                >
+                <Box color="neutral.9" px="8px" as="p" textStyle={{ base: 'title5', md: 'title4' }}>
                   <b>+{participants.data?.length}</b> Participants
                 </Box>
               )}
@@ -226,16 +196,10 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
           Hosts
         </Box>
         <VStack gap={'2px'} align="start" w="full">
-          {props.team.map((team) => {
+          {props.team.map(team => {
             return (
               <>
-                <HStack
-                  py="8px"
-                  as={Link}
-                  href={''}
-                  w="full"
-                  justify="space-between"
-                >
+                <HStack py="8px" as={Link} href={''} w="full" justify="space-between">
                   <HStack gap="0.6rem">
                     <Avatar
                       borderRadius={'8px'}
@@ -243,19 +207,11 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
                       border="1px solid #FFFFFF10"
                       src={team.user.profilePicture}
                     />
-                    <Box
-                      color={'white'}
-                      as="p"
-                      textStyle={{ base: 'body4', md: 'body3' }}
-                    >
+                    <Box color={'white'} as="p" textStyle={{ base: 'body4', md: 'body3' }}>
                       @{team.user.username}
                     </Box>
                   </HStack>
-                  <Box
-                    color="#B4B0B2"
-                    as="p"
-                    textStyle={{ base: 'body5', md: 'body4' }}
-                  >
+                  <Box color="#B4B0B2" as="p" textStyle={{ base: 'body5', md: 'body4' }}>
                     {TruncatedAddr({
                       walletAddress: team.user.mainWallet,
                     })}
@@ -277,12 +233,12 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
             md: '12px',
           }}
         >
-          {/* {Json.parse(sponsors).map((sponsor) => (
+          {props.sponsors?.map(sponsor => (
             <React.Fragment key={sponsor.name}>
               <Skeleton
-                isLoaded={!isLoading}
+                isLoaded={!props.isLoading}
                 fadeDuration={2.5}
-                opacity={isLoading ? '0.4' : '1'}
+                opacity={props.isLoading ? '0.4' : '1'}
                 rounded="full"
               >
                 <HStack
@@ -298,17 +254,13 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
                     src={sponsor.logo}
                     name={sponsor.name}
                   />
-                  <Box
-                    as="p"
-                    textStyle={{ base: 'title6', md: 'title4' }}
-                    color="neutral.11"
-                  >
+                  <Box as="p" textStyle={{ base: 'title6', md: 'title4' }} color="neutral.11">
                     {sponsor.name}
                   </Box>
                 </HStack>
               </Skeleton>
             </React.Fragment>
-          ))} */}
+          ))}
         </HStack>
       </VStack>
     </VStack>

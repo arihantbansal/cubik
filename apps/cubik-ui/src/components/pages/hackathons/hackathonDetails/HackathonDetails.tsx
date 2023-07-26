@@ -40,10 +40,12 @@ const HackathonDetails = (props: HackathonDetailsPropsType) => {
       px={{ base: '2rem', md: '3rem', xl: '1rem' }}
     >
       <HackathonHeader
+        timeline={props.timeline as HackathonSchedule}
         hackathonId={props.id}
         isLoading={props.isLoading}
         logo={props.logo}
         name={props.name}
+        tracks={props.tracks}
         short_description={props.short_description}
       />
       <HackathonBody

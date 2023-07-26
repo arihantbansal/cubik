@@ -1,8 +1,7 @@
 import { tagAnatomy } from '@chakra-ui/anatomy';
 import { createMultiStyleConfigHelpers } from '@chakra-ui/react';
 
-const { definePartsStyle, defineMultiStyleConfig } =
-  createMultiStyleConfigHelpers(tagAnatomy.keys);
+const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpers(tagAnatomy.keys);
 
 const baseStyle = definePartsStyle({
   // define the part you're going to style
@@ -11,7 +10,7 @@ const baseStyle = definePartsStyle({
     color: '#B1A9A9',
   },
   label: {
-    fontSize: { base: '10px', md: '12px' },
+    fontSize: { base: '12px', md: '14px' },
   },
 });
 const colorful = definePartsStyle({
