@@ -332,35 +332,34 @@ const SelectProjectToSubmitToHackathon = ({
                       <Spinner />
                     </Center>
                   ) : userProjects.data && userProjects.data.length > 0 ? (
-                    <VStack align={'start'} w="full" gap={2}>
-                      <Box
-                        as="p"
-                        fontSize={{ base: '12px', md: '20px' }}
-                        pb="0.5rem"
-                        fontWeight={{
-                          base: 500,
-                          md: 600,
-                        }}
-                        color="neutral.11"
-                      >
-                        Projects
-                      </Box>
-                      {userProjects.data?.map((project, index) => (
-                        <Tile
-                          isSelectAble={
-                            selectedArray.data?.find(e => e.projectsModel.id === project.id)
-                              ? false
-                              : true
-                          }
-                          key={project.id}
-                          tileIndex={project.id}
-                          logo={project.logo}
-                          name={project.name}
-                          status={project.status}
-                          isHackathon={true}
-                          joinRoundStatus={'APPROVED'}
-                        />
-                      ))}
+                    <VStack align={'start'} w="full" gap={'24px'}>
+                      <>
+                        {' '}
+                        <Box
+                          as="p"
+                          fontSize={{ base: '12px', md: '14px' }}
+                          pb="0.5rem"
+                          color="neutral.11"
+                        >
+                          Projects
+                        </Box>
+                        {userProjects.data?.map((project, index) => (
+                          <Tile
+                            isSelectAble={
+                              selectedArray.data?.find(e => e.projectsModel.id === project.id)
+                                ? false
+                                : true
+                            }
+                            key={project.id}
+                            tileIndex={project.id}
+                            logo={project.logo}
+                            name={project.name}
+                            status={project.status}
+                            isHackathon={true}
+                            joinRoundStatus={'APPROVED'}
+                          />
+                        ))}
+                      </>
                       <Controller
                         control={control}
                         name={'mainTrack'}
@@ -622,7 +621,7 @@ const SelectProjectToSubmitToHackathon = ({
                   )}
                 </VStack>
               ) : (
-                <VStack textAlign={'start'} align={'start'} spacing="24px">
+                <VStack textAlign={'start'} align={'start'} gap={'24px'}>
                   <VStack align={'start'} spacing="16px">
                     <Box
                       as="p"
