@@ -14,6 +14,7 @@ export const projectsHackathonSubmit = protectedProcedure.query(async ({ ctx }) 
         short_description: true,
         logo: true,
         status: true,
+        projectUserCount: true,
       },
     });
     return res;

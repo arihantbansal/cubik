@@ -666,3 +666,40 @@ export const proofRemove = async (wallet: NodeWallet, proofType: ProofType) => {
 
   return ix;
 };
+
+export const projectJoinHackathon = async (
+  wallet: NodeWallet,
+  projectCount: number,
+  counter: number,
+  hackathonAdmin: string,
+) => {
+  const program = anchorProgram(wallet);
+  let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      anchor.utils.bytes.utf8.encode('project'),
+      wallet.publicKey.toBuffer(),
+      Buffer.from(projectCount.toString()),
+    ],
+    program.programId,
+  );
+  const [hackathon_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    [
+      Buffer.from('hackathon'),
+      new anchor.web3.PublicKey(hackathonAdmin).toBuffer(),
+      new anchor.BN(counter).toArrayLike(Buffer, 'le', 2),
+    ],
+    new anchor.web3.PublicKey('DQDrRfiaqSzbSJCL9BMzPd6TfgLmDHxCEQDCrjoK9jCF'),
+  );
+  const [hackathonJoinAccount] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('hackathonjoin'), hackathon_account.toBuffer(), project_account.toBuffer()],
+    program.programId,
+  );
+  const ix = await program.methods
+    .projectJoinHackathon(hackathon_account, project_account)
+    .accounts({
+      hackathonJoinAccount: hackathonJoinAccount,
+    })
+    .instruction();
+
+  return ix;
+};

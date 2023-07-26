@@ -44,7 +44,7 @@ import { SuccessToast } from '~/components/common/toasts/Toasts';
 import EmptyStateHOC from '~/components/HOC/EmptyState';
 import { useUserStore } from '~/store/userStore';
 import { HackathonTracks } from '~/types/hackathon';
-import { connection, ProjectJoinRound } from '~/utils/program/contract';
+import { connection, projectJoinHackathon, ProjectJoinRound } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 import { GroupBase, OptionsOrGroups, Select } from 'chakra-react-select';
 import { track } from 'mixpanel-browser';
@@ -108,10 +108,15 @@ const SelectProjectToSubmitToHackathon = ({
     refetchOnMount: false,
   });
   // todo: update this
-  const sendTransaction = async (roundName: string, projectUserCount: number) => {
+  const sendTransaction = async (projectUserCount: number) => {
     try {
       const tx = new anchor.web3.Transaction();
-      const ix = await ProjectJoinRound(anchorWallet as NodeWallet, roundName, projectUserCount);
+      const ix = await projectJoinHackathon(
+        anchorWallet as NodeWallet,
+        projectUserCount,
+        1,
+        'AhFfjBPCoNRDExEDFYuNK2NXCWNa1gi2VUbdA7cF19CD',
+      );
       const { blockhash } = await connection.getLatestBlockhash();
       tx.recentBlockhash = blockhash;
       tx.feePayer = anchorWallet?.publicKey;
@@ -133,7 +138,9 @@ const SelectProjectToSubmitToHackathon = ({
       setsignTransactionLoading(true);
       if (!hackathonId) return;
 
-      const sig = await sendTransaction('', 0);
+      const sig = await sendTransaction(
+        userProjects.data?.find(e => e.id === selectedProject)?.projectUserCount as number,
+      );
       if (!sig) return;
       joinHackathonMutation.mutate({
         hackathonId: hackathonId as string,

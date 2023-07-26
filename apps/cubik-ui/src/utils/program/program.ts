@@ -1,4 +1,4 @@
-export type CubikContractV2 = {
+export interface CubikContractV2 {
   version: '0.1.0';
   name: 'cubik_contract_v2';
   instructions: [
@@ -24,13 +24,13 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
           name: 'username';
           type: 'string';
-        }
+        },
       ];
     },
     {
@@ -65,7 +65,7 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
@@ -75,7 +75,7 @@ export type CubikContractV2 = {
         {
           name: 'multiSig';
           type: 'publicKey';
-        }
+        },
       ];
     },
     {
@@ -100,7 +100,7 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
@@ -118,7 +118,7 @@ export type CubikContractV2 = {
         {
           name: 'limit';
           type: 'u64';
-        }
+        },
       ];
     },
     {
@@ -143,7 +143,7 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [];
     },
@@ -169,7 +169,7 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
@@ -179,7 +179,7 @@ export type CubikContractV2 = {
         {
           name: 'projectAccount';
           type: 'publicKey';
-        }
+        },
       ];
     },
     {
@@ -219,7 +219,7 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
@@ -233,7 +233,7 @@ export type CubikContractV2 = {
         {
           name: 'owner';
           type: 'publicKey';
-        }
+        },
       ];
     },
     {
@@ -273,7 +273,7 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
@@ -287,7 +287,7 @@ export type CubikContractV2 = {
         {
           name: 'owner';
           type: 'publicKey';
-        }
+        },
       ];
     },
     {
@@ -322,7 +322,7 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
@@ -332,7 +332,7 @@ export type CubikContractV2 = {
         {
           name: 'owner';
           type: 'publicKey';
-        }
+        },
       ];
     },
     {
@@ -367,7 +367,7 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
@@ -377,7 +377,7 @@ export type CubikContractV2 = {
         {
           name: 'owner';
           type: 'publicKey';
-        }
+        },
       ];
     },
     {
@@ -442,7 +442,7 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
@@ -468,7 +468,7 @@ export type CubikContractV2 = {
         {
           name: 'split';
           type: 'u64';
-        }
+        },
       ];
     },
     {
@@ -533,7 +533,7 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
@@ -559,7 +559,7 @@ export type CubikContractV2 = {
         {
           name: 'split';
           type: 'u64';
-        }
+        },
       ];
     },
     {
@@ -614,7 +614,7 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
@@ -640,7 +640,7 @@ export type CubikContractV2 = {
         {
           name: 'split';
           type: 'u64';
-        }
+        },
       ];
     },
     {
@@ -695,7 +695,7 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
@@ -721,7 +721,7 @@ export type CubikContractV2 = {
         {
           name: 'split';
           type: 'u64';
-        }
+        },
       ];
     },
     {
@@ -756,13 +756,13 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
           name: 'proof';
           type: 'string';
-        }
+        },
       ];
     },
     {
@@ -797,13 +797,13 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
           name: 'proof';
           type: 'string';
-        }
+        },
       ];
     },
     {
@@ -828,10 +828,136 @@ export type CubikContractV2 = {
           name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [];
-    }
+    },
+    {
+      name: 'createContributionV2';
+      accounts: [
+        {
+          name: 'authority';
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: 'tokenMint';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'tokenAtaSender';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'tokenAtaReceiver';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'tokenAtaAdmin';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'adminAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'roundAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'projectAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'contributionAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'systemProgram';
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: 'tokenProgram';
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: 'rent';
+          isMut: false;
+          isSigner: false;
+        },
+      ];
+      args: [
+        {
+          name: 'amount';
+          type: 'u64';
+        },
+        {
+          name: 'split';
+          type: 'u64';
+        },
+        {
+          name: 'createKey';
+          type: 'publicKey';
+        },
+        {
+          name: 'owner';
+          type: 'publicKey';
+        },
+        {
+          name: 'roundId';
+          type: 'string';
+        },
+        {
+          name: 'counter';
+          type: 'string';
+        },
+      ];
+    },
+    {
+      name: 'projectJoinHackathon';
+      accounts: [
+        {
+          name: 'authority';
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: 'hackathonJoinAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'systemProgram';
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: 'rent';
+          isMut: false;
+          isSigner: false;
+        },
+      ];
+      args: [
+        {
+          name: 'hackathonAccount';
+          type: 'publicKey';
+        },
+        {
+          name: 'projectAccount';
+          type: 'publicKey';
+        },
+      ];
+    },
   ];
   accounts: [
     {
@@ -846,7 +972,7 @@ export type CubikContractV2 = {
           {
             name: 'bump';
             type: 'u8';
-          }
+          },
         ];
       };
     },
@@ -870,7 +996,23 @@ export type CubikContractV2 = {
           {
             name: 'usd';
             type: 'u64';
-          }
+          },
+        ];
+      };
+    },
+    {
+      name: 'contributionV2';
+      type: {
+        kind: 'struct';
+        fields: [
+          {
+            name: 'authority';
+            type: 'publicKey';
+          },
+          {
+            name: 'bump';
+            type: 'u8';
+          },
         ];
       };
     },
@@ -904,7 +1046,7 @@ export type CubikContractV2 = {
           {
             name: 'bump';
             type: 'u8';
-          }
+          },
         ];
       };
     },
@@ -936,7 +1078,7 @@ export type CubikContractV2 = {
           {
             name: 'projectSize';
             type: 'u64';
-          }
+          },
         ];
       };
     },
@@ -966,7 +1108,23 @@ export type CubikContractV2 = {
           {
             name: 'bump';
             type: 'u8';
-          }
+          },
+        ];
+      };
+    },
+    {
+      name: 'joinHackathon';
+      type: {
+        kind: 'struct';
+        fields: [
+          {
+            name: 'authority';
+            type: 'publicKey';
+          },
+          {
+            name: 'bump';
+            type: 'u8';
+          },
         ];
       };
     },
@@ -994,10 +1152,10 @@ export type CubikContractV2 = {
           {
             name: 'bump';
             type: 'u8';
-          }
+          },
         ];
       };
-    }
+    },
   ];
   types: [
     {
@@ -1013,7 +1171,7 @@ export type CubikContractV2 = {
           },
           {
             name: 'FAILED';
-          }
+          },
         ];
       };
     },
@@ -1030,7 +1188,7 @@ export type CubikContractV2 = {
           },
           {
             name: 'REJECTED';
-          }
+          },
         ];
       };
     },
@@ -1056,10 +1214,10 @@ export type CubikContractV2 = {
           },
           {
             name: 'DROPS01';
-          }
+          },
         ];
       };
-    }
+    },
   ];
   events: [
     {
@@ -1094,7 +1252,32 @@ export type CubikContractV2 = {
           name: 'split';
           type: 'u64';
           index: false;
-        }
+        },
+      ];
+    },
+    {
+      name: 'NewContributionV2';
+      fields: [
+        {
+          name: 'user';
+          type: 'publicKey';
+          index: false;
+        },
+        {
+          name: 'createKey';
+          type: 'publicKey';
+          index: false;
+        },
+        {
+          name: 'amount';
+          type: 'u64';
+          index: false;
+        },
+        {
+          name: 'split';
+          type: 'u64';
+          index: false;
+        },
       ];
     },
     {
@@ -1109,9 +1292,29 @@ export type CubikContractV2 = {
           name: 'username';
           type: 'string';
           index: false;
-        }
+        },
       ];
-    }
+    },
+    {
+      name: 'NewHackathonJoin';
+      fields: [
+        {
+          name: 'authority';
+          type: 'publicKey';
+          index: false;
+        },
+        {
+          name: 'hackathonAccount';
+          type: 'publicKey';
+          index: false;
+        },
+        {
+          name: 'projectAccount';
+          type: 'publicKey';
+          index: false;
+        },
+      ];
+    },
   ];
   errors: [
     {
@@ -1153,9 +1356,9 @@ export type CubikContractV2 = {
       code: 6007;
       name: 'InvalidProofType';
       msg: 'Invalid Proof type';
-    }
+    },
   ];
-};
+}
 
 export const IDL: CubikContractV2 = {
   version: '0.1.0',
@@ -1991,6 +2194,132 @@ export const IDL: CubikContractV2 = {
       ],
       args: [],
     },
+    {
+      name: 'createContributionV2',
+      accounts: [
+        {
+          name: 'authority',
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: 'tokenMint',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'tokenAtaSender',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'tokenAtaReceiver',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'tokenAtaAdmin',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'adminAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'roundAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'projectAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'contributionAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'systemProgram',
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: 'tokenProgram',
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: 'rent',
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: 'amount',
+          type: 'u64',
+        },
+        {
+          name: 'split',
+          type: 'u64',
+        },
+        {
+          name: 'createKey',
+          type: 'publicKey',
+        },
+        {
+          name: 'owner',
+          type: 'publicKey',
+        },
+        {
+          name: 'roundId',
+          type: 'string',
+        },
+        {
+          name: 'counter',
+          type: 'string',
+        },
+      ],
+    },
+    {
+      name: 'projectJoinHackathon',
+      accounts: [
+        {
+          name: 'authority',
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: 'hackathonJoinAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'systemProgram',
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: 'rent',
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: 'hackathonAccount',
+          type: 'publicKey',
+        },
+        {
+          name: 'projectAccount',
+          type: 'publicKey',
+        },
+      ],
+    },
   ],
   accounts: [
     {
@@ -2029,6 +2358,22 @@ export const IDL: CubikContractV2 = {
           {
             name: 'usd',
             type: 'u64',
+          },
+        ],
+      },
+    },
+    {
+      name: 'contributionV2',
+      type: {
+        kind: 'struct',
+        fields: [
+          {
+            name: 'authority',
+            type: 'publicKey',
+          },
+          {
+            name: 'bump',
+            type: 'u8',
           },
         ],
       },
@@ -2121,6 +2466,22 @@ export const IDL: CubikContractV2 = {
             type: {
               defined: 'RoundProjectStatus',
             },
+          },
+          {
+            name: 'bump',
+            type: 'u8',
+          },
+        ],
+      },
+    },
+    {
+      name: 'joinHackathon',
+      type: {
+        kind: 'struct',
+        fields: [
+          {
+            name: 'authority',
+            type: 'publicKey',
           },
           {
             name: 'bump',
@@ -2257,6 +2618,31 @@ export const IDL: CubikContractV2 = {
       ],
     },
     {
+      name: 'NewContributionV2',
+      fields: [
+        {
+          name: 'user',
+          type: 'publicKey',
+          index: false,
+        },
+        {
+          name: 'createKey',
+          type: 'publicKey',
+          index: false,
+        },
+        {
+          name: 'amount',
+          type: 'u64',
+          index: false,
+        },
+        {
+          name: 'split',
+          type: 'u64',
+          index: false,
+        },
+      ],
+    },
+    {
       name: 'NewUser',
       fields: [
         {
@@ -2267,6 +2653,26 @@ export const IDL: CubikContractV2 = {
         {
           name: 'username',
           type: 'string',
+          index: false,
+        },
+      ],
+    },
+    {
+      name: 'NewHackathonJoin',
+      fields: [
+        {
+          name: 'authority',
+          type: 'publicKey',
+          index: false,
+        },
+        {
+          name: 'hackathonAccount',
+          type: 'publicKey',
+          index: false,
+        },
+        {
+          name: 'projectAccount',
+          type: 'publicKey',
           index: false,
         },
       ],

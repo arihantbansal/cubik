@@ -657,7 +657,7 @@ const HackathonHeader = ({
         onClose={submitForHackathonOnClose}
         hackathonLogo={logo || ''}
         hackathonDescription={short_description || ''}
-        hackathonTracks={tracks as HackathonTracks}
+        hackathonTracks={tracks as HackathonTracks[]}
         hackathonId={hackathonId}
       />
     </>

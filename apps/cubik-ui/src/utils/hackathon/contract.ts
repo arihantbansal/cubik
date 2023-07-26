@@ -7,7 +7,7 @@ import { env } from '~/env.mjs';
 import type { CubikHackathon } from './idl';
 import { IDL } from './idl';
 
-const PROGRAM_ID = 'DQDrRfiaqSzbSJCL9BMzPd6TfgLmDHxCEQDCrjoK9jCF';
+export const PROGRAM_ID = 'DQDrRfiaqSzbSJCL9BMzPd6TfgLmDHxCEQDCrjoK9jCF';
 
 const RPC_URL =
   env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta'
