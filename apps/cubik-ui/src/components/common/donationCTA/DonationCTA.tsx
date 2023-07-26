@@ -39,7 +39,13 @@ export const RoundEndedBanner = ({
         </Center>{' '}
         <Box as={'p'} textStyle={'body5'} color="white" textAlign={'start'}>
           Current Round has ended! Stay tuned till the next round starts.{' '}
-          <b style={{ textDecoration: 'underline' }}>Learn more</b>
+          <Link
+            href="https://twitter.com/_cubik"
+            target="_blank"
+            style={{ textDecoration: 'underline' }}
+          >
+            Learn more
+          </Link>
         </Box>
       </HStack>
     </Skeleton>
