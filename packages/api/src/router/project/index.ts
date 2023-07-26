@@ -21,6 +21,7 @@ import {
   joinRound,
   projectAdminDetails,
   projectCount,
+  projectIsValid,
   projectsHackathonSubmit,
 } from './protected';
 export const projectRouter = createTRPCRouter({
@@ -44,4 +45,5 @@ export const projectRouter = createTRPCRouter({
   findManyVerifiedUser: findManyVerifiedUser,
   searchProjects: searchProjects,
   projectsHackathonSubmit: projectsHackathonSubmit,
+  projectIsValid: projectIsValid,
 });
