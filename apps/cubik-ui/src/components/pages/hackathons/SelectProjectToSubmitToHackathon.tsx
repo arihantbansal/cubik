@@ -248,7 +248,7 @@ const SelectProjectToSubmitToHackathon = ({
                 >
                   {name}
                 </Box>
-                <Tag>Submitted</Tag>
+                {!isSelectAble && <Tag>Submitted</Tag>}
               </HStack>
             </Stack>
           </VStack>
@@ -332,14 +332,18 @@ const SelectProjectToSubmitToHackathon = ({
                       <Spinner />
                     </Center>
                   ) : userProjects.data && userProjects.data.length > 0 ? (
-                    <VStack w="full" gap="24px">
+                    <VStack align={'start'} w="full" gap={2}>
                       <Box
                         as="p"
-                        fontSize={{ base: '12px', md: '14px' }}
+                        fontSize={{ base: '12px', md: '20px' }}
                         pb="0.5rem"
+                        fontWeight={{
+                          base: 500,
+                          md: 600,
+                        }}
                         color="neutral.11"
                       >
-                        Sponsored Tracks
+                        Projects
                       </Box>
                       {userProjects.data?.map((project, index) => (
                         <Tile
