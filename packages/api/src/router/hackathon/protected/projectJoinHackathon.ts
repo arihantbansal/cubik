@@ -13,6 +13,7 @@ export const projectJoinHackathon = protectedProcedure
           value: z.string().nonempty(),
         }),
       ),
+      mainTracks: z.string().nonempty(),
     }),
   )
   .mutation(async ({ ctx, input }) => {
@@ -23,6 +24,7 @@ export const projectJoinHackathon = protectedProcedure
           projectId: input.projectId,
           tx: input.tx,
           tracks: input.tracks,
+          mainTrack: input.mainTracks,
         },
       });
 

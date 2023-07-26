@@ -49,6 +49,7 @@ model ProjectJoinHackathons {
   hackathonId            String
   projectId              String
   tracks                 Json?
+  mainTrack              String?
   amount                 Float                  @default(0)
   isArchive              Boolean                @default(false)
   createdAt              DateTime               @default(now())

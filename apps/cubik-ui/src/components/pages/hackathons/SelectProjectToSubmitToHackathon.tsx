@@ -52,6 +52,7 @@ import { GroupBase, OptionsOrGroups, Select } from 'chakra-react-select';
 import { track } from 'mixpanel-browser';
 
 type FormData = {
+  mainTrack: string;
   selectedProjectId: string | null;
   tracks: {
     value: string;
@@ -154,7 +155,8 @@ const SelectProjectToSubmitToHackathon = ({
         hackathonId: hackathonId as string,
         projectId: selectedProject as string,
         tx: sig,
-        tracks: getValues('tracks'), // add tracks here
+        tracks: getValues('tracks'),
+        mainTracks: '',
       });
     } catch (error) {
       error;
@@ -251,21 +253,23 @@ const SelectProjectToSubmitToHackathon = ({
             </Stack>
           </VStack>
         </VStack>
-        <Center
-          rounded="full"
-          border="2px solid"
-          w="22px"
-          h="22px"
-          borderColor={isSelectAble && isSelected ? '#14665B' : '#ADB8B6'}
-          p="4px"
-        >
+        {isSelectAble && (
           <Center
             rounded="full"
-            w="full"
-            h="full"
-            backgroundColor={isSelectAble && isSelected ? '#14665B' : ''}
-          />
-        </Center>
+            border="2px solid"
+            w="22px"
+            h="22px"
+            borderColor={isSelectAble && isSelected ? '#14665B' : '#ADB8B6'}
+            p="4px"
+          >
+            <Center
+              rounded="full"
+              w="full"
+              h="full"
+              backgroundColor={isSelectAble && isSelected ? '#14665B' : ''}
+            />
+          </Center>
+        )}
       </HStack>
     );
   };
@@ -329,6 +333,14 @@ const SelectProjectToSubmitToHackathon = ({
                     </Center>
                   ) : userProjects.data && userProjects.data.length > 0 ? (
                     <VStack w="full" gap="24px">
+                      <Box
+                        as="p"
+                        fontSize={{ base: '12px', md: '14px' }}
+                        pb="0.5rem"
+                        color="neutral.11"
+                      >
+                        Sponsored Tracks
+                      </Box>
                       {userProjects.data?.map((project, index) => (
                         <Tile
                           isSelectAble={
@@ -345,90 +357,68 @@ const SelectProjectToSubmitToHackathon = ({
                           joinRoundStatus={'APPROVED'}
                         />
                       ))}
-                    </VStack>
-                  ) : (
-                    <VStack w="full" py="4rem" justify={'center'}>
-                      <EmptyStateHOC
-                        heading={'No Project Found'}
-                        subHeading={
-                          'You have not submitted any project and you can not apply for grant'
-                        }
-                        margin={'1rem'}
+                      <Controller
+                        control={control}
+                        name={'mainTrack'}
+                        render={({
+                          field: { onChange, onBlur, value, name, ref },
+                          fieldState: { error },
+                          formState,
+                        }) => (
+                          <FormControl isRequired w="full">
+                            <VStack align="start" w="full">
+                              <FormLabel
+                                fontSize={{ base: '12px', md: '14px' }}
+                                pb="0.5rem"
+                                htmlFor="tracks"
+                                color="neutral.11"
+                              >
+                                Main Tracks
+                              </FormLabel>
+                              <ChakraSelect
+                                defaultValue={1}
+                                rounded="8px"
+                                h={{ base: '2.2rem', md: '2.5rem' }}
+                                textStyle={{ base: 'body5', md: 'body4' }}
+                                color="neutral.11"
+                                outline="none"
+                                w="full"
+                                border={'none'}
+                                boxShadow="none"
+                                _hover={{
+                                  boxShadow: 'none !important',
+                                  borderColor: '#ffffff10 !important',
+                                  outline: '#ffffff10 !important',
+                                }}
+                                _focus={{
+                                  boxShadow: 'none !important',
+                                  borderColor: '#ffffff10 !important',
+                                  outline: '#ffffff10 !important',
+                                }}
+                                _focusVisible={{
+                                  boxShadow: 'none !important',
+                                  borderColor: 'none !important',
+                                  outline: 'none !important',
+                                }}
+                                _active={{
+                                  boxShadow: 'none !important',
+                                  borderColor: 'none !important',
+                                  outline: 'none !important',
+                                }}
+                                _placeholder={{
+                                  textAlign: 'start',
+                                  fontSize: { base: '12px', md: '14px' },
+                                  color: '#3B3D3D',
+                                  px: '1rem',
+                                }}
+                              >
+                                <option value="option1">Fully On Chain Game</option>
+                                <option value="option1">Solana Integrated Game</option>
+                              </ChakraSelect>
+                            </VStack>
+                          </FormControl>
+                        )}
                       />
-                      <Button
-                        variant="cubikFilled"
-                        size={'cubikSmall'}
-                        as={Link}
-                        href="/submit-project"
-                        leftIcon={<BsPlus width={20} height={20} />}
-                      >
-                        Choose Project
-                      </Box>
-                      <VStack w="full" gap="24px">
-                        {userProjects.data?.map((project, index) => (
-                          <Tile
-                            key={project.id}
-                            tileIndex={project.id}
-                            logo={project.logo}
-                            name={project.name}
-                            status={project.status}
-                            isHackathon={true}
-                            joinRoundStatus={'APPROVED'}
-                          />
-                        ))}
-                      </VStack>{' '}
-                      <FormControl isRequired w="full">
-                        <VStack align="start" w="full">
-                          <FormLabel
-                            fontSize={{ base: '12px', md: '14px' }}
-                            pb="0.5rem"
-                            htmlFor="tracks"
-                            color="neutral.11"
-                          >
-                            Main Tracks
-                          </FormLabel>
-                          <ChakraSelect
-                            defaultValue={1}
-                            rounded="8px"
-                            h={{ base: '2.2rem', md: '2.5rem' }}
-                            textStyle={{ base: 'body5', md: 'body4' }}
-                            color="neutral.11"
-                            outline="none"
-                            w="full"
-                            border={'none'}
-                            boxShadow="none"
-                            _hover={{
-                              boxShadow: 'none !important',
-                              borderColor: '#ffffff10 !important',
-                              outline: '#ffffff10 !important',
-                            }}
-                            _focus={{
-                              boxShadow: 'none !important',
-                              borderColor: '#ffffff10 !important',
-                              outline: '#ffffff10 !important',
-                            }}
-                            _focusVisible={{
-                              boxShadow: 'none !important',
-                              borderColor: 'none !important',
-                              outline: 'none !important',
-                            }}
-                            _active={{
-                              boxShadow: 'none !important',
-                              borderColor: 'none !important',
-                              outline: 'none !important',
-                            }}
-                            _placeholder={{
-                              textAlign: 'start',
-                              fontSize: { base: '12px', md: '14px' },
-                              color: '#3B3D3D',
-                              px: '1rem',
-                            }}
-                          >
-                            <option value="option1">Fully On Chain Game</option>
-                            <option value="option1">Solana Integrated Game</option>
-                          </ChakraSelect>
-                        </VStack>
-                      </FormControl>
                       <Controller
                         control={control}
                         name="tracks"
@@ -602,7 +592,7 @@ const SelectProjectToSubmitToHackathon = ({
                           </FormControl>
                         )}
                       />
-                    </>
+                    </VStack>
                   ) : (
                     <VStack
                       border="1px dashed"
