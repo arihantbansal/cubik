@@ -271,12 +271,7 @@ const HackathonsPage = () => {
                                   w="full"
                                   spacing={{ base: '12px', md: '12px' }}
                                 >
-                                  <HStack
-                                    w="full"
-                                    gap="8px"
-                                    align={'flex-end'}
-                                    justify={'space-between'}
-                                  >
+                                  <HStack w="full" gap="8px" align={'flex-end'} justify={'start'}>
                                     <Box
                                       color="neutral.11"
                                       as="p"

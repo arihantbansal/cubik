@@ -37,7 +37,38 @@ type HackathonStatusProps = {
 };
 
 const HackathonStatus = ({ show, timeline }: HackathonStatusProps) => {
-  if (isFuture(new Date(timeline[0].end as Date))) {
+  console.log(timeline);
+  // check registration start date
+  if (!timeline) return <></>;
+
+  const registration = timeline.find(element => element.name === 'Registration');
+  const hackathon = timeline.find(element => element.name === 'Game Jam');
+  const voting = timeline.find(element => element.name === 'Voting');
+
+  if (registration && isFuture(new Date(hackathon?.start ?? 0))) {
+    return (
+      <HStack
+        rounded="full"
+        backgroundColor="#1D1F1E"
+        p="0px 12px"
+        spacing="8px"
+        minH={'22px'}
+        mx={1}
+      >
+        <Box as={AiTwotoneCalendar} color="white" boxSize={['12px', '14px', '18px']} />
+        <Box
+          p="8px 12px"
+          ps="0px"
+          as="p"
+          whiteSpace="pre"
+          color="neutral.11"
+          textStyle={{ base: 'body6', md: 'body5' }}
+        >
+          Coming Soon
+        </Box>
+      </HStack>
+    );
+  } else if (registration && isFuture(new Date(hackathon?.start ?? 0))) {
     return (
       <HStack
         rounded="full"
@@ -60,7 +91,11 @@ const HackathonStatus = ({ show, timeline }: HackathonStatusProps) => {
         </Box>
       </HStack>
     );
-  } else if (isPast(new Date(timeline[1].start as Date))) {
+  } else if (
+    hackathon &&
+    isPast(new Date(hackathon?.start ?? 0)) &&
+    isFuture(new Date(hackathon.end ?? 0))
+  ) {
     return (
       <HStack
         rounded={'full'}
@@ -81,15 +116,19 @@ const HackathonStatus = ({ show, timeline }: HackathonStatusProps) => {
           pe="12px"
           as="p"
           whiteSpace="pre"
-          color="neutral.11"
+          color="#31F579"
           textStyle={{ base: 'body6', md: 'overline3' }}
           display={{ base: show ? 'block' : 'none', md: 'block' }}
         >
-          Hackathon Live
+          Live
         </Box>
       </HStack>
     );
-  } else if (isPast(new Date(timeline[2].start as Date))) {
+  } else if (
+    voting &&
+    isPast(new Date(voting?.start ?? 0)) &&
+    isFuture(new Date(voting?.end ?? 0))
+  ) {
     return (
       <HStack
         rounded={'full'}
@@ -119,6 +158,7 @@ const HackathonStatus = ({ show, timeline }: HackathonStatusProps) => {
       </HStack>
     );
   }
+
   //   if (isFuture(startDate)) {
   //     return (
   //       <HStack

@@ -1,31 +1,28 @@
 import { z } from 'zod';
 import { protectedProcedure } from '../../../trpc';
 
-type tracksDB = {
-  label: string;
-};
-
 export const projectJoinHackathon = protectedProcedure
   .input(
     z.object({
       hackathonId: z.string().nonempty(),
       projectId: z.string().nonempty(),
       tx: z.string().nonempty(),
-      tracks: z.array(z.string()),
+      tracks: z.array(
+        z.object({
+          label: z.string().nonempty(),
+          value: z.string().nonempty(),
+        }),
+      ),
     }),
   )
   .mutation(async ({ ctx, input }) => {
     try {
-      const tracksDB: tracksDB[] = [];
-      input.tracks.forEach(track => {
-        tracksDB.push({ label: track });
-      });
       const res = ctx.prisma.projectJoinHackathons.create({
         data: {
           hackathonId: input.hackathonId,
           projectId: input.projectId,
-          tracks: tracksDB,
           tx: input.tx,
+          tracks: input.tracks,
         },
       });
 

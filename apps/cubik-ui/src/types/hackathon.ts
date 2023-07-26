@@ -29,15 +29,20 @@ export interface HackathonSponsor {
 }
 
 export interface HackathonLinks {
-  label: string;
-  url: string;
+  title: string;
+  link: string;
 }
 
 export interface HackathonTracks {
-  trackName: string;
-  trackDescription: string;
+  id: string;
+  name: string;
+  prizeWorth: number;
+  sponsor: HackathonSponsor[];
+  prizeUnit: string;
+  description: string;
+  ideas: string[];
+  judges: string[];
   links: HackathonLinks[];
-  trackPrizes: HackathonPrize[];
 }
 
 export interface HackathonSocial {

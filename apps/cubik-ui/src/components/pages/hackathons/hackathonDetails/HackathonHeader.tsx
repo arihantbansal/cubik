@@ -33,6 +33,7 @@ import HackathonSchedule from './HackathonSchedule';
 import { isPast } from 'date-fns';
 import SelectProjectToSubmitToHackathon from '../SelectProjectToSubmitToHackathon';
 import { HackathonTracks } from '~/types/hackathon';
+import HackathonStatus from '../HackathonStatus';
 
 interface Props {
   isOpen: boolean;
@@ -488,25 +489,28 @@ const HackathonHeader = ({
           direction={{ base: 'column', lg: 'row' }}
         >
           <VStack flex={3} alignItems="start" w="full" spacing="16px">
-            <Skeleton
-              isLoaded={!isLoading}
-              fadeDuration={1}
-              borderRadius={'12px'}
-              opacity={isLoading ? '0.6' : '1'}
-            >
-              <Box
-                as="p"
-                textStyle={{ base: 'title1', md: 'headline3' }}
-                textTransform="capitalize"
-                color="neutral.11"
-                noOfLines={1}
-                overflow="hidden"
-                whiteSpace="nowrap"
-                textOverflow="ellipsis"
+            <HStack>
+              <Skeleton
+                isLoaded={!isLoading}
+                fadeDuration={1}
+                borderRadius={'12px'}
+                opacity={isLoading ? '0.6' : '1'}
               >
-                {name}
-              </Box>
-            </Skeleton>
+                <Box
+                  as="p"
+                  textStyle={{ base: 'title1', md: 'headline3' }}
+                  textTransform="capitalize"
+                  color="neutral.11"
+                  noOfLines={1}
+                  overflow="hidden"
+                  whiteSpace="nowrap"
+                  textOverflow="ellipsis"
+                >
+                  {name}
+                </Box>
+              </Skeleton>
+              <HackathonStatus show={true} timeline={timeline} />
+            </HStack>
             <SkeletonText
               isLoaded={!isLoading}
               w="full"

@@ -72,7 +72,6 @@ const HackathonSchedule = ({
   timeline: HackathonSchedule;
 }) => {
   if (!timeline) return <></>;
-  // sort array with the index field inside of the array
   const timelineValues = Object.values(timeline).sort((a, b) => a.index - b.index);
   console.log(timelineValues);
   const { activeStep, setActiveStep } = useSteps({
@@ -83,7 +82,7 @@ const HackathonSchedule = ({
   console.log('acitve step - ', activeStep);
 
   return (
-    <Skeleton isLoaded={!isLoading}>
+    <Skeleton w="full" isLoaded={!isLoading}>
       <Stepper index={activeStep} colorScheme="teal" orientation="vertical" gap="0" w="full">
         {timelineValues.map(event => (
           <Step key={event.index} style={{ width: '100%' }}>
