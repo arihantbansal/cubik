@@ -38,11 +38,7 @@ const HackathonDetail = (props: { slug: string; share: boolean }) => {
       />
       <Container p={'0'} maxW={'full'}>
         <VStack>
-          <Skeleton
-            isLoaded={!isLoading}
-            opacity={isLoading ? '0.1' : '1'}
-            fadeDuration={2}
-          >
+          <Skeleton isLoaded={!isLoading} opacity={isLoading ? '0.1' : '1'} fadeDuration={2}>
             <Center
               alignItems={'end'}
               w="100vw"
@@ -56,8 +52,7 @@ const HackathonDetail = (props: { slug: string; share: boolean }) => {
                 left: 0,
                 right: 0,
                 height: { base: '16rem', md: '20rem', lg: '24rem' },
-                background:
-                  'linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)',
+                background: 'linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)',
                 zIndex: 1,
               }}
             >

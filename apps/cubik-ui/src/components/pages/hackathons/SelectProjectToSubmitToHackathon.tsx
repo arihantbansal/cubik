@@ -146,6 +146,7 @@ const SelectProjectToSubmitToHackathon = ({
         hackathonId: hackathonId as string,
         projectId: selectedProject as string,
         tx: sig,
+        tracks: [], // add tracks here
       });
       setsignTransactionLoading(false);
       onClose();

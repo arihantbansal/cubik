@@ -48,6 +48,7 @@ model ProjectJoinHackathons {
   id                     String                 @id @default(uuid()) @map("_id")
   hackathonId            String
   projectId              String
+  tracks                 Json?
   amount                 Float                  @default(0)
   isArchive              Boolean                @default(false)
   createdAt              DateTime               @default(now())
