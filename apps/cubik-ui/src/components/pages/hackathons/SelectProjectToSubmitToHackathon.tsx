@@ -103,7 +103,10 @@ const SelectProjectToSubmitToHackathon = ({
 
   const joinHackathonMutation = trpc.hackathon.projectJoinHackathon.useMutation({
     onSuccess: () => {
-      ('success');
+       setsignTransactionLoading(false);
+       onClose();
+       setStep(0);
+       SuccessToast({ toast, message: 'Submission Successful' });
     },
   });
 
@@ -153,9 +156,6 @@ const SelectProjectToSubmitToHackathon = ({
         tx: sig,
         tracks: getValues('tracks'), // add tracks here
       });
-      setsignTransactionLoading(false);
-      onClose();
-      SuccessToast({ toast, message: 'Submission Successful' });
     } catch (error) {
       error;
       setsignTransactionLoading(false);
