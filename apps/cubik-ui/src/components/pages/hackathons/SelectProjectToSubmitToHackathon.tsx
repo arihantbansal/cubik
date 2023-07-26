@@ -29,6 +29,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Tag,
+  Select as ChakraSelect,
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
@@ -277,7 +278,9 @@ const SelectProjectToSubmitToHackathon = ({
         variant={'cubik'}
         isOpen={isOpen}
         onClose={() => {
-          reset();
+          reset(undefined, { keepValues: false });
+          setSelectedProjectId(null);
+          setStep(0);
           onClose();
         }}
       >
@@ -320,14 +323,6 @@ const SelectProjectToSubmitToHackathon = ({
             <ModalBody>
               {step === 0 ? (
                 <VStack pb="4rem" align={'start'} spacing="24px" w="full">
-                  <Box
-                    fontSize={{ base: '12px', md: '14px' }}
-                    as="p"
-                    textStyle="title2"
-                    color="neutral.11"
-                  >
-                    Choose Project
-                  </Box>
                   {userProjects.isLoading ? (
                     <Center w="full" height="10rem">
                       <Spinner />
@@ -367,183 +362,270 @@ const SelectProjectToSubmitToHackathon = ({
                         href="/submit-project"
                         leftIcon={<BsPlus width={20} height={20} />}
                       >
-                        New Project
-                      </Button>
-                    </VStack>
-                  )}
-                  <Controller
-                    control={control}
-                    name="tracks"
-                    render={({
-                      field: { onChange, onBlur, value, name, ref },
-                      fieldState: { error },
-                    }) => (
-                      <FormControl isInvalid={Boolean(errors.tracks)} id="tracks">
-                        <HStack w="full" pb="0.5rem" justify={'space-between'}>
+                        Choose Project
+                      </Box>
+                      <VStack w="full" gap="24px">
+                        {userProjects.data?.map((project, index) => (
+                          <Tile
+                            key={project.id}
+                            tileIndex={project.id}
+                            logo={project.logo}
+                            name={project.name}
+                            status={project.status}
+                            isHackathon={true}
+                            joinRoundStatus={'APPROVED'}
+                          />
+                        ))}
+                      </VStack>{' '}
+                      <FormControl isRequired w="full">
+                        <VStack align="start" w="full">
                           <FormLabel
                             fontSize={{ base: '12px', md: '14px' }}
                             pb="0.5rem"
                             htmlFor="tracks"
                             color="neutral.11"
                           >
-                            Choose Categories
+                            Main Tracks
                           </FormLabel>
-                          <Box
-                            as="p"
-                            fontSize={{ base: '10px', md: '12px' }}
-                            color={'neutral.7'}
-                            fontWeight={'600'}
-                          >
-                            {watch('tracks') ? watch('tracks').length : '0'}
-                          </Box>
-                        </HStack>
-                        <Select
-                          isMulti
-                          name={name}
-                          ref={ref}
-                          onChange={onChange}
-                          onBlur={onBlur}
-                          value={value}
-                          //@ts-ignore
-                          options={
-                            hackathonTracks?.map(track => ({
-                              value: track.id,
-                              label: track.name,
-                            })) || []
-                          }
-                          placeholder="Search Categories..."
-                          closeMenuOnSelect={false}
-                          selectedOptionStyle="check"
-                          variant="unstyled"
-                          focusBorderColor="transparent"
-                          chakraStyles={{
-                            container: (provided, state) => ({
-                              ...provided,
-                              border: 'none',
-                              background: 'surface.input_field',
-                              outline: '0px !important',
-                              borderRadius: '8px',
-                              height: '40px',
-                              boxShadow: errors.tracks ? '0 0 0 2px #E53E3E' : '0',
-                              ps: '0rem',
-                              w: 'full',
-                              ':focus': {
-                                outline: 'none',
-                                boxShadow: '0',
-                                border: 'none',
-                              },
-                              ':hover': {
-                                outline: 'none',
-                                boxShadow: '0 !important',
-                                border: 'none !important',
-                              },
-                              ':active': {
-                                outline: 'none',
-                                boxShadow: '0',
-                                border: 'none',
-                              },
-                              ':selected': {
-                                outline: 'none',
-                                boxShadow: '0',
-                                border: 'none',
-                              },
-                              ':invalid': {
-                                boxShadow: '0 0 0 2px #E53E3E',
-                              },
-                            }),
-                            inputContainer: (provided, state) => ({
-                              ...provided,
-                              ps: '8px',
-                              fontSize: { base: '12px', md: '14px' },
-                              backgroundColor: 'transparent',
-                              //  border: 'none',
-                              boxShadow: 'none',
-                              outline: 'none',
-                            }),
-                            valueContainer: (provided, state) => ({
-                              ...provided,
-                              ps: '8px',
-                              border: 'none',
-                              backgroundColor: 'transparent',
-                              boxShadow: 'none',
-                              outline: 'none',
-                            }),
-
-                            clearIndicator: (provided, state) => ({
-                              ...provided,
-                              display: 'none',
-                            }),
-                            dropdownIndicator: (provided, state) => ({
-                              ...provided,
-                              background: '',
-                              borderColor: 'transparent !important',
-                              outline: '0px !important',
-                              boxShadow: '0',
-                              p: 0,
-                              w: '60px',
-                            }),
-                            indicatorSeparator: (provided, state) => ({
-                              ...provided,
-                              display: 'none',
-                            }),
-                            menu: (provided, state) => ({
-                              ...provided,
-                              //border: 'none',
-                              transform: 'translateY(-10px)',
-                              backgroundColor: '#0F0F0F',
-                            }),
-                            menuList: (provided, state) => ({
-                              ...provided,
-                              backgroundColor: '#0F0F0F',
-                              border: '1px solid #141414',
-                              borderTop: 'none',
-                              borderTopRadius: 'none',
-                              boxShadow: 'none',
-                              padding: '0px',
-                            }),
-                            option: (provided, state) => ({
-                              ...provided,
-                              color: 'neutral.11',
-                              fontSize: { base: '12px', md: '14px' },
-                              fontWeight: '400',
-                              backgroundColor: state.isSelected
-                                ? '#010F0D'
-                                : state.isFocused
-                                ? '#010F0D'
-                                : '#0F0F0F',
-                              _hover: {
-                                backgroundColor: '#010F0D',
-                              },
-                              ':active': {
-                                backgroundColor: '#0F0F0F',
-                              },
-                            }),
-                            control: (provided, state) => ({
-                              ...provided,
-                              border: 'none',
-                              backgroundColor: '#0F0F0F',
-                              boxShadow: 'none',
-                              outline: 'none',
-                              ':hover': {
-                                border: 'none',
-                                backgroundColor: '#0F0F0F',
-                              },
-                            }),
-                            placeholder: (provided, state) => ({
-                              ...provided,
+                          <ChakraSelect
+                            defaultValue={1}
+                            rounded="8px"
+                            h={{ base: '2.2rem', md: '2.5rem' }}
+                            textStyle={{ base: 'body5', md: 'body4' }}
+                            color="neutral.11"
+                            outline="none"
+                            w="full"
+                            border={'none'}
+                            boxShadow="none"
+                            _hover={{
+                              boxShadow: 'none !important',
+                              borderColor: '#ffffff10 !important',
+                              outline: '#ffffff10 !important',
+                            }}
+                            _focus={{
+                              boxShadow: 'none !important',
+                              borderColor: '#ffffff10 !important',
+                              outline: '#ffffff10 !important',
+                            }}
+                            _focusVisible={{
+                              boxShadow: 'none !important',
+                              borderColor: 'none !important',
+                              outline: 'none !important',
+                            }}
+                            _active={{
+                              boxShadow: 'none !important',
+                              borderColor: 'none !important',
+                              outline: 'none !important',
+                            }}
+                            _placeholder={{
                               textAlign: 'start',
                               fontSize: { base: '12px', md: '14px' },
                               color: '#3B3D3D',
                               px: '1rem',
-                            }),
-                          }}
-                        />
-                        <FormErrorMessage>
-                          {errors.tracks && errors.tracks.message}
-                        </FormErrorMessage>
+                            }}
+                          >
+                            <option value="option1">Fully On Chain Game</option>
+                            <option value="option1">Solana Integrated Game</option>
+                          </ChakraSelect>
+                        </VStack>
                       </FormControl>
-                    )}
-                  />
+                      <Controller
+                        control={control}
+                        name="tracks"
+                        render={({
+                          field: { onChange, onBlur, value, name, ref },
+                          fieldState: { error },
+                        }) => (
+                          <FormControl isInvalid={Boolean(errors.tracks)} id="tracks">
+                            <HStack w="full" pb="0.5rem" justify={'space-between'}>
+                              <FormLabel
+                                fontSize={{ base: '12px', md: '14px' }}
+                                pb="0.5rem"
+                                htmlFor="tracks"
+                                color="neutral.11"
+                              >
+                                Sponsored Tracks
+                              </FormLabel>
+                              <Box
+                                as="p"
+                                fontSize={{ base: '10px', md: '12px' }}
+                                color={'neutral.7'}
+                                fontWeight={'600'}
+                              >
+                                {watch('tracks') ? watch('tracks').length : ''}
+                              </Box>
+                            </HStack>
+                            <Select
+                              isMulti
+                              name={name}
+                              ref={ref}
+                              onChange={onChange}
+                              onBlur={onBlur}
+                              value={value}
+                              //@ts-ignore
+                              options={
+                                hackathonTracks?.map(track => ({
+                                  value: track.id,
+                                  label: track.name,
+                                })) || []
+                              }
+                              placeholder="Search Categories..."
+                              closeMenuOnSelect={false}
+                              selectedOptionStyle="check"
+                              variant="unstyled"
+                              focusBorderColor="transparent"
+                              chakraStyles={{
+                                container: (provided, state) => ({
+                                  ...provided,
+                                  border: 'none',
+                                  background: 'surface.input_field',
+                                  outline: '0px !important',
+                                  borderRadius: '8px',
+                                  height: '40px',
+                                  boxShadow: errors.tracks ? '0 0 0 2px #E53E3E' : '0',
+                                  ps: '0rem',
+                                  w: 'full',
+                                  ':focus': {
+                                    outline: 'none',
+                                    boxShadow: '0',
+                                    border: 'none',
+                                  },
+                                  ':hover': {
+                                    outline: 'none',
+                                    boxShadow: '0 !important',
+                                    border: 'none !important',
+                                  },
+                                  ':active': {
+                                    outline: 'none',
+                                    boxShadow: '0',
+                                    border: 'none',
+                                  },
+                                  ':selected': {
+                                    outline: 'none',
+                                    boxShadow: '0',
+                                    border: 'none',
+                                  },
+                                  ':invalid': {
+                                    boxShadow: '0 0 0 2px #E53E3E',
+                                  },
+                                }),
+                                inputContainer: (provided, state) => ({
+                                  ...provided,
+                                  ps: '8px',
+                                  fontSize: { base: '12px', md: '14px' },
+                                  backgroundColor: 'transparent',
+                                  //  border: 'none',
+                                  boxShadow: 'none',
+                                  outline: 'none',
+                                }),
+                                valueContainer: (provided, state) => ({
+                                  ...provided,
+                                  ps: '8px',
+                                  border: 'none',
+                                  backgroundColor: 'transparent',
+                                  boxShadow: 'none',
+                                  outline: 'none',
+                                }),
+
+                                clearIndicator: (provided, state) => ({
+                                  ...provided,
+                                  display: 'none',
+                                }),
+                                dropdownIndicator: (provided, state) => ({
+                                  ...provided,
+                                  background: '',
+                                  borderColor: 'transparent !important',
+                                  outline: '0px !important',
+                                  boxShadow: '0',
+                                  p: 0,
+                                  w: '60px',
+                                }),
+                                indicatorSeparator: (provided, state) => ({
+                                  ...provided,
+                                  display: 'none',
+                                }),
+                                menu: (provided, state) => ({
+                                  ...provided,
+                                  //border: 'none',
+                                  transform: 'translateY(-10px)',
+                                  backgroundColor: '#0F0F0F',
+                                }),
+                                menuList: (provided, state) => ({
+                                  ...provided,
+                                  backgroundColor: '#0F0F0F',
+                                  border: '1px solid #141414',
+                                  borderTop: 'none',
+                                  borderTopRadius: 'none',
+                                  boxShadow: 'none',
+                                  padding: '0px',
+                                }),
+                                option: (provided, state) => ({
+                                  ...provided,
+                                  color: 'neutral.11',
+                                  fontSize: { base: '12px', md: '14px' },
+                                  fontWeight: '400',
+                                  backgroundColor: state.isSelected
+                                    ? '#010F0D'
+                                    : state.isFocused
+                                    ? '#010F0D'
+                                    : '#0F0F0F',
+                                  _hover: {
+                                    backgroundColor: '#010F0D',
+                                  },
+                                  ':active': {
+                                    backgroundColor: '#0F0F0F',
+                                  },
+                                }),
+                                control: (provided, state) => ({
+                                  ...provided,
+                                  border: 'none',
+                                  backgroundColor: '#0F0F0F',
+                                  boxShadow: 'none',
+                                  outline: 'none',
+                                  ':hover': {
+                                    border: 'none',
+                                    backgroundColor: '#0F0F0F',
+                                  },
+                                }),
+                                placeholder: (provided, state) => ({
+                                  ...provided,
+                                  textAlign: 'start',
+                                  fontSize: { base: '12px', md: '14px' },
+                                  color: '#3B3D3D',
+                                  px: '1rem',
+                                }),
+                              }}
+                            />
+                            <FormErrorMessage>
+                              {errors.tracks && errors.tracks.message}
+                            </FormErrorMessage>
+                          </FormControl>
+                        )}
+                      />
+                    </>
+                  ) : (
+                    <VStack
+                      border="1px dashed"
+                      borderColor="neutral.4"
+                      rounded="8px"
+                      w="full"
+                      pb="3rem"
+                      justify={'center'}
+                    >
+                      <EmptyStateHOC
+                        heading={'No Project Found'}
+                        subHeading={
+                          'To submit a project in a hackathon you have to create a project first'
+                        }
+                        margin={'1rem'}
+                      />
+                      <Link href="/submit-project">
+                        <Button variant="cubikFilled" size={'cubikSmall'}>
+                          Create Project
+                        </Button>
+                      </Link>
+                    </VStack>
+                  )}
                 </VStack>
               ) : (
                 <VStack textAlign={'start'} align={'start'} spacing="24px">
@@ -592,11 +674,17 @@ const SelectProjectToSubmitToHackathon = ({
                       >
                         Tracks
                       </Box>
-                      <HStack>
-                        {getValues('tracks').map(track => {
-                          return <Tag key={track.value}>{track.label}</Tag>;
-                        })}
-                      </HStack>
+                      {getValues('tracks') ? (
+                        <HStack>
+                          {getValues('tracks').map(track => {
+                            return <Tag key={track.value}>{track.label}</Tag>;
+                          })}
+                        </HStack>
+                      ) : (
+                        <Box as="p" textStyle={{ base: 'title6', md: 'title5' }} color="neutral.11">
+                          No Track Selected
+                        </Box>
+                      )}
                     </VStack>
                     <VStack align={'start'} textAlign="start" spacing="8px">
                       <Box
@@ -637,7 +725,17 @@ const SelectProjectToSubmitToHackathon = ({
               )}{' '}
             </ModalBody>
             <ModalFooter display="flex" h={'fit-content'} justifyContent="space-between">
-              <Button w="8rem" variant="cubikOutlined" size="cubikSmall" onClick={onClose}>
+              <Button
+                w="8rem"
+                variant="cubikOutlined"
+                size="cubikSmall"
+                onClick={() => {
+                  reset(undefined, { keepValues: false });
+                  setStep(0);
+                  setSelectedProjectId(null);
+                  onClose();
+                }}
+              >
                 Cancel
               </Button>
               {step === 1 ? (
