@@ -20,7 +20,7 @@ const VisitorView: FC<visitorViewType> = ({
 }: visitorViewType) => {
   return (
     <Flex flexDir={'column'} gap="48px">
-      <ProfileHeader isLoading={isLoading} user={user} />
+      {/* <ProfileHeader isLoading={isLoading} user={user} /> */}
       <Tabs variant={'cubik'} isLazy>
         <TabList>
           <Tab>Details</Tab>
@@ -36,14 +36,11 @@ const VisitorView: FC<visitorViewType> = ({
           <TabPanel>
             <Flex direction="column" w="full" gap="32px">
               {user &&
-              user.project.filter(
-                (project) => project.status === ProjectVerifyStatus.VERIFIED
-              ).length ? (
+              user.project.filter(project => project.status === ProjectVerifyStatus.VERIFIED)
+                .length ? (
                 // filter verified projects only to show on user profile
                 user.project
-                  .filter(
-                    (project) => project.status === ProjectVerifyStatus.VERIFIED
-                  )
+                  .filter(project => project.status === ProjectVerifyStatus.VERIFIED)
                   .map((project, key) => (
                     <ProjectVisitorCard
                       userName={user.username}

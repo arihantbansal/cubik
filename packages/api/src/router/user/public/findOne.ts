@@ -13,8 +13,11 @@ export const findOne = publicProcedure
         where: {
           username: input.username,
         },
-        include: {
-          project: true,
+        select: {
+          profilePicture: true,
+          profileNft: true,
+          mainWallet: true,
+          id: true,
         },
       });
       return res;

@@ -15,6 +15,7 @@ import {
   findManyRejected,
   findManyVerifiedWithContributions,
   projectVisitorsDetail,
+  getProjects,
 } from './public';
 import {
   createProject,
@@ -46,4 +47,5 @@ export const projectRouter = createTRPCRouter({
   searchProjects: searchProjects,
   projectsHackathonSubmit: projectsHackathonSubmit,
   projectIsValid: projectIsValid,
+  getProjects: getProjects,
 });

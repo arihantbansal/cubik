@@ -2,8 +2,6 @@ import { Box, Center, Container, Heading } from '@chakra-ui/layout';
 import Link from 'next/link';
 import SEO from 'src/components/SEO';
 import ComponentErrors from '~/components/errors/ComponentErrors';
-import AdminView from '~/components/pages/user-profile/AdminView';
-import VisitorView from '~/components/pages/user-profile/VisitorView';
 import { useUserStore } from '~/store/userStore';
 import { trpc } from '~/utils/trpc';
 
@@ -16,18 +14,14 @@ const ProfilePage = ({ username }: { username: string }) => {
     },
     {
       refetchOnWindowFocus: false,
-    }
+    },
   );
 
   if (isError) return <ComponentErrors error={error} />;
   if (!isLoading && !data) {
     return (
       <>
-        <SEO
-          title={`Error 404`}
-          description={`There was some error!!`}
-          image={`error`}
-        />
+        <SEO title={`Error 404`} description={`There was some error!!`} image={`error`} />
         <Container maxW="full">
           <Center gap="16px" flexDir={'column'} maxW="4xl" mx="auto" py="14rem">
             <Heading fontSize="9xl">404</Heading>
@@ -41,12 +35,7 @@ const ProfilePage = ({ username }: { username: string }) => {
               textStyle={{ base: 'body4', md: 'body2' }}
             >
               The page you are looking for does not exist. Go back
-              <Box
-                as={Link}
-                href="/projects"
-                color="brand.teal5"
-                textDecoration={'underline'}
-              >
+              <Box as={Link} href="/projects" color="brand.teal5" textDecoration={'underline'}>
                 home
               </Box>
             </Box>
@@ -58,7 +47,7 @@ const ProfilePage = ({ username }: { username: string }) => {
 
   return (
     <>
-      <SEO
+      {/* <SEO
         title={`@${data ? data.username : 'User'}`}
         description={`@${data ? data.username : 'User'}'s profile`}
         image={`https://res.cloudinary.com/demonicirfan/image/upload/v1684179451/cubik%20og.png`}
@@ -73,7 +62,7 @@ const ProfilePage = ({ username }: { username: string }) => {
         ) : (
           <VisitorView user={data} isLoading={isLoading} />
         )}
-      </Container>
+      </Container> */}
     </>
   );
 };
