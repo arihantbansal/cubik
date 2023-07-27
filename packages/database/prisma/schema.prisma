@@ -23,12 +23,14 @@ model Hackathon {
   matching_pool_sponsors Json?
   timeline               Json?
   social                 Json?
+  
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
   slug                   String                   @unique
   team                   Team[]
   projectJoinRound       ProjectJoinHackathons[]
   HackathonRegistrations HackathonRegistrations[]
+
 }
 
 model HackathonRegistrations {
