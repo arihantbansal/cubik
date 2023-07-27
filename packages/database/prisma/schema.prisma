@@ -29,6 +29,8 @@ model Hackathon {
   team                   Team[]
   projectJoinRound       ProjectJoinHackathons[]
   HackathonRegistrations HackathonRegistrations[]
+  isActive               Boolean                  @default(true)
+  isArchive              Boolean                  @default(false)
 }
 
 model HackathonRegistrations {
