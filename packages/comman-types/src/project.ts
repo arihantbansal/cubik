@@ -18,7 +18,7 @@ export interface ProjectExplorerType {
   projectJoinHackathon?: {
     id: string;
     name: string;
-    color: string;
+    bgImage: string;
   };
 }
 

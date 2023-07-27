@@ -32,13 +32,37 @@ export const projectExplorer = async (req: Request, res: Response) => {
                 username: true,
               },
             },
-            Contribution: {
+
+            logo: true,
+            short_description: true,
+            industry: true,
+          },
+        },
+        contributors: {
+          select: {
+            user: {
               select: {
-                user: {
-                  select: {
-                    profilePicture: true,
-                  },
-                },
+                profilePicture: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    const projectJoinHackathon = await prisma.projectJoinHackathons.findMany({
+      where: {
+        projectsModel: {
+          status: 'VERIFIED',
+        },
+        isArchive: false,
+      },
+      select: {
+        amount: true,
+        projectsModel: {
+          select: {
+            owner: {
+              select: {
+                username: true,
               },
             },
             logo: true,
@@ -46,12 +70,21 @@ export const projectExplorer = async (req: Request, res: Response) => {
             industry: true,
           },
         },
+        hackathon: {
+          select: {
+            background: true,
+            name: true,
+            prize_pool: true,
+            short_description: true,
+            logo: true,
+          },
+        },
       },
     });
-    // const projectJoinHackathon = await prisma.projectJoinHackathons.findMany({
-    //   where: {},
-    // });
-    return res.status(200).json(projectJoinRound);
+    return res.status(200).json({
+      projectJoinHackathon,
+      projectJoinRound,
+    });
   } catch (error) {
     console.log(error);
     return res.status(200).json({ error });
