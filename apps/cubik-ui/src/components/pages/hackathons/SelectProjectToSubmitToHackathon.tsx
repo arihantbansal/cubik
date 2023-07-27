@@ -6,11 +6,6 @@ import {
   Box,
   Button,
   Center,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerOverlay,
   HStack,
   Modal,
   ModalBody,
@@ -22,7 +17,6 @@ import {
   Spinner,
   Stack,
   useDisclosure,
-  DrawerHeader,
   useToast,
   VStack,
   FormControl,
@@ -33,23 +27,19 @@ import {
 } from '@chakra-ui/react';
 import * as anchor from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { ProjectJoinRoundStatus, ProjectsModel, ProjectVerifyStatus } from '@cubik/database';
+import { ProjectJoinRoundStatus, ProjectVerifyStatus } from '@cubik/database';
 import { useAnchorWallet } from '@solana/wallet-adapter-react';
-import { watch } from 'fs';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { BsPlus } from 'react-icons/bs';
-import { v4 as uuidV4 } from 'uuid';
-import NoInformation from '~/components/common/empty-state/NoInformation';
 import { SuccessToast } from '~/components/common/toasts/Toasts';
-import EmptyStateHOC from '~/components/HOC/EmptyState';
+import { connection, projectJoinHackathon } from '~/utils/program/contract';
+import { trpc } from '~/utils/trpc';
+import { Select } from 'chakra-react-select';
 import { useUserStore } from '~/store/userStore';
 import { HackathonTracks } from '~/types/hackathon';
-import { connection, projectJoinHackathon, ProjectJoinRound } from '~/utils/program/contract';
-import { trpc } from '~/utils/trpc';
-import { GroupBase, OptionsOrGroups, Select } from 'chakra-react-select';
-import { track } from 'mixpanel-browser';
+import EmptyStateHOC from '~/components/HOC/EmptyState';
+
 
 type FormData = {
   mainTrack: string;

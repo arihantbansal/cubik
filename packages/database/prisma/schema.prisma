@@ -23,6 +23,7 @@ model Hackathon {
   matching_pool_sponsors Json?
   timeline               Json?
   social                 Json?
+  
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
   slug                   String                   @unique
@@ -31,6 +32,7 @@ model Hackathon {
   HackathonRegistrations HackathonRegistrations[]
   isActive               Boolean                  @default(true)
   isArchive              Boolean                  @default(false)
+
 }
 
 model HackathonRegistrations {
