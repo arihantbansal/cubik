@@ -34,7 +34,6 @@ const main = async () => {
   app.get('/', (req, res) => {
     res.send('Server is running');
   });
-  dbInit();
 
   app.use(basePath + '/token', tokenRouter);
   app.use(basePath + '/project', projectRouter);

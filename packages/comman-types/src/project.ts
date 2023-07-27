@@ -7,8 +7,11 @@ export interface ProjectExplorerType {
   industry: string;
   amount: number;
   contributorCount: number;
-  contributors: string[];
-  count: string;
+  contributors: {
+    user: {
+      profilePicture: string;
+    };
+  }[];
   type: ExplorerType;
   projectJoinRound?: {
     id: string;
@@ -29,4 +32,5 @@ export interface ProjectExploreBanner {
   endTime: Date;
   type: ExplorerType;
   bgImage?: string;
+  colorScheme?: string;
 }
