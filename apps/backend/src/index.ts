@@ -3,34 +3,52 @@ import express, { Express } from 'express';
 import logger from './middleware/logger';
 import cookieParser from 'cookie-parser';
 import { config } from 'dotenv';
-import { tokenRouter } from 'routes';
+import { projectRouter, tokenRouter } from 'routes';
+import { dbInit } from './service/pscale';
+import morgan from 'morgan';
+import morganBody from 'morgan-body';
+import helmet from 'helmet';
+const main = async () => {
+  config();
 
-config();
+  const PORT = process.env.PORT || 8000;
+  const basePath = '/api/v1';
 
-const PORT = process.env.PORT || 8000;
-const basePath = '/api/v1';
+  const app: Express = express();
 
-const app: Express = express();
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-
-app.get('/', (req, res) => {
-  res.send('Server is running');
-});
-app.use(basePath + '/token', tokenRouter);
-
-const server = app.listen(PORT, () => {
-  logger.log('info', `Server is running on Port:${PORT}`);
-});
-
-process.on('SIGTERM', () => {
-  logger.info('SIGTERM signal received.');
-  logger.info('Closing server.');
-  server.close((err) => {
-    logger.info('Server closed.');
-    // eslint-disable-next-line no-process-exit
-    process.exit(err ? 1 : 0);
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use(cookieParser());
+  // app.use(bodyParser.json());
+  app.use(morgan('combined'));
+  app.use(
+    helmet({
+      contentSecurityPolicy: false,
+    }),
+  );
+  morganBody(app, {
+    noColors: true,
+    logResponseBody: false,
   });
-});
+
+  app.get('/', (req, res) => {
+    res.send('Server is running');
+  });
+  dbInit();
+
+  app.use(basePath + '/token', tokenRouter);
+  app.use(basePath + '/project', projectRouter);
+
+  app.listen(PORT, () => {
+    logger.log('info', `Server is running on Port:${PORT}`);
+  });
+};
+
+main()
+  .then(() => {
+    logger.info('App started');
+  })
+  .catch(err => {
+    logger.error('App failed');
+    logger.error(err.stack);
+  });
