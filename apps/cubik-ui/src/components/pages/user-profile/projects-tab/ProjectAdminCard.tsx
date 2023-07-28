@@ -3,14 +3,7 @@ import { Button } from '@chakra-ui/button';
 import { Card, CardBody, CardFooter, CardHeader } from '@chakra-ui/card';
 import { Box, Center } from '@chakra-ui/layout';
 import { Skeleton } from '@chakra-ui/skeleton';
-import {
-  Contribution,
-  ProjectJoinRound,
-  ProjectVerifyStatus,
-  ProjectsModel,
-  Round,
-  UserModel,
-} from '@cubik/database';
+import { ProjectVerifyStatus } from '@cubik/database';
 import { useState } from 'react';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import ComponentErrors from '~/components/errors/ComponentErrors';
@@ -19,8 +12,9 @@ import AdminProjectRoundCard from './AdminProjectRoundCard';
 import ProjectHeader from './ProjectHeader';
 import ProjectVerificationStatusBanner from './ProjectVerificationStatusBanner';
 import Vault from './project-admin-dashboard/project-vault/Vault';
+import { ProjectProfileCard } from '~/types/projects';
 
-const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
+const ProjectAdminCard = ({ project }: { project: ProjectProfileCard }) => {
   const [showVault, setShowVault] = useState(true);
   const {
     data: projectData,
@@ -45,45 +39,32 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
   }
 
   return (
-    <Card
-      px="0px"
-      gap={{ base: '16px', sm: '20px', md: '24px' }}
-      w="100%"
-      border={'none'}
-    >
-      <Skeleton
-        isLoaded={!isLoading}
-        fadeDuration={1.5}
-        opacity={isLoading ? 0.5 : 1}
-        w="full"
-      >
+    <Card px="0px" gap={{ base: '16px', sm: '20px', md: '24px' }} w="100%" border={'none'}>
+      <Skeleton isLoaded={!isLoading} fadeDuration={1.5} opacity={isLoading ? 0.5 : 1} w="full">
         <ProjectVerificationStatusBanner
           status={projectData?.status}
           projectJoinRoundStatus={
-            projectData && projectData?.ProjectJoinRound?.length > 0
-              ? true
-              : false
+            projectData && projectData?.ProjectJoinRound?.length > 0 ? true : false
           }
         />
       </Skeleton>
       <CardHeader>
-        <ProjectHeader isLoading={isLoading} project={projectData} />
+        <ProjectHeader
+          isLoading={isLoading}
+          longDescription={projectData?.long_description as string}
+          projectLogo={project.logo}
+          projectName={project.name}
+          project_link={project.project_link}
+          shortdescription={projectData?.short_description as string}
+          status={project?.status}
+        />
       </CardHeader>
       {projectData && projectData?.ProjectJoinRound.length > 0 && (
         <Box w="full" h={'1px'} backgroundColor="neutral.3" />
       )}
-      <Skeleton
-        isLoaded={!isLoading}
-        fadeDuration={2.5}
-        opacity={isLoading ? 0.5 : 1}
-        w="full"
-      >
+      <Skeleton isLoaded={!isLoading} fadeDuration={2.5} opacity={isLoading ? 0.5 : 1} w="full">
         <CardBody
-          display={
-            projectData && projectData?.ProjectJoinRound?.length > 0
-              ? 'flex'
-              : 'none'
-          }
+          display={projectData && projectData?.ProjectJoinRound?.length > 0 ? 'flex' : 'none'}
           pb={{ base: '16px', sm: '20px', md: '24px' }}
           gap={{ base: '16px', md: '24px' }}
         >
@@ -97,21 +78,19 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
             allowToggle
             variant={'unstyled'}
           >
-            {projectData?.ProjectJoinRound.map(
-              (
-                round: ProjectJoinRound & {
-                  fundingRound: Round & {
-                    Contribution: (Contribution & { user: UserModel })[];
-                  };
-                }
-              ) => (
-                <AdminProjectRoundCard
-                  isLoading={isLoading}
-                  key={round.id}
-                  round={round}
-                />
-              )
-            )}
+            {projectData?.ProjectJoinRound.map(round => (
+              <AdminProjectRoundCard
+                isLoading={isLoading}
+                amountRaise={round.amountRaise || 0}
+                endTime={round.fundingRound.endTime}
+                id={round.fundingRound.id}
+                projectId={project.id}
+                key={round.fundingRound.id}
+                roundName={round.fundingRound.roundName}
+                startTime={round.fundingRound.startTime}
+                status={round.status}
+              />
+            ))}
           </Accordion>
           {showVault && (
             <Vault
@@ -121,11 +100,7 @@ const ProjectAdminCard = ({ project }: { project: ProjectsModel }) => {
             />
           )}
           <Center
-            display={
-              projectData?.status === ProjectVerifyStatus.VERIFIED
-                ? 'flex'
-                : 'none'
-            }
+            display={projectData?.status === ProjectVerifyStatus.VERIFIED ? 'flex' : 'none'}
             w="full"
           >
             <Button

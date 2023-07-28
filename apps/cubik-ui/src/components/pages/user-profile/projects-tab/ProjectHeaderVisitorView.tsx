@@ -5,6 +5,7 @@ import { Skeleton, SkeletonCircle } from '@chakra-ui/skeleton';
 import { ProjectsModel } from '@cubik/database';
 import Link from 'next/link';
 import GetFormattedLink from '~/components/HOC/GetLink';
+import { ProjectProfileCard } from '~/types/projects';
 
 export const ProjectHeaderVisitorView = ({
   projectOwnerName,
@@ -12,7 +13,7 @@ export const ProjectHeaderVisitorView = ({
   isLoading,
 }: {
   projectOwnerName?: string;
-  project: ProjectsModel;
+  project: ProjectProfileCard;
   isLoading: boolean;
 }) => {
   const headerSpacing = {
@@ -29,11 +30,7 @@ export const ProjectHeaderVisitorView = ({
         gap={headerSpacing}
         w="full"
       >
-        <Stack
-          w="full"
-          direction="row"
-          gap={{ base: '8px', sm: '12px', md: '16px' }}
-        >
+        <Stack w="full" direction="row" gap={{ base: '8px', sm: '12px', md: '16px' }}>
           <SkeletonCircle
             isLoaded={!isLoading}
             fadeDuration={1.5}
@@ -73,10 +70,7 @@ export const ProjectHeaderVisitorView = ({
             {isLoading ? (
               <Skeleton w="8rem" h="1rem" opacity={0.4} />
             ) : (
-              <GetFormattedLink
-                isLoading={isLoading}
-                link={project?.project_link}
-              />
+              <GetFormattedLink isLoading={isLoading} link={project?.project_link} />
             )}
           </VStack>
         </Stack>

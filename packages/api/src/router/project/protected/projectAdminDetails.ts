@@ -10,19 +10,59 @@ export const projectAdminDetails = protectedProcedure
   .query(async ({ input, ctx: { prisma } }) => {
     const response = prisma.projectsModel.findFirst({
       where: { id: input.id, isArchive: false },
-      include: {
+      select: {
+        status: true,
+        name: true,
+        createKey: true,
+        mutliSigAddress: true,
+        short_description: true,
+        long_description: true,
+        projectJoinHackathon: {
+          select: {
+            amount: true,
+
+            hackathon: {
+              select: {
+                // contribution: {
+                //   select: {
+                //     user: {
+                //       select: {
+                //         username: true,
+                //         profilePicture: true,
+                //       },
+                //     },
+                //   },
+                //   where: {
+                //     projectId: input.id,
+                //   },
+                // },
+              },
+            },
+          },
+        },
         ProjectJoinRound: {
-          include: {
+          select: {
+            status: true,
+            amountRaise: true,
             fundingRound: {
-              include: {
-                Contribution: {
-                  include: {
-                    user: true,
-                  },
-                  where: {
-                    projectId: input.id,
-                  },
-                },
+              select: {
+                id: true,
+                startTime: true,
+                roundName: true,
+                endTime: true,
+                // Contribution: {
+                //   select: {
+                //     user: {
+                //       select: {
+                //         username: true,
+                //         profilePicture: true,
+                //       },
+                //     },
+                //   },
+                //   where: {
+                //     projectId: input.id,
+                //   },
+                // },
               },
             },
           },

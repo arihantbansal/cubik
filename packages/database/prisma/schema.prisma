@@ -28,39 +28,43 @@ model Hackathon {
   updatedAt              DateTime                 @updatedAt
   slug                   String                   @unique
   team                   Team[]
-  projectJoinRound       ProjectJoinHackathons[]
+  projectJoinHackathon   ProjectJoinHackathons[]
   HackathonRegistrations HackathonRegistrations[]
+
+  contribution           Contribution[]
+
   isActive               Boolean                  @default(true)
   isArchive              Boolean                  @default(false)
 
 }
 
 model HackathonRegistrations {
-  id                    String                  @id @default(uuid()) @map("_id")
-  hackathonId           String
-  userId                String
-  createdAt             DateTime                @default(now())
-  updatedAt             DateTime                @updatedAt
-  Hackathon             Hackathon               @relation(fields: [hackathonId], references: [id])
-  User                  UserModel               @relation(fields: [userId], references: [id])
+  id          String    @id @default(uuid()) @map("_id")
+  hackathonId String
+  userId      String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  Hackathon   Hackathon @relation(fields: [hackathonId], references: [id])
+  User        UserModel @relation(fields: [userId], references: [id])
 
   @@index([hackathonId])
   @@index([userId])
 }
 
 model ProjectJoinHackathons {
-  id                     String                 @id @default(uuid()) @map("_id")
-  hackathonId            String
-  projectId              String
-  tracks                 Json?
-  mainTrack              String?
-  amount                 Float                  @default(0)
-  isArchive              Boolean                @default(false)
-  createdAt              DateTime               @default(now())
-  updatedAt              DateTime               @updatedAt
-  hackathon              Hackathon              @relation(fields: [hackathonId], references: [id])
-  projectsModel          ProjectsModel          @relation(fields: [projectId], references: [id])
-  tx                     String                 @db.VarChar(500)
+  id            String        @id @default(uuid()) @map("_id")
+  hackathonId   String
+  projectId     String
+  tracks        Json?
+  mainTrack     String?
+  amount        Float         @default(0)
+  isArchive     Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  hackathon     Hackathon     @relation(fields: [hackathonId], references: [id])
+  projectsModel ProjectsModel @relation(fields: [projectId], references: [id])
+  tx            String        @db.VarChar(500)
+
   @@index([hackathonId])
   @@index([projectId])
 }
@@ -71,7 +75,7 @@ model UserModel {
   mainWallet             String                   @unique
   proof                  Json?
   email                  String?
-  profileNft            Json?
+  profileNft             Json?
   profilePicture         String                   @db.VarChar(500)
   tx                     String                   @db.VarChar(500)
   createdAt              DateTime                 @default(now())
@@ -124,36 +128,36 @@ model VerificationToken {
 }
 
 model ProjectsModel {
-  id                String                  @id @default(uuid()) @map("_id")
-  name              String
-  short_description String                  @db.VarChar(2000)
-  logo              String                  @db.VarChar(1000)
-  owner_publickey   String
-  sig               String                  @default("")
-  long_description  String                  @db.Text
-  industry          String                  @db.VarChar(2000)
-  project_link      String                  @default("")
-  twitter_handle    String                  @default("")
-  github_link       String                  @default("")
-  discord_link      String                  @default("")
-  telegram_link     String                  @default("")
-  projectUserCount  Int                     @default(0)
-  status            ProjectVerifyStatus     @default(REVIEW)
-  failedReason      String?                 @default("")
-  mutliSigAddress   String?                 @default("")
-  createdAt         DateTime                @default(now())
-  updatedAt         DateTime                @updatedAt
-  email             String                  @default("")
-  isActive          Boolean                 @default(true)
-  isArchive         Boolean                 @default(false)
-  ogImage           String                  @default("")
-  createKey         String?                 @default("")
-  comments          Comments[]
-  ProjectJoinRound  ProjectJoinRound[]
-  projectJoinRound  ProjectJoinHackathons[]
-  owner             UserModel               @relation(fields: [owner_publickey], references: [mainWallet])
-  Team              Team[]
-  Contribution      Contribution[]
+  id                   String                  @id @default(uuid()) @map("_id")
+  name                 String
+  short_description    String                  @db.VarChar(2000)
+  logo                 String                  @db.VarChar(1000)
+  owner_publickey      String
+  sig                  String                  @default("")
+  long_description     String                  @db.Text
+  industry             String                  @db.VarChar(2000)
+  project_link         String                  @default("")
+  twitter_handle       String                  @default("")
+  github_link          String                  @default("")
+  discord_link         String                  @default("")
+  telegram_link        String                  @default("")
+  projectUserCount     Int                     @default(0)
+  status               ProjectVerifyStatus     @default(REVIEW)
+  failedReason         String?                 @default("")
+  mutliSigAddress      String?                 @default("")
+  createdAt            DateTime                @default(now())
+  updatedAt            DateTime                @updatedAt
+  email                String                  @default("")
+  isActive             Boolean                 @default(true)
+  isArchive            Boolean                 @default(false)
+  ogImage              String                  @default("")
+  createKey            String?                 @default("")
+  comments             Comments[]
+  ProjectJoinRound     ProjectJoinRound[]
+  projectJoinHackathon ProjectJoinHackathons[]
+  owner                UserModel               @relation(fields: [owner_publickey], references: [mainWallet])
+  Team                 Team[]
+  Contribution         Contribution[]
 
   @@index([owner_publickey])
 }
@@ -243,7 +247,7 @@ model Contribution {
   tx                 String            @db.VarChar(500)
   token              String
   split              Float
-  roundId            String
+  roundId            String?
   projectId          String
   userId             String
   createdAt          DateTime          @default(now())
@@ -257,13 +261,16 @@ model Contribution {
   projectJoinRoundId String?
   user               UserModel         @relation(fields: [userId], references: [id])
   ProjectsModel      ProjectsModel     @relation(fields: [projectId], references: [id])
-  Round              Round             @relation(fields: [roundId], references: [id])
+  Round              Round?            @relation(fields: [roundId], references: [id])
   ProjectJoinRound   ProjectJoinRound? @relation(fields: [projectJoinRoundId], references: [id])
+  Hackathon          Hackathon?        @relation(fields: [hackathonId], references: [id])
+  hackathonId        String?
 
   @@index([projectId])
   @@index([roundId])
   @@index([userId])
   @@index([projectJoinRoundId])
+  @@index([hackathonId])
 }
 
 model Comments {

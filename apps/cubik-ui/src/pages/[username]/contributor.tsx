@@ -1,20 +1,17 @@
-import { Box, Center, Container, Flex, Heading } from '@chakra-ui/layout';
-import Link from 'next/link';
-import SEO from 'src/components/SEO';
-import ComponentErrors from '~/components/errors/ComponentErrors';
-import UserDetails from '~/components/pages/user-profile/details-tab/UserDetails';
-import UserProofs from '~/components/pages/user-profile/details-tab/UserProofs';
-import { UserPageLayout } from '~/layouts/userPageLayout';
-import { useUserStore } from '~/store/userStore';
-import { UserProof } from '~/types/user';
+import { Box, Center, Container, Flex, Heading, Link } from '@chakra-ui/layout';
+import React from 'react';
+import SEO from '~/components/SEO';
+import UserContributions from '~/components/pages/user-profile/contributions-tab/UserContributions';
 import { trpc } from '~/utils/trpc';
-
-const ProfilePage = ({ username }: { username: string }) => {
-  const { user } = useUserStore();
-
+import { UserPageLayout } from '~/layouts/userPageLayout';
+import ComponentErrors from '~/components/errors/ComponentErrors';
+interface Props {
+  username: string;
+}
+const UserProjects = (props: Props) => {
   const { data, isLoading, isError, error } = trpc.user.findOne.useQuery(
     {
-      username: username as string,
+      username: props.username as string,
     },
     {
       refetchOnWindowFocus: false,
@@ -48,25 +45,20 @@ const ProfilePage = ({ username }: { username: string }) => {
       </>
     );
   }
-
   return (
     <>
+      <SEO
+        title={`@${data ? props.username : 'User'}`}
+        description={`@${data ? props.username : 'User'}'s profile`}
+        image={`https://res.cloudinary.com/demonicirfan/image/upload/v1684179451/cubik%20og.png`}
+      />
       <UserPageLayout
         id={data?.id as string}
         mainWallet={data?.mainWallet as string}
         profilePicture={data?.profilePicture as string}
-        username={username}
+        username={props.username}
       >
-        <Flex gap={{ base: '24px', md: '32px' }} w={'full'} p="0" flexDir="column">
-          <UserDetails userId={data?.id as string} isLoading={isLoading} />
-          {user && user?.id === data?.id && (
-            <UserProofs
-              wallet={user?.mainWallet as string}
-              isLoading={isLoading}
-              proofs={user?.proof as unknown as UserProof[]}
-            />
-          )}
-        </Flex>
+        <UserContributions userId={data?.id} />
       </UserPageLayout>
     </>
   );
@@ -81,5 +73,4 @@ export async function getServerSideProps(context: { query: { username: string } 
     },
   };
 }
-
-export default ProfilePage;
+export default UserProjects;

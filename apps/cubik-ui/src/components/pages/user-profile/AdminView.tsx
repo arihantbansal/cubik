@@ -27,7 +27,7 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
         flexDir={'column'}
         gap={{ base: '32px', sm: '40px', md: '56px' }}
       >
-        <ProfileHeader isLoading={isLoading} user={user} />
+        {/* <ProfileHeader isLoading={isLoading} user={user} /> */}
         <Tabs variant={'cubik'}>
           <TabList>
             <Tab>Details</Tab>
@@ -36,16 +36,8 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
           </TabList>
           <TabPanels p={'0'}>
             <TabPanel w="full">
-              <Flex
-                gap={{ base: '24px', md: '32px' }}
-                w={'full'}
-                p="0"
-                flexDir="column"
-              >
-                <UserDetails
-                  userId={user?.id as string}
-                  isLoading={isLoading}
-                />
+              <Flex gap={{ base: '24px', md: '32px' }} w={'full'} p="0" flexDir="column">
+                <UserDetails userId={user?.id as string} isLoading={isLoading} />
                 <UserProofs
                   wallet={user?.mainWallet as string}
                   isLoading={isLoading}
@@ -54,21 +46,15 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
               </Flex>
             </TabPanel>
             <TabPanel>
-              <Flex
-                direction="column"
-                w="full"
-                gap={{ base: '24px', md: '32px' }}
-              >
+              <Flex direction="column" w="full" gap={{ base: '24px', md: '32px' }}>
                 {user?.project.length ? (
-                  user?.project.map(
-                    (project: ProjectsModel, key: Key | null | undefined) => {
-                      return !project.isArchive ? (
-                        <ProjectAdminCard project={project} key={key} />
-                      ) : (
-                        <></>
-                      );
-                    }
-                  )
+                  user?.project.map((project: ProjectsModel, key: Key | null | undefined) => {
+                    return !project.isArchive ? (
+                      <ProjectAdminCard project={project} key={key} />
+                    ) : (
+                      <></>
+                    );
+                  })
                 ) : (
                   <AdminProjectEmptyState />
                 )}

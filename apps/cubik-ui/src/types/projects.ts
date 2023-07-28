@@ -79,3 +79,16 @@ export interface ProjectExplorerCard {
   projectDescription: string;
   colorScheme: string;
 }
+
+export type ProjectProfileCard = Prisma.ProjectsModelGetPayload<{
+  select: {
+    id: true;
+    industry: true;
+    name: true;
+    logo: true;
+    short_description: true;
+    isArchive: true;
+    status: true;
+    project_link: true;
+  };
+}>;

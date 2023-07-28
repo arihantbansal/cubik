@@ -7,13 +7,17 @@ import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import { UserProof, UserWithProjectType } from '~/types/user';
 
 type profileHeaderType = {
-  user: UserWithProjectType | null | undefined;
   isLoading: boolean;
+  profilePicture: string | undefined;
+  username: string | undefined;
+  mainWallet: string | undefined;
 };
 
 const ProfileHeader: FC<profileHeaderType> = ({
-  user,
   isLoading,
+  mainWallet,
+  profilePicture,
+  username,
 }: profileHeaderType) => {
   return (
     <HStack
@@ -38,8 +42,8 @@ const ProfileHeader: FC<profileHeaderType> = ({
             showBorder={true}
             backgroundColor="#FFFFFF30"
             border="2px solid #FFFFFF10"
-            src={user?.profilePicture}
-            name={user?.username}
+            name={username}
+            src={profilePicture}
             rounded="16%"
             borderRadius="16%"
             width={{ base: '56px', sm: '72px', md: '84px' }}
@@ -57,14 +61,11 @@ const ProfileHeader: FC<profileHeaderType> = ({
       >
         <HStack gap="8px">
           <Username
-            username={user?.username}
+            username={username}
             isLoading={isLoading}
-            proofs={(user?.proof as unknown as UserProof[]) ?? []}
+            // proofs={(user?.proof as unknown as UserProof[]) ?? []}
             size="lg"
           />
-          {/* <HStack>
-            <Box as="p">Get Verified</Box>
-          </HStack> */}
         </HStack>
         <Center marginInline={'0 !important'} margin="0 !important">
           <Skeleton
@@ -74,11 +75,7 @@ const ProfileHeader: FC<profileHeaderType> = ({
             opacity={isLoading ? '0.5' : '1'}
             isLoaded={!isLoading}
           >
-            <WalletAddress
-              walletAddress={user?.mainWallet || ''}
-              size="sm"
-              copy={true}
-            />
+            <WalletAddress walletAddress={mainWallet as string} size="sm" copy={true} />
           </Skeleton>
         </Center>
       </VStack>
@@ -86,4 +83,4 @@ const ProfileHeader: FC<profileHeaderType> = ({
   );
 };
 
-export default memo(ProfileHeader);
+export default ProfileHeader;

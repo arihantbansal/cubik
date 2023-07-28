@@ -30,6 +30,7 @@ import { ProjectLink } from '../../projects/project-details/ProjectDetailsHeader
 import { ProjectSocials } from '../../projects/project-details/project-interactions/ProjectInteractions';
 import ApplyForGrant from './project-admin-dashboard/ProjectAdminDetailsDrawer/ApplyForGrant';
 import EditProjectDetails from './project-admin-dashboard/ProjectAdminDetailsDrawer/EditProjectDetails';
+import { ProjectVerifyStatus } from '@prisma/client';
 
 export enum drawerBodyViewEnum {
   PROJECT_DETAILS = 'project_details',
@@ -40,11 +41,21 @@ export enum drawerBodyViewEnum {
 
 const ProjectDetails = ({
   isLoading,
-  project,
   setDrawerBodyView,
+  projectLogo,
+  status,
+  projectName,
+  shortDescription,
+  project_link,
+  long_description,
 }: {
+  long_description: string;
+  projectName: string;
+  project_link: string;
+  projectLogo: string;
+  status: ProjectVerifyStatus;
   isLoading: boolean;
-  project: projectWithFundingRoundType;
+  shortDescription: string;
   setDrawerBodyView: any;
 }) => {
   const ProjectOptionsMenu = () => {
@@ -107,8 +118,8 @@ const ProjectDetails = ({
       <VStack align={'start'} w="full" gap="24px">
         <HStack w="full" justifyContent={'space-between'} align="top">
           <Avatar
-            src={project?.logo}
-            name={project?.name}
+            src={projectLogo}
+            name={projectName}
             borderRadius="8px"
             width={{ base: '80px', md: '102px' }}
             height={{ base: '80px', md: '102px' }}
@@ -116,13 +127,8 @@ const ProjectDetails = ({
           <Center display={{ base: 'flex', md: 'none' }}>
             <ProjectOptionsMenu />
           </Center>
-          <Stack
-            display={{ base: 'none', md: 'flex' }}
-            direction="row"
-            gap="8px"
-            h="fit-content"
-          >
-            {project.status === 'VERIFIED' && (
+          <Stack display={{ base: 'none', md: 'flex' }} direction="row" gap="8px" h="fit-content">
+            {status === 'VERIFIED' && (
               <>
                 <Button
                   variant="cubikFilled"
@@ -140,16 +146,12 @@ const ProjectDetails = ({
         </HStack>
         <VStack gap={{ base: '4px', md: '16px' }} w="full" align="start">
           <HStack align={'start'} w="full">
-            <Box
-              as="p"
-              textStyle={{ base: 'headline4', md: 'headline3' }}
-              color="neutral.11"
-            >
-              {project?.name}
+            <Box as="p" textStyle={{ base: 'headline4', md: 'headline3' }} color="neutral.11">
+              {projectName}
             </Box>
           </HStack>
           <Box as="p" textStyle={'body9'} color="neutral.9">
-            {project?.short_description}
+            {shortDescription}
           </Box>
           <HStack w="full">
             <HStack w="full">
@@ -167,7 +169,7 @@ const ProjectDetails = ({
                   backgroundColor: 'brand.teal3',
                 }}
                 as="a"
-                href={project?.project_link}
+                href={project_link}
                 target="_blank"
               >
                 <Box
@@ -176,24 +178,15 @@ const ProjectDetails = ({
                   color="brand.teal.6"
                   pb="0.1rem"
                 >
-                  {getDomain(project?.project_link)}
+                  {getDomain(project_link)}
                 </Box>
               </Button>
-              <ProjectSocials
-                isLoading={isLoading}
-                hideTitle={true}
-                projectDetails={project}
-              />
+              {/* <ProjectSocials isLoading={isLoading} hideTitle={true} projectDetails={project} /> */}
             </HStack>
           </HStack>
         </VStack>
       </VStack>
-      <Stack
-        display={{ base: 'flex', md: 'none' }}
-        direction={'row'}
-        w="full"
-        h="fit-content"
-      >
+      <Stack display={{ base: 'flex', md: 'none' }} direction={'row'} w="full" h="fit-content">
         <Button
           variant="cubikFilled"
           size={'cubikSmall'}
@@ -207,7 +200,7 @@ const ProjectDetails = ({
       </Stack>
       <Center>
         <ProjectsDetailedDescription
-          description={project?.long_description}
+          description={long_description}
           maxH="full"
           overflow={'scroll'}
           isLoading={false}
@@ -219,14 +212,24 @@ const ProjectDetails = ({
 
 const ProjectHeader = ({
   isLoading,
-  project,
+  projectLogo,
+  projectName,
+  project_link,
+  shortdescription,
+  longDescription,
+  status,
 }: {
   isLoading: boolean;
-  project: projectWithFundingRoundType | null | undefined;
+  projectName: string;
+  projectLogo: string;
+  project_link: string;
+  shortdescription: string;
+  longDescription: string;
+  status: ProjectVerifyStatus;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [drawerBodyView, setDrawerBodyView] = useState<drawerBodyViewEnum>(
-    drawerBodyViewEnum.PROJECT_DETAILS
+    drawerBodyViewEnum.PROJECT_DETAILS,
   );
   const btnRef = useRef();
   const headerSpacing = {
@@ -243,11 +246,7 @@ const ProjectHeader = ({
         gap={headerSpacing}
         w="full"
       >
-        <Stack
-          w="full"
-          direction="row"
-          gap={{ base: '8px', sm: '12px', md: '16px' }}
-        >
+        <Stack w="full" direction="row" gap={{ base: '8px', sm: '12px', md: '16px' }}>
           <SkeletonCircle
             isLoaded={!isLoading}
             fadeDuration={1.5}
@@ -256,8 +255,8 @@ const ProjectHeader = ({
             height={{ base: '36px', sm: '48px', md: '52px' }}
           >
             <Avatar
-              src={project?.logo}
-              name={project?.name}
+              src={projectLogo}
+              name={projectName}
               width={{ base: '36px', sm: '48px', md: '52px' }}
               height={{ base: '36px', sm: '48px', md: '52px' }}
             />
@@ -281,13 +280,10 @@ const ProjectHeader = ({
                 textAlign="left"
                 color="white"
               >
-                {project?.name}
+                {projectName}
               </Box>
             </Skeleton>
-            <GetFormattedLink
-              isLoading={isLoading}
-              link={project?.project_link}
-            />
+            <GetFormattedLink isLoading={isLoading} link={project_link} />
           </VStack>
         </Stack>
         <Center w="full" justifyContent={'end'}>
@@ -311,7 +307,7 @@ const ProjectHeader = ({
             </Button>
           </Skeleton>
         </Center>
-        {project && (
+        {projectName && (
           <Drawer
             maxW="40rem"
             isOpen={isOpen}
@@ -323,10 +319,7 @@ const ProjectHeader = ({
             //@ts-ignore
             finalFocusRef={btnRef}
           >
-            <DrawerOverlay
-              color="rgba(0, 0, 0, 0.72)"
-              backdropFilter="blur(8px)"
-            />
+            <DrawerOverlay color="rgba(0, 0, 0, 0.72)" backdropFilter="blur(8px)" />
             <DrawerContent
               borderColor={'#1D1F1E'}
               borderBottom={'none'}
@@ -344,11 +337,9 @@ const ProjectHeader = ({
 
               <DrawerBody maxH={'90vh'} p="0">
                 {drawerBodyView === drawerBodyViewEnum.GRANTS ? (
-                  <ApplyForGrant
-                    setDrawerBodyView={setDrawerBodyView}
-                    project={project}
-                  />
-                ) : drawerBodyView === drawerBodyViewEnum.EDIT ? (
+                  <></>
+                ) : // <ApplyForGrant setDrawerBodyView={setDrawerBodyView} project={project} />
+                drawerBodyView === drawerBodyViewEnum.EDIT ? (
                   <EditProjectDetails />
                 ) : drawerBodyView === drawerBodyViewEnum.PREVIEW ? (
                   <></>
@@ -356,8 +347,13 @@ const ProjectHeader = ({
                   <>
                     <ProjectDetails
                       isLoading={false}
-                      project={project}
                       setDrawerBodyView={setDrawerBodyView}
+                      long_description={longDescription}
+                      projectLogo={projectLogo}
+                      status={status}
+                      projectName={projectName}
+                      project_link={project_link}
+                      shortDescription={shortdescription}
                     />
                   </>
                 )}
