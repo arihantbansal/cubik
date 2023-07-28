@@ -9,7 +9,7 @@ export const projectExplorer = async (req: Request, res: Response) => {
         status: 'APPROVED',
         fundingRound: {
           endTime: {
-            gte: new Date(),
+            // gte: new Date(),
           },
         },
         isArchive: false,
