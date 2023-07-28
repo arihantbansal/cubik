@@ -7,12 +7,10 @@ export const env = createEnv({
     NODE_ENV: z.enum(['development', 'test', 'production']),
 
     NEXTAUTH_SECRET:
-      process.env.NODE_ENV === 'production'
-        ? z.string().min(1)
-        : z.string().min(1).optional(),
+      process.env.NODE_ENV === 'production' ? z.string().min(1) : z.string().min(1).optional(),
     NEXTAUTH_URL: z.preprocess(
-      (str) => process.env.VERCEL_URL ?? str,
-      process.env.VERCEL ? z.string().min(1) : z.string().url()
+      str => process.env.VERCEL_URL ?? str,
+      process.env.VERCEL ? z.string().min(1) : z.string().url(),
     ),
   },
   client: {
@@ -33,6 +31,7 @@ export const env = createEnv({
     NEXT_PUBLIC_GA_TRACKING_ID: z.string().min(1),
     NEXT_PUBLIC_WEB3STORAGE_TOKEN: z.string().min(1),
     NEXT_PUBLIC_IMAGE_SERVER_URL: z.string().min(1),
+    NEXT_PUBLIC_BACKEND: z.string().min(1),
   },
   runtimeEnv: {
     PROD_DATABASE_URL: process.env.PROD_DATABASE_URL,
@@ -56,5 +55,6 @@ export const env = createEnv({
     NEXT_PUBLIC_GA_TRACKING_ID: process.env.NEXT_PUBLIC_GA_TRACKING_ID,
     NEXT_PUBLIC_WEB3STORAGE_TOKEN: process.env.NEXT_PUBLIC_WEB3STORAGE_TOKEN,
     NEXT_PUBLIC_IMAGE_SERVER_URL: process.env.NEXT_PUBLIC_IMAGE_SERVER_URL,
+    NEXT_PUBLIC_BACKEND: process.env.NEXT_PUBLIC_BACKEND,
   },
 });

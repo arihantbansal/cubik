@@ -1,15 +1,13 @@
 import { Container } from '@chakra-ui/layout';
+import axios from 'axios';
 import { GetStaticProps } from 'next';
 import SEO from '~/components/SEO';
 import ProjectsExplorer from '~/components/pages/projects/project-explorer/ProjectsExplorer';
+import { env } from '~/env.mjs';
+import { explorerType } from '@cubik/common-types';
 
-type projectsPropsType = {
-  allProjectsData: {
-    data: any;
-  };
-};
-
-const Projects = (_props: projectsPropsType) => {
+const Projects = (props: explorerType) => {
+  console.log('props -', props);
   return (
     <>
       <SEO
@@ -22,15 +20,25 @@ const Projects = (_props: projectsPropsType) => {
         maxW="7xl"
         py={{ base: '24px', md: '40px' }}
       >
-        <ProjectsExplorer />
+        <ProjectsExplorer projects={props.projects} banner={props.banner} />
       </Container>
     </>
   );
 };
 export const getStaticProps: GetStaticProps = async () => {
-  return {
-    props: {},
-    revalidate: 1 * 60 * 60,
-  };
-}; 
+  try {
+    const res = await axios.get<explorerType>(env.NEXT_PUBLIC_BACKEND + '/api/v1/project/explorer');
+    return {
+      props: res.data,
+      revalidate: 1 * 60 * 60,
+    };
+  } catch (e) {
+    return {
+      props: {
+        data: [],
+      },
+      revalidate: 1 * 60 * 60,
+    };
+  }
+};
 export default Projects;

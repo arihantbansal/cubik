@@ -1,4 +1,4 @@
-export const category = [
+const tags = [
   {
     label: 'AI',
     value: 'ai',
@@ -38,6 +38,10 @@ export const category = [
   {
     label: 'CLOB',
     value: 'clob',
+  },
+  {
+    label: 'Climate',
+    value: 'climate',
   },
   {
     label: 'Community',
@@ -130,6 +134,10 @@ export const category = [
   {
     label: 'Gaming',
     value: 'gaming',
+  },
+  {
+    label: 'Unity',
+    value: 'unity',
   },
   {
     label: 'Governance',
@@ -228,6 +236,10 @@ export const category = [
     value: 'rpc',
   },
   {
+    label: 'ReFi',
+    value: 'ReFi',
+  },
+  {
     label: 'SDK',
     value: 'sdk',
   },
@@ -315,4 +327,37 @@ export const category = [
     label: 'pNFT',
     value: 'pnft',
   },
+  {
+    label: 'Play to Earn',
+    value: 'play_to_earn',
+  },
+  {
+    label: 'DeFi Gaming',
+    value: 'defi_gaming',
+  },
+  {
+    label: 'Cross Chain',
+    value: 'cross_chain',
+  },
+  {
+    label: 'Crypto Collectibles',
+    value: 'crypto_collectibles',
+  },
+  {
+    label: 'Strategy Games',
+    value: 'strategy games',
+  },
+  {
+    label: 'Adventure Games',
+    value: 'adventure_games',
+  },
+  {
+    label: 'Puzzle Games',
+    value: 'puzzle_games',
+  },
 ];
+
+tags.sort((a, b) => a.label.localeCompare(b.label));
+
+// return tags by sorting them in alphabetical order
+export const category = tags;

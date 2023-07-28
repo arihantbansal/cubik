@@ -11,44 +11,19 @@ export type ContributionType = {
 };
 
 const ProjectsContributorsNumber = ({
-  projectId,
-  contributorsList,
+  contributors,
+  contributorsCount,
 }: {
-  projectId: string;
-  contributorsList: ContributionType[];
+  contributors: {
+    user: {
+      profilePicture: string;
+    };
+  }[];
+  contributorsCount: number;
 }) => {
-  const [contributors, setContributors] = useState<
-    {
-      id: string;
-      user: {
-        profilePicture: string;
-        username: string;
-      };
-    }[]
-  >([]);
-
-  useEffect(() => {
-    let contributorsData = [] as ContributionType[];
-
-    // filter out duplicate donations from the same user
-    const userNames: { [key: string]: boolean } = {};
-    contributorsData = contributorsList?.filter((contribution) => {
-      if (userNames[contribution.user.username]) {
-        // This user has already made a donation, skip this donation
-        return false;
-      } else {
-        // This user has not made a donation yet, include this donation and remember this user
-        userNames[contribution.user.username] = true;
-        return true;
-      }
-    });
-
-    setContributors(contributorsData);
-  }, [contributorsList]);
-
   return (
     <>
-      {contributors ? (
+      {contributors.length > 0 ? (
         <Flex
           justify="end"
           align={'center'}
@@ -59,30 +34,26 @@ const ProjectsContributorsNumber = ({
           zIndex="1"
         >
           <AvatarGroup size="xs" max={3}>
-            {contributors.slice(-3).map((contribution) => (
-              <Avatar
-                key={contribution.id}
-                outline="2px solid #0C0D0D"
-                name={contribution.user.username}
-                src={contribution.user.profilePicture}
-              />
+            {contributors.slice(-3).map((user, id) => (
+              <Avatar key={id} outline="2px solid #0C0D0D" src={user.user.profilePicture} />
             ))}
           </AvatarGroup>
-          <Box as="p" color="white" textStyle={{ base: 'body6', md: 'body5' }}>
-            {contributors.length === 0
-              ? '- -'
-              : contributors.length > 3
-              ? '+' + (contributors.length - 3)
-              : ''}
-          </Box>
+          {contributorsCount > 0 ? (
+            <Box
+              noOfLines={1}
+              minW={7}
+              as="p"
+              color="white"
+              textStyle={{ base: 'body6', md: 'body5' }}
+            >
+              + {contributorsCount}
+            </Box>
+          ) : (
+            '- -'
+          )}
         </Flex>
       ) : (
-        <Box
-          as="p"
-          color="white"
-          textStyle={{ base: 'body6', md: 'body5' }}
-          fontWeight="600"
-        >
+        <Box as="p" color="white" textStyle={{ base: 'body6', md: 'body5' }} fontWeight="600">
           - -
         </Box>
       )}

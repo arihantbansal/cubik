@@ -26,9 +26,9 @@ importers:
 
   apps/backend:
     dependencies:
-      '@cubik/comman-types':
+      '@cubik/common-types':
         specifier: workspace:*
-        version: link:../../packages/comman-types
+        version: link:../../packages/common-types
       '@cubik/database':
         specifier: workspace:*
         version: link:../../packages/database
@@ -183,6 +183,9 @@ importers:
       '@cubik/api':
         specifier: '*'
         version: link:../../packages/api
+      '@cubik/common-types':
+        specifier: workspace:*
+        version: link:../../packages/common-types
       '@cubik/database':
         specifier: workspace:*
         version: link:../../packages/database
@@ -573,8 +576,11 @@ importers:
         specifier: ^9.0.1
         version: 9.0.1
 
-  packages/comman-types:
+  packages/common-types:
     dependencies:
+      '@cubik/database':
+        specifier: workspace:*
+        version: link:../database
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
@@ -21637,3 +21643,7 @@ packages:
     version: 5.4.7
     engines: {node: '>=0.11'}
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

@@ -1,4 +1,4 @@
-import { ProjectExplorerType, ProjectExploreBanner } from '@cubik/comman-types';
+import { ProjectExplorerType, ProjectExploreBanner, HackathonSchedule } from '@cubik/common-types';
 import { prisma } from '@cubik/database';
 import { Request, Response } from 'express';
 
@@ -9,7 +9,7 @@ export const projectExplorer = async (req: Request, res: Response) => {
         status: 'APPROVED',
         fundingRound: {
           endTime: {
-            // gte: new Date(),
+            gte: new Date(),
           },
         },
         isArchive: false,
@@ -23,18 +23,23 @@ export const projectExplorer = async (req: Request, res: Response) => {
             roundName: true,
             colorScheme: true,
             matchedPool: true,
-          },
-        },
-        contributors: {
-          take: 3,
-          select: {
-            user: {
+            endTime: true,
+            startTime: true,
+            registrationEndDate: true,
+            registrationStartDate: true,
+            Contribution: {
               select: {
-                profilePicture: true,
+                projectId: true,
+                user: {
+                  select: {
+                    profilePicture: true,
+                  },
+                },
               },
             },
           },
         },
+
         project: {
           select: {
             owner: {
@@ -42,6 +47,7 @@ export const projectExplorer = async (req: Request, res: Response) => {
                 username: true,
               },
             },
+            id: true,
             name: true,
             logo: true,
             short_description: true,
@@ -67,6 +73,7 @@ export const projectExplorer = async (req: Request, res: Response) => {
                 username: true,
               },
             },
+            id: true,
             logo: true,
             short_description: true,
             industry: true,
@@ -79,6 +86,7 @@ export const projectExplorer = async (req: Request, res: Response) => {
             prize_pool: true,
             short_description: true,
             logo: true,
+            timeline: true,
           },
         },
       },
@@ -90,11 +98,13 @@ export const projectExplorer = async (req: Request, res: Response) => {
         },
       },
       select: {
+        startTime: true,
         colorScheme: true,
         roundName: true,
         endTime: true,
         matchedPool: true,
         id: true,
+        short_description: true,
       },
     });
     const activeHackathonPromise = await prisma.hackathon.findMany({
@@ -104,6 +114,7 @@ export const projectExplorer = async (req: Request, res: Response) => {
       select: {
         background: true,
         name: true,
+        timeline: true,
         prize_pool: true,
         short_description: true,
         logo: true,
@@ -121,47 +132,67 @@ export const projectExplorer = async (req: Request, res: Response) => {
     const banner: ProjectExploreBanner[] = [];
     projectJoinRound.forEach(project => {
       final.push({
+        id: project.project.id,
         logo: project.project.logo,
         industry: project.project.industry,
         title: project.project.name,
-        amount: project.amountRaise as number,
-        contributorCount: project._count.contributors,
-        contributors: project.contributors,
+        contributorCount:
+          project.fundingRound.Contribution.filter(e => e.projectId === project.project.id).length -
+            3 || 0,
+        contributors: project.fundingRound.Contribution.filter(
+          e => e.projectId === project.project.id,
+        ).slice(3),
+        projectShortDescription: project.project.short_description,
         ownerName: project.project.owner.username,
-        type: 'round',
-        projectJoinRound: {
-          color: project.fundingRound.colorScheme,
+        projectEvent: {
+          eventName: 'round',
+          color: 'teal',
+          amount: project.amountRaise || 0,
           id: project.id,
+          end: project.fundingRound.endTime,
+          start: project.fundingRound.startTime,
+          registrationEnd: project.fundingRound.registrationEndDate,
+          registrationStart: project.fundingRound.registrationStartDate,
           name: project.fundingRound.roundName,
         },
       });
     });
 
     projectJoinHackathon.forEach(project => {
+      const schedule = project.hackathon.timeline as unknown as HackathonSchedule;
       final.push({
+        id: project.projectsModel.id,
         logo: project.projectsModel.logo,
         industry: project.projectsModel.industry,
         title: project.projectsModel.short_description,
-        amount: project.amount,
         contributorCount: 0,
         contributors: [],
         ownerName: project.projectsModel.owner.username,
-        type: 'hackathon',
-        projectJoinHackathon: {
-          bgImage: project.hackathon.background,
+        projectShortDescription: project.projectsModel.short_description,
+        projectEvent: {
+          eventName: 'hackathon',
+          amount: project.amount,
+          bg: project.hackathon.background,
           id: project.id,
+          end: schedule[2].end as Date,
+          start: schedule[2].start as Date,
+          hackathonEnd: schedule[1].end as Date,
+          hackathonStart: schedule[1].end as Date,
           name: project.hackathon.name,
         },
       });
     });
     activeHackathon.forEach(hackathon => {
+      const schedule = hackathon.timeline as unknown as HackathonSchedule;
       banner.push({
         bgImage: hackathon.background,
-        endTime: new Date(), // change the date
+        endTime: schedule[1]?.end as Date,
         id: hackathon.id,
         matchingPool: hackathon.prize_pool,
         name: hackathon.name,
         type: 'hackathon',
+        startTime: schedule[1]?.start as Date,
+        shortDescription: hackathon.short_description,
       });
     });
 
@@ -173,6 +204,8 @@ export const projectExplorer = async (req: Request, res: Response) => {
         matchingPool: round.matchedPool,
         name: round.roundName,
         type: 'round',
+        startTime: round.startTime,
+        shortDescription: round.short_description,
       });
     });
     return res.status(200).send({

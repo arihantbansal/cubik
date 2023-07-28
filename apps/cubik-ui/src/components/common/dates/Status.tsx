@@ -31,10 +31,12 @@ const CircleRipple = chakra(Box, {
 });
 
 const RoundStatus = ({
+  isHackathon,
   show,
   startDate,
   endDate,
 }: {
+  isHackathon?: boolean;
   show?: boolean;
   startDate: Date | undefined | null;
   endDate: Date | undefined | null;
@@ -56,11 +58,7 @@ const RoundStatus = ({
         minH={'22px'}
         mx={1}
       >
-        <Box
-          as={AiTwotoneCalendar}
-          color="white"
-          boxSize={['12px', '14px', '18px']}
-        />
+        <Box as={AiTwotoneCalendar} color="white" boxSize={['12px', '14px', '18px']} />
         <Box
           p="8px 12px"
           ps="0px"
@@ -69,9 +67,8 @@ const RoundStatus = ({
           color="neutral.11"
           textStyle={{ base: 'body6', md: 'body5' }}
         >
-          {daysToStart === 0
-            ? `Round starts in a day`
-            : `Round starts in ${daysToStart} days`}
+          {isHackathon ? 'Voting' : 'Round'}
+          {daysToStart === 0 ? ` starts in a day` : ` starts in ${daysToStart} days`}
         </Box>
       </HStack>
     );
@@ -98,9 +95,8 @@ const RoundStatus = ({
           textStyle={{ base: 'body6', md: 'overline3' }}
           display={{ base: show ? 'block' : 'none', md: 'block' }}
         >
-          {daysToEnd > 1
-            ? `Live - ends in ${daysToEnd} days`
-            : 'Live - ending in a day'}
+          {isHackathon ? 'Voting ' : 'Round '}
+          {daysToEnd > 1 ? `Live - ends in ${daysToEnd} days` : 'Live - ending in a day'}
         </Box>
       </HStack>
     );
@@ -113,11 +109,7 @@ const RoundStatus = ({
         spacing="8px"
         mx={1}
       >
-        <Box
-          as={BiInfoCircle}
-          color="white"
-          boxSize={['12px', '14px', '18px']}
-        />
+        <Box as={BiInfoCircle} color="white" boxSize={['12px', '14px', '18px']} />
         <Box
           as="p"
           whiteSpace="pre"
@@ -125,9 +117,8 @@ const RoundStatus = ({
           textStyle={{ base: 'body6', md: 'body5' }}
           display={{ base: show ? 'block' : 'none', md: 'block' }}
         >
-          {daysSinceEnd > 1
-            ? `Round ended ${daysSinceEnd} days ago`
-            : 'Round ended'}
+          {isHackathon ? 'Voting ' : 'Round '}
+          {daysSinceEnd > 1 ? ` ended ${daysSinceEnd} days ago` : ' ended'}
         </Box>
       </HStack>
     );

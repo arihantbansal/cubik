@@ -24,9 +24,7 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ date }) => {
     };
   };
 
-  const [timeRemaining, setTimeRemaining] = useState<number>(
-    getTimeRemaining(date).total
-  );
+  const [timeRemaining, setTimeRemaining] = useState<number>(getTimeRemaining(date).total);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -83,9 +81,7 @@ export const CountdownTimerBig: React.FC<CountdownTimerProps> = ({ date }) => {
     };
   };
 
-  const [timeRemaining, setTimeRemaining] = useState<number>(
-    getTimeRemaining(date).total
-  );
+  const [timeRemaining, setTimeRemaining] = useState<number>(getTimeRemaining(date).total);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -179,22 +175,22 @@ export const CountdownTimerBig: React.FC<CountdownTimerProps> = ({ date }) => {
 const FundingRoundBanner = ({
   startDate,
   endDate,
-  roundId,
-  roundName,
-  roundDescription,
+  id,
+  name,
+  description,
   matchingPool,
 }: {
   startDate: Date;
   endDate: Date;
-  roundId: string;
-  roundName: string;
-  roundDescription: string;
+  id: string;
+  name: string;
+  description: string;
   matchingPool: number;
 }) => {
   return (
     <Stack
       as={Link}
-      href={`/grants/${roundId}`}
+      href={`/grants/${id}`}
       cursor={'pointer'}
       w="full"
       direction={{ base: 'column', md: 'row' }}
@@ -251,7 +247,7 @@ const FundingRoundBanner = ({
       >
         <VStack w="full" align={'start'} spacing="48px">
           <VStack w="full" align={'start'} spacing="24px">
-            <RoundStatus startDate={startDate} endDate={endDate} />
+            <RoundStatus isHackathon={true} startDate={startDate} endDate={endDate} />
             <Stack
               direction={{ base: 'column', md: 'row' }}
               justify={'space-between'}
@@ -260,22 +256,18 @@ const FundingRoundBanner = ({
               w="full"
             >
               <VStack align={'start'} gap="8px">
-                <Box
-                  color="neutral.11"
-                  as="p"
-                  textStyle={{ base: 'title2', md: 'headline3' }}
-                >
-                  {roundName}
+                <Box color="neutral.11" as="p" textStyle={{ base: 'title2', md: 'headline3' }}>
+                  {name}
                 </Box>
                 <Box
                   maxW={{ base: '340px', md: '500px' }}
                   as="p"
                   color="neutral.8"
-                  h="2.5rem"
+                  h="2.8rem"
                   textStyle={{ base: 'body5', md: 'body3' }}
                   noOfLines={2}
                 >
-                  {roundDescription}
+                  {description}
                 </Box>
               </VStack>
               <HStack
