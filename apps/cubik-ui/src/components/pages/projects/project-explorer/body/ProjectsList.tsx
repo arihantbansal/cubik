@@ -28,6 +28,7 @@ import ProjectsContributorsNumber, { ContributionType } from './ProjectsContribu
 import { projectRouter } from '@cubik/api/src/router';
 import { ProjectExplorerType } from '@cubik/common-types';
 import Image from 'next/image';
+import EmptyProjectsState from './empty-state/ProjectsEmptyState';
 
 const ProjectEventBanner = ({ name, bg, color }: { name: string; bg?: string; color?: string }) => {
   console.log('backgroundImge', bg);
@@ -397,9 +398,15 @@ const ProjectsList = ({ explorerProjects }: { explorerProjects: ProjectExplorerT
         align="center"
         direction={{ base: 'column', sm: 'row', md: 'row' }}
       >
-        {explorerProjects.map((project, key: React.Key | null | undefined) => {
-          return <ProjectCard project={project} key={key} />;
-        })}
+        {explorerProjects.length > 0 ? (
+          explorerProjects.map((project, key: React.Key | null | undefined) => {
+            return <ProjectCard project={project} key={key} />;
+          })
+        ) : (
+          <>
+            <EmptyProjectsState />
+          </>
+        )}
       </Wrap>
     </Container>
   );
