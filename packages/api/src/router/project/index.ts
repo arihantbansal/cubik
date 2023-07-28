@@ -36,7 +36,6 @@ export const projectRouter = createTRPCRouter({
   findManyVerifiedWithContributions: findManyVerifiedWithContributions,
   findOne: findOneProject,
   joinRound: joinRound,
-  projectAdminDetails: projectAdminDetails,
   projectVisitorsDetail: projectVisitorsDetail,
   count: projectCount,
   updateProjectStatus: updateProjectStatus,
@@ -48,4 +47,5 @@ export const projectRouter = createTRPCRouter({
   projectsHackathonSubmit: projectsHackathonSubmit,
   projectIsValid: projectIsValid,
   getProjects: getProjects,
+  projectAdminDetails: projectAdminDetails,
 });

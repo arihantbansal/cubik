@@ -13,6 +13,16 @@ export const getProjects = publicProcedure
           isActive: true,
           isArchive: false,
         },
+        select: {
+          id: true,
+          industry: true,
+          name: true,
+          logo: true,
+          short_description: true,
+          isArchive: true,
+          status: true,
+          project_link: true,
+        },
       });
       return projects;
     } catch (error) {

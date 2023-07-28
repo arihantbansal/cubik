@@ -5,6 +5,7 @@ import { ProjectVerifyStatus, ProjectsModel } from '@cubik/database';
 import ProjectHeaderVisitorView from './ProjectHeaderVisitorView';
 import ProjectBanner from './ProjectStatusBanner';
 import ProjectVisitorRoundsView from './ProjectVisitorRoundsView';
+import { ProjectProfileCard } from '~/types/projects';
 
 const ProjectVisitorCard = ({
   userName,
@@ -12,7 +13,7 @@ const ProjectVisitorCard = ({
   isLoading,
 }: {
   userName: string;
-  project: ProjectsModel;
+  project: ProjectProfileCard;
   isLoading: boolean;
 }) => {
   return (

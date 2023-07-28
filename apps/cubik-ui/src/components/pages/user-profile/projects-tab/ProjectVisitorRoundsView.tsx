@@ -3,12 +3,13 @@ import { ProjectJoinRoundStatus, ProjectsModel } from '@cubik/database';
 import ComponentErrors from '~/components/errors/ComponentErrors';
 import { trpc } from '~/utils/trpc';
 import VisitorProjectRoundCard from './VisitorProjectRoundCard';
+import { ProjectProfileCard } from '~/types/projects';
 
 const ProjectVisitorRoundsView = ({
   project,
   isLoading,
 }: {
-  project: ProjectsModel;
+  project: ProjectProfileCard;
   isLoading: boolean;
 }) => {
   const {
@@ -28,7 +29,7 @@ const ProjectVisitorRoundsView = ({
 
   // filter data here for projectJoinRoundStatus === ProjectJoinRoundStatus.APPROVED
   const filteredData = data?.ProjectJoinRound.filter(
-    (round) => round.status === ProjectJoinRoundStatus.APPROVED
+    round => round.status === ProjectJoinRoundStatus.APPROVED,
   );
 
   return filteredData && filteredData?.length > 0 ? (
@@ -42,7 +43,7 @@ const ProjectVisitorRoundsView = ({
       spacing={{ base: '64px', sm: '72px', md: '24px' }}
       align="start"
     >
-      {filteredData?.map((projectRound) => (
+      {filteredData?.map(projectRound => (
         <VisitorProjectRoundCard
           key={projectRound.id}
           round={projectRound}

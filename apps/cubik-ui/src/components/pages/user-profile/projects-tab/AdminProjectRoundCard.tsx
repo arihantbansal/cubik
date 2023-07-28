@@ -162,33 +162,34 @@ export const FundingRoundStatus = ({
 
 const AdminProjectRoundCard = ({
   isLoading,
-  round,
+  id,
+  endTime,
+  startTime,
+  status,
+  projectId,
+  roundName,
+  amountRaise,
 }: {
   isLoading: boolean;
-  round: ProjectJoinRound & {
-    fundingRound: Round & {
-      Contribution: (Contribution & {
-        user: UserModel;
-      })[];
-    };
-  };
+  id: string;
+  status: ProjectJoinRoundStatus;
+  endTime: Date;
+  startTime: Date;
+  roundName: string;
+  projectId: string;
+  amountRaise: number;
 }) => {
   const { ErrorBoundaryWrapper } = useErrorBoundary();
   return (
     <ErrorBoundaryWrapper>
       <Skeleton
-        key={round.id}
+        key={id}
         isLoaded={!isLoading}
         fadeDuration={2.5}
         opacity={isLoading ? 0.5 : 1}
         w="full"
       >
-        <AccordionItem
-          overflow={'scroll'}
-          w="full"
-          outline="none"
-          border="none"
-        >
+        <AccordionItem overflow={'scroll'} w="full" outline="none" border="none">
           <AccordionButton
             borderRadius="12px"
             backgroundColor={'neutral.2'}
@@ -206,24 +207,13 @@ const AdminProjectRoundCard = ({
             <HStack justify={'space-between'} w="full">
               <HStack justify={'space-between'} w="full">
                 <HStack gap={{ base: '6px', md: '8px' }}>
-                  <FundingRoundStatus
-                    status={round.status}
-                    startTime={round.fundingRound.startTime}
-                    endTime={round.fundingRound.endTime}
-                  />
-                  <Box
-                    as="p"
-                    textStyle={{ base: 'title6', md: 'title4' }}
-                    color="neutral.11"
-                  >
-                    {round.fundingRound.roundName}
+                  <FundingRoundStatus status={status} startTime={startTime} endTime={endTime} />
+                  <Box as="p" textStyle={{ base: 'title6', md: 'title4' }} color="neutral.11">
+                    {roundName}
                   </Box>
                 </HStack>
                 <HStack display={{ base: 'none', md: 'flex' }}>
-                  <RoundStatus
-                    startDate={round.fundingRound.startTime}
-                    endDate={round.fundingRound.endTime}
-                  />
+                  <RoundStatus startDate={startTime} endDate={endTime} />
                 </HStack>
               </HStack>
               <AccordionIcon display={{ base: 'none', md: 'block' }} />
@@ -234,22 +224,16 @@ const AdminProjectRoundCard = ({
             borderBottomRightRadius={'12px'}
             borderBottomLeftRadius={'12px'}
           >
-            {round.status === ProjectJoinRoundStatus.APPROVED ? (
-              isPast(round.fundingRound.startTime) ? ( // when live
+            {status === ProjectJoinRoundStatus.APPROVED ? (
+              isPast(startTime) ? ( // when live
                 <Tabs variant={'cubik'}>
                   <TabList gap="12px" height="2.5rem">
-                    <Tab
-                      height="2.5rem"
-                      fontSize={{ base: '14px', md: '17px' }}
-                    >
+                    <Tab height="2.5rem" fontSize={{ base: '14px', md: '17px' }}>
                       Details
                     </Tab>
-                    <Tab
-                      height="2.5rem"
-                      fontSize={{ base: '14px', md: '17px' }}
-                    >
+                    {/* <Tab height="2.5rem" fontSize={{ base: '14px', md: '17px' }}>
                       Contributors
-                    </Tab>
+                    </Tab> */}
                   </TabList>
                   <TabPanels p={'0'}>
                     <TabPanel>
@@ -264,52 +248,39 @@ const AdminProjectRoundCard = ({
                           direction={{ base: 'column', lg: 'row' }}
                         >
                           <FundingOverview
-                            amountRaise={round?.amountRaise ?? 0}
-                            projectId={round.projectId as string}
-                            roundId={round.fundingRound.id}
-                            roundStartDate={round.fundingRound.startTime}
-                            roundEndDate={round.fundingRound.endTime}
+                            amountRaise={amountRaise ?? 0}
+                            projectId={projectId as string}
+                            roundId={id}
+                            roundStartDate={startTime}
+                            roundEndDate={endTime}
                           />
                           <ProjectInsights
-                            projectId={round.projectId as string}
-                            roundId={round.fundingRound.id}
-                            roundStartDate={round.fundingRound.startTime}
-                            roundEndDate={round.fundingRound.endTime}
+                            projectId={projectId as string}
+                            roundId={id}
+                            roundStartDate={startTime}
+                            roundEndDate={endTime}
                           />
                         </Stack>
                       }
                     </TabPanel>
-                    <TabPanel p="0">
-                      <Flex
-                        direction="column"
-                        w="full"
-                        gap="32px"
-                        overflow={'scroll'}
-                      >
+                    {/* <TabPanel p="0">
+                      <Flex direction="column" w="full" gap="32px" overflow={'scroll'}>
                         <ProjectContributorsAdminView
                           contributorsData={round.fundingRound.Contribution}
                         />
                       </Flex>
-                    </TabPanel>
+                    </TabPanel> */}
                   </TabPanels>
                 </Tabs>
               ) : (
                 // upcomming round
                 <Center w="full" h="3.5rem">
-                  <HStack
-                    w="full"
-                    p="16px"
-                    rounded="12px"
-                    gap="12px"
-                    bg="#071A0F"
-                  >
+                  <HStack w="full" p="16px" rounded="12px" gap="12px" bg="#071A0F">
                     <Center p="8px" bg="#31F57910" rounded="full">
                       <Player
                         autoplay
                         loop={true}
-                        src={
-                          'https://assets7.lottiefiles.com/packages/lf20_4htoEB.json'
-                        }
+                        src={'https://assets7.lottiefiles.com/packages/lf20_4htoEB.json'}
                         style={{ height: `24px`, width: `24px` }}
                       />
                     </Center>
@@ -319,25 +290,19 @@ const AdminProjectRoundCard = ({
                       color="white"
                       textAlign={'start'}
                     >
-                      You will start receiving contribution from the community
-                      directly in the vault when the round starts -{' '}
+                      You will start receiving contribution from the community directly in the vault
+                      when the round starts -{' '}
                       <Box as="span" display={'inline-block'}>
-                        {CountdownTimer({ date: round.fundingRound.startTime })}
+                        {CountdownTimer({ date: startTime })}
                       </Box>{' '}
                       to go
                     </Box>
                   </HStack>
                 </Center>
               )
-            ) : round.status === ProjectJoinRoundStatus.PENDING ? (
+            ) : status === ProjectJoinRoundStatus.PENDING ? (
               <Center w="full" h="3.5rem">
-                <HStack
-                  p="16px"
-                  w="full"
-                  rounded="12px"
-                  gap="12px"
-                  bg="#240724"
-                >
+                <HStack p="16px" w="full" rounded="12px" gap="12px" bg="#240724">
                   <Center p="4px" bg="#240724" rounded="full">
                     <Player
                       autoplay
@@ -348,18 +313,12 @@ const AdminProjectRoundCard = ({
                       style={{ height: `20px`, width: `20px` }}
                     />
                   </Center>
-                  <Box
-                    as={'p'}
-                    textStyle={'body5'}
-                    color="#FFCCFF"
-                    textAlign={'start'}
-                  >
-                    The project is under review by the grant creator to
-                    participate in the round.
+                  <Box as={'p'} textStyle={'body5'} color="#FFCCFF" textAlign={'start'}>
+                    The project is under review by the grant creator to participate in the round.
                   </Box>
                 </HStack>
               </Center>
-            ) : round.status === ProjectJoinRoundStatus.REJECTED ? (
+            ) : status === ProjectJoinRoundStatus.REJECTED ? (
               //  status = rejected
               <Center w="full" h="3.5rem">
                 <HStack
@@ -370,11 +329,7 @@ const AdminProjectRoundCard = ({
                   backgroundColor="surface.orange.3"
                 >
                   <Center p="6px" bg="#FFFFFF12" rounded="full">
-                    <Box
-                      as={HiBan}
-                      boxSize={{ base: '14px', md: '18px' }}
-                      color="#FF9347"
-                    />
+                    <Box as={HiBan} boxSize={{ base: '14px', md: '18px' }} color="#FF9347" />
                   </Center>
                   <Box
                     as={'p'}
@@ -382,8 +337,7 @@ const AdminProjectRoundCard = ({
                     color="#FF9347"
                     textAlign={'start'}
                   >
-                    Your Project was not selected for this round by the grant
-                    provider.
+                    Your Project was not selected for this round by the grant provider.
                   </Box>
                 </HStack>
               </Center>
