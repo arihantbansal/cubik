@@ -23,35 +23,43 @@ export const UserPageLayout = (props: Props) => {
           isLoading={false}
           mainWallet={props.mainWallet}
           profilePicture={props.profilePicture}
-          username={props.username}
+          username={router.query.username as string}
         />
         <HStack gap={5} my={5}>
           <Box
-            borderBottom={router.asPath === `/${props.username}` ? '2px solid' : 0}
+            borderBottom={router.asPath === `/${router.query.username}` ? '2px solid' : 0}
             p={2}
             fontWeight={700}
-            color={router.asPath === `/${props.username}` ? 'brand.teal6' : 'neutral.7'}
+            color={router.asPath === `/${router.query.username}` ? 'brand.teal6' : 'neutral.7'}
             fontSize={20}
           >
-            <Link href={'/' + props.username}>Details</Link>
+            <Link href={'/' + router.query.username}>Details</Link>
           </Box>
           <Box
-            borderBottom={router.asPath === `/${props.username}/projects` ? '2px solid' : 0}
+            borderBottom={router.asPath === `/${router.query.username}/projects` ? '2px solid' : 0}
             p={2}
             fontWeight={700}
-            color={router.asPath === `/${props.username}/projects` ? 'brand.teal6' : 'neutral.7'}
+            color={
+              router.asPath === `/${router.query.username}/projects` ? 'brand.teal6' : 'neutral.7'
+            }
             fontSize={20}
           >
-            <Link href={'/' + props.username + '/projects'}>Projects</Link>
+            <Link href={'/' + router.query.username + '/projects'}>Projects</Link>
           </Box>
           <Box
-            borderBottom={router.asPath === `/${props.username}/contributor` ? '2px solid' : 0}
+            borderBottom={
+              router.asPath === `/${router.query.username}/contributor` ? '2px solid' : 0
+            }
             p={2}
             fontWeight={700}
-            color={router.asPath === `/${props.username}/contributor` ? 'brand.teal6' : 'neutral.7'}
+            color={
+              router.asPath === `/${router.query.username}/contributor`
+                ? 'brand.teal6'
+                : 'neutral.7'
+            }
             fontSize={20}
           >
-            <Link href={'/' + props.username + '/contributor'}>Contributor</Link>
+            <Link href={'/' + router.query.username + '/contributor'}>Contributor</Link>
           </Box>
         </HStack>
         {props.children}

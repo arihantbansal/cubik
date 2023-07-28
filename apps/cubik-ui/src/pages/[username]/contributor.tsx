@@ -63,11 +63,12 @@ const UserProjects = (props: Props) => {
     </>
   );
 };
-export async function getServerSidedata(context: { query: { username: string } }) {
+
+export async function getServerSideProps(context: { query: { username: string } }) {
   const username = context.query.username;
 
   return {
-    data: {
+    props: {
       username,
     },
   };

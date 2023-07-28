@@ -1,8 +1,12 @@
-import { Box, Center, Container, Heading } from '@chakra-ui/layout';
+import { Box, Center, Container, Flex, Heading } from '@chakra-ui/layout';
 import Link from 'next/link';
 import SEO from 'src/components/SEO';
 import ComponentErrors from '~/components/errors/ComponentErrors';
+import UserDetails from '~/components/pages/user-profile/details-tab/UserDetails';
+import UserProofs from '~/components/pages/user-profile/details-tab/UserProofs';
+import { UserPageLayout } from '~/layouts/userPageLayout';
 import { useUserStore } from '~/store/userStore';
+import { UserProof } from '~/types/user';
 import { trpc } from '~/utils/trpc';
 
 const ProfilePage = ({ username }: { username: string }) => {
@@ -47,29 +51,28 @@ const ProfilePage = ({ username }: { username: string }) => {
 
   return (
     <>
-      {/* <SEO
-        title={`@${data ? data.username : 'User'}`}
-        description={`@${data ? data.username : 'User'}'s profile`}
-        image={`https://res.cloudinary.com/demonicirfan/image/upload/v1684179451/cubik%20og.png`}
-      />
-      <Container
-        maxW="7xl"
-        w="full"
-        p={{ base: '23px 20px', sm: '32px', md: '48px', lg: '48px 20px' }}
+      <UserPageLayout
+        id={data?.id as string}
+        mainWallet={data?.mainWallet as string}
+        profilePicture={data?.profilePicture as string}
+        username={username}
       >
-        {user?.username === data?.username ? (
-          <AdminView user={data} isLoading={isLoading} />
-        ) : (
-          <VisitorView user={data} isLoading={isLoading} />
-        )}
-      </Container> */}
+        <Flex gap={{ base: '24px', md: '32px' }} w={'full'} p="0" flexDir="column">
+          <UserDetails userId={data?.id as string} isLoading={isLoading} />
+          {user && user?.id === data?.id && (
+            <UserProofs
+              wallet={user?.mainWallet as string}
+              isLoading={isLoading}
+              proofs={user?.proof as unknown as UserProof[]}
+            />
+          )}
+        </Flex>
+      </UserPageLayout>
     </>
   );
 };
 
-export async function getServerSideProps(context: {
-  query: { username: string };
-}) {
+export async function getServerSideProps(context: { query: { username: string } }) {
   const username = context.query.username;
 
   return {

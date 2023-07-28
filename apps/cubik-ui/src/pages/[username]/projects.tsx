@@ -1,19 +1,25 @@
 import { Box, Center, Container, Flex, Heading, Link } from '@chakra-ui/layout';
-import React from 'react';
+import React, { use } from 'react';
 import SEO from '~/components/SEO';
 import { Prisma, ProjectVerifyStatus, prisma } from '@cubik/database';
 import { ProfileNftType } from '~/types/user';
 import ProfileHeader from '~/components/pages/user-profile/ProfileHeader';
 import UserContributions from '~/components/pages/user-profile/contributions-tab/UserContributions';
-import { VisitorProjectEmptyState } from '~/components/pages/user-profile/empty-states/ProjectEmptyState';
+import {
+  AdminProjectEmptyState,
+  VisitorProjectEmptyState,
+} from '~/components/pages/user-profile/empty-states/ProjectEmptyState';
 import ProjectVisitorCard from '~/components/pages/user-profile/projects-tab/ProjectVisitorCard';
 import { trpc } from '~/utils/trpc';
 import { UserPageLayout } from '~/layouts/userPageLayout';
 import ComponentErrors from '~/components/errors/ComponentErrors';
+import ProjectAdminCard from '~/components/pages/user-profile/projects-tab/ProjectAdminCard';
+import { useUserStore } from '~/store/userStore';
 interface Props {
   username: string;
 }
 const UserProjects = (props: Props) => {
+  const { user } = useUserStore();
   const { data, isLoading, isError, error } = trpc.user.findOne.useQuery(
     {
       username: props.username as string,
@@ -74,31 +80,47 @@ const UserProjects = (props: Props) => {
         profilePicture={data?.profilePicture as string}
         username={props.username}
       >
-        <Flex direction="column" w="full" gap="32px">
-          {projects.data && projects.data?.length > 0 ? (
-            projects.data
-              .filter(project => project.status === ProjectVerifyStatus.VERIFIED)
-              .map((project, key) => (
-                <ProjectVisitorCard
-                  userName={props.username}
-                  project={project}
-                  isLoading={false}
-                  key={key}
-                />
-              ))
-          ) : (
-            <VisitorProjectEmptyState />
-          )}
-        </Flex>
+        {user && user.id === data?.id ? (
+          <Flex direction="column" w="full" gap={{ base: '24px', md: '32px' }}>
+            {projects.data && projects.data.length > 0 ? (
+              projects.data.map((project, key) => {
+                return !project.isArchive ? (
+                  <ProjectAdminCard project={project} key={key} />
+                ) : (
+                  <></>
+                );
+              })
+            ) : (
+              <AdminProjectEmptyState />
+            )}
+          </Flex>
+        ) : (
+          <Flex direction="column" w="full" gap="32px">
+            {projects.data && projects.data?.length > 0 ? (
+              projects.data
+                .filter(project => project.status === ProjectVerifyStatus.VERIFIED)
+                .map((project, key) => (
+                  <ProjectVisitorCard
+                    userName={props.username}
+                    project={project}
+                    isLoading={false}
+                    key={key}
+                  />
+                ))
+            ) : (
+              <VisitorProjectEmptyState />
+            )}
+          </Flex>
+        )}
       </UserPageLayout>
     </>
   );
 };
-export async function getServerSidedata(context: { query: { username: string } }) {
+export async function getServerSideProps(context: { query: { username: string } }) {
   const username = context.query.username;
 
   return {
-    data: {
+    props: {
       username,
     },
   };
