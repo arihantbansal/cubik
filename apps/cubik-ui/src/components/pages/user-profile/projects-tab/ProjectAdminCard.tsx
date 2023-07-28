@@ -92,6 +92,30 @@ const ProjectAdminCard = ({ project }: { project: ProjectProfileCard }) => {
               />
             ))}
           </Accordion>
+          <Accordion
+            px={{ base: '12px', md: '16px' }}
+            w="full"
+            display={'flex'}
+            flexDir={'column'}
+            gap={{ base: '16px', md: '24px' }}
+            allowMultiple
+            allowToggle
+            variant={'unstyled'}
+          >
+            {projectData?.ProjectJoinRound.map(round => (
+              <AdminProjectRoundCard
+                isLoading={isLoading}
+                amountRaise={round.amountRaise || 0}
+                endTime={round.fundingRound.endTime}
+                id={round.fundingRound.id}
+                projectId={project.id}
+                key={round.fundingRound.id}
+                roundName={round.fundingRound.roundName}
+                startTime={round.fundingRound.startTime}
+                status={round.status}
+              />
+            ))}
+          </Accordion>
           {showVault && (
             <Vault
               isLoading={isLoading}
