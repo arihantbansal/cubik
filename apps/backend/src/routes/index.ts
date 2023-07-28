@@ -1,3 +1,3 @@
 import { tokenRouter } from './token.router';
-
-export { tokenRouter };
+import { projectRouter } from './project.router';
+export { tokenRouter, projectRouter };

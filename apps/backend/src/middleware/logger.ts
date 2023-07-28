@@ -1,31 +1,31 @@
-import { createLogger, format, transports } from 'winston';
+import winston, { format } from 'winston';
 
-const logger = createLogger({
-  level: process.env.node_env === 'production' ? 'info' : 'debug',
-  format: format.combine(
-    format.timestamp({
-      format: 'YYYY-MM-DD HH:mm:ss',
-    }),
-    format.errors({ stack: true }),
-    format.splat(),
-    format.json(),
-    format.printf(({ timestamp, level, message, stack }) => {
-      return `${timestamp} [${level.toUpperCase()}] ${message} ${
-        stack ? `\n${stack}` : ''
-      }`;
-    })
-  ),
-  transports: [
-    new transports.Console({
-      stderrLevels: ['error'],
-      level: 'debug',
-      handleExceptions: true,
-    }),
-    new transports.File({
-      filename: 'logs/error.log',
-      level: 'error',
-    }),
-    new transports.File({ filename: 'logs/combined.log' }),
-  ],
+export const prettyJSON = (data: unknown) => JSON.stringify(data, null, 2);
+
+const alignedWithColorsAndTime = format.combine(
+  format.colorize(),
+  format.timestamp(),
+  format.align(),
+  format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`),
+);
+
+const options = {
+  console: {
+    level: 'debug',
+    handleExceptions: true,
+    json: false,
+    colorize: true,
+  },
+};
+
+// Don't enable slack in testing
+const transports: winston.transport[] = [];
+
+const logger = winston.createLogger({
+  level: 'info',
+  format: alignedWithColorsAndTime,
+  transports: [new winston.transports.Console(options.console), ...transports],
+  exitOnError: false,
 });
+
 export default logger;
