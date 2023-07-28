@@ -30,14 +30,14 @@ export const getStaticProps: GetStaticProps = async () => {
     const res = await axios.get<explorerType>(env.NEXT_PUBLIC_BACKEND + '/api/v1/project/explorer');
     return {
       props: res.data,
-      revalidate: 60 * 60,
+      revalidate: 5,
     };
   } catch (e) {
     return {
       props: {
         data: [],
       },
-      revalidate: 60 * 60,
+      revalidate: 5,
     };
   }
 };
