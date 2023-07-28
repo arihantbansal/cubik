@@ -146,7 +146,7 @@ const SelectProjectToSubmitToHackathon = ({
         projectId: selectedProject as string,
         tx: sig,
         tracks: getValues('tracks'),
-        mainTracks: '',
+        mainTracks: getValues('mainTrack'),
       });
     } catch (error) {
       error;
