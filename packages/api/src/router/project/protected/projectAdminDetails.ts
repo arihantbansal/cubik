@@ -23,6 +23,7 @@ export const projectAdminDetails = protectedProcedure
 
             hackathon: {
               select: {
+                name: true,
                 // contribution: {
                 //   select: {
                 //     user: {
