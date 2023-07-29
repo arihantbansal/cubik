@@ -703,3 +703,101 @@ export const projectJoinHackathon = async (
 
   return ix;
 };
+
+export const createContributionV2 = async (
+  wallet: NodeWallet,
+  amount: number,
+  split: number,
+  owner: string,
+  roundId: string,
+  projectCount: number,
+  token: string,
+) => {
+  try {
+    const createKey = anchor.web3.Keypair.generate();
+    const program = anchorProgram(wallet);
+
+    const tokenMint = new anchor.web3.PublicKey(token);
+
+    const [adminAccount] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from('admin')],
+      program.programId,
+    );
+
+    const [round_account] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from('round'), Buffer.from(roundId)],
+      program.programId,
+    );
+    let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
+      [
+        anchor.utils.bytes.utf8.encode('project'),
+        new anchor.web3.PublicKey(owner).toBuffer(),
+        Buffer.from(projectCount.toString()),
+      ],
+      program.programId,
+    );
+
+    let [contributionV2Account] = anchor.web3.PublicKey.findProgramAddressSync(
+      [
+        anchor.utils.bytes.utf8.encode('contribution'),
+        wallet.publicKey.toBuffer(),
+        createKey.publicKey.toBuffer(),
+      ],
+      program.programId,
+    );
+
+    // ATAs
+    const ata_sender = await spl.getAssociatedTokenAddress(
+      tokenMint,
+      wallet.publicKey,
+      false,
+      spl.TOKEN_PROGRAM_ID,
+      spl.ASSOCIATED_TOKEN_PROGRAM_ID,
+    );
+    const projectInfo = await program.account.project.fetch(project_account);
+    //@ts-ignore
+    const adminInfo = await program.account.admin.fetch(adminAccount);
+    const ata_admin = await spl.getAssociatedTokenAddress(
+      tokenMint,
+      adminInfo.authority,
+      false,
+      spl.TOKEN_PROGRAM_ID,
+      spl.ASSOCIATED_TOKEN_PROGRAM_ID,
+    );
+    const ata_reciver = await spl.getAssociatedTokenAddress(
+      tokenMint,
+      projectInfo.multiSig,
+      false,
+      spl.TOKEN_PROGRAM_ID,
+      spl.ASSOCIATED_TOKEN_PROGRAM_ID,
+    );
+    //
+    const ix = await program.methods
+      .createContributionV2(
+        new anchor.BN(amount),
+        new anchor.BN(split),
+        createKey.publicKey,
+        new anchor.web3.PublicKey(owner),
+        roundId,
+        JSON.stringify(projectCount),
+      )
+      .accounts({
+        adminAccount: adminAccount,
+        projectAccount: project_account,
+        roundAccount: round_account,
+        contributionAccount: contributionV2Account,
+        tokenProgram: spl.TOKEN_PROGRAM_ID,
+        tokenMint: tokenMint,
+        tokenAtaAdmin: ata_admin,
+        tokenAtaSender: ata_sender,
+        tokenAtaReceiver: ata_reciver,
+        authority: wallet.publicKey,
+      })
+      .instruction();
+
+    return ix;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
