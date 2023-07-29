@@ -636,6 +636,11 @@ const HackathonHeader = ({
                     isDisabled={!hasRegistered.data ? false : true}
                     onClick={async () => {
                       // console.log('click on register');
+
+                      if (minted) {
+                        return;
+                      }
+
                       if (!connected) {
                         setVisible(true);
                         return;
