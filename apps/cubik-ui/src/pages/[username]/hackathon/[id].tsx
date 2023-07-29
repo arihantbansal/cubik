@@ -7,9 +7,9 @@ import { GetServerSideProps } from 'next';
 import React from 'react';
 import SEO from '~/components/SEO';
 import ComponentErrors from '~/components/errors/ComponentErrors';
+import { ProjectInteractions } from '~/components/pages/projects/details/ProjectInteraction';
 import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-details/ProjectDetailsAndTabs';
 import ProjectDetailsLiveRoundStatus from '~/components/pages/projects/project-details/ProjectDetailsLiveRoundStatus';
-import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';
 import { trpc } from '~/utils/trpc';
 interface Props {
   id: string;
@@ -23,7 +23,7 @@ const HackathonJoinPage = ({ id }: Props) => {
     return <ComponentErrors error={error} />;
   }
 
-  const RoundStatusBanner = () => {
+  const HackathonStatusBanner = () => {
     if (!data) return <> </>;
 
     const timeline = (data?.hackathon.timeline as unknown as HackathonSchedule).sort(
@@ -42,6 +42,9 @@ const HackathonJoinPage = ({ id }: Props) => {
     } else return <></>;
   };
 
+  console.log(
+    (data?.hackathon.timeline as unknown as HackathonSchedule).sort((a, b) => a.index - b.index),
+  );
   return (
     <>
       <SEO
@@ -61,7 +64,7 @@ const HackathonJoinPage = ({ id }: Props) => {
             opacity={isLoading ? 0.3 : 1}
             h={isLoading ? '3rem' : 'auto'}
           >
-            <RoundStatusBanner />
+            <HackathonStatusBanner />
           </Skeleton>
         )}
         <Stack
@@ -75,22 +78,31 @@ const HackathonJoinPage = ({ id }: Props) => {
           justifyContent={'start'}
         >
           <ProjectDetailsAndTabs
+            name={data?.hackathon.name as string}
+            hackathonId={data?.hackathon.id as string}
+            timeline={(data?.hackathon.timeline as unknown as HackathonSchedule) || []}
             projectDetails={{
               ...data?.projectsModel!!,
             }}
             roundId={data?.hackathon.id as string}
             joinId={id}
             isLoading={isLoading}
-            amountRaise={0}
+            amountRaise={data?.amount || 0}
             contributions={0}
             communityContributions={0}
           />
 
           <ProjectInteractions
-            projectDetails={data?.projectsModel as ProjectsModel}
+            hackathonId={data?.hackathon.id as string}
+            timeline={(data?.hackathon.timeline as unknown as HackathonSchedule) || []}
+            hackathonJoinId={id}
+            communityContributions={0} // update this
+            contributors={0} // update this
+            funding={data?.amount ?? 0}
             isLoading={isLoading}
-            preview={true}
+            project={data?.projectsModel as ProjectsModel}
             team={data?.projectsModel.Team || []}
+            preview={false}
           />
         </Stack>
       </Container>

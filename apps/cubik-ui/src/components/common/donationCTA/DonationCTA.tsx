@@ -7,17 +7,14 @@ import { CountdownTimer } from '~/components/pages/projects/project-explorer/hea
 export const RoundEndedBanner = ({
   endDate,
   isLoading,
+  isHackathon = false,
 }: {
   endDate: Date;
+  isHackathon?: boolean;
   isLoading: boolean;
 }) => {
   return (
-    <Skeleton
-      opacity={isLoading ? '0.5' : 1}
-      fadeDuration={2}
-      isLoaded={!isLoading}
-      w="full"
-    >
+    <Skeleton opacity={isLoading ? '0.5' : 1} fadeDuration={2} isLoaded={!isLoading} w="full">
       <HStack p="16px" rounded="12px" gap="12px" bg="#33000260">
         <Center p="8px" bg="#330002" rounded="full">
           <Center>
@@ -38,7 +35,8 @@ export const RoundEndedBanner = ({
           </Center>
         </Center>{' '}
         <Box as={'p'} textStyle={'body5'} color="white" textAlign={'start'}>
-          Current Round has ended! Stay tuned till the next round starts.{' '}
+          Current {isHackathon ? 'hackathon' : 'Round'} has ended! Stay tuned till the next{' '}
+          {isHackathon ? 'hackathon' : 'Round'} starts.{' '}
           <Link
             href="https://twitter.com/_cubik"
             target="_blank"
@@ -54,17 +52,14 @@ export const RoundEndedBanner = ({
 export const ProofsValidation = ({
   username,
   isLoading,
+  isHackathon = false,
 }: {
   username: string;
   isLoading: boolean;
+  isHackathon?: boolean;
 }) => {
   return (
-    <Skeleton
-      opacity={isLoading ? '0.5' : 1}
-      fadeDuration={2}
-      isLoaded={!isLoading}
-      w="full"
-    >
+    <Skeleton opacity={isLoading ? '0.5' : 1} fadeDuration={2} isLoaded={!isLoading} w="full">
       <HStack p="16px" rounded="12px" gap="12px" bg="#2D2A14">
         <Center p="8px" bg="#FFD83D20" rounded="full">
           <Center>
@@ -72,7 +67,8 @@ export const ProofsValidation = ({
           </Center>
         </Center>{' '}
         <Box as={'p'} textStyle={'body5'} color="#FEF08A" textAlign={'start'}>
-          At least one proofs are need to contribute to a project in this round.
+          At least one proofs are need to contribute to a project in this{' '}
+          {isHackathon ? 'hackathon' : 'round'}
           <Link href={`/${username}`}>
             <Box style={{ textDecoration: 'underline' }}>collect Proofs</Box>
           </Link>
@@ -84,17 +80,14 @@ export const ProofsValidation = ({
 export const RoundStartingSoon = ({
   startDate,
   isLoading,
+  isHackathon = false,
 }: {
   startDate: Date;
   isLoading: boolean;
+  isHackathon?: boolean;
 }) => {
   return (
-    <Skeleton
-      opacity={isLoading ? '0.5' : 1}
-      fadeDuration={2}
-      isLoaded={!isLoading}
-      w="full"
-    >
+    <Skeleton opacity={isLoading ? '0.5' : 1} fadeDuration={2} isLoaded={!isLoading} w="full">
       <HStack p="16px" rounded="12px" gap="12px" bg="#31F57910">
         <Center p="8px" bg="#071A0F" rounded="full">
           <Player
@@ -105,9 +98,9 @@ export const RoundStartingSoon = ({
           />
         </Center>
         <Box as={'p'} textStyle={'body5'} color="white" textAlign={'start'}>
-          You can donate to the project once grant round starts -{' '}
+          You can donate to the project once {isHackathon ? 'hackathon' : 'grant round'} starts -{' '}
           <Box as="span" display={'inline-block'}>
-            {CountdownTimer({ date: startDate })}
+            {CountdownTimer({ date: new Date(startDate) })}
           </Box>{' '}
           to go
         </Box>

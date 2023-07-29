@@ -48,7 +48,7 @@ type ProjectDonationSimulatorProps = {
   setDonationSuccessful?: any;
   roundId: string;
   projectJoinRoundId: string;
-  roundName: string;
+  name: string;
 };
 
 export const token: tokenGroup[] = tokens;
@@ -60,7 +60,7 @@ export const ProjectDonationSimulator = ({
   setDonationSuccessful,
   roundId,
   projectJoinRoundId,
-  roundName,
+  name,
 }: ProjectDonationSimulatorProps) => {
   const [txnError, setTxnError] = useState<string | null>(null);
   const toast = useToast();
@@ -114,14 +114,14 @@ export const ProjectDonationSimulator = ({
         projectId: projectDetails.id, // check once if the value is right or not for project Id
       });
     },
-    onError: (error) => {
+    onError: error => {
       setTxnError('Trpc returned an error');
       FailureToast({ toast, message: 'Donation Failed' });
     },
   });
   const getBalances = async (address: string) => {
     const { data } = await axios.get(
-      `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${env.NEXT_PUBLIC_HELIUS_API_KEY}`
+      `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${env.NEXT_PUBLIC_HELIUS_API_KEY}`,
     );
     return data;
   };
@@ -138,22 +138,22 @@ export const ProjectDonationSimulator = ({
     }
     if (String(_values.token.value).includes('sol')) {
       sig = await donateSOL(
-        roundName as string,
+        name as string,
         projectDetails?.owner_publickey,
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
         _values.amount,
-        _values.amount * priceSol // multiply by 100 because of 2 decimal places
+        _values.amount * priceSol, // multiply by 100 because of 2 decimal places
       );
     } else {
       sig = await donateSPL(
-        roundName as string,
+        name as string,
         '',
         projectDetails?.owner_publickey,
         projectDetails?.projectUserCount,
         _values.matchingPoolDonation,
         _values.amount, // token value direct because form is not taking near 0 values
-        _values.amount * priceSol // multiply by 100 because of 2 decimal places
+        _values.amount * priceSol, // multiply by 100 because of 2 decimal places
       );
     }
 
@@ -180,7 +180,7 @@ export const ProjectDonationSimulator = ({
     count: number,
     split: number,
     total: number,
-    usd: number
+    usd: number,
   ): Promise<string | null> => {
     try {
       const ix = await contributeSPL(
@@ -191,7 +191,7 @@ export const ProjectDonationSimulator = ({
         count, // project count
         split, // split
         total, // total
-        usd // usd value
+        usd, // usd value
       );
       const tx = new anchor.web3.Transaction();
       const { blockhash } = await connection.getLatestBlockhash();
@@ -214,7 +214,7 @@ export const ProjectDonationSimulator = ({
     count: number,
     split: number,
     total: number,
-    usd: number
+    usd: number,
   ): Promise<string | null> => {
     try {
       const ix = await contributeSOL(
@@ -224,7 +224,7 @@ export const ProjectDonationSimulator = ({
         count, // project count
         split,
         total,
-        usd
+        usd,
       );
       const tx = new anchor.web3.Transaction();
       const { blockhash } = await connection.getLatestBlockhash();
@@ -315,9 +315,7 @@ export const ProjectDonationSimulator = ({
                     cursor="pointer"
                     key={key}
                     backgroundColor={
-                      watch('matchingPoolDonation') === percentage
-                        ? '#14665B'
-                        : '#242424'
+                      watch('matchingPoolDonation') === percentage ? '#14665B' : '#242424'
                     }
                     _hover={{ outline: '1px solid #3E3E3E' }}
                     outline={
@@ -334,11 +332,7 @@ export const ProjectDonationSimulator = ({
                       setValue('matchingPoolDonation', percentage);
                     }}
                   >
-                    <Box
-                      as="p"
-                      textStyle={{ base: 'body5', md: 'body4' }}
-                      color="#E0FFFD"
-                    >
+                    <Box as="p" textStyle={{ base: 'body5', md: 'body4' }} color="#E0FFFD">
                       {percentage}%
                     </Box>
                     {percentage === 10 ? (
@@ -365,11 +359,7 @@ export const ProjectDonationSimulator = ({
               })}
             </HStack>
             <FormErrorMessage>
-              {errors.matchingPoolDonation ? (
-                <>{errors.matchingPoolDonation.message}</>
-              ) : (
-                <></>
-              )}
+              {errors.matchingPoolDonation ? <>{errors.matchingPoolDonation.message}</> : <></>}
             </FormErrorMessage>
           </FormControl>
         </VStack>
@@ -391,12 +381,7 @@ export const ProjectDonationSimulator = ({
                   perspective={700}
                   numbers={
                     '$' +
-                    String(
-                      (
-                        (EstimatedAmmount.data ?? 0) +
-                        (priceSol ?? 0) * donation
-                      ).toFixed(3)
-                    )
+                    String(((EstimatedAmmount.data ?? 0) + (priceSol ?? 0) * donation).toFixed(3))
                   }
                 />
               </Center>

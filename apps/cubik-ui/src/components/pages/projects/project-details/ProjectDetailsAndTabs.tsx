@@ -27,6 +27,7 @@ import {
   ProjectSocials,
 } from './project-interactions/ProjectInteractions';
 import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
+import { HackathonSchedule } from '@cubik/common-types';
 
 type MobileDrawerTypes = {
   logo: string;
@@ -38,7 +39,7 @@ type MobileDrawerTypes = {
   roundId: string;
   projectJoinRoundId: string;
   projectDetails: ProjectsModel;
-  roundName: string;
+  name: string;
 };
 
 const MobileDrawer = ({
@@ -51,15 +52,10 @@ const MobileDrawer = ({
   roundId,
   projectJoinRoundId,
   projectDetails,
-  roundName,
+  name,
 }: MobileDrawerTypes) => {
   return (
-    <Drawer
-      isOpen={isOpen}
-      placement="bottom"
-      onClose={onClose}
-      variant="cubik"
-    >
+    <Drawer isOpen={isOpen} placement="bottom" onClose={onClose} variant="cubik">
       <DrawerOverlay />
       <DrawerContent w={{ base: '26rem', md: '30rem' }} mx="auto" pt="0">
         <DrawerCloseButton top="28px" backgroundColor="none" />
@@ -78,7 +74,7 @@ const MobileDrawer = ({
           <ProjectDonationSimulator
             height={88}
             width={120}
-            roundName={roundName}
+            name={name}
             projectDetails={projectDetails}
             projectJoinRoundId={projectJoinRoundId}
             roundId={roundId}
@@ -91,22 +87,32 @@ const MobileDrawer = ({
 };
 
 const MobileOnlyViews = ({
-  joinId,
+  projectJoinId,
   isLoading,
-  fundingRound,
   project,
   roundId,
   amountRaise,
   contributions,
   communityContributions,
+  hackathonId,
+  timeline,
+  endTime,
+  startTime,
+  hackathonJoinId,
+  name,
 }: {
-  joinId?: string;
+  projectJoinId?: string;
   isLoading: boolean;
-  fundingRound: Round;
-  roundId: string;
+  roundId?: string;
   amountRaise: number;
   contributions: number;
   communityContributions: number;
+  hackathonId?: string;
+  timeline?: HackathonSchedule;
+  hackathonJoinId?: string;
+  startTime: Date;
+  endTime: Date;
+  name: string;
   project:
     | (ProjectsModel & {
         Team: (Team & {
@@ -125,13 +131,34 @@ const MobileOnlyViews = ({
   return (
     <>
       <VStack gap="32px" w="full" display={{ base: 'flex', lg: 'none' }}>
-        <ProjectCTAsMobile
-          joinId={joinId}
-          round={fundingRound}
-          projectDetails={project}
-          isLoading={isLoading}
-          onOpen={onOpen}
-        />
+        {roundId && (
+          <ProjectCTAsMobile
+            onOpen={onOpen}
+            hackathonId={hackathonId as string}
+            endTime={endTime}
+            loading={isLoading}
+            project={{
+              ...project!!,
+            }}
+            projectJoinId={projectJoinId as string}
+            roundId={roundId as string}
+            startTime={startTime}
+          />
+        )}
+
+        {hackathonId && (
+          <ProjectCTAsMobile
+            onOpen={onOpen}
+            endTime={endTime}
+            loading={isLoading}
+            project={{
+              ...project!!,
+            }}
+            startTime={startTime}
+            hackathonId={hackathonId as string}
+            hackathonJoinId={hackathonJoinId}
+          />
+        )}
         <ProjectSocials
           isLoading={isLoading}
           projectDetails={{
@@ -152,7 +179,7 @@ const MobileOnlyViews = ({
         <ProjectOwner isLoading={isLoading} team={project?.Team} />
       </VStack>
       <MobileDrawer
-        roundName={fundingRound?.roundName as string}
+        name={name}
         projectDetails={project as ProjectsModel}
         logo={project?.logo as string}
         projectName={project?.name as string}
@@ -176,6 +203,9 @@ export const ProjectDetailsAndTabs = ({
   fundingRound,
   contributions,
   communityContributions,
+  hackathonId,
+  timeline,
+  name,
 }: {
   joinId?: string;
   isLoading: boolean;
@@ -184,6 +214,9 @@ export const ProjectDetailsAndTabs = ({
   contributions: number;
   fundingRound?: Round;
   communityContributions: number;
+  hackathonId?: string;
+  timeline?: HackathonSchedule;
+  name: string;
   projectDetails:
     | (ProjectsModel & {
         Team: (Team & {
@@ -215,16 +248,36 @@ export const ProjectDetailsAndTabs = ({
         name={projectDetails?.name as string}
         short_description={projectDetails?.short_description as string}
       />
-      <MobileOnlyViews
-        joinId={joinId}
-        amountRaise={amountRaise}
-        contributions={contributions as number}
-        communityContributions={communityContributions as number}
-        fundingRound={fundingRound as Round}
-        isLoading={isLoading}
-        project={projectDetails}
-        roundId={roundId}
-      />
+      {hackathonId && (
+        <MobileOnlyViews
+          name={name}
+          hackathonId={hackathonId as string}
+          timeline={timeline as HackathonSchedule}
+          amountRaise={amountRaise}
+          contributions={contributions as number}
+          communityContributions={communityContributions as number}
+          isLoading={isLoading}
+          project={projectDetails}
+          roundId={roundId}
+          endTime={timeline![2].end as Date}
+          startTime={timeline![2].start as Date}
+          hackathonJoinId={joinId}
+        />
+      )}
+      {roundId && (
+        <MobileOnlyViews
+          amountRaise={amountRaise}
+          contributions={contributions as number}
+          communityContributions={communityContributions as number}
+          isLoading={isLoading}
+          project={projectDetails}
+          roundId={roundId}
+          endTime={fundingRound?.endTime as Date}
+          startTime={fundingRound?.startTime as Date}
+          projectJoinId={joinId}
+          name={name}
+        />
+      )}
       <ProjectsTabs
         ownerName={projectDetails?.owner?.username as string}
         roundId={roundId || ''}

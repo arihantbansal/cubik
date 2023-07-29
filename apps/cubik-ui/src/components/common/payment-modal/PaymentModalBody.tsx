@@ -9,11 +9,11 @@ const PaymentModalBody = ({
   projectDetails,
   projectJoinRoundId,
   roundId,
-  roundName,
+  name,
 }: {
   setDonationSuccessful?: any;
   projectDetails: ProjectsModel;
-  roundName: string;
+  name: string;
   roundId: string;
   projectJoinRoundId: string;
 }) => {
@@ -24,7 +24,7 @@ const PaymentModalBody = ({
         width={100}
         projectJoinRoundId={projectJoinRoundId}
         roundId={roundId}
-        roundName={roundName}
+        name={name}
         setDonationSuccessful={setDonationSuccessful}
         projectDetails={projectDetails}
       />

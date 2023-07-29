@@ -86,7 +86,7 @@ const ProjectDetails = ({
             alignItems={'start'}
             justifyContent={'start'}
           >
-            <ProjectDetailsAndTabs
+            {/* <ProjectDetailsAndTabs
               joinId={joinId}
               isLoading={isLoading}
               amountRaise={data?.amountRaise ?? 0}
@@ -104,7 +104,7 @@ const ProjectDetails = ({
                   ) || 0
                 ).toFixed(2)
               )}
-            />
+            /> */}
             <ProjectInteractions
               joinId={joinId}
               round={data?.fundingRound}
