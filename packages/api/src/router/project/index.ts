@@ -16,6 +16,7 @@ import {
   findManyVerifiedWithContributions,
   projectVisitorsDetail,
   getProjects,
+  findOneHackthon,
 } from './public';
 import {
   createProject,
@@ -48,4 +49,5 @@ export const projectRouter = createTRPCRouter({
   projectIsValid: projectIsValid,
   getProjects: getProjects,
   projectAdminDetails: projectAdminDetails,
+  findOneHackthon: findOneHackthon,
 });

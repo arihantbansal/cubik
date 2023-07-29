@@ -139,12 +139,21 @@ const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
   useEffect(() => {
     setAddedToList(!!projectList.find(item => item.id === project.id));
   }, [projectList]);
+
+  const genrateLink = (): string => {
+    if (project.projectEvent.eventName === 'hackathon') {
+      return `/${project.ownerName}/hackathon/${project.projectEvent.id}`;
+    }
+    if (project.projectEvent.eventName === 'round') {
+      return `/${project.ownerName}/${project.id}/${project.projectEvent.id}`;
+    }
+    return `/${project.ownerName}/${project.id}`;
+  };
+
   return (
     <LinkBox
       as={Link}
-      href={`/${project.ownerName}/${project.id}${
-        project.projectEvent ? `/${project.projectEvent.id}` : ``
-      }`}
+      href={genrateLink()}
       w="full"
       maxW={{
         base: '92vw',

@@ -9,12 +9,14 @@ import { ProjectDiscussion } from './discussion/ProjectDiscussion';
 import ProjectContributors from './project-interactions/project-tabs/ProjectContributors';
 import { Button, Center } from '@chakra-ui/react';
 import { BiChevronDown } from 'react-icons/bi';
+import { useRouter } from 'next/router';
 
 export const ProjectsTabs = ({
   projectDetails,
   isLoading,
   roundId,
   ownerName,
+  isHackathon = false,
 }: {
   projectDetails:
     | (ProjectsModel & {
@@ -30,9 +32,9 @@ export const ProjectsTabs = ({
   ownerName: string;
   roundId: string;
   isLoading: boolean;
+  isHackathon?: boolean;
 }) => {
   // get the project id from the url using window object
-
   return (
     <Tabs variant={'cubik'} alignSelf={'start'} w="full">
       <TabList
@@ -62,10 +64,7 @@ export const ProjectsTabs = ({
                   opacity={isLoading ? '0.1' : '1'}
                 >
                   <Box as="p" textStyle="body4" color="neutral.7">
-                    Project Created:{' '}
-                    {formateDateInMonths(
-                      projectDetails?.createdAt ?? Date.now()
-                    )}
+                    Project Created: {formateDateInMonths(projectDetails?.createdAt ?? Date.now())}
                     {''} by @{ownerName}
                   </Box>
                 </Skeleton>
@@ -76,6 +75,7 @@ export const ProjectsTabs = ({
         <TabPanel overflowX="scroll">
           {projectDetails?.id && (
             <ProjectContributors
+              isHackathon={isHackathon}
               roundId={roundId}
               projectId={projectDetails?.id}
               isLoading={isLoading}
@@ -86,10 +86,7 @@ export const ProjectsTabs = ({
           {isLoading ? (
             <></>
           ) : (
-            <ProjectDiscussion
-              ownerName={ownerName}
-              projectId={projectDetails?.id as string}
-            />
+            <ProjectDiscussion ownerName={ownerName} projectId={projectDetails?.id as string} />
           )}
         </TabPanel>
       </TabPanels>

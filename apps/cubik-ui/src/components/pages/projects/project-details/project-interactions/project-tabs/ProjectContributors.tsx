@@ -166,21 +166,36 @@ const ProjectContributors = ({
   projectId,
   roundId,
   isLoading,
+  isHackathon,
 }: {
   projectId: string;
   isLoading?: boolean;
   roundId: string;
+  isHackathon: boolean;
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortField, setSortField] = useState('timestamp');
   const [sortDirection, setSortDirection] = useState('desc');
 
+  let params = {};
+  if (isHackathon) {
+    params = {
+      hackathonId: roundId,
+    };
+  } else {
+    params = {
+      roundId,
+    };
+  }
   const {
     data: contributorsData,
     isLoading: loadingContributors,
     isError,
     error,
-  } = trpc.contribution.getProjectContributors.useQuery({ projectId, roundId });
+  } = trpc.contribution.getProjectContributors.useQuery({
+    projectId,
+    ...params,
+  });
 
   const pageSize = 15;
   const siblingCount = 1;
@@ -219,21 +234,14 @@ const ProjectContributors = ({
   return (
     <VStack
       w="full"
-      align={
-        currentContributors?.length === 0
-          ? 'center'
-          : { base: 'start', md: 'end' }
-      }
+      align={currentContributors?.length === 0 ? 'center' : { base: 'start', md: 'end' }}
     >
       {currentContributors?.length === 0 ? (
         <ContributionsEmptyState />
       ) : (
         <>
           <Table w="full" minW="34rem" overflowX="scroll" variant="unstyled">
-            <Thead
-              color="neutral.8"
-              fontFamily={'Plus Jakarta Sans, sans-serif'}
-            >
+            <Thead color="neutral.8" fontFamily={'Plus Jakarta Sans, sans-serif'}>
               <Tr>
                 <Th w={'40%'} p="0px 18px">
                   <Text
@@ -312,7 +320,7 @@ const ProjectContributors = ({
                 {currentContributors.length === 0 ? (
                   <></>
                 ) : (
-                  currentContributors.map((contributor) => (
+                  currentContributors.map(contributor => (
                     <ContributorRow
                       key={contributor.id}
                       amount={contributor.total}
