@@ -69,7 +69,6 @@ const SelectProjectToSubmitToHackathon = ({
   hackathonTracks,
   hackathonName,
 }: Props) => {
-  console.log('hackathonTracks', hackathonTracks);
   const { user } = useUserStore();
   const toast = useToast();
   const anchorWallet = useAnchorWallet();
@@ -85,7 +84,11 @@ const SelectProjectToSubmitToHackathon = ({
     getValues,
     setError,
     getFieldState,
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    defaultValues: {
+      mainTrack: 'fully_on_chain_game',
+    },
+  });
   const [step, setStep] = useState(0);
   const [signTransactionLoading, setsignTransactionLoading] = useState(false);
   const [transactionSignError, setTransactionSignError] = useState(null);
@@ -146,7 +149,7 @@ const SelectProjectToSubmitToHackathon = ({
         projectId: selectedProject as string,
         tx: sig,
         tracks: getValues('tracks'),
-        mainTracks: getValues('mainTrack'),
+        mainTracks: getValues('mainTrack') || 'fully_on_chain_game',
       });
     } catch (error) {
       error;
@@ -378,6 +381,8 @@ const SelectProjectToSubmitToHackathon = ({
                                 w="full"
                                 border={'none'}
                                 boxShadow="none"
+                                onChange={onChange}
+                                onBlur={onBlur}
                                 _hover={{
                                   boxShadow: 'none !important',
                                   borderColor: '#ffffff10 !important',
@@ -405,8 +410,10 @@ const SelectProjectToSubmitToHackathon = ({
                                   px: '1rem',
                                 }}
                               >
-                                <option value="option1">Fully On Chain Game</option>
-                                <option value="option1">Solana Integrated Game</option>
+                                <option value="fully_on_chain_game">Fully On Chain Game</option>
+                                <option value="solana_integrated_game">
+                                  Solana Integrated Game
+                                </option>
                               </ChakraSelect>
                             </VStack>
                           </FormControl>
@@ -715,6 +722,7 @@ const SelectProjectToSubmitToHackathon = ({
                 onClick={() => {
                   reset(undefined, { keepValues: false });
                   setStep(0);
+                  setsignTransactionLoading(false);
                   setSelectedProjectId(null);
                   onClose();
                 }}
