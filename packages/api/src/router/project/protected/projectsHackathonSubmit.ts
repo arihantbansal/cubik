@@ -7,6 +7,7 @@ export const projectsHackathonSubmit = protectedProcedure.query(async ({ ctx }) 
         owner_publickey: ctx.session.user.mainWallet,
         isActive: true,
         isArchive: false,
+        status: 'VERIFIED',
       },
       select: {
         id: true,
@@ -15,7 +16,6 @@ export const projectsHackathonSubmit = protectedProcedure.query(async ({ ctx }) 
         logo: true,
         status: true,
         projectUserCount: true,
-
       },
     });
     return res;
