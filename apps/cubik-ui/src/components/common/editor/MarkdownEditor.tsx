@@ -56,6 +56,7 @@ const MarkdownEditor = ({
   const [preview, setPreview] = useState(false);
   const [HTMLPreviewData, setHTMLPreviewData] = useState('');
   const editor = useEditor({
+    content: editorData,
     extensions: [
       Underline,
       Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -89,7 +90,6 @@ const MarkdownEditor = ({
     editorProps: {
       attributes: {},
     },
-    content: editorData,
   });
 
   const handleAddLink = () => {

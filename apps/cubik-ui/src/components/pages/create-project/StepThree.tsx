@@ -23,7 +23,13 @@ const StepThree = ({
   setLoadingSubmit: (loading: boolean) => void;
   LoadingSubmit: boolean;
 }) => {
-  const [editorData, setEditorData] = useState<string>();
+  const [editorData, setEditorData] = useState<string>(`
+<ol><li><p>Instruction on how to test the game? Webapp/xNFTs etc. have higher chances to be tested and receive vote</p></br></li>
+
+<li><p>how the game fits the theme “Upgrade”</p></br></li>
+<li><p>if you are building modules/extension of an existing game specify what was achieved during Speedrun </p></br></li>
+<li><p>What is the Solana integration?</p></br></li></ol>
+`);
 
   return (
     <>
