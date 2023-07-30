@@ -23,6 +23,9 @@ export const findOneProject = publicProcedure
           include: {
             user: true,
           },
+          orderBy: {
+            createdAt: 'asc',
+          },
         },
       },
     });
