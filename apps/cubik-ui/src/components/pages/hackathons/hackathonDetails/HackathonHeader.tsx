@@ -35,6 +35,7 @@ import SelectProjectToSubmitToHackathon from '../SelectProjectToSubmitToHackatho
 import { HackathonTracks } from '~/types/hackathon';
 import HackathonStatus from '../HackathonStatus';
 import { HackathonEndSoon } from '~/components/common/donationCTA/DonationCTA';
+import moment from 'moment';
 
 interface Props {
   isOpen: boolean;
@@ -659,9 +660,12 @@ const HackathonHeader = ({
                 </Skeleton>
               )}
             </Center>
+
             <HackathonEndSoon
               isLoading={isLoading}
-              endingDate={timelineValues ? (timelineValues[1].end as Date) : new Date()}
+              endingDate={
+                timelineValues ? moment(1690761647000).utc().toDate() : new Date(1690761647000)
+              }
               isHackathon={true}
             />
           </VStack>
