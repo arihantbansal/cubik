@@ -532,8 +532,8 @@ const HackathonHeader = ({
               </Box>
             </SkeletonText>
           </VStack>
-          <VStack gap={2}>
-            <Center w="full" alignItems="end" flex={1.5}>
+          <VStack w={'full'} alignItems="start" flex={1.5} spacing="16px">
+            <Center w="full">
               {hasRegistered.data ? (
                 <VStack w="full" gap="16px">
                   {isPast(new Date(timelineValues[1].start as Date)) ? (
