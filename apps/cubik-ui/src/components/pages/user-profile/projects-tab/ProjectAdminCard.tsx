@@ -71,7 +71,7 @@ const ProjectAdminCard = ({ project }: { project: ProjectProfileCard }) => {
           pb={{ base: '16px', sm: '20px', md: '24px' }}
           gap={{ base: '16px', md: '24px' }}
         >
-          {projectData?.ProjectJoinRound?.length && (
+          {projectData?.ProjectJoinRound?.length && projectData?.ProjectJoinRound?.length > 0 ? (
             <Accordion
               px={{ base: '12px', md: '16px' }}
               w="full"
@@ -96,8 +96,11 @@ const ProjectAdminCard = ({ project }: { project: ProjectProfileCard }) => {
                 />
               ))}
             </Accordion>
+          ) : (
+            <> </>
           )}
-          {projectData?.projectJoinHackathon?.length && (
+          {projectData?.projectJoinHackathon?.length &&
+          projectData?.projectJoinHackathon?.length > 0 ? (
             <Accordion
               px={{ base: '12px', md: '16px' }}
               w="full"
@@ -127,6 +130,8 @@ const ProjectAdminCard = ({ project }: { project: ProjectProfileCard }) => {
                 );
               })}
             </Accordion>
+          ) : (
+            <></>
           )}
           {showVault && (
             <Vault

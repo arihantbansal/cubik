@@ -20,13 +20,7 @@ import {
 } from '@cubik/database';
 import Link from 'next/link';
 import { Key } from 'react';
-import {
-  FaDiscord,
-  FaGithub,
-  FaTelegramPlane,
-  FaTwitter,
-  FaYoutube,
-} from 'react-icons/fa';
+import { FaDiscord, FaGithub, FaTelegramPlane, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { HiLink } from 'react-icons/hi';
 import { WalletAddress } from '~/components/common/wallet/WalletAdd';
 import ComponentErrors from '~/components/errors/ComponentErrors';
