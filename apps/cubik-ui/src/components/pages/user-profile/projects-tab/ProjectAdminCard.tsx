@@ -66,63 +66,68 @@ const ProjectAdminCard = ({ project }: { project: ProjectProfileCard }) => {
       )}
       <Skeleton isLoaded={!isLoading} fadeDuration={2.5} opacity={isLoading ? 0.5 : 1} w="full">
         <CardBody
+          pt="0"
           display={projectData ? 'flex' : 'none'}
           pb={{ base: '16px', sm: '20px', md: '24px' }}
           gap={{ base: '16px', md: '24px' }}
         >
-          <Accordion
-            px={{ base: '12px', md: '16px' }}
-            w="full"
-            display={'flex'}
-            flexDir={'column'}
-            gap={{ base: '16px', md: '24px' }}
-            allowMultiple
-            allowToggle
-            variant={'unstyled'}
-          >
-            {projectData?.ProjectJoinRound.map(round => (
-              <AdminProjectRoundCard
-                isLoading={isLoading}
-                amountRaise={round.amountRaise || 0}
-                endTime={round.fundingRound.endTime}
-                id={round.fundingRound.id}
-                projectId={project.id}
-                key={round.fundingRound.id}
-                roundName={round.fundingRound.roundName}
-                startTime={round.fundingRound.startTime}
-                status={round.status}
-              />
-            ))}
-          </Accordion>
-          <Accordion
-            px={{ base: '12px', md: '16px' }}
-            w="full"
-            display={'flex'}
-            flexDir={'column'}
-            gap={{ base: '16px', md: '24px' }}
-            allowMultiple
-            allowToggle
-            variant={'unstyled'}
-          >
-            {projectData?.projectJoinHackathon.map(hackathon => {
-              const timeline = (hackathon.hackathon.timeline as unknown as HackathonSchedule).sort(
-                (a, b) => a.index - b.index,
-              );
-              return (
-                <AdminProjectHackathonCard
+          {projectData?.ProjectJoinRound?.length && (
+            <Accordion
+              px={{ base: '12px', md: '16px' }}
+              w="full"
+              display={'flex'}
+              flexDir={'column'}
+              gap={{ base: '16px', md: '24px' }}
+              allowMultiple
+              allowToggle
+              variant={'unstyled'}
+            >
+              {projectData?.ProjectJoinRound.map(round => (
+                <AdminProjectRoundCard
                   isLoading={isLoading}
-                  amountRaise={hackathon.amount || 0}
-                  endTime={timeline[1].end as Date}
-                  id={hackathon.hackathon.name}
+                  amountRaise={round.amountRaise || 0}
+                  endTime={round.fundingRound.endTime}
+                  id={round.fundingRound.id}
                   projectId={project.id}
-                  key={hackathon.hackathon.name}
-                  hackathonName={hackathon.hackathon.name}
-                  startTime={timeline[1].start as Date}
-                  status={'APPROVED'}
+                  key={round.fundingRound.id}
+                  roundName={round.fundingRound.roundName}
+                  startTime={round.fundingRound.startTime}
+                  status={round.status}
                 />
-              );
-            })}
-          </Accordion>
+              ))}
+            </Accordion>
+          )}
+          {projectData?.projectJoinHackathon?.length && (
+            <Accordion
+              px={{ base: '12px', md: '16px' }}
+              w="full"
+              display={'flex'}
+              flexDir={'column'}
+              gap={{ base: '16px', md: '24px' }}
+              allowMultiple
+              allowToggle
+              variant={'unstyled'}
+            >
+              {projectData?.projectJoinHackathon.map(hackathon => {
+                const timeline = (
+                  hackathon.hackathon.timeline as unknown as HackathonSchedule
+                ).sort((a, b) => a.index - b.index);
+                return (
+                  <AdminProjectHackathonCard
+                    isLoading={isLoading}
+                    amountRaise={hackathon.amount || 0}
+                    endTime={timeline[1].end as Date}
+                    id={hackathon.hackathon.name}
+                    projectId={project.id}
+                    key={hackathon.hackathon.name}
+                    hackathonName={hackathon.hackathon.name}
+                    startTime={timeline[1].start as Date}
+                    status={'APPROVED'}
+                  />
+                );
+              })}
+            </Accordion>
+          )}
           {showVault && (
             <Vault
               isLoading={isLoading}

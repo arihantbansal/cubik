@@ -30,11 +30,7 @@ const ProjectVerificationStatusBanner = ({
           boxShadow="0px 4px 20px rgba(0, 0, 0, 0.4)"
         >
           <HStack w="fit-content" rounded="full" p="6px 10px" bg="#110F0A">
-            <Box
-              as={TbListSearch}
-              color="#FFE747"
-              boxSize={['10px', '12px', '13px', '14px']}
-            />
+            <Box as={TbListSearch} color="#FFE747" boxSize={['10px', '12px', '13px', '14px']} />
             <Box
               as="p"
               noOfLines={1}
@@ -73,11 +69,7 @@ const ProjectVerificationStatusBanner = ({
           backgroundColor={'#1C7CEB08'}
         >
           <HStack w="fit-content" rounded="full" p="6px 10px" bg="#1C7CEB">
-            <Box
-              as={MdVerified}
-              color="#fff"
-              boxSize={['10px', '12px', '13px', '14px']}
-            />
+            <Box as={MdVerified} color="#fff" boxSize={['10px', '12px', '13px', '14px']} />
             <Box
               as="p"
               noOfLines={1}
@@ -96,15 +88,15 @@ const ProjectVerificationStatusBanner = ({
               textStyle={{ base: 'body6', md: 'body5' }}
               color="surface.blue.1"
             >
-              Your project has successfully passed Cubik verification process.
-              You can now submit in a{' '}
+              Your project has successfully passed Cubik verification process. You can now submit in
+              a{' '}
               <Link href="/grants" style={{ textDecoration: 'underline' }}>
                 <b>grants round</b>
               </Link>{' '}
-              {/* or a{' '}
-                <Link href="/hackathons" style={{ textDecoration: 'underline' }}>
-                  <b>hackathon</b>
-                </Link> */}{' '}
+              or a{' '}
+              <Link href="/hackathons" style={{ textDecoration: 'underline' }}>
+                <b>hackathon</b>
+              </Link>
             </Box>{' '}
             <InfoPopover />
           </HStack>
@@ -125,11 +117,7 @@ const ProjectVerificationStatusBanner = ({
           backgroundColor={'#140001'}
         >
           <HStack w="fit-content" rounded="full" p="6px 10px" bg="#660005">
-            <Box
-              as={AiOutlineWarning}
-              color="#FFCAC2"
-              boxSize={['10px', '12px', '13px', '14px']}
-            />
+            <Box as={AiOutlineWarning} color="#FFCAC2" boxSize={['10px', '12px', '13px', '14px']} />
             <Box
               as="p"
               noOfLines={1}

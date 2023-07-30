@@ -25,7 +25,7 @@ export const UserPageLayout = (props: Props) => {
           profilePicture={props.profilePicture}
           username={router.query.username as string}
         />
-        <HStack gap={5} my={5}>
+        <HStack py="1rem" gap={5} my={5}>
           <Box
             borderBottom={router.asPath === `/${router.query.username}` ? '2px solid' : 0}
             p={2}

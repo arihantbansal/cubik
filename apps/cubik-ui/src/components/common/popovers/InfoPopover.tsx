@@ -21,19 +21,15 @@ export const AmountReceivedPopover = () => {
         </PopoverTrigger>
         <PopoverContent>
           <PopoverHeader>
-            <Box
-              as="p"
-              textStyle={{ base: 'title5', md: 'title4' }}
-              color="white"
-            >
+            <Box as="p" textStyle={{ base: 'title5', md: 'title4' }} color="white">
               Amount Received
             </Box>
           </PopoverHeader>
           <PopoverBody>
             <Box as="p" textStyle={{ base: 'body6', md: 'title7' }}>
-              The final sum that a project receives will consist of an estimated
-              match from the shared pool ( based on your contribution ) + the
-              original contribution amount you will contribute.
+              The final sum that a project receives will consist of an estimated match from the
+              shared pool ( based on your contribution ) + the original contribution amount you will
+              contribute.
             </Box>
           </PopoverBody>
         </PopoverContent>
@@ -52,20 +48,15 @@ export const CubikMatchingPoolDonationPopover = () => {
         </PopoverTrigger>
         <PopoverContent>
           <PopoverHeader>
-            <Box
-              as="p"
-              textStyle={{ base: 'title5', md: 'title4' }}
-              color="white"
-            >
+            <Box as="p" textStyle={{ base: 'title5', md: 'title4' }} color="white">
               Cubik Matching Pool
             </Box>
           </PopoverHeader>
           <PopoverBody>
             <Box as="p" textStyle={{ base: 'body6', md: 'title7' }}>
-              Cubik Matching Pool serves as the reservoir that multiplies the
-              impact of community donations in each funding round. This
-              percentage is the amount from your contribution that will be
-              allocated to matching grants in upcoming rounds.
+              Cubik Matching Pool serves as the reservoir that multiplies the impact of community
+              donations in each funding round. This percentage is the amount from your contribution
+              that will be allocated to matching grants in upcoming rounds.
             </Box>
           </PopoverBody>
         </PopoverContent>
@@ -84,25 +75,14 @@ export const InfoPopover = () => {
         </PopoverTrigger>
         <PopoverContent>
           <PopoverHeader>
-            <Box
-              as="p"
-              textStyle={{ base: 'title5', md: 'title4' }}
-              color="white"
-            >
+            <Box as="p" textStyle={{ base: 'title5', md: 'title4' }} color="white">
               Verified Projects
             </Box>
           </PopoverHeader>
           <PopoverBody>
             <Box as="p" textStyle={{ base: 'body6', md: 'body5' }}>
-              You are now eligible for
-              <Link href={'/grants'}>
-                <Box color="#FFD83D">grant round</Box>
-              </Link>
-              and hackathons. Make the most of
-              <Link href={'/qf'}>
-                <Box color="#A8F0E6">Quadratic Funding</Box>
-              </Link>
-              to optimize your fundraising efforts.
+              Verified Projects eligible for participating in any Quadratic Funding resource
+              distribution event.
             </Box>
           </PopoverBody>
         </PopoverContent>
