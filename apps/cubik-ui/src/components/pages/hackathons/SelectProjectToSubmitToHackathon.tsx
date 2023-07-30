@@ -148,7 +148,7 @@ const SelectProjectToSubmitToHackathon = ({
         hackathonId: hackathonId as string,
         projectId: selectedProject as string,
         tx: sig,
-        tracks: getValues('tracks'),
+        tracks: getValues('tracks') || [],
         mainTracks: getValues('mainTrack') || 'fully_on_chain_game',
       });
     } catch (error) {
