@@ -34,6 +34,7 @@ import { isPast } from 'date-fns';
 import SelectProjectToSubmitToHackathon from '../SelectProjectToSubmitToHackathon';
 import { HackathonTracks } from '~/types/hackathon';
 import HackathonStatus from '../HackathonStatus';
+import { HackathonEndSoon } from '~/components/common/donationCTA/DonationCTA';
 
 interface Props {
   isOpen: boolean;
@@ -531,44 +532,102 @@ const HackathonHeader = ({
               </Box>
             </SkeletonText>
           </VStack>
-          {/* <Button onClick={hackathonInit}>Init</Button> */}
-          <Center w="full" alignItems="end" flex={1.5}>
-            {hasRegistered.data ? (
-              <VStack w="full" gap="16px">
-                {isPast(new Date(timelineValues[1].start as Date)) ? (
-                  <Skeleton
-                    isLoaded={!isLoading}
-                    fadeDuration={1}
-                    borderRadius={'12px'}
-                    opacity={isLoading ? '0.5' : '1'}
-                    w="full"
-                  >
-                    <Button
-                      variant="cubikFilled"
-                      size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+          <VStack gap={2}>
+            <Center w="full" alignItems="end" flex={1.5}>
+              {hasRegistered.data ? (
+                <VStack w="full" gap="16px">
+                  {isPast(new Date(timelineValues[1].start as Date)) ? (
+                    <Skeleton
+                      isLoaded={!isLoading}
+                      fadeDuration={1}
+                      borderRadius={'12px'}
+                      opacity={isLoading ? '0.5' : '1'}
                       w="full"
-                      isLoading={loading}
-                      disabled={!hasSubmitted ? false : true}
-                      isDisabled={!hasSubmitted ? false : true}
-                      onClick={() => {
-                        if (!connected) {
-                          setVisible(true);
-                          return;
-                        }
-                        submitForHackathonOnOpen();
-                      }}
                     >
-                      {hasSubmitted ? 'Submitted' : 'Submit Project'}
-                    </Button>
-                  </Skeleton>
-                ) : (
-                  <Skeleton
-                    isLoaded={!isLoading}
-                    fadeDuration={1}
-                    borderRadius={'12px'}
-                    opacity={isLoading ? '0.5' : '1'}
-                    w="full"
-                  >
+                      <Button
+                        variant="cubikFilled"
+                        size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+                        w="full"
+                        isLoading={loading}
+                        disabled={!hasSubmitted ? false : true}
+                        isDisabled={!hasSubmitted ? false : true}
+                        onClick={() => {
+                          if (!connected) {
+                            setVisible(true);
+                            return;
+                          }
+                          submitForHackathonOnOpen();
+                        }}
+                      >
+                        {hasSubmitted ? 'Submitted' : 'Submit Project'}
+                      </Button>
+                    </Skeleton>
+                  ) : (
+                    <Skeleton
+                      isLoaded={!isLoading}
+                      fadeDuration={1}
+                      borderRadius={'12px'}
+                      opacity={isLoading ? '0.5' : '1'}
+                      w="full"
+                    >
+                      <Button
+                        variant="cubikFilled"
+                        size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+                        w="full"
+                        isLoading={loading}
+                        disabled={!hasRegistered.data ? false : true}
+                        isDisabled={!hasRegistered.data ? false : true}
+                        onClick={async () => {
+                          if (!connected) {
+                            setVisible(true);
+                            return;
+                          }
+                          const sig = await CreateParticipant();
+                          if (!sig) return;
+                          registrationMutation.mutate({
+                            hackathonId: hackathonId,
+                          });
+                        }}
+                      >
+                        {hasRegistered.data ? 'Registered' : 'Register'}
+                      </Button>
+                    </Skeleton>
+                  )}
+                  {!minted && (
+                    <Skeleton
+                      isLoaded={!isLoading}
+                      fadeDuration={1}
+                      borderRadius={'12px'}
+                      opacity={isLoading ? '0.5' : '1'}
+                      w="full"
+                    >
+                      <Button
+                        variant="cubikFilled"
+                        size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+                        w="full"
+                        isLoading={loading}
+                        onClick={async () => {
+                          if (!connected) {
+                            setVisible(true);
+                            return;
+                          }
+                          const sig = await CreateParticipant();
+                        }}
+                      >
+                        Mint Hackathon Pass
+                      </Button>
+                    </Skeleton>
+                  )}
+                </VStack>
+              ) : (
+                <Skeleton
+                  isLoaded={!isLoading}
+                  fadeDuration={1}
+                  borderRadius={'12px'}
+                  opacity={isLoading ? '0.5' : '1'}
+                  w="full"
+                >
+                  {
                     <Button
                       variant="cubikFilled"
                       size={{ base: 'cubikSmall', md: 'cubikMedium' }}
@@ -577,6 +636,12 @@ const HackathonHeader = ({
                       disabled={!hasRegistered.data ? false : true}
                       isDisabled={!hasRegistered.data ? false : true}
                       onClick={async () => {
+                        // console.log('click on register');
+
+                        if (minted) {
+                          return;
+                        }
+
                         if (!connected) {
                           setVisible(true);
                           return;
@@ -590,74 +655,16 @@ const HackathonHeader = ({
                     >
                       {hasRegistered.data ? 'Registered' : 'Register'}
                     </Button>
-                  </Skeleton>
-                )}
-                {!minted && (
-                  <Skeleton
-                    isLoaded={!isLoading}
-                    fadeDuration={1}
-                    borderRadius={'12px'}
-                    opacity={isLoading ? '0.5' : '1'}
-                    w="full"
-                  >
-                    <Button
-                      variant="cubikFilled"
-                      size={{ base: 'cubikSmall', md: 'cubikMedium' }}
-                      w="full"
-                      isLoading={loading}
-                      onClick={async () => {
-                        if (!connected) {
-                          setVisible(true);
-                          return;
-                        }
-                        const sig = await CreateParticipant();
-                      }}
-                    >
-                      Mint Hackathon Pass
-                    </Button>
-                  </Skeleton>
-                )}
-              </VStack>
-            ) : (
-              <Skeleton
-                isLoaded={!isLoading}
-                fadeDuration={1}
-                borderRadius={'12px'}
-                opacity={isLoading ? '0.5' : '1'}
-                w="full"
-              >
-                {
-                  <Button
-                    variant="cubikFilled"
-                    size={{ base: 'cubikSmall', md: 'cubikMedium' }}
-                    w="full"
-                    isLoading={loading}
-                    disabled={!hasRegistered.data ? false : true}
-                    isDisabled={!hasRegistered.data ? false : true}
-                    onClick={async () => {
-                      // console.log('click on register');
-
-                      if (minted) {
-                        return;
-                      }
-
-                      if (!connected) {
-                        setVisible(true);
-                        return;
-                      }
-                      const sig = await CreateParticipant();
-                      if (!sig) return;
-                      registrationMutation.mutate({
-                        hackathonId: hackathonId,
-                      });
-                    }}
-                  >
-                    {hasRegistered.data ? 'Registered' : 'Register'}
-                  </Button>
-                }
-              </Skeleton>
-            )}
-          </Center>
+                  }
+                </Skeleton>
+              )}
+            </Center>
+            <HackathonEndSoon
+              isLoading={isLoading}
+              endingDate={timelineValues ? (timelineValues[1].end as Date) : new Date()}
+              isHackathon={true}
+            />
+          </VStack>
         </Stack>
       </VStack>
       <SelectProjectToSubmitToHackathon

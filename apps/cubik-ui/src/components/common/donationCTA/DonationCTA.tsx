@@ -108,3 +108,33 @@ export const RoundStartingSoon = ({
     </Skeleton>
   );
 };
+export const HackathonEndSoon = ({
+  endingDate,
+  isLoading,
+  isHackathon = false,
+}: {
+  endingDate: Date;
+  isLoading: boolean;
+  isHackathon?: boolean;
+}) => {
+  return (
+    <Skeleton opacity={isLoading ? '0.5' : 1} fadeDuration={2} isLoaded={!isLoading} w="full">
+      <HStack p="16px" rounded="12px" gap="12px" bg="#31F57910">
+        <Center p="8px" bg="#071A0F" rounded="full">
+          <Player
+            autoplay
+            loop={true}
+            src={'https://assets7.lottiefiles.com/packages/lf20_4htoEB.json'}
+            style={{ height: `24px`, width: `24px` }}
+          />
+        </Center>
+        <Box as={'p'} textStyle={'body5'} color="white" textAlign={'start'}>
+          Submission ends in{'  '}
+          <Box as="span" display={'inline-block'}>
+            {CountdownTimer({ date: new Date(endingDate) })}
+          </Box>{' '}
+        </Box>
+      </HStack>
+    </Skeleton>
+  );
+};
