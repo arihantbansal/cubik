@@ -94,7 +94,7 @@ const HackathonInteractions = (props: HackathonInteractionsProps) => {
             <HStack w="full" align={'start'}>
               <VStack align={'start'} gap="8px">
                 <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
-                  ${props.prizePool}
+                  $25,000
                 </Box>
               </VStack>
               <Center
