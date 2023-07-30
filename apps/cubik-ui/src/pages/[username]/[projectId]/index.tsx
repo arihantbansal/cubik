@@ -49,7 +49,8 @@ const ProjectDetails = ({
             alignItems={'start'}
             justifyContent={'start'}
           >
-            {/* <ProjectDetailsAndTabs
+            <ProjectDetailsAndTabs
+              name=""
               projectDetails={{
                 ...data!!,
               }}
@@ -59,7 +60,7 @@ const ProjectDetails = ({
               amountRaise={0}
               contributions={0}
               communityContributions={0}
-            /> */}
+            />
 
             <ProjectInteractions
               projectDetails={data as ProjectsModel}
