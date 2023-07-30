@@ -3,6 +3,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import Link from 'next/link';
 import { CgShapeHexagon } from 'react-icons/cg';
 import { CountdownTimer } from '~/components/pages/projects/project-explorer/header/FundingRoundBanner';
+import moment from 'moment';
 
 export const RoundEndedBanner = ({
   endDate,
@@ -131,7 +132,7 @@ export const HackathonEndSoon = ({
         <Box as={'p'} textStyle={'body5'} color="white" textAlign={'start'}>
           Submission ends in{'  '}
           <Box as="span" display={'inline-block'}>
-            {CountdownTimer({ date: new Date(endingDate) })}
+            {CountdownTimer({ date: moment(endingDate).utc().toDate() })}
           </Box>{' '}
         </Box>
       </HStack>
