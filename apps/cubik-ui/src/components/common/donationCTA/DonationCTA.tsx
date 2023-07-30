@@ -98,7 +98,7 @@ export const RoundStartingSoon = ({
           />
         </Center>
         <Box as={'p'} textStyle={'body5'} color="white" textAlign={'start'}>
-          You can donate to the project once {isHackathon ? 'hackathon' : 'grant round'} starts -{' '}
+          You can donate to the project once {isHackathon ? 'voting' : 'grant round'} starts -{' '}
           <Box as="span" display={'inline-block'}>
             {CountdownTimer({ date: new Date(startDate) })}
           </Box>{' '}
