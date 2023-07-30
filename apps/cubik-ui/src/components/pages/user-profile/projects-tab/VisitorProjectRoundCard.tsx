@@ -24,12 +24,7 @@ const VisitorProjectRoundCard = ({
   const username = router.query.username;
 
   return (
-    <Skeleton
-      isLoaded={!isLoading}
-      fadeDuration={2}
-      opacity={isLoading ? '0.5' : '1'}
-      w="full"
-    >
+    <Skeleton isLoaded={!isLoading} fadeDuration={2} opacity={isLoading ? '0.5' : '1'} w="full">
       <Card
         as={Link}
         href={{
@@ -47,11 +42,7 @@ const VisitorProjectRoundCard = ({
       >
         <CardBody borderRadius="12px" w="full">
           <HStack justify={'space-between'} w="full">
-            <Stack
-              direction={{ base: 'row', md: 'row' }}
-              justify={'space-between'}
-              w="full"
-            >
+            <Stack direction={{ base: 'row', md: 'row' }} justify={'space-between'} w="full">
               <HStack gap="8px">
                 <FundingRoundStatus
                   status={round?.status as string}
@@ -63,7 +54,7 @@ const VisitorProjectRoundCard = ({
                   textStyle={{ base: 'title6', sm: 'title5', md: 'title4' }}
                   color="neutral.11"
                 >
-                  {round?.fundingRound.roundName}
+                  {round?.fundingRound.roundName}{' '}
                 </Box>
               </HStack>
               <RoundStatus

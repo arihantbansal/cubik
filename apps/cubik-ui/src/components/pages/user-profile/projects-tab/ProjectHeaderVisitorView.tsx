@@ -86,7 +86,7 @@ export const ProjectHeaderVisitorView = ({
               variant={'cubikOutlined'}
               size={{ base: 'cubikMini', md: 'cubikSmall' }}
               as={Link}
-              href={projectOwnerName + '/' + project?.id} // todo: adding round id to this route
+              href={'/' + projectOwnerName + '/' + project?.id} // todo: adding round id to this route
             >
               View Details
             </Button>
