@@ -73,6 +73,7 @@ export const projectExplorer = async (req: Request, res: Response) => {
                 username: true,
               },
             },
+            name: true,
             id: true,
             logo: true,
             short_description: true,
@@ -139,11 +140,12 @@ export const projectExplorer = async (req: Request, res: Response) => {
         contributorCount:
           project.fundingRound.Contribution.filter(e => e.projectId === project.project.id).length -
             3 || 0,
-        contributors: project.fundingRound.Contribution.filter(
-          e => e.projectId === project.project.id,
-        ).slice(3),
+        contributors:
+          project.fundingRound.Contribution.filter(e => e.projectId === project.project.id).slice(
+            3,
+          ) || [],
         projectShortDescription: project.project.short_description,
-        ownerName: project.project.owner.username,
+        ownerName: project.project.owner.username as string,
         projectEvent: {
           eventName: 'round',
           color: 'teal',
@@ -164,10 +166,10 @@ export const projectExplorer = async (req: Request, res: Response) => {
         id: project.projectsModel.id,
         logo: project.projectsModel.logo,
         industry: project.projectsModel.industry,
-        title: project.projectsModel.short_description,
+        title: project.projectsModel.name,
         contributorCount: 0,
         contributors: [],
-        ownerName: project.projectsModel.owner.username,
+        ownerName: project.projectsModel.owner.username as string,
         projectShortDescription: project.projectsModel.short_description,
         projectEvent: {
           eventName: 'hackathon',

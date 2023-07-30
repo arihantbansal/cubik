@@ -55,7 +55,7 @@ export interface ProjectExplorerType {
   projectEvent: EventType;
   contributors: {
     user: {
-      profilePicture: string;
+      profilePicture: string | null;
     };
   }[];
 }
