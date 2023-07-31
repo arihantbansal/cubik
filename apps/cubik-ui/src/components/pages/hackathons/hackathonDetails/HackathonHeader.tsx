@@ -538,7 +538,7 @@ const HackathonHeader = ({
           </VStack>
           <VStack w={'full'} alignItems="start" flex={1.5} spacing="16px">
             <Center w="full">
-              {hasRegistered.data ? (
+              {/* {hasRegistered.data ? (
                 <VStack w="full" gap="16px">
                   {isPast(new Date(timelineValues[2].start as Date)) ? (
                     <Skeleton
@@ -656,6 +656,36 @@ const HackathonHeader = ({
                     </Button>
                   }
                 </Skeleton>
+              )} */}
+
+              {hasRegistered.data && (
+                <>
+                  <Skeleton
+                    isLoaded={!isLoading}
+                    fadeDuration={1}
+                    borderRadius={'12px'}
+                    opacity={isLoading ? '0.5' : '1'}
+                    w="full"
+                  >
+                    <Button
+                      variant="cubikFilled"
+                      size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+                      w="full"
+                      isLoading={loading}
+                      disabled={true}
+                      isDisabled={true}
+                      onClick={() => {
+                        if (!connected) {
+                          setVisible(true);
+                          return;
+                        }
+                        submitForHackathonOnOpen();
+                      }}
+                    >
+                      {hasSubmitted ? 'Submitted' : 'Submit Project'}
+                    </Button>
+                  </Skeleton>
+                </>
               )}
             </Center>
             {timeline && moment(new Date(timeline[1].end!)) > moment(new Date()) && (

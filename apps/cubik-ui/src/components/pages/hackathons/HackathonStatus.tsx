@@ -231,7 +231,7 @@ const HackathonStatus = ({ show, timeline }: HackathonStatusProps) => {
   //       </HStack>
   //     );
   //   }
-  return <>dd</>;
+  return <></>;
 };
 
 export default HackathonStatus;
