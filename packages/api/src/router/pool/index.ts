@@ -1,7 +1,7 @@
 import { Prisma } from '@cubik/database';
 import { createTRPCRouter, publicProcedure } from '../../trpc';
 import { z } from 'zod';
-import { qfV1, qfEstimated } from '../../utils/qf';
+import { qfV1, qfEstimated, HackathonAllType, qfEstimatedHackathon } from '../../utils/qf';
 type RoundAllType = Prisma.RoundGetPayload<{
   include: {
     Contribution: {
@@ -18,7 +18,7 @@ export const poolRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string().nonempty(),
-      })
+      }),
     )
     .query(async ({ input, ctx: { prisma } }) => {
       const res = await prisma.round.findFirst({
@@ -40,7 +40,7 @@ export const poolRouter = createTRPCRouter({
       });
       if (!res) return null;
       const filterdContributions = res.Contribution.filter(
-        (element) => element.ProjectsModel.isArchive === false
+        element => element.ProjectsModel.isArchive === false,
       );
       const filterdProjectJoinRound: RoundAllType = {
         ...res,
@@ -57,20 +57,20 @@ export const poolRouter = createTRPCRouter({
         projectId: z.string().nonempty(),
         roundId: z.string().nonempty(),
         amount: z.number(),
-      })
+      }),
     )
     .query(async ({ input, ctx: { prisma } }) => {
-      const res = await prisma.round.findFirst({
+      const res = await prisma.hackathon.findFirst({
         where: {
           id: input.roundId,
         },
         include: {
-          Contribution: {
+          contribution: {
             include: {
               ProjectsModel: true,
             },
           },
-          ProjectJoinRound: {
+          projectJoinHackathon: {
             where: {
               isArchive: false,
             },
@@ -78,18 +78,14 @@ export const poolRouter = createTRPCRouter({
         },
       });
       if (!res) return null;
-      const filterdContributions = res.Contribution.filter(
-        (element) => element.ProjectsModel.isArchive === false
+      const filterdContributions = res.contribution.filter(
+        element => element.ProjectsModel.isArchive === false,
       );
-      const filterdProjectJoinRound: RoundAllType = {
+      const filterdProjectJoinRound: HackathonAllType = {
         ...res,
-        Contribution: filterdContributions,
+        contribution: filterdContributions,
       };
-      const amount = qfEstimated(
-        filterdProjectJoinRound,
-        input.projectId,
-        input.amount
-      );
+      const amount = qfEstimatedHackathon(filterdProjectJoinRound, input.projectId, input.amount);
 
       return amount;
     }),

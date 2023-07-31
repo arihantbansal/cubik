@@ -88,16 +88,20 @@ const HackathonJoinPage = ({ id }: Props) => {
             joinId={id}
             isLoading={isLoading}
             amountRaise={data?.amount || 0}
-            contributions={0}
-            communityContributions={0}
+            contributions={data?.projectsModel.Contribution.length || 0}
+            communityContributions={
+              data?.projectsModel.Contribution.reduce((a, b) => a + b.usdTotal, 0) || 0
+            }
           />
 
           <ProjectInteractions
             hackathonId={data?.hackathon.id as string}
             timeline={(data?.hackathon.timeline as unknown as HackathonSchedule) || []}
             hackathonJoinId={id}
-            communityContributions={0} // update this
-            contributors={0} // update this
+            communityContributions={
+              data?.projectsModel.Contribution.reduce((a, b) => a + b.usdTotal, 0) || 0
+            }
+            contributors={data?.projectsModel.Contribution.length || 0}
             funding={data?.amount ?? 0}
             isLoading={isLoading}
             project={data?.projectsModel as ProjectsModel}

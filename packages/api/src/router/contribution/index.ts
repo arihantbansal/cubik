@@ -5,8 +5,8 @@ import {
 } from '../../trpc';
 import { z } from 'zod';
 import { v4 as uuid } from 'uuid';
-import { qfV1 } from '../../utils/qf';
-import { Prisma, ProjectJoinRound } from '@cubik/database';
+import { qfV1, qfV1Hackathon } from '../../utils/qf';
+import { Prisma, ProjectJoinHackathons, ProjectJoinRound } from '@cubik/database';
 export const contributionRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
@@ -80,6 +80,44 @@ export const contributionRouter = createTRPCRouter({
       }
     }),
 
+  createHackathon: protectedProcedure
+    .input(
+      z.object({
+        token: z.string().nonempty(),
+        projectId: z.string().nonempty(),
+        tx: z.string().nonempty(),
+        totalAmount: z.number(),
+        usd: z.number().positive(),
+        hackathonId: z.string().nonempty(),
+      }),
+    )
+    .mutation(async ({ input, ctx: { prisma, session } }) => {
+      try {
+        const hackathon = await prisma.contribution.create({
+          data: {
+            id: uuid(),
+            token: input.token,
+            split: 0,
+            currentTotal: input.totalAmount,
+            currentusdTotal: input.usd,
+            usdTotal: input.usd,
+            total: input.totalAmount,
+            count: 0,
+            tx: input.tx,
+            userId: session.user.id,
+            projectId: input.projectId,
+            isLatest: true,
+            hackathonId: input.hackathonId,
+          },
+        });
+
+        return hackathon;
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+    }),
+
   updateProjectRaise: protectedProcedure
     .input(
       z.object({
@@ -89,17 +127,13 @@ export const contributionRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input, ctx: { prisma } }) => {
-      const res = await prisma.round.findUnique({
+      const res = await prisma.hackathon.findUnique({
         where: {
           id: input.roundId,
         },
         include: {
-          Contribution: {
-            include: {
-              ProjectsModel: true,
-            },
-          },
-          ProjectJoinRound: {
+          contribution: true,
+          projectJoinHackathon: {
             where: {
               isArchive: false,
             },
@@ -107,22 +141,22 @@ export const contributionRouter = createTRPCRouter({
         },
       });
       if (!res) return null;
-      const qf = qfV1(res);
+      const qf = qfV1Hackathon(res);
 
-      const allProjects = await prisma.projectJoinRound.findMany({
+      const allProjects = await prisma.projectJoinHackathons.findMany({
         where: {
-          roundId: input.roundId,
           isArchive: false,
+          hackathonId: input.roundId,
         },
       });
-      const updatePromise: Prisma.Prisma__ProjectJoinRoundClient<ProjectJoinRound, never>[] = [];
+      const updatePromise: Prisma.Prisma__ProjectJoinHackathonsClient<ProjectJoinHackathons>[] = [];
       allProjects.forEach(async e => {
-        const a = prisma.projectJoinRound.update({
+        const a = prisma.projectJoinHackathons.update({
           where: {
             id: e.id,
           },
           data: {
-            amountRaise: qf.find(el => el.projectId === e.projectId)?.amount ?? 0,
+            amount: qf.find(el => el.projectId === e.projectId)?.amount ?? 0,
           },
         });
         updatePromise.push(a);
@@ -162,6 +196,7 @@ export const contributionRouter = createTRPCRouter({
         });
         return contributions;
       } else if (input.hackthonId) {
+        console.log(input.hackthonId, '----');
         const contributions = await prisma.contribution.findMany({
           where: {
             projectId: input.projectId,
@@ -181,6 +216,7 @@ export const contributionRouter = createTRPCRouter({
             user: true,
           },
         });
+
         return contributions;
       } else {
         return [];

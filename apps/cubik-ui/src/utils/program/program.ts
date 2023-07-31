@@ -866,11 +866,6 @@ export interface CubikContractV2 {
           isSigner: false;
         },
         {
-          name: 'roundAccount';
-          isMut: true;
-          isSigner: false;
-        },
-        {
           name: 'projectAccount';
           isMut: true;
           isSigner: false;
@@ -2224,11 +2219,6 @@ export const IDL: CubikContractV2 = {
         },
         {
           name: 'adminAccount',
-          isMut: true,
-          isSigner: false,
-        },
-        {
-          name: 'roundAccount',
           isMut: true,
           isSigner: false,
         },

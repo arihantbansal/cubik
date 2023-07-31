@@ -15,10 +15,10 @@ import {
 } from '@chakra-ui/modal';
 import { Skeleton } from '@chakra-ui/skeleton';
 import { BsTwitter } from 'react-icons/bs';
-import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
 import { ProjectsModel } from '@prisma/client';
 import { MdArrowForward } from 'react-icons/md';
 import { IconProps } from '@chakra-ui/react';
+import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
 
 const AnimatedArrowIcon = (props: IconProps & { animate: boolean }) => {
   const transition = 'all 0.2s ease-in-out';
@@ -283,15 +283,15 @@ export const ProjectCTAs = (props: Props) => {
             </ModalHeader>
             <ModalCloseButton top="24px" />
             <ModalBody>
-              {/* {projectDetails && (
+              {props.project && (
                 <PaymentModalBody
-                  projectJoinRoundId={projectJoinRoundId as string}
-                  roundId={roundId as string}
-                  roundName={roundName}
+                  projectJoinRoundId={props.hackathonJoinId as string}
+                  roundId={props.hackathonId as string}
+                  name={'Speedrun'}
                   setDonationSuccessful={setDonationSuccessful}
-                  projectDetails={projectDetails}
+                  projectDetails={props.project}
                 />
-              )} */}
+              )}
             </ModalBody>
           </ModalContent>
         )}

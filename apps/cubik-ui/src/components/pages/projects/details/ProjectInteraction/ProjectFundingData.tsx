@@ -174,7 +174,7 @@ export const ProjectFundingData = ({
           </HStack>
         </VStack>
       </Skeleton>
-      <Skeleton isLoaded={!isLoading} fadeDuration={2.5} opacity={isLoading ? 0.3 : 1} w="full">
+      {/* <Skeleton isLoaded={!isLoading} fadeDuration={2.5} opacity={isLoading ? 0.3 : 1} w="full">
         <VStack
           border="1px solid"
           borderColor={'surface.blue.3'}
@@ -232,7 +232,7 @@ export const ProjectFundingData = ({
             </Center>
           </HStack>
         </VStack>
-      </Skeleton>
+      </Skeleton> */}
     </VStack>
   );
 };

@@ -75,7 +75,7 @@ export const ProjectsTabs = ({
         <TabPanel overflowX="scroll">
           {projectDetails?.id && (
             <ProjectContributors
-              isHackathon={isHackathon}
+              isHackathon={true}
               roundId={roundId}
               projectId={projectDetails?.id}
               isLoading={isLoading}

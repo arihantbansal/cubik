@@ -718,16 +718,11 @@ export const createContributionV2 = async (
     const program = anchorProgram(wallet);
 
     const tokenMint = new anchor.web3.PublicKey(token);
-
     const [adminAccount] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from('admin')],
       program.programId,
     );
 
-    const [round_account] = anchor.web3.PublicKey.findProgramAddressSync(
-      [Buffer.from('round'), Buffer.from(roundId)],
-      program.programId,
-    );
     let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
       [
         anchor.utils.bytes.utf8.encode('project'),
@@ -736,7 +731,6 @@ export const createContributionV2 = async (
       ],
       program.programId,
     );
-
     let [contributionV2Account] = anchor.web3.PublicKey.findProgramAddressSync(
       [
         anchor.utils.bytes.utf8.encode('contribution'),
@@ -767,10 +761,30 @@ export const createContributionV2 = async (
     const ata_reciver = await spl.getAssociatedTokenAddress(
       tokenMint,
       projectInfo.multiSig,
-      false,
+      true,
       spl.TOKEN_PROGRAM_ID,
       spl.ASSOCIATED_TOKEN_PROGRAM_ID,
     );
+    const info = await connection.getAccountInfo(ata_reciver);
+    const info2 = await connection.getAccountInfo(ata_reciver);
+    let tokenAccountIx: anchor.web3.TransactionInstruction | null = null;
+    let tokenAccountIx2: anchor.web3.TransactionInstruction | null = null;
+    if (!info) {
+      tokenAccountIx = spl.createAssociatedTokenAccountInstruction(
+        wallet.publicKey,
+        ata_reciver,
+        projectInfo.multiSig,
+        tokenMint,
+      );
+    }
+    if (!info2) {
+      tokenAccountIx2 = spl.createAssociatedTokenAccountInstruction(
+        wallet.publicKey,
+        ata_admin,
+        adminInfo.authority,
+        tokenMint,
+      );
+    }
     //
     const ix = await program.methods
       .createContributionV2(
@@ -784,7 +798,6 @@ export const createContributionV2 = async (
       .accounts({
         adminAccount: adminAccount,
         projectAccount: project_account,
-        roundAccount: round_account,
         contributionAccount: contributionV2Account,
         tokenProgram: spl.TOKEN_PROGRAM_ID,
         tokenMint: tokenMint,
@@ -795,9 +808,9 @@ export const createContributionV2 = async (
       })
       .instruction();
 
-    return ix;
+    return [ix, tokenAccountIx, tokenAccountIx2];
   } catch (error) {
     console.log(error);
-    return null;
+    return [null, null, null];
   }
 };

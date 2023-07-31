@@ -24,18 +24,26 @@ import { tokens } from '~/components/common/tokens/DonationTokens';
 import { DonationFormType } from '~/interfaces/donationForm';
 import { tokenGroup } from '~/interfaces/token';
 import { useUserStore } from '~/store/userStore';
+import { TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import {
   AmountReceivedPopover,
   CubikMatchingPoolDonationPopover,
 } from '~/components/common/popovers/InfoPopover';
 import { ProjectsModel } from '@cubik/database';
-import { LAMPORTS_PER_SOL } from '@solana/web3.js';
+import {
+  AddressLookupTableAccount,
+  LAMPORTS_PER_SOL,
+  sendAndConfirmTransaction,
+  TransactionMessage,
+  VersionedTransaction,
+} from '@solana/web3.js';
 import axios from 'axios';
 import useCurrentTokenPrice from '~/hooks/useCurrentTokenPrice';
 import {
   connection,
   contributeSOL,
   contributeSPL,
+  createContributionV2,
 } from '~/utils/program/contract';
 import { trpc } from '~/utils/trpc';
 import { AmountInput } from './form/DonationAmountInput';
@@ -90,8 +98,6 @@ export const ProjectDonationSimulator = ({
       setValue('amount', donation * 22);
     } else if (selectedToken.label === 'usdc') {
       setValue('amount', donation);
-    } else if (selectedToken.label === 'bonk') {
-      setValue('amount', donation * 0.00000005);
     } else {
       setValue('amount', 0);
     }
@@ -100,7 +106,7 @@ export const ProjectDonationSimulator = ({
   const utils = trpc.useContext();
   const updateProjectRaise = trpc.contribution.updateProjectRaise.useMutation();
 
-  const createContributionMutation = trpc.contribution.create.useMutation({
+  const createContributionMutation = trpc.contribution.createHackathon.useMutation({
     onSuccess: async (data: any) => {
       setDonationSuccessful(true);
 
@@ -126,7 +132,9 @@ export const ProjectDonationSimulator = ({
     return data;
   };
   const anchorWallet = useAnchorWallet();
+
   const priceSol = price![0].price;
+
   async function onSubmit(_values: any) {
     if (!price![0]?.price) return;
 
@@ -137,70 +145,86 @@ export const ProjectDonationSimulator = ({
       return setTxnError('Insufficient balance');
     }
     if (String(_values.token.value).includes('sol')) {
-      sig = await donateSOL(
-        name as string,
-        projectDetails?.owner_publickey,
-        projectDetails?.projectUserCount,
-        _values.matchingPoolDonation,
-        _values.amount,
-        _values.amount * priceSol, // multiply by 100 because of 2 decimal places
-      );
+      return;
+      // sig = await donateSOL(
+      //   name as string,
+      //   projectDetails?.owner_publickey,
+      //   projectDetails?.projectUserCount,
+      //   _values.matchingPoolDonation,
+      //   _values.amount,
+      //   _values.amount * priceSol, // multiply by 100 because of 2 decimal places
+      // );
+      // if (!sig) return;
+      // createContributionMutation.mutate({
+      //   projectId: projectDetails.id,
+      //   token: _values.token.value,
+      //   totalAmount: _values.amount,
+      //   tx: sig as string,
+      //   usd: _values.amount * priceSol,
+      //   hackathonId: roundId,
+      // });
     } else {
       sig = await donateSPL(
-        name as string,
-        '',
-        projectDetails?.owner_publickey,
-        projectDetails?.projectUserCount,
-        _values.matchingPoolDonation,
-        _values.amount, // token value direct because form is not taking near 0 values
-        _values.amount * priceSol, // multiply by 100 because of 2 decimal places
+        projectDetails.owner_publickey,
+        projectDetails.projectUserCount,
+        _values.amount,
       );
+      if (!sig) return;
+
+      createContributionMutation.mutate({
+        projectId: projectDetails.id,
+        token: _values.token.value,
+        totalAmount: _values.amount,
+        tx: sig as string,
+        usd: _values.amount,
+        hackathonId: roundId,
+      });
     }
 
-    if (!sig) return;
+    // createContributionMutation.mutate({
+    //   projectId: projectDetails.id,
+    //   roundId: roundId,
+    //   split: _values.matchingPoolDonation,
+    //   token: _values.token.value,
+    //   totalAmount: _values.amount,
+    //   usd: _values.amount * priceSol,
+    //   tx: sig as string,
+    //   userId: user?.id as string,
+    //   projectJoinRoundId: projectJoinRoundId,
+    // });
 
-    createContributionMutation.mutate({
-      projectId: projectDetails.id,
-      roundId: roundId,
-      split: _values.matchingPoolDonation,
-      token: _values.token.value,
-      totalAmount: _values.amount,
-      usd: _values.amount * priceSol,
-      tx: sig as string,
-      userId: user?.id as string,
-      projectJoinRoundId: projectJoinRoundId,
-    });
     // onOpen();
   }
 
-  const donateSPL = async (
-    roundId: string,
-    token: string,
-    owner: string,
-    count: number,
-    split: number,
-    total: number,
-    usd: number,
-  ): Promise<string | null> => {
+  const donateSPL = async (owner: string, count: number, total: number): Promise<string | null> => {
     try {
-      const ix = await contributeSPL(
+      const [ix, ix2, ix3] = await createContributionV2(
         anchorWallet as NodeWallet,
-        roundId,
-        token,
+        total * 1000000,
+        0,
         owner,
-        count, // project count
-        split, // split
-        total, // total
-        usd, // usd value
+        roundId,
+        count,
+        'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
       );
       const tx = new anchor.web3.Transaction();
       const { blockhash } = await connection.getLatestBlockhash();
       tx.recentBlockhash = blockhash;
       tx.feePayer = anchorWallet?.publicKey as anchor.web3.PublicKey;
-      tx.add(ix!);
-      const signed = await anchorWallet?.signTransaction(tx);
-      const txid = await connection.sendRawTransaction(signed!.serialize());
+      if (ix2) {
+        tx.add(ix2!);
+      }
+      if (ix3) {
+        tx.add(ix3!);
+      }
 
+      tx.add(ix!);
+
+      const signed = await anchorWallet?.signTransaction(tx);
+      const txid = await connection.sendRawTransaction(signed!.serialize(), {
+        skipPreflight: true,
+      });
+      console.log(txid);
       return txid;
     } catch (error: any) {
       setTxnError(error.message || 'There was some error');
@@ -217,25 +241,82 @@ export const ProjectDonationSimulator = ({
     usd: number,
   ): Promise<string | null> => {
     try {
-      const ix = await contributeSOL(
-        anchorWallet as NodeWallet,
-        roundId,
-        owner,
-        count, // project count
-        split,
-        total,
-        usd,
+      const res = await fetch(
+        `https://quote-api.jup.ag/v4/quote?inputMint=So11111111111111111111111111111111111111112&outputMint=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&amount=${
+          usd * 1000000
+        }&swapMode=ExactOut&slippageBps=1`,
+        {
+          method: 'GET',
+        },
       );
-      const tx = new anchor.web3.Transaction();
-      const { blockhash } = await connection.getLatestBlockhash();
-      tx.recentBlockhash = blockhash;
-      tx.feePayer = anchorWallet?.publicKey as anchor.web3.PublicKey;
-      tx.add(ix!);
-      const signed = await anchorWallet?.signTransaction(tx);
-      const txid = await connection.sendRawTransaction(signed!.serialize());
+      const routes = await res.json();
+      console.log(routes);
+      const transactionsres = await fetch('https://quote-api.jup.ag/v4/swap', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          // route from /quote api
+          route: routes.data[0],
+          userPublicKey: anchorWallet?.publicKey.toString(),
+        }),
+      });
+      const transactions = await transactionsres.json();
+
+      const { swapTransaction } = transactions;
+
+      const swapTransactionBuf = Buffer.from(swapTransaction, 'base64');
+      var transaction = VersionedTransaction.deserialize(swapTransactionBuf);
+      console.log(transaction);
+
+      // get address lookup table accounts
+      const addressLookupTableAccounts = await Promise.all(
+        transaction.message.addressTableLookups.map(async lookup => {
+          return new AddressLookupTableAccount({
+            key: lookup.accountKey,
+            state: AddressLookupTableAccount.deserialize(
+              (await connection
+                .getAccountInfo(lookup.accountKey)
+                .then(res => res?.data)) as Uint8Array,
+            ),
+          });
+        }),
+      );
+      var message = TransactionMessage.decompile(transaction.message, {
+        addressLookupTableAccounts: addressLookupTableAccounts,
+      });
+
+      const ix = await createContributionV2(
+        anchorWallet as NodeWallet,
+        total,
+        0,
+        owner,
+        roundId,
+        count,
+        'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+      );
+      // message.instructions.push(ix!);
+
+      // compile the message and update the transaction
+      transaction.message = message.compileToV0Message(addressLookupTableAccounts);
+      // const signedTransaction = await sendAndConfirmTransaction(connection,transaction, {
+      //   skipPreflight: true,
+      //   preflightCommitment: 'confirmed',
+      // });
+      // const tx = new anchor.web3.Transaction();
+      // const { blockhash } = await connection.getLatestBlockhash();
+      // transaction.recentBlockhash = blockhash;
+      // transaction.feePayer = anchorWallet?.publicKey as anchor.web3.PublicKey;
+      // tx.add(ix!);
+      // const signed = await anchorWallet?.signTransaction(transaction);
+
+      // transaction.sign([anchorWallet?.publicKey as anchor.web3.PublicKey]);
+      const txid = await connection.sendTransaction(transaction);
 
       return txid;
     } catch (error: any) {
+      console.log(error);
       setTxnError(error.message || 'There was some error');
       return null;
     }
@@ -294,7 +375,7 @@ export const ProjectDonationSimulator = ({
             </FormErrorMessage>
             {/* <WalletBalanceError selectedToken={selectedToken} data={data} /> */}
           </FormControl>
-          <FormControl>
+          {/* <FormControl>
             <HStack pb="10px" spacing="0" align={'top'} justify="start">
               <FormLabel
                 textStyle={{ base: 'body6', md: 'title4' }}
@@ -361,7 +442,7 @@ export const ProjectDonationSimulator = ({
             <FormErrorMessage>
               {errors.matchingPoolDonation ? <>{errors.matchingPoolDonation.message}</> : <></>}
             </FormErrorMessage>
-          </FormControl>
+          </FormControl> */}
         </VStack>
         <VStack w="full" gap="16px">
           <VStack w="full" align="center" gap="8px">
@@ -386,28 +467,6 @@ export const ProjectDonationSimulator = ({
                 />
               </Center>
             </HStack>
-            {/* <HStack w="full" justify={'space-between'}>
-              <Box as="p" textStyle={'body5'} color="neutral.8">
-                Matching pool contribution
-              </Box>
-              <Center color="#ADB8B6">
-                <FlipNumbers
-                  height={14}
-                  width={10}
-                  color="#ADB8B6"
-                  play
-                  perspective={700}
-                  numbers={
-                    '$' +
-                    String(
-                      watch('matchingPoolDonation') === 0
-                        ? '0.0'
-                        : (donation / watch('matchingPoolDonation')).toFixed(1)
-                    )
-                  }
-                />
-              </Center>
-            </HStack> */}
           </VStack>
           {txnError && (
             <Alert status="error" variant="cubik">
