@@ -34,7 +34,10 @@ import { isPast } from 'date-fns';
 import SelectProjectToSubmitToHackathon from '../SelectProjectToSubmitToHackathon';
 import { HackathonTracks } from '~/types/hackathon';
 import HackathonStatus from '../HackathonStatus';
-import { HackathonEndSoon } from '~/components/common/donationCTA/DonationCTA';
+import {
+  HackathonEndSoon,
+  HackathonVotingStartSoon,
+} from '~/components/common/donationCTA/DonationCTA';
 import moment from 'moment';
 
 interface Props {
@@ -537,7 +540,7 @@ const HackathonHeader = ({
             <Center w="full">
               {hasRegistered.data ? (
                 <VStack w="full" gap="16px">
-                  {isPast(new Date(timelineValues[1].start as Date)) ? (
+                  {isPast(new Date(timelineValues[2].start as Date)) ? (
                     <Skeleton
                       isLoaded={!isLoading}
                       fadeDuration={1}
@@ -576,21 +579,16 @@ const HackathonHeader = ({
                         size={{ base: 'cubikSmall', md: 'cubikMedium' }}
                         w="full"
                         isLoading={loading}
-                        disabled={!hasRegistered.data ? false : true}
-                        isDisabled={!hasRegistered.data ? false : true}
+                        disabled={true}
+                        isDisabled={true}
                         onClick={async () => {
                           if (!connected) {
                             setVisible(true);
                             return;
                           }
-                          const sig = await CreateParticipant();
-                          if (!sig) return;
-                          registrationMutation.mutate({
-                            hackathonId: hackathonId,
-                          });
                         }}
                       >
-                        {hasRegistered.data ? 'Registered' : 'Register'}
+                        {hasSubmitted ? 'Submitted' : 'Submit Project'}
                       </Button>
                     </Skeleton>
                   )}
@@ -660,14 +658,28 @@ const HackathonHeader = ({
                 </Skeleton>
               )}
             </Center>
-
-            <HackathonEndSoon
-              isLoading={isLoading}
-              endingDate={
-                timelineValues ? moment(1690761647000).utc().toDate() : new Date(1690761647000)
-              }
-              isHackathon={true}
-            />
+            {timeline && moment(new Date(timeline[1].end!)) > moment(new Date()) && (
+              <HackathonEndSoon
+                isLoading={isLoading}
+                endingDate={
+                  timelineValues
+                    ? moment(new Date(timeline[1].end!)).utc().toDate()
+                    : new Date(1690761647000)
+                }
+                isHackathon={true}
+              />
+            )}
+            {timeline && moment(new Date(timeline[1].end!)) < moment(new Date()) && (
+              <HackathonVotingStartSoon
+                isLoading={isLoading}
+                endingDate={
+                  timelineValues
+                    ? moment(new Date(timeline[2].start!)).utc().toDate()
+                    : new Date(1690761647000)
+                }
+                isHackathon={true}
+              />
+            )}
           </VStack>
         </Stack>
       </VStack>
