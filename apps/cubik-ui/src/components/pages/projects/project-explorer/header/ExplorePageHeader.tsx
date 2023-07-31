@@ -41,7 +41,6 @@ const ExplorePageHeader = ({ banner }: { banner: ProjectExploreBanner[] }) => {
         {banner ? (
           banner?.map(resource_distribution_event => (
             <FundingRoundBanner
-              eventName={resource_distribution_event.name}
               key={resource_distribution_event.id}
               startDate={new Date(resource_distribution_event.startTime)}
               endDate={new Date(resource_distribution_event.endTime)}
