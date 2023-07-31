@@ -187,10 +187,11 @@ const FundingRoundBanner = ({
   description: string;
   matchingPool: number;
 }) => {
+
   return (
     <Stack
       as={Link}
-      href={`/grants/${id}`}
+      href={`/hackathons/${id}`}
       cursor={'pointer'}
       w="full"
       direction={{ base: 'column', md: 'row' }}
