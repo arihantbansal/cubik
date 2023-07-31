@@ -191,7 +191,7 @@ const FundingRoundBanner = ({
   return (
     <Stack
       as={Link}
-      href={`/hackathons/${id}`}
+      href={`/hackathons/${name}`}
       cursor={'pointer'}
       w="full"
       direction={{ base: 'column', md: 'row' }}
