@@ -672,8 +672,8 @@ const HackathonHeader = ({
                       size={{ base: 'cubikSmall', md: 'cubikMedium' }}
                       w="full"
                       isLoading={loading}
-                      disabled={true}
-                      isDisabled={true}
+                      // disabled={true}
+                      // isDisabled={true}
                       onClick={() => {
                         if (!connected) {
                           setVisible(true);
