@@ -68,8 +68,7 @@ export const ProofsValidation = ({
           </Center>
         </Center>{' '}
         <Box as={'p'} textStyle={'body5'} color="#FEF08A" textAlign={'start'}>
-          At least one proofs are need to contribute to a project in this{' '}
-          {isHackathon ? 'hackathon' : 'round'}
+          At least two proofs are need to contribute to a project in this hackathon
           <Link href={`/${username}`}>
             <Box style={{ textDecoration: 'underline' }}>collect Proofs</Box>
           </Link>
