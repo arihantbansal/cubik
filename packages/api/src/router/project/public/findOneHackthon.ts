@@ -12,7 +12,7 @@ export const findOneHackthon = publicProcedure
       const res = await ctx.prisma.projectJoinHackathons.findFirst({
         where: {
           id: input.id,
-          //   isArchive: false,
+          isArchive: false,
         },
         include: {
           projectsModel: {

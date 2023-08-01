@@ -95,6 +95,7 @@ const HackathonJoinPage = ({ id }: Props) => {
           />
 
           <ProjectInteractions
+            tracks={(data?.tracks as any[]) || []}
             hackathonId={data?.hackathon.id as string}
             timeline={(data?.hackathon.timeline as unknown as HackathonSchedule) || []}
             hackathonJoinId={id}

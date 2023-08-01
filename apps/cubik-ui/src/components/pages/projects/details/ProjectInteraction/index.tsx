@@ -20,6 +20,10 @@ interface Props {
   hackathonId: string;
   projectJoinId?: string;
   hackathonJoinId?: string;
+  tracks: {
+    label: string;
+    value: string;
+  }[];
 }
 
 export const ProjectInteractions = ({
@@ -35,6 +39,7 @@ export const ProjectInteractions = ({
   roundId,
   hackathonJoinId,
   projectJoinId,
+  tracks,
 }: Props) => {
   const timelineSorted = timeline?.sort((a, b) => a.index - b.index);
   return (
@@ -62,6 +67,7 @@ export const ProjectInteractions = ({
           />
         )}
         <ProjectCreatorAndLinks
+          tracks={tracks}
           communityContributions={communityContributions}
           contributors={contributors}
           funding={funding}

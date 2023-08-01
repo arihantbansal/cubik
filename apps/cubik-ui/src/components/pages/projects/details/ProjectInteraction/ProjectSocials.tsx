@@ -3,6 +3,8 @@ import { Box, VStack, Wrap } from '@chakra-ui/layout';
 import { SocialLinks } from './SocialLinks';
 import { ProjectsModel } from '@prisma/client';
 import { Skeleton } from '@chakra-ui/skeleton';
+import { HackathonTracks } from '@cubik/common-types';
+import { Tag } from '@chakra-ui/tag';
 
 export const ProjectSocialsSkeleton = ({ isLoading }: { isLoading: boolean }) => {
   return (
@@ -26,10 +28,15 @@ export const ProjectSocials = ({
   isLoading,
   hideTitle,
   projectDetails,
+  tracks,
 }: {
   isLoading: boolean;
   hideTitle?: boolean;
   projectDetails: ProjectsModel;
+  tracks: {
+    label: string;
+    value: string;
+  }[];
 }) => {
   const socials = [
     {
@@ -52,6 +59,15 @@ export const ProjectSocials = ({
   ];
   return (
     <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
+      <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
+        Tracks
+      </Box>
+      <Wrap gap={1} direction={'row'}>
+        {tracks.map((track, key) => (
+          <Tag>{track.label}</Tag>
+        ))}
+      </Wrap>
+
       {!hideTitle && (
         <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
           Socials

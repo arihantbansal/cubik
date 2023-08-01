@@ -12,6 +12,10 @@ interface Props {
   contributors: number;
   communityContributions: number;
   project: ProjectsModel;
+  tracks: {
+    label: string;
+    value: string;
+  }[];
   team: (Team & {
     user: UserModel;
   })[];
@@ -24,6 +28,7 @@ export const ProjectCreatorAndLinks = ({
   funding,
   project,
   team,
+  tracks,
 }: Props) => {
   return (
     <VStack
@@ -34,7 +39,7 @@ export const ProjectCreatorAndLinks = ({
       justifyContent={'start'}
       display={{ base: 'none', lg: 'flex' }}
     >
-      <ProjectSocials isLoading={isLoading} projectDetails={project} />
+      <ProjectSocials tracks={tracks} isLoading={isLoading} projectDetails={project} />
 
       {!preview && (
         <ProjectFundingData
