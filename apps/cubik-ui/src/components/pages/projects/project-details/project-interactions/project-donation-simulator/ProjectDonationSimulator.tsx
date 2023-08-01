@@ -108,8 +108,6 @@ export const ProjectDonationSimulator = ({
 
   const createContributionMutation = trpc.contribution.createHackathon.useMutation({
     onSuccess: async (data: any) => {
-      setDonationSuccessful(true);
-
       SuccessToast({ toast, message: 'Donation Successful' });
       updateProjectRaise.mutate({
         projectId: projectDetails.id,
@@ -119,6 +117,7 @@ export const ProjectDonationSimulator = ({
       utils.contribution.getProjectContributors.invalidate({
         projectId: projectDetails.id, // check once if the value is right or not for project Id
       });
+      setDonationSuccessful(true);
     },
     onError: error => {
       setTxnError('Trpc returned an error');
@@ -219,7 +218,7 @@ export const ProjectDonationSimulator = ({
       const { blockhash } = await connection.getLatestBlockhash();
       tx.recentBlockhash = blockhash;
       tx.feePayer = anchorWallet?.publicKey as anchor.web3.PublicKey;
-        console.log(ix2, ix3);
+      console.log(ix2, ix3);
       if (ix2) {
         tx.add(ix2!);
       }
@@ -331,7 +330,7 @@ export const ProjectDonationSimulator = ({
     }
   };
   const EstimatedAmmount = trpc.pool.findEstimated.useQuery({
-    amount: (watch('amount') * priceSol) as number,
+    amount: watch('amount') as number,
     projectId: projectDetails.id,
     roundId: roundId,
   });
@@ -494,7 +493,7 @@ export const ProjectDonationSimulator = ({
             height="44px"
             mt={4}
             colorScheme="teal"
-            isLoading={isSubmitting}
+            isLoading={isSubmitting || createContributionMutation.isLoading}
             loadingText="Confirming Transaction"
             type="submit"
           >
