@@ -114,6 +114,9 @@ export const ProjectDonationSimulator = ({
         projectJoinRoundId: projectJoinRoundId,
         roundId: roundId,
       });
+      utils.project.findOneHackthon.invalidate({
+        id: projectDetails.id,
+      });
       utils.contribution.getProjectContributors.invalidate({
         projectId: projectDetails.id, // check once if the value is right or not for project Id
       });
