@@ -259,7 +259,7 @@ export const ProjectCTAs = (props: Props) => {
                   }}
                   p="12px"
                   as="a"
-                  href="https://twitter.com/intent/tweet?text=Just%20made%20my%20contribution%20on%20the%20%40_cubik%20Dev%20Tooling%20Grants%20Round.%20%0A%20%0AJoin%20me%20in%20driving%20innovation%20on%20Solana.%20Let%27s%20grow%20the%20Solana%20ecosystem%20together%3A%20https%3A%2F%2Fcubik.so%2Fprojects"
+                  href="https://twitter.com/intent/tweet?text=Just%20made%20my%20contribution%20to%20the%20Solana%20Speedrun%20Game%20Jam%20on%20%40_cubik.%20%0A%20%0AJoin%20me%20in%20driving%20innovation%20on%20Solana.%20Let%27s%20grow%20the%20Solana%20ecosystem%20together%3A%20https%3A%2F%2Fcubik.so%2Fprojects"
                   target="_blank"
                 >
                   <BsTwitter size={20} color="#1D9BF0" />
