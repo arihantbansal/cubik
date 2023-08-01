@@ -658,7 +658,7 @@ const HackathonHeader = ({
                 </Skeleton>
               )} */}
 
-              <Skeleton
+              {/* <Skeleton
                 isLoaded={!isLoading}
                 fadeDuration={1}
                 borderRadius={'12px'}
@@ -682,14 +682,14 @@ const HackathonHeader = ({
                 >
                   {hasSubmitted ? 'Submitted' : 'Submit Project'}
                 </Button>
-              </Skeleton>
+              </Skeleton> */}
             </Center>
             {timeline && moment(new Date(timeline[1].end!)) > moment(new Date()) && (
               <HackathonEndSoon
                 isLoading={isLoading}
                 endingDate={
                   timelineValues
-                    ? moment(new Date(timeline[1].end!)).utc().toDate()
+                    ? moment(new Date(timeline[2].end!)).utc().toDate()
                     : new Date(1690761647000)
                 }
                 isHackathon={true}
@@ -700,7 +700,7 @@ const HackathonHeader = ({
                 isLoading={isLoading}
                 endingDate={
                   timelineValues
-                    ? moment(new Date(timeline[2].start!)).utc().toDate()
+                    ? moment(new Date(timeline[2].end!)).utc().toDate()
                     : new Date(1690761647000)
                 }
                 isHackathon={true}

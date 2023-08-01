@@ -160,7 +160,7 @@ export const HackathonVotingStartSoon = ({
           />
         </Center>
         <Box as={'p'} textStyle={'body5'} color="white" textAlign={'start'}>
-          Voting Starts in{'  '}
+          Voting ending in{'  '}
           <Box as="span" display={'inline-block'}>
             {CountdownTimer({ date: moment(endingDate).utc().toDate() })}
           </Box>{' '}
