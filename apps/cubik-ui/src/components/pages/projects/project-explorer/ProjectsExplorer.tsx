@@ -21,6 +21,24 @@ type PropsType = {
 
 const ProjectsExplorer = ({ projects, banner }: PropsType) => {
   const { ErrorBoundaryWrapper } = useErrorBoundary();
+  function shuffle(array: any[]) {
+    let currentIndex = array.length,
+      randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+  }
+  const finalProjects = projects;
+
   return (
     <ErrorBoundaryWrapper>
       <VStack
@@ -68,14 +86,10 @@ const ProjectsExplorer = ({ projects, banner }: PropsType) => {
           />
           <TabPanels w="full" px="0" py={{ base: '12px', md: '16px' }}>
             <TabPanel w="full" flexWrap={'wrap'} p="0">
-              <ProjectsList explorerProjects={projects} />
+              <ProjectsList explorerProjects={shuffle(finalProjects)} />
             </TabPanel>
             <TabPanel>
-              <ProjectLeaderboard
-                explorerProjects={projects.sort(
-                  (a, b) => b.projectEvent.amount - a.projectEvent.amount,
-                )}
-              />
+              <ProjectLeaderboard explorerProjects={projects} />
             </TabPanel>
           </TabPanels>
         </Tabs>

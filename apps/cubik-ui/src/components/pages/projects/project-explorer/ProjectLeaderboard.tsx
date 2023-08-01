@@ -30,30 +30,32 @@ export const ProjectLeaderboard = ({
             </Tr>
           </Thead>
           <Tbody>
-            {explorerProjects.map((item, index) => {
-              return (
-                <>
-                  <Tr>
-                    <Td textAlign="center" width={'10rem'}>
-                      {index + 1}
-                    </Td>
-                    <Td>
-                      <HStack align={'center'} gap={{ base: '8px', md: '16px' }}>
-                        <Avatar
-                          width={{ base: '36px', md: '44px' }}
-                          height={{ base: '36px', md: '44px' }}
-                          src={item.logo}
-                        />
+            {explorerProjects
+              .sort((a, b) => b.projectEvent.amount - a.projectEvent.amount)
+              .map((item, index) => {
+                return (
+                  <>
+                    <Tr>
+                      <Td textAlign="center" width={'10rem'}>
+                        {index + 1}
+                      </Td>
+                      <Td>
+                        <HStack align={'center'} gap={{ base: '8px', md: '16px' }}>
+                          <Avatar
+                            width={{ base: '36px', md: '44px' }}
+                            height={{ base: '36px', md: '44px' }}
+                            src={item.logo}
+                          />
 
-                        <Text>{item.title}</Text>
-                      </HStack>
-                    </Td>
-                    <Td textAlign={'center'}>{item.contributorCount}</Td>
-                    <Td textAlign={'center'}>{item.projectEvent.amount.toLocaleString()}</Td>
-                  </Tr>
-                </>
-              );
-            })}
+                          <Text>{item.title}</Text>
+                        </HStack>
+                      </Td>
+                      <Td textAlign={'center'}>{item.contributorCount}</Td>
+                      <Td textAlign={'center'}>{item.projectEvent.amount.toLocaleString()}</Td>
+                    </Tr>
+                  </>
+                );
+              })}
           </Tbody>
         </Table>
       </TableContainer>
