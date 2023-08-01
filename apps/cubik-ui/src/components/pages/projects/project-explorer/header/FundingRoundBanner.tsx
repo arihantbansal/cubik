@@ -289,7 +289,7 @@ const FundingRoundBanner = ({
                     zIndex={1000}
                     background={'black'}
                     p={2}
-                    label="The matching pool is in $RAIN + $USDC. The value of $RAIN is subject to change the usd"
+                    label="The matching pool is in 1M $RAIN  + 1K $USDC. The value of $RAIN is subject to change, might result in lower USDC value"
                   >
                     <Box zIndex={1000} as="p">
                       <FiInfo />

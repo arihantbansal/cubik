@@ -206,7 +206,7 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
         spacing={{ base: '24px', md: '32px' }}
         pt={{ base: '16px', sm: '20px', md: '24px' }}
       >
-        {/* <Skeleton
+        <Skeleton
           fadeDuration={2.5}
           isLoaded={!isLoading}
           opacity={isLoading ? 0.4 : 1}
@@ -222,15 +222,11 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
             transition={{ duration: 0.3 }}
           >
             <GoogleProof
-              minted={
-                proofs?.find((e) => e.name.toLocaleLowerCase() === 'google')
-                  ? true
-                  : false
-              }
+              minted={proofs?.find(e => e.name.toLocaleLowerCase() === 'google') ? true : false}
               isLoading={isLoading}
             />
           </MotionBox>
-        </Skeleton> */}
+        </Skeleton>
         {/* <Skeleton
           fadeDuration={2.5}
           isLoaded={!isLoading}
@@ -307,9 +303,9 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
             whileHover={{ y: -8, scale: 1 }}
             transition={{ duration: 0.3 }}
           >
-            <DripProof
+            {/* <DripProof
               claimed={proofs?.find(e => e.name.toLocaleLowerCase() === 'drips01') ? true : false}
-            />
+            /> */}
           </MotionBox>
         </Skeleton>
         <Skeleton
