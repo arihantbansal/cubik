@@ -166,7 +166,7 @@ export const ProjectFundingData = ({
           <HStack zIndex={1} w="full" align={'start'}>
             <VStack align={'start'} gap="8px">
               <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
-                ${communityContributions}
+                ${communityContributions.toFixed(2)}
               </Box>
               <Box as="p" textStyle={'body4'} color={'neutral.8'}>
                 Community Contributions
