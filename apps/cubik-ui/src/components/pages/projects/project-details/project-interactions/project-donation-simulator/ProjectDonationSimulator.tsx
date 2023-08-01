@@ -141,7 +141,15 @@ export const ProjectDonationSimulator = ({
     let sig: string | null = null;
     const balance = await getBalances(publicKey?.toBase58() as string);
 
-    if (balance.nativeBalance < _values.amount * LAMPORTS_PER_SOL) {
+    if (
+      balance.tokens.find(
+        (token: any) => token.mint === 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+      ) &&
+      balance.tokens.find(
+        (token: any) => token.mint === 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+      ).amount <
+        _values.amount * 1000000
+    ) {
       return setTxnError('Insufficient balance');
     }
     if (String(_values.token.value).includes('sol')) {
