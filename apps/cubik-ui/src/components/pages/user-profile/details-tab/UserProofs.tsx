@@ -288,7 +288,7 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
             />
           </MotionBox>
         </Skeleton>
-        <Skeleton
+        {/* <Skeleton
           fadeDuration={2.6}
           isLoaded={!isLoading}
           opacity={isLoading ? 0.4 : 1}
@@ -303,11 +303,11 @@ const UserProofs = ({ isLoading, proofs, wallet }: Props) => {
             whileHover={{ y: -8, scale: 1 }}
             transition={{ duration: 0.3 }}
           >
-            {/* <DripProof
+            <DripProof
               claimed={proofs?.find(e => e.name.toLocaleLowerCase() === 'drips01') ? true : false}
-            /> */}
+            />
           </MotionBox>
-        </Skeleton>
+        </Skeleton> */}
         <Skeleton
           fadeDuration={2.6}
           isLoaded={!isLoading}
