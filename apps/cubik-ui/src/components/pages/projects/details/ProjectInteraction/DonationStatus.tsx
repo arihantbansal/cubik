@@ -2,6 +2,7 @@ import { Button } from '@chakra-ui/button';
 import { Skeleton } from '@chakra-ui/skeleton';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { isFuture, isPast } from 'date-fns';
+import moment from 'moment';
 import {
   ProofsValidation,
   RoundEndedBanner,
@@ -73,7 +74,7 @@ export const DonationStatus = (props: Props) => {
 
   if (props.hackathonId && props.hackathonJoinId) {
     // hackathon is starting soon
-    if (isFuture(new Date(props.startTime))) {
+    if (isFuture(moment(new Date(props.startTime)).utc().toDate())) {
       return (
         <RoundStartingSoon
           isHackathon={true}
@@ -84,7 +85,10 @@ export const DonationStatus = (props: Props) => {
     }
 
     // round is live
-    if (isPast(new Date(props.startTime)) && isFuture(new Date(props.endTime))) {
+    if (
+      isPast(moment(new Date(props.startTime)).utc().toDate()) &&
+      isFuture(moment(new Date(props.endTime)).utc().toDate())
+    ) {
       // when no user is connected
       if (!user) {
         return (
@@ -133,7 +137,7 @@ export const DonationStatus = (props: Props) => {
     }
 
     // hackathon has ended
-    if (isPast(new Date(props.endTime))) {
+    if (isPast(moment(new Date(props.endTime)).utc().toDate())) {
       return (
         <RoundEndedBanner isHackathon={true} endDate={props.endTime} isLoading={props.loading} />
       );
