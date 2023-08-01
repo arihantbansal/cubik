@@ -2,8 +2,13 @@ import { Button } from '@chakra-ui/button';
 import { Skeleton } from '@chakra-ui/skeleton';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { isFuture, isPast } from 'date-fns';
-import { RoundEndedBanner, RoundStartingSoon } from '~/components/common/donationCTA/DonationCTA';
+import {
+  ProofsValidation,
+  RoundEndedBanner,
+  RoundStartingSoon,
+} from '~/components/common/donationCTA/DonationCTA';
 import { useUserStore } from '~/store/userStore';
+import { UserProof } from '~/types/user';
 
 interface Props {
   roundId?: string;
@@ -20,6 +25,7 @@ interface Props {
 export const DonationStatus = (props: Props) => {
   const { user } = useUserStore();
   const { setVisible } = useWalletModal();
+  const proof = user?.proof as unknown as UserProof[];
   if (props.roundId && props.projectJoinId) {
     // hackathon is starting soon
     if (isFuture(new Date(props.startTime))) {
@@ -109,7 +115,9 @@ export const DonationStatus = (props: Props) => {
           </Skeleton>
         );
       }
-
+      if (proof.length > 2) {
+        return <ProofsValidation username={user.username} isLoading={false} />;
+      }
       return (
         <Skeleton
           opacity={props.loading ? '0.5' : 1}

@@ -8,7 +8,6 @@ import {
 } from '@chakra-ui/react';
 import { Skeleton } from '@chakra-ui/skeleton';
 import { Tooltip } from '@chakra-ui/tooltip';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { FiInfo } from 'react-icons/fi';
 
 interface Props {

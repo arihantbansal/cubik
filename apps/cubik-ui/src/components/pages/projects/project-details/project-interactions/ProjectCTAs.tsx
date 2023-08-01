@@ -486,7 +486,11 @@ export const ProjectCTAsMobile = (props: {
             w="full"
             pb="0.5rem"
           >
-            <DonationStatus onDonateHandler={onDonateHandler} {...props} />
+            <DonationStatus
+              owner={props.project.owner_publickey}
+              onDonateHandler={onDonateHandler}
+              {...props}
+            />
             <Skeleton
               fadeDuration={2.5}
               opacity={props.loading ? '0.3' : 1}
