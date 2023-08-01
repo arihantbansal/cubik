@@ -86,8 +86,8 @@ export const DonationStatus = (props: Props) => {
 
     // round is live
     if (
-      isPast(moment(new Date(props.startTime)).utc().toDate()) &&
-      isFuture(moment(new Date(props.endTime)).utc().toDate())
+      isPast(moment(props.startTime).utc().toDate()) &&
+      isFuture(moment(props.endTime).utc().toDate())
     ) {
       // when no user is connected
       if (!user) {
@@ -137,7 +137,7 @@ export const DonationStatus = (props: Props) => {
     }
 
     // hackathon has ended
-    if (isPast(moment(new Date(props.endTime)).utc().toDate())) {
+    if (isPast(moment(props.endTime).utc().toDate())) {
       return (
         <RoundEndedBanner isHackathon={true} endDate={props.endTime} isLoading={props.loading} />
       );
