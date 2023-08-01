@@ -1,7 +1,8 @@
-import { Box, HStack, Stack, VStack } from '@chakra-ui/react';
+import { Box, HStack, Stack, Tooltip, VStack } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import FlipNumbers from 'react-flip-numbers';
+import { FiInfo } from 'react-icons/fi';
 import RoundStatus from '~/components/common/dates/Status';
 
 interface CountdownTimerProps {
@@ -187,15 +188,8 @@ const FundingRoundBanner = ({
   description: string;
   matchingPool: number;
 }) => {
-
   return (
-    <Stack
-      as={Link}
-      href={`/hackathons/${name}`}
-      cursor={'pointer'}
-      w="full"
-      direction={{ base: 'column', md: 'row' }}
-    >
+    <Stack cursor={'pointer'} w="full" direction={{ base: 'column', md: 'row' }}>
       <Stack
         maxW={'full'}
         p={{ base: '16px', md: '32px' }}
@@ -287,9 +281,21 @@ const FundingRoundBanner = ({
                 >
                   Matching Pool :
                 </Box>
-                <Box as="p" textStyle={{ base: 'body5', md: 'title3' }}>
-                  ${matchingPool}
-                </Box>
+                <HStack>
+                  <Box as="p" textStyle={{ base: 'body5', md: 'title3' }}>
+                    ${matchingPool}
+                  </Box>
+                  <Tooltip
+                    zIndex={1000}
+                    background={'black'}
+                    p={2}
+                    label="The matching pool is in $RAIN + $USDC. The value of $RAIN is subject to change the usd"
+                  >
+                    <Box zIndex={1000} as="p">
+                      <FiInfo />
+                    </Box>
+                  </Tooltip>
+                </HStack>
               </HStack>
             </Stack>
           </VStack>

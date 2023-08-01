@@ -1,5 +1,15 @@
 import { VStack, HStack, Center, Box } from '@chakra-ui/layout';
+import {
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+} from '@chakra-ui/react';
 import { Skeleton } from '@chakra-ui/skeleton';
+import { Tooltip } from '@chakra-ui/tooltip';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { FiInfo } from 'react-icons/fi';
 
 interface Props {
   isLoading: boolean;
@@ -49,9 +59,16 @@ export const ProjectFundingData = ({
           </Box>
           <HStack w="full" align={'start'}>
             <VStack align={'start'} gap="8px">
-              <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
-                ${funding.toFixed(2)}
-              </Box>
+              <HStack>
+                <Box as="p" textStyle={'headline4'} color={'neutral.11'}>
+                  ${funding.toFixed(2)}
+                </Box>
+                <Tooltip label="The matching pool is in $RAIN + $USDC. The value of $RAIN is subject to change">
+                  <Box as="p" textStyle={'body4'} color={'neutral.8'}>
+                    <FiInfo />
+                  </Box>
+                </Tooltip>
+              </HStack>
               <Box as="p" textStyle={'body4'} color={'neutral.8'}>
                 Estimated Matching Funds
               </Box>
