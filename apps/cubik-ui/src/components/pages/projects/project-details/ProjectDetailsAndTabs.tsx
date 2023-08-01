@@ -131,21 +131,6 @@ const MobileOnlyViews = ({
   return (
     <>
       <VStack gap="32px" w="full" display={{ base: 'flex', lg: 'none' }}>
-        {roundId && (
-          <ProjectCTAsMobile
-            onOpen={onOpen}
-            hackathonId={hackathonId as string}
-            endTime={endTime}
-            loading={isLoading}
-            project={{
-              ...project!!,
-            }}
-            projectJoinId={projectJoinId as string}
-            roundId={roundId as string}
-            startTime={startTime}
-          />
-        )}
-
         {hackathonId && (
           <ProjectCTAsMobile
             onOpen={onOpen}
