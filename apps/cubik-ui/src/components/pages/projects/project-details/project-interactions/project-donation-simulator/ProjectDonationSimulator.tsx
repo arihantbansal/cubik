@@ -219,6 +219,7 @@ export const ProjectDonationSimulator = ({
       const { blockhash } = await connection.getLatestBlockhash();
       tx.recentBlockhash = blockhash;
       tx.feePayer = anchorWallet?.publicKey as anchor.web3.PublicKey;
+        console.log(ix2, ix3);
       if (ix2) {
         tx.add(ix2!);
       }

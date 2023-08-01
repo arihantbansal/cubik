@@ -766,7 +766,7 @@ export const createContributionV2 = async (
       spl.ASSOCIATED_TOKEN_PROGRAM_ID,
     );
     const info = await connection.getAccountInfo(ata_reciver);
-    const info2 = await connection.getAccountInfo(ata_reciver);
+    const info2 = await connection.getAccountInfo(ata_admin);
     let tokenAccountIx: anchor.web3.TransactionInstruction | null = null;
     let tokenAccountIx2: anchor.web3.TransactionInstruction | null = null;
     if (!info) {
