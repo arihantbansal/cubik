@@ -394,28 +394,26 @@ const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
 
 const ProjectsList = ({ explorerProjects }: { explorerProjects: ProjectExplorerType[] }) => {
   return (
-    <Container maxW="7xl" overflow={'visible'} p="0">
-      <Wrap
-        overflow={'visible'}
-        py="8px"
-        spacing={{ base: '1.8rem', md: '1.5rem' }}
-        w="100%"
-        margin="0"
-        justify={'center'}
-        align="center"
-        direction={{ base: 'column', sm: 'row', md: 'row' }}
-      >
-        {explorerProjects.length > 0 ? (
-          explorerProjects.map((project, key: React.Key | null | undefined) => {
-            return <ProjectCard project={project} key={key} />;
-          })
-        ) : (
-          <>
-            <EmptyProjectsState />
-          </>
-        )}
-      </Wrap>
-    </Container>
+    <Wrap
+      overflow={'visible'}
+      py="8px"
+      spacing={{ base: '1.8rem', md: '1.5rem' }}
+      w="100%"
+      margin="0"
+      justify={'center'}
+      align="center"
+      direction={{ base: 'column', sm: 'row', md: 'row' }}
+    >
+      {explorerProjects.length > 0 ? (
+        explorerProjects.map((project, key: React.Key | null | undefined) => {
+          return <ProjectCard project={project} key={key} />;
+        })
+      ) : (
+        <>
+          <EmptyProjectsState />
+        </>
+      )}
+    </Wrap>
   );
 };
 

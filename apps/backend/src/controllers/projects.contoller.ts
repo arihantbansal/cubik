@@ -83,6 +83,7 @@ export const projectExplorer = async (req: Request, res: Response) => {
       select: {
         amount: true,
         id: true,
+
         projectsModel: {
           select: {
             owner: {
@@ -97,6 +98,7 @@ export const projectExplorer = async (req: Request, res: Response) => {
             industry: true,
           },
         },
+
         hackathon: {
           select: {
             background: true,
@@ -105,6 +107,16 @@ export const projectExplorer = async (req: Request, res: Response) => {
             short_description: true,
             logo: true,
             timeline: true,
+            contribution: {
+              select: {
+                projectId: true,
+                user: {
+                  select: {
+                    profilePicture: true,
+                  },
+                },
+              },
+            },
           },
         },
       },
@@ -184,8 +196,18 @@ export const projectExplorer = async (req: Request, res: Response) => {
         logo: project.projectsModel.logo,
         industry: project.projectsModel.industry,
         title: project.projectsModel.name,
-        contributorCount: 0,
-        contributors: [],
+        contributorCount:
+          project.hackathon.contribution.filter(e => e.projectId === project.projectsModel.id)
+            .length -
+            3 <
+          0
+            ? 0
+            : project.hackathon.contribution.filter(e => e.projectId === project.projectsModel.id)
+                .length,
+        contributors:
+          project.hackathon.contribution
+            .filter(e => e.projectId === project.projectsModel.id)
+            .slice(3) || [],
         ownerName: project.projectsModel.owner.username as string,
         projectShortDescription: project.projectsModel.short_description,
         projectEvent: {
