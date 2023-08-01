@@ -115,7 +115,7 @@ export const DonationStatus = (props: Props) => {
           </Skeleton>
         );
       }
-      if (proof.length > 2) {
+      if (proof.length < 2) {
         return <ProofsValidation username={user.username} isLoading={false} />;
       }
       return (
