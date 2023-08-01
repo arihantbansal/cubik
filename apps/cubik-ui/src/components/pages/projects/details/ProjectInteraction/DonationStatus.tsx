@@ -14,6 +14,7 @@ interface Props {
   endTime: Date;
   loading: boolean;
   onDonateHandler: () => void;
+  owner: string;
 }
 
 export const DonationStatus = (props: Props) => {
@@ -89,6 +90,21 @@ export const DonationStatus = (props: Props) => {
           >
             <Button onClick={() => setVisible(true)} variant="cubikFilled" size="md" w="full">
               Connect Wallet
+            </Button>
+          </Skeleton>
+        );
+      }
+
+      if (user.mainWallet === props.owner) {
+        return (
+          <Skeleton
+            opacity={props.loading ? '0.5' : 1}
+            fadeDuration={2}
+            isLoaded={!props.loading}
+            w="full"
+          >
+            <Button disabled={true} isDisabled={true} variant="cubikFilled" size="md" w="full">
+              Donate
             </Button>
           </Skeleton>
         );

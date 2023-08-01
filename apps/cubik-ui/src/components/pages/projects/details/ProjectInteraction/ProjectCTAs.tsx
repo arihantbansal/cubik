@@ -299,7 +299,11 @@ export const ProjectCTAs = (props: Props) => {
       <Box display={{ base: 'none', lg: 'block' }}>
         <VStack ml="auto" right="20rem" w={'full'} alignItems={{ base: 'center', lg: 'start' }}>
           <VStack gap="16px" align={'end'} spacing="0" w="full" pb="0.5rem">
-            <DonationStatus onDonateHandler={onDonateHandler} {...props} />
+            <DonationStatus
+              owner={props.project.owner_publickey}
+              onDonateHandler={onDonateHandler}
+              {...props}
+            />
             <Skeleton
               fadeDuration={2.5}
               opacity={props.loading ? 0.3 : 1}
