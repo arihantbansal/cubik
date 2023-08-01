@@ -74,54 +74,23 @@ export const DonationStatus = (props: Props) => {
 
   if (props.hackathonId && props.hackathonJoinId) {
     // hackathon is starting soon
-    if (isFuture(moment(new Date(props.startTime)).utc().toDate())) {
-      return (
-        <RoundStartingSoon
-          isHackathon={true}
-          startDate={props.startTime}
-          isLoading={props.loading}
-        />
-      );
-    }
+    // if (isFuture(moment(new Date(props.startTime)).utc().toDate())) {
+    //   return (
+    //     <RoundStartingSoon
+    //       isHackathon={true}
+    //       startDate={props.startTime}
+    //       isLoading={props.loading}
+    //     />
+    //   );
+    // }
 
     // round is live
-    if (
-      isPast(moment(props.startTime).utc().toDate()) &&
-      isFuture(moment(props.endTime).utc().toDate())
-    ) {
-      // when no user is connected
-      if (!user) {
-        return (
-          <Skeleton
-            opacity={props.loading ? '0.5' : 1}
-            fadeDuration={2}
-            isLoaded={!props.loading}
-            w="full"
-          >
-            <Button onClick={() => setVisible(true)} variant="cubikFilled" size="md" w="full">
-              Connect Wallet
-            </Button>
-          </Skeleton>
-        );
-      }
-
-      if (user.mainWallet === props.owner) {
-        return (
-          <Skeleton
-            opacity={props.loading ? '0.5' : 1}
-            fadeDuration={2}
-            isLoaded={!props.loading}
-            w="full"
-          >
-            <Button disabled={true} isDisabled={true} variant="cubikFilled" size="md" w="full">
-              Donate
-            </Button>
-          </Skeleton>
-        );
-      }
-      if (proof.length < 2) {
-        return <ProofsValidation username={user.username} isLoading={false} />;
-      }
+    // if (
+    //   isPast(moment(props.startTime).utc().toDate()) &&
+    //   isFuture(moment(props.endTime).utc().toDate())
+    // ) {
+    // when no user is connected
+    if (!user) {
       return (
         <Skeleton
           opacity={props.loading ? '0.5' : 1}
@@ -129,21 +98,52 @@ export const DonationStatus = (props: Props) => {
           isLoaded={!props.loading}
           w="full"
         >
-          <Button onClick={props.onDonateHandler} variant="cubikFilled" size="md" w="full">
-            Donate
+          <Button onClick={() => setVisible(true)} variant="cubikFilled" size="md" w="full">
+            Connect Wallet
           </Button>
         </Skeleton>
       );
     }
 
-    // hackathon has ended
-    if (isPast(moment(props.endTime).utc().toDate())) {
+    if (user.mainWallet === props.owner) {
       return (
-        <RoundEndedBanner isHackathon={true} endDate={props.endTime} isLoading={props.loading} />
+        <Skeleton
+          opacity={props.loading ? '0.5' : 1}
+          fadeDuration={2}
+          isLoaded={!props.loading}
+          w="full"
+        >
+          <Button disabled={true} isDisabled={true} variant="cubikFilled" size="md" w="full">
+            Donate
+          </Button>
+        </Skeleton>
       );
     }
-    // default nothing
-    return <></>;
+    if (proof.length < 2) {
+      return <ProofsValidation username={user.username} isLoading={false} />;
+    }
+    return (
+      <Skeleton
+        opacity={props.loading ? '0.5' : 1}
+        fadeDuration={2}
+        isLoaded={!props.loading}
+        w="full"
+      >
+        <Button onClick={props.onDonateHandler} variant="cubikFilled" size="md" w="full">
+          Donate
+        </Button>
+      </Skeleton>
+    );
+    // }
+
+    // hackathon has ended
+    // if (isPast(moment(props.endTime).utc().toDate())) {
+    //   return (
+    //     <RoundEndedBanner isHackathon={true} endDate={props.endTime} isLoading={props.loading} />
+    //   );
+    // }
+    // // default nothing
+    // return <></>;
   }
 
   return <></>;
