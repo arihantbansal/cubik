@@ -59,7 +59,7 @@ export const poolRouter = createTRPCRouter({
         amount: z.number(),
       }),
     )
-    .query(async ({ input, ctx: { prisma } }) => {
+    .query(async ({ input, ctx: { prisma, session } }) => {
       const res = await prisma.hackathon.findFirst({
         where: {
           id: input.roundId,
@@ -85,7 +85,12 @@ export const poolRouter = createTRPCRouter({
         ...res,
         contribution: filterdContributions,
       };
-      const amount = qfEstimatedHackathon(filterdProjectJoinRound, input.projectId, input.amount);
+      const amount = qfEstimatedHackathon(
+        filterdProjectJoinRound,
+        input.projectId,
+        input.amount,
+        session.user?.id ?? '',
+      );
 
       return amount;
     }),
