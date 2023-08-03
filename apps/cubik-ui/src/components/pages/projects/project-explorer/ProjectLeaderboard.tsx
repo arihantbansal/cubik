@@ -22,7 +22,7 @@ export const ProjectLeaderboard = ({
                 Name
               </Th>
               <Th width="15%" textAlign={'center'}>
-                Total Contributors
+                Unique Contributors
               </Th>
               <Th width="15%" textAlign={'center'}>
                 Estimated Match
