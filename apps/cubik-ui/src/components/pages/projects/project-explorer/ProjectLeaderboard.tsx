@@ -50,7 +50,7 @@ export const ProjectLeaderboard = ({
                           <Text>{item.title}</Text>
                         </HStack>
                       </Td>
-                      <Td textAlign={'center'}>{item.contributorCount}</Td>
+                      <Td textAlign={'center'}>{item.contributorCount + 3}</Td>
                       <Td textAlign={'center'}>{item.projectEvent.amount.toLocaleString()}</Td>
                     </Tr>
                   </>
