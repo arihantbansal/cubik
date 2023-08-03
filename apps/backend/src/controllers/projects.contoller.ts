@@ -111,6 +111,7 @@ export const projectExplorer = async (req: Request, res: Response) => {
                 projectId: true,
                 user: {
                   select: {
+                    id: true,
                     profilePicture: true,
                   },
                 },
@@ -189,15 +190,23 @@ export const projectExplorer = async (req: Request, res: Response) => {
     });
 
     projectJoinHackathon.forEach(project => {
+      const users: string[] = [];
+
+      const pr = project.hackathon.contribution.filter(
+        e => e.projectId === project.projectsModel.id,
+      );
+      pr.forEach(e => {
+        if (!users.includes(e.user.id)) {
+          users.push(e.user.id);
+        }
+      });
       const schedule = project.hackathon.timeline as unknown as HackathonSchedule;
       final.push({
         id: project.projectsModel.id,
         logo: project.projectsModel.logo,
         industry: project.projectsModel.industry,
         title: project.projectsModel.name,
-        contributorCount: project.hackathon.contribution.filter(
-          e => e.projectId === project.projectsModel.id,
-        ).length,
+        contributorCount: users.length > 3 ? users.length - 3 : 0,
         contributors:
           project.hackathon.contribution.filter(e => e.projectId === project.projectsModel.id)
             .length > 3
