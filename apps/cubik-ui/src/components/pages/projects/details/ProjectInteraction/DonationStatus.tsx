@@ -105,7 +105,7 @@ export const DonationStatus = (props: Props) => {
     //   );
     // }
 
-    if (user.mainWallet === props.owner) {
+    if (user?.mainWallet === props.owner) {
       return (
         <Skeleton
           opacity={props.loading ? '0.5' : 1}
