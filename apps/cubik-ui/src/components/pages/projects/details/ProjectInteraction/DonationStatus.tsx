@@ -120,7 +120,7 @@ export const DonationStatus = (props: Props) => {
       );
     }
     if (proof.length < 2) {
-      return <ProofsValidation username={user.username} isLoading={false} />;
+      return <ProofsValidation username={user?.username || ""} isLoading={false} />;
     }
     return (
       <Skeleton
@@ -134,7 +134,7 @@ export const DonationStatus = (props: Props) => {
         </Button>
       </Skeleton>
     );
-  }
+      
 
     // hackathon has ended
     // if (isPast(moment(props.endTime).utc().toDate())) {
