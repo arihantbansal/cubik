@@ -105,43 +105,43 @@ export const DonationStatus = (props: Props) => {
     //   );
     // }
 
-    // if (user.mainWallet === props.owner) {
-    //   return (
-    //     <Skeleton
-    //       opacity={props.loading ? '0.5' : 1}
-    //       fadeDuration={2}
-    //       isLoaded={!props.loading}
-    //       w="full"
-    //     >
-    //       <Button disabled={true} isDisabled={true} variant="cubikFilled" size="md" w="full">
-    //         Donate
-    //       </Button>
-    //     </Skeleton>
-    //   );
-    // }
-    // if (proof.length < 2) {
-    //   return <ProofsValidation username={user.username} isLoading={false} />;
-    // }
-    // return (
-    //   <Skeleton
-    //     opacity={props.loading ? '0.5' : 1}
-    //     fadeDuration={2}
-    //     isLoaded={!props.loading}
-    //     w="full"
-    //   >
-    //     <Button onClick={props.onDonateHandler} variant="cubikFilled" size="md" w="full">
-    //       Donate
-    //     </Button>
-    //   </Skeleton>
-    // );
-    // }
-
-    // hackathon has ended
-    if (isPast(moment(props.endTime).utc().toDate())) {
+    if (user.mainWallet === props.owner) {
       return (
-        <RoundEndedBanner isHackathon={true} endDate={props.endTime} isLoading={props.loading} />
+        <Skeleton
+          opacity={props.loading ? '0.5' : 1}
+          fadeDuration={2}
+          isLoaded={!props.loading}
+          w="full"
+        >
+          <Button disabled={true} isDisabled={true} variant="cubikFilled" size="md" w="full">
+            Donate
+          </Button>
+        </Skeleton>
       );
     }
+    if (proof.length < 2) {
+      return <ProofsValidation username={user.username} isLoading={false} />;
+    }
+    return (
+      <Skeleton
+        opacity={props.loading ? '0.5' : 1}
+        fadeDuration={2}
+        isLoaded={!props.loading}
+        w="full"
+      >
+        <Button onClick={props.onDonateHandler} variant="cubikFilled" size="md" w="full">
+          Donate
+        </Button>
+      </Skeleton>
+    );
+  }
+
+    // hackathon has ended
+    // if (isPast(moment(props.endTime).utc().toDate())) {
+    //   return (
+    //     <RoundEndedBanner isHackathon={true} endDate={props.endTime} isLoading={props.loading} />
+    //   );
+    // }
     // default nothing
     return <></>;
   }
