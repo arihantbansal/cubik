@@ -684,7 +684,7 @@ const HackathonHeader = ({
                 </Button>
               </Skeleton> */}
             </Center>
-            {timeline && moment(new Date(timeline[1].end!)) > moment(new Date()) && (
+{/*             {timeline && moment(new Date(timeline[1].end!)) > moment(new Date()) && (
               <HackathonEndSoon
                 isLoading={isLoading}
                 endingDate={
@@ -705,7 +705,7 @@ const HackathonHeader = ({
                 }
                 isHackathon={true}
               />
-            )}
+            )} */}
           </VStack>
         </Stack>
       </VStack>
