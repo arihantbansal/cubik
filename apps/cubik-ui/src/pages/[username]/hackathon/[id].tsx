@@ -42,9 +42,7 @@ const HackathonJoinPage = ({ id }: Props) => {
     } else return <></>;
   };
 
-  console.log(
-    (data?.hackathon.timeline as unknown as HackathonSchedule).sort((a, b) => a.index - b.index),
-  );
+
   return (
     <>
       <SEO
