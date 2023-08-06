@@ -136,7 +136,7 @@ export const DonationStatus = (props: Props) => {
     // );
     // }
 
-    hackathon has ended
+    // hackathon has ended
     if (isPast(moment(props.endTime).utc().toDate())) {
       return (
         <RoundEndedBanner isHackathon={true} endDate={props.endTime} isLoading={props.loading} />
