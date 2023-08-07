@@ -51,9 +51,9 @@ export const leaderBoard = publicProcedure
       } else {
         userBased.push({
           id: contribution.userId,
-          username: contribution.user.username,
+          username: contribution.user.username as string,
           total: contribution.usdTotal,
-          profilePicture: contribution.user.profilePicture,
+          profilePicture: contribution.user.profilePicture as string,
           counter: 1,
           projects: [contribution.projectId],
         });

@@ -31,11 +31,10 @@ model Hackathon {
   projectJoinHackathon   ProjectJoinHackathons[]
   HackathonRegistrations HackathonRegistrations[]
 
-  contribution           Contribution[]
+  contribution Contribution[]
 
-  isActive               Boolean                  @default(true)
-  isArchive              Boolean                  @default(false)
-
+  isActive  Boolean @default(true)
+  isArchive Boolean @default(false)
 }
 
 model HackathonRegistrations {
@@ -71,13 +70,13 @@ model ProjectJoinHackathons {
 
 model UserModel {
   id                     String                   @id @default(uuid()) @map("_id")
-  username               String                   @unique
+  username               String?                  @unique
   mainWallet             String                   @unique
   proof                  Json?
   email                  String?
   profileNft             Json?
-  profilePicture         String                   @db.VarChar(500)
-  tx                     String                   @db.VarChar(500)
+  profilePicture         String?                  @db.VarChar(500)
+  tx                     String?                  @db.VarChar(500)
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
   isActive               Boolean                  @default(true)
@@ -106,13 +105,12 @@ model UserKeys {
 }
 
 model Session {
-  id           String    @id @default(uuid())
-  sessionToken String    @unique
-  userId       String
-  expires      DateTime
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  user         UserModel @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String    @id @default(uuid())
+  ipAddress String
+  userAgent String
+  createdAt DateTime  @default(now())
+  user      UserModel @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
 
   @@index([userId])
 }

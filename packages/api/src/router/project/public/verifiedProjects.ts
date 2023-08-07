@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { publicProcedure } from '../../../trpc';
-import type { verifiedProjectsType } from '../../../types';
+import { z } from "zod";
+import { publicProcedure } from "../../../trpc";
+import type { verifiedProjectsType } from "../../../types";
 
 export const verifiedProjects = publicProcedure
   .input(
@@ -77,10 +77,8 @@ export const verifiedProjects = publicProcedure
                     username: true,
                   },
                 },
-              },
-            },
-          },
-        },
+          },},
+        },},
       },
     });
 
@@ -118,6 +116,7 @@ export const verifiedProjects = publicProcedure
 
       return active;
     }
+
     // only round working
     if (input.round && input.round.length > 0 && !input.filter) {
       const active = res.filter(e => {
