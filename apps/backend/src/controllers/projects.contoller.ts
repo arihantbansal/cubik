@@ -1,6 +1,10 @@
-import { ProjectExplorerType, ProjectExploreBanner, HackathonSchedule } from '@cubik/common-types';
-import { prisma } from '@cubik/database';
-import { Request, Response } from 'express';
+import {
+  ProjectExplorerType,
+  ProjectExploreBanner,
+  HackathonSchedule,
+} from "@cubik/common-types";
+import { prisma } from "@cubik/database";
+import { Request, Response } from "express";
 
 function shuffle(array: any[]) {
   let currentIndex = array.length,
@@ -13,7 +17,10 @@ function shuffle(array: any[]) {
     currentIndex--;
 
     // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
   }
 
   return array;
@@ -23,7 +30,7 @@ export const projectExplorer = async (req: Request, res: Response) => {
   try {
     const projectJoinRoundPromise = prisma.projectJoinRound.findMany({
       where: {
-        status: 'APPROVED',
+        status: "APPROVED",
         fundingRound: {
           endTime: {
             gte: new Date(),
@@ -76,7 +83,7 @@ export const projectExplorer = async (req: Request, res: Response) => {
     const projectJoinHackathonPromise = prisma.projectJoinHackathons.findMany({
       where: {
         projectsModel: {
-          status: 'VERIFIED',
+          status: "VERIFIED",
         },
         isArchive: false,
       },
@@ -97,7 +104,6 @@ export const projectExplorer = async (req: Request, res: Response) => {
             industry: true,
           },
         },
-
         hackathon: {
           select: {
             background: true,
@@ -151,33 +157,38 @@ export const projectExplorer = async (req: Request, res: Response) => {
         id: true,
       },
     });
-    const [projectJoinRound, projectJoinHackathon, activeHackathon, activeRound] =
-      await Promise.all([
-        projectJoinRoundPromise,
-        projectJoinHackathonPromise,
-        activeHackathonPromise,
-        activeRoundPromise,
-      ]);
+    const [
+      projectJoinRound,
+      projectJoinHackathon,
+      activeHackathon,
+      activeRound,
+    ] = await Promise.all([
+      projectJoinRoundPromise,
+      projectJoinHackathonPromise,
+      activeHackathonPromise,
+      activeRoundPromise,
+    ]);
     const final: ProjectExplorerType[] = [];
     const banner: ProjectExploreBanner[] = [];
-    projectJoinRound.forEach(project => {
+    projectJoinRound.forEach((project) => {
       final.push({
         id: project.project.id,
         logo: project.project.logo,
         industry: project.project.industry,
         title: project.project.name,
         contributorCount:
-          project.fundingRound.Contribution.filter(e => e.projectId === project.project.id).length -
-            3 || 0,
+          project.fundingRound.Contribution.filter(
+            (e) => e.projectId === project.project.id
+          ).length - 3 || 0,
         contributors:
-          project.fundingRound.Contribution.filter(e => e.projectId === project.project.id).slice(
-            3,
-          ) || [],
+          project.fundingRound.Contribution.filter(
+            (e) => e.projectId === project.project.id
+          ).slice(3) || [],
         projectShortDescription: project.project.short_description,
         ownerName: project.project.owner.username as string,
         projectEvent: {
-          eventName: 'round',
-          color: 'teal',
+          eventName: "round",
+          color: "teal",
           amount: project.amountRaise || 0,
           id: project.id,
           end: project.fundingRound.endTime,
@@ -189,18 +200,19 @@ export const projectExplorer = async (req: Request, res: Response) => {
       });
     });
 
-    projectJoinHackathon.forEach(project => {
+    projectJoinHackathon.forEach((project) => {
       const users: string[] = [];
 
       const pr = project.hackathon.contribution.filter(
-        e => e.projectId === project.projectsModel.id,
+        (e) => e.projectId === project.projectsModel.id
       );
-      pr.forEach(e => {
+      pr.forEach((e) => {
         if (!users.includes(e.user.id)) {
           users.push(e.user.id);
         }
       });
-      const schedule = project.hackathon.timeline as unknown as HackathonSchedule;
+      const schedule = project.hackathon
+        .timeline as unknown as HackathonSchedule;
       final.push({
         id: project.projectsModel.id,
         logo: project.projectsModel.logo,
@@ -208,16 +220,19 @@ export const projectExplorer = async (req: Request, res: Response) => {
         title: project.projectsModel.name,
         contributorCount: users.length > 3 ? users.length - 3 : 0,
         contributors:
-          project.hackathon.contribution.filter(e => e.projectId === project.projectsModel.id)
-            .length > 3
+          project.hackathon.contribution.filter(
+            (e) => e.projectId === project.projectsModel.id
+          ).length > 3
             ? project.hackathon.contribution
-                .filter(e => e.projectId === project.projectsModel.id)
+                .filter((e) => e.projectId === project.projectsModel.id)
                 .slice(3)
-            : project.hackathon.contribution.filter(e => e.projectId === project.projectsModel.id),
+            : project.hackathon.contribution.filter(
+                (e) => e.projectId === project.projectsModel.id
+              ),
         ownerName: project.projectsModel.owner.username as string,
         projectShortDescription: project.projectsModel.short_description,
         projectEvent: {
-          eventName: 'hackathon',
+          eventName: "hackathon",
           amount: project.amount,
           bg: project.hackathon.background,
           id: project.id,
@@ -229,7 +244,7 @@ export const projectExplorer = async (req: Request, res: Response) => {
         },
       });
     });
-    activeHackathon.forEach(hackathon => {
+    activeHackathon.forEach((hackathon) => {
       const schedule = hackathon.timeline as unknown as HackathonSchedule;
       banner.push({
         bgImage: hackathon.background,
@@ -237,20 +252,20 @@ export const projectExplorer = async (req: Request, res: Response) => {
         id: hackathon.id,
         matchingPool: hackathon.prize_pool,
         name: hackathon.name,
-        type: 'hackathon',
+        type: "hackathon",
         startTime: schedule[1]?.start as Date,
         shortDescription: hackathon.short_description,
       });
     });
 
-    activeRound.forEach(round => {
+    activeRound.forEach((round) => {
       banner.push({
         colorScheme: round.colorScheme,
         endTime: round.endTime,
         id: round.id,
         matchingPool: round.matchedPool,
         name: round.roundName,
-        type: 'round',
+        type: "round",
         startTime: round.startTime,
         shortDescription: round.short_description,
       });

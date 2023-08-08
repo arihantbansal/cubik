@@ -20,6 +20,7 @@ const Sidebar = () => {
           color="white"
           onClick={onToggle}
         />
+        
       </Center>
     </HStack>
   ) : null;

@@ -15,7 +15,7 @@ import {
   Skeleton,
   VStack,
   useDisclosure,
-} from "@chakra-ui/react";
+} from "@/utils/chakra";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Link from "next/link";
 import { BiChevronDown, BiUser } from "react-icons/bi";
@@ -23,11 +23,7 @@ import { MdPowerSettingsNew, MdUpload } from "react-icons/md";
 import Username from "@/app/components/common/username";
 import { WalletAddress } from "@/app/components/common/wallet";
 import { useUser } from "@/app/context/user";
-import { formatNumberWithK } from "@/utils/helpers/formatWithK";
-import { LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { SOL, USDC } from "@/app/components/common/tags/TokenTags";
-import ComponentErrors from "@/app/components/common/errors/componentErrors";
-import axios from "axios";
+import { WalletBalance } from "./WalletBalance";
 
 const ProfileDetails = () => {
   const { user } = useUser();
@@ -68,16 +64,12 @@ const ProfileDetails = () => {
 
 const UserNavbarMenuButton = () => {
   const { disconnect } = useWallet();
-  const { setUser } = useUser();
+  const { setUser, logout } = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { user } = useUser();
   async function handleSignOut() {
-    await disconnect();
-    localStorage.removeItem("anon_sig");
-    localStorage.removeItem("wallet_auth");
-    localStorage.removeItem("walletName");
-    setUser(null);
+    logout();
   }
 
   const NavMenuButtons = () => {
@@ -241,7 +233,8 @@ const UserNavbarMenuButton = () => {
           <DrawerBody>
             <VStack gap="16px" w="full" align={"start"}>
               <ProfileDetails />
-              {/* <WalletBalance />{" "} //todo check this for adding wallet balance */}
+              <WalletBalance />
+
               <Box w="full" h="1px" backgroundColor={"#1D1F1E"} />
               <VStack spacing="0px" align={"start"} w="full">
                 <NavMenuButtons />
@@ -300,7 +293,7 @@ const UserNavbarMenuButton = () => {
             height={!user?.profilePicture ? "3rem" : "auto"}
             borderRadius="8px"
           >
-            {/* <WalletBalance /> */}
+            <WalletBalance />
           </Skeleton>
           <MenuDivider />
           <NavMenuButtons />
@@ -311,10 +304,4 @@ const UserNavbarMenuButton = () => {
 };
 
 export default UserNavbarMenuButton;
-function useCurrentTokenPrice(arg0: string[]): {
-  data: any;
-  isLoading: any;
-  error: any;
-} {
-  throw new Error("Function not implemented.");
-}
+
