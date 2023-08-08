@@ -10,6 +10,9 @@ const getContribution = async (username: string) => {
         username: username,
       },
     },
+    orderBy: {
+      createdAt: "desc",
+    },
     select: {
       usdTotal: true,
       total: true,
@@ -57,7 +60,7 @@ const ContributionPage = async ({
               isLoading={false}
               createdAt={contribution.createdAt.toString()}
               eventName={
-                contribution.Round.roundName || "hackathon name" // update schema and
+                contribution.Round?.roundName || "hackathon name" // update schema and
               }
               projectIndustry={contribution.ProjectsModel.industry}
               projectLogo={contribution.ProjectsModel.logo}
