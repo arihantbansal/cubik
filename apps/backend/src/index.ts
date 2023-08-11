@@ -3,8 +3,7 @@ import express, { Express } from 'express';
 import logger from './middleware/logger';
 import cookieParser from 'cookie-parser';
 import { config } from 'dotenv';
-import { projectRouter, tokenRouter } from 'routes';
-import { dbInit } from './service/pscale';
+import { projectRouter, tokenRouter, uploadRouter } from 'routes';
 import morgan from 'morgan';
 import morganBody from 'morgan-body';
 import helmet from 'helmet';
@@ -35,6 +34,7 @@ const main = async () => {
     res.send('Server is running');
   });
 
+app.use( basePath + "/upload", uploadRouter);
   app.use(basePath + '/token', tokenRouter);
   app.use(basePath + '/project', projectRouter);
 

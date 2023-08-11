@@ -23,3 +23,5 @@ export type TokenPriceResponse = {
   };
   timeTaken: number;
 };
+
+export type ContentType = 'file' | 'image';
