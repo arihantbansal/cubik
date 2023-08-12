@@ -5,7 +5,7 @@ export const findOne = publicProcedure
   .input(
     z.object({
       username: z.string().nonempty(),
-    })
+    }),
   )
   .query(async ({ input, ctx: { prisma } }) => {
     try {
