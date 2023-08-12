@@ -6,7 +6,7 @@ import { prisma } from "@cubik/database";
 const getContribution = async (username: string) => {
   return await prisma.contribution.findMany({
     where: {
-      User: {
+      user: {
         username: username,
       },
     },
@@ -19,19 +19,19 @@ const getContribution = async (username: string) => {
       createdAt: true,
       token: true,
       id: true,
-      Project: {
+      project: {
         select: {
           name: true,
           industry: true,
           logo: true,
-          Owner: {
+          owner: {
             select: {
               username: true,
             },
           },
         },
       },
-      Round: {
+      round: {
         select: {
           name: true,
         },
@@ -60,12 +60,12 @@ const ContributionPage = async ({
               isLoading={false}
               createdAt={contribution.createdAt.toString()}
               eventName={
-                contribution.Round?.name || "hackathon name" // update schema and
+                contribution.round?.name || "hackathon name" // update schema and
               }
-              projectIndustry={contribution.Project.industry}
-              projectLogo={contribution.Project.logo}
-              projectName={contribution.Project.name}
-              projectOwner={contribution.Project.Owner.username as string}
+              projectIndustry={contribution.project.industry}
+              projectLogo={contribution.project.logo}
+              projectName={contribution.project.name}
+              projectOwner={contribution.project.owner.username as string}
             />
           );
         })}
