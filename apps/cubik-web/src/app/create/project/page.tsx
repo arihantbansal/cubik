@@ -27,7 +27,7 @@ export type FormData = {
   projectName: string;
   tagline: string;
   category: { label: string; value: string; colorScheme: string }[];
-  logo: FileList;
+  logo: string;
   twitter: string;
   github: string;
   projectLink: string;
@@ -101,9 +101,7 @@ const CreateProjectPage = () => {
             message: "Tagline can not be more than 120 characters",
           }),
 
-        logo: z.custom<File>((v) => v instanceof File, {
-          message: "Logo is required",
-        }),
+        logo: z.string().nonempty({ message: "Logo can't be empty" }),
 
         email: z.string().nonempty({ message: "Email can't be empty" }),
         category: z
@@ -138,21 +136,7 @@ const CreateProjectPage = () => {
 
   const handleStepThreeSubmit = async (editorData: string) => {
     try {
-      const { data } = await axios.post("https://api.cubik.so/api/v1/upload", {
-        data: getValues("logo"),
-        key: "logos/" + getValues("projectName"),
-        content_type: "image/png",
-      });
-      const imageUrl = data.url;
-      //   const imageUrl = await uploadToCloudinary(getValues("logo")).catch(
-      //     // replace this with upload to aws
-      //     (error) => {
-      //       throw new Error(
-      //         `Error uploading image to Cloudinary: ${error.message}`
-      //       );
-      //     }
-      //   );
-      setImageUrl(imageUrl);
+      setImageUrl(watch("logo"));
       setEditorData(editorData);
       onTransactionModalOpen();
     } catch (e) {

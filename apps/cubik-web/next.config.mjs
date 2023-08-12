@@ -24,6 +24,7 @@ const config = {
       "media-fastly.hackerearth.com",
       "res.cloudinary.com",
       "source.boringavatars.com",
+      "uploadthing.com",
     ],
   },
   typescript: {

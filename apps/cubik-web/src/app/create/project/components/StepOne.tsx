@@ -17,7 +17,7 @@ import {
 import { GroupBase, OptionsOrGroups, Select } from "chakra-react-select";
 import Image from "next/image";
 import { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
+import { FileWithPath, useDropzone } from "react-dropzone";
 import {
   Control,
   Controller,
@@ -34,6 +34,8 @@ import { FiChevronRight } from "react-icons/fi";
 import { VscCloudUpload } from "react-icons/vsc";
 import { category } from "./categories";
 import { FormData } from "../page";
+import { useUploadThing, uploadFiles } from "@/utils/helpers/uploadthing";
+import { generateClientDropzoneAccept } from "uploadthing/client";
 
 type StepOneProps = {
   onSubmit: (data: any) => void;
@@ -64,34 +66,44 @@ const StepOne: React.FC<StepOneProps> = ({
   const [currentTeammateName, setCurrentTeammateName] = useState<
     string | undefined
   >(undefined);
+  const [uploadLoading, setUploadLoading] = useState<boolean>(false);
+
   //   const {
   //     data: teamSearch,
   //     isLoading: teamSearchLoading,
   //     error: teamSearchError,
   //   } = useTeamSearch(currentTeammateName);
 
-  const onDrop = useCallback((acceptedFiles: any[]) => {
-    // Only accept the first file from the dropped files
-    if (acceptedFiles.length > 0) {
-      const file = acceptedFiles[0];
-
-      // Check file size, should be less than or equal to 5MB
-      // file.size is in bytes, so 5MB is 5 * 1024 * 1024 bytes
-      if (file.size <= 5 * 1024 * 1024) {
-        setValue("logo", file);
-      } else {
-        setError("logo", {
-          message: "File size should be less than or equal to 5MB",
-        });
-      }
-    }
+  const [files, setFiles] = useState<File[]>([]);
+  const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
+    setFiles(acceptedFiles);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    // @ts-ignore
+    //@ts-ignore
     accept: "image/*",
     multiple: false, // prevent multiple file selection
     onDrop,
+  });
+
+  const { startUpload } = useUploadThing("imageUploader", {
+    onClientUploadComplete: (res) => {
+      if (res) {
+        setValue("logo", res[0]?.url as string);
+        console.log(res[0]?.url as string, "success");
+
+        setUploadLoading(false);
+      } else {
+        setError("logo", {
+          message: "uploading error. Please try again",
+        });
+        setUploadLoading(false);
+      }
+    },
+    onUploadError: () => {
+      setUploadLoading(false);
+      alert("error occurred while uploading");
+    },
   });
 
   const teamWithNames: any[] = [];
@@ -651,11 +663,7 @@ const StepOne: React.FC<StepOneProps> = ({
                       overflow="hidden"
                     >
                       <Image
-                        src={
-                          getValues("logo") &&
-                          // @ts-ignore
-                          URL.createObjectURL(getValues("logo"))
-                        }
+                        src={watch("logo")}
                         alt="project logo"
                         fill={true}
                         style={{ objectFit: "cover" }}
@@ -672,13 +680,21 @@ const StepOne: React.FC<StepOneProps> = ({
                   height={"full"}
                 >
                   <Center {...getRootProps()}>
-                    <input {...getInputProps()} />{" "}
+                    <input {...getInputProps()} />
+                    {/* {files.length > 0 && ( */}
                     <Button
                       variant={"primary"}
+                      loadingText="Uploading..."
+                      isLoading={uploadLoading}
+                      onClick={() => {
+                        setUploadLoading(true);
+                        startUpload(files);
+                      }}
                       fontSize={{ base: "xs", md: "md" }}
                     >
                       {getValues("logo") ? "Upload New Image" : "Upload Image"}
-                    </Button>{" "}
+                    </Button>
+                    {/* )} */}
                   </Center>
                   <Box
                     textAlign={"start"}

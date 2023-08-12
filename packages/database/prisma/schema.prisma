@@ -23,14 +23,14 @@ model User {
   updatedAt      DateTime        @updatedAt
   isActive       Boolean         @default(true)
   isArchive      Boolean         @default(false)
-  Session        Session[]
-  Comments       Comments[]
-  Reply          Reply[]
-  Round          Round[]
-  Contribution   Contribution[]
-  Team           Team[]
-  Proof          Proof[]
-  Project        Project[]
+  session        Session[]
+  comments       Comments[]
+  reply          Reply[]
+  round          Round[]
+  contribution   Contribution[]
+  team           Team[]
+  proof          Proof[]
+  project        Project[]
 
   @@fulltext([username])
 }
@@ -44,8 +44,8 @@ model Proof {
   updatedAt DateTime  @updatedAt
   isActive  Boolean   @default(true)
   isArchive Boolean   @default(false)
-  User      User      @relation(fields: [userId], references: [id])
-  Project   Project   @relation(fields: [projectId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+  project   Project   @relation(fields: [projectId], references: [id])
   projectId String
 
   @@index([userId])
@@ -88,13 +88,13 @@ model Project {
   updatedAt            DateTime               @updatedAt
   isActive             Boolean                @default(true)
   isArchive            Boolean                @default(false)
-  Owner                User                   @relation(fields: [ownerPublickey], references: [mainWallet])
-  Comments             Comments[]
-  ProjectJoinRound     ProjectJoinRound[]
-  Contribution         Contribution[]
-  Team                 Team[]
-  ProjectJoinHackathon ProjectJoinHackathon[]
-  Proof                Proof[]
+  owner                User                   @relation(fields: [ownerPublickey], references: [mainWallet])
+  comments             Comments[]
+  projectJoinRound     ProjectJoinRound[]
+  contribution         Contribution[]
+  team                 Team[]
+  projectJoinHackathon ProjectJoinHackathon[]
+  proof                Proof[]
 
   @@index([ownerPublickey])
 }
@@ -120,10 +120,10 @@ model Round {
   manager               String             @default("")
   isActive              Boolean            @default(true)
   isArchive             Boolean            @default(false)
-  User                  User               @relation(fields: [userId], references: [id])
-  Sponsor               Sponsor[]
-  ProjectJoinRound      ProjectJoinRound[]
-  Contribution          Contribution[]
+  user                  User               @relation(fields: [userId], references: [id])
+  sponsor               Sponsor[]
+  projectJoinRound      ProjectJoinRound[]
+  contribution          Contribution[]
 
   @@index([userId])
 }
@@ -138,7 +138,7 @@ model Sponsor {
   isArchive Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Round     Round    @relation(fields: [roundId], references: [id])
+  round     Round    @relation(fields: [roundId], references: [id])
 
   @@index([roundId])
 }
@@ -154,9 +154,9 @@ model ProjectJoinRound {
   amountRaise   Float?                 @default(0)
   contributions Int                    @default(0)
   isArchive     Boolean                @default(false)
-  Project       Project                @relation(fields: [projectId], references: [id])
-  Round         Round                  @relation(fields: [roundId], references: [id])
-  Contribution  Contribution[]
+  project       Project                @relation(fields: [projectId], references: [id])
+  round         Round                  @relation(fields: [roundId], references: [id])
+  contribution  Contribution[]
 
   @@index([projectId])
   @@index([roundId])
@@ -172,8 +172,8 @@ model Team {
   isArchive   Boolean    @default(false)
   hackathonId String?
   user        User       @relation(fields: [userId], references: [id])
-  Project     Project?   @relation(fields: [projectId], references: [id])
-  Hackathon   Hackathon? @relation(fields: [hackathonId], references: [id])
+  project     Project?   @relation(fields: [projectId], references: [id])
+  hackathon   Hackathon? @relation(fields: [hackathonId], references: [id])
 
   @@index([projectId])
   @@index([userId])
@@ -198,8 +198,8 @@ model Hackathon {
   isActive             Boolean                @default(true)
   isArchive            Boolean                @default(false)
   contribution         Contribution[]
-  ProjectJoinHackathon ProjectJoinHackathon[]
-  Team                 Team[]
+  projectJoinHackathon ProjectJoinHackathon[]
+  team                 Team[]
 }
 
 model ProjectJoinHackathon {
@@ -213,9 +213,9 @@ model ProjectJoinHackathon {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   tx           String         @db.VarChar(500)
-  Hackathon    Hackathon      @relation(fields: [hackathonId], references: [id])
-  Project      Project        @relation(fields: [projectId], references: [id])
-  Contribution Contribution[]
+  hackathon    Hackathon      @relation(fields: [hackathonId], references: [id])
+  project      Project        @relation(fields: [projectId], references: [id])
+  contribution Contribution[]
 
   @@index([hackathonId])
   @@index([projectId])
@@ -238,12 +238,12 @@ model Contribution {
   isArchive              Boolean               @default(false)
   createdAt              DateTime              @default(now())
   updatedAt              DateTime              @updatedAt
-  User                   User                  @relation(fields: [userId], references: [id])
-  Project                Project               @relation(fields: [projectId], references: [id])
-  Round                  Round?                @relation(fields: [roundId], references: [id])
-  Hackathon              Hackathon?            @relation(fields: [hackathonId], references: [id])
-  ProjectJoinRound       ProjectJoinRound?     @relation(fields: [projectJoinRoundId], references: [id])
-  ProjectJoinHackathon   ProjectJoinHackathon? @relation(fields: [projectJoinHackathonId], references: [id])
+  user                   User                  @relation(fields: [userId], references: [id])
+  project                Project               @relation(fields: [projectId], references: [id])
+  round                  Round?                @relation(fields: [roundId], references: [id])
+  hackathon              Hackathon?            @relation(fields: [hackathonId], references: [id])
+  projectJoinRound       ProjectJoinRound?     @relation(fields: [projectJoinRoundId], references: [id])
+  projectJoinHackathon   ProjectJoinHackathon? @relation(fields: [projectJoinHackathonId], references: [id])
 
   @@index([projectId])
   @@index([roundId])
@@ -262,9 +262,9 @@ model Comments {
   isArchive Boolean  @default(false)
   reactions Json
   projectId String
-  Reply     Reply[]
-  User      User     @relation(fields: [userId], references: [id])
-  Project   Project  @relation(fields: [projectId], references: [id])
+  reply     Reply[]
+  user      User     @relation(fields: [userId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id])
 
   @@index([userId])
   @@index([projectId])
