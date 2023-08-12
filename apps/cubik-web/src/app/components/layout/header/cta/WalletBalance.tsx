@@ -10,10 +10,9 @@ import React from "react";
 import { getBalances } from "@/utils/helpers/getBalances";
 import { useCurrentTokenPrice } from "@/utils/helpers/tokenprice";
 interface Props {
-  walletAddress: string;
   size?: "sm" | "md" | "lg" | string;
 }
-export const WalletBalance = ({ walletAddress, size }: Props) => {
+export const WalletBalance = ({ size }: Props) => {
   const { user } = useUser();
 
   const {
@@ -27,11 +26,8 @@ export const WalletBalance = ({ walletAddress, size }: Props) => {
     error: balanceFetchingError,
     data,
   } = useQuery(
-    ["balances", walletAddress],
-    () =>
-      getBalances(
-        walletAddress ? (walletAddress as string) : (user?.mainWallet as string)
-      ),
+    ["balances", user?.mainWallet],
+    () => getBalances(user?.mainWallet as string),
     {
       staleTime: 3 * 60 * 1000,
       refetchIntervalInBackground: false,

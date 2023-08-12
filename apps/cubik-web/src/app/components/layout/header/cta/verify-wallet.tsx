@@ -68,16 +68,7 @@ const VerifyWallet = () => {
       variant="cubik"
       isOpen={true}
       onClose={async () => {
-        // await disconnect();
-        // localStorage.removeItem("anon_sig");
-        // localStorage.removeItem("wallet_auth");
-        // setUser(null);
-        // onClose();
-        // FailureToast({
-        //   toast,
-        //   message: "Wallet Verification Failed",
-        // });
-        // localStorage.removeItem("walletName");
+       await disconnect();
       }}
     >
       <ModalOverlay />
@@ -133,15 +124,6 @@ const VerifyWallet = () => {
             variant={"cubikOutlined"}
             onClick={async () => {
               await disconnect();
-              //   localStorage.removeItem("anon_sig");
-              //   localStorage.removeItem("wallet_auth");
-              //   setUser(null);
-              //   onClose();
-              //   FailureToast({
-              //     toast,
-              //     message: "Wallet Verification Failed",
-              //   });
-              //   localStorage.removeItem("walletName");
             }}
           >
             Cancel

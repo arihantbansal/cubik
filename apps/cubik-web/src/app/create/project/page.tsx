@@ -10,18 +10,18 @@ import {
 } from "@/utils/chakra";
 import React, { useState } from "react";
 import CustomStepper from "./components/CustomStepper";
-import { ProjectsModel } from "@cubik/database";
+import { Project } from "@cubik/database";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { StepOne } from "./components/StepOne";
 import { StepTwo } from "./components/StepTwo";
 import { StepThree } from "./components/StepThree";
+import axios from "axios";
 
 type SubmitProjectProps = {
   onSubmit: (_project: Project) => void;
 };
-type Project = ProjectsModel;
 
 export type FormData = {
   projectName: string;
@@ -101,7 +101,9 @@ const CreateProjectPage = () => {
             message: "Tagline can not be more than 120 characters",
           }),
 
-        logo: z.string().nonempty({ message: "Logo can't be empty" }),
+        logo: z.custom<File>((v) => v instanceof File, {
+          message: "Logo is required",
+        }),
 
         email: z.string().nonempty({ message: "Email can't be empty" }),
         category: z
@@ -136,6 +138,12 @@ const CreateProjectPage = () => {
 
   const handleStepThreeSubmit = async (editorData: string) => {
     try {
+      const { data } = await axios.post("https://api.cubik.so/api/v1/upload", {
+        data: getValues("logo"),
+        key: "logos/" + getValues("projectName"),
+        content_type: "image/png",
+      });
+      const imageUrl = data.url;
       //   const imageUrl = await uploadToCloudinary(getValues("logo")).catch(
       //     // replace this with upload to aws
       //     (error) => {
@@ -207,8 +215,7 @@ const CreateProjectPage = () => {
             </>
           )}
           <form
-            // @ts-ignore
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={() => {}}
             style={{
               width: "100%",
               display: "flex",

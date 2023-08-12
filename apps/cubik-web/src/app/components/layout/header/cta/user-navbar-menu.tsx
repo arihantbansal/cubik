@@ -63,7 +63,6 @@ const ProfileDetails = () => {
 };
 
 const UserNavbarMenuButton = () => {
-  const { disconnect } = useWallet();
   const { setUser, logout } = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -123,7 +122,7 @@ const UserNavbarMenuButton = () => {
           fadeDuration={2.5}
           isLoaded={!!user?.username}
         >
-          <Link href={"/submit-project"}>
+          <Link href={"/create/project"}>
             <Box
               as={Button}
               bg="transparent"

@@ -122,7 +122,6 @@ const StepOne: React.FC<StepOneProps> = ({
       colorScheme: colors[Math.floor(Math.random() * colors.length)] || "",
     };
   });
-
   return (
     <>
       <CardBody>
@@ -246,7 +245,7 @@ const StepOne: React.FC<StepOneProps> = ({
             </FormHelperText>
           )}
         </FormControl>
-        <Controller
+        {/* <Controller
           control={control}
           name="category"
           rules={{ required: "Please enter at least 1 Tag." }}
@@ -299,7 +298,7 @@ const StepOne: React.FC<StepOneProps> = ({
                   container: (provided, state) => ({
                     ...provided,
                     border: "none",
-                    background: "surface.input_field",
+                    // background: `surface.${}`,
                     outline: "0px !important",
                     borderRadius: "8px",
                     height: "40px",
@@ -354,7 +353,6 @@ const StepOne: React.FC<StepOneProps> = ({
                   }),
                   dropdownIndicator: (provided, state) => ({
                     ...provided,
-                    background: "",
                     borderColor: "transparent !important",
                     outline: "0px !important",
                     boxShadow: "0",
@@ -367,7 +365,6 @@ const StepOne: React.FC<StepOneProps> = ({
                   }),
                   menu: (provided, state) => ({
                     ...provided,
-                    //border: 'none',
                     transform: "translateY(-10px)",
                     backgroundColor: "#0F0F0F",
                   }),
@@ -422,8 +419,8 @@ const StepOne: React.FC<StepOneProps> = ({
               </FormErrorMessage>
             </FormControl>
           )}
-        />
-        <Controller
+        /> */}
+        {/* <Controller
           control={control}
           name="team"
           render={({
@@ -459,7 +456,6 @@ const StepOne: React.FC<StepOneProps> = ({
                       gap: "0px",
                     }}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={icon}
                       alt={label}
@@ -608,7 +604,7 @@ const StepOne: React.FC<StepOneProps> = ({
               </FormErrorMessage>
             </FormControl>
           )}
-        />
+        /> */}
         <FormControl isRequired isInvalid={Boolean(errors.logo)} id="logo">
           <FormLabel
             fontSize={{ base: "12px", md: "14px" }}
@@ -721,7 +717,8 @@ const StepOne: React.FC<StepOneProps> = ({
                 "logo",
               ]);
 
-              if (isValid) {
+              console.log(isValid, "--is");
+              if (!isValid) {
                 //@ts-ignore
                 onSubmit();
               } else {
