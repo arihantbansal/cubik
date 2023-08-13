@@ -18,7 +18,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [client] = useState(new QueryClient());
+  const [client] = useState(() => new QueryClient());
   return (
     <html lang="en">
       <body className={`${jakarta.className}`}>

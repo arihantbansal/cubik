@@ -2,92 +2,92 @@ import { formatNumberWithK } from "@/utils/helpers/formatWithK";
 import { prisma } from "@cubik/database";
 import Projects, { Project } from "./components";
 
-const getProjects = async () => {
-  const projects = await prisma.projectJoinRound.findMany({
-    where: {
-      status: "APPROVED",
-    },
-    orderBy: {
-      amountRaise: "desc",
-    },
-    select: {
-      _count: {
-        select: {
-          contribution: true,
-        },
-      },
-      id: true,
-      status: true,
-      amountRaise: true,
-      round: {
-        select: {
-          id: true,
-          colorScheme: true,
-          isActive: true,
-          endTime: true,
-          name: true,
-          startTime: true,
-        },
-      },
-      project: {
-        select: {
-          id: true,
-          industry: true,
-          logo: true,
-          name: true,
-          projectLink: true,
-          shortDescription: true,
-          owner: {
-            select: {
-              username: true,
-            },
-          },
-          isArchive: true,
-          contribution: {
-            take: 3,
+// const getProjects = async () => {
+//   const projects = await prisma.projectJoinRound.findMany({
+//     where: {
+//       status: "APPROVED",
+//     },
+//     orderBy: {
+//       amountRaise: "desc",
+//     },
+//     select: {
+//       _count: {
+//         select: {
+//           Contribution: true,
+//         },
+//       },
+//       id: true,
+//       status: true,
+//       amountRaise: true,
+//       Round: {
+//         select: {
+//           id: true,
+//           colorScheme: true,
+//           isActive: true,
+//           endTime: true,
+//           name: true,
+//           startTime: true,
+//         },
+//       },
+//       Project: {
+//         select: {
+//           id: true,
+//           industry: true,
+//           logo: true,
+//           name: true,
+//           projectLink: true,
+//           shortDescription: true,
+//           Owner: {
+//             select: {
+//               username: true,
+//             },
+//           },
+//           isArchive: true,
+//           Contribution: {
+//             take: 3,
 
-            orderBy: {
-              totalAmount: "desc",
-            },
+//             orderBy: {
+//               totalAmount: "desc",
+//             },
 
-            distinct: "userId",
-            select: {
-              user: {
-                select: {
-                  profilePicture: true,
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  });
+//             distinct: "userId",
+//             select: {
+//               User: {
+//                 select: {
+//                   profilePicture: true,
+//                 },
+//               },
+//             },
+//           },
+//         },
+//       },
+//     },
+//   });
 
-  return projects.map(({ id, status, amountRaise, project, round, _count }) => {
-    return {
-      id,
-      projectId: project.id,
-      owner: project.owner,
-      status,
-      name: project.name,
-      logo: project.logo,
-      description: project.shortDescription,
-      amountRaised: amountRaise
-        ? formatNumberWithK(parseInt(amountRaise.toFixed(2)))
-        : "0",
-      industry: JSON.parse(project.industry) as Project["industry"],
-      contributors: {
-        count: _count.contribution,
-        images: project.contribution
-          .filter((c) => c.user.profilePicture !== null)
-          .map((c) => {
-            return c.user.profilePicture!;
-          }),
-      },
-    };
-  });
-};
+//   return projects.map(({ id, status, amountRaise, Project, Round, _count }) => {
+//     return {
+//       id,
+//       projectId: Project.id,
+//       owner: Project.Owner,
+//       status,
+//       name: Project.name,
+//       logo: Project.logo,
+//       description: Project.shortDescription,
+//       amountRaised: amountRaise
+//         ? formatNumberWithK(parseInt(amountRaise.toFixed(2)))
+//         : "0",
+//       industry: JSON.parse(Project.industry) as Project["industry"],
+//       contributors: {
+//         count: _count.Contribution,
+//         images: Project.Contribution.filter(
+//           (c) => c.User.profilePicture !== null
+//         ).map((c) => {
+//           return c.User.profilePicture!;
+//         }),
+//       },
+//     };
+//   });
+// };
 
 function shuffle<T>(array: T[]): T[] {
   const shuffledArray = [...array];
@@ -96,8 +96,9 @@ function shuffle<T>(array: T[]): T[] {
 }
 
 export default async function () {
-  const projects = await shuffle(await getProjects());
-  return <Projects projects={projects} />;
+  // const projects = await shuffle(await getProjects());
+  // return <Projects projects={projects} />;
+  return <>dfd</>;
 }
 
 export const revalidate = 3600;
