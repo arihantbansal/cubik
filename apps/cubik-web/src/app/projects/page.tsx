@@ -13,13 +13,13 @@ const getProjects = async () => {
     select: {
       _count: {
         select: {
-          Contribution: true,
+          contribution: true,
         },
       },
       id: true,
       status: true,
       amountRaise: true,
-      Round: {
+      round: {
         select: {
           id: true,
           colorScheme: true,
@@ -29,7 +29,7 @@ const getProjects = async () => {
           startTime: true,
         },
       },
-      Project: {
+      project: {
         select: {
           id: true,
           industry: true,
@@ -37,13 +37,13 @@ const getProjects = async () => {
           name: true,
           projectLink: true,
           shortDescription: true,
-          Owner: {
+          owner: {
             select: {
               username: true,
             },
           },
           isArchive: true,
-          Contribution: {
+          contribution: {
             take: 3,
 
             orderBy: {
@@ -52,7 +52,7 @@ const getProjects = async () => {
 
             distinct: "userId",
             select: {
-              User: {
+              user: {
                 select: {
                   profilePicture: true,
                 },
@@ -64,26 +64,26 @@ const getProjects = async () => {
     },
   });
 
-  return projects.map(({ id, status, amountRaise, Project, Round, _count }) => {
+  return projects.map(({ id, status, amountRaise, project, round, _count }) => {
     return {
       id,
-      projectId: Project.id,
-      owner: Project.Owner,
+      projectId: project.id,
+      owner: project.owner,
       status,
-      name: Project.name,
-      logo: Project.logo,
-      description: Project.shortDescription,
+      name: project.name,
+      logo: project.logo,
+      description: project.shortDescription,
       amountRaised: amountRaise
         ? formatNumberWithK(parseInt(amountRaise.toFixed(2)))
         : "0",
-      industry: JSON.parse(Project.industry) as Project["industry"],
+      industry: JSON.parse(project.industry) as Project["industry"],
       contributors: {
-        count: _count.Contribution,
-        images: Project.Contribution.filter(
-          (c) => c.User.profilePicture !== null
-        ).map((c) => {
-          return c.User.profilePicture!;
-        }),
+        count: _count.contribution,
+        images: project.contribution
+          .filter((c) => c.user.profilePicture !== null)
+          .map((c) => {
+            return c.user.profilePicture!;
+          }),
       },
     };
   });

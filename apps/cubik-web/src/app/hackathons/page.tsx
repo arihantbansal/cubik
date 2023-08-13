@@ -1,18 +1,71 @@
 import {
   Box,
+  Center,
   Container,
   HStack,
   Stack,
   Tab,
   TabIndicator,
   TabList,
+  TabPanel,
   TabPanels,
   Tabs,
   VStack,
 } from "@/utils/chakra";
 import React from "react";
+import { prisma } from "@cubik/database";
+import { HackathonCard } from "./components/hackathonCard";
+import { EmptyStateHOC } from "../components/common/empty-state/EmptyStateHOC";
 
-const HackathonExplorer = () => {
+export const FutureHackathon = async () => {
+  return await prisma.hackathon.findMany({
+    where: {
+      resultDate: {
+        gte: new Date(),
+      },
+    },
+    select: {
+      background: true,
+      name: true,
+      slug: true,
+      shortDescription: true,
+      registrationStartDate: true,
+      registrationEndDate: true,
+      hackathonEndDate: true,
+      hackathonStartDate: true,
+      votingEndDate: true,
+      votingStartDate: true,
+      prizePool: true,
+      id: true,
+    },
+  });
+};
+export const PastHackathon = async () => {
+  return await prisma.hackathon.findMany({
+    where: {
+      resultDate: {
+        lt: new Date(),
+      },
+    },
+    select: {
+      background: true,
+      name: true,
+      slug: true,
+      shortDescription: true,
+      registrationStartDate: true,
+      registrationEndDate: true,
+      hackathonEndDate: true,
+      hackathonStartDate: true,
+      votingEndDate: true,
+      votingStartDate: true,
+      id: true,
+      prizePool: true,
+    },
+  });
+};
+const HackathonExplorer = async () => {
+  const futureHackathon = await FutureHackathon();
+  const pastHackathon = await PastHackathon();
   return (
     <>
       <Container maxW="7xl" py={{ base: "48px", md: "64px" }}>
@@ -135,7 +188,72 @@ const HackathonExplorer = () => {
               h={{ base: "2.1rem", md: "2.5rem" }}
               mt="4px"
             />
-            <TabPanels></TabPanels>
+            <TabPanels>
+              <TabPanel>
+                {futureHackathon.length > 0 &&
+                  futureHackathon.map((hackathon) => {
+                    return (
+                      <HackathonCard
+                        key={hackathon.slug}
+                        background={hackathon.background}
+                        name={hackathon.name}
+                        slug={hackathon.slug}
+                        prizePool={hackathon.prizePool}
+                        id={hackathon.id}
+                        shortDescription={hackathon.shortDescription}
+                      />
+                    );
+                  })}
+                {futureHackathon.length === 0 && (
+                  <Center
+                    w="full"
+                    border="1px dashed"
+                    borderColor={"neutral.6"}
+                    rounded="12px"
+                    flexDir={"column"}
+                  >
+                    <EmptyStateHOC
+                      heading={"ah, no hackathon currently!"}
+                      subHeading={
+                        "There are no ongoing hackathon and no upcoming hackathons right now to view here, check previous hackathons or come back later!"
+                      }
+                    />
+                  </Center>
+                )}
+              </TabPanel>
+              <TabPanel>
+                {pastHackathon.length > 0 &&
+                  pastHackathon.map((hackathon) => {
+                    return (
+                      <HackathonCard
+                        key={hackathon.slug}
+                        background={hackathon.background}
+                        name={hackathon.name}
+                        slug={hackathon.slug}
+                        prizePool={hackathon.prizePool}
+                        id={hackathon.id}
+                        shortDescription={hackathon.shortDescription}
+                      />
+                    );
+                  })}
+                {pastHackathon.length === 0 && (
+                  <Center
+                    w="full"
+                    border="1px dashed"
+                    borderColor={"neutral.6"}
+                    rounded="12px"
+                    flexDir={"column"}
+                  >
+                    <EmptyStateHOC
+                      heading={"No Hackathon History to View"}
+                      subHeading={
+                        "There are no previous hackathons to view here"
+                      }
+                    />
+                  </Center>
+                )}
+              </TabPanel>
+            </TabPanels>
           </Tabs>
         </VStack>
       </Container>

@@ -15,7 +15,7 @@ const config = {
     }
     return config;
   },
-  transpilePackages: ["@cubik/api", "@cubik/database"],
+  transpilePackages: ["@cubik/database"],
   experimental: { serverActions: true, appDir: true },
   images: {
     domains: [

@@ -13,7 +13,6 @@ interface Props {
   shortDescription: string;
   prizePool: number;
   background: string;
-  timeline: HackathonSchedule;
 }
 
 export const HackathonCard = (props: Props) => {
@@ -145,10 +144,10 @@ export const HackathonCard = (props: Props) => {
                     >
                       {props.name}
                     </Box>
-                    <HackathonStatus
+                    {/* <HackathonStatus
                       show={true}
-                      timeline={props.timeline as unknown as HackathonSchedule}
-                    />
+                      timeline={}
+                    /> */}
                   </HStack>
                   <Box
                     as="p"

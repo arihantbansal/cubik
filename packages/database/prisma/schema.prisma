@@ -190,9 +190,15 @@ model Hackathon {
   prizePool            Int                    @default(0)
   host                 Json?
   track                Json?
-  timeline             Json?
   social               Json?
   slug                 String                 @unique
+  registrationEndDate  DateTime?               @default(now())
+  registrationStartDate DateTime               @default(now())
+  hackathonStartDate  DateTime               @default(now())
+  hackathonEndDate    DateTime               @default(now())
+  votingStartDate     DateTime?               @default(now())
+  votingEndDate       DateTime?              @default(now())
+  resultDate          DateTime?              @default(now())
   createdAt            DateTime               @default(now())
   updatedAt            DateTime               @updatedAt
   isActive             Boolean                @default(true)
