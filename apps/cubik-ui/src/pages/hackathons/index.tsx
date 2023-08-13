@@ -16,7 +16,7 @@ import {
   TabPanels,
   Tabs,
   VStack,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 import Link from 'next/link';
 import RoundStatus from '~/components/common/dates/Status';
 import { formatNumberWithK } from '~/utils/formatWithK';

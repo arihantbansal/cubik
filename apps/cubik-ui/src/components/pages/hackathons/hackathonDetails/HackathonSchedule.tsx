@@ -11,7 +11,7 @@ import {
   Stepper,
   VStack,
   useSteps,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 import React from 'react';
 import { BiCalendar } from 'react-icons/bi';
 import { BsCheckCircle } from 'react-icons/bs';

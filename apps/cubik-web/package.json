@@ -11,7 +11,9 @@
   "dependencies": {
     "@chakra-ui/anatomy": "^2.1.1",
     "@chakra-ui/react": "^2.5.5",
+    "@chakra-ui/stepper": "^2.3.0",
     "@chakra-ui/styled-system": "^2.9.1",
+    "@chakra-ui/theme-tools": "^2.0.18",
     "@coral-xyz/anchor": "^0.27.0",
     "@cubik/database": "workspace:*",
     "@hookform/resolvers": "^2.9.11",
