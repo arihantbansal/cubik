@@ -1,11 +1,8 @@
+"use client";
 import { Container } from "@/utils/chakra";
 import React from "react";
-// const Form = dynamic(() => import("./components/Form"), {
-//   ssr: false,
-//   loading: () => <p>Loading...</p>,
-// });
+
 import Form from "./components/Form";
-import dynamic from "next/dynamic";
 
 const CreateProjectPage = () => {
   return (

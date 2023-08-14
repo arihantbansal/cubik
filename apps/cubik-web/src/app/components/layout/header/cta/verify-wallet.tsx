@@ -51,6 +51,7 @@ const VerifyWallet = () => {
         window.location.href = "/create/profile";
       } else {
         setUser({
+          id: user.id,
           username: user.username!,
           profilePicture: user.profilePicture!,
           mainWallet: publicKey!.toString(),

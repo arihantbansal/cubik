@@ -1,3 +1,4 @@
+"use client";
 import MarkdownEditor from "@/app/components/editor/Editor";
 import {
   Box,

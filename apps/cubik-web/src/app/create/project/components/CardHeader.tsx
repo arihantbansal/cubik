@@ -1,3 +1,4 @@
+"use client";
 import { Box, CardHeader, HStack } from "@/utils/chakra";
 import React from "react";
 import CustomStepper from "./CustomStepper";

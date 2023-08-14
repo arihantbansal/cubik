@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import { UseFormGetValues } from "react-hook-form";
 import { FormData } from "./Form";
 import {
@@ -25,7 +25,15 @@ import {
 import { WalletAddress } from "@/app/components/common/wallet";
 import { useUser } from "@/app/context/user";
 import { ActiveEvent } from "./ActiveEvent";
-
+import { createProjectIx } from "@/utils/contract";
+import { useAnchorWallet } from "@solana/wallet-adapter-react";
+import { createVault, getVault } from "@/utils/squads";
+import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import { web3 } from "@coral-xyz/anchor";
+import { v4 as uuidV4 } from "uuid";
+import { connection } from "@/utils/contract/sdk";
+import { createProject } from "./createProjects";
+import { Prisma, Team } from "@cubik/database";
 interface Props {
   getValues: UseFormGetValues<FormData>;
   isTransactionModalOpen: boolean;
@@ -36,17 +44,120 @@ interface Props {
 export const CreateProjectTransactionModal = (props: Props) => {
   const { user } = useUser();
   const toast = useToast();
+  const [isPending, startTransition] = useTransition();
   const [transactionError, setTransactionError] = useState<string | null>(null);
   const [transactionLoading, setTransactionLoading] = useState<boolean>(false);
   const [projectSubmitted, setProjectSubmitted] = useState<boolean>(false);
+  const anchorWallet = useAnchorWallet();
+  const [projectId, setProjectId] = useState<string | null>(null);
+  const HandleTransactionSign = async () => {
+    setTransactionLoading(true);
+    const id = uuidV4();
+    setProjectId(id);
+    try {
+      const {
+        ix: valutIx,
+        key,
+        createKey,
+      } = await createVault(
+        user?.username as string,
+        anchorWallet as NodeWallet,
+        props.getValues().projectName,
+        props.imageUrl as string
+      );
+      const vaultAuth = await getVault(anchorWallet as NodeWallet, key);
+      const tx = new web3.Transaction();
 
-  const HandleTransactionSign = async () => {};
+      const ix = await createProjectIx(
+        anchorWallet as NodeWallet,
+        0,
+        new web3.PublicKey(vaultAuth)
+      );
+      const { blockhash } = await connection.getLatestBlockhash();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = anchorWallet?.publicKey;
+      tx.add(valutIx);
+      tx.add(ix);
+      const signTx = await anchorWallet?.signTransaction(tx);
+      if (!signTx) return;
+      const serialized_transaction = signTx.serialize();
+      const sig = await connection.sendRawTransaction(serialized_transaction);
+      console.log(sig);
+      if (!sig) return;
+      let team: Team[] = [];
+      team = props
+        .getValues()
+        ?.team?.map((member) => member.value)
+        .map((teamId) => {
+          return {
+            id: uuidV4(),
+            projectId: id,
+            userId: teamId,
+            createdAt: new Date(),
+            isActive: true,
+            isArchive: false,
+            updatedAt: new Date(),
+            hackathonId: null,
+          };
+        });
+      let finalTeam: Team[] = [
+        {
+          id: uuidV4(),
+          projectId: id,
+          userId: user?.id || "",
+          createdAt: new Date(),
+          isActive: true,
+          isArchive: false,
+          updatedAt: new Date(),
+          hackathonId: null,
+        },
+      ];
+      team.map((team) => {
+        if (!finalTeam.find((t) => t.userId === team.userId)) {
+          finalTeam.push(team);
+        }
+      });
+
+      await createProject(
+        {
+          createdAt: new Date(),
+          createKey: createKey.toBase58(),
+          discordLink: props.getValues().discord as string,
+          email: props.getValues().email,
+          failedReason: "",
+          githubLink: props.getValues().github as string,
+          id: id,
+          industry: JSON.stringify(props.getValues().category),
+          isActive: true,
+          isArchive: false,
+          logo: props.imageUrl as string,
+          longDescription: props.editorData,
+          mutliSigAddress: vaultAuth,
+          name: props.getValues().projectName,
+          ogImage: props.imageUrl as string,
+          ownerPublickey: anchorWallet?.publicKey?.toBase58() as string,
+          projectLink: props.getValues().projectLink,
+          projectUserCount: 0,
+          shortDescription: props.getValues().tagline,
+          status: "REVIEW",
+          twitterHandle: props.getValues().twitter,
+          telegramLink: props.getValues().telegram,
+          tx: sig,
+          updatedAt: new Date(),
+        },
+        team
+      );
+      setProjectSubmitted(true);
+    } catch (error) {
+      setTransactionError("Something went wrong. Please try again.");
+      setTransactionLoading(false);
+    }
+  };
   return (
     <>
       <Modal
         variant={"cubik"}
-        // isOpen={props.isTransactionModalOpen}
-        isOpen={true}
+        isOpen={props.isTransactionModalOpen}
         onClose={props.onTransactionModalClose}
       >
         <ModalOverlay />
@@ -71,7 +182,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
             zIndex: "-1",
           }}
         >
-          {!projectSubmitted ? (
+          {projectSubmitted ? (
             <>
               <ModalHeader
                 display={"flex"}
@@ -226,7 +337,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
                 </Center>
                 <VStack gap="6px">
                   <Box as="p" textStyle={{ base: "title3", md: "headline4" }}>
-                    Project Submitted Successfully!
+                    Project Created Successfully!
                   </Box>
                   <Box
                     maxW="22rem"
@@ -234,11 +345,12 @@ export const CreateProjectTransactionModal = (props: Props) => {
                     textStyle={"body3"}
                     color="neutral.8"
                   >
-                    Your project is under review
+                    Apply for the upcoming Round or Hackathon till we review
+                    your project.
                   </Box>
                 </VStack>
-                <Box mx="auto">
-                  <ActiveEvent />
+                <Box mx="auto" maxW="25rem" w="full">
+                  <ActiveEvent projectId={"s"} />
                 </Box>
               </ModalHeader>
             </>

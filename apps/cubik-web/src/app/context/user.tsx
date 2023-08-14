@@ -4,6 +4,7 @@ import axios from "axios";
 import { saveSession } from "@/utils/helpers/saveSession";
 
 export interface User {
+  id: string;
   username: string;
   profilePicture: string;
   mainWallet: string;

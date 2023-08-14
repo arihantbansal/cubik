@@ -10,6 +10,7 @@ export const getOrCreateUser = async (publicKey: string) => {
     select: {
       username: true,
       profilePicture: true,
+      id: true,
     },
   });
 

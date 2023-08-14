@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, useDisclosure } from "@/utils/chakra";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { Cardheader } from "./CardHeader";
 import { StepThree } from "./StepThree";
 import { StepTwo } from "./StepTwo";
@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { StepOne } from "./StepOne";
-// import { useUploadThing } from "@/utils/helpers/uploadthing";
+import { useUploadThing } from "@/utils/helpers/uploadthing";
 
 export type FormData = {
   projectName: string;
@@ -69,10 +69,7 @@ const Form = () => {
     getFieldState,
   } = useForm<FormData>({
     mode: "onChange",
-    defaultValues: {
-      twitter: "https://twitter.com/@username",
-      projectLink: "https://example.com",
-    },
+    defaultValues: {},
     resolver: zodResolver(
       z.object({
         projectName: z
@@ -90,7 +87,7 @@ const Form = () => {
             message: "Tagline can not be more than 120 characters",
           }),
 
-        logo: z.string().nonempty({ message: "Logo can't be empty" }),
+        logo: z.custom<File[]>(),
 
         email: z.string().nonempty({ message: "Email can't be empty" }),
         category: z
@@ -123,27 +120,26 @@ const Form = () => {
     ),
   });
 
-  // const { startUpload } = useUploadThing("imageUploader", {
-  //   onClientUploadComplete: (res) => {
-  //     if (res) {
-  //       console.log(res, "success");
-  //       setImageUrl(res[0]?.url as string);
-  //     } else {
-  //       setError("logo", {
-  //         message: "uploading error. Please try again",
-  //       });
-  //     }
-  //   },
+  const { startUpload } = useUploadThing("imageUploader", {
+    onClientUploadComplete: (res) => {
+      if (res) {
+        console.log(res, "success");
+        setImageUrl(res[0]?.url as string);
+      } else {
+        setError("logo", {
+          message: "uploading error. Please try again",
+        });
+      }
+    },
 
-  //   onUploadError: () => {
-  //     alert("error occurred while uploading");
-  //   },
-  // });
+    onUploadError: (e) => {
+      console.log("error", e);
+    },
+  });
 
   const handleStepThreeSubmit = async (editorData: string) => {
     try {
-      // startUpload(watch("logo"));
-      //   setImageUrl(watch("logo"));
+      startUpload(watch("logo"));
       setEditorData(editorData);
       onTransactionModalOpen();
     } catch (e) {
@@ -154,61 +150,63 @@ const Form = () => {
   };
   return (
     <>
-      <Card
-        maxW={{
-          base: increasedSize ? "98%" : "28rem",
-          md: increasedSize ? "90%" : "32rem",
-        }}
-        mx="auto"
-        padding={{ base: "24px", md: "40px" }}
-      >
-        {!(step === 4) && <Cardheader step={step} />}
-        <form
-          onSubmit={handleSubmit(() => {})}
-          style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "start",
-            gap: "2rem",
+      <Suspense fallback={<>loading</>}>
+        <Card
+          maxW={{
+            base: !increasedSize ? "28rem" : "98%",
+            md: !increasedSize ? "32rem" : "90%",
           }}
+          mx="auto"
+          padding={{ base: "24px", md: "40px" }}
         >
-          {step === 1 && (
-            <StepOne
-              trigger={trigger}
-              onSubmit={handleStepOneSubmit}
-              register={register}
-              errors={errors}
-              setError={setError}
-              setValue={setValue}
-              getValues={getValues}
-              watch={watch}
-              control={control}
-              getFieldState={getFieldState}
-            />
-          )}
-          {step === 2 && (
-            <StepTwo
-              trigger={trigger}
-              onSubmit={handleStepTwoSubmit}
-              register={register}
-              onPrevious={goToPreviousStep}
-              errors={errors}
-              setError={setError}
-            />
-          )}
-          {step === 3 && (
-            <StepThree
-              setIncreasedSize={setIncreasedSize}
-              onPrevious={goToPreviousStep}
-              onSubmit={handleStepThreeSubmit}
-              setLoadingSubmit={setLoadingSubmit}
-              LoadingSubmit={LoadingSubmit}
-            />
-          )}
-          {step === 4 && <>done...</>}
-        </form>
-      </Card>
+          {!(step === 4) && <Cardheader step={step} />}
+          <form
+            onSubmit={handleSubmit(() => {})}
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "start",
+              gap: "2rem",
+            }}
+          >
+            {step === 1 && (
+              <StepOne
+                trigger={trigger}
+                onSubmit={handleStepOneSubmit}
+                register={register}
+                errors={errors}
+                setError={setError}
+                setValue={setValue}
+                getValues={getValues}
+                watch={watch}
+                control={control}
+                getFieldState={getFieldState}
+              />
+            )}
+            {step === 2 && (
+              <StepTwo
+                trigger={trigger}
+                onSubmit={handleStepTwoSubmit}
+                register={register}
+                onPrevious={goToPreviousStep}
+                errors={errors}
+                setError={setError}
+              />
+            )}
+            {step === 3 && (
+              <StepThree
+                setIncreasedSize={setIncreasedSize}
+                onPrevious={goToPreviousStep}
+                onSubmit={handleStepThreeSubmit}
+                setLoadingSubmit={setLoadingSubmit}
+                LoadingSubmit={LoadingSubmit}
+              />
+            )}
+            {step === 4 && <>done...</>}
+          </form>
+        </Card>
+      </Suspense>
       <CreateProjectTransactionModal
         getValues={getValues}
         isTransactionModalOpen={isTransactionModalOpen}

@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   Button,
@@ -27,7 +28,7 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { FormData } from "../page";
+import { FormData } from "./Form";
 
 type StepTwoProps = {
   trigger: UseFormTrigger<FormData>;
