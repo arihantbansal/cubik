@@ -17,6 +17,7 @@
     "@cubik/tsconfig": "workspace:*",
     "@cubik/ui": "workspace:*",
     "@prisma/nextjs-monorepo-workaround-plugin": "^5.1.1",
+    "@solana/wallet-adapter-react": "^0.15.24",
     "@tanstack/react-table": "^8.9.3",
     "@types/node": "20.4.10",
     "@types/react": "18.2.20",
