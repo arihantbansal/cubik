@@ -149,7 +149,7 @@ const StepOne: React.FC<StepOneProps> = ({
             <FormErrorMessage fontSize={{ base: "12px", md: "14px" }}>
               {errors.email && errors.email.message}
             </FormErrorMessage>
-            {getFieldState("email")?.isDirty && (
+            {/* {getFieldState("email")?.isDirty && (
               <FormHelperText
                 fontSize={{ base: "12px", md: "14px" }}
                 color="neutral.6"
@@ -157,7 +157,7 @@ const StepOne: React.FC<StepOneProps> = ({
                 This email will be used to share important information about
                 your project.
               </FormHelperText>
-            )}
+            )} */}
           </FormControl>
         </HStack>
         <FormControl isRequired isInvalid={Boolean(errors.tagline)}>
@@ -275,8 +275,8 @@ const StepOne: React.FC<StepOneProps> = ({
                         style={{ objectFit: "cover" }}
                       />
                     </Center>
-                    ) : (
-                        <>{/* @todo */}</>
+                  ) : (
+                    <>{/* @todo */}</>
                     // <VscCloudUpload size={34} color={"neutral.6"} />
                   )}
                 </Center>
@@ -318,7 +318,7 @@ const StepOne: React.FC<StepOneProps> = ({
             variant={"cubikText"}
             size={{ base: "cubikSmall", md: "cubikMedium" }}
             //rightIcon={
-               // <Box boxSize={{ base: "14px", md: "18px" }} as={FiChevronRight} />
+            // <Box boxSize={{ base: "14px", md: "18px" }} as={FiChevronRight} />
             //}
             ml="auto"
             onClick={async () => {

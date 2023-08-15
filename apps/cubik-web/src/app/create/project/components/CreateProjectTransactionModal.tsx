@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useTransition } from "react";
+import React, { useState } from "react";
 import { UseFormGetValues } from "react-hook-form";
 import { FormData } from "./Form";
 import {
@@ -11,7 +11,6 @@ import {
   Button,
   Center,
   HStack,
-  Link,
   Modal,
   ModalBody,
   ModalContent,
@@ -20,7 +19,6 @@ import {
   ModalOverlay,
   Stack,
   VStack,
-  useToast,
 } from "@/utils/chakra";
 import { WalletAddress } from "@/app/components/common/wallet";
 import { useUser } from "@/app/context/user";
@@ -33,7 +31,9 @@ import { web3 } from "@coral-xyz/anchor";
 import { v4 as uuidV4 } from "uuid";
 import { connection } from "@/utils/contract/sdk";
 import { createProject } from "./createProjects";
-import { Prisma, Team } from "@cubik/database";
+import { Team } from "@cubik/database";
+import { useQuery } from "@tanstack/react-query";
+import { findCount } from "./findCount";
 interface Props {
   getValues: UseFormGetValues<FormData>;
   isTransactionModalOpen: boolean;
@@ -43,20 +43,30 @@ interface Props {
 }
 export const CreateProjectTransactionModal = (props: Props) => {
   const { user } = useUser();
-  const toast = useToast();
-  const [isPending, startTransition] = useTransition();
+
   const [transactionError, setTransactionError] = useState<string | null>(null);
   const [transactionLoading, setTransactionLoading] = useState<boolean>(false);
   const [projectSubmitted, setProjectSubmitted] = useState<boolean>(false);
   const anchorWallet = useAnchorWallet();
+  const userProjectCount = useQuery({
+    queryFn: ({ queryKey }) => findCount(queryKey[1] as string),
+    queryKey: ["userProjectCount", user?.mainWallet],
+    enabled: user?.mainWallet ? true : false,
+  });
   const [projectId, setProjectId] = useState<string | null>(null);
   const HandleTransactionSign = async () => {
     setTransactionLoading(true);
     const id = uuidV4();
     setProjectId(id);
+    if (!userProjectCount.data) {
+      setTransactionLoading(false);
+      return setTransactionError(
+        "Something went wrong. Unable to pull user data"
+      );
+    }
     try {
       const {
-        ix: valutIx,
+        ix: vaultIx,
         key,
         createKey,
       } = await createVault(
@@ -70,13 +80,13 @@ export const CreateProjectTransactionModal = (props: Props) => {
 
       const ix = await createProjectIx(
         anchorWallet as NodeWallet,
-        0,
+        userProjectCount.data,
         new web3.PublicKey(vaultAuth)
       );
       const { blockhash } = await connection.getLatestBlockhash();
       tx.recentBlockhash = blockhash;
       tx.feePayer = anchorWallet?.publicKey;
-      tx.add(valutIx);
+      tx.add(vaultIx);
       tx.add(ix);
       const signTx = await anchorWallet?.signTransaction(tx);
       if (!signTx) return;
@@ -137,7 +147,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
           ogImage: props.imageUrl as string,
           ownerPublickey: anchorWallet?.publicKey?.toBase58() as string,
           projectLink: props.getValues().projectLink,
-          projectUserCount: 0,
+          projectUserCount: userProjectCount.data,
           shortDescription: props.getValues().tagline,
           status: "REVIEW",
           twitterHandle: props.getValues().twitter,
@@ -388,7 +398,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
                   >
                     <HStack align={"start"} gap={{ base: "14px", md: "16px" }}>
                       <Avatar
-                        src={props.imageUrl as string}
+                        src={props.imageUrl}
                         name={props.getValues("projectName")}
                         borderRadius="8px"
                         width={{ base: "60px", md: "80px" }}
