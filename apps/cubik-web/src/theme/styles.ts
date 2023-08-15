@@ -192,7 +192,7 @@ export const styles = {
     },
     '.wallet-adapter-modal-title:after': {
       visibility: 'visible',
-      position: 'absolute',¸¸¸
+      position: 'absolute', 
       top: '-10px',
       left: '32px',
       fontSize: '20px',
