@@ -1,3 +1,4 @@
+"use client";
 import { Box, HStack } from "@/utils/chakra";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
@@ -14,7 +15,7 @@ interface GrantsCarouselProps {
   children: React.ReactElement | React.ReactElement[];
 }
 
-export default function GrantsCarousel({ children }: GrantsCarouselProps) {
+export function GrantsCarousel({ children }: GrantsCarouselProps) {
   const [index, setIndex] = useState(0);
 
   const childrenArray = React.Children.toArray(children);

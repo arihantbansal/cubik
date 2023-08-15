@@ -1,40 +1,119 @@
-"use client";
+import CustomTag from "@/app/components/common/tags/CustomTag";
+import { ProjectExplorerType } from "@/types/explorer";
 import {
   LinkBox,
   Card,
   Center,
-  HStack,
-  Box,
   VStack,
   Stack,
-  SlideFade,
   Avatar,
+  HStack,
+  SlideFade,
   Button,
-  Wrap,
   useMediaQuery,
+  useToast,
+  Box,
 } from "@/utils/chakra";
 import Link from "next/link";
-import { ProjectJoinRoundStatus } from "@prisma/client";
-import { Project } from "../index";
-import Contributors from "./contributors";
-import CustomTag from "@/app/components/common/tags/CustomTag";
-import { useState } from "react";
-import Footer from "./footer";
-// import { isPast } from "date-fns";
+import { useEffect, useState } from "react";
+import { formatNumberWithK } from "@/utils/helpers/formatNumberWithK";
+import ProjectsContributorsNumber from "../ProjectContributorsNumber";
+import { RemoveToast, SuccessToast } from "@/app/components/toasts/Toasts";
+import Image from "next/image";
 
-const ProjectCard = ({
-  id,
-  projectId,
-  owner: { username },
-  status,
+const ProjectEventBanner = ({
   name,
-  logo,
-  description,
-  amountRaised,
-  contributors,
-  industry,
-}: Project) => {
+  bg,
+  color,
+}: {
+  name: string;
+  bg?: string;
+  color?: string;
+}) => {
+  console.log("backgroundImge", bg);
+  return (
+    <Center
+      w="full"
+      bg={color ? `surface.${color}.3` : "transparent"}
+      borderTopRadius={"16px"}
+      position={"relative"}
+      overflow={"hidden"}
+    >
+      {bg && (
+        <Center
+          zIndex={"0"}
+          alignItems={"end"}
+          bg="red"
+          w="28rem"
+          h="8.5rem"
+          transform={"translateY(31%)"}
+          position={"absolute"}
+          overflow={"hidden"}
+        >
+          <Image
+            src={bg as string}
+            alt={name as string}
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center"
+          />
+        </Center>
+      )}
+      <HStack
+        zIndex={"1"}
+        w="full"
+        gap="8px"
+        padding={"12px 24px"}
+        borderTopRadius={"16px"}
+        justifyContent="space-between"
+      >
+        <Box
+          w="full"
+          as="p"
+          noOfLines={2}
+          whiteSpace={"nowrap"}
+          color={color ? `surface.${color}.1` : "transparent"}
+          textStyle={"overline4"}
+          overflow="visible"
+          pt="0.1rem"
+          lineHeight={"auto"}
+          textTransform="uppercase"
+          letterSpacing={"0.2em"}
+          fontSize={{ base: "8px", md: "10px" }}
+          textShadow={"0px 5px 7px rgb(0 0 0)"}
+        >
+          Participating In
+        </Box>
+        <Box
+          overflow="visible"
+          as="p"
+          w="fit-content"
+          whiteSpace={"nowrap"}
+          textStyle={{ base: "title6", md: "title5" }}
+          color={`surface.${color}.1`}
+          textShadow={"0px 5px 7px rgb(0 0 0)"}
+        >
+          {name}
+        </Box>
+      </HStack>
+    </Center>
+  );
+};
+export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
+  // use media query to detect mobile screen
+
+  const [isLargerThan767] = useMediaQuery("(min-width: 767px)");
+  const toast = useToast();
+  // const addProject = useListStore((state) => state.addProject);
+  // const removeProject = useListStore((state) => state.removeProject);
+  // const projectList = useListStore((state) => state.projectList);
+
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  // const [addedToList, setAddedToList] = useState(
+  //   !!projectList.find((item) => item.id === project.id)
+  // );
+
+  const industry = JSON.parse(project.industry);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -43,15 +122,36 @@ const ProjectCard = ({
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
+  // const handleAddOrRemoveProject = () => {
+  //   if (addedToList) {
+  //     removeProject(project.id);
+  //     setAddedToList(false);
+  //     RemoveToast({ toast, message: "Project removed from list" });
+  //   } else {
+  //     // addProject(projectJoinRound.project);
+  //     setAddedToList(true);
+  //     SuccessToast({ toast, message: "Project added to list" });
+  //   }
+  // };
 
-  console.log(isHovered);
+  // useEffect(() => {
+  //   setAddedToList(!!projectList.find((item) => item.id === project.id));
+  // }, [projectList]);
+
+  const genrateLink = (): string => {
+    if (project.projectEvent.eventName === "hackathon") {
+      return `/${project.ownerName}/hackathon/${project.projectEvent.id}`;
+    }
+    if (project.projectEvent.eventName === "round") {
+      return `/${project.ownerName}/${project.id}/${project.projectEvent.id}`;
+    }
+    return `/${project.ownerName}/${project.id}`;
+  };
 
   return (
     <LinkBox
       as={Link}
-      href={`/${username}/${projectId}/${
-        status === ProjectJoinRoundStatus.APPROVED && id
-      }`}
+      href={genrateLink()}
       w="full"
       maxW={{
         base: "92vw",
@@ -77,8 +177,6 @@ const ProjectCard = ({
           xl: "25.5rem",
         }}
         //  onTouchStart={() => setIsHovered((prevState) => !prevState)}
-
-        // on hover set isHovered to true
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         gap="0"
@@ -86,18 +184,18 @@ const ProjectCard = ({
         _hover={{
           border: "none",
           background: "neutral.3",
-          //  borderColor: `surface.${props.colorScheme}.3`,
+          //  borderColor: `surface.${project.colorScheme}.3`,
         }}
         _active={{
           // border: '2px solid',
           background: "neutral.3",
-          // borderColor: `surface.${props.colorScheme}.3`,
+          borderColor: `surface.${"teal"}.3`,
         }}
       >
-        {/* card outline */}
+        {/* Todo: fix the multi contribute option */}
         {/* {addedToList && (
           <Center
-            position={'absolute'}
+            position={"absolute"}
             w="1.6rem"
             h="1.6rem"
             rounded="full"
@@ -108,51 +206,12 @@ const ProjectCard = ({
             <HiCheck size={16} color="#001F1B" />
           </Center>
         )} */}
-        {/* card Header */}
-        {/* {isPast(startTime) && !isPast(endTime) && (
-          // if project is participating in a round then make it visible else don't show it
-          <Center
-            display={
-              status === ProjectJoinRoundStatus.APPROVED ? "flex" : "none"
-            }
-            w="full"
-            bg={`surface.${colorScheme}.3`}
-            borderTopRadius={"16px"}
-          >
-            <HStack
-              w="full"
-              gap="8px"
-              borderColor="red"
-              borderBottom={"red"}
-              padding={"12px 24px"}
-              borderTopRadius={"16px"}
-              justifyContent="space-between"
-            >
-              <Box
-                w="full"
-                as="p"
-                noOfLines={1}
-                whiteSpace={"nowrap"}
-                color={`surface.${colorScheme}.1`}
-                textStyle={"overline4"}
-                textTransform="uppercase"
-                letterSpacing={"0.2em"}
-                fontSize={{ base: "8px", md: "10px" }}
-              >
-                Participating In
-              </Box>
-              <Box
-                as="p"
-                w="fit-content"
-                whiteSpace={"nowrap"}
-                textStyle={{ base: "title6", md: "title5" }}
-                color={`surface.${colorScheme}.1`}
-              >
-                {roundName}
-              </Box>
-            </HStack>
-          </Center>
-        )} */}
+
+        <ProjectEventBanner
+          name={project.projectEvent.name}
+          bg={project.projectEvent?.bg ?? undefined}
+          color={project.projectEvent.color ? "teal" : "white"}
+        />
         <VStack
           w="full"
           alignItems={"start"}
@@ -173,8 +232,8 @@ const ProjectCard = ({
               justifyContent={"space-between"}
             >
               <Avatar
-                src={logo}
-                name={name}
+                src={project.logo}
+                name={project.title}
                 borderRadius={"8px"}
                 width={{ base: "3.4rem", md: "4rem" }}
                 height={{ base: "3.4rem", md: "4rem" }}
@@ -191,14 +250,19 @@ const ProjectCard = ({
                     color="neutral.11"
                     textStyle={{ base: "title4", md: "title3" }}
                   >
-                    {name}
+                    {project.title}
                   </Box>
                   <Box
                     as="p"
                     color="#A8F0E6"
                     textStyle={{ base: "title4", md: "title3" }}
                   >
-                    ${amountRaised}
+                    $
+                    {formatNumberWithK(
+                      (parseInt(
+                        project.projectEvent.amount?.toFixed(2) as string
+                      ) as number) ?? 0
+                    )}
                   </Box>
                 </HStack>
                 <HStack
@@ -218,7 +282,7 @@ const ProjectCard = ({
                       textTransform="lowercase"
                       w="full"
                     >
-                      by @{username}
+                      by @{project.ownerName}
                     </Box>
                   </Center>
                   <Box
@@ -231,30 +295,123 @@ const ProjectCard = ({
                 </HStack>
               </VStack>{" "}
             </Stack>
-            <Box
-              color="neutral.9"
-              as="p"
-              textStyle={{ base: "body5", md: "body4" }}
-              sx={{
-                noOfLines: { base: "4", md: "3" },
-              }}
-              alignContent="start"
-              alignItems={"start"}
-              textAlign={"start"}
-            >
-              {description}
-            </Box>
+            {project.projectShortDescription && (
+              <Box
+                color="neutral.9"
+                as="p"
+                textStyle={{ base: "body5", md: "body4" }}
+                sx={{
+                  noOfLines: { base: "4", md: "3" },
+                }}
+                alignContent="start"
+                alignItems={"start"}
+                textAlign={"start"}
+              >
+                {project.projectShortDescription}
+              </Box>
+            )}
           </VStack>
-
-          <Footer
-            isHovered={isHovered}
-            industry={industry}
-            contributors={contributors}
-          />
+          {/* card footer */}
+          {project.contributors && (
+            <VStack
+              marginTop={"0px !important"}
+              p="8px 24px 24px 24px"
+              w="full"
+              position={"relative"}
+            >
+              <HStack
+                display={isLargerThan767 && isHovered ? "none" : "flex"}
+                overflowX="hidden"
+                w="full"
+                justify="space-between"
+              >
+                <Box
+                  overflow="hidden"
+                  w="full"
+                  flex="4"
+                  minWidth="0"
+                  position="relative"
+                  _after={{
+                    content: '""',
+                    position: "absolute",
+                    top: "45%",
+                    right: "0%",
+                    transform: "translateY(-50%)",
+                    height: "2.4rem",
+                    width: "3rem",
+                    background:
+                      "linear-gradient(90deg, #0C0D0D00 0%, #0C0D0D 80%)",
+                  }}
+                >
+                  <HStack
+                    overflow="clip"
+                    w="200%"
+                    mt="auto"
+                    justify="start"
+                    whiteSpace="nowrap" // Set whiteSpace to nowrap
+                  >
+                    {industry.map((tag: any, key: any) => {
+                      return (
+                        <CustomTag color={tag.label} key={key}>
+                          {tag.label}
+                        </CustomTag>
+                      );
+                    })}
+                  </HStack>
+                </Box>
+                <ProjectsContributorsNumber
+                  contributors={project.contributors as any[]}
+                  contributorsCount={project.contributorCount}
+                />
+              </HStack>
+              {isLargerThan767 && (
+                <SlideFade in={isHovered} offsetY="0px" reverse>
+                  <HStack
+                    zIndex={"9"}
+                    w="full"
+                    justifyContent="start"
+                    position="absolute"
+                    left="0"
+                    p="8px 24px 24px 24px"
+                    bottom="0px"
+                    backgroundColor={isHovered ? "neutral.3" : "#0C0D0D"}
+                    borderRadius="36px"
+                    justify={"space-between"}
+                  >
+                    <Button
+                      as={Link}
+                      href={genrateLink()}
+                      background={"#1D1F1E"}
+                      color="white"
+                      fontWeight={"700"}
+                      borderColor="transparent"
+                      outline="none"
+                      //  w="calc(100% - 2.2rem)"
+                      w="calc(100% )"
+                      variant="connect_wallet"
+                    >
+                      View Details
+                    </Button>
+                    {/* <IconButton
+                  background={'#1D1F1E'}
+                  color="white"
+                  fontWeight={'700'}
+                  borderColor="transparent"
+                  outline="none"
+                  onClick={handleAddOrRemoveProject}
+                  aria-label="link"
+                  variant="connect_wallet"
+                  icon={
+                    addedToList ? <MdRemove size={26} /> : <BsPlus size={26} />
+                  }
+                /> */}
+                  </HStack>
+                </SlideFade>
+              )}
+            </VStack>
+          )}
         </VStack>
       </Card>
     </LinkBox>
   );
 };
-
-export default ProjectCard;

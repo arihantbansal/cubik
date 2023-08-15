@@ -3,7 +3,7 @@ import { Box, Tag } from "@/utils/chakra";
 import React, { forwardRef } from "react";
 
 interface CustomTagProps {
-  // color?: string;
+  color?: string;
   children: React.ReactNode;
   // onResize?: () => void;
   // ref?: React.Ref<HTMLDivElement>;

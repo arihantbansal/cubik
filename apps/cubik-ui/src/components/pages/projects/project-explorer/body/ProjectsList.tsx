@@ -29,6 +29,7 @@ import { projectRouter } from '@cubik/api/src/router';
 import { ProjectExplorerType } from '@cubik/common-types';
 import Image from 'next/image';
 import EmptyProjectsState from './empty-state/ProjectsEmptyState';
+import EmptyStateHOC from "~/components/HOC/EmptyState";
 
 const ProjectEventBanner = ({ name, bg, color }: { name: string; bg?: string; color?: string }) => {
   console.log('backgroundImge', bg);
@@ -395,14 +396,14 @@ const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
 const ProjectsList = ({ explorerProjects }: { explorerProjects: ProjectExplorerType[] }) => {
   return (
     <Wrap
-      overflow={'visible'}
+      overflow={"visible"}
       py="8px"
-      spacing={{ base: '1.8rem', md: '1.5rem' }}
+      spacing={{ base: "1.8rem", md: "1.5rem" }}
       w="100%"
       margin="0"
-      justify={'center'}
+      justify={"center"}
       align="center"
-      direction={{ base: 'column', sm: 'row', md: 'row' }}
+      direction={{ base: "column", sm: "row", md: "row" }}
     >
       {explorerProjects.length > 0 ? (
         explorerProjects.map((project, key: React.Key | null | undefined) => {
@@ -410,7 +411,12 @@ const ProjectsList = ({ explorerProjects }: { explorerProjects: ProjectExplorerT
         })
       ) : (
         <>
-          <EmptyProjectsState />
+          <EmptyStateHOC
+            heading={"No Project Found"}
+            subHeading={
+              "We couldn`t find any projects matching your search. Please try a different query or check back later."
+            }
+          />
         </>
       )}
     </Wrap>
