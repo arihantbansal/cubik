@@ -1,3 +1,5 @@
+"use client";
+import WalletContext from "@/context/walletContext";
 import { Provider } from "@/layouts/Provider";
 import { Plus_Jakarta_Sans } from "next/font/google";
 const jakarta = Plus_Jakarta_Sans({
@@ -13,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${jakarta.className}`}>
-        <Provider>{children}</Provider>
+        <WalletContext>
+          <Provider>{children}</Provider>
+        </WalletContext>
       </body>
     </html>
   );
