@@ -65,8 +65,6 @@ type projectDataType = {
 const SponsorSubmissionBar = ({ value }: { value: number }) => {
   return (
     <HStack gap="8px">
-      // make sure the value is normalized to 100 before passing it to the
-      progress bar
       <Text fontSize={{ base: "14px", md: "16px" }} fontWeight="600">
         {value}
       </Text>
@@ -119,8 +117,7 @@ const ProjectStatusModal = ({
           textTransform={"capitalize"}
         >
           {status}
-        </Box>
-        // only show it to admin
+        </Box> 
         <Center
           onClick={onOpen}
           width={{ base: "16px", sm: "18px", md: "20px" }}
@@ -223,8 +220,8 @@ const ProjectStatusModal = ({
                       outline: "none",
                     }}
                   >
-                    {prizeBreakdown.map((prize) => (
-                      <option value={prize.value}> {prize.title}</option>
+                    {prizeBreakdown.map((prize, index) => (
+                      <option key={index} value={prize.value}> {prize.title}</option>
                     ))}
                   </Select>
                 </Center>
@@ -457,7 +454,7 @@ const InnerTable = ({
         },
       },
     ],
-    []
+   []
   );
 
   const innerTableInstance = useReactTable({
@@ -471,7 +468,7 @@ const InnerTable = ({
       <ChakraTable px="4rem" size="sm" variant="unstyled">
         <Tbody>
           {Array.from({ length: 6 }, (_, index) => (
-            <Tr>
+            <Tr key={index}>
               <Td p="16px">
                 <Skeleton w="2rem" height="10px" />
               </Td>
@@ -501,8 +498,9 @@ const InnerTable = ({
       <Thead color="neutral.8" fontFamily={"Plus Jakarta Sans, sans-serif"}>
         {innerTableInstance.getHeaderGroups().map((headerGroup) => (
           <Tr key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
+            {headerGroup.headers.map((header, index) => (
               <Th
+                key={index}
                 p="16px"
                 fontWeight="500"
                 color="#636666"
@@ -524,7 +522,7 @@ const InnerTable = ({
           <Fragment key={innerRow.id}>
             <Tr>
               {innerRow.getVisibleCells().map((cell, cellIndex) => (
-                <Td
+                <Td 
                   fontSize={{ base: "14px", md: "16px" }}
                   fontWeight="600"
                   p="16px"
@@ -558,7 +556,6 @@ const HackathonSponsorsView = () => {
     }));
   };
 
-  if (sponsorsData.length === 0) return <EmptyState />;
   const data = useMemo(() => {
     return sponsorsData.map((sponsor) => {
       return {
@@ -606,6 +603,8 @@ const HackathonSponsorsView = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
+  if (sponsorsData.length === 0) return <EmptyState />;
+
   return (
     <div>
       <TableContainer>
@@ -625,8 +624,9 @@ const HackathonSponsorsView = () => {
                   fontSize={{ base: "12px", md: "14px" }}
                   textTransform={"capitalize"}
                 ></Th>
-                {headerGroup.headers.map((header) => (
+                {headerGroup.headers.map((header, index) => (
                   <Th
+                  key={index}
                     p="16px"
                     fontWeight="600"
                     fontSize={{ base: "12px", md: "14px" }}
