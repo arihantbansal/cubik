@@ -26,7 +26,7 @@ export default function RootLayout({
           <QueryClientProvider client={client}>
             <AuthProvider>
               <Providers>
-                <VStack maxW="full" w="100%" h="100vh" p="0" bg="black">
+                <VStack mt={10} maxW="full" w="100%" h="100vh" p="0" bg="black">
                   <Header />
                   {children}
                 </VStack>

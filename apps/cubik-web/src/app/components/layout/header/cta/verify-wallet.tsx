@@ -20,19 +20,16 @@ import {
   createMessage,
   verifyMessage,
 } from "@/utils/helpers/getSignatureMessage";
-import * as anchor from "@coral-xyz/anchor";
+import { utils } from "@coral-xyz/anchor";
 import { getOrCreateUser } from "./get-user";
-import { useRouter } from "next/router";
-import { redirect } from "next/navigation";
-import { useTransition } from "react";
-import { User } from ".";
+import { useRouter } from "next/navigation";
 import { useUser } from "@/app/context/user";
 
 const VerifyWallet = () => {
   const { publicKey, disconnect, signMessage } = useWallet();
   const [isLoading, setIsLoading] = useState(false);
   const { setUser } = useUser();
-
+  const router = useRouter();
   const verify = async () => {
     if (!publicKey && !signMessage) return;
 
@@ -40,7 +37,7 @@ const VerifyWallet = () => {
       setIsLoading(true);
 
       const msg = await createMessage();
-      const sig = anchor.utils.bytes.bs58.encode(await signMessage!(msg));
+      const sig = utils.bytes.bs58.encode(await signMessage!(msg));
 
       await verifyMessage(sig, publicKey!);
       const user = await getOrCreateUser(publicKey!.toString());
@@ -48,7 +45,7 @@ const VerifyWallet = () => {
       console.log(user);
 
       if (user === null) {
-        window.location.href = "/create/profile";
+        router.push("/create/profile");
       } else {
         setUser({
           id: user.id,
@@ -69,7 +66,7 @@ const VerifyWallet = () => {
       variant="cubik"
       isOpen={true}
       onClose={async () => {
-       await disconnect();
+        await disconnect();
       }}
     >
       <ModalOverlay />
