@@ -31,6 +31,7 @@ const CustomStepper = ({ steps, currentStep }: CustomStepperProps) => {
 
         return (
           <Box
+            maxW="fit-content"
             key={step.index}
             w={{ base: "fit-content", sm: "full" }}
             rounded="full"

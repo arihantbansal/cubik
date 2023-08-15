@@ -32,7 +32,7 @@ export type FormData = {
 
 const Form = () => {
   const [step, setStep] = useState<number>(1);
-  const [increasedSize, setIncreasedSize] = useState<boolean>(false);
+  const [increasedSize, setIncreasedSize] = useState<boolean>(true);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [editorData, setEditorData] = useState<string | null>(null);
   const [LoadingSubmit, setLoadingSubmit] = useState<boolean>(false);
@@ -83,8 +83,8 @@ const Form = () => {
         tagline: z
           .string()
           .nonempty({ message: "Tagline can't be empty" })
-          .max(120, {
-            message: "Tagline can not be more than 120 characters",
+          .max(80, {
+            message: "Tagline can not be more than 80 characters",
           }),
 
         logo: z.custom<File[]>(),
@@ -154,16 +154,18 @@ const Form = () => {
         <Card
           maxW={{
             base: !increasedSize ? "28rem" : "98%",
-            md: !increasedSize ? "32rem" : "90%",
+            md: !increasedSize ? "full" : "3xl",
           }}
+          minW={{ base: "full", md: "48rem" }}
+          w="full"
           mx="auto"
-          padding={{ base: "24px", md: "40px" }}
+          padding={{ base: "24px", md: "38px" }}
         >
           {!(step === 4) && <Cardheader step={step} />}
           <form
             onSubmit={handleSubmit(() => {})}
             style={{
-              width: "100%",
+              width: "full",
               display: "flex",
               flexDirection: "column",
               alignItems: "start",

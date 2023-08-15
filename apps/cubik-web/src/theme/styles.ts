@@ -57,18 +57,18 @@ export const styles = {
       height: '100%',
     },
     // ---- wallet adapter ui ---
-    '.wallet-adapter-modal-overlay': {
+    '.wallet-adapter-modal-overlay': { 
       bg: 'rgba(0, 0, 0, 0.12)',
       backdropFilter: 'blur(12px)',
     },
     '.wallet-adapter-modal-wrapper': {
       borderRadius: '20px',
       border: '1px solid #141414',
-      backgroundColor: `#08080880`,
+      backgroundColor: `#08080880 !important`,
       boxShadow: '0px 2px 120px #000000',
       backdropFilter: 'blur(10px)',
       padding: '44px 0px 16px 0px',
-      gap: '0px',
+      gap: '18px !important',
       width: { base: '10px', md: '416px' },
       overflow: 'hidden',
     },
@@ -155,7 +155,7 @@ export const styles = {
         },
       },
     '.wallet-adapter-button-start-icon': {
-      margin: '0',
+      margin: '0px !important',
       width: { base: '48px !important', md: '32px !important' },
       height: { base: '48px !important', md: '32px !important' },
       display: 'flex',
@@ -187,12 +187,12 @@ export const styles = {
     '.wallet-adapter-modal-title': {
       visibility: 'hidden',
       position: 'relative',
-      padding: '0px',
-      height: '1rem',
+      padding: '0px !important',
+      height: '0rem',
     },
     '.wallet-adapter-modal-title:after': {
       visibility: 'visible',
-      position: 'absolute',
+      position: 'absolute',¸¸¸
       top: '-10px',
       left: '32px',
       fontSize: '20px',

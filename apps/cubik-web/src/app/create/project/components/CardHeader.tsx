@@ -28,8 +28,10 @@ export const Cardheader = ({ step }: Props) => {
         <HStack
           pt="18px"
           w="full"
+          align="center"
+          justify="center"
           spacing={{ base: "0px", md: "8px" }}
-          justify={{ base: "center", md: "space-between" }}
+          // justify={{ base: "center", md: "space-between" }}
         >
           <CustomStepper
             steps={[

@@ -143,7 +143,7 @@ export const CategorySelect = ({
                   inputContainer: (provided, state) => ({
                     ...provided,
                     ps: "8px",
-                    height: "2rem",
+                    height: "40px",
                     fontSize: { base: "12px", md: "14px" },
                     backgroundColor: "transparent",
                     //  border: 'none',
@@ -357,7 +357,7 @@ export const TeamSelect = ({
               inputContainer: (provided, state) => ({
                 ...provided,
                 ps: "8px",
-                height: "2rem",
+                height: "40px",
                 fontSize: { base: "12px", md: "14px" },
                 backgroundColor: "transparent",
                 border: "none",
