@@ -1,8 +1,8 @@
 "use client";
 import { Box, Center, HStack, chakra, keyframes } from "@/utils/chakra";
 import { differenceInDays, isFuture, isPast } from "date-fns";
-import { BiInfoCircle } from "react-icons/bi";
-import { AiTwotoneCalendar } from "react-icons/ai";
+//import { BiInfoCircle } from "react-icons/bi";
+//import { AiTwotoneCalendar } from "react-icons/ai";
 
 const random = () => Math.floor(Math.random() * 10);
 
@@ -57,11 +57,12 @@ export const RoundStatus = ({
         minH={"22px"}
         mx={1}
       >
-        <Box
+        {/*  @todo  */}
+        {/* <Box
           as={AiTwotoneCalendar}
           color="white"
           boxSize={["12px", "14px", "18px"]}
-        />
+        /> */}
         <Box
           p="8px 12px"
           ps="0px"
@@ -114,11 +115,12 @@ export const RoundStatus = ({
         spacing="8px"
         mx={1}
       >
-        <Box
+        {/*  @todo  */}
+        {/* <Box
           as={BiInfoCircle}
           color="white"
           boxSize={["12px", "14px", "18px"]}
-        />
+        /> */}
         <Box
           as="p"
           whiteSpace="pre"

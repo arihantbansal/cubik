@@ -13,7 +13,7 @@ import {
 } from "@/utils/chakra";
 import { formatNumberWithK } from "@/utils/helpers/formatWithK";
 import React from "react";
-import { BiChevronRight } from "react-icons/bi";
+//import { BiChevronRight } from "react-icons/bi";
 import { timeSince } from "@/utils/helpers/timeSince";
 import { tokenList } from "@/utils/helpers/tokenlist";
 
@@ -202,7 +202,8 @@ export const ContributionRow = ({
         </Skeleton>
       </Td>
       <Td px="12px">
-        <BiChevronRight size="24" />
+        {/*  @todo  */}
+        {/* <BiChevronRight size="24" />  */}
       </Td>
     </Tr>
   );

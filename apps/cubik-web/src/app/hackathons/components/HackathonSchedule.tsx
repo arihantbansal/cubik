@@ -11,10 +11,10 @@ import {
   useSteps,
   VStack,
 } from "@/utils/chakra";
-import { CgTimelapse } from "react-icons/cg";
+//import { CgTimelapse } from "react-icons/cg";
 import { isFuture, isPast } from "date-fns";
-import { BsCheckCircle } from "react-icons/bs";
-import { BiCalendar } from "react-icons/bi";
+//import { BsCheckCircle } from "react-icons/bs";
+//import { BiCalendar } from "react-icons/bi";
 import { formateDateInMonths } from "@/utils/helpers/formateDateInMonths";
 interface Props {
   slug: string;
@@ -140,22 +140,22 @@ export const HackathonSchedule = ({
               </Box>
               <HStack gap="12px">
                 <HStack bg="neutral.4" rounded="12px" p="12px" spacing="8px">
-                  <Box
+                  {/* <Box // @todo: add icon
                     as={BiCalendar}
                     color="white"
                     boxSize={{ base: "16px", md: "22px" }}
-                  />
+                  /> */}
                   <Box as="p" textStyle={"title4"} color="neutral.11">
                     {formateDateInMonths(event.start)}
                   </Box>
                 </HStack>
                 {event.endDate && (
                   <HStack bg="neutral.4" rounded="12px" p="12px" spacing="8px">
-                    <Box
+                    {/* <Box // @todo: add icon
                       as={BiCalendar}
                       color="white"
                       boxSize={{ base: "16px", md: "22px" }}
-                    />
+                    /> */}
                     <Box as="p" textStyle={"title4"} color="neutral.11">
                       {formateDateInMonths(event.endDate)}
                     </Box>

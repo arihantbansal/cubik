@@ -18,8 +18,8 @@ import {
 } from "@/utils/chakra";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Link from "next/link";
-import { BiChevronDown, BiUser } from "react-icons/bi";
-import { MdPowerSettingsNew, MdUpload } from "react-icons/md";
+// import { BiChevronDown, BiUser } from "react-icons/bi";
+//import { MdPowerSettingsNew, MdUpload } from "react-icons/md";
 import Username from "@/app/components/common/username";
 import { WalletAddress } from "@/app/components/common/wallet";
 import { useUser } from "@/app/context/user";
@@ -92,11 +92,12 @@ const UserNavbarMenuButton = () => {
               alignItems="center"
               justifyContent={"start"}
               leftIcon={
-                <Box
-                  as={BiUser}
-                  boxSize={{ base: "16px", sm: "18px", md: "20px" }}
-                  color={"#ADB8B6"}
-                />
+                <> {/*  @todo  */} </>
+                // <Box
+                //   as={BiUser}
+                //   boxSize={{ base: "16px", sm: "18px", md: "20px" }}
+                //   color={"#ADB8B6"}
+                // />
               }
               iconSpacing="8px"
               p={{ base: "12px", md: "8px" }}
@@ -133,13 +134,14 @@ const UserNavbarMenuButton = () => {
               display={"flex"}
               alignItems="center"
               justifyContent={"start"}
-              leftIcon={
-                <Box
-                  as={MdUpload}
-                  boxSize={{ base: "16px", sm: "18px", md: "20px" }}
-                  color={"#ADB8B6"}
-                />
-              }
+              // leftIcon={
+              //   <Box
+              //     as={MdUpload}
+              //     boxSize={{ base: "16px", sm: "18px", md: "20px" }}
+              //     color={"#ADB8B6"}
+              //   />
+              // }
+              //   @todo
               iconSpacing="8px"
               p={{ base: "12px", md: "8px" }}
               sx={{
@@ -173,13 +175,14 @@ const UserNavbarMenuButton = () => {
             display={"flex"}
             alignItems="center"
             justifyContent={"start"}
-            leftIcon={
-              <Box
-                as={MdPowerSettingsNew}
-                boxSize={{ base: "16px", sm: "18px", md: "20px" }}
-                color={"#ADB8B6"}
-              />
-            }
+            // leftIcon={
+            //   <Box
+            //     as={MdPowerSettingsNew}
+            //     boxSize={{ base: "16px", sm: "18px", md: "20px" }}
+            //     color={"#ADB8B6"}
+            //   />
+            // }
+            //   @todo
             p={{ base: "12px", md: "8px" }}
             onClick={handleSignOut}
             sx={{
@@ -258,7 +261,8 @@ const UserNavbarMenuButton = () => {
           as={Button}
           w={"fit-content"}
           p="0"
-          rightIcon={<BiChevronDown size={26} color="#A8F0E6" />}
+          //  @todo
+          // rightIcon={<BiChevronDown size={26} color="#A8F0E6" />}
         >
           <Skeleton
             fadeDuration={2.5}

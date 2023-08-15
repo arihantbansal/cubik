@@ -1,5 +1,5 @@
 import { Center, Avatar as ChakraAvatar } from "@/utils/chakra";
-import { BiUpArrowAlt } from "react-icons/bi";
+//import { BiUpArrowAlt } from "react-icons/bi";
 
 const ProfilePicture = ({
   onOpen,
@@ -36,7 +36,7 @@ const ProfilePicture = ({
         p="0.1rem"
         zIndex={"10"}
       >
-        <BiUpArrowAlt color="black" />
+        {/* todo: <BiUpArrowAlt color="black" /> */}
       </Center>
       <ChakraAvatar src={pfp} width="84px" height="84px" borderRadius={"8px"} />
     </Center>

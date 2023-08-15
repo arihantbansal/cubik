@@ -2,7 +2,7 @@
 import { useClipboard, Center, HStack, Text } from "@/utils/chakra";
 import { useToast } from "@chakra-ui/react";
 import { FC, SetStateAction, useEffect } from "react";
-import { TbCopy } from "react-icons/tb";
+//import { TbCopy } from "react-icons/tb";
 // import { SuccessToast } from "../toasts/Toasts";
 
 type PropsType = {
@@ -137,7 +137,8 @@ export const WalletAddress: FC<PropsType> = ({
           }}
           as="button"
         >
-          <TbCopy width={3} height={3} color={fillColor} />
+          {/*  @todo  */}
+          {/* <TbCopy width={3} height={3} color={fillColor} /> */}
         </Center>
       )}
     </HStack>

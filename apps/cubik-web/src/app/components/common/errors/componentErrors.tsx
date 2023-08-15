@@ -9,7 +9,7 @@ import {
   Box,
   Center,
 } from "@/utils/chakra";
-import { BiError } from "react-icons/bi";
+//import { BiError } from "react-icons/bi";
 
 const ComponentErrors = ({ error }: any) => {
   return (
@@ -17,7 +17,8 @@ const ComponentErrors = ({ error }: any) => {
       <AccordionItem border="none" outline="none">
         <AccordionButton>
           <Center py="1rem" w="full" gap="12px">
-            <BiError size={18} color="#626665" />
+            {/*  @todo  */}
+            {/* <BiError size={18} color="#626665" /> */}
             <Box
               as="p"
               textStyle={{ base: "body4", md: "body4" }}

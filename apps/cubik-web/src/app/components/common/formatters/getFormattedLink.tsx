@@ -1,5 +1,5 @@
 import { Box, HStack, Skeleton } from "@/utils/chakra";
-import { BiLink } from "react-icons/bi";
+//import { BiLink } from "react-icons/bi";
 import { getDomain } from "@/utils/helpers/getDomain";
 const GetFormattedLink = ({
   isLoading,
@@ -22,7 +22,8 @@ const GetFormattedLink = ({
         justify="start"
         spacing="4px"
       >
-        <Box as={BiLink} boxSize={["14px", "16px", "18px"]} color={"#A8F0E6"} />
+        {/*  @todo  */}
+        {/* <Box as={BiLink} boxSize={["14px", "16px", "18px"]} color={"#A8F0E6"} /> */}
         <Box
           noOfLines={1}
           textAlign="start"

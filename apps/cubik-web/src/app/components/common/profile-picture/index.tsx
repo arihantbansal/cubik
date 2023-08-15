@@ -11,7 +11,7 @@ import {
 import React, { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Portal, Skeleton, Tag } from "@chakra-ui/react";
-import { TbCurrencySolana } from "react-icons/tb";
+//import { TbCurrencySolana } from "react-icons/tb";
 import { NFTProfile } from "@/types/NFTProfile";
 import { TruncatedAddr } from "../wallet";
 const MotionBox = motion(Box);

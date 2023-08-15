@@ -26,18 +26,18 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import parse from "html-react-parser";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import {
-  AiOutlineExpand,
-  AiOutlineLink,
-  AiOutlineOrderedList,
-} from "react-icons/ai";
-import { BiHeading } from "react-icons/bi";
-import { BsTypeItalic } from "react-icons/bs";
-import {
-  MdOutlineFormatBold,
-  MdOutlineFormatListBulleted,
-  MdOutlineFormatUnderlined,
-} from "react-icons/md";
+// import {
+//   AiOutlineExpand,
+//   AiOutlineLink,
+//   AiOutlineOrderedList,
+// } from "react-icons/ai";
+//import { BiHeading } from "react-icons/bi";
+//import { BsTypeItalic } from "react-icons/bs";
+//import {
+//  MdOutlineFormatBold,
+//  MdOutlineFormatListBulleted,
+//  MdOutlineFormatUnderlined,
+// } from "react-icons/md";
 import { DescriptionPreview } from "./EditorPreview";
 
 const MarkdownEditor = ({
@@ -206,18 +206,19 @@ const MarkdownEditor = ({
               editor?.commands.toggleHeading({ level: 2 });
             }}
             icon={
-              <Box
-                as={BiHeading}
-                boxSize={
-                  componentSize === "sm"
-                    ? { base: "10px", md: "16px" }
-                    : componentSize === "md"
-                    ? { base: "12px", md: "18px" }
-                    : componentSize === "lg"
-                    ? { base: "16px", md: "20px" }
-                    : { base: "12px", md: "18px" }
-                }
-              />
+              <>{/*  @todo  */}</>
+              // <Box
+              //   as={BiHeading}
+              //   boxSize={
+              //     componentSize === "sm"
+              //       ? { base: "10px", md: "16px" }
+              //       : componentSize === "md"
+              //       ? { base: "12px", md: "18px" }
+              //       : componentSize === "lg"
+              //       ? { base: "16px", md: "20px" }
+              //       : { base: "12px", md: "18px" }
+              //   }
+              // />
             }
           />
           <IconButton
@@ -229,18 +230,19 @@ const MarkdownEditor = ({
               editor?.chain().focus().toggleBold().run();
             }}
             icon={
-              <Box
-                as={MdOutlineFormatBold}
-                boxSize={
-                  componentSize === "sm"
-                    ? { base: "10px", md: "16px" }
-                    : componentSize === "md"
-                    ? { base: "12px", md: "18px" }
-                    : componentSize === "lg"
-                    ? { base: "16px", md: "20px" }
-                    : { base: "12px", md: "18px" }
-                }
-              />
+              <>{/*  @todo  */}</>
+              // <Box
+              //   as={MdOutlineFormatBold}
+              //   boxSize={
+              //     componentSize === "sm"
+              //       ? { base: "10px", md: "16px" }
+              //       : componentSize === "md"
+              //       ? { base: "12px", md: "18px" }
+              //       : componentSize === "lg"
+              //       ? { base: "16px", md: "20px" }
+              //       : { base: "12px", md: "18px" }
+              //   }
+              // />
             }
           />
           <IconButton
@@ -252,18 +254,19 @@ const MarkdownEditor = ({
               editor?.chain().focus().toggleItalic().run();
             }}
             icon={
-              <Box
-                as={BsTypeItalic}
-                boxSize={
-                  componentSize === "sm"
-                    ? { base: "10px", md: "16px" }
-                    : componentSize === "md"
-                    ? { base: "12px", md: "18px" }
-                    : componentSize === "lg"
-                    ? { base: "16px", md: "20px" }
-                    : { base: "12px", md: "18px" }
-                }
-              />
+              <>{/*  @todo  */}</>
+              // <Box
+              //   as={BsTypeItalic}
+              //   boxSize={
+              //     componentSize === "sm"
+              //       ? { base: "10px", md: "16px" }
+              //       : componentSize === "md"
+              //       ? { base: "12px", md: "18px" }
+              //       : componentSize === "lg"
+              //       ? { base: "16px", md: "20px" }
+              //       : { base: "12px", md: "18px" }
+              //   }
+              // />
             }
           />
           <IconButton
@@ -275,7 +278,8 @@ const MarkdownEditor = ({
               editor?.chain().focus().toggleUnderline().run();
             }}
           >
-            <Box
+            <>{/*  @todo  */}</>
+            {/* <Box
               as={MdOutlineFormatUnderlined}
               boxSize={
                 componentSize === "sm"
@@ -286,7 +290,7 @@ const MarkdownEditor = ({
                   ? { base: "16px", md: "20px" }
                   : { base: "12px", md: "18px" }
               }
-            />
+            /> */}
           </IconButton>
           <IconButton
             h="100%"
@@ -295,18 +299,19 @@ const MarkdownEditor = ({
             bg={editor?.isActive("link") ? "neutral.4" : ""}
             onClick={() => setIsLinkModalOpen(true)}
             icon={
-              <Box
-                as={AiOutlineLink}
-                boxSize={
-                  componentSize === "sm"
-                    ? { base: "10px", md: "16px" }
-                    : componentSize === "md"
-                    ? { base: "12px", md: "18px" }
-                    : componentSize === "lg"
-                    ? { base: "16px", md: "20px" }
-                    : { base: "12px", md: "18px" }
-                }
-              />
+              <>{/*  @todo  */}</>
+              // <Box
+              //   as={AiOutlineLink}
+              //   boxSize={
+              //     componentSize === "sm"
+              //       ? { base: "10px", md: "16px" }
+              //       : componentSize === "md"
+              //       ? { base: "12px", md: "18px" }
+              //       : componentSize === "lg"
+              //       ? { base: "16px", md: "20px" }
+              //       : { base: "12px", md: "18px" }
+              //   }
+              // />
             }
           />
           <IconButton
@@ -318,18 +323,19 @@ const MarkdownEditor = ({
               editor?.chain().focus().toggleBulletList().run();
             }}
             icon={
-              <Box
-                as={MdOutlineFormatListBulleted}
-                boxSize={
-                  componentSize === "sm"
-                    ? { base: "10px", md: "16px" }
-                    : componentSize === "md"
-                    ? { base: "12px", md: "18px" }
-                    : componentSize === "lg"
-                    ? { base: "16px", md: "20px" }
-                    : { base: "12px", md: "18px" }
-                }
-              />
+              <>{/*  @todo  */}</>
+              // <Box
+              //   as={MdOutlineFormatListBulleted}
+              //   boxSize={
+              //     componentSize === "sm"
+              //       ? { base: "10px", md: "16px" }
+              //       : componentSize === "md"
+              //       ? { base: "12px", md: "18px" }
+              //       : componentSize === "lg"
+              //       ? { base: "16px", md: "20px" }
+              //       : { base: "12px", md: "18px" }
+              //   }
+              // />
             }
           />
           <IconButton
@@ -341,18 +347,19 @@ const MarkdownEditor = ({
               editor?.chain().focus().toggleOrderedList().run();
             }}
             icon={
-              <Box
-                as={AiOutlineOrderedList}
-                boxSize={
-                  componentSize === "sm"
-                    ? { base: "10px", md: "16px" }
-                    : componentSize === "md"
-                    ? { base: "12px", md: "18px" }
-                    : componentSize === "lg"
-                    ? { base: "16px", md: "20px" }
-                    : { base: "12px", md: "18px" }
-                }
-              />
+              <>{/*  @todo  */}</>
+              // <Box
+              //   as={AiOutlineOrderedList}
+              //   boxSize={
+              //     componentSize === "sm"
+              //       ? { base: "10px", md: "16px" }
+              //       : componentSize === "md"
+              //       ? { base: "12px", md: "18px" }
+              //       : componentSize === "lg"
+              //       ? { base: "16px", md: "20px" }
+              //       : { base: "12px", md: "18px" }
+              //   }
+              // />
             }
           />
           {/* <IconButton
@@ -421,7 +428,8 @@ const MarkdownEditor = ({
             onClick={() => {
               setIncreasedSize((prevValue) => !prevValue);
             }}
-            icon={<AiOutlineExpand size={20} color="#A8F0E6" />}
+            // @todo
+            // icon={<AiOutlineExpand size={20} color="#A8F0E6" />}
           />
           <div
             style={{

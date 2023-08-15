@@ -28,8 +28,8 @@ import {
   UseFormTrigger,
   UseFormWatch,
 } from "react-hook-form";
-import { FiChevronRight } from "react-icons/fi";
-import { VscCloudUpload } from "react-icons/vsc";
+//import { FiChevronRight } from "react-icons/fi";
+// import { VscCloudUpload } from "react-icons/vsc";
 import { category } from "./categories";
 import { FormData } from "./Form";
 import { CategorySelect, TeamSelect } from "./ChakraReactSelect";
@@ -275,8 +275,9 @@ const StepOne: React.FC<StepOneProps> = ({
                         style={{ objectFit: "cover" }}
                       />
                     </Center>
-                  ) : (
-                    <VscCloudUpload size={34} color={"neutral.6"} />
+                    ) : (
+                        <>{/* @todo */}</>
+                    // <VscCloudUpload size={34} color={"neutral.6"} />
                   )}
                 </Center>
                 <VStack
@@ -316,9 +317,9 @@ const StepOne: React.FC<StepOneProps> = ({
           <Button
             variant={"cubikText"}
             size={{ base: "cubikSmall", md: "cubikMedium" }}
-            rightIcon={
-              <Box boxSize={{ base: "14px", md: "18px" }} as={FiChevronRight} />
-            }
+            //rightIcon={
+               // <Box boxSize={{ base: "14px", md: "18px" }} as={FiChevronRight} />
+            //}
             ml="auto"
             onClick={async () => {
               setIsSubmitting(true);

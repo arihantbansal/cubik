@@ -22,7 +22,7 @@ import {
   useDisclosure,
 } from "@/utils/chakra";
 import { Controller, useForm } from "react-hook-form";
-import { HiCheck } from "react-icons/hi";
+//import { HiCheck } from "react-icons/hi";
 import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserSchema } from "@/utils/schema/user";
@@ -217,7 +217,8 @@ export const Form = () => {
                 <InputRightElement fontSize="18px">
                   {loadingUserName && <Spinner size={"xs"} thickness="1px" />}
                   {!errors.username && userNameIsAvailable && (
-                    <HiCheck color={"#A8F0E6"} />
+                    // @todo <HiCheck color={"#A8F0E6"} />
+                    <></>
                   )}
                 </InputRightElement>
               }

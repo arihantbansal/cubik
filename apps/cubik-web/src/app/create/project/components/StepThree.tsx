@@ -9,7 +9,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Dispatch, SetStateAction, useState } from "react";
-import { FiChevronLeft } from "react-icons/fi";
+// import { FiChevronLeft } from "react-icons/fi";
 
 const StepThree = ({
   setIncreasedSize,
@@ -63,9 +63,10 @@ const StepThree = ({
           size={{ base: "cubikMini", md: "cubikSmall" }}
           variant={"cubikText"}
           onClick={onPrevious}
-          leftIcon={
-            <Box boxSize={{ base: "14px", md: "18px" }} as={FiChevronLeft} />
-          }
+          // @todo: add icon
+          // leftIcon={
+          //   <Box boxSize={{ base: "14px", md: "18px" }} as={FiChevronLeft} />
+          // }
         >
           Previous
         </Button>

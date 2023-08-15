@@ -17,7 +17,7 @@ import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import ComponentErrors from "@/app/components/common/errors/componentErrors";
 import { useState } from "react";
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+//import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
 const ErrorUI = () => {
   return (

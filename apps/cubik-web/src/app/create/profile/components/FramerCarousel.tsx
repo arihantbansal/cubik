@@ -21,8 +21,8 @@ import {
   useRef,
   useState,
 } from "react";
-import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
-import { BsImage } from "react-icons/bs";
+// import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+// import { BsImage } from "react-icons/bs";
 import { assestsByOwner } from "./assestsByOwner";
 // import { useUserStore } from "~/store/userStore";
 import Carousel from "./Carousel";
@@ -146,7 +146,7 @@ const FramerCarousel = ({
           minW={"26px"}
           zIndex={"2"}
           aria-label="go to left"
-          icon={<BiChevronLeft size={24} />}
+          // @todo:  icon={<BiChevronLeft size={24} />}
           onClick={() => scrollCarousel("left")}
         />
         <Box
@@ -194,7 +194,7 @@ const FramerCarousel = ({
                 </Center>
               ) : (
                 <VStack gap="4px" p="0">
-                  <BsImage size="22" />
+                  {/* @todo: <BsImage size="22" /> */}
                   <Text fontSize="xs" maxW="12rem" textAlign={"center"}>
                     You do not have NFTs in your wallet to use as Profile
                     Picture.
@@ -219,7 +219,7 @@ const FramerCarousel = ({
           maxW="26px"
           minW={"26px"}
           aria-label="go to left"
-          icon={<BiChevronRight size={24} />}
+          // @todo:  icon={<BiChevronRight size={24} />}
           onClick={() => scrollCarousel("right")}
         />
       </HStack>

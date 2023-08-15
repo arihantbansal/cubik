@@ -3,7 +3,7 @@ import React from "react";
 import { Box, Center } from "@/utils/chakra";
 import { motion } from "framer-motion";
 import { HStack } from "@/utils/chakra";
-import { MdCheck } from "react-icons/md";
+//import { MdCheck } from "react-icons/md";
 
 const MotionHStack = motion(HStack);
 const MotionBox = motion(Box);
@@ -90,12 +90,13 @@ const CustomStepper = ({ steps, currentStep }: CustomStepperProps) => {
                   {step.index}
                 </MotionBox>
                 {status === "complete" ? (
-                  <Box
-                    as={MdCheck}
-                    position="absolute"
-                    boxSize={{ base: "12px", md: "14px" }}
-                    style={{ color: "black" }}
-                  />
+                  //   <Box
+                  // // @todo: as={MdCheck}
+                  //     position="absolute"
+                  //     boxSize={{ base: "12px", md: "14px" }}
+                  //     style={{ color: "black" }}
+                  //   />
+                  <></>
                 ) : (
                   <></>
                 )}

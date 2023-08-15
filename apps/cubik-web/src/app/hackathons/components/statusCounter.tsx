@@ -1,7 +1,7 @@
 "use client";
 import { Box, Center, HStack, chakra, keyframes } from "@/utils/chakra";
 import { isFuture, isPast } from "date-fns";
-import { AiTwotoneCalendar } from "react-icons/ai";
+//import { AiTwotoneCalendar } from "react-icons/ai";
 import { HackathonSchedule } from "@/types/hackathon";
 
 const random = () => Math.floor(Math.random() * 10);
@@ -57,11 +57,12 @@ const HackathonStatus = ({ show, timeline }: HackathonStatusProps) => {
         minH={"22px"}
         mx={1}
       >
-        <Box
+        {/* @todo */}
+        {/* <Box
           as={AiTwotoneCalendar}
           color="white"
           boxSize={["12px", "14px", "18px"]}
-        />
+        /> */}
         <Box
           p="8px 12px"
           ps="0px"
@@ -84,11 +85,12 @@ const HackathonStatus = ({ show, timeline }: HackathonStatusProps) => {
         minH={"22px"}
         mx={1}
       >
-        <Box
+        {/* @todo */}
+        {/* <Box
           as={AiTwotoneCalendar}
           color="white"
           boxSize={["12px", "14px", "18px"]}
-        />
+        /> */}
         <Box
           p="8px 12px"
           ps="0px"
