@@ -19,7 +19,7 @@ const CustomTag = forwardRef<HTMLDivElement, CustomTagProps>(
         backgroundColor="#1D1F1E"
         fontSize="xs"
         p="8px 12px"
-        mx={1}
+        mx={0}
       >
         <Box
           as="p"

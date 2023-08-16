@@ -30,7 +30,7 @@ const Projects = ({
         spacing={{ base: "1.8rem", md: "1.5rem" }}
         w="100%"
         margin="0"
-        justify={"center"}
+        justify={"start"}
         align="center"
         direction={{ base: "column", sm: "row", md: "row" }}
       >

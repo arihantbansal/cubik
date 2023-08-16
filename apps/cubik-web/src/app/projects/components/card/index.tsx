@@ -80,7 +80,7 @@ const ProjectEventBanner = ({
           textTransform="uppercase"
           letterSpacing={"0.2em"}
           fontSize={{ base: "8px", md: "10px" }}
-          textShadow={"0px 5px 7px rgb(0 0 0)"}
+          //  textShadow={"0px 3px 4px rgb(0 0 0)"}
         >
           Participating In
         </Box>
@@ -91,7 +91,7 @@ const ProjectEventBanner = ({
           whiteSpace={"nowrap"}
           textStyle={{ base: "title6", md: "title5" }}
           color={`surface.${color}.1`}
-          textShadow={"0px 5px 7px rgb(0 0 0)"}
+          //    textShadow={"0px 5px 7px rgb(0 0 0)"}
         >
           {name}
         </Box>
@@ -99,16 +99,21 @@ const ProjectEventBanner = ({
     </Center>
   );
 };
+
 export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
   // use media query to detect mobile screen
+  const isDesktop = useMediaQuery("(min-width: 767px)");
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
+  const toggleHover = () => {
+    setIsHovered((prevState) => !prevState);
+  };
   const [isLargerThan767] = useMediaQuery("(min-width: 767px)");
   const toast = useToast();
   // const addProject = useListStore((state) => state.addProject);
   // const removeProject = useListStore((state) => state.removeProject);
   // const projectList = useListStore((state) => state.projectList);
 
-  const [isHovered, setIsHovered] = useState<boolean>(false);
   // const [addedToList, setAddedToList] = useState(
   //   !!projectList.find((item) => item.id === project.id)
   // );
@@ -138,7 +143,7 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
   //   setAddedToList(!!projectList.find((item) => item.id === project.id));
   // }, [projectList]);
 
-  const genrateLink = (): string => {
+  const generateLink = (): string => {
     if (project.projectEvent.eventName === "hackathon") {
       return `/${project.ownerName}/hackathon/${project.projectEvent.id}`;
     }
@@ -148,10 +153,11 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
     return `/${project.ownerName}/${project.id}`;
   };
 
+  //  border={addedToList ? '2px solid #659C95' : '2px solid transparent'}
   return (
     <LinkBox
       as={Link}
-      href={genrateLink()}
+      href={generateLink()}
       w="full"
       maxW={{
         base: "92vw",
@@ -163,7 +169,6 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
       position={"relative"}
     >
       <Card
-        //  border={addedToList ? '2px solid #659C95' : '2px solid transparent'}
         border="none"
         p="0"
         h={{ base: "fit-content", md: "23rem" }}
@@ -176,18 +181,16 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
           lg: "29.5vw",
           xl: "25.5rem",
         }}
-        //  onTouchStart={() => setIsHovered((prevState) => !prevState)}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onTouchStart={toggleHover}
+        onMouseEnter={isDesktop ? toggleHover : undefined}
+        onMouseLeave={toggleHover}
         gap="0"
         background={"#0C0D0D"}
         _hover={{
           border: "none",
           background: "neutral.3",
-          //  borderColor: `surface.${project.colorScheme}.3`,
         }}
         _active={{
-          // border: '2px solid',
           background: "neutral.3",
           borderColor: `surface.${"teal"}.3`,
         }}
@@ -209,8 +212,8 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
 
         <ProjectEventBanner
           name={project.projectEvent.name}
-          bg={project.projectEvent?.bg ?? undefined}
-          color={project.projectEvent.color ? "teal" : "white"}
+          //  bg={project.projectEvent?.bg ?? undefined}
+          color={project.projectEvent.color ? "teal" : "yellow"}
         />
         <VStack
           w="full"
@@ -248,6 +251,10 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
                   <Box
                     as="p"
                     color="neutral.11"
+                    maxW="full"
+                    sx={{
+                      numberOfLines: "1",
+                    }}
                     textStyle={{ base: "title4", md: "title3" }}
                   >
                     {project.title}
@@ -297,12 +304,13 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
             </Stack>
             {project.projectShortDescription && (
               <Box
-                color="neutral.9"
+                color="neutral.8"
                 as="p"
                 textStyle={{ base: "body5", md: "body4" }}
                 sx={{
                   noOfLines: { base: "4", md: "3" },
                 }}
+                fontWeight={"600 !important"}
                 alignContent="start"
                 alignItems={"start"}
                 textAlign={"start"}
@@ -315,7 +323,7 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
           {project.contributors && (
             <VStack
               marginTop={"0px !important"}
-              p="8px 24px 24px 24px"
+              p={{ base: "8px 14px 16px 14px", md: "8px 24px 24px 24px" }}
               w="full"
               position={"relative"}
             >
@@ -339,11 +347,14 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
                     transform: "translateY(-50%)",
                     height: "2.4rem",
                     width: "3rem",
-                    background:
-                      "linear-gradient(90deg, #0C0D0D00 0%, #0C0D0D 80%)",
+                    background: isHovered
+                      ? "linear-gradient(90deg, #14141400 0%, #141414 80%)"
+                      : "linear-gradient(90deg, #0C0D0D00 0%, #0C0D0D 80%)",
                   }}
                 >
                   <HStack
+                    spacing="4px"
+                    p="0"
                     overflow="clip"
                     w="200%"
                     mt="auto"
@@ -380,7 +391,7 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
                   >
                     <Button
                       as={Link}
-                      href={genrateLink()}
+                      href={generateLink()}
                       background={"#1D1F1E"}
                       color="white"
                       fontWeight={"700"}

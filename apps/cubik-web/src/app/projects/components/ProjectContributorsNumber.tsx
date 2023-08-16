@@ -32,7 +32,7 @@ const ProjectsContributorsNumber = ({
           position="relative"
           zIndex="1"
         >
-          <AvatarGroup size="xs" max={3}>
+          <AvatarGroup size="xs" spacing="-16px" max={3}>
             {contributors.slice(-3).map((user, id) => (
               <Avatar
                 key={id}
@@ -44,7 +44,8 @@ const ProjectsContributorsNumber = ({
           {contributorsCount > 0 ? (
             <Box
               noOfLines={1}
-              minW={7}
+              w="full"
+              minW={contributorsCount > 80 ? 12 : 8}
               as="p"
               color="white"
               textStyle={{ base: "body6", md: "body5" }}

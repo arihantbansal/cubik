@@ -204,7 +204,7 @@ export const ContributionRow = ({
       </Td>
       <Td px="12px">
         {/*  @todo: pending to confirm  */}
-        <Center
+        {/* <Center
           width={{ base: "18px", sm: "22px", md: "22px" }}
           height={{ base: "18px", sm: "22px", md: "22px" }}
           position="relative"
@@ -217,7 +217,7 @@ export const ContributionRow = ({
             width={"100"}
             height={"100"}
           />
-        </Center>
+        </Center> */}
       </Td>
     </Tr>
   );

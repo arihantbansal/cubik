@@ -8,7 +8,6 @@ interface Props {
   setProjects: (projects: ProjectExplorerType[]) => void;
 }
 
-
 export const Sort = ({ _projects, projects, setProjects }: Props) => {
   const handleFilter = (filter: string) => {
     let filterProjects: ProjectExplorerType[] = projects;
@@ -30,51 +29,52 @@ export const Sort = ({ _projects, projects, setProjects }: Props) => {
   };
 
   return (
-    <>
-      <VStack gap="8px">
-        <Select
-          defaultValue={1}
-          onChange={(e) => handleFilter(e.target.value)}
-          rounded="12px"
-          h={{ base: "2.2rem", md: "2.5rem" }}
-          textStyle={{ base: "body5", md: "body4" }}
-          color="neutral.7"
-          outline="none"
-          w="full"
-          border={"none"}
-          boxShadow="none"
-          _hover={{
-            boxShadow: "none !important",
-            borderColor: "#ffffff10 !important",
-            outline: "#ffffff10 !important",
-          }}
-          _focus={{
-            boxShadow: "none !important",
-            borderColor: "#ffffff10 !important",
-            outline: "#ffffff10 !important",
-          }}
-          _focusVisible={{
-            boxShadow: "none !important",
-            borderColor: "none !important",
-            outline: "none !important",
-          }}
-          _active={{
-            boxShadow: "none !important",
-            borderColor: "none !important",
-            outline: "none !important",
-          }}
-          _placeholder={{
-            fontSize: { base: "12px", md: "14px" },
-            lineHeight: { base: "18px", md: "20px" },
-            color: "#75757580",
-          }}
-        >
-          <option value="option1">Est. Funds Raised ( Low to how )</option>
-          <option value="option2">Est. Funds Raised ( High to low )</option>
-          <option value="option3">Contributors ( Highest to lowest )</option>
-          <option value="option4">Contributors ( Lowest to highest )</option>
-        </Select>
-      </VStack>
-    </>
+    <VStack w="full" gap="8px" maxW="20rem">
+      <Box w="full" textStyle={"body4"} color="neutral.8">
+        Sort Project By
+      </Box>
+      <Select
+        defaultValue={1}
+        onChange={(e) => handleFilter(e.target.value)}
+        rounded="12px"
+        h={{ base: "2.2rem", md: "2.5rem" }}
+        textStyle={{ base: "body5", md: "body4" }}
+        color="neutral.7"
+        outline="none"
+        w="full"
+        border={"none"}
+        boxShadow="none"
+        _hover={{
+          boxShadow: "none !important",
+          borderColor: "#ffffff10 !important",
+          outline: "#ffffff10 !important",
+        }}
+        _focus={{
+          boxShadow: "none !important",
+          borderColor: "#ffffff10 !important",
+          outline: "#ffffff10 !important",
+        }}
+        _focusVisible={{
+          boxShadow: "none !important",
+          borderColor: "none !important",
+          outline: "none !important",
+        }}
+        _active={{
+          boxShadow: "none !important",
+          borderColor: "none !important",
+          outline: "none !important",
+        }}
+        _placeholder={{
+          fontSize: { base: "12px", md: "14px" },
+          lineHeight: { base: "18px", md: "20px" },
+          color: "#75757580",
+        }}
+      >
+        <option value="option1">Est. Funds Raised ( Low to how )</option>
+        <option value="option2">Est. Funds Raised ( High to low )</option>
+        <option value="option3">Contributors ( Highest to lowest )</option>
+        <option value="option4">Contributors ( Lowest to highest )</option>
+      </Select>
+    </VStack>
   );
 };
