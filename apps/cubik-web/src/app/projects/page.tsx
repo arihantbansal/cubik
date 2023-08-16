@@ -68,9 +68,9 @@ export const projectExplorer = async () => {
     });
     const projectJoinHackathonPromise = prisma.projectJoinHackathon.findMany({
       where: {
-        project: {
-          status: "VERIFIED",
-        },
+        // project: {
+        //   status: "VERIFIED",
+        // },
         isArchive: false,
       },
       select: {
@@ -291,7 +291,6 @@ export const metadata: Metadata = {
 
 export default async function () {
   const explorerData = await projectExplorer();
-  console.log("explorer data - ", explorerData);
   return (
     <>
       <Box bg={"black"} w="full" h="full" pt="10px">
