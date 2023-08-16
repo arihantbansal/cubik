@@ -354,7 +354,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
                     </defs>
                   </svg>
                 </Center>
-                <VStack gap="6px">
+                <VStack h={"max-content"} gap="6px">
                   <Box as="p" textStyle={{ base: "title3", md: "headline4" }}>
                     Project Created Successfully!
                   </Box>
@@ -368,7 +368,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
                     your project.
                   </Box>
                 </VStack>
-                <Box mx="auto" maxW="25rem" w="full">
+                <Box mx="auto" h={"full"} maxW="25rem" w="full">
                   <ActiveEvent projectId={projectId as string} />
                 </Box>
               </ModalHeader>

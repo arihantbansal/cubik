@@ -2,6 +2,7 @@ interface Event {
   name: string;
   id: string;
   shortDescription: string;
+  tracks?: { label: string; value: string }[];
   type: "hackathon" | "round";
 }
 export const handleEvent = async (): Promise<Event[]> => {

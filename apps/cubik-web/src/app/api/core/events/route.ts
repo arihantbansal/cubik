@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
         name: true,
         id: true,
         shortDescription: true,
+        hackathonSponsors: true,
       },
     });
 
@@ -38,6 +39,12 @@ export async function GET(request: NextRequest) {
       ...hackathon.map((e) => {
         return {
           ...e,
+          tracks: e.hackathonSponsors.map((t) => {
+            return {
+              label: t.name,
+              value: t.name,
+            };
+          }),
           type: "hackathon",
         };
       }),
