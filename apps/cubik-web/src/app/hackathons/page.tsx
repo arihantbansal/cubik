@@ -70,7 +70,7 @@ const HackathonExplorer = async () => {
   const pastHackathon = await PastHackathon();
   return (
     <>
-      <Container maxW="7xl" py={{ base: "48px", md: "64px" }}>
+      <Container maxW="7xl" py={{ base: "48px", md: "64px" }} mt="4rem">
         <Stack
           direction={{ base: "column", md: "row" }}
           gap="40px"

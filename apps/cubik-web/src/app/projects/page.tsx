@@ -293,14 +293,14 @@ export default async function () {
   const explorerData = await projectExplorer();
   return (
     <>
-      <Box bg={"black"} w="full" h="full" pt="10px">
+      <Box bg={"black"} w="full" h="full" pt="4.5rem">
         <Container
           px={{ base: "0.6rem", sm: "0.8rem", md: "2rem", xl: "0px" }}
           maxW="7xl"
           py={{ base: "24px", md: "40px" }}
         >
           <VStack
-            gap={{ base: "24px", sm: "30px", md: "38px" }}
+            gap={{ base: "24px", sm: "30px", md: "42px" }}
             w="full"
             alignItems={"start"}
             justifyContent="start"

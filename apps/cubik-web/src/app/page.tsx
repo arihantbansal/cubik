@@ -11,7 +11,7 @@ export default function Home() {
   const anchorWallet = useAnchorWallet();
   return (
     <>
-      <Button
+      {/* <Button
         mt={"10rem"}
         onClick={async () => {
           const ix = await createAdmin(anchorWallet as NodeWallet);
@@ -30,7 +30,7 @@ export default function Home() {
         }}
       >
         Admin
-      </Button>
+      </Button> */}
       <LandingPage />
     </>
   );

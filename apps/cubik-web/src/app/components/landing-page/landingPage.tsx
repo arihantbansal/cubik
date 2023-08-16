@@ -63,7 +63,7 @@ const LandingPage = () => {
   const { setVisible } = useWalletModal();
   const wallet = useWallet();
   return (
-    <Container background="black" maxW="full" px="0">
+    <Container mt="4.5rem" background="black" maxW="full" px="0">
       <MouseParallaxContainer globalFactorX={0.1} globalFactorY={0.1}>
         <Center bg="black" height={{ base: "37rem", md: "56rem" }} w="full">
           <Center overflow={"hidden"} background="black" position={"fixed"}>

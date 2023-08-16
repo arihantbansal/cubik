@@ -46,12 +46,12 @@ const Profile = async ({
     return notFound();
   }
 
-
   return (
     <Container
       maxW="7xl"
       w="full"
-      p={{ base: "23px 20px", sm: "32px", md: "48px", lg: "48px 20px" }}
+      p={{ base: "23px 20px", sm: "32px", md: "48px", lg: "64px 20px" }}
+      mt="4rem"
     >
       <Flex flexDir={"column"} gap="48px">
         <User

@@ -66,6 +66,7 @@ const GrantsPage = async () => {
         w="100vw"
         py={{ base: "32px", md: "64px" }}
         px={{ base: "16px" }}
+        mt="4rem"
       >
         <Stack
           direction={{ base: "column", md: "row" }}
