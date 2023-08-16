@@ -222,7 +222,11 @@ export const TransactionModel = ({
                 </svg>
               </Center>
               <VStack spacing={{ base: "4px", md: "8px" }} w="full">
-                <Box as="p" textStyle={{ base: "title2", md: "headline4" }}>
+                <Box
+                  textAlign={"center"}
+                  as="p"
+                  textStyle={{ base: "title2", md: "headline4" }}
+                >
                   Welcome to Cubik @{userName}
                 </Box>
                 <Box

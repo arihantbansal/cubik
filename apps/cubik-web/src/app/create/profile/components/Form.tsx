@@ -36,6 +36,7 @@ import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 import { connection, web3 } from "@/utils/contract/sdk";
 import { TransactionModel } from "./TransactionModel";
 import { NFTProfile } from "@/types/NFTProfile";
+import { createUser } from "./handleSubmit";
 export const Form = () => {
   const [userNameIsAvailable, setUserNameIsAvailable] =
     useState<boolean>(false);
@@ -47,7 +48,6 @@ export const Form = () => {
   const [profileNFT, setProfileNFT] = useState<NFTProfile | undefined>(
     undefined
   );
-  // const [signingTransaction, setSigningTransaction] = useState(false);
   const { publicKey } = useWallet();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { setVisible } = useWalletModal();
@@ -101,20 +101,16 @@ export const Form = () => {
       setIsLoading(true);
       const txId = await handleTx();
       if (!txId) return;
-      await prisma.user.update({
-        where: {
-          mainWallet: publicKey?.toBase58(),
-        },
-        data: {
-          username: getValues("username"),
-          profilePicture: pfp,
-          profileNft: profileNFT,
-          tx: txId,
-        },
-      });
+      await createUser(
+        publicKey?.toBase58() as string,
+        getValues("username"),
+        pfp,
+        profileNFT as NFTProfile,
+        txId
+      );
       setProfileCreated(true);
-      setIsLoading(false);
 
+      setIsLoading(false);
       return;
     } catch (error) {
       console.log(error);
