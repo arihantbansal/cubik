@@ -43,7 +43,7 @@ const fetchHackathon = async (slug: string) => {
       votingStartDate: true,
       host: true,
       prizePool: true,
-      HackathonSponsors: {
+      hackathonSponsors: {
         select: {
           name: true,
           description: true,
@@ -106,7 +106,7 @@ export const HackathonBody = async ({ slug }: Props) => {
                 </TabPanel>
                 <TabPanel p="0 !important" overflowX="scroll">
                   <HackathonTracks
-                    tracks={hackathon?.HackathonSponsors as unknown}
+                    tracks={hackathon?.hackathonSponsors as unknown as any}
                   />
                 </TabPanel>
               </TabPanels>

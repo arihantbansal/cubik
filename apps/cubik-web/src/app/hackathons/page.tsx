@@ -18,7 +18,7 @@ import { HackathonCard } from "./components/hackathonCard";
 import { EmptyStateHOC } from "../components/common/empty-state/EmptyStateHOC";
 
 export const FutureHackathon = async () => {
-  return await prisma.hackathon.findMany({
+  const future = await prisma.hackathon.findMany({
     where: {
       resultDate: {
         gte: new Date(),
@@ -39,9 +39,10 @@ export const FutureHackathon = async () => {
       id: true,
     },
   });
+  return future;
 };
 export const PastHackathon = async () => {
-  return await prisma.hackathon.findMany({
+  const past = await prisma.hackathon.findMany({
     where: {
       resultDate: {
         lt: new Date(),
@@ -62,6 +63,7 @@ export const PastHackathon = async () => {
       prizePool: true,
     },
   });
+  return past;
 };
 const HackathonExplorer = async () => {
   const futureHackathon = await FutureHackathon();
