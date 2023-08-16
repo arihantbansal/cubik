@@ -76,6 +76,7 @@ export const projectExplorer = async () => {
       select: {
         amount: true,
         id: true,
+        tracks: true,
         project: {
           select: {
             owner: {
@@ -116,11 +117,11 @@ export const projectExplorer = async () => {
         },
       },
     });
-    const activeRoundPromise = await prisma.round.findMany({
+    const activeRoundPromise = prisma.round.findMany({
       where: {
-        endTime: {
-          gte: new Date(),
-        },
+        // endTime: {
+        //   gte: new Date(),
+        // },
       },
       select: {
         startTime: true,
@@ -132,7 +133,7 @@ export const projectExplorer = async () => {
         shortDescription: true,
       },
     });
-    const activeHackathonPromise = await prisma.hackathon.findMany({
+    const activeHackathonPromise = prisma.hackathon.findMany({
       where: {
         // isActive: true,
       },
@@ -147,6 +148,11 @@ export const projectExplorer = async () => {
         hackathonStartDate: true,
         votingEndDate: true,
         votingStartDate: true,
+        hackathonSponsors: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
     const [
@@ -223,6 +229,7 @@ export const projectExplorer = async () => {
         ownerName: project.project.owner.username as string,
         projectShortDescription: project.project.shortDescription,
         projectEvent: {
+          tracks: project.tracks as any,
           eventName: "hackathon",
           amount: project.amount,
           bg: project.hackathon.background,
@@ -245,6 +252,7 @@ export const projectExplorer = async () => {
         endTime: hackathon.hackathonStartDate as Date,
         startTime: hackathon.hackathonStartDate as Date,
         shortDescription: hackathon.shortDescription,
+        hackathonTracks: hackathon.hackathonSponsors.map((e) => e.name),
       });
     });
 
@@ -301,7 +309,10 @@ export default async function () {
             >
               Projects
             </Box>
-            <Projects projects={explorerData.projects} />
+            <Projects
+              banner={explorerData.banner || []}
+              projects={explorerData.projects}
+            />
           </VStack>
         </Container>
       </Box>

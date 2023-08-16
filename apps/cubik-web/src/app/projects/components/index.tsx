@@ -4,20 +4,23 @@ import Filters from "./filters";
 import { ProjectJoinRoundStatus } from "@cubik/database";
 import { useState } from "react";
 import { Category } from "./filters/categories";
-import { ProjectExplorerType } from "@/types/explorer";
+import { ProjectExploreBanner, ProjectExplorerType } from "@/types/explorer";
 import { EmptyStateHOC } from "@/app/components/common/empty-state/EmptyStateHOC";
 import { ProjectCard } from "./card";
 
 const Projects = ({
   projects: _projects,
+  banner,
 }: {
   projects: ProjectExplorerType[];
+  banner: ProjectExploreBanner[];
 }) => {
   const [projects, setProjects] = useState<ProjectExplorerType[]>(_projects);
 
   return (
     <>
       <Filters
+        banner={banner}
         _projects={_projects}
         projects={projects}
         setProjects={setProjects}

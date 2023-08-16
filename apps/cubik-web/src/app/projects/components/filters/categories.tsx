@@ -59,7 +59,7 @@ const Categories = ({
 
   return (
     <HStack
-      py="40px"
+      py={4}
       ref={scrollRef}
       overflow="clip"
       w="full"

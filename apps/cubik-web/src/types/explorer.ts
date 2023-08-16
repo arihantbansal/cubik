@@ -16,6 +16,7 @@ export type HackathonEvent = {
   color?: string;
   votingStart: Date;
   votingEnd: Date;
+  tracks: any[];
 };
 
 export type RoundEvent = {
@@ -70,6 +71,7 @@ export interface ProjectExploreBanner {
   type: ExplorerType;
   bgImage?: string;
   colorScheme?: string;
+  hackathonTracks?: string[];
 }
 
 export interface explorerType {

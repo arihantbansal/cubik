@@ -208,8 +208,8 @@ model Hackathon {
   contribution          Contribution[]
   projectJoinHackathon  ProjectJoinHackathon[]
   team                  Team[]
-  AdminAccess           AdminAccess[]
-  HackathonSponsors     HackathonSponsors[]
+  adminAccess           AdminAccess[]
+  hackathonSponsors     HackathonSponsors[]
 }
 
 model HackathonSponsors {

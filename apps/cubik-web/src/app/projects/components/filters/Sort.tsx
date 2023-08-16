@@ -7,7 +7,9 @@ interface Props {
   projects: ProjectExplorerType[];
   setProjects: (projects: ProjectExplorerType[]) => void;
 }
-export const FilterTrack = ({ _projects, projects, setProjects }: Props) => {
+
+
+export const Sort = ({ _projects, projects, setProjects }: Props) => {
   const handleFilter = (filter: string) => {
     let filterProjects: ProjectExplorerType[] = projects;
     if (filter === "option1") {
