@@ -15,11 +15,11 @@ const RPC_URL =
     : env.NEXT_PUBLIC_RPC_DEVNET_URL;
 
 const getSquads = async (wallet: NodeWallet): Promise<Squads> => {
-  if (env.NEXT_PUBLIC_SOLANA_NETWORK === "mainnet-beta") {
-    const squads = Squads.endpoint(RPC_URL, wallet);
+  // if (env.NEXT_PUBLIC_SOLANA_NETWORK === "mainnet-beta") {
+  //   const squads = Squads.endpoint(RPC_URL, wallet);
 
-    return squads;
-  }
+  //   return squads;
+  // }
   const squads = Squads.devnet(wallet);
 
   return squads;

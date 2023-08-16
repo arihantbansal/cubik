@@ -13,3 +13,13 @@ export const createUserIx = (
 
   return sdk.user.create(wallet.publicKey, userAccount, username);
 };
+
+export const createAdmin = (
+  wallet: NodeWallet
+): Promise<web3.TransactionInstruction> => {
+  const sdk = getSdk(wallet);
+
+  const [adminAccount] = sdk.admin.getAdminPDA();
+
+  return sdk.admin.create(wallet.publicKey, adminAccount);
+};

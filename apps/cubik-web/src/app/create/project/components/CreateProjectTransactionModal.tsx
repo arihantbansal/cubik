@@ -58,7 +58,8 @@ export const CreateProjectTransactionModal = (props: Props) => {
     setTransactionLoading(true);
     const id = uuidV4();
     setProjectId(id);
-    if (!userProjectCount.data) {
+    console.log(userProjectCount.data);
+    if (userProjectCount.data === null || userProjectCount.data === undefined) {
       setTransactionLoading(false);
       return setTransactionError(
         "Something went wrong. Unable to pull user data"
@@ -80,7 +81,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
 
       const ix = await createProjectIx(
         anchorWallet as NodeWallet,
-        userProjectCount.data,
+        userProjectCount.data + 4,
         new web3.PublicKey(vaultAuth)
       );
       const { blockhash } = await connection.getLatestBlockhash();
@@ -95,21 +96,23 @@ export const CreateProjectTransactionModal = (props: Props) => {
       console.log(sig);
       if (!sig) return;
       let team: Team[] = [];
-      team = props
-        .getValues()
-        ?.team?.map((member) => member.value)
-        .map((teamId) => {
-          return {
-            id: uuidV4(),
-            projectId: id,
-            userId: teamId,
-            createdAt: new Date(),
-            isActive: true,
-            isArchive: false,
-            updatedAt: new Date(),
-            hackathonId: null,
-          };
-        });
+      if (props.getValues("team") && props.getValues("team").length > 0) {
+        team = props
+          .getValues()
+          ?.team?.map((member) => member.value)
+          .map((teamId) => {
+            return {
+              id: uuidV4(),
+              projectId: id,
+              userId: teamId,
+              createdAt: new Date(),
+              isActive: true,
+              isArchive: false,
+              updatedAt: new Date(),
+              hackathonId: null,
+            };
+          });
+      }
       let finalTeam: Team[] = [
         {
           id: uuidV4(),
@@ -147,7 +150,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
           ogImage: props.imageUrl as string,
           ownerPublickey: anchorWallet?.publicKey?.toBase58() as string,
           projectLink: props.getValues().projectLink,
-          projectUserCount: userProjectCount.data,
+          projectUserCount: userProjectCount.data + 4,
           shortDescription: props.getValues().tagline,
           status: "REVIEW",
           twitterHandle: props.getValues().twitter,
@@ -157,8 +160,10 @@ export const CreateProjectTransactionModal = (props: Props) => {
         },
         team
       );
+      setProjectId(id);
       setProjectSubmitted(true);
     } catch (error) {
+      console.log(error);
       setTransactionError("Something went wrong. Please try again.");
       setTransactionLoading(false);
     }
@@ -360,7 +365,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
                   </Box>
                 </VStack>
                 <Box mx="auto" maxW="25rem" w="full">
-                  <ActiveEvent projectId={"s"} />
+                  <ActiveEvent projectId={projectId as string} />
                 </Box>
               </ModalHeader>
             </>
