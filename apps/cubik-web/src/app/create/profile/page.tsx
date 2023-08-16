@@ -17,7 +17,6 @@ const CreateProfile = () => {
           p={{ base: "22px", md: "32px" }}
           position="relative"
         >
-    
           <Box
             as="svg"
             position="absolute"
@@ -52,7 +51,6 @@ const CreateProfile = () => {
                 Create your Cubik account to get started.
               </Box>
             </CardHeader>
-
             <Form />
           </>
         </Card>

@@ -321,15 +321,14 @@ export const Button = {
       },
     }),
     cubikOutlined: (_props: StyleFunctionProps) => ({
-      color: "#A8F0E6",
+      color: "#E0FFFD",
       backgroundColor: "transparent",
-      borderRadius: "10px",
-      outline: isMobileSafari ? "" : "1px solid #A8F0E6",
-      border: isMobileSafari ? "1px solid #A8F0E6" : "",
+      borderRadius: "8px",
+      border: "2px solid #E0FFFD",
       _hover: {
         color: "#031513",
         backgroundColor: "#E0FFFD",
-        outline: "1px solid #E0FFFD",
+        // outline: "1px solid #E0FFFD",
       },
       _disabled: {
         color: "#9E9E9E",

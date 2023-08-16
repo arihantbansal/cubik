@@ -33,10 +33,23 @@ const ProfilePicture = ({
         right="-4px"
         rounded="full"
         bg="white"
-        p="0.1rem"
+        p="0.3rem"
+        pl="0.35rem"
         zIndex={"10"}
       >
-        {/* todo: <BiUpArrowAlt color="black" /> */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="14"
+          height="14"
+          fill="none"
+          stroke="#000"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="3"
+        >
+          <path d="M6 8.83a30.23 30.23 0 0 1 5.406-5.62A.949.949 0 0 1 12 3m6 5.83a30.233 30.233 0 0 0-5.406-5.62A.949.949 0 0 0 12 3m0 0v18" />
+        </svg>
       </Center>
       <ChakraAvatar src={pfp} width="84px" height="84px" borderRadius={"8px"} />
     </Center>

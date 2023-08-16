@@ -147,6 +147,23 @@ const FramerCarousel = ({
           zIndex={"2"}
           aria-label="go to left"
           // @todo:  icon={<BiChevronLeft size={24} />}
+          icon={
+            <Center>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="#000"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+              >
+                <path d="M15 18a30.616 30.616 0 0 1-5.817-5.49.803.803 0 0 1 0-1.02A30.617 30.617 0 0 1 15 6" />
+              </svg>
+            </Center>
+          }
           onClick={() => scrollCarousel("left")}
         />
         <Box
@@ -220,6 +237,23 @@ const FramerCarousel = ({
           minW={"26px"}
           aria-label="go to left"
           // @todo:  icon={<BiChevronRight size={24} />}
+          icon={
+            <Center>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="#000"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+              >
+                <path d="M9 18a30.617 30.617 0 0 0 5.817-5.49.803.803 0 0 0 0-1.02A30.619 30.619 0 0 0 9 6" />
+              </svg>
+            </Center>
+          }
           onClick={() => scrollCarousel("right")}
         />
       </HStack>

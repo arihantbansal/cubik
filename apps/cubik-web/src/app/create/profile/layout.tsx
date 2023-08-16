@@ -12,7 +12,7 @@ const ProfileLayout = ({ children }: Props) => {
   return (
     <>
       {connected ? (
-        <Box mt={10}>{children}</Box>
+        <Box mt={20}>{children}</Box>
       ) : (
         <Box mt={20}>
           <AuthConnectWallet />
