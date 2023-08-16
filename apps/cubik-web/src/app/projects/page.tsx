@@ -291,22 +291,16 @@ export default async function () {
           maxW="7xl"
           py={{ base: "24px", md: "40px" }}
         >
-          <VStack
-            w="full"
-            alignItems={"start"}
-            justifyContent="start"
-            gap={{ base: "28px", md: "40px" }}
-          >
+          <VStack w="full" alignItems={"start"} justifyContent="start">
             <ExploreBanner banner={explorerData.banner || []} />
-            <HStack pb="1rem" w="full" justify="space-between">
-              <Box
-                color="neutral.11"
-                as="p"
-                textStyle={{ base: "title2", md: "title1" }}
-              >
-                Projects
-              </Box>
-            </HStack>
+            <Box
+              mt={10}
+              color="neutral.11"
+              as="p"
+              textStyle={{ base: "title2", md: "title1" }}
+            >
+              Projects
+            </Box>
             <Projects projects={explorerData.projects} />
           </VStack>
         </Container>

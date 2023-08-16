@@ -1,4 +1,5 @@
 "use client";
+import { RoundStatus } from "@/app/components/common/dates/roundStatus";
 import { Box, HStack, Stack, Tooltip, VStack } from "@/utils/chakra";
 import { useEffect, useState } from "react";
 import FlipNumbers from "react-flip-numbers";
@@ -251,11 +252,7 @@ const FundingRoundBanner = ({
       >
         <VStack w="full" align={"start"} spacing="48px">
           <VStack w="full" align={"start"} spacing="24px">
-            {/* <RoundStatus
-              isHackathon={true}
-              startDate={startDate}
-              endDate={endDate}
-            /> */}
+            <RoundStatus startDate={startDate} endDate={endDate} />
             <Stack
               direction={{ base: "column", md: "row" }}
               justify={"space-between"}
