@@ -291,21 +291,26 @@ export const metadata: Metadata = {
 
 export default async function () {
   const explorerData = await projectExplorer();
+  console.log("explorer data - ", explorerData);
   return (
     <>
-      <Box bg={"black"} w="full" h="full">
+      <Box bg={"black"} w="full" h="full" pt="10px">
         <Container
           px={{ base: "0.6rem", sm: "0.8rem", md: "2rem", xl: "0px" }}
           maxW="7xl"
           py={{ base: "24px", md: "40px" }}
         >
-          <VStack w="full" alignItems={"start"} justifyContent="start">
+          <VStack
+            gap={{ base: "24px", sm: "30px", md: "38px" }}
+            w="full"
+            alignItems={"start"}
+            justifyContent="start"
+          >
             <ExploreBanner banner={explorerData.banner || []} />
             <Box
-              mt={10}
               color="neutral.11"
               as="p"
-              textStyle={{ base: "title2", md: "title1" }}
+              textStyle={{ base: "title3", sm: "title2", md: "title1" }}
             >
               Projects
             </Box>

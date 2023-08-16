@@ -3,6 +3,7 @@ import { Box, Center, HStack, chakra, keyframes } from "@/utils/chakra";
 import { differenceInDays, isFuture, isPast } from "date-fns";
 //import { BiInfoCircle } from "react-icons/bi";
 //import { AiTwotoneCalendar } from "react-icons/ai";
+import InfoIcon from "../../../../theme/icons/info_circle.svg";
 
 const random = () => Math.floor(Math.random() * 10);
 
@@ -115,12 +116,9 @@ export const RoundStatus = ({
         spacing="8px"
         mx={1}
       >
-        {/*  @todo  */}
-        {/* <Box
-          as={BiInfoCircle}
-          color="white"
-          boxSize={["12px", "14px", "18px"]}
-        /> */}
+        {/*  @todo 
+        <Box as={InfoIcon} color="white" boxSize={[12, 12, 12]} /> */}
+        <InfoIcon width="14" height="14" />
         <Box
           as="p"
           whiteSpace="pre"

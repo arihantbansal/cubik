@@ -13,13 +13,13 @@ const Logo = () => {
         <Box
           display="flex"
           flexDir={"row"}
-          gap="12px"
+          gap={{ base: "8px", md: "12px" }}
           alignContent={"center"}
           justifyContent={"center"}
         >
           <Center
-            width={{ base: "1.5rem", sm: "1.6rem" }}
-            height={{ base: "1.5rem", sm: "1.6rem" }}
+            width={{ base: "1.4rem", sm: "1.6rem" }}
+            height={{ base: "1.4rem", sm: "1.6rem" }}
           >
             <svg
               width="101"
@@ -39,7 +39,7 @@ const Logo = () => {
           <Text
             letterSpacing={"0.12em"}
             fontWeight={"800"}
-            fontSize={{ base: "18px", sm: "20px" }}
+            fontSize={{ base: "15px", sm: "20px" }}
             color="white"
             display={{ base: "block", sm: "block", lg: "block" }}
           >

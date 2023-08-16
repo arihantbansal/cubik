@@ -32,9 +32,6 @@ export const Sort = ({ _projects, projects, setProjects }: Props) => {
   return (
     <>
       <VStack gap="8px">
-        <Box w="full" textStyle={"body4"} color="neutral.8">
-          Sort by
-        </Box>
         <Select
           defaultValue={1}
           onChange={(e) => handleFilter(e.target.value)}

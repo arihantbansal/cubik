@@ -16,6 +16,7 @@ import React from "react";
 //import { BiChevronRight } from "react-icons/bi";
 import { timeSince } from "@/utils/helpers/timeSince";
 import { tokenList } from "@/utils/helpers/tokenlist";
+import { Image } from "@chakra-ui/next-js";
 
 interface Props {
   isLoading?: boolean;
@@ -202,8 +203,21 @@ export const ContributionRow = ({
         </Skeleton>
       </Td>
       <Td px="12px">
-        {/*  @todo  */}
-        {/* <BiChevronRight size="24" />  */}
+        {/*  @todo: pending to confirm  */}
+        <Center
+          width={{ base: "18px", sm: "22px", md: "22px" }}
+          height={{ base: "18px", sm: "22px", md: "22px" }}
+          position="relative"
+          right="auto"
+          bottom="auto"
+        >
+          <Image
+            src="/icons/chevron/BigRight.svg"
+            alt="cubik chevron right icon"
+            width={"100"}
+            height={"100"}
+          />
+        </Center>
       </Td>
     </Tr>
   );

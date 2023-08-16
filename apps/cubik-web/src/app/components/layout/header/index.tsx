@@ -69,11 +69,11 @@ const Header = () => {
           position="fixed"
           top="0px"
           left="0px"
-          minH="4rem"
+          minH="3.6rem"
           p="0"
           bg="transparent"
           sx={{
-            backdropFilter: "blur(20px)",
+            backdropFilter: "blur(18px)",
             margin: "0px !important",
             marginTop: "0px !important",
           }}

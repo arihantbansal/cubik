@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import CategoryTag from "@/app/components/common/tags/CategoryTags";
 import { Box, Center, HStack } from "@/utils/chakra";
 import { ProjectExplorerType } from "@/types/explorer";
+import Image from "next/image";
 
 export interface Category {
   value:
@@ -24,7 +25,7 @@ const Categories = ({
   projects: ProjectExplorerType[];
   setProjects: (projects: ProjectExplorerType[]) => void;
 }) => {
-  const [category, setCategory] = useState<Category["value"]>("all");
+  const [category, setCategory] = useState<Category["label"]>("all");
   const categories: Category[] = [
     {
       value: "all",
@@ -58,70 +59,91 @@ const Categories = ({
   };
 
   return (
-    <HStack
-      py={4}
-      ref={scrollRef}
-      overflow="clip"
-      w="full"
-      justify="start"
-      whiteSpace="nowrap"
-      position={"relative"}
-      _after={{
-        content: '""',
-        position: "absolute",
-        top: "45%",
-        right: "0%",
-        transform: "translateY(-50%)",
-        height: { base: "2.2rem", md: "3rem" },
-        width: "3rem",
-        background: "linear-gradient(90deg, #0C0D0D00 0%, #000 80%)",
-      }}
-    >
-      {/* <Center as="button" color="#ADB8B6" onClick={() => changeCategory("all")}>
+    <Box position="relative">
+      <HStack
+        ref={scrollRef}
+        overflowX="auto"
+        w="80vw"
+        maxW="6xl"
+        justify="start"
+        whiteSpace="nowrap"
+        position={"relative"}
+        sx={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
+        {/* <Center as="button" color="#ADB8B6" onClick={() => changeCategory("all")}>
         <CategoryTag isSelected={true}>All Projects</CategoryTag>
-      </Center> */}
+         </Center> */}
 
-      {category !== "all" ? (
-        <>
-          <Center
-            cursor="pointer"
-            rounded="full"
-            px="12px"
-            py="12px"
-            bg="#010F0D"
-            color="#ADB8B6"
-            _hover={{
-              color: "#14665B",
-              bg: "#E0FFFD",
-            }}
-            onClick={() => {
-              changeCategory("all");
-            }}
-          >
-            {/* @todo */}
-            {/* <Box
-              as={RxCross1}
-              boxSize={["12px", "14px", "18px"]}
-              color="#626665"
-            /> */}
-          </Center>
-          <CategoryTag isSelected={true}>{category}</CategoryTag>
-        </>
-      ) : (
-        <>
-          {categories.map(({ label, value }) => (
+        {category !== "all" ? (
+          <>
             <Center
-              key={value}
-              as="button"
+              cursor="pointer"
+              rounded="full"
+              px="9px"
+              py="9px"
+              bg="#010F0D"
               color="#ADB8B6"
-              onClick={() => changeCategory(value)}
+              _hover={{
+                color: "#14665B",
+                bg: "#E0FFFD",
+              }}
+              onClick={() => {
+                changeCategory("all");
+              }}
             >
-              <CategoryTag isSelected={category === value}>{label}</CategoryTag>
+              {/* @todo improve the color and sizing ( maybe create custom icons library ) */}
+              <Center
+                width={{ base: "18px", sm: "22px", md: "22px" }}
+                height={{ base: "18px", sm: "22px", md: "22px" }}
+                position="relative"
+                right="auto"
+                bottom="auto"
+                color="#fff"
+              >
+                <Image
+                  src="/icons/cross.svg"
+                  alt="cubik chevron right icon"
+                  color="#fff"
+                  width={"100"}
+                  height={"100"}
+                />
+              </Center>
             </Center>
-          ))}
-        </>
-      )}
-    </HStack>
+            <CategoryTag isSelected={true}>{category}</CategoryTag>
+          </>
+        ) : (
+          <>
+            {categories.map(({ label, value }) => (
+              <Center
+                key={value}
+                as="button"
+                color="#ADB8B6"
+                onClick={() => changeCategory(value)}
+              >
+                <CategoryTag isSelected={category === value}>
+                  {label}
+                </CategoryTag>
+              </Center>
+            ))}
+          </>
+        )}
+      </HStack>{" "}
+      <Box
+        position="absolute"
+        top="45%"
+        right="0%"
+        transform="translateY(-50%)"
+        height={{ base: "2.5rem", md: "3rem" }}
+        width={{ base: "1.5rem", md: "3rem" }}
+        background="linear-gradient(90deg, #0C0D0D00 0%, #000 80%)"
+      />
+    </Box>
   );
 };
 

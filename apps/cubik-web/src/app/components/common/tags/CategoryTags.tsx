@@ -12,8 +12,8 @@ const CategoryTag = ({
     <Tag
       cursor="pointer"
       rounded="full"
-      px={{ base: "14px", md: "16px" }}
-      py={{ base: "10px", md: "12px" }}
+      px={{ base: "16px", md: "24px" }}
+      py={{ base: "18px", md: "18px" }}
       bg={isSelected ? "#E0FFFD" : "#010F0D"}
     >
       <Box
@@ -21,10 +21,11 @@ const CategoryTag = ({
         color={isSelected ? "#14665B" : "#ADB8B6"}
         noOfLines={1}
         whiteSpace="nowrap"
-        textStyle={{ base: "body6", md: "body5" }}
-        fontWeight="600"
+        textStyle={{ base: "title7", md: "title6" }}
+        fontWeight="500 !important"
+        textTransform={"capitalize"}
       >
-        {children}
+        {children.replaceAll(/_/g, " ")}
       </Box>
     </Tag>
   );

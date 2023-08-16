@@ -21,7 +21,6 @@ const Sidebar = () => {
           color="white"
           onClick={onToggle}
         /> */}
-        Menu
       </Center>
     </HStack>
   ) : null;

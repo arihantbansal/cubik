@@ -202,7 +202,7 @@ const FundingRoundBanner = ({
     >
       <Stack
         maxW={"full"}
-        p={{ base: "16px", md: "32px" }}
+        p={{ base: "16px", sm: "24px", md: "32px" }}
         border="2px solid #ffffff10"
         overflow="hidden"
         background={"#080808"}
@@ -250,21 +250,25 @@ const FundingRoundBanner = ({
           rounded: "full",
         }}
       >
-        <VStack w="full" align={"start"} spacing="48px">
-          <VStack w="full" align={"start"} spacing="24px">
+        <VStack w="full" align={"start"}>
+          <VStack
+            w="full"
+            align={"start"}
+            spacing={{ base: "16px", sm: "20px", md: "24px" }}
+          >
             <RoundStatus startDate={startDate} endDate={endDate} />
             <Stack
               direction={{ base: "column", md: "row" }}
               justify={"space-between"}
               align="start"
-              gap={{ base: "8px", md: "16px" }}
+              gap={{ base: "12px", sm: "12px", md: "16px" }}
               w="full"
             >
-              <VStack align={"start"} gap="8px">
+              <VStack align={"start"} gap={{ base: "6px", md: "8px" }}>
                 <Box
                   color="neutral.11"
                   as="p"
-                  textStyle={{ base: "title2", md: "headline3" }}
+                  textStyle={{ base: "title2", sm: "title2", md: "headline3" }}
                 >
                   {name}
                 </Box>
@@ -272,8 +276,8 @@ const FundingRoundBanner = ({
                   maxW={{ base: "340px", md: "500px" }}
                   as="p"
                   color="neutral.8"
-                  h="2.8rem"
-                  textStyle={{ base: "body5", md: "body3" }}
+                  h={{ base: "auto", md: "2.8rem" }}
+                  textStyle={{ base: "body5", sm: "body4", md: "body3" }}
                   noOfLines={2}
                 >
                   {description}
@@ -283,7 +287,11 @@ const FundingRoundBanner = ({
                 bg="#ffffff10"
                 rounded="full"
                 boxShadow={"0px 4px 24px rgba(0, 0, 0, 0.08)"}
-                p={{ base: "0.6rem 1.2rem", md: "0.8rem 1.5rem" }}
+                p={{
+                  base: "0.4rem 0.8rem",
+                  sm: "0.6rem 1rem",
+                  md: "0.8rem 1.3rem",
+                }}
               >
                 <Box
                   whiteSpace={"nowrap"}
@@ -299,17 +307,16 @@ const FundingRoundBanner = ({
                   <Box as="p" textStyle={{ base: "body5", md: "title3" }}>
                     ${matchingPool}
                   </Box>
-                  <Tooltip
+                  {/* <Tooltip
                     zIndex={1000}
                     background={"black"}
-                    p={2}
+                    p={[1, 1, 2]}
                     label="The matching pool is in 1M $RAIN  + 1K $USDC. The USD value of $RAIN is subject to change"
                   >
                     <Box zIndex={1000} as="p">
-                      {/* <FiInfo /> */}
-                      {/* @todo */}
+                    
                     </Box>
-                  </Tooltip>
+                  </Tooltip> */}
                 </HStack>
               </HStack>
             </Stack>

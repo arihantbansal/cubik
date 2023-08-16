@@ -25,10 +25,8 @@ const Projects = ({
         projects={projects}
         setProjects={setProjects}
       />
-
       <Wrap
         overflow={"visible"}
-        py="8px"
         spacing={{ base: "1.8rem", md: "1.5rem" }}
         w="100%"
         margin="0"
@@ -43,6 +41,7 @@ const Projects = ({
         ) : (
           <>
             <EmptyStateHOC
+              margin="0"
               heading={"No Project Found"}
               subHeading={
                 "We couldn`t find any projects matching your search. Please try a different query or check back later."

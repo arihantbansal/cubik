@@ -429,8 +429,9 @@ export const Button = {
   },
   sizes: {
     cubikMini: {
+      height: "36px",
       fontSize: "12px",
-      padding: "10px 24px",
+      padding: "0px 12px",
     },
     cubikSmall: {
       height: "40px",

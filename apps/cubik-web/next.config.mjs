@@ -13,6 +13,10 @@ const config = {
     if (isServer) {
       config.plugins = [...config.plugins, new PrismaPlugin()];
     }
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ["@svgr/webpack"],
+    });
     return config;
   },
   transpilePackages: ["@cubik/database"],

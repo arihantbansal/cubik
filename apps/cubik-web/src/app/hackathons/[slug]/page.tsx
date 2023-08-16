@@ -18,7 +18,6 @@ const fetchHackathon = async (slug: string) => {
 };
 const HackathonPage = async ({ params: { slug } }: Props) => {
   const hackathon = await fetchHackathon(slug);
-  console.log("hackathon", hackathon);
   return (
     <>
       <Container p={"0"} maxW={"full"}>

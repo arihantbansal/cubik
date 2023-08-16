@@ -14,9 +14,8 @@ const ConnectWallet = () => {
     <>
       {!connected ? (
         <Button
-          variant="primary"
-          // size="xs"
-          // fontSize="sm"
+          variant="cubikFilled"
+          size={{ base: "cubikMini", md: "cubikSmall" }}
           onClick={() => setVisible(true)}
         >
           Connect Wallet

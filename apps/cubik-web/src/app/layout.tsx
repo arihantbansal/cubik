@@ -1,5 +1,5 @@
 "use client";
-import { VStack } from "@/utils/chakra";
+import { Box, VStack } from "@/utils/chakra";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Header from "@/app/components/layout/header";
 import WalletContext from "@/app/components/wallet/context";
@@ -26,7 +26,15 @@ export default function RootLayout({
           <QueryClientProvider client={client}>
             <AuthProvider>
               <Providers>
-                <VStack mt={10} maxW="full" w="100%" h="100vh" p="0" bg="black">
+                <VStack
+                  overflowX={"hidden"}
+                  mt={10}
+                  maxW="full"
+                  w="100%"
+                  h="100vh"
+                  p="0"
+                  bg="black"
+                >
                   <Header />
                   {children}
                 </VStack>

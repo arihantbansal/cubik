@@ -19,10 +19,14 @@ export const EmptyStateHOC = ({
     <VStack
       my={margin ? margin : "6rem"}
       alignContent={"center"}
+      w="full"
       mx="auto"
-      p="24px"
+      rounded="12px"
+      p="6rem"
       align="center"
       gap="16px"
+      border={"1px dashed"}
+      borderColor="neutral.2"
     >
       {children ? (
         <>{children}</>
