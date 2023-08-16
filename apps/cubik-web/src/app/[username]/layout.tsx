@@ -46,7 +46,6 @@ const Profile = async ({
     return notFound();
   }
 
-  console.log("profile", profile);
 
   return (
     <Container

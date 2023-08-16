@@ -1,3 +1,4 @@
+"use client";
 export function getDomain(url: string) {
   var hostname;
   if (url?.indexOf("://") > -1) {
