@@ -1,8 +1,10 @@
 "use client";
-import { Button, VStack } from "@/utils/chakra";
+import { Button, Center, VStack } from "@/utils/chakra";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import React from "react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+
 const LoginPage = () => {
   const { publicKey } = useWallet();
   const { setVisible } = useWalletModal();
@@ -15,9 +17,12 @@ const LoginPage = () => {
         justify={"center"}
         align={"center"}
       >
-        <Button onClick={() => setVisible(true)} variant={"cubikFilled"}>
+        <Center mx="auto" maxW="20rem">
+          <WalletMultiButton />
+        </Center>
+        {/* <Button onClick={() => setVisible(true)} variant={"cubikFilled"}>
           Connect Wallet
-        </Button>
+        </Button> */}
       </VStack>
     </>
   );

@@ -15,13 +15,15 @@ import {
   TorusWalletAdapter,
   UnsafeBurnerWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
-import { web3 } from "@coral-xyz/anchor";
 import type { FC, ReactNode } from "react";
 import { useMemo } from "react";
+import { clusterApiUrl } from "@solana/web3.js";
+
+require("@solana/wallet-adapter-react-ui/styles.css");
 
 const WalletContext: FC<{ children: ReactNode }> = ({ children }) => {
   const network = WalletAdapterNetwork.Mainnet;
-  const endpoint = useMemo(() => web3.clusterApiUrl(network), [network]);
+  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
   const wallets = useMemo(
     () => [
       new BackpackWalletAdapter(),
@@ -32,7 +34,6 @@ const WalletContext: FC<{ children: ReactNode }> = ({ children }) => {
       new SolletExtensionWalletAdapter(),
       new TorusWalletAdapter(),
       new TokenaryWalletAdapter(),
-      new UnsafeBurnerWalletAdapter(),
     ],
     []
   );
