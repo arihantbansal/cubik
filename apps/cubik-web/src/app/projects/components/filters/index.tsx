@@ -1,26 +1,32 @@
 "use client";
-import { useRef } from "react";
-// import CategoryTag from '~/components/common/tags/CategoryTags';
-import { Center, HStack } from "@/utils/chakra";
 import Categories from "./categories";
-import { Project } from "../";
+import { ProjectExplorerType } from "@/types/explorer";
+import { FilterTrack } from "./filterTrack";
+import { HStack } from "@chakra-ui/react";
 
 const Filters = ({
   _projects,
   projects,
   setProjects,
 }: {
-  _projects: Project[];
-  projects: Project[];
-  setProjects: (projects: Project[]) => void;
+  _projects: ProjectExplorerType[];
+  projects: ProjectExplorerType[];
+  setProjects: (projects: ProjectExplorerType[]) => void;
 }) => {
   return (
     <>
-      <Categories
-        _projects={_projects}
-        projects={projects}
-        setProjects={setProjects}
-      />
+      <HStack justify={"space-between"} w="full">
+        <Categories
+          _projects={_projects}
+          projects={projects}
+          setProjects={setProjects}
+        />
+        <FilterTrack
+          _projects={_projects}
+          projects={projects}
+          setProjects={setProjects}
+        />
+      </HStack>
     </>
   );
 };

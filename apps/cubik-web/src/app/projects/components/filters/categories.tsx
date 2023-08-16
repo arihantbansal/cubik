@@ -1,10 +1,8 @@
 "use client";
 import { useRef, useState } from "react";
-// import CategoryTag from '~/components/common/tags/CategoryTags';
 import CategoryTag from "@/app/components/common/tags/CategoryTags";
 import { Box, Center, HStack } from "@/utils/chakra";
-import { Project } from "..";
-//import { RxCross1 } from "react-icons/rx";
+import { ProjectExplorerType } from "@/types/explorer";
 
 export interface Category {
   value:
@@ -22,9 +20,9 @@ const Categories = ({
   projects,
   setProjects,
 }: {
-  _projects: Project[];
-  projects: Project[];
-  setProjects: (projects: Project[]) => void;
+  _projects: ProjectExplorerType[];
+  projects: ProjectExplorerType[];
+  setProjects: (projects: ProjectExplorerType[]) => void;
 }) => {
   const [category, setCategory] = useState<Category["value"]>("all");
   const categories: Category[] = [
@@ -50,7 +48,7 @@ const Categories = ({
     }
 
     const filteredProjects = _projects.filter(({ industry }) => {
-      return industry.some(({ value }) => {
+      return (JSON.parse(industry) as any[]).some(({ value }) => {
         console.log(value, category);
         return value === category;
       });
