@@ -1,6 +1,15 @@
 import React from "react";
 import { Avatar, Box, Center, HStack, Skeleton, VStack } from "@/utils/chakra";
-export const HackathonInteractions = () => {
+import { HackathonHost } from "@/types/hackathon";
+import { TruncatedAddr } from "@/app/components/common/wallet";
+import { formatNumberWithK } from "@/utils/helpers/formatWithK";
+export const HackathonInteractions = ({
+  host,
+  prizePool,
+}: {
+  host: HackathonHost[];
+  prizePool: number;
+}) => {
   return (
     <>
       <VStack w="full" gap="48px">
@@ -28,23 +37,6 @@ export const HackathonInteractions = () => {
                 textStyle={{ base: "title5", md: "title4" }}
               >
                 Lamport DAO
-              </Box>
-            </HStack>
-            <HStack w="full" gap="0.6rem">
-              <Avatar
-                border="2px solid #FFFFFF10"
-                borderRadius={"8px"}
-                size={{ base: "sm", md: "md" }}
-                src={
-                  "https://res.cloudinary.com/demonicirfan/image/upload/v1687866008/Frame_232_zhelfd.png"
-                }
-              />
-              <Box
-                color={"white"}
-                as="p"
-                textStyle={{ base: "title5", md: "title4" }}
-              >
-                Magic Block
               </Box>
             </HStack>
           </VStack>
@@ -88,8 +80,13 @@ export const HackathonInteractions = () => {
             </Box>
             <HStack w="full" align={"start"}>
               <VStack align={"start"} gap="8px">
-                <Box as="p" textStyle={"headline4"} color={"neutral.11"}>
-                  $25,000
+                <Box
+                  as="p"
+                  textStyle={"headline4"}
+                  textTransform={"uppercase"}
+                  color={"neutral.11"}
+                >
+                  $ {formatNumberWithK(prizePool)}
                 </Box>
               </VStack>
               <Center
@@ -162,47 +159,43 @@ export const HackathonInteractions = () => {
             Hosts
           </Box>
           <VStack gap={"2px"} align="start" w="full">
-            {/* {props.team.map((team) => {
+            {host.map((team) => {
               return (
                 <>
-                  <HStack
-                    py="8px"
-                    as={Link}
-                    href={""}
-                    w="full"
-                    justify="space-between"
-                  >
+                  <HStack py="8px" w="full" justify="space-between">
                     <HStack gap="0.6rem">
                       <Avatar
                         borderRadius={"8px"}
                         size={{ base: "sm", md: "sm" }}
                         border="1px solid #FFFFFF10"
-                        src={team.user.profilePicture}
+                        src={team.avatar}
+                        name={team.name}
                       />
                       <Box
                         color={"white"}
                         as="p"
                         textStyle={{ base: "body4", md: "body3" }}
+                        fontWeight={"600 !important"}
                       >
-                        @{team.user.username}
+                        @{team.name}
                       </Box>
                     </HStack>
-                    <Box
-                      color="#B4B0B2"
-                      as="p"
-                      textStyle={{ base: "body5", md: "body4" }}
-                    >
-                      {TruncatedAddr({
-                        walletAddress: team.user.mainWallet,
-                      })}
-                    </Box>
+                    <Skeleton isLoaded={!!team.wallet}>
+                      <Box
+                        color="#B4B0B2"
+                        as="p"
+                        textStyle={{ base: "body5", md: "body4" }}
+                      >
+                        {team.wallet.slice(0, 4)}...{team.wallet.slice(-4)}
+                      </Box>
+                    </Skeleton>
                   </HStack>
                 </>
               );
-            })} */}
+            })}
           </VStack>
         </VStack>
-        <VStack gap={{ base: "8px", md: "16px" }} align="start" w="full">
+        {/* <VStack gap={{ base: "8px", md: "16px" }} align="start" w="full">
           <Box
             as="p"
             textStyle={{ base: "title4", md: "title3" }}
@@ -217,7 +210,7 @@ export const HackathonInteractions = () => {
               md: "12px",
             }}
           >
-            {/* {props.sponsors?.map((sponsor) => (
+             {props.sponsors?.map((sponsor) => (
               <React.Fragment key={sponsor.name}>
                 <Skeleton
                   isLoaded={!props.isLoading}
@@ -248,9 +241,9 @@ export const HackathonInteractions = () => {
                   </HStack>
                 </Skeleton>
               </React.Fragment>
-            ))} */}
+            ))} 
           </HStack>
-        </VStack>
+        </VStack> */}
       </VStack>
     </>
   );

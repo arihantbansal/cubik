@@ -209,6 +209,51 @@ model Hackathon {
   projectJoinHackathon  ProjectJoinHackathon[]
   team                  Team[]
   AdminAccess           AdminAccess[]
+  HackathonSponsors     HackathonSponsors[]
+}
+
+model HackathonSponsors {
+  id                    String          @id @default(uuid()) @map("_id")
+  hackathonId           String
+  name                  String
+  description           String
+  sponsorOrganizations  Json
+  link                  Json
+  prize                 Json
+  prizeBreakdown        Json?
+  otherPrize            Json?
+  ideas                 Json?
+  requirements          Json?
+  judges                Json?
+  ownerOfTrack          Json?
+  resources             Json?
+  contactPerson         String?
+  email                 String?
+  phone                 String?
+  brandColor            Json?
+  brandGuidelines       String?
+  sponsorshipAmount     Float?
+  paymentStatus         PaymentStatus?  @default(PENDING)
+  paymentMethod         String?
+  workshop              Json?
+  feedback              Json?
+  engagementMetrics     Json?
+  socialMediaHandles    Json?
+  promotionalCode       String?
+  contractSigned        Boolean?        @default(false)
+  termsAndConditions    Boolean?        @default(false)
+  sponsorshipTier       SponsorShipTier @default(PLATINUM)
+  categories            Json?
+  previousParticipation Boolean?        @default(false)
+  futureInterest        Boolean?        @default(false)
+  notes                 String?
+  attachments           Json?
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  hackathon             Hackathon       @relation(fields: [hackathonId], references: [id])
+  isActive              Boolean         @default(true)
+
+  @@index([hackathonId])
 }
 
 model ProjectJoinHackathon {
@@ -308,6 +353,19 @@ model AdminAccess {
   @@index([userId])
   @@index([hackathonId])
   @@index([roundId])
+}
+
+enum SponsorShipTier {
+  PLATINUM
+  GOLD
+  SILVER
+  BRONZE
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  OVERDUE
 }
 
 enum UserSybilStatus {

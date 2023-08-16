@@ -10,6 +10,7 @@ import {
   Stepper,
   useSteps,
   VStack,
+  Center,
 } from "@/utils/chakra";
 //import { CgTimelapse } from "react-icons/cg";
 import { isFuture, isPast } from "date-fns";
@@ -55,16 +56,17 @@ export const HackathonSchedule = ({
       return 0;
     }
   };
+
   const steps: { title: string; start: Date; endDate?: Date; index: number }[] =
     [
       {
-        title: "Registration Starts",
+        title: "Registration",
         start: registrationStartDate,
         endDate: registrationEndDate,
         index: 0,
       },
       {
-        title: "Game Jam",
+        title: "Hackathon",
         start: hackathonStartDate,
         endDate: hackathonEndDate,
         index: 1,
@@ -96,26 +98,51 @@ export const HackathonSchedule = ({
       >
         {steps.map((event) => (
           <Step key={event.index} style={{ width: "100%" }}>
-            {/* <StepIndicator
+            <StepIndicator
               borderColor={activeStep === event.index ? "#14665B" : "#1D1F1E"}
               bg={activeStep === event.index ? "#14665B" : "#1D1F1E"}
             >
               <StepStatus
                 complete={
-                  <Box
-                    as={BsCheckCircle}
-                    rounded="full"
-                    width="12px"
-                    height="12px"
-                    bg="#A8F0E6"
-                  />
+                  <Center>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                    >
+                      <path d="M12 8v4.816a.5.5 0 0 0 .232.422L15 15m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                  </Center>
                 }
                 incomplete={
                   <Box rounded="full" width="12px" height="12px" bg="#3B3D3D" />
                 }
-                active={<CgTimelapse color="#A8F0E6" />}
+                // active={<CgTimelapse color="#A8F0E6" />}
+                active={
+                  <Center>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                    >
+                      <path d="M12 8v4.816a.5.5 0 0 0 .232.422L15 15m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                  </Center>
+                }
               />
-            </StepIndicator> */}
+            </StepIndicator>
             <VStack
               w="90%"
               ml={"1rem"}
