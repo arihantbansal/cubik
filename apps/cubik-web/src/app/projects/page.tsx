@@ -249,8 +249,8 @@ export const projectExplorer = async () => {
         matchingPool: hackathon.prizePool,
         name: hackathon.name,
         type: "hackathon",
-        endTime: hackathon.hackathonStartDate as Date,
-        startTime: hackathon.hackathonStartDate as Date,
+        endTime: hackathon.votingEndDate as Date,
+        startTime: hackathon.votingStartDate as Date,
         shortDescription: hackathon.shortDescription,
         hackathonTracks: hackathon.hackathonSponsors.map((e) => e.name),
       });

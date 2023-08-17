@@ -16,6 +16,7 @@ export const ExploreBanner = ({ banner }: Props) => {
           {banner ? (
             banner?.map((resource_distribution_event) => (
               <FundingRoundBanner
+                event={resource_distribution_event.type}
                 key={resource_distribution_event.id}
                 startDate={new Date(resource_distribution_event.startTime)}
                 endDate={new Date(resource_distribution_event.endTime)}

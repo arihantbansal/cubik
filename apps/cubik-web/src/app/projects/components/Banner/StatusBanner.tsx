@@ -1,7 +1,7 @@
-import { Box, Center, HStack, chakra, keyframes } from '@chakra-ui/react';
-import { differenceInDays, isFuture, isPast } from 'date-fns';
-import { AiTwotoneCalendar } from 'react-icons/ai';
-import { BiInfoCircle } from 'react-icons/bi';
+import { Box, Center, HStack, chakra, keyframes } from "@chakra-ui/react";
+import { differenceInDays, isFuture, isPast } from "date-fns";
+// import { AiTwotoneCalendar } from "react-icons/ai";
+// import { BiInfoCircle } from "react-icons/bi";
 
 const random = () => Math.floor(Math.random() * 10);
 
@@ -22,15 +22,15 @@ const ripple = keyframes`
 
 const CircleRipple = chakra(Box, {
   baseStyle: {
-    backgroundColor: '#31F579',
-    width: { base: '0.8em', md: '1em' },
-    height: { base: '0.8em', md: '1em' },
-    rounded: 'full',
+    backgroundColor: "#31F579",
+    width: { base: "0.8em", md: "1em" },
+    height: { base: "0.8em", md: "1em" },
+    rounded: "full",
     animation: `${ripple} 1.${random()}s linear infinite`,
   },
 });
 
-const RoundStatus = ({
+export const StatusBanner = ({
   isHackathon,
   show,
   startDate,
@@ -55,20 +55,26 @@ const RoundStatus = ({
         backgroundColor="#1D1F1E"
         p="0px 12px"
         spacing="8px"
-        minH={'22px'}
+        minH={"22px"}
         mx={1}
       >
-        <Box as={AiTwotoneCalendar} color="white" boxSize={['12px', '14px', '18px']} />
+        <Box
+          //   as={AiTwotoneCalendar}
+          color="white"
+          boxSize={["12px", "14px", "18px"]}
+        />
         <Box
           p="8px 12px"
           ps="0px"
           as="p"
           whiteSpace="pre"
           color="neutral.11"
-          textStyle={{ base: 'body6', md: 'body5' }}
+          textStyle={{ base: "body6", md: "body5" }}
         >
-          {isHackathon ? 'Voting' : 'Round'}
-          {daysToStart === 0 ? ` starts in a day` : ` starts in ${daysToStart} days`}
+          {isHackathon ? "Voting" : "Round"}
+          {daysToStart === 0
+            ? ` starts in a day`
+            : ` starts in ${daysToStart} days`}
         </Box>
       </HStack>
     );
@@ -112,7 +118,7 @@ const RoundStatus = ({
         mx={1}
       >
         <Box
-          as={BiInfoCircle}
+          //   as={BiInfoCircle}
           color="white"
           boxSize={["12px", "14px", "18px"]}
         />
@@ -132,5 +138,3 @@ const RoundStatus = ({
 
   return <></>;
 };
-
-export default RoundStatus;

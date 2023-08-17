@@ -29,11 +29,10 @@ export const createProject = async (project: Project, team: Team[]) => {
         projectUserCount: project.projectUserCount,
       },
     });
-    if (res) {
-      await prisma.team.createMany({
-        data: team,
-      });
-    }
+
+    await prisma.team.createMany({
+      data: team,
+    });
     return res;
   } catch (error) {
     console.log(error);

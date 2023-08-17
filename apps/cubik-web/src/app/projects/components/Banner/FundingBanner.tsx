@@ -1,8 +1,9 @@
 "use client";
-import { RoundStatus } from "@/app/components/common/dates/roundStatus";
 import { Box, HStack, Stack, Tooltip, VStack } from "@/utils/chakra";
 import { useEffect, useState } from "react";
 import FlipNumbers from "react-flip-numbers";
+import { StatusBanner } from "./StatusBanner";
+import { RoundStatus } from "@/app/components/common/dates/roundStatus";
 // import { FiInfo } from "react-icons/fi";
 // import RoundStatus from "~/components/common/dates/Status";
 
@@ -185,12 +186,14 @@ const FundingRoundBanner = ({
   name,
   description,
   matchingPool,
+  event,
 }: {
   startDate: Date;
   endDate: Date;
   id: string;
   name: string;
   description: string;
+  event: "hackathon" | "round";
   matchingPool: number;
 }) => {
   return (
@@ -256,7 +259,11 @@ const FundingRoundBanner = ({
             align={"start"}
             spacing={{ base: "16px", sm: "20px", md: "24px" }}
           >
-            <RoundStatus startDate={startDate} endDate={endDate} />
+            <StatusBanner
+              isHackathon={event === "hackathon" ? true : false}
+              startDate={startDate}
+              endDate={endDate}
+            />
             <Stack
               direction={{ base: "column", md: "row" }}
               justify={"space-between"}
@@ -307,31 +314,11 @@ const FundingRoundBanner = ({
                   <Box as="p" textStyle={{ base: "body5", md: "title3" }}>
                     ${matchingPool}
                   </Box>
-                  {/* <Tooltip
-                    zIndex={1000}
-                    background={"black"}
-                    p={[1, 1, 2]}
-                    label="The matching pool is in 1M $RAIN  + 1K $USDC. The USD value of $RAIN is subject to change"
-                  >
-                    <Box zIndex={1000} as="p">
-                    
-                    </Box>
-                  </Tooltip> */}
                 </HStack>
               </HStack>
             </Stack>
           </VStack>
-          {/* <Button
-            rightIcon={<BiChevronRight size={20} />}
-            borderRadius="8px"
-            p="12px 32px"
-            backgroundColor="white"
-            colorScheme={'white'}
-          >
-            Submit Project
-          </Button>*/}
         </VStack>
-        {/* <RoundStatus /> */}
       </Stack>
     </Stack>
   );
