@@ -1,3 +1,4 @@
+"use client";
 import CustomTag from "@/app/components/common/tags/CustomTag";
 import {
   Avatar,
@@ -14,8 +15,7 @@ import {
 } from "@/utils/chakra";
 import React from "react";
 import ChevronDown from "@/theme/icons/chevron_down.svg";
-import { DonationStatus } from "./ProjectCTAstatus";
-import { Hackathon } from "@cubik/database";
+import { DonationStatus } from "./DonationStatus";
 
 interface Props {
   name: string;
@@ -25,8 +25,9 @@ interface Props {
   type: "preview" | "round" | "hackathon";
   eventId?: string;
   projectLink: string;
-  projectJoinHackathon?: Hackathon[];
   owner: any;
+  startTime: Date;
+  endTime: Date;
 }
 export const ProjectHeader = ({
   industry,
@@ -35,8 +36,10 @@ export const ProjectHeader = ({
   shortDescription,
   type = "preview",
   projectLink,
-  projectJoinHackathon,
   owner,
+  endTime,
+  startTime,
+  eventId,
 }: Props) => {
   return (
     <Stack
@@ -145,14 +148,17 @@ export const ProjectHeader = ({
           alignItems={{ base: "center", lg: "start" }}
         >
           <VStack gap="16px" align={"end"} spacing="0" w="full" pb="0.5rem">
-            {/* <DonationStatus
-              hackathonId={""}
-              hackathonJoinId={""}
+            <DonationStatus
+              loading={false}
+              projectJoinId={type === "round" ? eventId : undefined}
+              roundId={type === "round" ? eventId : undefined}
+              hackathonId={type === "hackathon" ? eventId : undefined}
+              hackathonJoinId={type === "hackathon" ? eventId : undefined}
               startTime={startTime}
               endTime={endTime}
               onDonateHandler={() => {}}
               owner={owner}
-            /> */}
+            />
             <Button
               // rightIcon={
               //   <AnimatedArrowIcon

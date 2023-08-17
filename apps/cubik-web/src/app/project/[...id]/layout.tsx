@@ -2,7 +2,6 @@ import { Box, Container, Stack } from "@/utils/chakra";
 import { prisma } from "@cubik/database";
 import React from "react";
 import { ProjectHeader } from "../components/ProjectHeader";
-import { ProjectDetailsLiveHackathonStatus } from "../components/ProjectDetailsLiveHackathonStatus";
 
 interface Props {
   params: {
@@ -21,6 +20,12 @@ interface ProjectReturnType {
   createdAt: Date;
   owner: {
     username: string;
+  };
+  projectJoinRound?: {
+    round: {
+      endTime: Date;
+      startTime: Date;
+    };
   };
   projectJoinHackathon?: {
     hackathon: {
@@ -71,16 +76,6 @@ const fetchProject = async (
             },
           },
         },
-        // include: {
-        //   projectJoinHackathon: {
-        //     where: {
-        //       id: eventId,
-        //     },
-        //     select: {
-        //       id: true,
-        //     },
-        //   },
-        // },
       });
       return res as ProjectReturnType;
     }
@@ -97,9 +92,19 @@ const fetchProject = async (
           shortDescription: true,
           logo: true,
           projectLink: true,
+          projectJoinRound: {
+            select: {
+              round: {
+                select: {
+                  endTime: true,
+                  startTime: true,
+                },
+              },
+            },
+          },
         },
       });
-      return res as ProjectReturnType;
+      return res as unknown as ProjectReturnType;
     }
     // default
     const res = await prisma.project.findFirst({
@@ -122,13 +127,15 @@ const fetchProject = async (
   }
 };
 const ProjectPageLayout = async ({ params, children }: Props) => {
-  console.log(params);
-  const project = await fetchProject(params.id[0] as string);
+  const project = await fetchProject(
+    params.id[0] as string,
+    params.id[1] as "hackathon" | "round",
+    params.id[2]
+  );
   if (!project) {
     return <Box mt={10}>Project not found</Box>; // error state
   }
 
-  console.log("fetchProject - ", project);
   return (
     <>
       <Container maxW={"full"} p="0" mt="4.5rem">
@@ -165,6 +172,18 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
             />
           )} */}
           <ProjectHeader
+            endTime={
+              project.projectJoinHackathon
+                ? (project.projectJoinHackathon[0]?.hackathon
+                    .votingEndDate as Date)
+                : (project.projectJoinRound?.round.endTime as Date)
+            }
+            startTime={
+              project.projectJoinHackathon
+                ? (project.projectJoinHackathon[0]?.hackathon
+                    .votingStartDate as Date)
+                : (project.projectJoinRound?.round.startTime as Date)
+            }
             projectLink={project.projectLink}
             eventId={params.id[2]} // optional
             type={(params.id[1] as Event) || "preview"} // optional
