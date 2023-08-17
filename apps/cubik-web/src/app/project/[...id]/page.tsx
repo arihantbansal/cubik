@@ -2,6 +2,7 @@ import React from "react";
 import { ProjectTabs } from "../components/ProjectTabs";
 import { SideBar } from "../components/Sidebar";
 import { Prisma, User, prisma } from "@cubik/database";
+import { ProjectDetailsLiveHackathonStatus } from "../components/ProjectDetailsLiveHackathonStatus";
 
 interface Props {
   params: {
@@ -19,7 +20,15 @@ interface ProjectDetailsReturnType {
   }[];
   projectJoinHackathon?: {
     tracks: Prisma.JsonValue;
+    hackathon: {
+      name: string;
+      hackathonEndDate: Date;
+      hackathonStartDate: Date;
+      votingEndDate: Date;
+      votingStartDate: Date;
+    };
   }[];
+  amount?: number;
 }
 const ProjectDetails = async (
   id: string,
@@ -28,7 +37,7 @@ const ProjectDetails = async (
 ): Promise<ProjectDetailsReturnType | null> => {
   try {
     if (eventId && event === "hackathon") {
-      const res = await prisma.project.findUnique({
+      const res = await prisma.project.findFirst({
         where: {
           id: id,
         },
@@ -45,15 +54,26 @@ const ProjectDetails = async (
           },
           projectJoinHackathon: {
             where: {
-              id: eventId,
+              hackathonId: eventId,
             },
             select: {
               tracks: true,
+              amount: true,
+
+              hackathon: {
+                select: {
+                  name: true,
+                  hackathonEndDate: true,
+                  hackathonStartDate: true,
+                  votingEndDate: true,
+                  votingStartDate: true,
+                },
+              },
             },
           },
         },
       });
-      return res;
+      return res as ProjectDetailsReturnType;
     }
     const res = await prisma.project.findFirst({
       where: {
@@ -85,7 +105,6 @@ const ProjectPage = async ({ params: { id } }: Props) => {
     id[1] as "hackathon" | "round",
     id[2]
   );
-
   return (
     <>
       <ProjectTabs
@@ -97,13 +116,16 @@ const ProjectPage = async ({ params: { id } }: Props) => {
         }
       />
       <SideBar
+        contributors={0}
+        funding={projectDetails?.amount || 0}
         team={projectDetails?.team || []}
         discord_link={projectDetails?.discordLink as string}
         github_link={projectDetails?.githubLink as string}
         telegram_link={projectDetails?.telegramLink as string}
         twitter_handle={projectDetails?.twitterHandle as string}
         tracks={
-          projectDetails?.projectJoinHackathon
+          projectDetails?.projectJoinHackathon &&
+          projectDetails?.projectJoinHackathon[0]?.tracks
             ? (projectDetails.projectJoinHackathon[0]?.tracks as {
                 label: string;
                 value: string;

@@ -4,12 +4,15 @@ import { ProjectSocials } from "./ProjectSocials";
 import { ProjectOwner } from "./ProjectOwner";
 import { Team, User } from "@cubik/database";
 import { SimilarProject } from "./SimilarProject";
+import { ProjectFundingData } from "./ProjectFundingData";
 
 interface Props {
   github_link: string;
   discord_link: string;
   telegram_link: string;
   twitter_handle: string;
+  funding: number;
+  contributors: number;
   team: {
     user: User;
   }[];
@@ -39,6 +42,11 @@ export const SideBar = (props: Props) => {
           display={{ base: "none", lg: "flex" }}
         >
           <ProjectSocials {...props} />
+          <ProjectFundingData
+            communityContributions={0}
+            contributors={0}
+            funding={0}
+          />
           <ProjectOwner team={props.team} />
           {/* <SimilarProject /> */}
         </VStack>

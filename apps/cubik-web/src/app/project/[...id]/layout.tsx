@@ -1,7 +1,8 @@
 import { Box, Container, Stack } from "@/utils/chakra";
-import { prisma } from "@cubik/database";
+import { ProjectVerifyStatus, prisma } from "@cubik/database";
 import React from "react";
 import { ProjectHeader } from "../components/ProjectHeader";
+import { ProjectDetailsLiveHackathonStatus } from "../components/ProjectDetailsLiveHackathonStatus";
 
 interface Props {
   params: {
@@ -10,11 +11,32 @@ interface Props {
   children: React.ReactNode;
 }
 type Event = "preview" | "round" | "hackathon";
+interface ProjectReturnType {
+  id: string;
+  name: string;
+  industry: string;
+  shortDescription: string;
+  logo: string;
+  projectLink: string;
+  createdAt: Date;
+  owner: {
+    username: string;
+  };
+  projectJoinHackathon?: {
+    hackathon: {
+      name: string;
+      hackathonEndDate: Date;
+      hackathonStartDate: Date;
+      votingEndDate: Date;
+      votingStartDate: Date;
+    };
+  }[];
+}
 const fetchProject = async (
   id: string,
   event?: "hackathon" | "round",
   eventId?: string
-) => {
+): Promise<ProjectReturnType | null> => {
   try {
     // when hackathon
     if (event && eventId && event === "hackathon") {
@@ -32,6 +54,22 @@ const fetchProject = async (
           projectLink: true,
           createdAt: true,
           owner: true,
+          projectJoinHackathon: {
+            where: {
+              hackathonId: eventId,
+            },
+            select: {
+              hackathon: {
+                select: {
+                  name: true,
+                  hackathonEndDate: true,
+                  hackathonStartDate: true,
+                  votingEndDate: true,
+                  votingStartDate: true,
+                },
+              },
+            },
+          },
         },
         // include: {
         //   projectJoinHackathon: {
@@ -44,7 +82,7 @@ const fetchProject = async (
         //   },
         // },
       });
-      return res;
+      return res as ProjectReturnType;
     }
     // when round
     if (event && eventId && event === "round") {
@@ -60,15 +98,8 @@ const fetchProject = async (
           logo: true,
           projectLink: true,
         },
-        // include: {
-        //   projectJoinRound: {
-        //     where: {
-        //       id: eventId,
-        //     },
-        //   },
-        // },
       });
-      return res;
+      return res as ProjectReturnType;
     }
     // default
     const res = await prisma.project.findFirst({
@@ -84,7 +115,7 @@ const fetchProject = async (
         projectLink: true,
       },
     });
-    return res;
+    return res as ProjectReturnType;
   } catch (error) {
     console.log(error);
     return null;
@@ -111,6 +142,28 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
           mt={10}
           justifyContent={"start"}
         >
+          {params.id[1] === "hackathon" && (
+            <ProjectDetailsLiveHackathonStatus
+              endTime={
+                (project?.projectJoinHackathon &&
+                  project?.projectJoinHackathon[0]?.hackathon.votingEndDate) ||
+                new Date()
+              }
+              hackathonName={
+                (project?.projectJoinHackathon &&
+                  project?.projectJoinHackathon[0]?.hackathon.name) ||
+                ""
+              }
+              startTime={
+                (project?.projectJoinHackathon &&
+                  project?.projectJoinHackathon[0]?.hackathon
+                    .votingStartDate) ||
+                new Date()
+              }
+              status={ProjectVerifyStatus.REVIEW}
+              show={true}
+            />
+          )}
           <ProjectHeader
             projectLink={project.projectLink}
             eventId={params.id[2]} // optional

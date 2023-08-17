@@ -30,6 +30,7 @@ export const projectExplorer = async () => {
         amountRaise: true,
         round: {
           select: {
+            id: true,
             name: true,
             colorScheme: true,
             matchedPool: true,
@@ -93,6 +94,7 @@ export const projectExplorer = async () => {
         },
         hackathon: {
           select: {
+            id: true,
             background: true,
             name: true,
             prizePool: true,
@@ -188,7 +190,7 @@ export const projectExplorer = async () => {
           eventName: "round",
           color: "teal",
           amount: project.amountRaise || 0,
-          id: project.id,
+          id: project.round.id,
           end: project.round.endTime,
           start: project.round.startTime,
           registrationEnd: project.round.registrationEndDate,
@@ -233,7 +235,7 @@ export const projectExplorer = async () => {
           eventName: "hackathon",
           amount: project.amount,
           bg: project.hackathon.background,
-          id: project.id,
+          id: project.hackathon.id,
           votingStart: project.hackathon.votingStartDate as Date,
           votingEnd: project.hackathon.votingEndDate as Date,
           hackathonEnd: project.hackathon.hackathonEndDate as Date,
