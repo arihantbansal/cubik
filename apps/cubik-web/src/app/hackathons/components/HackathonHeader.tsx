@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   HStack,
   Skeleton,
   SkeletonText,
@@ -11,6 +12,8 @@ import React from "react";
 import { HackathonStatus } from "./HackathonStatus";
 import { prisma } from "@cubik/database";
 import Image from "next/image";
+import { SubmitNowModal } from "./SubmitNowModal";
+import { SubmitNowButton } from "./SubmitNowButton";
 interface Props {
   slug: string;
 }
@@ -20,6 +23,7 @@ const fetchHackathon = async (slug: string) => {
       slug: slug,
     },
     select: {
+      id: true,
       name: true,
       logo: true,
       shortDescription: true,
@@ -30,6 +34,11 @@ const fetchHackathon = async (slug: string) => {
       resultDate: true,
       registrationEndDate: true,
       registrationStartDate: true,
+      hackathonSponsors: {
+        select: {
+          name: true,
+        },
+      },
     },
   });
 
@@ -37,6 +46,7 @@ const fetchHackathon = async (slug: string) => {
 };
 export const HackathonHeader = async ({ slug }: Props) => {
   const hackathon = await fetchHackathon(slug);
+
   return (
     <>
       <VStack w="full" gap="24px" align={"start"}>
@@ -94,7 +104,20 @@ export const HackathonHeader = async ({ slug }: Props) => {
             </Box>
           </VStack>
           <VStack w={"full"} alignItems="start" flex={1.5} spacing="16px">
-            s
+            <SubmitNowButton
+              id={hackathon?.id as string}
+              logo={hackathon?.logo as string}
+              name={hackathon?.name as string}
+              shortDescription={hackathon?.shortDescription as string}
+              tracks={
+                hackathon?.hackathonSponsors.map((sponsor) => {
+                  return {
+                    value: sponsor.name,
+                    label: sponsor.name,
+                  };
+                }) || []
+              }
+            />
           </VStack>
         </Stack>
       </VStack>
