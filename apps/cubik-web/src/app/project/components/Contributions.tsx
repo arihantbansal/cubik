@@ -1,5 +1,5 @@
 import React from "react";
-
+import { prisma } from "@cubik/database";
 interface Props {
   id: string;
   eventId?: string;
