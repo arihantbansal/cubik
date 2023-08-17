@@ -26,7 +26,7 @@ export const SideBar = (props: Props) => {
     <>
       <Stack
         w="full"
-        maxW="26rem"
+        maxW="24rem"
         flex="1"
         gap="48px"
         h={"full"}
@@ -34,7 +34,7 @@ export const SideBar = (props: Props) => {
         justifyContent="start"
       >
         <VStack
-          gap={{ base: "24px", md: "64px" }}
+          gap={{ base: "24px", md: "48px" }}
           w="full"
           justify={"space-between"}
           direction={"column"}
@@ -46,6 +46,7 @@ export const SideBar = (props: Props) => {
             communityContributions={0}
             contributors={0}
             funding={0}
+            rank={0}
           />
           <ProjectOwner team={props.team} />
           {/* <SimilarProject /> */}

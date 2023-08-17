@@ -87,23 +87,8 @@ export const ProjectSocials = ({
   return (
     <>
       <VStack gap={{ base: "8px", md: "16px" }} align="start" w="full">
-        {tracks.length > 0 && (
-          <Box
-            as="p"
-            textStyle={{ base: "title4", md: "title3" }}
-            color="white"
-          >
-            Tracks
-          </Box>
-        )}
-        <Wrap gap={1} direction={"row"}>
-          {tracks.map((track, key) => (
-            <Tag>{track.label}</Tag>
-          ))}
-        </Wrap>
-
         <Box as="p" textStyle={{ base: "title4", md: "title3" }} color="white">
-          Socials
+          Project Socials
         </Box>
         <Wrap direction={"row"}>
           {socials.map(
@@ -132,6 +117,32 @@ export const ProjectSocials = ({
                 />
               )
           )}
+        </Wrap>
+      </VStack>
+      <VStack gap={{ base: "8px", md: "16px" }} align="start" w="full">
+        {tracks.length > 0 && (
+          <Box
+            as="p"
+            textStyle={{ base: "title4", md: "title3" }}
+            color="white"
+          >
+            Event Tracks
+          </Box>
+        )}
+        <Wrap gap={1} direction={"row"}>
+          {tracks.map((track, key) => (
+            <Center
+              rounded="full"
+              bg="#222222"
+              fontSize={{ base: "12px", md: "14px" }}
+              fontWeight={"500"}
+              color="#ffffff85"
+              h={{ base: "32px", md: "40px" }}
+              px={{ base: "16px", md: "18px" }}
+            >
+              {track.label}
+            </Center>
+          ))}
         </Wrap>
       </VStack>
     </>

@@ -14,6 +14,8 @@ import {
 } from "@/utils/chakra";
 import React from "react";
 import ChevronDown from "@/theme/icons/chevron_down.svg";
+import { DonationStatus } from "./ProjectCTAstatus";
+import { Hackathon } from "@cubik/database";
 
 interface Props {
   name: string;
@@ -23,6 +25,8 @@ interface Props {
   type: "preview" | "round" | "hackathon";
   eventId?: string;
   projectLink: string;
+  projectJoinHackathon?: Hackathon[];
+  owner: any;
 }
 export const ProjectHeader = ({
   industry,
@@ -31,6 +35,8 @@ export const ProjectHeader = ({
   shortDescription,
   type = "preview",
   projectLink,
+  projectJoinHackathon,
+  owner,
 }: Props) => {
   return (
     <Stack
@@ -131,7 +137,7 @@ export const ProjectHeader = ({
           {shortDescription}
         </Box>
       </VStack>
-      <Box maxW="26rem" w={"full"} display={{ base: "none", lg: "block" }}>
+      <Box maxW="24rem" w={"full"} display={{ base: "none", lg: "block" }}>
         <VStack
           ml="auto"
           right="20rem"
@@ -139,6 +145,14 @@ export const ProjectHeader = ({
           alignItems={{ base: "center", lg: "start" }}
         >
           <VStack gap="16px" align={"end"} spacing="0" w="full" pb="0.5rem">
+            {/* <DonationStatus
+              hackathonId={""}
+              hackathonJoinId={""}
+              startTime={startTime}
+              endTime={endTime}
+              onDonateHandler={() => {}}
+              owner={owner}
+            /> */}
             <Button
               // rightIcon={
               //   <AnimatedArrowIcon

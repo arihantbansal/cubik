@@ -3,6 +3,7 @@ import { ProjectTabs } from "../components/ProjectTabs";
 import { SideBar } from "../components/Sidebar";
 import { Prisma, User, prisma } from "@cubik/database";
 import { ProjectDetailsLiveHackathonStatus } from "../components/ProjectDetailsLiveHackathonStatus";
+import { Stack } from "@/utils/chakra";
 
 interface Props {
   params: {
@@ -106,7 +107,13 @@ const ProjectPage = async ({ params: { id } }: Props) => {
     id[2]
   );
   return (
-    <>
+    <Stack
+      w="full"
+      mx="auto"
+      direction={{ base: "column", lg: "row" }}
+      alignItems={"start"}
+      justifyContent={"space-between"}
+    >
       <ProjectTabs
         id={id[0] as string}
         eventId={id[2] as string}
@@ -133,7 +140,7 @@ const ProjectPage = async ({ params: { id } }: Props) => {
             : []
         }
       />
-    </>
+    </Stack>
   );
 };
 

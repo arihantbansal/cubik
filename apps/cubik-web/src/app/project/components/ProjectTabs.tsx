@@ -30,11 +30,10 @@ export const ProjectTabs = ({
       <Container
         display={"flex"}
         w="full"
-        maxW="50rem"
-        flex="3"
+        //maxW="50rem"
+        m="0"
         flexDir="column"
         alignItems={{ base: "end", lg: "center" }}
-        justifyContent="start"
         gap={{ base: "32px", lg: "64px" }}
         p="0"
       >

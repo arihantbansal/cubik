@@ -52,7 +52,7 @@ export const ProjectOwner = ({ team }: Props) => {
   return (
     <VStack gap="16px" align={"start"} w="full">
       <Box as="p" textStyle={{ base: "title4", md: "title3" }} color="white">
-        Creators
+        Project Creators
       </Box>
       {team?.map((teamMember, key) => (
         <ProjectCreatorTeam team={teamMember} key={key} />

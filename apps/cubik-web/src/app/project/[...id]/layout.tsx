@@ -142,7 +142,7 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
           mt={10}
           justifyContent={"start"}
         >
-          {params.id[1] === "hackathon" && (
+          {/* {params.id[1] === "hackathon" && (
             <ProjectDetailsLiveHackathonStatus
               endTime={
                 (project?.projectJoinHackathon &&
@@ -163,7 +163,7 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
               status={ProjectVerifyStatus.REVIEW}
               show={true}
             />
-          )}
+          )} */}
           <ProjectHeader
             projectLink={project.projectLink}
             eventId={params.id[2]} // optional
@@ -173,16 +173,10 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
             name={project.name}
             shortDescription={project.shortDescription}
             key={project.id}
+            sprojectJoinHackathon={project.projectJoinHackathon}
+            owner={project.owner}
           />
-          <Stack
-            w="full"
-            mx="auto"
-            direction={{ base: "column", lg: "row" }}
-            alignItems={"start"}
-            justifyContent={"start"}
-          >
-            {children}
-          </Stack>
+          {children}
         </Stack>
       </Container>
     </>

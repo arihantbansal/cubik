@@ -4,19 +4,80 @@ interface Props {
   funding: number;
   contributors: number;
   communityContributions: number;
+  rank: number;
 }
 
 export const ProjectFundingData = ({
   funding,
   contributors,
   communityContributions,
+  rank,
 }: Props) => {
   return (
     <VStack gap="16px" align={"start"} w="full">
       <Box as="p" textStyle={{ base: "title4", md: "title3" }} color="white">
-        Funding
+        Event Stats
       </Box>
-
+      {/*Matching Pool */}
+      <VStack
+        border="1px solid"
+        borderColor={"surface.yellow.3"}
+        rounded="16px"
+        backgroundColor={"surface.yellow.0"}
+        w="full"
+        p="24px 32px"
+        overflow={"hidden"}
+        position={"relative"}
+      >
+        <Box
+          as="svg"
+          position="absolute"
+          top="50%"
+          left="0%"
+          transform="translate(-50%, -50%)"
+          zIndex={-1}
+          width="22rem"
+          height="22rem"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{
+            filter: "blur(45px)",
+          }}
+        >
+          <circle cx="50" cy="50" r="50" fill="#FFCD2040" />
+        </Box>
+        <HStack w="full" align={"start"}>
+          <VStack align={"start"} gap="8px">
+            <Box as="p" textStyle={"headline4"} color={"neutral.11"}>
+              {rank ? rank : "-"}
+            </Box>
+            <Box as="p" textStyle={"body4"} color={"neutral.8"}>
+              Rank
+            </Box>
+          </VStack>
+          <Center
+            position={"absolute"}
+            right="0"
+            bottom="0"
+            boxShadow="0px 4px 24px rgba(0, 0, 0, 0.16)"
+          >
+            <svg
+              width="107"
+              height="115"
+              viewBox="0 0 107 115"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M96.0877 18.537C98.9485 19.9008 101.206 22.2718 102.429 25.1969C103.651 28.1219 103.753 31.3957 102.715 34.3923L109.269 37.5168C111.54 38.5991 113.32 40.496 114.256 42.8311C115.192 45.1661 115.217 47.7686 114.324 50.1217L114 50.8814L106.603 66.3999C104.556 70.6942 100.945 74.043 96.5102 75.7595C92.0752 77.476 87.1527 77.4299 82.7525 75.6308L81.6522 75.1443C77.3674 79.6978 71.8782 82.9401 65.824 84.4937C59.7698 86.0472 53.4 85.8481 47.4564 83.9194L43.6369 91.9321L52.6987 96.2516C56.9885 98.2978 60.3324 101.909 62.0448 106.344C63.7571 110.779 63.7081 115.703 61.9077 120.105L61.485 121.072L60.2521 123.658C59.8047 124.596 59.0326 125.341 58.0789 125.753C57.1252 126.166 56.0545 126.219 55.0652 125.902L54.5258 125.69L2.81237 101.039C1.87403 100.593 1.12919 99.8219 0.715836 98.8685C0.30248 97.9151 0.248628 96.8439 0.564256 95.8534L0.784747 95.311L2.01764 92.7246C4.06383 88.4311 7.67398 85.0827 12.1078 83.3658C16.5416 81.6489 21.4631 81.6938 25.863 83.4913L26.8316 83.9213L35.8778 88.2334L39.6974 80.2207C34.4592 76.8171 30.296 71.9943 27.6926 66.314C25.0891 60.6336 24.1525 54.3294 24.9917 48.1354L24.8649 48.0686C20.4093 45.9447 16.9804 42.1365 15.3326 37.4818C13.6849 32.8272 13.9532 27.7073 16.0786 23.2486L23.476 7.73012C25.8579 2.73317 31.8438 0.609532 36.8373 2.98985L43.392 6.11433C45.0666 3.41991 47.675 1.43718 50.7183 0.545439C53.7615 -0.346305 57.026 -0.0844638 59.8872 1.28087L96.0877 18.537ZM105.571 45.276L99.0883 42.1861L86.8013 67.9622C88.9597 68.6369 91.2832 68.5613 93.3941 67.7477C95.5049 66.934 97.279 65.4302 98.428 63.4806L98.8439 62.7013L106.241 47.1828C106.38 46.8912 106.416 46.5615 106.343 46.247C106.271 45.9326 106.095 45.6518 105.843 45.4502L105.571 45.276ZM39.6209 13.8391L33.1386 10.7491C32.7959 10.5857 32.4022 10.5653 32.0443 10.6923C31.6863 10.8193 31.3934 11.0833 31.2299 11.4263L23.8325 26.9447C22.7923 29.1261 22.5743 31.6095 23.2186 33.9379C23.8629 36.2664 25.3261 38.2834 27.3391 39.6177L39.6209 13.8391Z"
+                fill="#FFCA16"
+                fill-opacity="0.16"
+              />
+            </svg>
+          </Center>
+        </HStack>
+      </VStack>
+      {/*Matching Pool */}
       <VStack
         border="1px solid"
         borderColor={"surface.green.3"}
@@ -113,7 +174,7 @@ export const ProjectFundingData = ({
           </Center>
         </HStack>
       </VStack>
-
+      {/*contributions */}
       <VStack
         border="1px solid"
         borderColor={"neutral.4"}
@@ -169,7 +230,7 @@ export const ProjectFundingData = ({
           </Center>
         </HStack>
       </VStack>
-
+      {/*contributors */}
       <VStack
         border="1px solid"
         borderColor={"surface.blue.3"}
