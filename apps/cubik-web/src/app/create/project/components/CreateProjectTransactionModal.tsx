@@ -48,28 +48,29 @@ export const CreateProjectTransactionModal = (props: Props) => {
   const [transactionLoading, setTransactionLoading] = useState<boolean>(false);
   const [projectSubmitted, setProjectSubmitted] = useState<boolean>(false);
   const anchorWallet = useAnchorWallet();
-  const userProjectCount = useQuery({
-    queryFn: ({ queryKey }) => findCount(queryKey[1] as string),
-    queryKey: ["userProjectCount", user?.mainWallet],
-    enabled: user?.mainWallet ? true : false,
-  });
+  // const userProjectCount = useQuery({
+  //   queryFn: ({ queryKey }) => findCount(queryKey[1] as string),
+  //   queryKey: ["userProjectCount", user?.mainWallet],
+  //   enabled: user?.mainWallet ? true : false,
+  // });
   const [projectId, setProjectId] = useState<string | null>(null);
   const HandleTransactionSign = async () => {
     setTransactionLoading(true);
     const id = uuidV4();
     setProjectId(id);
-    console.log(userProjectCount.data);
-    if (userProjectCount.data === null || userProjectCount.data === undefined) {
-      setTransactionLoading(false);
-      return setTransactionError(
-        "Something went wrong. Unable to pull user data"
-      );
-    }
+    // console.log(userProjectCount.data);
+    // if (userProjectCount.data === null || userProjectCount.data === undefined) {
+    //   setTransactionLoading(false);
+    //   return setTransactionError(
+    //     "Something went wrong. Unable to pull user data"
+    //   );
+    // }
     if (!user) {
       setTransactionLoading(false);
       return setTransactionError("Something went wrong. Invalid user data");
     }
     try {
+      const count = Math.floor(100000 + Math.random() * 900000);
       const {
         ix: vaultIx,
         key,
@@ -85,7 +86,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
 
       const ix = await createProjectIx(
         anchorWallet as NodeWallet,
-        userProjectCount.data + 1,
+        count,
         new web3.PublicKey(vaultAuth)
       );
       const { blockhash } = await connection.getLatestBlockhash();
@@ -154,7 +155,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
           ogImage: props.imageUrl as string,
           ownerPublickey: anchorWallet?.publicKey?.toBase58() as string,
           projectLink: props.getValues().projectLink,
-          projectUserCount: userProjectCount.data + 1,
+          projectUserCount: count,
           shortDescription: props.getValues().tagline,
           status: "REVIEW",
           twitterHandle: props.getValues().twitter,
