@@ -22,7 +22,6 @@ const config = {
   transpilePackages: ["@cubik/database"],
   experimental: { serverActions: true, appDir: true },
   images: {
-    unoptimized: true, // remove later
     domains: [
       "d1yweukyu067aq.cloudfront.net",
       "www.sandstormhackathon.com",

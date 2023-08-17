@@ -1,4 +1,5 @@
 "use server";
+import { prisma } from "@cubik/database";
 interface Event {
   name: string;
   id: string;
