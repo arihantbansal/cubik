@@ -30,6 +30,8 @@ const fetchProject = async (
           shortDescription: true,
           logo: true,
           projectLink: true,
+          createdAt: true,
+          owner: true,
         },
         // include: {
         //   projectJoinHackathon: {
@@ -94,9 +96,11 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
   if (!project) {
     return <Box mt={10}>Project not found</Box>; // error state
   }
+
+  console.log("fetchProject - ", project);
   return (
     <>
-      <Container maxW={"full"} p="0">
+      <Container maxW={"full"} p="0" mt="4.5rem">
         <Stack
           maxW="7xl"
           mx="auto"

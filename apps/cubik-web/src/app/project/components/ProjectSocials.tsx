@@ -1,24 +1,53 @@
-import { Box, IconButton, Tag, VStack, Wrap } from "@/utils/chakra";
+import { Box, Center, IconButton, Tag, VStack, Wrap } from "@/utils/chakra";
 import React from "react";
+import Twitter from "@/theme/icons/socials/twitter.svg";
+import Github from "@/theme/icons/socials/github.svg";
+import Discord from "@/theme/icons/socials/discord.svg";
+import Youtube from "@/theme/icons/socials/youtube.svg";
+import Telegram from "@/theme/icons/socials/telegram.svg";
 
-// export const SocialLinks = ({ urlName }: { urlName: string }) => {
-//   switch (urlName) {
-//     case "url":
-//       return <HiLink color="#E0FFFD" size={18} />;
-//     case "twitter":
-//       return <FaTwitter color="#E0FFFD" size={18} />;
-//     case "discord":
-//       return <FaDiscord color="#E0FFFD" size={18} />;
-//     case "telegram":
-//       return <FaTelegramPlane color="#E0FFFD" size={18} />;
-//     case "youtube":
-//       return <FaYoutube color="#E0FFFD" size={18} />;
-//     case "github":
-//       return <FaGithub color="#E0FFFD" size={18} />;
-//     default:
-//       return <></>;
-//   }
-// };
+export const SocialLinks = ({ urlName }: { urlName: string }) => {
+  switch (urlName) {
+    case "url":
+      return (
+        <Center width="18px" height="18px">
+          <Twitter color="#E0FFFD" />
+        </Center>
+      );
+    case "twitter":
+      return (
+        <Center width="18px" height="18px">
+          <Twitter color="#E0FFFD" />
+        </Center>
+      );
+    case "discord":
+      return (
+        <Center width="18px" height="18px">
+          <Discord color="#E0FFFD" />
+        </Center>
+      );
+    case "telegram":
+      return (
+        <Center width="18px" height="18px">
+          <Telegram color="#E0FFFD" />
+        </Center>
+      );
+    case "youtube":
+      return (
+        <Center width="18px" height="18px">
+          <Youtube color="#E0FFFD" />
+        </Center>
+      );
+    case "github":
+      return (
+        <Center width="18px" height="18px">
+          <Github color="#E0FFFD" />
+        </Center>
+      );
+    default:
+      return <></>;
+  }
+};
 
 interface Props {
   twitter_handle: string;
@@ -48,7 +77,6 @@ export const ProjectSocials = ({
     },
     {
       name: telegram_link ? "telegram" : undefined,
-
       url: telegram_link ? telegram_link : undefined,
     },
     {
@@ -94,7 +122,7 @@ export const ProjectSocials = ({
                   color="brand.teal6"
                   backgroundColor="brand.teal2"
                   key={key}
-                  //   icon={<SocialLinks urlName={link.name} />}
+                  icon={<SocialLinks urlName={link.name} />}
                   _hover={{
                     backgroundColor: "brand.teal3",
                   }}

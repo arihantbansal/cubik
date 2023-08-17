@@ -3,6 +3,7 @@ import {
   Avatar,
   Box,
   Button,
+  Center,
   HStack,
   Menu,
   MenuButton,
@@ -12,6 +13,7 @@ import {
   VStack,
 } from "@/utils/chakra";
 import React from "react";
+import ChevronDown from "@/theme/icons/chevron_down.svg";
 
 interface Props {
   name: string;
@@ -33,13 +35,15 @@ export const ProjectHeader = ({
   return (
     <Stack
       direction={{ base: "row", md: "row" }}
-      gap={{ base: "8px", md: "24px" }}
+      gap={{ base: "12px", md: "24px" }}
       width={"full"}
       alignItems={"center"}
     >
       <Avatar
         backgroundColor={"#1C1C1C"}
         src={logo}
+        name={name}
+        borderRadius="10px"
         width={{ base: "4.4rem", md: "6.2rem" }}
         height={{ base: "4.4rem", md: "6.2rem" }}
       />
@@ -76,8 +80,13 @@ export const ProjectHeader = ({
                 iconSpacing={"0px"}
                 variant="cubikText"
                 maxH="1rem"
-                // rightIcon={<BiChevronDown size={26} color="white" />}
+                rightIcon={
+                  <Center width="20px" height="20px">
+                    <ChevronDown color="#fff" />
+                  </Center>
+                }
               />
+
               <MenuList p="0" outline="0" border="0">
                 <MenuItem
                   p="8px 16px"
