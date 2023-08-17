@@ -37,7 +37,6 @@ export const ProjectTabs = ({
         justifyContent="start"
         gap={{ base: "32px", lg: "64px" }}
         p="0"
-        border={"1px solid red"}
       >
         <Tabs variant={"cubik"} alignSelf={"start"} w="full">
           <TabList

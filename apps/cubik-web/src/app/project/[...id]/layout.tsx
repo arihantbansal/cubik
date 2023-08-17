@@ -104,6 +104,7 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
           px={{ base: "1rem", sm: "2rem", md: "2rem", xl: "1rem" }}
           py={{ base: "24px", md: "64px" }}
           alignItems={"start"}
+          mt={10}
           justifyContent={"start"}
         >
           <ProjectHeader

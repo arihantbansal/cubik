@@ -144,13 +144,13 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
   // }, [projectList]);
 
   const generateLink = (): string => {
-    if (project.projectEvent.eventName === "hackathon") {
-      return `/${project.ownerName}/hackathon/${project.projectEvent.id}`;
-    }
-    if (project.projectEvent.eventName === "round") {
-      return `/${project.ownerName}/${project.id}/${project.projectEvent.id}`;
-    }
-    return `/${project.ownerName}/${project.id}`;
+    // if (project.projectEvent.eventName === "hackathon") {
+    //   return `/${project.ownerName}/hackathon/${project.projectEvent.id}`;
+    // }
+    // if (project.projectEvent.eventName === "round") {
+    //   return `/${project.ownerName}/${project.id}/${project.projectEvent.id}`;
+    // }
+    return `/project/${project.id}`;
   };
 
   //  border={addedToList ? '2px solid #659C95' : '2px solid transparent'}

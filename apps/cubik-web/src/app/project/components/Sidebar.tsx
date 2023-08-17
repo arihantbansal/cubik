@@ -29,7 +29,6 @@ export const SideBar = (props: Props) => {
         h={"full"}
         flexDir="column"
         justifyContent="start"
-        border={"1px solid red"}
       >
         <VStack
           gap={{ base: "24px", md: "64px" }}
