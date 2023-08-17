@@ -6,7 +6,6 @@ type size = "xs" | "sm" | "md" | "lg" | "xl" | undefined | null;
 type usernameProps = {
   isLoading: boolean;
   username: string | null | undefined;
-  proofs?: undefined;
   size: size;
 };
 
@@ -31,7 +30,7 @@ const CheckMarkIcon = ({
   </svg>
 );
 
-const Username = ({ isLoading, username, proofs, size }: usernameProps) => {
+const Username = ({ isLoading, username, size }: usernameProps) => {
   const CheckMark = ({ size }: { size?: size }) => {
     const boxSize =
       size === "xs"
