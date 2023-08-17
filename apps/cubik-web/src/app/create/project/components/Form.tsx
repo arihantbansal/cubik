@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, useDisclosure } from "@/utils/chakra";
+import { Box, Card, HStack, VStack, useDisclosure } from "@/utils/chakra";
 import React, { Suspense, useState } from "react";
 import { Cardheader } from "./CardHeader";
 import { StepThree } from "./StepThree";
@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { StepOne } from "./StepOne";
 import { useUploadThing } from "@/utils/helpers/uploadthing";
+import Link from "next/link";
 
 export type FormData = {
   projectName: string;

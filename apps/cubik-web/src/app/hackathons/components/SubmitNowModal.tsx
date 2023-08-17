@@ -169,6 +169,7 @@ export const SubmitNowModal = ({
         backgroundColor={isSelectAble && isSelected ? "#010F0D" : "transparent"}
         p={{ base: "16px", md: "18px" }}
         w="full"
+        minH="5rem"
         gap="24px"
         rounded="16px"
         justify={"space-between"}
@@ -326,7 +327,12 @@ export const SubmitNowModal = ({
                         >
                           Projects
                         </Box>
-                        <VStack gap="12px" w="full">
+                        <VStack
+                          maxH="20rem"
+                          overflow="scroll"
+                          gap="12px"
+                          w="full"
+                        >
                           {userProjects.data?.map((project, index) => (
                             <Tile
                               isSelectAble={
@@ -702,10 +708,10 @@ export const SubmitNowModal = ({
                   variant="cubikFilled"
                   size="cubikSmall"
                   onClick={signTransactionHandler}
-                  loadingText="Verifying"
+                  loadingText="Submitting"
                   isLoading={signTransactionLoading}
                 >
-                  Sign Transaction
+                  Submit
                 </Button>
               ) : (
                 <Button

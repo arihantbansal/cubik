@@ -4,6 +4,7 @@ import {
   Button,
   CardBody,
   CardFooter,
+  Center,
   FormControl,
   FormErrorMessage,
   FormHelperText,
@@ -20,14 +21,13 @@ import {
   UseFormSetError,
   UseFormTrigger,
 } from "react-hook-form";
-// import {
-//   FaDiscord,
-//   FaGithub,
-//   FaLink,
-//   FaTelegramPlane,
-//   FaTwitter,
-// } from "react-icons/fa";
-// import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import Twitter from "@/theme/icons/socials/twitter.svg";
+import Github from "@/theme/icons/socials/github.svg";
+import Discord from "@/theme/icons/socials/discord.svg";
+import ChainLink from "@/theme/icons/chain_link.svg";
+import ChevronRight from "@/theme/icons/chevron_right.svg";
+import ChevronLeft from "@/theme/icons/chevron_left.svg";
+import Telegram from "@/theme/icons/socials/telegram.svg";
 import { FormData } from "./Form";
 
 type StepTwoProps = {
@@ -99,8 +99,10 @@ const StepTwo: React.FC<StepTwoProps> = ({
           >
             <InputGroup>
               <InputLeftAddon pointerEvents="none">
-                {/* @todo <FaTwitter size={"16"} /> */}
-                <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="400">
+                <Center width="18px" height="18px">
+                  <Twitter color="#ADB8B6" />
+                </Center>
+                <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="500">
                   Twitter
                 </Text>
               </InputLeftAddon>
@@ -119,9 +121,10 @@ const StepTwo: React.FC<StepTwoProps> = ({
           <FormControl id="github">
             <InputGroup>
               <InputLeftAddon pointerEvents="none">
-                {/* @todo <FaGithub size={"16"} /> */}
-
-                <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="400">
+                <Center width="18px" height="18px">
+                  <Github color="#ADB8B6" />
+                </Center>
+                <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="500">
                   Github
                 </Text>
               </InputLeftAddon>
@@ -135,8 +138,10 @@ const StepTwo: React.FC<StepTwoProps> = ({
           <FormControl isInvalid={Boolean(errors.telegram)} id="telegram">
             <InputGroup>
               <InputLeftAddon pointerEvents="none">
-                {/* @todo: <FaTelegramPlane color="gray.300" /> */}
-                <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="400">
+                <Center width="18px" height="18px">
+                  <Telegram color="#ADB8B6" />
+                </Center>
+                <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="500">
                   Telegram
                 </Text>
               </InputLeftAddon>
@@ -150,8 +155,10 @@ const StepTwo: React.FC<StepTwoProps> = ({
           <FormControl isInvalid={Boolean(errors.discord)} id="discord">
             <InputGroup>
               <InputLeftAddon pointerEvents="none">
-                {/* @todo <FaDiscord color="gray.300" /> */}
-                <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="400">
+                <Center width="18px" height="18px">
+                  <Discord color="#ADB8B6" />
+                </Center>
+                <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="500">
                   Discord
                 </Text>
               </InputLeftAddon>
@@ -169,8 +176,10 @@ const StepTwo: React.FC<StepTwoProps> = ({
           >
             <InputGroup>
               <InputLeftAddon pointerEvents="none">
-                {/* @todo <FaLink color="gray.300" /> */}
-                <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="400">
+                <Center width="18px" height="18px">
+                  <ChainLink color="#ADB8B6" />
+                </Center>
+                <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="500">
                   Custom
                 </Text>
               </InputLeftAddon>
@@ -187,10 +196,11 @@ const StepTwo: React.FC<StepTwoProps> = ({
         <Button
           variant={"cubikText"}
           size={{ base: "cubikSmall", md: "cubikMedium" }}
-          // leftIcon={
-          //   <Box boxSize={{ base: "14px", md: "18px" }} as={FiChevronLeft} />
-          // }
-          // @todo: fix this
+          leftIcon={
+            <Center width="20px" height="20px">
+              <ChevronLeft width="14" height="14" />{" "}
+            </Center>
+          }
           onClick={onPrevious}
         >
           Previous
@@ -198,10 +208,11 @@ const StepTwo: React.FC<StepTwoProps> = ({
         <Button
           variant={"cubikText"}
           size={{ base: "cubikSmall", md: "cubikMedium" }}
-          // rightIcon={
-          //   <Box boxSize={{ base: "14px", md: "18px" }} as={FiChevronRight} />
-          // }
-          // @todo: fix this
+          rightIcon={
+            <Center width="20px" height="20px">
+              <ChevronRight width="14" height="14" />{" "}
+            </Center>
+          }
           onClick={async () => {
             const isValid = await trigger(["projectLink", "twitter"]);
             if (isValid) {

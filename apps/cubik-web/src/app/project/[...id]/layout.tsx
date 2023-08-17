@@ -192,6 +192,7 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
             name={project.name}
             shortDescription={project.shortDescription}
             key={project.id}
+            //  sprojectJoinHackathon={project.projectJoinHackathon}
             owner={project.owner}
           />
           {children}

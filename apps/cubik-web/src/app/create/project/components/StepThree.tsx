@@ -5,11 +5,12 @@ import {
   Button,
   CardBody,
   CardFooter,
+  Center,
   HStack,
   VStack,
 } from "@chakra-ui/react";
 import { Dispatch, SetStateAction, useState } from "react";
-// import { FiChevronLeft } from "react-icons/fi";
+import ChevronLeft from "@/theme/icons/chevron_left.svg";
 
 const StepThree = ({
   setIncreasedSize,
@@ -65,10 +66,11 @@ const StepThree = ({
           size={{ base: "cubikMini", md: "cubikSmall" }}
           variant={"cubikText"}
           onClick={onPrevious}
-          // @todo: add icon
-          // leftIcon={
-          //   <Box boxSize={{ base: "14px", md: "18px" }} as={FiChevronLeft} />
-          // }
+          leftIcon={
+            <Center width="20px" height="20px">
+              <ChevronLeft width="14" height="14" />{" "}
+            </Center>
+          }
         >
           Previous
         </Button>

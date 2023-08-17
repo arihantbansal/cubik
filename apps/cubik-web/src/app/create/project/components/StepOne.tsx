@@ -28,8 +28,6 @@ import {
   UseFormTrigger,
   UseFormWatch,
 } from "react-hook-form";
-//import { FiChevronRight } from "react-icons/fi";
-// import { VscCloudUpload } from "react-icons/vsc";
 import UploadIcon from "@/theme/icons/upload.svg";
 import ChevronRight from "@/theme/icons/chevron_right.svg";
 import { category } from "./categories";
@@ -278,7 +276,9 @@ const StepOne: React.FC<StepOneProps> = ({
                       />
                     </Center>
                   ) : (
-                    <UploadIcon width="20" height="20" color={"neutral.6"} />
+                    <Center width="20px" height="20px">
+                      <UploadIcon width="20" height="20" color={"neutral.6"} />
+                    </Center>
                   )}
                 </Center>
                 <VStack
@@ -318,7 +318,11 @@ const StepOne: React.FC<StepOneProps> = ({
           <Button
             variant={"cubikText"}
             size={{ base: "cubikSmall", md: "cubikMedium" }}
-            rightIcon={<UploadIcon width="14" height="14" />}
+            rightIcon={
+              <Center width="20px" height="20px">
+                <ChevronRight width="14" height="14" />{" "}
+              </Center>
+            }
             ml="auto"
             onClick={async () => {
               setIsSubmitting(true);
@@ -330,7 +334,6 @@ const StepOne: React.FC<StepOneProps> = ({
                 "email",
                 "logo",
               ]);
-
               if (isValid) {
                 //@ts-ignore
                 onSubmit();

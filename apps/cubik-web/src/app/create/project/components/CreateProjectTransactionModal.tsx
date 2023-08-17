@@ -358,7 +358,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
                 </Center>
                 <VStack h={"max-content"} gap="6px">
                   <Box as="p" textStyle={{ base: "title3", md: "headline4" }}>
-                    Project Created Successfully!
+                    Project Created Successfully
                   </Box>
                   <Box
                     maxW="22rem"
@@ -366,15 +366,56 @@ export const CreateProjectTransactionModal = (props: Props) => {
                     textStyle={"body3"}
                     color="neutral.8"
                   >
-                    Apply for the upcoming Round or Hackathon till we review
-                    your project.
+                    Now you can apply for hackathons and grants with this
+                    project.
                   </Box>
                 </VStack>
-                <Box mx="auto" h={"full"} maxW="25rem" w="full">
-                  <Link href={"/hackathons/opos?submit=true"}>
-                    <Button variant={"cubikFilled"}>Submit to Hackathon</Button>
-                  </Link>
-                </Box>
+                <VStack
+                  backgroundColor="#0C0D0D"
+                  rounded={"20px"}
+                  gap={"16px"}
+                  maxW="24rem"
+                  w="full"
+                  p="24px"
+                  alignItems={"start"}
+                  align="center"
+                >
+                  <VStack align="center">
+                    <Box as="p" textStyle={"title4"} color="white">
+                      Submit to OPOS
+                    </Box>
+                    <Box
+                      textAlign="center"
+                      as="p"
+                      textStyle={"body5"}
+                      color="neutral.8"
+                    >
+                      Hackathon Submissions are open. You can submit your
+                      project by going to the hackathon page.
+                    </Box>
+                  </VStack>
+                  <Center
+                    rounded="12px"
+                    border="1px solid"
+                    w="full"
+                    cursor="pointer"
+                    color="#A459FF"
+                    backgroundColor="#A459FF16"
+                    borderColor="transparent"
+                    _hover={{
+                      borderColor: "#A459FF",
+                    }}
+                    p="12px"
+                    as="a"
+                    target="_blank"
+                  >
+                    <Link style={{ width: "full" }} href={"/hackathons/opos"}>
+                      <Box fontWeight="400" as="p" fontSize={"16px"}>
+                        Go to Hackathon Page
+                      </Box>
+                    </Link>
+                  </Center>
+                </VStack>
               </ModalHeader>
             </>
           ) : (
