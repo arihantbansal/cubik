@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 
 const generateFakeData = (dates: Date[]): [number, number][] => {
   return dates.map((date) => {
-    return [date.getTime(), Math.round(Math.random() * 100)];
+    return [date.getTime(), 0];
   });
 };
 
@@ -143,7 +143,7 @@ export default function Home() {
                 fontWeight={"800"}
                 textStyle={{ base: "title1", md: "display5" }}
               >
-                136
+                0
               </Box>
               <Box
                 color="#ADB8B6"
@@ -160,7 +160,7 @@ export default function Home() {
                 fontWeight={"800"}
                 textStyle={{ base: "title1", md: "display5" }}
               >
-                240
+                0
               </Box>
               <Box
                 color="#ADB8B6"
@@ -177,7 +177,7 @@ export default function Home() {
                 fontWeight={"800"}
                 textStyle={{ base: "title1", md: "display5" }}
               >
-                412
+                0
               </Box>
               <Box
                 color="#ADB8B6"
