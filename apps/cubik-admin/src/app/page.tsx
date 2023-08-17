@@ -267,7 +267,7 @@ export default function Home() {
                       fontWeight="700"
                       textStyle={{ base: "title1", md: "display5" }}
                     >
-                      $136
+                      $0
                     </Box>
                     <HStack>
                       <Box
