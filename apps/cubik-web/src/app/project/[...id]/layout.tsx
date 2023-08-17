@@ -1,5 +1,5 @@
 import { Box, Container, Stack } from "@/utils/chakra";
-import { ProjectVerifyStatus, prisma } from "@cubik/database";
+import { prisma } from "@cubik/database";
 import React from "react";
 import { ProjectHeader } from "../components/ProjectHeader";
 import { ProjectDetailsLiveHackathonStatus } from "../components/ProjectDetailsLiveHackathonStatus";
@@ -173,7 +173,6 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
             name={project.name}
             shortDescription={project.shortDescription}
             key={project.id}
-            sprojectJoinHackathon={project.projectJoinHackathon}
             owner={project.owner}
           />
           {children}

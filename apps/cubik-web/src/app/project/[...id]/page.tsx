@@ -2,7 +2,6 @@ import React from "react";
 import { ProjectTabs } from "../components/ProjectTabs";
 import { SideBar } from "../components/Sidebar";
 import { Prisma, User, prisma } from "@cubik/database";
-import { ProjectDetailsLiveHackathonStatus } from "../components/ProjectDetailsLiveHackathonStatus";
 import { Stack } from "@/utils/chakra";
 
 interface Props {
