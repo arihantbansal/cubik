@@ -308,7 +308,8 @@ const FundingRoundBanner = ({
                   textStyle={{ base: "body7", md: "overline4" }}
                   letterSpacing="2px"
                 >
-                  Matching Pool :
+                  {event === "hackathon" && "Prize Pool :"}
+                  {event === "round" && "Matching Pool :"}
                 </Box>
                 <HStack>
                   <Box as="p" textStyle={{ base: "body5", md: "title3" }}>

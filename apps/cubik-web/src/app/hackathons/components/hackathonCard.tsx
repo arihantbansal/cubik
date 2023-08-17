@@ -178,7 +178,7 @@ export const HackathonCard = (props: Props) => {
                       md: "overline3",
                     }}
                   >
-                    Matching Pool
+                    Prize Pool
                   </Box>
                   <Box
                     as="p"

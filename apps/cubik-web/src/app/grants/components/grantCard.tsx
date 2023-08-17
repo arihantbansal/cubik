@@ -12,6 +12,7 @@ interface Props {
   short_description: string;
   startTime: Date;
   endTime: Date;
+  event: "hackathon" | "round";
 }
 
 export const GrantCard = (props: Props) => {
@@ -120,7 +121,7 @@ export const GrantCard = (props: Props) => {
                 as="p"
                 textStyle={{ base: "body6", md: "overline3" }}
               >
-                Matching Pool
+                {props.event === "hackathon" ? "Prize Pool" : "Matching Pool"}
               </Box>
               <Box
                 as="p"
