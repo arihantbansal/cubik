@@ -34,6 +34,7 @@ import { createProject } from "./createProjects";
 import { Team } from "@cubik/database";
 import { useQuery } from "@tanstack/react-query";
 import { findCount } from "./findCount";
+import Link from "next/link";
 interface Props {
   getValues: UseFormGetValues<FormData>;
   isTransactionModalOpen: boolean;
@@ -370,7 +371,9 @@ export const CreateProjectTransactionModal = (props: Props) => {
                   </Box>
                 </VStack>
                 <Box mx="auto" h={"full"} maxW="25rem" w="full">
-                  <ActiveEvent projectId={projectId as string} />
+                  <Link href={"/hackathons/opos?submit=true"}>
+                    <Button variant={"cubikFilled"}>Submit to Hackathon</Button>
+                  </Link>
                 </Box>
               </ModalHeader>
             </>
