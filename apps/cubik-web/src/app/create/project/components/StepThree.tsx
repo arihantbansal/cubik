@@ -17,12 +17,14 @@ const StepThree = ({
   onSubmit,
   setLoadingSubmit,
   LoadingSubmit,
+  isUploading,
 }: {
   setIncreasedSize: Dispatch<SetStateAction<boolean>>;
   onPrevious: () => void;
   onSubmit: (editorData: string) => void;
   setLoadingSubmit: (loading: boolean) => void;
   LoadingSubmit: boolean;
+  isUploading: boolean;
 }) => {
   const [editorData, setEditorData] = useState<string>();
 
@@ -75,7 +77,7 @@ const StepThree = ({
           variant="cubikFilled"
           loadingText="Submitting"
           isDisabled={!editorData}
-          isLoading={LoadingSubmit}
+          isLoading={isUploading || LoadingSubmit}
           onClick={() => {
             setLoadingSubmit(true);
             // @ts-ignore

@@ -120,11 +120,11 @@ const Form = () => {
     ),
   });
 
-  const { startUpload } = useUploadThing("imageUploader", {
+  const { startUpload, isUploading } = useUploadThing("imageUploader", {
     onClientUploadComplete: (res) => {
       if (res) {
-        console.log(res, "success");
         setImageUrl(res[0]?.url as string);
+        onTransactionModalOpen();
       } else {
         setError("logo", {
           message: "uploading error. Please try again",
@@ -141,7 +141,6 @@ const Form = () => {
     try {
       startUpload(watch("logo"));
       setEditorData(editorData);
-      onTransactionModalOpen();
     } catch (e) {
       console.error("There was an error uploading the image", e);
     } finally {
@@ -198,6 +197,7 @@ const Form = () => {
             )}
             {step === 3 && (
               <StepThree
+                isUploading={isUploading}
                 setIncreasedSize={setIncreasedSize}
                 onPrevious={goToPreviousStep}
                 onSubmit={handleStepThreeSubmit}
