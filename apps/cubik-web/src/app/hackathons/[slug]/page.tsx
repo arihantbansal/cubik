@@ -24,7 +24,8 @@ const HackathonPage = async ({ params: { slug } }: Props) => {
         <VStack>
           <Center
             alignItems={"end"}
-            w="100vw"
+            w="full"
+            p="0"
             h={{ base: "16rem", md: "20rem", lg: "24rem" }}
             position={"relative"}
             overflow={"hidden"}

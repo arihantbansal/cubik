@@ -301,15 +301,23 @@ export const SubmitNowModal = ({
           <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
             <ModalBody>
               {step === 0 ? (
-                <VStack pb="4rem" align={"start"} spacing="24px" w="full">
+                <VStack
+                  pb="4rem"
+                  align={"start"}
+                  spacing={{ base: "24px", md: "32px" }}
+                  w="full"
+                >
                   {userProjects.isLoading ? (
                     <Center w="full" height="10rem">
                       <Spinner />
                     </Center>
                   ) : userProjects.data && userProjects.data.length > 0 ? (
-                    <VStack align={"start"} w="full" gap={"24px"}>
-                      <>
-                        {" "}
+                    <VStack
+                      align={"start"}
+                      w="full"
+                      spacing={{ base: "24px", md: "32px" }}
+                    >
+                      <VStack align="start" gap="12px" w="full">
                         <Box
                           as="p"
                           fontSize={{ base: "12px", md: "14px" }}
@@ -318,25 +326,27 @@ export const SubmitNowModal = ({
                         >
                           Projects
                         </Box>
-                        {userProjects.data?.map((project, index) => (
-                          <Tile
-                            isSelectAble={
-                              selectedArray.data?.find(
-                                (e) => e.project.id === project.id
-                              )
-                                ? false
-                                : true
-                            }
-                            key={project.id}
-                            tileIndex={project.id}
-                            logo={project.logo}
-                            name={project.name}
-                            status={project.status}
-                            isHackathon={true}
-                            joinRoundStatus={"APPROVED"}
-                          />
-                        ))}
-                      </>
+                        <VStack gap="12px" w="full">
+                          {userProjects.data?.map((project, index) => (
+                            <Tile
+                              isSelectAble={
+                                selectedArray.data?.find(
+                                  (e) => e.project.id === project.id
+                                )
+                                  ? false
+                                  : true
+                              }
+                              key={project.id}
+                              tileIndex={project.id}
+                              logo={project.logo}
+                              name={project.name}
+                              status={project.status}
+                              isHackathon={true}
+                              joinRoundStatus={"APPROVED"}
+                            />
+                          ))}
+                        </VStack>
+                      </VStack>
 
                       <Controller
                         control={control}
@@ -348,10 +358,11 @@ export const SubmitNowModal = ({
                           <FormControl
                             isInvalid={Boolean(errors.tracks)}
                             id="tracks"
+                            gap="12px"
                           >
                             <HStack
                               w="full"
-                              pb="0.5rem"
+                              // pb="0.5rem"
                               justify={"space-between"}
                             >
                               <FormLabel
@@ -360,7 +371,7 @@ export const SubmitNowModal = ({
                                 htmlFor="tracks"
                                 color="neutral.11"
                               >
-                                Sponsored Tracks
+                                Hackathon Tracks
                               </FormLabel>
                               <Box
                                 as="p"
@@ -380,7 +391,7 @@ export const SubmitNowModal = ({
                               value={value}
                               //@ts-ignore
                               options={hackathonTracks || []}
-                              placeholder="Search Categories..."
+                              placeholder="Search for Track"
                               closeMenuOnSelect={false}
                               selectedOptionStyle="check"
                               variant="unstyled"
@@ -392,7 +403,7 @@ export const SubmitNowModal = ({
                                   background: "surface.input_field",
                                   outline: "0px !important",
                                   borderRadius: "8px",
-                                  height: "40px",
+                                  minH: "40px",
                                   boxShadow: errors.tracks
                                     ? "0 0 0 2px #E53E3E"
                                     : "0",
@@ -434,6 +445,7 @@ export const SubmitNowModal = ({
                                 valueContainer: (provided, state) => ({
                                   ...provided,
                                   ps: "8px",
+                                  minH: "40px",
                                   border: "none",
                                   backgroundColor: "transparent",
                                   boxShadow: "none",

@@ -30,7 +30,7 @@ export const SubmitNowButton = ({
     return (
       <>
         <Button w="full" onClick={() => setVisible(true)}>
-          Connect Wallet
+          Submit Project
         </Button>
       </>
     );
@@ -38,7 +38,7 @@ export const SubmitNowButton = ({
   return (
     <>
       <Button onClick={onOpen} variant={"cubikFilled"} w="full">
-        Submit
+        Submit Project
       </Button>
       <SubmitNowModal
         hackathonDescription={shortDescription as string}

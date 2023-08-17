@@ -108,6 +108,25 @@ const HackathonTracks = ({ tracks }: PropsType) => {
                 </AccordionButton>
                 <AccordionPanel pb={4}>
                   <VStack align="start" gap="16px">
+                    <VStack color="white" align="start" gap="18px" p="12px">
+                      <Box as="p" textStyle={"body4"} textAlign="left">
+                        {track.description}
+                      </Box>
+                      {/*  <HStack gap="8px">
+                     {track.links.map((link) => (
+                          <Tag
+                            as="a"
+                            cursor={"pointer"}
+                            href={link.link}
+                            target="_blank"
+                            p="8px 12px"
+                          >
+                            <TagLabel fontWeight="700">{link.title}</TagLabel>
+                            <TagRightIcon boxSize="12px" as={CgExternal} />
+                          </Tag>
+                        ))}   
+                    </HStack>*/}
+                    </VStack>
                     <VStack align="start" gap="16px" px="16px">
                       <Box
                         color="white"
@@ -196,25 +215,6 @@ const HackathonTracks = ({ tracks }: PropsType) => {
                           </HStack>
                         ))}
                       </HStack>
-                    </VStack>
-                    <VStack color="white" align="start" gap="18px" p="12px">
-                      <Box as="p" textStyle={"body4"} textAlign="left">
-                        {track.description}
-                      </Box>
-                      {/*  <HStack gap="8px">
-                     {track.links.map((link) => (
-                          <Tag
-                            as="a"
-                            cursor={"pointer"}
-                            href={link.link}
-                            target="_blank"
-                            p="8px 12px"
-                          >
-                            <TagLabel fontWeight="700">{link.title}</TagLabel>
-                            <TagRightIcon boxSize="12px" as={CgExternal} />
-                          </Tag>
-                        ))}   
-                    </HStack>*/}
                     </VStack>
                   </VStack>
                 </AccordionPanel>
