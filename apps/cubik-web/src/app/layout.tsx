@@ -8,7 +8,7 @@ import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Providers } from "./provider";
 
-const jakarta = Plus_Jakarta_Sans({
+const PlusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["200", "300", "400", "500", "600", "700", "800"],
 });
@@ -21,7 +21,7 @@ export default function RootLayout({
   const [client] = useState(() => new QueryClient());
   return (
     <html lang="en">
-      <body className={`${jakarta.className}`}>
+      <body className={`${PlusJakartaSans.className}`}>
         <WalletContext>
           <QueryClientProvider client={client}>
             <AuthProvider>

@@ -304,11 +304,12 @@ export const Button = {
     cubikFilled: (_props: StyleFunctionProps) => ({
       color: "#031513",
       backgroundColor: "#E0FFFD",
-      rounded: "14px",
+      rounded: "12px",
       border: "2px solid #E0FFFD",
       _hover: {
         color: "#031513",
         backgroundColor: "#A8F0E6",
+        borderColor: "#A8F0E6",
       },
       _disabled: {
         color: "#9E9E9E",
@@ -324,11 +325,12 @@ export const Button = {
     cubikOutlined: (_props: StyleFunctionProps) => ({
       color: "#E0FFFD",
       backgroundColor: "transparent",
-      rounded: "14px",
+      rounded: "12px",
       border: "2px solid #E0FFFD",
       _hover: {
         color: "#031513",
         backgroundColor: "#E0FFFD",
+        borderColor: "#E0FFFD",
         // outline: "1px solid #E0FFFD",
       },
       _disabled: {
@@ -348,7 +350,7 @@ export const Button = {
     cubikDanger: (_props: StyleFunctionProps) => ({
       color: "#250003",
       backgroundColor: "#FCBDB5",
-      rounded: "14px",
+      rounded: "12px",
       _hover: {
         color: "#F6142E",
         backgroundColor: "#250003",
@@ -365,7 +367,7 @@ export const Button = {
     cubikWarning: (_props: StyleFunctionProps) => ({
       color: "#212010",
       backgroundColor: "#FFEC71",
-      rounded: "14px",
+      rounded: "12px",
       _hover: {
         color: "#FFEC71",
         backgroundColor: "#212010",
@@ -382,7 +384,7 @@ export const Button = {
     cubikText: (_props: StyleFunctionProps) => ({
       color: "#A8F0E6",
       px: "24px !important",
-      rounded: "14px",
+      rounded: "12px",
       _hover: {
         color: "#A8F0E6",
         backgroundColor: "#161616",

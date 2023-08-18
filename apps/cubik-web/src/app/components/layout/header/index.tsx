@@ -86,7 +86,7 @@ const Header = () => {
             justifyContent={"space-between"}
             gap={"24px"}
           >
-            <HStack flexGrow="1" gap={{ base: "28px", lg: "128px" }}>
+            <HStack flexGrow="1" gap={{ base: "28px", lg: "42px" }}>
               <Logo />
               <Links />
             </HStack>

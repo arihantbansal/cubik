@@ -24,7 +24,7 @@ const Links = () => {
         <Box
           as="p"
           textStyle={"title4"}
-          color={isActiveRoute("/projects") ? "brand.teal5" : "neutral.8"}
+          color={isActiveRoute("/projects") ? "neutral.11" : "neutral.8"}
           cursor={"pointer"}
         >
           Projects
@@ -34,7 +34,7 @@ const Links = () => {
         <Box
           as="p"
           textStyle={"title4"}
-          color={isActiveRoute("/grants") ? "brand.teal5" : "neutral.8"}
+          color={isActiveRoute("/grants") ? "neutral.11" : "neutral.8"}
           cursor={"pointer"}
         >
           Grants
@@ -44,7 +44,7 @@ const Links = () => {
         <Box
           as="p"
           textStyle={"title4"}
-          color={isActiveRoute("/hackathons") ? "brand.teal5" : "neutral.8"}
+          color={isActiveRoute("/hackathons") ? "neutral.11" : "neutral.8"}
           cursor={"pointer"}
         >
           Hackathons

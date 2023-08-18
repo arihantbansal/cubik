@@ -42,6 +42,7 @@ const Logo = () => {
             fontSize={{ base: "15px", sm: "20px" }}
             color="white"
             display={{ base: "block", sm: "block", lg: "block" }}
+            lineHeight={"24px"}
           >
             CUBIK
           </Text>

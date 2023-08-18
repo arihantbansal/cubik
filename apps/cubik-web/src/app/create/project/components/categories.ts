@@ -93,6 +93,14 @@ export const category = [
     value: "defi",
   },
   {
+    label: "DePin",
+    value: "depin",
+  },
+  {
+    label: "DeSci",
+    value: "desci",
+  },
+  {
     label: "Developer Tools",
     value: "developer_tools",
   },

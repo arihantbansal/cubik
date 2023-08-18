@@ -18,8 +18,7 @@ import {
 } from "@/utils/chakra";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Link from "next/link";
-// import { BiChevronDown, BiUser } from "react-icons/bi";
-//import { MdPowerSettingsNew, MdUpload } from "react-icons/md";
+import ChevronDown from "@/theme/icons/chevron_down.svg";
 import Username from "@/app/components/common/username";
 import { WalletAddress } from "@/app/components/common/wallet";
 import { useUser } from "@/app/context/user";
@@ -39,7 +38,7 @@ const ProfileDetails = () => {
         <Avatar
           width="40px"
           height="40px"
-          borderRadius={6}
+          // borderRadius={6}
           name={user?.username as string}
           src={user?.profilePicture as string}
         />
@@ -223,7 +222,6 @@ const UserNavbarMenuButton = () => {
           onClick={onOpen}
           width={{ base: "30px", md: "36px" }}
           height={{ base: "30px", md: "36px" }}
-          borderRadius={6}
           name={user?.username as string}
           src={user?.profilePicture as string}
         />
@@ -240,7 +238,6 @@ const UserNavbarMenuButton = () => {
             <VStack gap="16px" w="full" align={"start"}>
               <ProfileDetails />
               <WalletBalance />
-
               <Box w="full" h="1px" backgroundColor={"#1D1F1E"} />
               <VStack spacing="0px" align={"start"} w="full">
                 <NavMenuButtons />
@@ -265,8 +262,15 @@ const UserNavbarMenuButton = () => {
           as={Button}
           w={"fit-content"}
           p="0"
-          //  @todo
-          // rightIcon={<BiChevronDown size={26} color="#A8F0E6" />}
+          rightIcon={
+            <Center
+              width={{ base: "18px", md: "20px" }}
+              height={{ base: "18px", md: "20px" }}
+              color="#FFF"
+            >
+              <ChevronDown size={26} />
+            </Center>
+          }
         >
           <Skeleton
             fadeDuration={2.5}
@@ -276,9 +280,8 @@ const UserNavbarMenuButton = () => {
             borderRadius="8px"
           >
             <Avatar
-              width={{ base: "28px", md: "36px" }}
-              height={{ base: "28px", md: "36px" }}
-              borderRadius={6}
+              width={{ base: "28px", md: "40px" }}
+              height={{ base: "28px", md: "40px" }}
               name={user?.username as string}
               src={user?.profilePicture as string}
             />
@@ -311,4 +314,3 @@ const UserNavbarMenuButton = () => {
 };
 
 export default UserNavbarMenuButton;
-
