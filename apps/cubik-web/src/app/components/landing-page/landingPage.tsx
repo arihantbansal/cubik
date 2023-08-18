@@ -1,5 +1,4 @@
 "use client";
-
 import { Box, Center, Container, Flex, VStack, Button } from "@/utils/chakra";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";

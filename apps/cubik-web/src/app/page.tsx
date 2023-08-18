@@ -1,14 +1,12 @@
-"use client";
 import LandingPage from "@/app/components/landing-page/landingPage";
-import { createAdmin } from "@/utils/contract";
-import { connection } from "@/utils/contract/sdk";
-import { Button } from "@chakra-ui/react";
-import { web3 } from "@coral-xyz/anchor";
-import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
-import { useAnchorWallet } from "@solana/wallet-adapter-react";
+// import { createAdmin } from "@/utils/contract";
+// import { connection } from "@/utils/contract/sdk";
+// import { Button } from "@chakra-ui/react";
+// import { web3 } from "@coral-xyz/anchor";
+// import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+// import { useAnchorWallet } from "@solana/wallet-adapter-react";
 
 export default function Home() {
-  const anchorWallet = useAnchorWallet();
   return (
     <>
       {/* <Button
