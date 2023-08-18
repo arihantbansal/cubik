@@ -81,7 +81,9 @@ const UserNavbarMenuButton = () => {
           w="full"
         >
           <Link href={"/" + user?.username}>
-            <Box
+            <Button
+              isDisabled
+              disabled
               as={Button}
               bg="transparent"
               w="full"
@@ -91,14 +93,16 @@ const UserNavbarMenuButton = () => {
               display={"flex"}
               alignItems="center"
               justifyContent={"start"}
-              leftIcon={
-                <> {/*  @todo  */} </>
-                // <Box
-                //   as={BiUser}
-                //   boxSize={{ base: "16px", sm: "18px", md: "20px" }}
-                //   color={"#ADB8B6"}
-                // />
-              }
+              // leftIcon={
+              //   {
+              //     /*  @todo  */
+              //   }
+              //   // <Box
+              //   //   as={BiUser}
+              //   //   boxSize={{ base: "16px", sm: "18px", md: "20px" }}
+              //   //   color={"#ADB8B6"}
+              //   // />
+              // }
               iconSpacing="8px"
               p={{ base: "12px", md: "8px" }}
               sx={{
@@ -114,7 +118,7 @@ const UserNavbarMenuButton = () => {
               <Box as="p" textStyle={{ base: "body5", md: "body4" }}>
                 Profile
               </Box>
-            </Box>
+            </Button>
           </Link>
         </Skeleton>
         <Skeleton

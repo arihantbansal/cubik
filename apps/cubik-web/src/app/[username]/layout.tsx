@@ -11,6 +11,7 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Text,
   VStack,
 } from "@/utils/chakra";
 import { notFound } from "next/navigation";
@@ -61,7 +62,16 @@ const Profile = async ({
           profilePicture={profile.profilePicture!}
         />
 
-        <Tabs variant={"cubik"} isLazy>
+        <Center
+          display={"flex"}
+          flexDirection={"column"}
+          fontWeight={700}
+          fontSize={"2xl"}
+        >
+          <Text>Update going on</Text>
+          <Text>Coming Back Soon</Text>
+        </Center>
+        {/* <Tabs variant={"cubik"} isLazy>
           <TabList>
             <Tab>Details</Tab>
             <Tab>Projects</Tab>
@@ -70,15 +80,15 @@ const Profile = async ({
           <TabPanels p={"0"}>
             <TabPanel p="0">
               <Flex maxW={"full"} p="0" flexDir="column" gap="40px">
-                {/* <UserDetails
+                <UserDetails
                   isLoading={isLoading}
                   userId={user?.id as string}
-                /> */}
+                />
 
                 {children}
               </Flex>
             </TabPanel>
-            {/* <TabPanel>
+             <TabPanel>
               <Flex direction="column" w="full" gap="32px">
                  {user &&
                 user.project.filter(
@@ -105,9 +115,9 @@ const Profile = async ({
             </TabPanel>
             <TabPanel>
               {user && <UserContributions userId={user.id} />}
-            </TabPanel> */}
+            </TabPanel> 
           </TabPanels>
-        </Tabs>
+        </Tabs> */}
       </Flex>
     </Container>
   );
