@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import FlipNumbers from "react-flip-numbers";
 import { StatusBanner } from "./StatusBanner";
 import { RoundStatus } from "@/app/components/common/dates/roundStatus";
+import { HackathonCard } from "@/app/hackathons/components/hackathonCard";
 // import { FiInfo } from "react-icons/fi";
 // import RoundStatus from "~/components/common/dates/Status";
 
@@ -187,6 +188,7 @@ const FundingRoundBanner = ({
   description,
   matchingPool,
   event,
+  background,
 }: {
   startDate: Date;
   endDate: Date;
@@ -195,7 +197,20 @@ const FundingRoundBanner = ({
   description: string;
   event: "hackathon" | "round";
   matchingPool: number;
+  background?: string;
 }) => {
+  if (event === "hackathon" && background) {
+    return (
+      <HackathonCard
+        background={background}
+        id={id}
+        name={name}
+        prizePool={matchingPool}
+        shortDescription={description}
+        slug={id}
+      />
+    );
+  }
   return (
     <Stack
       cursor={"pointer"}
