@@ -70,7 +70,7 @@ export const projectExplorer = async () => {
     const projectJoinHackathonPromise = prisma.projectJoinHackathon.findMany({
       where: {
         project: {
-          status: "VERIFIED",
+          // status: "VERIFIED",
         },
         hackathon: {
           isActive: true,

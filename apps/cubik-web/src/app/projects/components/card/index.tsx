@@ -65,6 +65,7 @@ const ProjectEventBanner = ({
         padding={"12px 24px"}
         borderTopRadius={"16px"}
         justifyContent="space-between"
+        color={"black"}
       >
         <Box
           w="full"
