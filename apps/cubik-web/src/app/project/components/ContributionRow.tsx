@@ -1,3 +1,4 @@
+"use client";
 import { SOL, USDC } from "@/app/components/common/tags/TokenTags";
 import Username from "@/app/components/common/username";
 import { TruncatedAddr } from "@/app/components/common/wallet";

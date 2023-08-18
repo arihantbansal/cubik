@@ -31,26 +31,33 @@ import Image from 'next/image';
 import EmptyProjectsState from './empty-state/ProjectsEmptyState';
 import EmptyStateHOC from "~/components/HOC/EmptyState";
 
-const ProjectEventBanner = ({ name, bg, color }: { name: string; bg?: string; color?: string }) => {
-  console.log('backgroundImge', bg);
+const ProjectEventBanner = ({
+  name,
+  bg,
+  color,
+}: {
+  name: string;
+  bg?: string;
+  color?: string;
+}) => {
   return (
     <Center
       w="full"
-      bg={color ? `surface.${color}.3` : 'transparent'}
-      borderTopRadius={'16px'}
-      position={'relative'}
-      overflow={'hidden'}
+      bg={color ? `surface.${color}.3` : "transparent"}
+      borderTopRadius={"16px"}
+      position={"relative"}
+      overflow={"hidden"}
     >
       {bg && (
         <Center
-          zIndex={'0'}
-          alignItems={'end'}
+          zIndex={"0"}
+          alignItems={"end"}
           bg="red"
           w="28rem"
           h="8.5rem"
-          transform={'translateY(31%)'}
-          position={'absolute'}
-          overflow={'hidden'}
+          transform={"translateY(31%)"}
+          position={"absolute"}
+          overflow={"hidden"}
         >
           <Image
             src={bg as string}
@@ -62,27 +69,27 @@ const ProjectEventBanner = ({ name, bg, color }: { name: string; bg?: string; co
         </Center>
       )}
       <HStack
-        zIndex={'1'}
+        zIndex={"1"}
         w="full"
         gap="8px"
-        padding={'12px 24px'}
-        borderTopRadius={'16px'}
+        padding={"12px 24px"}
+        borderTopRadius={"16px"}
         justifyContent="space-between"
       >
         <Box
           w="full"
           as="p"
           noOfLines={2}
-          whiteSpace={'nowrap'}
-          color={color ? `surface.${color}.1` : 'transparent'}
-          textStyle={'overline4'}
+          whiteSpace={"nowrap"}
+          color={color ? `surface.${color}.1` : "transparent"}
+          textStyle={"overline4"}
           overflow="visible"
           pt="0.1rem"
-          lineHeight={'auto'}
+          lineHeight={"auto"}
           textTransform="uppercase"
-          letterSpacing={'0.2em'}
-          fontSize={{ base: '8px', md: '10px' }}
-          textShadow={'0px 5px 7px rgb(0 0 0)'}
+          letterSpacing={"0.2em"}
+          fontSize={{ base: "8px", md: "10px" }}
+          textShadow={"0px 5px 7px rgb(0 0 0)"}
         >
           Participating In
         </Box>
@@ -90,10 +97,10 @@ const ProjectEventBanner = ({ name, bg, color }: { name: string; bg?: string; co
           overflow="visible"
           as="p"
           w="fit-content"
-          whiteSpace={'nowrap'}
-          textStyle={{ base: 'title6', md: 'title5' }}
+          whiteSpace={"nowrap"}
+          textStyle={{ base: "title6", md: "title5" }}
           color={`surface.${color}.1`}
-          textShadow={'0px 5px 7px rgb(0 0 0)'}
+          textShadow={"0px 5px 7px rgb(0 0 0)"}
         >
           {name}
         </Box>

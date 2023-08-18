@@ -30,7 +30,6 @@ const ProjectEventBanner = ({
   bg?: string;
   color?: string;
 }) => {
-  console.log("backgroundImge", bg);
   return (
     <Center
       w="full"
@@ -212,7 +211,7 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
 
         <ProjectEventBanner
           name={project.projectEvent.name}
-          //  bg={project.projectEvent?.bg ?? undefined}
+          bg={project.projectEvent?.bg ?? undefined}
           color={project.projectEvent.color ? "teal" : "yellow"}
         />
         <VStack

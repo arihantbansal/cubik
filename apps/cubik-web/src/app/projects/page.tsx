@@ -17,11 +17,11 @@ export const projectExplorer = async () => {
     const projectJoinRoundPromise = prisma.projectJoinRound.findMany({
       where: {
         status: "APPROVED",
-        // round: {
-        //   endTime: {
-        //     gte: new Date(),
-        //   },
-        // },
+        round: {
+          endTime: {
+            gte: new Date(),
+          },
+        },
         isArchive: false,
       },
       select: {
@@ -69,9 +69,12 @@ export const projectExplorer = async () => {
     });
     const projectJoinHackathonPromise = prisma.projectJoinHackathon.findMany({
       where: {
-        // project: {
-        //   status: "VERIFIED",
-        // },
+        project: {
+          status: "VERIFIED",
+        },
+        hackathon: {
+          isActive: true,
+        },
         isArchive: false,
       },
       select: {
@@ -121,9 +124,9 @@ export const projectExplorer = async () => {
     });
     const activeRoundPromise = prisma.round.findMany({
       where: {
-        // endTime: {
-        //   gte: new Date(),
-        // },
+        endTime: {
+          gte: new Date(),
+        },
       },
       select: {
         startTime: true,
@@ -137,7 +140,7 @@ export const projectExplorer = async () => {
     });
     const activeHackathonPromise = prisma.hackathon.findMany({
       where: {
-        // isActive: true,
+        isActive: true,
       },
       select: {
         background: true,
