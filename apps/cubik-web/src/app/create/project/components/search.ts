@@ -1,13 +1,24 @@
-"use client";
-import axios from "axios";
+"use server";
+import { prisma } from "@cubik/database";
 
 export const searchTeam = async (search: string) => {
   try {
     if (!search || search.length < 3) return [];
-    console.log(search);
-    const { data } = await axios.get(`/api/search/user?search=${search}`);
-    console.log(data);
-    return data;
+    const res = await prisma.user.findMany({
+      where: {
+        username: {
+          contains: search,
+        },
+      },
+    });
+
+    return res?.map((item) => {
+      return {
+        value: item.id,
+        label: item.username,
+        icon: item.profilePicture,
+      };
+    });
   } catch (error) {
     console.log(error);
     return [];

@@ -131,12 +131,11 @@ export const CreateProjectTransactionModal = (props: Props) => {
           hackathonId: null,
         },
       ];
-      team.map((team) => {
+      team.forEach((team) => {
         if (!finalTeam.find((t) => t.userId === team.userId)) {
           finalTeam.push(team);
         }
       });
-
       await createProject(
         {
           createdAt: new Date(),
@@ -164,7 +163,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
           tx: sig,
           updatedAt: new Date(),
         },
-        team
+        finalTeam
       );
       setProjectId(id);
       setProjectSubmitted(true);
@@ -562,6 +561,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
                   variant="cubikOutlined"
                   onClick={() => {
                     props.onTransactionModalClose();
+                    setTransactionLoading(false);
                   }}
                 >
                   Cancel

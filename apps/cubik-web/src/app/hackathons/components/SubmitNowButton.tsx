@@ -37,7 +37,7 @@ export const SubmitNowButton = ({
 
   return (
     <>
-      <Button variant={"cubikFilled"} w="full">
+      <Button onClick={onOpen} variant={"cubikFilled"} w="full">
         Submit Project
       </Button>
       <SubmitNowModal
