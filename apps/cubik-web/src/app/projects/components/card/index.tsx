@@ -38,7 +38,7 @@ const ProjectEventBanner = ({
       position={"relative"}
       overflow={"hidden"}
     >
-      {bg && (
+      {/* {bg && (
         <Center
           zIndex={"0"}
           alignItems={"end"}
@@ -57,7 +57,7 @@ const ProjectEventBanner = ({
             objectPosition="center"
           />
         </Center>
-      )}
+      )} */}
       <HStack
         zIndex={"1"}
         w="full"
