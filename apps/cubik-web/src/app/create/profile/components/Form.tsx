@@ -23,21 +23,25 @@ import {
 } from "@/utils/chakra";
 import { Controller, useForm } from "react-hook-form";
 //import { HiCheck } from "react-icons/hi";
+import * as yup from "yup";
 import React, { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createUserSchema } from "@/utils/schema/user";
 import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import ProfilePicture from "./ProfilePicture";
 import FramerCarousel from "./FramerCarousel";
-import { prisma } from "@cubik/database";
 import { createUserIx } from "@/utils/contract";
 import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 import { connection, web3 } from "@/utils/contract/sdk";
 import { TransactionModel } from "./TransactionModel";
 import { NFTProfile } from "@/types/NFTProfile";
 import { createUser } from "./handleSubmit";
+import { useUser } from "@/app/context/user";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useMutation } from "@tanstack/react-query";
+import { checkUsername } from "./checkUsername";
+
 export const Form = () => {
+  const [userName, setUsername] = useState<string>("");
   const [userNameIsAvailable, setUserNameIsAvailable] =
     useState<boolean>(false);
 
@@ -48,6 +52,7 @@ export const Form = () => {
   const [profileNFT, setProfileNFT] = useState<NFTProfile | undefined>(
     undefined
   );
+  const { setUser } = useUser();
   const { publicKey } = useWallet();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { setVisible } = useWalletModal();
@@ -55,6 +60,44 @@ export const Form = () => {
   const [pfp, setPFP] = useState<string>(
     `https://source.boringavatars.com/marble/120/${publicKey?.toBase58()}?square&?colors=05299E,5E4AE3,947BD3,F0A7A0,F26CA7,FFFFFF,CAF0F8,CCA43B`
   );
+  const checkUsernameMutation = useMutation({
+    mutationFn: checkUsername,
+    mutationKey: ["username"],
+  });
+
+  const schema = yup.object().shape({
+    username: yup
+      .string()
+      .required("Username is required")
+      .min(0, "Username must be at least 4 characters")
+      .max(15)
+      .matches(/^[a-zA-Z0-9]+$/, "Username must be alphanumeric and no spaces")
+      .test(
+        "is-unique",
+        // @ts-ignore
+        async function (username: string) {
+          setLoadingUserName(true); // Set loading state
+          try {
+            const usercheck = await checkUsernameMutation.mutateAsync(username);
+
+            setUsername(username);
+            // await refetch();
+            if (usercheck) {
+              throw new yup.ValidationError(
+                username + " is not available",
+                null,
+                "username"
+              );
+            } else {
+              return true;
+            }
+          } finally {
+            setLoadingUserName(false); // Clear loading state
+          }
+        }
+      ),
+  });
+
   const {
     handleSubmit,
     trigger,
@@ -63,7 +106,7 @@ export const Form = () => {
     getValues,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(createUserSchema),
+    resolver: yupResolver(schema),
   });
   const {
     isOpen: transactionIsOpen,
@@ -101,13 +144,20 @@ export const Form = () => {
       setIsLoading(true);
       const txId = await handleTx();
       if (!txId) return;
-      await createUser(
+      const res = await createUser(
         publicKey?.toBase58() as string,
         getValues("username"),
         pfp,
         profileNFT as NFTProfile,
         txId
       );
+
+      setUser({
+        id: res?.id as string,
+        mainWallet: res?.mainWallet as string,
+        profilePicture: res?.profilePicture as string,
+        username: res?.username as string,
+      });
       setProfileCreated(true);
 
       setIsLoading(false);
@@ -120,6 +170,7 @@ export const Form = () => {
       return;
     }
   };
+
   return (
     <>
       {transactionIsOpen && (
