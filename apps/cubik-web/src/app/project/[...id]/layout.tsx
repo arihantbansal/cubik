@@ -142,7 +142,7 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
         <Stack
           maxW="7xl"
           mx="auto"
-          gap={{ base: "24px", md: "12px", lg: "60px", xl: "100px" }}
+          gap={10}
           px={{ base: "1rem", sm: "2rem", md: "2rem", xl: "1rem" }}
           py={{ base: "24px", md: "64px" }}
           alignItems={"start"}
@@ -192,7 +192,6 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
             name={project.name}
             shortDescription={project.shortDescription}
             key={project.id}
-            //  sprojectJoinHackathon={project.projectJoinHackathon}
             owner={project.owner}
           />
           {children}

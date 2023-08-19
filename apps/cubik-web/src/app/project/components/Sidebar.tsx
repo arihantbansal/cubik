@@ -42,13 +42,13 @@ export const SideBar = (props: Props) => {
           display={{ base: "none", lg: "flex" }}
         >
           <ProjectSocials {...props} />
+          <ProjectOwner team={props.team} />
           <ProjectFundingData
             communityContributions={0}
             contributors={0}
             funding={0}
             rank={0}
           />
-          <ProjectOwner team={props.team} />
           {/* <SimilarProject /> */}
         </VStack>
       </Stack>
