@@ -2,14 +2,14 @@ import { Box, Button, Center, HStack, Tag, Text } from "@chakra-ui/react";
 import Link from "next/link";
 
 const Logo = () => {
-  const beta = false;
+  const beta = true;
   return (
     <HStack
       spacing={{ base: "2px", md: "8px" }}
       alignItems={"center"}
       justify="space-between"
     >
-      <Link href="/">
+      <Link style={{ height: "fit-content" }} href="/">
         <Box
           display="flex"
           flexDir={"row"}
@@ -18,8 +18,8 @@ const Logo = () => {
           justifyContent={"center"}
         >
           <Center
-            width={{ base: "1.4rem", sm: "1.6rem" }}
-            height={{ base: "1.4rem", sm: "1.6rem" }}
+            width={{ base: "1.4rem", sm: "1.7rem" }}
+            height={{ base: "1.4rem", sm: "1.7rem" }}
           >
             <svg
               width="101"
@@ -39,10 +39,10 @@ const Logo = () => {
           <Text
             letterSpacing={"0.12em"}
             fontWeight={"800"}
-            fontSize={{ base: "15px", sm: "20px" }}
+            fontSize={{ base: "16px", sm: "20px" }}
             color="white"
             display={{ base: "block", sm: "block", lg: "block" }}
-            lineHeight={"24px"}
+            lineHeight={{ base: "23px", md: "26px" }}
           >
             CUBIK
           </Text>
@@ -55,7 +55,7 @@ const Logo = () => {
           backgroundColor="#FFD83D18"
           boxShadow="0px 4px 20px rgba(0, 0, 0, 0.2)"
           fontSize="xs"
-          p={{ base: "8px 12px", md: "8px 12px" }}
+          p={{ base: "4px 12px", md: "8px 12px" }}
           mx={1}
         >
           <Box
@@ -66,7 +66,7 @@ const Logo = () => {
             fontWeight="700 !important"
             letterSpacing="1.2px"
           >
-            DEVNET
+            BETA
           </Box>
         </Tag>
       ) : (

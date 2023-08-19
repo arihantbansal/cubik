@@ -174,7 +174,7 @@ const HackathonTracks = ({ tracks }: PropsType) => {
                         ))}
                       </HStack>
                     </VStack>
-                    <VStack align="start" gap="16px" px="16px">
+                    {/* <VStack align="start" gap="16px" px="16px">
                       <Box
                         color="white"
                         as="p"
@@ -215,7 +215,7 @@ const HackathonTracks = ({ tracks }: PropsType) => {
                           </HStack>
                         ))}
                       </HStack>
-                    </VStack>
+                    </VStack> */}
                   </VStack>
                 </AccordionPanel>
               </>

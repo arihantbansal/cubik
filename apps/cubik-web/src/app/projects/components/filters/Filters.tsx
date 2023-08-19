@@ -23,12 +23,13 @@ const CollapsedFilters = ({
   setProjects,
 }: CollapsedFiltersProps) => {
   return (
-    <Collapse in={isOpen} animateOpacity>
+    <Collapse style={{ width: "100%" }} in={isOpen} animateOpacity>
       <Stack
-        direction={{ base: "column", md: "row" }}
+        p="12px"
+        direction={{ base: "row", md: "row" }}
         spacing={{ base: "16px", md: "32px" }}
         pt={{ base: "16px", md: "32px" }}
-        w="92vw"
+        w="full"
         maxW="7xl"
         justify="start"
         zIndex={1}

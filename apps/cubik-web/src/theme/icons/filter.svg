@@ -1,5 +1,5 @@
-<!-- cross/cross -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 100%; height: 100%;" fill="none"
     stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-    <path d="m6 18 6-6m0 0 6-6m-6 6L6 6m6 6 6 6" />
+    <path
+        d="M3 7h7m0 0a3 3 0 0 0 3 3h1a3 3 0 1 0 0-6h-1a3 3 0 0 0-3 3Zm6 10h5M20 7h1M3 17h3m0 0a3 3 0 0 0 3 3h1a3 3 0 1 0 0-6H9a3 3 0 0 0-3 3Z" />
 </svg>

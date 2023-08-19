@@ -2,9 +2,16 @@
 import Categories from "./categories";
 import { ProjectExploreBanner, ProjectExplorerType } from "@/types/explorer";
 import { Sort } from "./Sort";
-import { Button, HStack, VStack, useDisclosure } from "@/utils/chakra";
-import { TrackFilter } from "./TrackFilter";
+import {
+  Button,
+  Center,
+  HStack,
+  Text,
+  VStack,
+  useDisclosure,
+} from "@/utils/chakra";
 import CollapsedFilters from "./Filters";
+import FilterIcon from "@/theme/icons/filter.svg";
 
 const Filters = ({
   _projects,
@@ -34,7 +41,12 @@ const Filters = ({
   return (
     <>
       <VStack align={"start"} justify={"space-between"} w="full">
-        <HStack w="full" align={"start"} justify={"space-between"}>
+        <HStack
+          spacing={"0px"}
+          w="full"
+          align={"start"}
+          justify={"space-between"}
+        >
           <Categories
             _projects={_projects}
             projects={projects}
@@ -48,24 +60,33 @@ const Filters = ({
             height="100%"
             backgroundColor={"neutral.3"}
             color="#626665"
+            iconSpacing={{ base: "0px", md: "8px" }}
+            size={{ base: "cubikMini", md: "cubikSmall" }}
             _hover={{
               backgroundColor: "neutral.4",
               boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
             }}
-            // leftIcon={
-            //   <Box as={RiFilter3Fill} boxSize={['20px']} color="#626665" />
-            // }
+            leftIcon={
+              <Center
+                width={{ base: "16px", md: "18px" }}
+                height={{ base: "16px", md: "18px" }}
+              >
+                <FilterIcon color="#626665" />
+              </Center>
+            }
           >
-            Filter
+            <Text display={{ base: "none", md: "block" }}>Filter</Text>
           </Button>
         </HStack>{" "}
-        <CollapsedFilters
-          projects={projects}
-          _projects={_projects}
-          setProjects={setProjects}
-          tracks={HackathonTracks()}
-          isOpen={isOpen}
-        />
+        <Center w="full">
+          <CollapsedFilters
+            projects={projects}
+            _projects={_projects}
+            setProjects={setProjects}
+            tracks={HackathonTracks()}
+            isOpen={isOpen}
+          />
+        </Center>
       </VStack>
     </>
   );

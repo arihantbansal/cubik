@@ -199,18 +199,18 @@ const FundingRoundBanner = ({
   matchingPool: number;
   background?: string;
 }) => {
-  if (event === "hackathon" && background) {
-    return (
-      <HackathonCard
-        background={background}
-        id={id}
-        name={name}
-        prizePool={matchingPool}
-        shortDescription={description}
-        slug={id}
-      />
-    );
-  }
+  // if (event === "hackathon" && background) {
+  //   return (
+  //     <HackathonCard
+  //       background={background}
+  //       id={id}
+  //       name={name}
+  //       prizePool={matchingPool}
+  //       shortDescription={description}
+  //       slug={id}
+  //     />
+  //   );
+  // }
   return (
     <Stack
       cursor={"pointer"}

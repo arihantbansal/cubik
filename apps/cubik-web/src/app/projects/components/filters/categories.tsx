@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import CategoryTag from "@/app/components/common/tags/CategoryTags";
 import { Box, Center, HStack } from "@/utils/chakra";
 import { ProjectExplorerType } from "@/types/explorer";
-import Image from "next/image";
+import CrossIcon from "@/theme/icons/cross.svg";
 
 export interface Category {
   value:
@@ -63,7 +63,7 @@ const Categories = ({
       <HStack
         ref={scrollRef}
         overflowX="auto"
-        w="80vw"
+        w="82vw"
         maxW="6xl"
         justify="start"
         whiteSpace="nowrap"
@@ -79,7 +79,6 @@ const Categories = ({
         {/* <Center as="button" color="#ADB8B6" onClick={() => changeCategory("all")}>
         <CategoryTag isSelected={true}>All Projects</CategoryTag>
          </Center> */}
-
         {category !== "all" ? (
           <>
             <Center
@@ -99,20 +98,10 @@ const Categories = ({
             >
               {/* @todo improve the color and sizing ( maybe create custom icons library ) */}
               <Center
-                width={{ base: "18px", sm: "22px", md: "22px" }}
-                height={{ base: "18px", sm: "22px", md: "22px" }}
-                position="relative"
-                right="auto"
-                bottom="auto"
-                color="#fff"
+                width={{ base: "18px", md: "20px" }}
+                height={{ base: "18px", md: "20px" }}
               >
-                <Image
-                  src="/icons/cross.svg"
-                  alt="cubik chevron right icon"
-                  color="#fff"
-                  width={"100"}
-                  height={"100"}
-                />
+                <CrossIcon />
               </Center>
             </Center>
             <CategoryTag isSelected={true}>{category}</CategoryTag>
@@ -140,7 +129,7 @@ const Categories = ({
         right="0%"
         transform="translateY(-50%)"
         height={{ base: "2.5rem", md: "3rem" }}
-        width={{ base: "1.5rem", md: "3rem" }}
+        width={{ base: "1rem", md: "3rem" }}
         background="linear-gradient(90deg, #0C0D0D00 0%, #000 80%)"
       />
     </Box>

@@ -11,7 +11,7 @@ interface Props {
 export const ExploreBanner = ({ banner }: Props) => {
   return (
     <>
-      <VStack w="full">
+      <VStack display={{ base: "none", md: "flex" }} w="full">
         <GrantsCarousel>
           {banner ? (
             banner?.map((resource_distribution_event) => (
