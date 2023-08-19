@@ -550,7 +550,7 @@ export const SubmitNowModal = ({
                         }
                         margin={"1rem"}
                       />
-                      <Link href="/submit-project">
+                      <Link href="/create/project">
                         <Button variant="cubikFilled" size={"cubikSmall"}>
                           Create Project
                         </Button>
