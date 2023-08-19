@@ -158,7 +158,7 @@ const UserNavbarMenuButton = () => {
               }}
             >
               <Box textStyle={{ base: "body5", md: "body4" }}>
-                Submit Project
+                Create new Project
               </Box>
             </Box>
           </Link>
