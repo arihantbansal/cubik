@@ -61,63 +61,7 @@ const Profile = async ({
           mainWallet={profile.mainWallet}
           profilePicture={profile.profilePicture!}
         />
-
-        <Center
-          display={"flex"}
-          flexDirection={"column"}
-          fontWeight={700}
-          fontSize={"2xl"}
-        >
-          <Text>Update going on</Text>
-          <Text>Coming Back Soon</Text>
-        </Center>
-        {/* <Tabs variant={"cubik"} isLazy>
-          <TabList>
-            <Tab>Details</Tab>
-            <Tab>Projects</Tab>
-            <Tab>Contributions</Tab>
-          </TabList>
-          <TabPanels p={"0"}>
-            <TabPanel p="0">
-              <Flex maxW={"full"} p="0" flexDir="column" gap="40px">
-                <UserDetails
-                  isLoading={isLoading}
-                  userId={user?.id as string}
-                />
-
-                {children}
-              </Flex>
-            </TabPanel>
-             <TabPanel>
-              <Flex direction="column" w="full" gap="32px">
-                 {user &&
-                user.project.filter(
-                  (project) => project.status === ProjectVerifyStatus.VERIFIED
-                ).length ? (
-                  // filter verified projects only to show on user profile
-                  user.project
-                    .filter(
-                      (project) =>
-                        project.status === ProjectVerifyStatus.VERIFIED
-                    )
-                    .map((project, key) => (
-                      <ProjectVisitorCard
-                        userName={user.username as string}
-                        project={project}
-                        isLoading={isLoading}
-                        key={key}
-                      />
-                    ))
-                ) : (
-                  <VisitorProjectEmptyState />
-                )} 
-              </Flex>
-            </TabPanel>
-            <TabPanel>
-              {user && <UserContributions userId={user.id} />}
-            </TabPanel> 
-          </TabPanels>
-        </Tabs> */}
+        {children}
       </Flex>
     </Container>
   );

@@ -188,19 +188,16 @@ export const ContributionRow = ({
         </VStack>
       </Td>
       <Td px="12px">
-        <Skeleton
-          isLoaded={!isLoading}
-          fadeDuration={2}
-          opacity={isLoading ? 0.5 : 1}
+        <Box
+          as="p"
+          textStyle={{ base: "title4", md: "title3" }}
+          color="neutral.11"
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"center"}
         >
-          <Box
-            as="p"
-            textStyle={{ base: "title4", md: "title3" }}
-            color="neutral.11"
-          >
-            {amountRaised || "0.0"}
-          </Box>
-        </Skeleton>
+          {amountRaised || "0.0"}
+        </Box>
       </Td>
       <Td px="12px">
         {/*  @todo: pending to confirm  */}

@@ -1,6 +1,6 @@
 import React from "react";
-import { ContributionTable } from "../components/user/ContributionTable";
-import { ContributionRow } from "../components/user/ContributionRow";
+import { ContributionTable } from "./ContributionTable";
+import { ContributionRow } from "./ContributionRow";
 import { prisma } from "@cubik/database";
 
 const getContribution = async (username: string) => {
@@ -36,15 +36,16 @@ const getContribution = async (username: string) => {
           name: true,
         },
       },
+      hackathon: {
+        select: {
+          name: true,
+        },
+      },
     },
   });
 };
 
-const ContributionPage = async ({
-  params: { username },
-}: {
-  params: { username: string };
-}) => {
+const ContributionPage = async ({ username }: { username: string }) => {
   const contribution = await getContribution(username);
   return (
     <>
@@ -60,7 +61,7 @@ const ContributionPage = async ({
               isLoading={false}
               createdAt={contribution.createdAt.toString()}
               eventName={
-                contribution.round?.name || "hackathon name" // update schema and
+                contribution.round?.name || contribution.hackathon?.name || "" // update schema and
               }
               projectIndustry={contribution.project.industry}
               projectLogo={contribution.project.logo}
