@@ -12,6 +12,7 @@ import {
 } from "@/utils/chakra";
 import React from "react";
 import { Contributions } from "./Contributions";
+import { ProjectDiscussion } from "./Discussion";
 
 interface Props {
   longDescription: string;
@@ -64,7 +65,9 @@ export const ProjectTabs = ({
             <TabPanel overflowX="scroll">
               <Contributions id={id} eventId={eventId} eventType={eventType} />
             </TabPanel>
-            <TabPanel>{/* <Discussion /> */}</TabPanel>
+            <TabPanel>
+              <ProjectDiscussion projectId={id} />
+            </TabPanel>
           </TabPanels>
         </Tabs>
       </Container>
