@@ -627,7 +627,7 @@ export const SubmitNowModal = ({
                         Tracks
                       </Box>
                       {getValues("tracks") ? (
-                        <HStack>
+                        <HStack flexWrap={"wrap"}>
                           {getValues("tracks").map((track) => {
                             return <Tag key={track.value}>{track.label}</Tag>;
                           })}
