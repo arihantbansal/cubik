@@ -243,9 +243,10 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
               /> */}
               <Box
                 borderRadius={"8px"}
-                width={{ base: "3.4rem", md: "4rem" }}
-                height={{ base: "3.4rem", md: "4rem" }}
-                pos={"relative"}
+                w={{ base: "3.4rem", md: "4rem" }}
+                minW={{ base: "3.4rem", md: "4rem" }}
+                h={{ base: "3.4rem", md: "4rem" }}
+                position={"relative"}
               >
                 <Image
                   src={project.logo}
@@ -253,6 +254,7 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
                   objectFit="cover"
                   layout="fill"
                   style={{
+                    background: "transparent",
                     borderRadius: "8px",
                   }}
                   priority
@@ -277,6 +279,9 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
                     {project.title}
                   </Box>
                   <Box
+                    display={
+                      project.projectEvent.amount === 0 ? "none" : "block"
+                    }
                     as="p"
                     color="#A8F0E6"
                     textStyle={{ base: "title4", md: "title3" }}
@@ -310,6 +315,9 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
                     </Box>
                   </Center>
                   <Box
+                    display={
+                      project.projectEvent.amount === 0 ? "none" : "block"
+                    }
                     color="neutral.8"
                     as="p"
                     textStyle={{ base: "body6", md: "body5" }}

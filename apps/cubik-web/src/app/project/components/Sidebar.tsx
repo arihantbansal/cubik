@@ -39,11 +39,12 @@ export const SideBar = (props: Props) => {
           justify={"space-between"}
           direction={"column"}
           justifyContent={"start"}
-          display={{ base: "none", lg: "flex" }}
+          display={{ base: "flex", lg: "flex" }}
         >
           <ProjectSocials {...props} />
           <ProjectOwner team={props.team} />
           <ProjectFundingData
+            isHackathon={true}
             communityContributions={0}
             contributors={0}
             funding={0}

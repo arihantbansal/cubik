@@ -13,19 +13,19 @@ export const ProjectCreatorTeam = ({
 }) => {
   return (
     <>
-      <Link href={`/${team.user.username}`}>
+      <Link style={{ width: "100%" }} href={`/${team.user.username}`}>
         <HStack cursor="pointer" w="full" justify="space-between" px="16px">
           <HStack gap="0.6rem">
             <Avatar
-              borderRadius={"8px"}
-              width={{ base: "32px", md: "38px" }}
-              height={{ base: "32px", md: "38px" }}
+              //borderRadius={"8px"}
+              width={{ base: "34px", md: "38px" }}
+              height={{ base: "34px", md: "38px" }}
               src={team.user.profilePicture as string}
             />
             <Box
               color={"white"}
               as="p"
-              textStyle={{ base: "body4", md: "body3" }}
+              textStyle={{ base: "title5", md: "title4" }}
             >
               @{team.user.username}
             </Box>

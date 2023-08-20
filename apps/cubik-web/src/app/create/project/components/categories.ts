@@ -41,6 +41,10 @@ export const category = [
     value: "clob",
   },
   {
+    label: "cNFT",
+    value: "cnft",
+  },
+  {
     label: "Community",
     value: "community",
   },
@@ -225,6 +229,10 @@ export const category = [
     value: "payments",
   },
   {
+    label: "pNFT",
+    value: "pnft",
+  },
+  {
     label: "Prediction Markets",
     value: "prediction_markets",
   },
@@ -315,13 +323,5 @@ export const category = [
   {
     label: "Youtube",
     value: "youtube",
-  },
-  {
-    label: "cNFT",
-    value: "nft",
-  },
-  {
-    label: "pNFT",
-    value: "pnft",
   },
 ];

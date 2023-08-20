@@ -109,7 +109,8 @@ const ProjectPage = async ({ params: { id } }: Props) => {
     <Stack
       w="full"
       mx="auto"
-      direction={{ base: "column", lg: "row" }}
+      gap="24px"
+      direction={{ base: "column-reverse", lg: "row" }}
       alignItems={"start"}
       justifyContent={"space-between"}
     >

@@ -5,6 +5,8 @@ import FlipNumbers from "react-flip-numbers";
 import { StatusBanner } from "./StatusBanner";
 import { RoundStatus } from "@/app/components/common/dates/roundStatus";
 import { HackathonCard } from "@/app/hackathons/components/hackathonCard";
+import { formatNumberWithComma } from "@/utils/helpers/formatNumberWithK";
+
 // import { FiInfo } from "react-icons/fi";
 // import RoundStatus from "~/components/common/dates/Status";
 
@@ -331,7 +333,7 @@ const FundingRoundBanner = ({
                 </Box>
                 <HStack>
                   <Box as="p" textStyle={{ base: "body5", md: "title3" }}>
-                    ${matchingPool}
+                    ${formatNumberWithComma(matchingPool)}
                   </Box>
                 </HStack>
               </HStack>

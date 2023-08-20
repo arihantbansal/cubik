@@ -1,4 +1,12 @@
-import { Box, Center, IconButton, Tag, VStack, Wrap } from "@/utils/chakra";
+import {
+  Box,
+  Center,
+  Flex,
+  IconButton,
+  Tag,
+  VStack,
+  Wrap,
+} from "@/utils/chakra";
 import React from "react";
 import Twitter from "@/theme/icons/socials/twitter.svg";
 import Github from "@/theme/icons/socials/github.svg";
@@ -129,21 +137,35 @@ export const ProjectSocials = ({
             Event Tracks
           </Box>
         )}
-        <Wrap gap={1} direction={"row"}>
+        <Flex
+          flexWrap={{ base: "nowrap", md: "wrap" }}
+          gap={"4px"}
+          direction={"row"}
+          w="full"
+          overflow={"scroll"}
+          sx={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          }}
+        >
           {tracks.map((track, key) => (
             <Center
+              minW={"fit-content"}
               rounded="full"
               bg="#222222"
-              fontSize={{ base: "12px", md: "14px" }}
+              fontSize={{ base: "12px", md: "13px" }}
               fontWeight={"500"}
               color="#ffffff85"
-              h={{ base: "32px", md: "40px" }}
+              h={{ base: "32px", md: "36px" }}
               px={{ base: "16px", md: "18px" }}
             >
               {track.label}
             </Center>
           ))}
-        </Wrap>
+        </Flex>
       </VStack>
     </>
   );

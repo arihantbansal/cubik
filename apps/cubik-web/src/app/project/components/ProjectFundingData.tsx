@@ -1,6 +1,7 @@
 import { Box, Center, HStack, Skeleton, VStack } from "@/utils/chakra";
 
 interface Props {
+  isHackathon: boolean;
   funding: number;
   contributors: number;
   communityContributions: number;
@@ -8,6 +9,7 @@ interface Props {
 }
 
 export const ProjectFundingData = ({
+  isHackathon,
   funding,
   contributors,
   communityContributions,
@@ -18,8 +20,9 @@ export const ProjectFundingData = ({
       <Box as="p" textStyle={{ base: "title4", md: "title3" }} color="white">
         Event Stats
       </Box>
-      {/*Matching Pool */}
+      {/*Rank*/}
       <VStack
+        display={!isHackathon ? "none" : "flex"}
         border="1px solid"
         borderColor={"surface.yellow.3"}
         rounded="16px"
@@ -79,6 +82,7 @@ export const ProjectFundingData = ({
       </VStack>
       {/*Matching Pool */}
       <VStack
+        display={isHackathon ? "none" : "flex"}
         border="1px solid"
         borderColor={"surface.green.3"}
         rounded="16px"

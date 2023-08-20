@@ -24,3 +24,7 @@ export function formatNumberWithK(num: number): string {
 
   return new Intl.NumberFormat().format(num);
 }
+
+export function formatNumberWithComma(number: number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
