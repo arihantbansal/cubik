@@ -234,13 +234,30 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
               w="full"
               justifyContent={"space-between"}
             >
-              <Avatar
+              {/* <Avatar
                 src={project.logo}
                 name={project.title}
                 borderRadius={"8px"}
                 width={{ base: "3.4rem", md: "4rem" }}
                 height={{ base: "3.4rem", md: "4rem" }}
-              />
+              /> */}
+              <Box
+                borderRadius={"8px"}
+                width={{ base: "3.4rem", md: "4rem" }}
+                height={{ base: "3.4rem", md: "4rem" }}
+                pos={"relative"}
+              >
+                <Image
+                  src={project.logo}
+                  alt={project.title}
+                  objectFit="cover"
+                  layout="fill"
+                  style={{
+                    borderRadius: "8px",
+                  }}
+                  priority
+                />
+              </Box>
               <VStack spacing="4px" w="full">
                 <HStack
                   w="full"
