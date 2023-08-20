@@ -21,6 +21,7 @@ const config = {
   },
   transpilePackages: ["@cubik/database"],
   experimental: { serverActions: true, appDir: true },
+
   images: {
     domains: [
       "d1yweukyu067aq.cloudfront.net",
@@ -33,6 +34,15 @@ const config = {
   },
   typescript: {
     ignoreBuildErrors: true,
+  },
+  async redirects() {
+    return [
+      {
+        source: "/hackathon/opos",
+        destination: "/hackathons/opos",
+        permanent: true,
+      },
+    ];
   },
 };
 export default config;
