@@ -1,7 +1,14 @@
 import { Box, Center, HStack, chakra, keyframes } from "@chakra-ui/react";
-import { differenceInDays, isFuture, isPast } from "date-fns";
-// import { AiTwotoneCalendar } from "react-icons/ai";
+import {
+  differenceInHours,
+  differenceInDays,
+  isFuture,
+  isPast,
+} from "date-fns";
+// import { AiTwotoneClock } from "react-icons/ai";
 // import { BiInfoCircle } from "react-icons/bi";
+import Clock from "@/theme/icons/clock.svg";
+import InfoCircle from "@/theme/icons/info_circle.svg";
 
 const random = () => Math.floor(Math.random() * 10);
 
@@ -32,19 +39,28 @@ const CircleRipple = chakra(Box, {
 
 export const StatusBanner = ({
   isHackathon,
+  submissionEndDate,
   show,
   startDate,
   endDate,
 }: {
   isHackathon?: boolean;
   show?: boolean;
+  submissionEndDate: Date | undefined | null;
   startDate: Date | undefined | null;
   endDate: Date | undefined | null;
 }) => {
-  if (!startDate || !endDate) return null;
+  if (!startDate || !endDate || !submissionEndDate) return null;
   const now = new Date();
 
-  const daysToStart = differenceInDays(startDate, now);
+  const daysToSubmissionEnd =
+    differenceInDays(submissionEndDate, now) > 1
+      ? differenceInDays(submissionEndDate, now) + " days"
+      : differenceInHours(submissionEndDate, now) + " hours";
+  const daysToStart: string =
+    differenceInDays(startDate, now) > 1
+      ? differenceInDays(startDate, now) + " days"
+      : differenceInHours(startDate, now) + " hours";
   const daysToEnd = differenceInDays(endDate, now);
   const daysSinceEnd = differenceInDays(now, endDate);
 
@@ -58,11 +74,12 @@ export const StatusBanner = ({
         minH={"22px"}
         mx={1}
       >
-        <Box
-          //   as={AiTwotoneCalendar}
-          color="white"
-          boxSize={["12px", "14px", "18px"]}
-        />
+        <Center
+          width={["12px", "14px", "16px"]}
+          height={["12px", "14px", "16px"]}
+        >
+          <Clock color="#fff" />
+        </Center>
         <Box
           p="8px 12px"
           ps="0px"
@@ -71,10 +88,9 @@ export const StatusBanner = ({
           color="neutral.11"
           textStyle={{ base: "body6", md: "body5" }}
         >
-          {isHackathon ? "Voting" : "Round"}
-          {daysToStart === 0
-            ? ` starts in a day`
-            : ` starts in ${daysToStart} days`}
+          {isFuture(submissionEndDate as Date)
+            ? "Submissions Ending" + ` in ${daysToSubmissionEnd}`
+            : "Contributions Period ending" + ` in ${daysToEnd}`}
         </Box>
       </HStack>
     );
@@ -117,11 +133,12 @@ export const StatusBanner = ({
         spacing="8px"
         mx={1}
       >
-        <Box
-          //   as={BiInfoCircle}
-          color="white"
-          boxSize={["12px", "14px", "18px"]}
-        />
+        <Center
+          width={["12px", "14px", "18px"]}
+          height={["12px", "14px", "18px"]}
+        >
+          <InfoCircle color="#fff" />
+        </Center>
         <Box
           as="p"
           whiteSpace="pre"

@@ -181,6 +181,7 @@ export const CountdownTimerBig: React.FC<CountdownTimerProps> = ({ date }) => {
 };
 
 const FundingRoundBanner = ({
+  submissionEndDate,
   startDate,
   endDate,
   id,
@@ -190,6 +191,7 @@ const FundingRoundBanner = ({
   event,
   background,
 }: {
+  submissionEndDate: Date;
   startDate: Date;
   endDate: Date;
   id: string;
@@ -276,6 +278,7 @@ const FundingRoundBanner = ({
           >
             <StatusBanner
               isHackathon={event === "hackathon" ? true : false}
+              submissionEndDate={submissionEndDate}
               startDate={startDate}
               endDate={endDate}
             />

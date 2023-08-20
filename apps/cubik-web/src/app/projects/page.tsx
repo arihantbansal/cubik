@@ -254,6 +254,7 @@ export const projectExplorer = async () => {
         matchingPool: hackathon.prizePool,
         name: hackathon.name,
         type: "hackathon",
+        submissionEndDate: hackathon.hackathonEndDate as Date,
         endTime: hackathon.votingEndDate as Date,
         startTime: hackathon.votingStartDate as Date,
         shortDescription: hackathon.shortDescription,
@@ -269,6 +270,7 @@ export const projectExplorer = async () => {
         matchingPool: round.matchedPool,
         name: round.name,
         type: "round",
+        submissionEndDate: round.startTime,
         startTime: round.startTime,
         shortDescription: round.shortDescription,
       });

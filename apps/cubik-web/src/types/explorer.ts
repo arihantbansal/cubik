@@ -66,6 +66,7 @@ export interface ProjectExploreBanner {
   name: string;
   shortDescription?: string;
   matchingPool: number;
+  submissionEndDate: Date;
   startTime: Date;
   endTime: Date;
   type: ExplorerType;

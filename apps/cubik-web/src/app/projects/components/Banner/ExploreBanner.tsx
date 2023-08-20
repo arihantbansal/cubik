@@ -19,6 +19,9 @@ export const ExploreBanner = ({ banner }: Props) => {
                 background={resource_distribution_event.bgImage}
                 event={resource_distribution_event.type}
                 key={resource_distribution_event.id}
+                submissionEndDate={
+                  new Date(resource_distribution_event.submissionEndDate)
+                }
                 startDate={new Date(resource_distribution_event.startTime)}
                 endDate={new Date(resource_distribution_event.endTime)}
                 id={resource_distribution_event.id}
