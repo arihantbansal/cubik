@@ -37,6 +37,7 @@ import {
   useDisclosure,
   Stack,
   Select,
+  Link,
 } from "@/utils/chakra";
 import {
   useReactTable,
@@ -48,6 +49,8 @@ import {
 import Image from "next/image";
 import { sponsorsData } from "./sponsors";
 import { useMemo, useState, Fragment, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchSponsors } from "./data";
 
 type InnerTableProps = {
   projectId: string;
@@ -117,7 +120,7 @@ const ProjectStatusModal = ({
           textTransform={"capitalize"}
         >
           {status}
-        </Box> 
+        </Box>
         <Center
           onClick={onOpen}
           width={{ base: "16px", sm: "18px", md: "20px" }}
@@ -221,7 +224,10 @@ const ProjectStatusModal = ({
                     }}
                   >
                     {prizeBreakdown.map((prize, index) => (
-                      <option key={index} value={prize.value}> {prize.title}</option>
+                      <option key={index} value={prize.value}>
+                        {" "}
+                        {prize.title}
+                      </option>
                     ))}
                   </Select>
                 </Center>
@@ -247,7 +253,13 @@ const ProjectStatusModal = ({
   );
 };
 
-const ProjectDetailsMenu = ({}) => {
+const ProjectDetailsMenu = ({
+  projectId,
+  ownerName,
+}: {
+  projectId: string;
+  ownerName: string;
+}) => {
   return (
     <Menu>
       <MenuButton bg="none">
@@ -274,12 +286,24 @@ const ProjectDetailsMenu = ({}) => {
         gap="12px"
         color="white"
       >
-        <MenuItem p="12px 16px" backgroundColor="neutral.3" rounded="lg">
-          View Project
+          <Link
+            isExternal
+            href={
+              "https://cubik.so/project/" +
+              projectId +
+              "/" +
+              "8e23ade0-0dae-4c4b-83aa-67867749029c"
+            }
+          >
+              <MenuItem p="12px 16px" backgroundColor="neutral.3" rounded="lg">
+            View Project
         </MenuItem>
-        <MenuItem p="12px 16px" backgroundColor="neutral.3" rounded="lg">
-          Visit Profile
-        </MenuItem>
+          </Link>
+        <Link isExternal href={"https://cubik.so/" + ownerName}>
+          <MenuItem p="12px 16px" backgroundColor="neutral.3" rounded="lg">
+            Visit Profile
+          </MenuItem>
+        </Link>
       </MenuList>
     </Menu>
   );
@@ -330,73 +354,18 @@ const EmptyState = () => {
   );
 };
 
-const fetchInnerTableData = async (rowId: string) => {
-  // Replace this with your actual API call
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve([
-        {
-          index: 1,
-          project: {
-            id: 1,
-            name: "TinyDancer",
-            image:
-              "https://pbs.twimg.com/profile_images/1628722617334267905/s7UFpQtX_400x400.jpg",
-            description: "First Light Client on Solana",
-          },
-          contributions: 134.5,
-          voters: 69,
-          owner: "@anoushk",
-          status: "WINNER",
-        },
-        {
-          index: 2,
-          project: {
-            id: 1,
-            name: "Anchor",
-            image: "https://www.anchor-lang.com/logo.png",
-            description: "Sealevel runtime for solana",
-          },
-          contributions: 2094.1,
-          voters: 398,
-          owner: "@armani",
-          status: "Not Set",
-        },
-        {
-          index: 3,
-          project: {
-            id: 1,
-            name: "Solana Unity SDK",
-            image:
-              "https://camo.githubusercontent.com/67b4157acd8cf062d897adb3828d76b31a2721b18e396cdb52f8745a0f37fdc7/68747470733a2f2f736f6c616e612e756e6974792d73646b2e67672f6c6f676f2e706e67",
-            description: "SDK for development of games on solana using Unity",
-          },
-          contributions: 223,
-          voters: 46,
-          owner: "@dhruv",
-          status: "Not Set",
-        },
-      ]);
-    }, 1000);
-  });
-};
-
 const InnerTable = ({
   rowId,
   prizeBreakdown,
   trackName,
+  innerTableData,
 }: {
   rowId: string;
   prizeBreakdown: [{ title: string; value: string; amount: string }];
   trackName: string;
+  innerTableData: projectDataType[];
 }) => {
-  const [innerTableData, setInnerTableData] = useState<projectDataType[]>([]);
-  useEffect(() => {
-    // Fetch data when the component is mounted
-    fetchInnerTableData(rowId).then((data) =>
-      setInnerTableData(data as unknown as projectDataType[])
-    );
-  }, [rowId]);
+  // const [innerTableData, setInnerTableData] = useState<projectDataType[]>([]);
 
   const innerTableColumns = useMemo(
     () => [
@@ -454,7 +423,7 @@ const InnerTable = ({
         },
       },
     ],
-   []
+    []
   );
 
   const innerTableInstance = useReactTable({
@@ -522,7 +491,7 @@ const InnerTable = ({
           <Fragment key={innerRow.id}>
             <Tr>
               {innerRow.getVisibleCells().map((cell, cellIndex) => (
-                <Td 
+                <Td
                   fontSize={{ base: "14px", md: "16px" }}
                   fontWeight="600"
                   p="16px"
@@ -537,7 +506,10 @@ const InnerTable = ({
                 fontWeight="600"
                 p="16px"
               >
-                <ProjectDetailsMenu />
+                <ProjectDetailsMenu
+                  ownerName={innerRow.original.owner}
+                  projectId={innerRow.original.project.id}
+                />
               </Td>
             </Tr>
           </Fragment>
@@ -549,6 +521,7 @@ const InnerTable = ({
 
 const HackathonSponsorsView = () => {
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
+
   const toggleRowExpanded = (rowId: string) => {
     setExpandedRows((prev) => ({
       ...prev,
@@ -556,22 +529,51 @@ const HackathonSponsorsView = () => {
     }));
   };
 
+  const SponsorInfo = useQuery({
+    queryKey: ["sponsorInfo"],
+    queryFn: async () => fetchSponsors(),
+  });
+
   const data = useMemo(() => {
-    return sponsorsData.map((sponsor) => {
+    const res = SponsorInfo.data?.hackathonSponsors.map((sponsor) => {
+      let submission = 0;
+      const projects: projectDataType[] = [];
+      SponsorInfo.data?.projectJoinHackathon.forEach((project) => {
+        const t = project.tracks as { value: number; label: string }[];
+        t.forEach((track) => {
+          if (track.label === sponsor.name) {
+            projects.push({
+              contributions: 0,
+              index: projects.length + 1,
+              owner: project.project.owner.username || "",
+              project: {
+                id: project.projectId,
+                name: project.project.name,
+                image: project.project.logo,
+              },
+              status: "PENDING",
+              voters: 0,
+            });
+            submission++;
+          }
+        });
+      });
       return {
         track: sponsor.name,
-        prizePool: sponsor?.prize.map(
-          (prize: { value: number; unit: string }) => {
-            return `${prize.value} ${prize.unit}`;
-          }
-        ),
-        // these are random numbers @dhruv fix this also
-        submissions: Math.floor(Math.random() * 100),
-        contributions: Math.floor(Math.random() * 100),
+        prizePool:
+          (sponsor?.prize as any[]).map(
+            (prize: { value: number; unit: string }) => {
+              return `${prize.value} ${prize.unit}`;
+            }
+          ) || [],
+        submissions: submission,
+        contributions: 100,
         prizeBreakdown: sponsor.prizeBreakdown,
+        projects: projects,
       };
     });
-  }, []);
+    return res;
+  }, [SponsorInfo.data]);
   const columns = useMemo(
     () => [
       {
@@ -598,7 +600,7 @@ const HackathonSponsorsView = () => {
   );
 
   const tableInstance = useReactTable({
-    data: data,
+    data: data || [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -626,7 +628,7 @@ const HackathonSponsorsView = () => {
                 ></Th>
                 {headerGroup.headers.map((header, index) => (
                   <Th
-                  key={index}
+                    key={index}
                     p="16px"
                     fontWeight="600"
                     fontSize={{ base: "12px", md: "14px" }}
@@ -704,6 +706,9 @@ const HackathonSponsorsView = () => {
                         //@ts-ignore
                         prizeBreakdown={row.original.prizeBreakdown}
                         trackName={row.original.track}
+                        innerTableData={
+                          row.original.projects as projectDataType[]
+                        }
                       />
                     </Td>
                     <Td w="3rem" bg={"#080808"}></Td>

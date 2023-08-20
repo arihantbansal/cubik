@@ -37,3 +37,5 @@ const config = {
     ignoreBuildErrors: true,
   },
 };
+
+export default config;
