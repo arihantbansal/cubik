@@ -62,15 +62,15 @@ const SelectQuadraticEvent = () => {
           right="auto"
           bottom="auto"
         >
-          <Image
+          {/* <Image
             src="/icons/chevron/down.svg"
             alt="Solana"
             width={"100"}
             height={"100"}
-          />
+          /> */}
         </Center>
       </HStack>
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {isOpen && (
           <Portal>
             <MotionBox
@@ -116,7 +116,7 @@ const SelectQuadraticEvent = () => {
             </MotionBox>
           </Portal>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </Center>
   );
 };

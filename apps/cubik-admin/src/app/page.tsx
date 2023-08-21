@@ -181,7 +181,7 @@ export default function Home() {
                 fontWeight={"800"}
                 textStyle={{ base: "title1", md: "display5" }}
               >
-                {hackathonOverview.data?.hackathonSponsors}
+                100,000
               </Box>
               <Box
                 color="#ADB8B6"
@@ -366,7 +366,7 @@ export default function Home() {
               borderColor="#141414"
             >
               <GrantAdminDashboardOverview
-                roundEndingDate={new Date("2023-08-21T23:59:16.000Z")}
+                roundEndingDate={new Date("2023-08-22T07:00:16.000Z")}
                 roundStartingDate={new Date("2023-08-02T23:59:16.000Z")}
               />
             </Center>
