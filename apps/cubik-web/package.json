@@ -46,6 +46,7 @@
     "cookies-next": "^2.1.2",
     "cubik-main": "^0.0.6",
     "date-fns": "^2.30.0",
+    "dayjs": "^1.11.9",
     "framer-motion": "^10.3.2",
     "html-react-parser": "^3.0.12",
     "next": "^13.4.16",

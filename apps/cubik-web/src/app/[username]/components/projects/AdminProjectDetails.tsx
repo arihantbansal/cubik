@@ -57,25 +57,25 @@ export const AdminProjectDetails = ({
           outline="none"
           border="none"
         >
-          <MenuItem
+          <Link href={"/project/" + id} isExternal>
+            <MenuItem
 
-          // icon={<VscPreview size={22} />}
-          >
-            <Link href={"/project/" + id} isExternal>
+            // icon={<VscPreview size={22} />}
+            >
               <Box as="p" textStyle={"body3"}>
                 Preview
               </Box>
-            </Link>
-          </MenuItem>
-          <MenuItem
-          //   icon={<AiOutlineEdit size={22} />}
-          >
-            <Link href={"/edit/project/" + id}>
+            </MenuItem>
+          </Link>
+          <Link href={"/edit/project/" + id}>
+            <MenuItem
+            //   icon={<AiOutlineEdit size={22} />}
+            >
               <Box as="p" textStyle={"body3"}>
                 Edit
               </Box>
-            </Link>
-          </MenuItem>
+            </MenuItem>
+          </Link>
           <MenuItem
             isDisabled
             //    icon={<BiMessageSquareDots size={22} />}
