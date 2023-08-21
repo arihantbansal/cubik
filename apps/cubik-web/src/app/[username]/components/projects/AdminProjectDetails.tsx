@@ -62,15 +62,8 @@ export const AdminProjectDetails = ({
         />
         <MenuList background={"#242424"} outline="none" border="none">
           <MenuItem
-            isDisabled
-            _hover={{
-              backgroundColor: "#141414",
-            }}
-            _active={{
-              backgroundColor: "#141414",
-            }}
 
-            // icon={<VscPreview size={22} />}
+          // icon={<VscPreview size={22} />}
           >
             <Link href={"/project/" + id} isExternal>
               <Box as="p" textStyle={"body3"}>
@@ -79,12 +72,13 @@ export const AdminProjectDetails = ({
             </Link>
           </MenuItem>
           <MenuItem
-            isDisabled
-            //   icon={<AiOutlineEdit size={22} />}
+          //   icon={<AiOutlineEdit size={22} />}
           >
-            <Box as="p" textStyle={"body3"}>
-              Edit
-            </Box>
+            <Link href={"/edit/project/" + id}>
+              <Box as="p" textStyle={"body3"}>
+                Edit
+              </Box>
+            </Link>
           </MenuItem>
           <MenuItem
             isDisabled
