@@ -14,10 +14,28 @@ export const fetchDetails = async () => {
             team: true,
           },
         },
+        projectJoinHackathon: {
+          include: {
+            project: {
+              include: {
+                team: true,
+              },
+            },
+          },
+        },
       },
     });
 
-    return res?._count || null;
+    let participantsCount = 0;
+
+    res?.projectJoinHackathon.forEach((pj) => {
+      participantsCount += pj.project.team.length;
+    });
+
+    return {
+      ...res?._count,
+      team: participantsCount,
+    };
   } catch (error) {
     console.log(error);
     return null;

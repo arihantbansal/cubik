@@ -63,7 +63,7 @@ const SponsorSubmissionBar = ({ value }: { value: number }) => {
         {value}
       </Text>
       <Progress
-        max={25}
+        max={35}
         value={value}
         size="xs"
         colorScheme="yellow"
@@ -560,7 +560,7 @@ const HackathonSponsorsView = () => {
             }
           ) || [],
         submissions: submission,
-        contributions: 100,
+        contributions: 0,
         prizeBreakdown: sponsor.prizeBreakdown,
         projects: projects,
       };

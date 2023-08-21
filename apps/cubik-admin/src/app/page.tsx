@@ -89,6 +89,7 @@ export default function Home() {
     queryKey: ["hackathonOverview"],
     queryFn: () => fetchDetails(),
   });
+
   return (
     <HomeLayout>
       <VStack
@@ -153,7 +154,7 @@ export default function Home() {
                 as="p"
                 textStyle={{ base: "body6", md: "body5" }}
               >
-                Projects Submitted
+                Submissions
               </Box>
             </VStack>
             <VStack h="full" align="start" spacing={["4px", "6px", "8px"]}>
@@ -163,14 +164,14 @@ export default function Home() {
                 fontWeight={"800"}
                 textStyle={{ base: "title1", md: "display5" }}
               >
-                {hackathonOverview.data?.team || 0}
+                {hackathonOverview.data?.team}
               </Box>
               <Box
                 color="#ADB8B6"
                 as="p"
                 textStyle={{ base: "body6", md: "body5" }}
               >
-                Hackers
+                Builders
               </Box>
             </VStack>
             <VStack h="full" align="start" spacing={["4px", "6px", "8px"]}>
@@ -187,7 +188,7 @@ export default function Home() {
                 as="p"
                 textStyle={{ base: "body6", md: "body5" }}
               >
-                Project Tracks
+                Prize Pool
               </Box>
             </VStack>
           </HStack>
