@@ -151,7 +151,7 @@ export const RoundStartingSoon = ({
 }) => {
   return (
     <>
-      <HStack p="16px" rounded="12px" gap="12px" bg="#31F57910">
+      <HStack w="full" p="16px" rounded="12px" gap="12px" bg="#31F57910">
         <Center p="8px" bg="#071A0F" rounded="full">
           <Player
             autoplay
@@ -161,12 +161,7 @@ export const RoundStartingSoon = ({
           />
         </Center>
         <Box as={"p"} textStyle={"body5"} color="white" textAlign={"start"}>
-          You can donate to the project once{" "}
-          {isHackathon ? "voting" : "grant round"} starts -{" "}
-          <Box as="span" display={"inline-block"}>
-            {CountdownTimer({ date: new Date(startDate) })}
-          </Box>{" "}
-          to go
+          Voting Starts at at 11:59 PM PST
         </Box>
       </HStack>
     </>

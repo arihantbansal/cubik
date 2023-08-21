@@ -6,6 +6,7 @@ import { StatusBanner } from "./StatusBanner";
 import { RoundStatus } from "@/app/components/common/dates/roundStatus";
 import { HackathonCard } from "@/app/hackathons/components/hackathonCard";
 import { formatNumberWithComma } from "@/utils/helpers/formatNumberWithK";
+import dayjs from "dayjs";
 
 // import { FiInfo } from "react-icons/fi";
 // import RoundStatus from "~/components/common/dates/Status";
@@ -281,8 +282,8 @@ const FundingRoundBanner = ({
             <StatusBanner
               isHackathon={event === "hackathon" ? true : false}
               submissionEndDate={submissionEndDate}
-              startDate={startDate}
-              endDate={endDate}
+              startDate={new Date(startDate)}
+              endDate={new Date(endDate)}
             />
             <Stack
               direction={{ base: "column", md: "row" }}

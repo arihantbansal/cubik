@@ -9,6 +9,7 @@ import {
 // import { BiInfoCircle } from "react-icons/bi";
 import Clock from "@/theme/icons/clock.svg";
 import InfoCircle from "@/theme/icons/info_circle.svg";
+import { dayjs } from "@/utils/helpers/dayjs";
 
 const random = () => Math.floor(Math.random() * 10);
 
@@ -89,7 +90,7 @@ export const StatusBanner = ({
           textStyle={{ base: "body6", md: "body5" }}
         >
           {isFuture(submissionEndDate as Date)
-            ? "Submissions Ending" + ` in ${daysToSubmissionEnd}`
+            ? "Submissions Ending" + ` at 11:59 PM PST`
             : "Contributions Period ending" + ` in ${daysToEnd}`}
         </Box>
       </HStack>
