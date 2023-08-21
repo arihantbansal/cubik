@@ -532,24 +532,26 @@ const HackathonSponsorsView = () => {
       let submission = 0;
       const projects: projectDataType[] = [];
       SponsorInfo.data?.projectJoinHackathon.forEach((project) => {
-        const t = project.tracks as { value: number; label: string }[];
-        t.forEach((track) => {
-          if (track.label === sponsor.name) {
-            projects.push({
-              contributions: 0,
-              index: projects.length + 1,
-              owner: project.project.owner.username || "",
-              project: {
-                id: project.projectId,
-                name: project.project.name,
-                image: project.project.logo,
-              },
-              status: "PENDING",
-              voters: 0,
-            });
-            submission++;
-          }
-        });
+        const t = (project.tracks as { value: number; label: string }[]) || [];
+        if (t && t.length > 0) {
+          t?.forEach((track) => {
+            if (track.label === sponsor.name) {
+              projects.push({
+                contributions: 0,
+                index: projects.length + 1,
+                owner: project.project.owner.username || "",
+                project: {
+                  id: project.projectId,
+                  name: project.project.name,
+                  image: project.project.logo,
+                },
+                status: "PENDING",
+                voters: 0,
+              });
+              submission++;
+            }
+          });
+        }
       });
       return {
         track: sponsor.name,
