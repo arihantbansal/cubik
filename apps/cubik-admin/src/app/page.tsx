@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { Button, Text } from "@cubik/ui";
 import Image from "next/image";
 import {
   Box,
@@ -21,6 +20,7 @@ import { EventStatus } from "@/components/EventStatus";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import HackathonSponsorsView from "@/components/Hackathon/Sponsors/SponsorsView";
 import { HomeLayout } from "@/layouts/HomeLayout";
+import HackathonProjectsView from "@/components/Hackathon/Projects/HackathonProjectsView";
 
 export const metadata: Metadata = {
   title: "Cubik - Dashboard",
@@ -393,7 +393,7 @@ export default function Home() {
               Hackathon Participants
             </Box>
           </HStack>
-          <Tabs w="full" variant="unstyled" position={"relative"}>
+          <Tabs isLazy={true} w="full" variant="unstyled" position={"relative"}>
             <HStack pb="1rem" w="full" justify="space-between">
               <TabList
                 gap={{ base: "4px", sm: "8px", md: "14px" }}
@@ -460,7 +460,9 @@ export default function Home() {
               <TabPanel p="0">
                 <HackathonSponsorsView />
               </TabPanel>
-              <TabPanel p="0"></TabPanel>
+              <TabPanel p="0">
+                <HackathonProjectsView />
+              </TabPanel>
               <TabPanel p="0"></TabPanel>
             </TabPanels>
           </Tabs>

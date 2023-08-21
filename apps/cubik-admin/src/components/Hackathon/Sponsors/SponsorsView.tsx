@@ -4,26 +4,19 @@ import {
   Center,
   VStack,
   Progress,
-  Tag,
   Avatar,
   Table as ChakraTable,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  Spinner,
   Skeleton,
   TableContainer,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
   HStack,
   Text,
   Modal,
@@ -35,7 +28,6 @@ import {
   ModalCloseButton,
   Button,
   useDisclosure,
-  Stack,
   Select,
   Link,
 } from "@/utils/chakra";
@@ -43,12 +35,11 @@ import {
   useReactTable,
   getCoreRowModel,
   flexRender,
-  RowModel,
-  Table,
+  getSortedRowModel,
+  SortingState,
 } from "@tanstack/react-table";
 import Image from "next/image";
-import { sponsorsData } from "./sponsors";
-import { useMemo, useState, Fragment, useEffect } from "react";
+import { useMemo, useState, Fragment } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSponsors } from "./data";
 
@@ -72,6 +63,7 @@ const SponsorSubmissionBar = ({ value }: { value: number }) => {
         {value}
       </Text>
       <Progress
+        max={25}
         value={value}
         size="xs"
         colorScheme="yellow"
@@ -104,7 +96,7 @@ const ProjectStatusModal = ({
   function getValues(arg0: string): import("react").ReactNode {
     throw new Error("Function not implemented.");
   }
-  console.log("prize breakdown - ", prizeBreakdown);
+
   return (
     <>
       <HStack>
@@ -121,7 +113,7 @@ const ProjectStatusModal = ({
         >
           {status}
         </Box>
-        <Center
+        {/* <Center
           onClick={onOpen}
           width={{ base: "16px", sm: "18px", md: "20px" }}
           height={{ base: "16px", sm: "18px", md: "20px" }}
@@ -136,9 +128,9 @@ const ProjectStatusModal = ({
             width={"100"}
             height={"100"}
           />
-        </Center>
+        </Center> */}
       </HStack>
-      <Modal id={projectId} variant="cubik" isOpen={isOpen} onClose={onClose}>
+      {/* <Modal id={projectId} variant="cubik" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Select Winners</ModalHeader>
@@ -223,7 +215,7 @@ const ProjectStatusModal = ({
                       outline: "none",
                     }}
                   >
-                    {prizeBreakdown.map((prize, index) => (
+                    {prizeBreakdown?.map((prize, index) => (
                       <option key={index} value={prize.value}>
                         {" "}
                         {prize.title}
@@ -248,7 +240,7 @@ const ProjectStatusModal = ({
             </Button>
           </ModalFooter>
         </ModalContent>
-      </Modal>
+      </Modal> */}
     </>
   );
 };
@@ -286,19 +278,19 @@ const ProjectDetailsMenu = ({
         gap="12px"
         color="white"
       >
-          <Link
-            isExternal
-            href={
-              "https://cubik.so/project/" +
-              projectId +
-              "/" +
-              "8e23ade0-0dae-4c4b-83aa-67867749029c"
-            }
-          >
-              <MenuItem p="12px 16px" backgroundColor="neutral.3" rounded="lg">
+        <Link
+          isExternal
+          href={
+            "https://cubik.so/project/" +
+            projectId +
+            "/" +
+            "8e23ade0-0dae-4c4b-83aa-67867749029c"
+          }
+        >
+          <MenuItem p="12px 16px" backgroundColor="neutral.3" rounded="lg">
             View Project
-        </MenuItem>
-          </Link>
+          </MenuItem>
+        </Link>
         <Link isExternal href={"https://cubik.so/" + ownerName}>
           <MenuItem p="12px 16px" backgroundColor="neutral.3" rounded="lg">
             Visit Profile
@@ -521,6 +513,7 @@ const InnerTable = ({
 
 const HackathonSponsorsView = () => {
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   const toggleRowExpanded = (rowId: string) => {
     setExpandedRows((prev) => ({
@@ -572,8 +565,9 @@ const HackathonSponsorsView = () => {
         projects: projects,
       };
     });
-    return res;
+    return res?.sort((a, b) => b.submissions - a.submissions);
   }, [SponsorInfo.data]);
+
   const columns = useMemo(
     () => [
       {
@@ -603,9 +597,12 @@ const HackathonSponsorsView = () => {
     data: data || [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
+    state: {
+      sorting: sorting,
+    },
   });
-
-  if (sponsorsData.length === 0) return <EmptyState />;
 
   return (
     <div>
@@ -626,7 +623,7 @@ const HackathonSponsorsView = () => {
                   fontSize={{ base: "12px", md: "14px" }}
                   textTransform={"capitalize"}
                 ></Th>
-                {headerGroup.headers.map((header, index) => (
+                {headerGroup.headers?.map((header, index) => (
                   <Th
                     key={index}
                     p="16px"
@@ -634,11 +631,17 @@ const HackathonSponsorsView = () => {
                     fontSize={{ base: "12px", md: "14px" }}
                     textTransform={"capitalize"}
                     id={header.id}
+                    cursor={"pointer"}
+                    onClick={() => header.column.getToggleSortingHandler()}
                   >
                     {flexRender(
                       header.column.columnDef.header,
                       header.getContext()
                     )}
+                    {{
+                      asc: "🔼",
+                      desc: "🔽",
+                    }[header.column.getIsSorted() as string] ?? null}
                   </Th>
                 ))}
               </Tr>

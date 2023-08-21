@@ -3,6 +3,7 @@ import { Avatar, Box, Button, Center, Stack, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 import { ProjectCommonType } from "./type";
+import { getDomain } from "@/utils/helpers/getDomain";
 
 interface Props {
   project: ProjectCommonType;
@@ -30,6 +31,7 @@ export const VisitorViewCardHeader = (props: Props) => {
           <Avatar
             src={props.project.logo}
             name={props.project.name}
+            borderRadius={"8px"}
             width={{ base: "42px", sm: "48px", md: "52px" }}
             height={{ base: "42px", sm: "48px", md: "52px" }}
           />
@@ -48,11 +50,11 @@ export const VisitorViewCardHeader = (props: Props) => {
             >
               {props.project.name}
             </Box>
-
-            <GetFormattedLink
-              isLoading={false}
-              link={props?.project.projectLink}
-            />
+            <Center color="neutral.8">
+              <Box as="p" textStyle={{ base: "title6", md: "title5" }}>
+                {getDomain(props?.project.projectLink)}
+              </Box>
+            </Center>
           </VStack>
         </Stack>
         <Center w="full" justifyContent={"end"}>

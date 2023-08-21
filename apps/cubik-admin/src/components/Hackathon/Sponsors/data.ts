@@ -27,3 +27,23 @@ export const fetchSponsors = async () => {
     return null;
   }
 };
+export const fetchProjects = async () => {
+  try {
+    const res = await prisma.projectJoinHackathon.findMany({
+      where: {
+        hackathonId: "8e23ade0-0dae-4c4b-83aa-67867749029c",
+      },
+      include: {
+        project: {
+          include: {
+            owner: true,
+          },
+        },
+      },
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

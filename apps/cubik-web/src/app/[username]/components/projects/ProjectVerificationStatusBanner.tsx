@@ -1,5 +1,7 @@
-import { Box, Flex, HStack, Link } from "@/utils/chakra";
+import { Box, Center, Flex, HStack, Link } from "@/utils/chakra";
 import { ProjectVerifyStatus } from "@cubik/database";
+import FileSearch from "@/theme/icons/file_search.svg";
+import Spinner from "@/theme/icons/spinner.svg";
 
 export const ProjectVerificationStatusBanner = ({
   status,
@@ -25,11 +27,17 @@ export const ProjectVerificationStatusBanner = ({
           boxShadow="0px 4px 20px rgba(0, 0, 0, 0.4)"
         >
           <HStack w="fit-content" rounded="full" p="6px 10px" bg="#110F0A">
-            <Box
+            {/* <Box
               //   as={TbListSearch}
               color="#FFE747"
               boxSize={["10px", "12px", "13px", "14px"]}
-            />
+            /> */}
+            <Center
+              width={["10px", "12px", "13px", "14px"]}
+              height={["10px", "12px", "13px", "14px"]}
+            >
+              <Spinner color="#FFE74790" />
+            </Center>
             <Box
               as="p"
               noOfLines={1}
