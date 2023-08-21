@@ -1,3 +1,4 @@
+"use client";
 import { Metadata } from "next";
 import Image from "next/image";
 import {
@@ -21,10 +22,8 @@ import { CountdownTimer } from "@/components/CountdownTimer";
 import HackathonSponsorsView from "@/components/Hackathon/Sponsors/SponsorsView";
 import { HomeLayout } from "@/layouts/HomeLayout";
 import HackathonProjectsView from "@/components/Hackathon/Projects/HackathonProjectsView";
-
-export const metadata: Metadata = {
-  title: "Cubik - Dashboard",
-};
+import { useQuery } from "@tanstack/react-query";
+import { fetchDetails } from "./fetch";
 
 const generateFakeData = (dates: Date[]): [number, number][] => {
   return dates.map((date) => {
@@ -86,6 +85,10 @@ const GrantAdminDashboardOverview = ({
 };
 
 export default function Home() {
+  const hackathonOverview = useQuery({
+    queryKey: ["hackathonOverview"],
+    queryFn: () => fetchDetails(),
+  });
   return (
     <HomeLayout>
       <VStack
@@ -143,7 +146,7 @@ export default function Home() {
                 fontWeight={"800"}
                 textStyle={{ base: "title1", md: "display5" }}
               >
-                0
+                {hackathonOverview.data?.projectJoinHackathon}
               </Box>
               <Box
                 color="#ADB8B6"
@@ -160,7 +163,7 @@ export default function Home() {
                 fontWeight={"800"}
                 textStyle={{ base: "title1", md: "display5" }}
               >
-                0
+                {hackathonOverview.data?.team || 0}
               </Box>
               <Box
                 color="#ADB8B6"
@@ -177,7 +180,7 @@ export default function Home() {
                 fontWeight={"800"}
                 textStyle={{ base: "title1", md: "display5" }}
               >
-                0
+                {hackathonOverview.data?.hackathonSponsors}
               </Box>
               <Box
                 color="#ADB8B6"
@@ -362,8 +365,8 @@ export default function Home() {
               borderColor="#141414"
             >
               <GrantAdminDashboardOverview
-                roundEndingDate={new Date(2023, 9, 2)}
-                roundStartingDate={new Date(2023, 0, 1)}
+                roundEndingDate={new Date("2023-08-21T23:59:16.000Z")}
+                roundStartingDate={new Date("2023-08-02T23:59:16.000Z")}
               />
             </Center>
           </Wrap>
