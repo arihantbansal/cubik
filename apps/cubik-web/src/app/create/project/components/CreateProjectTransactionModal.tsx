@@ -71,7 +71,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
       return setTransactionError("Something went wrong. Invalid user data");
     }
     try {
-      const count = Math.floor(100000 + Math.random() * 900000);
+      const count = Math.floor(1000 + Math.random() * 9000);
       const {
         ix: vaultIx,
         key,
