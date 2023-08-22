@@ -74,7 +74,17 @@ export const TrackFilter = ({ setProjects, _projects, tracks }: Props) => {
       >
         <option value="all">All</option>
         {tracks.map((track) => {
-          return <option value={track}>{track}</option>;
+          return (
+            <option
+              style={{
+                background: "white !important",
+                color: "black !important",
+              }}
+              value={track}
+            >
+              {track}
+            </option>
+          );
         })}
       </Select>
     </VStack>
