@@ -63,7 +63,7 @@ const SponsorSubmissionBar = ({ value }: { value: number }) => {
         {value}
       </Text>
       <Progress
-        max={35}
+        max={50}
         value={value}
         size="xs"
         colorScheme="yellow"
