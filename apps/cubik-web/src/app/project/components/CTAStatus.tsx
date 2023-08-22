@@ -161,7 +161,7 @@ export const RoundStartingSoon = ({
           />
         </Center>
         <Box as={"p"} textStyle={"body5"} color="white" textAlign={"start"}>
-          Voting Starts at at 11:59 PM PST
+          Voting Starts at 22 August 11:59 PM PST
         </Box>
       </HStack>
     </>
