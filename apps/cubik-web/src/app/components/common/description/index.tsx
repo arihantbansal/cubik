@@ -49,6 +49,7 @@ export const DetailedDescription = ({
       const { children } = props;
       return (
         <Text
+          py="6px"
           fontSize={{ base: "14px", md: "16px" }}
           lineHeight={{ base: "22px", md: "24px" }}
           fontWeight="400"

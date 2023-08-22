@@ -69,16 +69,27 @@ export const TrackFilter = ({ setProjects, _projects, tracks }: Props) => {
           color: "#75757580",
         }}
         onChange={(e) => handleChange(e.target.value)}
-        placeholder="Select option"
         defaultValue={"all"}
       >
-        <option value="all">All</option>
+        <option
+          value="all"
+          style={{
+            background: "white !important",
+            color: "black !important",
+            border: "none !important",
+            outline: "none !important",
+          }}
+        >
+          Select Track
+        </option>
         {tracks.map((track) => {
           return (
             <option
               style={{
                 background: "white !important",
                 color: "black !important",
+                border: "none !important",
+                outline: "none !important",
               }}
               value={track}
             >

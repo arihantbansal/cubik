@@ -30,6 +30,7 @@ const config = {
       "res.cloudinary.com",
       "source.boringavatars.com",
       "uploadthing.com",
+      "media.discordapp.net",
     ],
   },
   typescript: {

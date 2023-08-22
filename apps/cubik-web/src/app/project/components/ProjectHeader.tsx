@@ -55,7 +55,7 @@ export const ProjectHeader = ({
         alignItems={"center"}
       >
         <Avatar
-          backgroundColor={"#1C1C1C"}
+          backgroundColor={"transparent"}
           src={logo}
           name={name}
           borderRadius="10px"
@@ -135,6 +135,7 @@ export const ProjectHeader = ({
           </Stack>
           <Box
             as="p"
+            maxW={{ base: "100%", md: "85%" }}
             textStyle={{ base: "body4", md: "body2" }}
             color="neutral.9"
             noOfLines={2}
