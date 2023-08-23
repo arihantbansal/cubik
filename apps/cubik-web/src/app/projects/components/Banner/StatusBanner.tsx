@@ -89,9 +89,9 @@ export const StatusBanner = ({
           color="neutral.11"
           textStyle={{ base: "body6", md: "body5" }}
         >
-          {isFuture(submissionEndDate as Date)
-            ? "Submissions Ending" + ` at 11:59 PM PST`
-            : "Voting Period starting" + ` in 22 August 11:59 PST`}
+          {!isFuture(submissionEndDate as Date)
+            ? "Submissions Ending" + ` at 07:30 AM PST`
+            : "Contributions Period ending" + ` in ${daysToEnd}`}
         </Box>
       </HStack>
     );

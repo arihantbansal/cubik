@@ -1,5 +1,5 @@
 import { Box, Container, Stack } from "@/utils/chakra";
-import { prisma } from "@cubik/database";
+import { User, prisma } from "@cubik/database";
 import React from "react";
 import { ProjectHeader } from "../components/ProjectHeader";
 
@@ -18,9 +18,9 @@ interface ProjectReturnType {
   logo: string;
   projectLink: string;
   createdAt: Date;
-  owner: {
-    username: string;
-  };
+  owner: User;
+  projectUserCount: number;
+  mutliSigAddress: string;
   projectJoinRound?: {
     round: {
       endTime: Date;
@@ -49,7 +49,6 @@ const fetchProject = async (
         where: {
           id: id,
         },
-
         select: {
           id: true,
           name: true,
@@ -59,6 +58,8 @@ const fetchProject = async (
           projectLink: true,
           createdAt: true,
           owner: true,
+          projectUserCount: true,
+          mutliSigAddress: true,
           projectJoinHackathon: {
             where: {
               hackathonId: eventId,
@@ -172,6 +173,9 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
             />
           )} */}
           <ProjectHeader
+            multiSig={project.mutliSigAddress}
+            projectId={project.id}
+            userCount={project.projectUserCount}
             endTime={
               project.projectJoinHackathon
                 ? (project.projectJoinHackathon[0]?.hackathon
@@ -192,7 +196,7 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
             name={project.name}
             shortDescription={project.shortDescription}
             key={project.id}
-            owner={project.owner}
+            owner={project.owner.mainWallet}
           />
           {children}
         </Stack>

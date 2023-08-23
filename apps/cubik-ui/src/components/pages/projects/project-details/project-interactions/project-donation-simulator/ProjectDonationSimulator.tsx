@@ -28,8 +28,7 @@ import { TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token
 import {
   AmountReceivedPopover,
   CubikMatchingPoolDonationPopover,
-} from '~/components/common/popovers/InfoPopover';
-import { ProjectsModel } from '@cubik/database';
+} from "~/components/common/popovers/InfoPopover";
 import {
   AddressLookupTableAccount,
   LAMPORTS_PER_SOL,
@@ -50,7 +49,7 @@ import { AmountInput } from './form/DonationAmountInput';
 import { env } from '~/env.mjs';
 
 type ProjectDonationSimulatorProps = {
-  projectDetails: ProjectsModel;
+  projectDetails: ;
   height: number;
   width: number;
   setDonationSuccessful?: any;

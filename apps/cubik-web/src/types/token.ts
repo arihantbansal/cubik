@@ -1,8 +1,11 @@
 export type TokenInfo = {
-  tokenAccount: string;
+  tokenAccount?: string;
   mint: string;
   amount: number;
+  symbol: string;
   decimals: number;
+  address?: string;
+  name?: string;
 };
 
 export type TokenPriceResponse = {
