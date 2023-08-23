@@ -656,6 +656,9 @@ importers:
       '@sqds/sdk':
         specifier: ^2.0.4
         version: 2.0.4
+      '@supabase/supabase-js':
+        specifier: ^2.24.0
+        version: 2.24.0
       '@t3-oss/env-nextjs':
         specifier: ^0.3.1
         version: 0.3.1(typescript@4.9.5)(zod@3.21.4)

@@ -39,11 +39,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(null);
         return;
       }
-      if (publicKey!.toString() !== user.mainWallet) {
-        disconnect();
-        setUser(null);
-        return;
-      }
     }
   }, [publicKey, user]);
 

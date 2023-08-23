@@ -2,16 +2,16 @@ import {
   createClient,
   SupabaseClient,
   UserResponse,
-} from '@supabase/supabase-js';
-import { useEffect, useState } from 'react';
-import { env } from '~/env.mjs';
+} from "@supabase/supabase-js";
+import { useEffect, useState } from "react";
+import { env } from "@/env.mjs";
 
 export const supabase = createClient(
   env.NEXT_PUBLIC_SUPABASE_URL,
   env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
-const useUser = (client: SupabaseClient) => {
+const useUserSupabase = (client: SupabaseClient) => {
   const [user, setUser] = useState<UserResponse | null>(null);
   const [loading, setIsLoading] = useState<boolean>(true);
   const fetchUser = async () => {
@@ -25,9 +25,9 @@ const useUser = (client: SupabaseClient) => {
   useEffect(() => {
     client.auth.onAuthStateChange((event) => {
       fetchUser();
-      event === 'SIGNED_IN'
+      event === "SIGNED_IN"
         ? setUser(user)
-        : event === 'SIGNED_OUT'
+        : event === "SIGNED_OUT"
         ? setUser(null)
         : null;
 
@@ -38,4 +38,4 @@ const useUser = (client: SupabaseClient) => {
   return { user, loading };
 };
 
-export { useUser };
+export { useUserSupabase };

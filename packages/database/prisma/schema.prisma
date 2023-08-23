@@ -45,11 +45,9 @@ model Proof {
   isActive  Boolean   @default(true)
   isArchive Boolean   @default(false)
   user      User      @relation(fields: [userId], references: [id])
-  project   Project   @relation(fields: [projectId], references: [id])
-  projectId String
+
 
   @@index([userId])
-  @@index([projectId])
 }
 
 model Session {
@@ -94,7 +92,6 @@ model Project {
   contribution         Contribution[]
   team                 Team[]
   projectJoinHackathon ProjectJoinHackathon[]
-  proof                Proof[]
 
   @@index([ownerPublickey])
 }

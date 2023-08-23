@@ -2,6 +2,7 @@ import { Flex, Tab, TabList, TabPanel, TabPanels, Tabs } from "@/utils/chakra";
 import ContributionPage from "./components/contributions/contributionTab";
 import { ProjectsTab } from "./components/projects/ProjectsTab";
 import { UserDetails } from "./components/user/UserDetails";
+import { UserProof } from "./components/user/userProof";
 
 interface Props {
   params: { username: string };
@@ -19,7 +20,7 @@ const Details = ({ params: { username } }: Props) => {
           <TabPanel p="0">
             <Flex maxW={"full"} p="0" flexDir="column" gap="40px">
               <UserDetails username={username} />
-              {/* <UserDetails isLoading={isLoading} userId={user?.id as string} /> */}
+              <UserProof username={username} />
             </Flex>
           </TabPanel>
           <TabPanel>
