@@ -2,9 +2,7 @@
 import { ProofType, prisma } from "@cubik/database";
 
 interface Data {
-  proofInfo: {
-    username: string;
-  };
+  proofInfo: any;
   proofType: ProofType;
   userId: string;
 }
@@ -38,6 +36,33 @@ export const getUser = async (id: string) => {
     const res = await prisma.user.findUnique({
       where: {
         id: id,
+      },
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const createProofSuperteam = async (data: Data) => {
+  try {
+    const res = await prisma.proof.create({
+      data: {
+        ...data,
+      },
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+export const createProofCubikGrantee = async (data: Data) => {
+  try {
+    const res = await prisma.proof.create({
+      data: {
+        ...data,
       },
     });
     return res;
