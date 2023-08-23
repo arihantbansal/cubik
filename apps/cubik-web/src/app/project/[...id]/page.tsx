@@ -3,7 +3,7 @@ import { ProjectTabs } from "../components/ProjectTabs";
 import { SideBar } from "../components/Sidebar";
 import { Prisma, User, prisma } from "@cubik/database";
 import { Stack } from "@/utils/chakra";
-import type { Metadata, ResolvingMetadata } from "next";
+// import type { Metadata, ResolvingMetadata } from "next";
 
 interface Props {
   params: {
@@ -100,42 +100,42 @@ const ProjectDetails = async (
   }
 };
 
-type OgProps = {
-  params: { id: string }
-  searchParams: { [key: string]: string | string[] | undefined }
-}
+// type OgProps = {
+//   params: { id: string }
+//   searchParams: { [key: string]: string | string[] | undefined }
+// }
 
 
-export async function generateMetadata(
-  { params, searchParams }: OgProps,
-  parent?: ResolvingMetadata
-): Promise<Metadata> {
-  const project = {
-    title: "Cubik",
-  };
+// export async function generateMetadata(
+//   { params, searchParams }: OgProps,
+//   parent?: ResolvingMetadata
+// ): Promise<Metadata> {
+//   const project = {
+//     title: "Cubik",
+//   };
 
-  const projects = await prisma.project.findUnique({
-      where: {
-        id: params.id[0],
-      },
-      select: {
-        name: true,
-        shortDescription: true,
-        logo: true,
-        ogImage: true,
-      },
-    });
+//   const projects = await prisma.project.findUnique({
+//       where: {
+//         id: params.id[0],
+//       },
+//       select: {
+//         name: true,
+//         shortDescription: true,
+//         logo: true,
+//         ogImage: true,
+//       },
+//     });
 
-    const previousImages = (await parent)?.openGraph?.images || []
+//     const previousImages = (await parent)?.openGraph?.images || []
 
-  return {
-    title: projects?.name,
-    description:projects?.shortDescription,
-    openGraph:{
-      images:[`${projects?.ogImage}`, ...previousImages ]
-    }
-  };
-}
+//   return {
+//     title: projects?.name,
+//     description:projects?.shortDescription,
+//     openGraph:{
+//       images:[`${projects?.ogImage}`, ...previousImages ]
+//     }
+//   };
+// }
 
 const ProjectPage = async ({ params: { id } }: Props) => {
   const projectDetails = await ProjectDetails(
