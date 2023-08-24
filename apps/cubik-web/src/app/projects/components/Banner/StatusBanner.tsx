@@ -120,7 +120,7 @@ export const StatusBanner = ({
         >
           {isHackathon ? "Voting" : "Round"}
           {daysToEnd > 1
-            ? `Live - ends in ${daysToEnd} days`
+            ? `Live - ends in ${daysToEnd + 1} days`
             : "Live - ending in a day"}
         </Box>
       </HStack>

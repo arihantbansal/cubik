@@ -5,6 +5,7 @@ import { ContributorRow } from "./ContributionRow";
 import { EmptyStateHOC } from "@/app/components/common/empty-state/EmptyStateHOC";
 import Link from "next/link";
 import { ContributionTable } from "./ContributionTable";
+import { revalidatePath } from "next/cache";
 interface Props {
   id: string;
   eventId?: string;

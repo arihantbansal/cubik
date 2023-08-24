@@ -5,6 +5,7 @@ import { TruncatedAddr } from "@/app/components/common/wallet";
 import { Avatar, Box, Center, HStack, Td, Tr, VStack } from "@/utils/chakra";
 import { formatNumberWithK } from "@/utils/helpers/formatNumberWithK";
 import { timeSince } from "@/utils/helpers/timeSince";
+import { fullTokenList } from "@/utils/helpers/tokenlist";
 import { useRouter } from "next/navigation";
 
 type Props = {
@@ -57,11 +58,12 @@ export const ContributorRow: React.FC<Props> = (props) => {
       <Td p="18px">
         <HStack gap="8px" align={"center"}>
           <Center>
-            {props.token.includes("sol") ? (
-              <SOL size={"28px"} />
-            ) : (
-              <USDC size={"28px"} />
-            )}
+            {fullTokenList.find(
+              (e) => e.name.includes("Solana") && e.address === props.token
+            ) && <SOL size={"32px"} />}
+            {fullTokenList.find(
+              (e) => e.name.includes("USDC") && e.address === props.token
+            ) && <USDC size={"32px"} />}
           </Center>
           <VStack justify={"center"} spacing="2px" align={"start"}>
             <HStack align={"baseline"} color="white">
@@ -69,7 +71,7 @@ export const ContributorRow: React.FC<Props> = (props) => {
                 {formatNumberWithK(props.amount)}
               </Box>
               <Box as="p" textStyle={{ base: "title6", md: "title7" }}>
-                {props.token.toUpperCase()}
+                {fullTokenList.find((e) => e.address === props.token)?.name}
               </Box>
             </HStack>
 

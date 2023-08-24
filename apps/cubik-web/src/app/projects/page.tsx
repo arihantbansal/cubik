@@ -296,6 +296,22 @@ export const projectExplorer = async () => {
 //   description: `Browse projects and Cubik and support them`,
 // };
 
+export const metadata: Metadata = {
+  title: "Projects - Cubik",
+  description: "Browse projects and Cubik and support them",
+  openGraph: {
+    images: [
+      "https://res.cloudinary.com/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png",
+    ],
+  },
+  twitter: {
+    title: "Cubik",
+    card: "summary_large_image",
+    images: [
+      "https://res.cloudinary.com/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png",
+    ],
+  },
+};
 export default async function () {
   const explorerData = await projectExplorer();
   return (

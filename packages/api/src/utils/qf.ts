@@ -186,13 +186,16 @@ export const qfEstimatedHackathon = (
     projectId: string;
     sum: number;
   }[] = [];
-  const projectMapContributionWithoutEstimate = round.contribution.map(contribution => {
-    return {
-      user: contribution.userId,
-      projectId: contribution.projectId,
-      amount: contribution.usdTotal,
-    };
-  });
+
+  const projectMapContributionWithoutEstimate = round.contribution.map(
+    (contribution) => {
+      return {
+        user: contribution.userId,
+        projectId: contribution.projectId,
+        amount: contribution.usdTotal,
+      };
+    }
+  );
 
   const projectMapContribution: {
     user: string;
@@ -200,29 +203,30 @@ export const qfEstimatedHackathon = (
     amount: number;
   }[] = [];
 
-  [...projectMapContributionWithoutEstimate, { projectId, amount, user }].forEach(
-    (contri, index) => {
-      if (
+  [
+    ...projectMapContributionWithoutEstimate,
+    { projectId, amount, user },
+  ].forEach((contri, index) => {
+    if (
+      projectMapContribution.findIndex(
+        (e) => e.projectId === contri.projectId && e.user === contri.user
+      ) >= 0
+    ) {
+      projectMapContribution[
         projectMapContribution.findIndex(
-          e => e.projectId === contri.projectId && e.user === contri.user,
-        ) >= 0
-      ) {
-        projectMapContribution[
-          projectMapContribution.findIndex(
-            e => e.projectId === contri.projectId && e.user === contri.user,
-          )
-        ].amount += contri.amount;
-      } else {
-        projectMapContribution.push(contri);
-      }
-    },
-  );
+          (e) => e.projectId === contri.projectId && e.user === contri.user
+        )
+      ].amount += contri.amount;
+    } else {
+      projectMapContribution.push(contri);
+    }
+  });
 
-  round.projectJoinHackathon.forEach(projectJoin => {
+  round.projectJoinHackathon.forEach((projectJoin) => {
     let sumAmount = 0;
     projectMapContribution
-      .filter(project => project.projectId === projectJoin.projectId)
-      .forEach(project => {
+      .filter((project) => project.projectId === projectJoin.projectId)
+      .forEach((project) => {
         sumAmount += Math.sqrt(project.amount);
       });
 
@@ -235,15 +239,17 @@ export const qfEstimatedHackathon = (
   });
   let divisor = matchingPool / summed;
 
-  const finalMatch = round.projectJoinHackathon.map(project => {
+  const finalMatch = round.projectJoinHackathon.map((project) => {
     return {
       projectId: project.projectId,
-      amount: arrOfMatch.filter(e => e.projectId === project.projectId)[0].sum * divisor,
+      amount:
+        arrOfMatch.filter((e) => e.projectId === project.projectId)[0].sum *
+        divisor,
     };
   });
 
   return (
-    finalMatch.filter(e => e.projectId === projectId)[0].amount -
-    beforeMatchingPool.filter(e => e.projectId === projectId)[0].amount
+    finalMatch.filter((e) => e.projectId === projectId)[0].amount -
+    beforeMatchingPool.filter((e) => e.projectId === projectId)[0].amount
   );
 };

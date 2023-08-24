@@ -1,4 +1,5 @@
 import LandingPage from "@/app/components/landing-page/landingPage";
+import { Metadata } from "next";
 // import { createAdmin } from "@/utils/contract";
 // import { connection } from "@/utils/contract/sdk";
 // import { Button } from "@chakra-ui/react";
@@ -6,15 +7,22 @@ import LandingPage from "@/app/components/landing-page/landingPage";
 // import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 // import { useAnchorWallet } from "@solana/wallet-adapter-react";
 
-// export const metadata: Metadata = {
-//   title: "Cubik",
-//   description: "Fund Public Goods Through Community Voting On Solana",
-//   openGraph: {
-//     images: [
-//       "https://res.cloudinary.com/demonicirfan/image/upload/v1684179451/cubik%20og.png",
-//     ],
-//   },
-// };
+export const metadata: Metadata = {
+  title: "Cubik",
+  description: "Fund Public Goods Through Community Voting On Solana",
+  openGraph: {
+    images: [
+      "https://res.cloudinary.com/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png",
+    ],
+  },
+  twitter: {
+    title: "Cubik",
+    card: "summary_large_image",
+    images: [
+      "https://res.cloudinary.com/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png",
+    ],
+  },
+};
 
 export default function Home() {
   return (

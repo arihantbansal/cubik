@@ -4,6 +4,7 @@ import React from "react";
 import { HackathonHeader } from "../components/HackathonHeader";
 import { prisma } from "@cubik/database";
 import { HackathonBody } from "../components/HackathonBody";
+import { Metadata } from "next";
 interface Props {
   params: { slug: string };
 }
@@ -15,6 +16,22 @@ const fetchHackathon = async (slug: string) => {
   });
 
   return res;
+};
+export const metadata: Metadata = {
+  title: "Hackathon- Cubik",
+  description: "Browse hackathon and Cubik and support them",
+  openGraph: {
+    images: [
+      "https://res.cloudinary.com/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png",
+    ],
+  },
+  twitter: {
+    title: "Cubik",
+    card: "summary_large_image",
+    images: [
+      "https://res.cloudinary.com/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png",
+    ],
+  },
 };
 const HackathonPage = async ({ params: { slug } }: Props) => {
   const hackathon = await fetchHackathon(slug);

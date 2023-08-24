@@ -7,13 +7,22 @@ interface CreateContributionInput {
   totalUsdAmount: number;
   tx: string;
   isIncluded: boolean;
-  projectJoinHackathonId?: string;
   projectJoinRoundId?: string;
   projectId: string;
   userId: string;
+  hackathonId?: string;
 }
 export const createContribution = async (data: CreateContributionInput) => {
   try {
+    const joinId = await prisma.projectJoinHackathon.findFirst({
+      where: {
+        projectId: data.projectId,
+        hackathonId: data.hackathonId,
+      },
+      select: {
+        id: true,
+      },
+    });
     const res = await prisma.contribution.create({
       data: {
         split: 0,
@@ -22,10 +31,11 @@ export const createContribution = async (data: CreateContributionInput) => {
         totalUsdAmount: data.totalUsdAmount,
         tx: data.tx,
         isIncluded: data.isIncluded,
-        projectJoinHackathonId: data.projectJoinHackathonId,
+        projectJoinHackathonId: joinId?.id,
         projectJoinRoundId: data.projectJoinRoundId,
         projectId: data.projectId,
         userId: data.userId,
+        hackathonId: data.hackathonId,
       },
     });
     return res;

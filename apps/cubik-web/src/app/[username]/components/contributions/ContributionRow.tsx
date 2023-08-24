@@ -15,7 +15,7 @@ import { formatNumberWithK } from "@/utils/helpers/formatWithK";
 import React from "react";
 //import { BiChevronRight } from "react-icons/bi";
 import { timeSince } from "@/utils/helpers/timeSince";
-import { tokenList } from "@/utils/helpers/tokenlist";
+import { fullTokenList } from "@/utils/helpers/tokenlist";
 import { Image } from "@chakra-ui/next-js";
 
 interface Props {
@@ -118,10 +118,10 @@ export const ContributionRow = ({
             opacity={isLoading ? 0.5 : 1}
           >
             <Center>
-              {tokenList.find(
+              {fullTokenList.find(
                 (e) => e.name.includes("Solana") && e.address === token
               ) && <SOL size={"32px"} />}
-              {tokenList.find(
+              {fullTokenList.find(
                 (e) => e.name.includes("USDC") && e.address === token
               ) && <USDC size={"32px"} />}
             </Center>
@@ -138,7 +138,9 @@ export const ContributionRow = ({
                 </Box>
               </Skeleton>
               <Box as="p" textStyle={{ base: "title8", md: "title7" }}>
-                {tokenList.find((e) => e.address === token)?.name.toUpperCase()}
+                {fullTokenList
+                  .find((e) => e.address === token)
+                  ?.name.toUpperCase()}
               </Box>
             </HStack>
             <Skeleton

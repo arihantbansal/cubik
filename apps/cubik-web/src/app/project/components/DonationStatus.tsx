@@ -65,14 +65,15 @@ export const DonationStatus = (props: Props) => {
 
   if (props.hackathonId && props.hackathonJoinId) {
     // hackathon is starting soon
-    if (isFuture(props.startTime)) {
-      return (
-        <RoundStartingSoon isHackathon={true} startDate={props.startTime} />
-      );
-    }
+
+    // if (isFuture(props.startTime)) {
+    //   return (
+    //     <RoundStartingSoon isHackathon={true} startDate={props.startTime} />
+    //   );
+    // }
 
     // round is live
-    if (isPast(props.startTime) && isFuture(props.endTime)) {
+    if (!isPast(props.startTime) && isFuture(props.endTime)) {
       // when no user is connected
       if (!user) {
         return (

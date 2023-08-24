@@ -16,6 +16,24 @@ import React from "react";
 import { prisma } from "@cubik/database";
 import { HackathonCard } from "./components/hackathonCard";
 import { EmptyStateHOC } from "../components/common/empty-state/EmptyStateHOC";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Projects - Cubik",
+  description: "Browse projects and Cubik and support them",
+  openGraph: {
+    images: [
+      "https://res.cloudinary.com/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png",
+    ],
+  },
+  twitter: {
+    title: "Cubik",
+    card: "summary_large_image",
+    images: [
+      "https://res.cloudinary.com/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png",
+    ],
+  },
+};
 
 export const FutureHackathon = async () => {
   const future = await prisma.hackathon.findMany({
