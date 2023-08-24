@@ -20,9 +20,7 @@ interface ProjectDetailsReturnType {
   team: {
     user: User;
   }[];
-  _count?: {
-    contribution: number;
-  };
+
   contribution?: {
     totalUsdAmount: number;
   }[];
@@ -60,12 +58,11 @@ const ProjectDetails = async (
               user: true,
             },
           },
-          _count: {
-            select: {
-              contribution: true,
-            },
-          },
+
           contribution: {
+            where: {
+              hackathonId: eventId,
+            },
             select: {
               totalUsdAmount: true,
             },
@@ -192,7 +189,7 @@ const ProjectPage = async ({ params: { id } }: Props) => {
             0
           ) || 0
         }
-        contributors={projectDetails?._count?.contribution || 0}
+        contributors={projectDetails?.contribution?.length || 0}
         funding={projectDetails?.amount || 0}
         team={projectDetails?.team || []}
         discord_link={projectDetails?.discordLink as string}
