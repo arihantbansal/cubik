@@ -34,7 +34,7 @@ import { FailureToast, SuccessToast } from "@/app/components/toasts/Toasts";
 import { EstimateUpdate, checkProofs, updateData } from "./Qf";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export interface DonationFormType {
   amount: number;
@@ -69,6 +69,7 @@ export const ProjectDonationSimulator = ({
   const [txnError, setTxnError] = useState<string | null>(null);
   const { user } = useUser();
   const toast = useToast();
+  const router = useRouter();
   const pathname = usePathname();
   const getBalances = async (address: string) => {
     const { data } = await axios.get(
@@ -100,6 +101,7 @@ export const ProjectDonationSimulator = ({
       //   projectId: projectDetails.id, // check once if the value is right or not for project Id
       // });
       setDonationSuccessful(true);
+      router.refresh();
     },
   });
   const anchorWallet = useAnchorWallet();

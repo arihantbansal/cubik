@@ -41,6 +41,9 @@ const getContributions = async ({
         projectId: id,
         hackathonId: eventId,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
       include: {
         user: true,
       },
