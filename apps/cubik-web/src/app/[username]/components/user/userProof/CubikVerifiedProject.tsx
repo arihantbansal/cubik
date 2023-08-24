@@ -47,6 +47,7 @@ export const CubikVerifiedProject = ({ proofs, username }: Props) => {
           userId: user?.id as string,
         });
         setIsClaimAble(true);
+          playerRef?.current?.play();
         setIsLoading(false);
         onClose();
         router.refresh();

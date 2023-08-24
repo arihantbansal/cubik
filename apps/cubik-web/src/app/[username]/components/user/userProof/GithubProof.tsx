@@ -100,13 +100,12 @@ export const GithubProof = ({ username, proofs }: Props) => {
         });
       }
       playerRef?.current?.play();
-      setTimeout(() => {
-        onClose();
-        SuccessToast({
-          toast,
-          message: "Proof minted successfully",
-        });
-      }, 2000);
+      onClose();
+      SuccessToast({
+        toast,
+        message: "Proof minted successfully",
+      });
+
       // await supabase.auth.signOut();
       localStorage.removeItem("authId");
       localStorage.removeItem("tempUser");

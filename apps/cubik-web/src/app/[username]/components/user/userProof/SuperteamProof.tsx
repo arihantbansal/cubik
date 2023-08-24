@@ -49,7 +49,9 @@ export const SuperteamProof = ({ proofs, username }: Props) => {
           userId: user?.id as string,
         });
         if (ress) {
+
           setIsClaimAble(true);
+          playerRef?.current?.play();
           onClose();
           router.refresh();
         }
