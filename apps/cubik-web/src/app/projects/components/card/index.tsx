@@ -279,19 +279,17 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
                     {project.title}
                   </Box>
                   <Box
-                    display={
-                      project.projectEvent.amount === 0 ? "none" : "block"
-                    }
                     as="p"
                     color="#A8F0E6"
                     textStyle={{ base: "title4", md: "title3" }}
                   >
                     $
-                    {formatNumberWithK(
+                    {/* {formatNumberWithK(
                       (parseInt(
                         project.projectEvent.amount?.toFixed(2) as string
                       ) as number) ?? 0
-                    )}
+                    )} */}
+                    {project.projectEvent.amount}
                   </Box>
                 </HStack>
                 <HStack
@@ -315,9 +313,6 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
                     </Box>
                   </Center>
                   <Box
-                    display={
-                      project.projectEvent.amount === 0 ? "none" : "block"
-                    }
                     color="neutral.8"
                     as="p"
                     textStyle={{ base: "body6", md: "body5" }}

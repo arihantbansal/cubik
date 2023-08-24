@@ -53,7 +53,7 @@ const ProjectsContributorsNumber = ({
               + {contributorsCount}
             </Box>
           ) : (
-            "- -"
+            <></>
           )}
         </Flex>
       ) : (
@@ -62,7 +62,9 @@ const ProjectsContributorsNumber = ({
           color="white"
           textStyle={{ base: "body6", md: "body5" }}
           fontWeight="600"
-        ></Box>
+        >
+          --
+        </Box>
       )}
     </>
   );
