@@ -92,7 +92,7 @@ export const updateData = async (
     projects.forEach((project) => {
       let sumAmount = 0;
       projectMapContribution
-        .filter((project) => project.projectId === project.projectId)
+        .filter((projects) => projects.projectId === project.projectId)
         .forEach((project) => {
           sumAmount += Math.sqrt(project.amount);
         });
@@ -217,7 +217,7 @@ export const EstimateUpdate = async ({
     projects.forEach((project) => {
       let sumAmount = 0;
       projectMapContribution
-        .filter((project) => project.projectId === project.projectId)
+        .filter((projects) => projects.projectId === project.projectId)
         .forEach((project) => {
           sumAmount += Math.sqrt(project.amount);
         });
@@ -248,7 +248,7 @@ export const EstimateUpdate = async ({
       finalMatch.filter((e) => e.projectId === projectId)[0]?.amount!
     )
       ? 0
-      : projects.find((e) => e.projectId === projectId)?.amount! -
+      : finalMatch.filter((e) => e.projectId === projectId)[0]?.amount! -
           projects.find((e) => e.projectId === projectId)?.amount!;
   } catch (error) {
     console.log(error);
