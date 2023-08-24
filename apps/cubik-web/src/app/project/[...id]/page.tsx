@@ -20,6 +20,12 @@ interface ProjectDetailsReturnType {
   team: {
     user: User;
   }[];
+  _count?: {
+    contribution: number;
+  };
+  contribution?: {
+    totalUsdAmount: number;
+  }[];
   projectJoinHackathon?: {
     tracks: Prisma.JsonValue;
     hackathon: {
@@ -54,6 +60,16 @@ const ProjectDetails = async (
               user: true,
             },
           },
+          _count: {
+            select: {
+              contribution: true,
+            },
+          },
+          contribution: {
+            select: {
+              totalUsdAmount: true,
+            },
+          },
           projectJoinHackathon: {
             where: {
               hackathonId: eventId,
@@ -61,7 +77,6 @@ const ProjectDetails = async (
             select: {
               tracks: true,
               amount: true,
-
               hackathon: {
                 select: {
                   name: true,
@@ -171,7 +186,13 @@ const ProjectPage = async ({ params: { id } }: Props) => {
         }
       />
       <SideBar
-        contributors={0}
+        communitycontributions={
+          projectDetails?.contribution?.reduce(
+            (acc, cur) => (acc += cur.totalUsdAmount),
+            0
+          ) || 0
+        }
+        contributors={projectDetails?._count?.contribution || 0}
         funding={projectDetails?.amount || 0}
         team={projectDetails?.team || []}
         discord_link={projectDetails?.discordLink as string}

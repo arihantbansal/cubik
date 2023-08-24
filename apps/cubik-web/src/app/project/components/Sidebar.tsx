@@ -16,6 +16,7 @@ interface Props {
   team: {
     user: User;
   }[];
+  communitycontributions: number;
   tracks: {
     label: string;
     value: string;
@@ -45,8 +46,8 @@ export const SideBar = (props: Props) => {
           <ProjectOwner team={props.team} />
           <ProjectFundingData
             isHackathon={true}
-            communityContributions={0}
-            contributors={0}
+            communityContributions={props.communitycontributions}
+            contributors={props.contributors}
             funding={0}
             rank={0}
           />

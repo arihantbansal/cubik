@@ -33,7 +33,6 @@ import { createContributionV2 } from "@/utils/contract/program";
 import { FailureToast, SuccessToast } from "@/app/components/toasts/Toasts";
 import { EstimateUpdate, checkProofs, updateData } from "./Qf";
 import Link from "next/link";
-import { revalidatePath } from "next/cache";
 import { usePathname, useRouter } from "next/navigation";
 
 export interface DonationFormType {
@@ -145,6 +144,11 @@ export const ProjectDonationSimulator = ({
     ) {
       return setTxnError("Insufficient balance");
     }
+
+    if (balance.native) {
+      return setTxnError("Insufficient balance SOL");
+    }
+
     if (String(_values.token.value).includes("sol")) {
       return;
       // sig = await donateSOL(
