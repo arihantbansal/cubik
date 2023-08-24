@@ -73,7 +73,7 @@ export const DonationStatus = (props: Props) => {
     // }
 
     // round is live
-    if (!isPast(props.startTime) && isFuture(props.endTime)) {
+    if (isPast(props.startTime) && isFuture(props.endTime)) {
       // when no user is connected
       if (!user) {
         return (

@@ -183,10 +183,8 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
                 : (project.projectJoinRound?.round.endTime as Date)
             }
             startTime={
-              project.projectJoinHackathon
-                ? (project.projectJoinHackathon[0]?.hackathon
-                    .votingStartDate as Date)
-                : (project.projectJoinRound?.round.startTime as Date)
+              (project.projectJoinHackathon![0]?.hackathon
+                .votingStartDate as Date) || new Date()
             }
             projectLink={project.projectLink}
             eventId={params.id[2]} // optional
