@@ -88,7 +88,7 @@ export const ProjectDonationSimulator = ({
     },
     onSuccess: async () => {
       SuccessToast({ toast, message: "Donation Successful" });
-      await updateData(eventId as string, "hackathon");
+      // await updateData(eventId as string, "hackathon");
       // updateProjectRaise.mutate({
       //   projectId: projectDetails.id,
       //   projectJoinRoundId: projectJoinRoundId,
