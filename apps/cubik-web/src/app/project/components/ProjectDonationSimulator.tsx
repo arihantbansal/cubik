@@ -81,13 +81,13 @@ export const ProjectDonationSimulator = ({
     mutationFn: createContribution,
     mutationKey: ["createContribution"],
     onError: (error) => {
-      setTxnError("Trpc returned an error");
+      console.log(error);
+      setTxnError("Error");
       FailureToast({ toast, message: "Donation Failed" });
     },
     onSuccess: async () => {
       SuccessToast({ toast, message: "Donation Successful" });
       await updateData(eventId as string, "hackathon");
-      revalidatePath(pathname as string);
       // updateProjectRaise.mutate({
       //   projectId: projectDetails.id,
       //   projectJoinRoundId: projectJoinRoundId,
