@@ -357,7 +357,7 @@ export const ProjectDonationSimulator = ({
                     You Don't have any proof claim and your funds will might not
                     get matched by Cubik Matching Pool{"  "}
                     <Link
-                      href="https://twitter.com/_cubik"
+                      href={`/${user?.username as string}`}
                       target="_blank"
                       style={{ textDecoration: "underline", marginLeft: "5px" }}
                     >
