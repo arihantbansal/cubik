@@ -130,13 +130,19 @@ export async function generateMetadata(
 
   return {
     title: projects?.name,
+    metadataBase: new URL("https://cubik.so"),
     description: projects?.shortDescription,
     openGraph: {
+      type: "website",
       images: [`${projects?.ogImage}`, ...previousImages],
+      title: projects?.name,
+      description: projects?.shortDescription,
     },
     twitter: {
       card: "summary_large_image",
       images: [`${projects?.ogImage}`, ...previousImages],
+      title: projects?.name,
+      description: projects?.shortDescription,
     },
   };
 }

@@ -9,6 +9,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Cubik",
+  metadataBase: new URL("https://cubik.so"),
   description: "Fund Public Goods Through Community Voting On Solana",
   openGraph: {
     images: [

@@ -298,11 +298,15 @@ export const projectExplorer = async () => {
 
 export const metadata: Metadata = {
   title: "Projects - Cubik",
+  metadataBase: new URL("https://cubik.so/projects"),
   description: "Browse projects and Cubik and support them",
   openGraph: {
     images: [
       "https://res.cloudinary.com/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png",
     ],
+    type: "website",
+    title: "Cubik",
+    description: "Browse projects and Cubik and support them",
   },
   twitter: {
     title: "Cubik",
@@ -310,6 +314,7 @@ export const metadata: Metadata = {
     images: [
       "https://res.cloudinary.com/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png",
     ],
+    description: "Browse projects and Cubik and support them",
   },
 };
 export default async function () {
