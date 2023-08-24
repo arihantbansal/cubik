@@ -88,7 +88,7 @@ export const ProjectDonationSimulator = ({
     },
     onSuccess: async () => {
       SuccessToast({ toast, message: "Donation Successful" });
-      // await updateData(eventId as string, "hackathon");
+      await updateData(eventId as string, "hackathon");
       // updateProjectRaise.mutate({
       //   projectId: projectDetails.id,
       //   projectJoinRoundId: projectJoinRoundId,
@@ -101,7 +101,7 @@ export const ProjectDonationSimulator = ({
       //   projectId: projectDetails.id, // check once if the value is right or not for project Id
       // });
       setDonationSuccessful(true);
-      router.refresh();
+      // router.refresh();
     },
   });
   const anchorWallet = useAnchorWallet();
