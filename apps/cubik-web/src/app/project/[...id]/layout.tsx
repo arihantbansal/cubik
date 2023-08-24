@@ -1,5 +1,5 @@
 import { Box, Container, Stack } from "@/utils/chakra";
-import { User, prisma } from "@cubik/database";
+import { Team, User, prisma } from "@cubik/database";
 import React from "react";
 import { ProjectHeader } from "../components/ProjectHeader";
 
@@ -21,6 +21,7 @@ interface ProjectReturnType {
   owner: User;
   projectUserCount: number;
   mutliSigAddress: string;
+  team: Team[];
   projectJoinRound?: {
     round: {
       endTime: Date;
@@ -60,6 +61,7 @@ const fetchProject = async (
           owner: true,
           projectUserCount: true,
           mutliSigAddress: true,
+          team: true,
           projectJoinHackathon: {
             where: {
               hackathonId: eventId,
@@ -173,6 +175,7 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
             />
           )} */}
           <ProjectHeader
+            team={project.team}
             multiSig={project.mutliSigAddress}
             projectId={project.id}
             userCount={project.projectUserCount}

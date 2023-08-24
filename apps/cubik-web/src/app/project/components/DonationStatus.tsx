@@ -5,6 +5,7 @@ import { isFuture, isPast } from "date-fns";
 import React from "react";
 import { RoundEndedBanner, RoundStartingSoon } from "./CTAStatus";
 import { Button } from "@chakra-ui/react";
+import { Team } from "@cubik/database";
 
 interface Props {
   roundId?: string;
@@ -16,6 +17,7 @@ interface Props {
   loading: boolean;
   onDonateHandler: () => void;
   owner: string;
+  team: Team[];
 }
 export const DonationStatus = (props: Props) => {
   const { user } = useUser();
@@ -88,7 +90,10 @@ export const DonationStatus = (props: Props) => {
         );
       }
 
-      if (user?.mainWallet === props.owner) {
+      if (
+        user?.mainWallet === props.owner ||
+        props.team.find((t) => t.userId === user?.id)
+      ) {
         return (
           <Button
             disabled={true}

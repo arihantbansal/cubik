@@ -20,6 +20,7 @@ import { DonationStatus } from "./DonationStatus";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useUser } from "@/app/context/user";
 import { DonationModal } from "./DonationModal";
+import { Team } from "@cubik/database";
 
 interface Props {
   name: string;
@@ -35,6 +36,7 @@ interface Props {
   userCount: number;
   projectId: string;
   multiSig: string;
+  team: Team[];
 }
 export const ProjectHeader = ({
   industry,
@@ -50,6 +52,7 @@ export const ProjectHeader = ({
   userCount,
   projectId,
   multiSig,
+  team,
 }: Props) => {
   const { user } = useUser();
   const { setVisible } = useWalletModal();
@@ -194,6 +197,7 @@ export const ProjectHeader = ({
           >
             <VStack gap="16px" align={"end"} spacing="0" w="full" pb="0.5rem">
               <DonationStatus
+                team={team}
                 loading={false}
                 projectJoinId={type === "round" ? eventId : undefined}
                 roundId={type === "round" ? eventId : undefined}
