@@ -104,23 +104,22 @@ export async function POST(request: NextRequest) {
       };
     });
 
-    // await Promise.all(
-    //   finalMatch.map((e) =>
-    //     prisma.projectJoinHackathon.update({
-    //       where: {
-    //         id: projects.find((e) => e.projectId === e.projectId)?.id!,
-    //       },
-    //       data: {
-    //         amount: e.amount,
-    //       },
-    //     })
-    //   )
-    // );
+    await Promise.all(
+      finalMatch.map((e) =>
+        prisma.projectJoinHackathon.update({
+          where: {
+            id: projects.find((e) => e.projectId === e.projectId)?.id!,
+          },
+          data: {
+            amount: e.amount,
+          },
+        })
+      )
+    );
     return NextResponse.json({
       e: finalMatch,
       res: res,
     });
-    return finalMatch;
   } catch (error) {
     console.log(error);
   }

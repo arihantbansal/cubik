@@ -173,7 +173,7 @@ export const ProjectDonationSimulator = ({
       if (!sig) return;
       createContributionMutation.mutate({
         projectId: projectId,
-        isIncluded: proofCount.data! > 1 ? true : false,
+        isIncluded: proofCount.data! > 0 ? true : false,
         token: _values.token.address,
         totalAmount: _values.amount,
         totalUsdAmount: _values.amount,
@@ -328,7 +328,7 @@ export const ProjectDonationSimulator = ({
             </FormControl>
 
             <Box>
-              {proofCount.data && proofCount.data > 1 ? (
+              {proofCount.data && proofCount.data > 0 ? (
                 <></>
               ) : (
                 <HStack p="16px" rounded="12px" gap="12px" bg="#33000260">
