@@ -9,19 +9,15 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Cubik",
-  metadataBase: new URL("https://cubik.so"),
+  metadataBase: new URL("https://res.cloudinary.com"),
   description: "Fund Public Goods Through Community Voting On Solana",
   openGraph: {
-    images: [
-      "https://res.cloudinary.com/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png",
-    ],
+    images: ["/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png"],
   },
   twitter: {
     title: "Cubik",
     card: "summary_large_image",
-    images: [
-      "https://res.cloudinary.com/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png",
-    ],
+    images: ["demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png"],
   },
 };
 
