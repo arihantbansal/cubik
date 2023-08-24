@@ -66,6 +66,7 @@ export const getUserDetails = async (username: string) => {
 
 export const UserDetails = async ({ username }: Props) => {
   const user = await getUserDetails(username);
+  console.log(user);
   return (
     <>
       <VStack

@@ -2,7 +2,7 @@ import { Box, HStack, VStack } from "@/utils/chakra";
 import React from "react";
 import { ProofHandler } from "./ProofHandler";
 import { ProofWrapper } from "./ProofWrapper";
-
+import { prisma } from "@cubik/database";
 interface Props {
   username: string;
 }
