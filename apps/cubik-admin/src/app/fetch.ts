@@ -15,6 +15,9 @@ export const fetchDetails = async () => {
           },
         },
         projectJoinHackathon: {
+          where: {
+            isArchive: false,
+          },
           include: {
             project: {
               include: {

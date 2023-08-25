@@ -10,6 +10,9 @@ export const fetchSponsors = async () => {
       },
       include: {
         projectJoinHackathon: {
+          where: {
+            isArchive: false,
+          },
           include: {
             project: {
               include: {
