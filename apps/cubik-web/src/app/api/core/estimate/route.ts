@@ -104,21 +104,21 @@ export async function POST(request: NextRequest) {
       };
     });
 
-    await Promise.all(
-      finalMatch.map((e) =>
-        prisma.projectJoinHackathon.update({
-          where: {
-            id: projects.find((e) => e.projectId === e.projectId)?.id!,
-          },
-          data: {
-            amount: e.amount,
-          },
-        })
-      )
-    );
+    finalMatch.forEach(async (e) => {
+      const res = await prisma.projectJoinHackathon.update({
+        where: {
+          id: projects.find((r) => r.projectId === e.projectId)?.id,
+        },
+        data: {
+          amount: e.amount,
+        },
+      });
+      console.log(res);
+    });
+
     return NextResponse.json({
       e: finalMatch,
-      res: res,
+      res: projects,
     });
   } catch (error) {
     console.log(error);

@@ -284,12 +284,11 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
                     textStyle={{ base: "title4", md: "title3" }}
                   >
                     $
-                    {/* {formatNumberWithK(
+                    {formatNumberWithK(
                       (parseInt(
                         project.projectEvent.amount?.toFixed(2) as string
                       ) as number) ?? 0
-                    )} */}
-                    {project.projectEvent.amount}
+                    )}
                   </Box>
                 </HStack>
                 <HStack
