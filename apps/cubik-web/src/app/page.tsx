@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   twitter: {
     title: "Cubik",
     card: "summary_large_image",
-    images: ["demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png"],
+    images: ["/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png"],
   },
 };
 
