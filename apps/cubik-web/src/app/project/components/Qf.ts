@@ -218,8 +218,8 @@ export const EstimateUpdate = async ({
       let sumAmount = 0;
       projectMapContribution
         .filter((projects) => projects.projectId === project.projectId)
-        .forEach((project) => {
-          sumAmount += Math.sqrt(project.amount);
+        .forEach((projects) => {
+          sumAmount += Math.sqrt(projects.amount);
         });
 
       sumAmount *= sumAmount;
@@ -229,9 +229,14 @@ export const EstimateUpdate = async ({
         sum: sumAmount,
       });
     });
-
+    console.log(summed);
     let divisor = matchingPool / summed;
-
+    console.log(
+      arrOfMatch.find(
+        (e) => e.projectId === "e027dba6-529c-4439-aad3-61b674e74363"
+      ),
+      "---Divisor---"
+    );
     const finalMatch = projects.map((project) => {
       return {
         projectId: project.projectId,
@@ -240,6 +245,7 @@ export const EstimateUpdate = async ({
           divisor,
       };
     });
+    // console.log(ar, "----------------");
     console.log(
       finalMatch.filter((e) => e.projectId === projectId)[0]?.amount,
       projects.find((e) => e.projectId === projectId)?.amount
@@ -248,7 +254,7 @@ export const EstimateUpdate = async ({
       finalMatch.filter((e) => e.projectId === projectId)[0]?.amount!
     )
       ? 0
-      : finalMatch.filter((e) => e.projectId === projectId)[0]?.amount! -
+      : finalMatch.find((e) => e.projectId === projectId)?.amount! -
           projects.find((e) => e.projectId === projectId)?.amount!;
   } catch (error) {
     console.log(error);

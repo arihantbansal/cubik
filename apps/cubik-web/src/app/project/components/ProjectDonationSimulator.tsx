@@ -266,7 +266,7 @@ export const ProjectDonationSimulator = ({
   };
 
   const estimateQuery = useQuery({
-    enabled: watch("amount") > 0 && Boolean(user?.id),
+    enabled: watch("amount") > 0,
     queryKey: ["estimate"],
     queryFn: () =>
       EstimateUpdate({
@@ -276,6 +276,7 @@ export const ProjectDonationSimulator = ({
         user: user?.id as string,
         eventType: "hackathon",
       }),
+    refetchInterval: 1000,
   });
   return (
     <>
@@ -458,7 +459,9 @@ export const ProjectDonationSimulator = ({
                     perspective={700}
                     numbers={
                       estimateQuery.data
-                        ? "$" + (estimateQuery.data?.toFixed(2) as string)
+                        ? 0 < estimateQuery.data
+                          ? "$" + (estimateQuery.data?.toFixed(2) as string)
+                          : "$1"
                         : "$0"
                     }
                   />
