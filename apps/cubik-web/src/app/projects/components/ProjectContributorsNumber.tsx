@@ -41,7 +41,7 @@ const ProjectsContributorsNumber = ({
               />
             ))}
           </AvatarGroup>
-          {contributorsCount > 0 ? (
+          {contributorsCount > 3 ? (
             <Box
               noOfLines={1}
               w="full"
