@@ -356,8 +356,8 @@ export const ProjectDonationSimulator = ({
                     color="white"
                     textAlign={"start"}
                   >
-                    You Don't have any proof claim and your funds will might not
-                    get matched by Cubik Matching Pool{"  "}
+                    You do not have a proof collected, your contributions will
+                    not be matched from cubik matching pool.
                     <Link
                       href={`/${user?.username as string}`}
                       target="_blank"
