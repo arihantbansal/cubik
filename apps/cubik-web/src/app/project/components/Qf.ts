@@ -116,23 +116,23 @@ export const updateData = async (
       };
     });
 
-    await Promise.all(
-      finalMatch.map((e) =>
-        prisma.projectJoinHackathon.update({
-          where: {
-            id: projects.find((e) => e.projectId === e.projectId)?.id!,
-          },
-          data: {
-            amount: e.amount,
-          },
-        })
-      )
-    );
+    
+       finalMatch.map(
+         async (e) =>
+           await prisma.projectJoinHackathon.update({
+             where: {
+               id: projects.find((r) => r.projectId === e.projectId)?.id!,
+             },
+             data: {
+               amount: e.amount,
+             },
+           })
+       );
 
-    return finalMatch;
+       return "success";
   } catch (error) {
     console.log(error);
-    return null;
+    return "error";
   }
 };
 

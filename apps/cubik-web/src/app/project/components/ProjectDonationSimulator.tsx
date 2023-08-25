@@ -460,7 +460,10 @@ export const ProjectDonationSimulator = ({
                     numbers={
                       estimateQuery.data
                         ? 0 < estimateQuery.data
-                          ? "$" + (estimateQuery.data?.toFixed(2) as string)
+                          ? "$" +
+                            ((estimateQuery.data + watch("amount"))?.toFixed(
+                              2
+                            ) as string)
                           : "$1"
                         : "$0"
                     }
