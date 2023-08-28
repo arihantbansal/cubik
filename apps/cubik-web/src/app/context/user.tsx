@@ -1,7 +1,5 @@
 import { useWallet } from "@solana/wallet-adapter-react";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import axios from "axios";
-import { saveSession } from "@/utils/helpers/saveSession";
+import React, { createContext, useContext, useState } from "react";
 
 export interface User {
   id: string;
@@ -32,30 +30,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(null);
     disconnect();
   };
-
-  useEffect(() => {
-    if (user) {
-      if (!publicKey) {
-        setUser(null);
-        return;
-      }
-    }
-  }, [publicKey, user]);
-
-  const track = async () => {
-    const {
-      data: { ip, userAgent },
-    } = await axios.get("/api/track");
-
-    saveSession(user!.mainWallet, {
-      ip,
-      userAgent,
-    });
-  };
-
-  useEffect(() => {
-    user && track();
-  }, [user]);
 
   return (
     <UserContext.Provider value={{ user, setUser, logout }}>

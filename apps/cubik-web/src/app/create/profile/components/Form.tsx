@@ -39,6 +39,7 @@ import { useUser } from "@/app/context/user";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { checkUsername } from "./checkUsername";
+import { AuthVerifyReturn } from "@/types/auth";
 
 export const Form = () => {
   const [userName, setUsername] = useState<string>("");
@@ -151,16 +152,32 @@ export const Form = () => {
         profileNFT as NFTProfile,
         txId
       );
-
-      setUser({
-        id: res?.id as string,
-        mainWallet: res?.mainWallet as string,
-        profilePicture: res?.profilePicture as string,
-        username: res?.username as string,
-      });
+      if (
+        localStorage.getItem("wallet_sig") &&
+        localStorage.getItem("wallet_nonce")
+      ) {
+        const verify = await fetch("/api/auth/verify", {
+          method: "POST",
+          body: JSON.stringify({
+            signature: localStorage.getItem("wallet_sig"),
+            publicKey: publicKey,
+            nonce: localStorage.getItem("wallet_nonce"),
+          }),
+        });
+        const verifyResponse = (await verify.json()) as AuthVerifyReturn;
+        if (verifyResponse.data) {
+          setUser({
+            id: res?.id as string,
+            mainWallet: res?.mainWallet as string,
+            profilePicture: res?.profilePicture as string,
+            username: res?.username as string,
+          });
+        } else {
+          setUser(null);
+        }
+      }
       setProfileCreated(true);
-
-      setIsLoading(false);
+      // setIsLoading(false);
       return;
     } catch (error) {
       console.log(error);

@@ -1,7 +1,6 @@
 "use client";
 import { Center, Text } from "@/utils/chakra";
 import Sidebar from "./sidebar";
-import User from "./user";
 import { useEffect, useState } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";

@@ -16,13 +16,13 @@ import {
   VStack,
   useDisclosure,
 } from "@/utils/chakra";
-import { useWallet } from "@solana/wallet-adapter-react";
 import Link from "next/link";
 import ChevronDown from "@/theme/icons/chevron_down.svg";
 import Username from "@/app/components/common/username";
 import { WalletAddress } from "@/app/components/common/wallet";
 import { useUser } from "@/app/context/user";
 import { WalletBalance } from "./WalletBalance";
+import { handleLogout } from "@/utils/helpers/auth";
 
 const ProfileDetails = () => {
   const { user } = useUser();
@@ -67,7 +67,9 @@ const UserNavbarMenuButton = () => {
 
   const { user } = useUser();
   async function handleSignOut() {
+    await handleLogout();
     logout();
+    
   }
 
   const NavMenuButtons = () => {

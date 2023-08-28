@@ -16,10 +16,7 @@ import {
 import { WalletAddress } from "../../../common/wallet";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useState } from "react";
-import {
-  createMessage,
-  verifyMessage,
-} from "@/utils/helpers/getSignatureMessage";
+
 import { utils } from "@coral-xyz/anchor";
 import { getOrCreateUser } from "./get-user";
 import { useRouter } from "next/navigation";
@@ -30,36 +27,37 @@ const VerifyWallet = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { setUser } = useUser();
   const router = useRouter();
-  const verify = async () => {
-    if (!publicKey && !signMessage) return;
 
-    try {
-      setIsLoading(true);
+  // const verify = async () => {
+  //   if (!publicKey && !signMessage) return;
 
-      const msg = await createMessage();
-      const sig = utils.bytes.bs58.encode(await signMessage!(msg));
+  //   try {
+  //     setIsLoading(true);
 
-      await verifyMessage(sig, publicKey!);
-      const user = await getOrCreateUser(publicKey!.toString());
+  //     const msg = await createMessage();
+  //     const sig = utils.bytes.bs58.encode(await signMessage!(msg));
 
-      console.log(user);
+  //     await verifyMessage(sig, publicKey!);
+  //     const user = await getOrCreateUser(publicKey!.toString());
 
-      if (user === null) {
-        router.push("/create/profile");
-      } else {
-        setUser({
-          id: user.id,
-          username: user.username!,
-          profilePicture: user.profilePicture!,
-          mainWallet: publicKey!.toString(),
-        });
-      }
-    } catch (error) {
-      await disconnect();
-      console.log(error);
-      setIsLoading(false);
-    }
-  };
+  //     console.log(user);
+
+  //     if (user === null) {
+  //       router.push("/create/profile");
+  //     } else {
+  //       setUser({
+  //         id: user.id,
+  //         username: user.username!,
+  //         profilePicture: user.profilePicture!,
+  //         mainWallet: publicKey!.toString(),
+  //       });
+  //     }
+  //   } catch (error) {
+  //     await disconnect();
+  //     console.log(error);
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return (
     <Modal
@@ -130,7 +128,7 @@ const VerifyWallet = () => {
           <Button
             variant={"cubikFilled"}
             loadingText="Verifying"
-            onClick={verify}
+            // onClick={verify}
             isLoading={isLoading}
           >
             {"Verify Wallet"}
