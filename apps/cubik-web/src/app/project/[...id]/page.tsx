@@ -58,7 +58,6 @@ const ProjectDetails = async (
               user: true,
             },
           },
-
           contribution: {
             where: {
               hackathonId: eventId,

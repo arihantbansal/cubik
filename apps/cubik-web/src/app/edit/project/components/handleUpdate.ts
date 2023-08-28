@@ -1,9 +1,33 @@
 "use server";
 
+import { decodeToken } from "@/utils/helpers/auth";
 import { Project, Team, prisma } from "@cubik/database";
-
+import { cookies } from "next/headers";
 export const handleUpdate = async (project: Partial<Project>, team: Team[]) => {
   try {
+    const auth = cookies().get("authToken");
+    if (!auth) {
+      throw new Error("Not authorized");
+    }
+    const user = await decodeToken(auth.value);
+
+    if (!user?.username) {
+      throw new Error("Not authorized");
+    }
+
+    const projectCheck = await prisma.project.findFirst({
+      where: {
+        id: project.id,
+      },
+      select: {
+        ownerPublickey: true,
+      },
+    });
+
+    if (projectCheck?.ownerPublickey !== user.mainWallet) {
+      throw new Error("Not authorized");
+    }
+
     const res = await prisma.project.update({
       where: {
         id: project.id,
@@ -22,20 +46,8 @@ export const handleUpdate = async (project: Partial<Project>, team: Team[]) => {
         telegramLink: project.telegramLink,
       },
     });
+
     return res;
-    // team.forEach(async (member) => {
-    //   await prisma.team.upsert({
-    //     where: {
-    //       userId: member.userId,
-    //       projectId: member.projectId as string,
-    //     },
-    //     update: {},
-    //     create: {
-    //       userId: member.userId,
-    //       projectId: member.projectId,
-    //     },
-    //   });
-    // });
   } catch (error) {
     console.log(error);
     throw new Error("Error while updating project");
