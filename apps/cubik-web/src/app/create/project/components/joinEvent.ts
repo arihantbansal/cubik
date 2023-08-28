@@ -7,13 +7,13 @@ export const createJoinHackathon = (
   projectId: string,
   tracks: any[]
 ) => {
-  const res = prisma.projectJoinHackathon.create({
-    data: {
-      tx: "asdfasdf",
-      hackathonId: hackathonId,
-      projectId: projectId,
-      tracks: tracks || {},
-    },
-  });
-  return res;
+  // const res = prisma.projectJoinHackathon.create({
+  //   data: {
+  //     tx: "asdfasdf",
+  //     hackathonId: hackathonId,
+  //     projectId: projectId,
+  //     tracks: tracks || {},
+  //   },
+  // });
+  // return res;
 };
