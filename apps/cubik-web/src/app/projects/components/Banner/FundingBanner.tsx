@@ -329,12 +329,14 @@ const FundingRoundBanner = ({
                   textStyle={{ base: "body7", md: "overline4" }}
                   letterSpacing="2px"
                 >
-                  {event === "hackathon" && "Prize Pool :"}
-                  {event === "round" && "Matching Pool :"}
+                  {/* {event === "hackathon" && "Prize Pool :"}
+                  {event === "round" && "Matching Pool :"} */}
+                  Matching Pool :
                 </Box>
                 <HStack>
                   <Box as="p" textStyle={{ base: "body5", md: "title3" }}>
-                    ${formatNumberWithComma(matchingPool)}
+                    {/* ${formatNumberWithComma(matchingPool)} */}
+                    2K BLZE + USDC
                   </Box>
                 </HStack>
               </HStack>

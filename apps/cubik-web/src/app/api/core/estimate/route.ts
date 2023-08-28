@@ -109,6 +109,7 @@ export async function POST(request: NextRequest) {
         where: {
           id: projects.find((r) => r.projectId === e.projectId)?.id,
         },
+
         data: {
           amount: e.amount,
         },
