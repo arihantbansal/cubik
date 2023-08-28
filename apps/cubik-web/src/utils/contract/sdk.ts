@@ -21,7 +21,7 @@ export const getSdk = (
     wallet,
     customConnection,
     {
-      commitment: "confirmed",
+      commitment: "max",
     },
     env.NEXT_PUBLIC_SOLANA_NETWORK === "mainnet-beta"
       ? "mainnet-beta"
