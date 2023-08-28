@@ -21,8 +21,13 @@ export const checkSuperteam = async (wallet: string): Promise<number> => {
     const filteredNFT: any[] = results.result.items.filter((e: any) => {
       if (
         e.grouping[0]?.group_key === "collection" &&
-        e.grouping[0]?.group_value ===
-          "E4ToMjm8YtRyfPUhZ7hxRMxe4J8FnSr9CcprytZBYFua"
+        [
+          "UeXfwweGMBV8JkTQ7pFF6shPR9EiKEg8VnTNF4qKjhh", // SuperteamDE
+          "E4ToMjm8YtRyfPUhZ7hxRMxe4J8FnSr9CcprytZBYFua", // SuperteamIN
+        ].find(
+          (add) =>
+            add.toLowerCase() === e.grouping[0]?.group_value.toLowerCase()
+        )
       ) {
         return e;
       }
