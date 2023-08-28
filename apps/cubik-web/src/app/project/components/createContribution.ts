@@ -46,6 +46,7 @@ export const createContribution = async (data: CreateContributionInput) => {
         projectId: data.projectId,
         userId: user?.id as string,
         hackathonId: data.hackathonId,
+        isArchive: true,
       },
     });
     return res;
