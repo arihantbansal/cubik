@@ -245,9 +245,7 @@ export const ProjectDonationSimulator = ({
       tx.add(ix!);
 
       const signed = await anchorWallet?.signTransaction(tx);
-      const txid = await connection.sendRawTransaction(signed!.serialize(), {
-        preflightCommitment: "finalized",
-      });
+      const txid = await connection.sendRawTransaction(signed!.serialize(), {});
       console.log(txid);
       return txid;
     } catch (error: any) {
