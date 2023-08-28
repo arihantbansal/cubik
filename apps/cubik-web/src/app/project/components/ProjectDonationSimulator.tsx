@@ -211,22 +211,12 @@ export const ProjectDonationSimulator = ({
     total: number
   ): Promise<string | null> => {
     try {
-      console.log(
-        anchorWallet as NodeWallet,
-        total * 1000000,
-        0,
-        eventId || "asdf",
-        count,
-        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-        ownerPublicKey,
-        multiSig
-      );
       const [ix, ix2, ix3] = await createContributionV2(
         anchorWallet as NodeWallet,
         total * 1000000,
         0,
         ownerPublicKey,
-        "asd" || "asdf",
+        eventId || "asdf",
         count,
         "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
       );
