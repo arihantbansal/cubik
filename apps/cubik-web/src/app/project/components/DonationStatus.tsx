@@ -75,49 +75,49 @@ export const DonationStatus = (props: Props) => {
     // }
 
     // round is live
-    if (isPast(props.startTime) && isFuture(props.endTime)) {
-      // when no user is connected
-      if (!user) {
-        return (
-          <Button
-            onClick={() => setVisible(true)}
-            variant="cubikFilled"
-            size="md"
-            w="full"
-          >
-            Connect Wallet
-          </Button>
-        );
-      }
+    // if (isPast(props.startTime) && isFuture(props.endTime)) {
+    //   // when no user is connected
+    //   if (!user) {
+    //     return (
+    //       <Button
+    //         onClick={() => setVisible(true)}
+    //         variant="cubikFilled"
+    //         size="md"
+    //         w="full"
+    //       >
+    //         Connect Wallet
+    //       </Button>
+    //     );
+    //   }
 
-      if (
-        user?.mainWallet === props.owner ||
-        props.team.find((t) => t.userId === user?.id)
-      ) {
-        return (
-          <Button
-            disabled={true}
-            isDisabled={true}
-            variant="cubikFilled"
-            size="md"
-            w="full"
-          >
-            Donate
-          </Button>
-        );
-      }
+    //   if (
+    //     user?.mainWallet === props.owner ||
+    //     props.team.find((t) => t.userId === user?.id)
+    //   ) {
+    //     return (
+    //       <Button
+    //         disabled={true}
+    //         isDisabled={true}
+    //         variant="cubikFilled"
+    //         size="md"
+    //         w="full"
+    //       >
+    //         Donate
+    //       </Button>
+    //     );
+    //   }
 
-      return (
-        <Button
-          onClick={props.onDonateHandler}
-          variant="cubikFilled"
-          size="md"
-          w="full"
-        >
-          Donate
-        </Button>
-      );
-    }
+    //   return (
+    //     <Button
+    //       onClick={props.onDonateHandler}
+    //       variant="cubikFilled"
+    //       size="md"
+    //       w="full"
+    //     >
+    //       Donate
+    //     </Button>
+    //   );
+    // }
 
     // hackathon has ended
     if (isPast(props.endTime)) {

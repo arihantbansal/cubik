@@ -23,33 +23,33 @@ export const createContribution = async (data: CreateContributionInput) => {
 
     const user = await decodeToken(auth.value);
 
-    const joinId = await prisma.projectJoinHackathon.findFirst({
-      where: {
-        projectId: data.projectId,
-        hackathonId: data.hackathonId,
-      },
-      select: {
-        id: true,
-      },
-    });
+    // const joinId = await prisma.projectJoinHackathon.findFirst({
+    //   where: {
+    //     projectId: data.projectId,
+    //     hackathonId: data.hackathonId,
+    //   },
+    //   select: {
+    //     id: true,
+    //   },
+    // });
 
-    const res = await prisma.contribution.create({
-      data: {
-        split: 0,
-        token: data.token,
-        totalAmount: data.totalAmount,
-        totalUsdAmount: data.totalUsdAmount,
-        tx: data.tx,
-        isIncluded: false,
-        projectJoinHackathonId: joinId?.id,
-        projectJoinRoundId: data.projectJoinRoundId,
-        projectId: data.projectId,
-        userId: user?.id as string,
-        hackathonId: data.hackathonId,
-        isArchive: true,
-      },
-    });
-    return res;
+    // const res = await prisma.contribution.create({
+    //   data: {
+    //     split: 0,
+    //     token: data.token,
+    //     totalAmount: data.totalAmount,
+    //     totalUsdAmount: data.totalUsdAmount,
+    //     tx: data.tx,
+    //     isIncluded: false,
+    //     projectJoinHackathonId: joinId?.id,
+    //     projectJoinRoundId: data.projectJoinRoundId,
+    //     projectId: data.projectId,
+    //     userId: user?.id as string,
+    //     hackathonId: data.hackathonId,
+    //     isArchive: true,
+    //   },
+    // });
+    // return res;
   } catch (error) {
     console.log(error);
     return null;

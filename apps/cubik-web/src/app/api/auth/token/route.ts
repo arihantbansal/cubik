@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get("authToken")?.value;
-    console.log(token, "token");
     if (!token) {
       return NextResponse.json({
         data: null,
