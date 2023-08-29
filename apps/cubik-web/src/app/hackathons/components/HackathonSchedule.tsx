@@ -96,7 +96,7 @@ export const HackathonSchedule = ({
         gap="0"
         w="full"
       >
-        {steps.map((event) => (
+        {steps.slice(0, 3).map((event) => (
           <Step key={event.index} style={{ width: "100%" }}>
             <StepIndicator
               borderColor={activeStep === event.index ? "#14665B" : "#1D1F1E"}
