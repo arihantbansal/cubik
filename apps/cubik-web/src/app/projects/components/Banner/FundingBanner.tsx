@@ -336,7 +336,7 @@ const FundingRoundBanner = ({
                 <HStack>
                   <Box as="p" textStyle={{ base: "body5", md: "title3" }}>
                     {/* ${formatNumberWithComma(matchingPool)} */}
-                    2K BLZE + USDC
+                    $1K BLZE + $1K USDC
                   </Box>
                 </HStack>
               </HStack>
