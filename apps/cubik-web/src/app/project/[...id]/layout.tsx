@@ -1,5 +1,6 @@
 import { Box, Container, Stack } from "@/utils/chakra";
-import { Team, User, prisma } from "@cubik/database";
+import type { Team, User } from "@cubik/database";
+import { prisma } from "@cubik/database";
 import React from "react";
 import { ProjectHeader } from "../components/ProjectHeader";
 
@@ -131,7 +132,7 @@ const fetchProject = async (
 };
 const ProjectPageLayout = async ({ params, children }: Props) => {
   const project = await fetchProject(
-    params.id[0] as string,
+    params.id[0]!,
     params.id[1] as "hackathon" | "round",
     params.id[2]
   );
@@ -181,14 +182,14 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
             userCount={project.projectUserCount}
             endTime={
               project.projectJoinHackathon
-                ? (project.projectJoinHackathon[0]?.hackathon
-                    .votingEndDate as Date)
-                : (project.projectJoinRound?.round.endTime as Date)
+                ? project.projectJoinHackathon[0]?.hackathon.votingEndDate ??
+                  new Date()
+                : project.projectJoinRound?.round.endTime ?? new Date()
             }
             startTime={
               project.projectJoinHackathon
-                ? (project.projectJoinHackathon![0]?.hackathon
-                    .votingStartDate as Date)
+                ? project.projectJoinHackathon[0]?.hackathon.votingStartDate ??
+                  new Date()
                 : new Date()
             }
             projectLink={project.projectLink}

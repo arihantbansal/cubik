@@ -1,10 +1,11 @@
 "use client";
-import { Container, Box, Wrap } from "@/utils/chakra";
+import { Wrap } from "@/utils/chakra";
 import Filters from "./filters";
-import { ProjectJoinRoundStatus } from "@cubik/database";
 import { useState } from "react";
-import { Category } from "./filters/categories";
-import { ProjectExploreBanner, ProjectExplorerType } from "@/types/explorer";
+import type {
+  ProjectExploreBanner,
+  ProjectExplorerType,
+} from "@/types/explorer";
 import { EmptyStateHOC } from "@/app/components/common/empty-state/EmptyStateHOC";
 import { ProjectCard } from "./card";
 

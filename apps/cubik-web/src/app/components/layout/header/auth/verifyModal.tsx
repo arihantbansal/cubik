@@ -1,7 +1,7 @@
 "use client";
 import { WalletAddress } from "@/app/components/common/wallet";
-import { User } from "@/app/context/user";
-import { AuthVerifyReturn } from "@/types/auth";
+import type { User } from "@/app/context/user";
+import type { AuthVerifyReturn } from "@/types/auth";
 import {
   Box,
   Button,
@@ -15,10 +15,10 @@ import {
   ModalOverlay,
   VStack,
 } from "@/utils/chakra";
-import { decodeToken, getToken, handleLogout } from "@/utils/helpers/auth";
+import { decodeToken } from "@/utils/helpers/auth";
 import { createMessage } from "@/utils/helpers/getSignatureMessage";
 import { utils } from "@coral-xyz/anchor";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
+import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import React, { useState } from "react";
 
 interface Props {

@@ -1,5 +1,5 @@
 import CustomTag from "@/app/components/common/tags/CustomTag";
-import { BONK, SOL, USDC } from "@/app/components/common/tags/TokenTags";
+import { SOL, USDC } from "@/app/components/common/tags/TokenTags";
 import {
   Avatar,
   Box,
@@ -16,7 +16,6 @@ import React from "react";
 //import { BiChevronRight } from "react-icons/bi";
 import { timeSince } from "@/utils/helpers/timeSince";
 import { fullTokenList } from "@/utils/helpers/tokenlist";
-import { Image } from "@chakra-ui/next-js";
 
 interface Props {
   isLoading?: boolean;

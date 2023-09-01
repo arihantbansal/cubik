@@ -22,7 +22,7 @@ export const SubmitNowButton = ({
   logo,
   tracks,
 }: Props) => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const { isOpen, onClose } = useDisclosure();
   const { user } = useUser();
   const { setVisible } = useWalletModal();
 

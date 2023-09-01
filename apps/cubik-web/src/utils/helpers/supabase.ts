@@ -1,8 +1,6 @@
-import {
-  createClient,
-  SupabaseClient,
-  UserResponse,
-} from "@supabase/supabase-js";
+/* eslint-disable react-hooks/exhaustive-deps */
+import type { SupabaseClient, UserResponse } from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { env } from "@/env.mjs";
 
@@ -23,8 +21,8 @@ const useUserSupabase = (client: SupabaseClient) => {
     setIsLoading(false);
   };
   useEffect(() => {
-    client.auth.onAuthStateChange((event) => {
-      fetchUser();
+    client.auth.onAuthStateChange(async (event) => {
+      await fetchUser();
       event === "SIGNED_IN"
         ? setUser(user)
         : event === "SIGNED_OUT"

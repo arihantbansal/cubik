@@ -1,7 +1,7 @@
 import { Wrap } from "@chakra-ui/react";
 import React from "react";
 import { GithubProof } from "./GithubProof";
-import { Proof } from "@cubik/database";
+import type { Proof } from "@cubik/database";
 import { SuperteamProof } from "./SuperteamProof";
 import { CubikVerifiedProject } from "./CubikVerifiedProject";
 

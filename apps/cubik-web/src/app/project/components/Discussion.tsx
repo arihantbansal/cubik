@@ -25,7 +25,7 @@ import { useForm } from "react-hook-form";
 import { NoComments } from "./NoComents";
 import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { createComment, fetchComment } from "./getComment";
-import { Prisma } from "@cubik/database";
+import type { Prisma } from "@cubik/database";
 import { CommentComponent } from "./CommentComponent";
 
 export type getCommentType = Prisma.CommentsGetPayload<{
@@ -43,11 +43,7 @@ export const ProjectDiscussion = ({ projectId }: { projectId: string }) => {
   const { setVisible } = useWalletModal();
   const { user } = useUser();
   const { publicKey } = useWallet();
-  const [loadMoreComments, setLoadMoreComments] = useState<getCommentType[]>(
-    []
-  );
-  const [cannotLoadMore, setCannotLoadMore] = useState<boolean>(false);
-  const [counter, setCounter] = useState<number>(0);
+  const [cannotLoadMore] = useState<boolean>(false);
 
   const {
     handleSubmit,
@@ -69,7 +65,7 @@ export const ProjectDiscussion = ({ projectId }: { projectId: string }) => {
   const createCommentMutation = useMutation({
     mutationFn: createComment,
     mutationKey: ["createComment", projectId],
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(["getComments", projectId]);
     },
   });

@@ -1,5 +1,5 @@
 "use client";
-import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import type NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 import { SDK } from "cubik-main";
 import { web3 } from "@coral-xyz/anchor";
 import { env } from "@/env.mjs";

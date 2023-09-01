@@ -34,6 +34,7 @@ export function GrantsCarousel({ children }: GrantsCarouselProps) {
 
       return () => clearInterval(interval);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index, childrenArray.length]);
 
   return (

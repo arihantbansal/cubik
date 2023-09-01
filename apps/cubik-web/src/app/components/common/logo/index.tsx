@@ -1,4 +1,4 @@
-import { Box, Button, Center, HStack, Tag, Text } from "@chakra-ui/react";
+import { Box, Center, HStack, Tag, Text } from "@chakra-ui/react";
 import Link from "next/link";
 
 const Logo = () => {

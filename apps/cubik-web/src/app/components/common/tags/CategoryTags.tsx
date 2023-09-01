@@ -1,6 +1,5 @@
-// @ts-nocheck
 import { Box, Tag } from "@/utils/chakra";
-
+import type { JSX } from "react";
 const CategoryTag = ({
   isSelected,
   children,
@@ -25,7 +24,7 @@ const CategoryTag = ({
         fontWeight="500 !important"
         textTransform={"capitalize"}
       >
-        {children.replaceAll(/_/g, " ")}
+        {children}
       </Box>
     </Tag>
   );

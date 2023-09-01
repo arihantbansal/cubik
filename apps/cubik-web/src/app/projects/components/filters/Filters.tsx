@@ -1,4 +1,4 @@
-import { ProjectExplorerType } from "@/types/explorer";
+import type { ProjectExplorerType } from "@/types/explorer";
 import { Collapse, Stack } from "@/utils/chakra";
 import React from "react";
 import { Sort } from "./Sort";

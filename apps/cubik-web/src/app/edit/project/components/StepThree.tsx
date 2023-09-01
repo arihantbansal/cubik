@@ -9,7 +9,8 @@ import {
   HStack,
   VStack,
 } from "@chakra-ui/react";
-import { Dispatch, SetStateAction, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 import ChevronLeft from "@/theme/icons/chevron_left.svg";
 
 const StepThree = ({

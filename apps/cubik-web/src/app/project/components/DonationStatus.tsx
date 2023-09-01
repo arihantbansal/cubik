@@ -5,7 +5,7 @@ import { isFuture, isPast } from "date-fns";
 import React from "react";
 import { RoundEndedBanner, RoundStartingSoon } from "./CTAStatus";
 import { Button } from "@chakra-ui/react";
-import { Team } from "@cubik/database";
+import type { Team } from "@cubik/database";
 
 interface Props {
   roundId?: string;
@@ -25,7 +25,7 @@ export const DonationStatus = (props: Props) => {
   if (props.roundId && props.projectJoinId) {
     // hackathon is starting soon
     if (isFuture(new Date(props.startTime))) {
-      return <RoundStartingSoon startDate={props.startTime} />;
+      return <RoundStartingSoon />;
     }
 
     // hackathon is live

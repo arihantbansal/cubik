@@ -1,4 +1,4 @@
-import { Box, Center, HStack, Icon, Skeleton } from "@/utils/chakra";
+import { Box, Center, HStack, Skeleton } from "@/utils/chakra";
 // import { UserProof } from "~/types/user";
 
 type size = "xs" | "sm" | "md" | "lg" | "xl" | undefined | null;
@@ -9,7 +9,7 @@ type usernameProps = {
   size: size;
 };
 
-const CheckMarkIcon = ({
+export const CheckMarkIcon = ({
   checkColor,
   bgColor,
 }: {
@@ -31,48 +31,6 @@ const CheckMarkIcon = ({
 );
 
 const Username = ({ isLoading, username, size }: usernameProps) => {
-  const CheckMark = ({ size }: { size?: size }) => {
-    const boxSize =
-      size === "xs"
-        ? { base: "8px", sm: "9px", md: "12px" }
-        : size === "sm"
-        ? { base: "9px", sm: "10px", md: "12px" }
-        : size === "md"
-        ? { base: "10px", sm: "11px", md: "16px" }
-        : size === "lg"
-        ? { base: "12px", sm: "14px", md: "18px" }
-        : { base: "11px", sm: "12px", md: "16px" };
-
-    // switch (proofs?.length) {
-    //   case 6:
-    //     return (
-    //       <Box as={Icon} boxSize={boxSize}>
-    //         <CheckMarkIcon checkColor="" bgColor="#FFD83D" />
-    //       </Box>
-    //     );
-    //   case 5:
-    //     return (
-    //       <Box as={Icon} boxSize={boxSize}>
-    //         <CheckMarkIcon checkColor="" bgColor="#FFD83D" />
-    //       </Box>
-    //     );
-    //   case 4:
-    //     return (
-    //       <Box as={Icon} boxSize={boxSize}>
-    //         <CheckMarkIcon checkColor="" bgColor="#FFD83D" />
-    //       </Box>
-    //     );
-    //   case 3:
-    //     return <></>;
-    //   case 2:
-    //     return <></>;
-    //   case 1:
-    //     return <></>;
-    //   default:
-    //     return <></>;
-    // }
-  };
-
   return (
     <HStack
       align="baseline"

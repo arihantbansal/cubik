@@ -1,7 +1,7 @@
 "use client";
 import { useClipboard, Center, HStack, Text } from "@/utils/chakra";
-import { useToast } from "@chakra-ui/react";
-import { FC, SetStateAction, useEffect } from "react";
+import type { FC, SetStateAction } from "react";
+import { useEffect } from "react";
 //import { TbCopy } from "react-icons/tb";
 // import { SuccessToast } from "../toasts/Toasts";
 
@@ -21,7 +21,6 @@ export const WalletAddress: FC<PropsType> = ({
   children,
 }: PropsType) => {
   const { onCopy, value, setValue, hasCopied } = useClipboard("");
-  const toast = useToast();
   const addr = walletAddress;
 
   useEffect(() => {

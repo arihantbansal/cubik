@@ -1,12 +1,8 @@
 import * as anchor from "@coral-xyz/anchor";
-import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
-import { PublicKey } from "@solana/web3.js";
-import Squads, {
-  getTxPDA,
-  getIxPDA,
-  TransactionAccount,
-  InstructionAccount,
-} from "@sqds/sdk";
+import type NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import type { PublicKey } from "@solana/web3.js";
+import type { TransactionAccount, InstructionAccount } from "@sqds/sdk";
+import Squads, { getTxPDA, getIxPDA } from "@sqds/sdk";
 import { env } from "@/env.mjs";
 
 const RPC_URL =
@@ -14,12 +10,12 @@ const RPC_URL =
     ? env.NEXT_PUBLIC_RPC_MAINNET_URL
     : env.NEXT_PUBLIC_RPC_DEVNET_URL;
 
-const getSquads = async (wallet: NodeWallet): Promise<Squads> => {
-  // if (env.NEXT_PUBLIC_SOLANA_NETWORK === "mainnet-beta") {
-  //   const squads = Squads.endpoint(RPC_URL, wallet);
+const getSquads = (wallet: NodeWallet): Squads => {
+  if (env.NEXT_PUBLIC_SOLANA_NETWORK === "mainnet-beta") {
+    const squads = Squads.endpoint(RPC_URL, wallet);
 
-  //   return squads;
-  // }
+    return squads;
+  }
   const squads = Squads.devnet(wallet);
 
   return squads;
@@ -31,7 +27,7 @@ export const createVault = async (
   name: string,
   image: string
 ) => {
-  const squads = await getSquads(wallet);
+  const squads = getSquads(wallet);
   const createKey = anchor.web3.Keypair.generate();
   const ix = await squads.buildCreateMultisig(
     2,
@@ -44,11 +40,11 @@ export const createVault = async (
 
   return { ix: ix, key: ix.keys[0]!.pubkey, createKey: createKey.publicKey };
 };
-export const getVault = async (
+export const getVault = (
   wallet: NodeWallet,
   mutliSigAccount: anchor.web3.PublicKey
-): Promise<string> => {
-  const squads = await getSquads(wallet);
+): string => {
+  const squads = getSquads(wallet);
 
   const [authority] = anchor.web3.PublicKey.findProgramAddressSync(
     [
@@ -63,8 +59,8 @@ export const getVault = async (
   return authority.toBase58();
 };
 
-export const getMsAddress = async (wallet: NodeWallet, createKey: string) => {
-  const squads = await getSquads(wallet);
+export const getMsAddress = (wallet: NodeWallet, createKey: string) => {
+  const squads = getSquads(wallet);
 
   const [multiSigAccount] = anchor.web3.PublicKey.findProgramAddressSync(
     [
@@ -77,14 +73,14 @@ export const getMsAddress = async (wallet: NodeWallet, createKey: string) => {
 
   return multiSigAccount.toBase58();
 };
-export type VaultTx = {
+export interface VaultTx {
   tx: TransactionAccount;
   ix: InstructionAccount;
-};
+}
 export const getAllTx = async (wallet: NodeWallet, createKey: string) => {
   try {
     if (!createKey) return [];
-    const squads = await getSquads(wallet);
+    const squads = getSquads(wallet);
 
     const [multiSigAccount] = anchor.web3.PublicKey.findProgramAddressSync(
       [
@@ -111,8 +107,8 @@ export const getAllTx = async (wallet: NodeWallet, createKey: string) => {
     txsAccount.forEach((tx, index) => {
       if (!ixAccount) return;
       final.push({
-        tx: tx as TransactionAccount,
-        ix: ixAccount![index] as InstructionAccount,
+        tx: tx!,
+        ix: ixAccount[index]!,
       });
     });
     final.sort((a, b) => {
@@ -131,13 +127,13 @@ export const getAllIxAcc = async (
   txPDA: anchor.web3.PublicKey[]
 ) => {
   try {
-    const squads = await getSquads(wallet);
+    const squads = getSquads(wallet);
 
     const nextIndex = await squads.getNextTransactionIndex(multiSigAccount);
     const IxsPDA: PublicKey[] = [];
     for (let index = 0; index < nextIndex - 1; index++) {
       const [pda] = getIxPDA(
-        txPDA[index] as PublicKey,
+        txPDA[index]!,
         new anchor.BN(1),
         squads.multisigProgramId
       );
@@ -156,7 +152,7 @@ export const approveTxVault = async (
   index: number
 ) => {
   try {
-    const squads = await getSquads(wallet);
+    const squads = getSquads(wallet);
     const [txPDA] = getTxPDA(
       multiSig,
       new anchor.BN(index),
@@ -176,7 +172,7 @@ export const exceuteTxVault = async (
   txPDA: anchor.web3.PublicKey
 ) => {
   try {
-    const squads = await getSquads(wallet);
+    const squads = getSquads(wallet);
 
     const tx = await squads.executeTransaction(txPDA, wallet.publicKey);
 

@@ -4,7 +4,7 @@ import React from "react";
 import { HackathonHeader } from "../components/HackathonHeader";
 import { prisma } from "@cubik/database";
 import { HackathonBody } from "../components/HackathonBody";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 interface Props {
   params: { slug: string };
 }

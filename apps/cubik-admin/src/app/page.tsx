@@ -1,11 +1,9 @@
 "use client";
-import { Metadata } from "next";
 import Image from "next/image";
 import {
   Box,
   Center,
   HStack,
-  Stack,
   Tab,
   TabIndicator,
   TabList,

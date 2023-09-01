@@ -1,9 +1,10 @@
 import React from "react";
 import { ProjectTabs } from "../components/ProjectTabs";
 import { SideBar } from "../components/Sidebar";
-import { Prisma, User, prisma } from "@cubik/database";
+import type { Prisma, User } from "@cubik/database";
+import { prisma } from "@cubik/database";
 import { Stack } from "@/utils/chakra";
-import { Metadata, ResolvingMetadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 // import type { Metadata, ResolvingMetadata } from "next";
 
 interface Props {
@@ -112,19 +113,15 @@ const ProjectDetails = async (
   }
 };
 
-type OgProps = {
+interface OgProps {
   params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
+  searchParams: Record<string, string | string[] | undefined>;
+}
 
 export async function generateMetadata(
-  { params, searchParams }: OgProps,
+  { params }: OgProps,
   parent?: ResolvingMetadata
 ): Promise<Metadata> {
-  const project = {
-    title: "Cubik",
-  };
-
   const projects = await prisma.project.findUnique({
     where: {
       id: params.id[0],
@@ -137,11 +134,10 @@ export async function generateMetadata(
     },
   });
 
-  const previousImages = (await parent)?.openGraph?.images || [];
+  const previousImages = (await parent)?.openGraph?.images ?? [];
 
   return {
     title: projects?.name,
-    metadataBase: new URL("https://cubik.so"),
     description: projects?.shortDescription,
     openGraph: {
       type: "website",
@@ -160,7 +156,7 @@ export async function generateMetadata(
 
 const ProjectPage = async ({ params: { id } }: Props) => {
   const projectDetails = await ProjectDetails(
-    id[0] as string,
+    id[0]!,
     id[1] as "hackathon" | "round",
     id[2]
   );
@@ -174,27 +170,25 @@ const ProjectPage = async ({ params: { id } }: Props) => {
       justifyContent={"space-between"}
     >
       <ProjectTabs
-        id={id[0] as string}
-        eventId={id[2] as string}
+        id={id[0]!}
+        eventId={id[2]}
         eventType={id[1] as "hackathon" | "round" | "preview"}
-        longDescription={
-          (projectDetails?.longDescription as string) || "default"
-        }
+        longDescription={projectDetails?.longDescription ?? "default"}
       />
       <SideBar
         communitycontributions={
           projectDetails?.contribution?.reduce(
             (acc, cur) => (acc += cur.totalUsdAmount),
             0
-          ) || 0
+          ) ?? 0
         }
-        contributors={projectDetails?.contribution?.length || 0}
-        funding={projectDetails?.amount || 0}
-        team={projectDetails?.team || []}
-        discord_link={projectDetails?.discordLink as string}
-        github_link={projectDetails?.githubLink as string}
-        telegram_link={projectDetails?.telegramLink as string}
-        twitter_handle={projectDetails?.twitterHandle as string}
+        contributors={projectDetails?.contribution?.length ?? 0}
+        funding={projectDetails?.amount ?? 0}
+        team={projectDetails?.team ?? []}
+        discord_link={projectDetails?.discordLink ?? ""}
+        github_link={projectDetails?.githubLink ?? ""}
+        telegram_link={projectDetails?.telegramLink ?? ""}
+        twitter_handle={projectDetails?.twitterHandle ?? ""}
         tracks={
           projectDetails?.projectJoinHackathon &&
           projectDetails?.projectJoinHackathon[0]?.tracks

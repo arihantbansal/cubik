@@ -1,8 +1,7 @@
 import { Card, CardHeader, VStack } from "@/utils/chakra";
 import React from "react";
 import { VisitorViewCardHeader } from "./VisitorViewCardHeader";
-import { ProjectCommonType } from "./type";
-import { StatusBanner } from "./StatusBanner";
+import type { ProjectCommonType } from "./type";
 
 interface Props {
   projects: ProjectCommonType;

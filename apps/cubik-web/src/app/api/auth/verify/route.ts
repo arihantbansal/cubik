@@ -1,9 +1,7 @@
-import {
-  createMessage,
-  verifyMessage,
-} from "@/utils/helpers/getSignatureMessage";
-import { utils, web3 } from "@coral-xyz/anchor";
-import { NextRequest, NextResponse } from "next/server";
+import { verifyMessage } from "@/utils/helpers/getSignatureMessage";
+import { web3 } from "@coral-xyz/anchor";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "@cubik/database";
 import { createToken } from "@/utils/helpers/auth";
 

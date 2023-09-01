@@ -1,6 +1,7 @@
 import { tagAnatomy } from '@chakra-ui/anatomy';
 import { createMultiStyleConfigHelpers } from '@chakra-ui/react';
 
+// eslint-disable-next-line @typescript-eslint/unbound-method
 const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpers(tagAnatomy.keys);
 
 const baseStyle = definePartsStyle({

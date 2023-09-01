@@ -1,10 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "@cubik/database";
 import { decodeToken } from "@/utils/helpers/auth";
 
-import { getClientIp } from "request-ip";
-import { AuthCheckReturn } from "@/types/auth";
-import { env } from "@/env.mjs";
+import type { AuthCheckReturn } from "@/types/auth";
 
 export async function POST(req: NextRequest) {
   try {
@@ -23,11 +22,11 @@ export async function POST(req: NextRequest) {
       });
       // no user then add a user
       if (!user) {
-        const res = await prisma.user.create({
-          data: {
-            mainWallet: wallet as string,
-          },
-        });
+        await prisma.user.create({
+           data: {
+             mainWallet: wallet as string,
+           },
+         });
         returnData = {
           data: {
             type: "NEW_WALLET",

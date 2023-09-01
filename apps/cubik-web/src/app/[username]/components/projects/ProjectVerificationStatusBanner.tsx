@@ -1,6 +1,5 @@
 import { Box, Center, Flex, HStack, Link } from "@/utils/chakra";
 import { ProjectVerifyStatus } from "@cubik/database";
-import FileSearch from "@/theme/icons/file_search.svg";
 import Spinner from "@/theme/icons/spinner.svg";
 
 export const ProjectVerificationStatusBanner = ({

@@ -1,4 +1,4 @@
-import { ProjectExploreBanner } from "@/types/explorer";
+import type { ProjectExploreBanner } from "@/types/explorer";
 import React from "react";
 import { GrantsCarousel } from "../carousel/grants";
 import { Center, Skeleton, VStack } from "@/utils/chakra";

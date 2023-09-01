@@ -2,8 +2,7 @@ import { Stack, VStack } from "@/utils/chakra";
 import React from "react";
 import { ProjectSocials } from "./ProjectSocials";
 import { ProjectOwner } from "./ProjectOwner";
-import { Team, User } from "@cubik/database";
-import { SimilarProject } from "./SimilarProject";
+import type { User } from "@cubik/database";
 import { ProjectFundingData } from "./ProjectFundingData";
 
 interface Props {

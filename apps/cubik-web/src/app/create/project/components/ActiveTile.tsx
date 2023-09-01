@@ -1,6 +1,5 @@
-import { Avatar, Box, Center, HStack, Stack, VStack } from "@/utils/chakra";
-import { ProjectJoinRoundStatus } from "@cubik/database";
-import { Dispatch, SetStateAction } from "react";
+import { Box, Center, HStack, VStack } from "@/utils/chakra";
+import type { Dispatch, SetStateAction } from "react";
 
 interface Props {
   tileIndex: string;

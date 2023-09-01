@@ -1,7 +1,7 @@
 import { Center, HStack, Text } from "@/utils/chakra";
 import { Player } from "@lottiefiles/react-lottie-player";
 
-const Toast = ({
+export const Toast = ({
   url,
   text,
   color,

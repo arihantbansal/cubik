@@ -1,4 +1,3 @@
-import { StyleFunctionProps } from '@chakra-ui/theme-tools';
 import { isMobileSafari, isSafari } from 'react-device-detect';
 
 export const Button = {
@@ -28,7 +27,7 @@ export const Button = {
   //   },
   // },
   variants: {
-    outline: (_props: StyleFunctionProps) => ({
+    outline: () => ({
       rounded: '12px',
       padding: '8px 16px',
       h: '3rem',
@@ -51,7 +50,7 @@ export const Button = {
         color: '#A8F0E6',
       },
     }),
-    markdownIconButton: (_props: StyleFunctionProps) => ({
+    markdownIconButton: () => ({
       rounded: '6px',
       padding: '4px !important',
       border: 'none',
@@ -62,7 +61,7 @@ export const Button = {
       color: '#ADB8B6',
       _hover: { height: 'full', maxW: '10px', background: 'neutral.3' },
     }),
-    primary: (_props: StyleFunctionProps) => ({
+    primary: () => ({
       color: '#031513',
       backgroundColor: '#A8F0E6',
       outline: isMobileSafari ? '' : '1px solid #A8F0E6',
@@ -83,7 +82,7 @@ export const Button = {
         transition: 'all 0.6s',
       },
     }),
-    secondary: (_props: StyleFunctionProps) => ({
+    secondary: () => ({
       color: '#A8F0E6',
       backgroundColor: 'transparent',
       height: 'full',
@@ -104,7 +103,7 @@ export const Button = {
         transition: 'all 0.6s',
       },
     }),
-    connect_wallet: (_props: StyleFunctionProps) => ({
+    connect_wallet: () => ({
       color: '#031513',
       backgroundColor: '#A8F0E6',
       padding: { base: '8px 20px 10px 20px', md: '8px 20px 10px 20px' },
@@ -131,7 +130,7 @@ export const Button = {
         backgroundColor: '#A8F0E6',
       },
     }),
-    create_account: (_props: StyleFunctionProps) => ({
+    create_account: () => ({
       color: '#031513',
       backgroundColor: '#A8F0E6',
       padding: { base: '8px 20px 10px 20px', md: '8px 20px 10px 20px' },
@@ -157,7 +156,7 @@ export const Button = {
         border: 'none',
       },
     }),
-    apply_for_grant: (_props: StyleFunctionProps) => ({
+    apply_for_grant: () => ({
       color: '#031513',
       backgroundColor: '#A8F0E6',
       padding: { base: '8px 16px 10px 16px', md: '8px 20px 10px 20px' },
@@ -183,7 +182,7 @@ export const Button = {
         border: 'none',
       },
     }),
-    close_modal: (_props: StyleFunctionProps) => ({
+    close_modal: () => ({
       color: '#A8F0E6',
       backgroundColor: 'transparent',
       padding: { base: '8px 20px 10px 20px', md: '8px 20px 10px 20px' },
@@ -202,7 +201,7 @@ export const Button = {
         transition: 'all 0.6s',
       },
     }),
-    primary_white: (_props: StyleFunctionProps) => ({
+    primary_white: () => ({
       color: '#00010A',
       backgroundColor: '#E0FFFD',
       padding: '14px 80px 16px 80px',
@@ -224,7 +223,7 @@ export const Button = {
         color: '#031513',
       },
     }),
-    connect_twitter: (_props: StyleFunctionProps) => ({
+    connect_twitter: () => ({
       color: '#031513',
       backgroundColor: '#E0FFFD',
       outline: isMobileSafari ? '' : '1px solid #A8F0E6',
@@ -243,7 +242,7 @@ export const Button = {
         outline: isMobileSafari ? '' : '1px solid #14665B',
       },
     }),
-    project_button_primary: (_props: StyleFunctionProps) => ({
+    project_button_primary: () => ({
       color: '#001F1B',
       backgroundColor: '#A8F0E6',
       height: 'full',
@@ -279,7 +278,7 @@ export const Button = {
         transition: 'all 0.6s',
       },
     }),
-    project_button_secondary: (_props: StyleFunctionProps) => ({
+    project_button_secondary: () => ({
       color: '#A8F0E6',
       backgroundColor: 'transparent',
       height: 'full',
@@ -301,7 +300,7 @@ export const Button = {
     }),
 
     // custom cubik buttons
-    cubikFilled: (_props: StyleFunctionProps) => ({
+    cubikFilled: () => ({
       color: '#031513',
       backgroundColor: '#A8F0E6',
       borderRadius: '10px',
@@ -319,7 +318,7 @@ export const Button = {
         },
       },
     }),
-    cubikOutlined: (_props: StyleFunctionProps) => ({
+    cubikOutlined: () => ({
       color: '#A8F0E6',
       backgroundColor: 'transparent',
       borderRadius: '10px',
@@ -344,7 +343,7 @@ export const Button = {
         },
       },
     }),
-    cubikDanger: (_props: StyleFunctionProps) => ({
+    cubikDanger: () => ({
       color: '#250003',
       backgroundColor: '#FCBDB5',
       borderRadius: '10px',
@@ -361,7 +360,7 @@ export const Button = {
         },
       },
     }),
-    cubikWarning: (_props: StyleFunctionProps) => ({
+    cubikWarning: () => ({
       color: '#212010',
       backgroundColor: '#FFEC71',
       borderRadius: '10px',
@@ -378,7 +377,7 @@ export const Button = {
         },
       },
     }),
-    cubikText: (_props: StyleFunctionProps) => ({
+    cubikText: () => ({
       color: '#A8F0E6',
       px: '16px !important',
       borderRadius: '10px',
@@ -399,7 +398,7 @@ export const Button = {
         },
       },
     }),
-    cubikAccept: (_props: StyleFunctionProps) => ({
+    cubikAccept: () => ({
       backgroundColor: '#31F57910',
       p: {
         base: '8px !important',
@@ -412,7 +411,7 @@ export const Button = {
         backgroundColor: '#31F57930',
       },
     }),
-    cubikReject: (_props: StyleFunctionProps) => ({
+    cubikReject: () => ({
       backgroundColor: '#ADB8B610',
       p: {
         base: '8px !important',

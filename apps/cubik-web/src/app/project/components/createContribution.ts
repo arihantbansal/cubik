@@ -1,6 +1,5 @@
 "use server";
 import { decodeToken } from "@/utils/helpers/auth";
-import { prisma } from "@cubik/database";
 import { cookies } from "next/headers";
 interface CreateContributionInput {
   token: string;
@@ -22,7 +21,7 @@ export const createContribution = async (data: CreateContributionInput) => {
     }
 
     const user = await decodeToken(auth.value);
-
+    return [data, user];
     // const joinId = await prisma.projectJoinHackathon.findFirst({
     //   where: {
     //     projectId: data.projectId,

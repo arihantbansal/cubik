@@ -1,8 +1,7 @@
-import GetFormattedLink from "@/app/components/common/formatters/getFormattedLink";
 import { Avatar, Box, Button, Center, Stack, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
-import { ProjectCommonType } from "./type";
+import type { ProjectCommonType } from "./type";
 import { getDomain } from "@/utils/helpers/getDomain";
 
 interface Props {

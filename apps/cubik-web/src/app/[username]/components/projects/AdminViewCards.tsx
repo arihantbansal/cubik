@@ -1,16 +1,7 @@
-import {
-  Accordion,
-  Box,
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Center,
-} from "@chakra-ui/react";
+import { Card, CardFooter, CardHeader } from "@chakra-ui/react";
 import React from "react";
 import { AdminProjectDetails } from "./AdminProjectDetails";
-import { ProjectCommonType } from "./type";
+import type { ProjectCommonType } from "./type";
 import { ProjectVerificationStatusBanner } from "./ProjectVerificationStatusBanner";
 
 interface Props {

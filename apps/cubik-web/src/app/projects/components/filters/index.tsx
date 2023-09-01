@@ -1,7 +1,9 @@
 "use client";
 import Categories from "./categories";
-import { ProjectExploreBanner, ProjectExplorerType } from "@/types/explorer";
-import { Sort } from "./Sort";
+import type {
+  ProjectExploreBanner,
+  ProjectExplorerType,
+} from "@/types/explorer";
 import {
   Button,
   Center,

@@ -1,18 +1,17 @@
 import { Stat, StatLabel, StatNumber, VStack } from "@/utils/chakra";
 import { formatNumberWithK } from "@/utils/helpers/formatNumberWithK";
-
+import React from "react";
 export const OverviewStatsCard = ({
   height,
   children,
   title,
   value,
-  isLoading,
 }: {
   height?: string;
   title: string;
   value: number;
   isLoading?: boolean;
-  children?: JSX.Element;
+  children?: React.JSX.Element;
 }) => {
   return (
     <Stat

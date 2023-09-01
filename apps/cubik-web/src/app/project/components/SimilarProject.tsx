@@ -1,5 +1,6 @@
 import { Avatar, Box, Card, Link, VStack } from "@/utils/chakra";
-import { ProjectVerifyStatus, User } from "@cubik/database";
+import type { User } from "@cubik/database";
+import { prisma, ProjectVerifyStatus } from "@cubik/database";
 import React from "react";
 
 interface ReturnType {

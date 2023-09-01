@@ -1,17 +1,16 @@
 "use client";
 
-import { useUser } from "@/app/context/user";
-import { NFTProfile, NftResponseCarousel } from "@/types/NFTProfile";
+import type { NFTProfile, NftResponseCarousel } from "@/types/NFTProfile";
 import { Box, Flex, Skeleton } from "@/utils/chakra";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { motion } from "framer-motion";
-import { Dispatch, Key, SetStateAction, memo, useState } from "react";
+import type { Dispatch, Key, SetStateAction } from "react";
+import { memo, useState } from "react";
 // import { useUserStore } from "~/store/userStore";
 
 const Carousel = memo(function Carousel({
   carouselWidth,
   nftsData,
-  PFP,
   setPFP,
   setNFTProfile,
 }: {

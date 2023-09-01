@@ -23,11 +23,11 @@ const sizes = {
 };
 
 // define styles for custom variant
-const cubik = defineStyle((props) => {
+const cubik = defineStyle(() => {
   return {
     bg: `#1D1F1E`,
     borderColor: `#1D1F1E`,
-    rounded: '4px',
+    rounded: "4px",
     color: `#626665`,
     _light: {
       bg: `#1D1F1E`,

@@ -1,6 +1,6 @@
 "use client";
 export function getDomain(url: string) {
-  var hostname;
+  let hostname;
   if (url?.indexOf("://") > -1) {
     hostname = url?.split("/")[2];
   } else {

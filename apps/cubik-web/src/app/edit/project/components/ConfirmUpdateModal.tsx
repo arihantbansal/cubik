@@ -9,18 +9,16 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Avatar,
   Box,
   HStack,
   Stack,
   VStack,
 } from "@/utils/chakra";
-import React, { Dispatch, SetStateAction } from "react";
-import { UseFormGetValues } from "react-hook-form";
-import { FormData } from "./Form";
+import type { Dispatch, SetStateAction } from "react";
+import React from "react";
+import type { UseFormGetValues } from "react-hook-form";
+import type { FormData } from "./Form";
 import { useUser } from "@/app/context/user";
 
 interface Props {
@@ -39,7 +37,6 @@ export const ConfirmUpdateModal = ({
   onUpdate,
   getValues,
   isLoading,
-  setLoading,
 }: Props) => {
   const { user } = useUser();
   return (

@@ -3,7 +3,7 @@
 import { Box, HStack } from "@/utils/chakra";
 import React from "react";
 import { ProofHandler } from "./ProofHandler";
-import { Proof } from "@cubik/database";
+import type { Proof } from "@cubik/database";
 import { useUser } from "@/app/context/user";
 
 interface Props {

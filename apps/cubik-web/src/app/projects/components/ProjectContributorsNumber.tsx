@@ -1,13 +1,13 @@
 import { Avatar, AvatarGroup } from "@/utils/chakra";
 import { Box, Flex } from "@/utils/chakra";
 
-export type ContributionType = {
+export interface ContributionType {
   id: string;
   user: {
     profilePicture: string;
     username: string;
   };
-};
+}
 
 const ProjectsContributorsNumber = ({
   contributors,
@@ -15,7 +15,7 @@ const ProjectsContributorsNumber = ({
 }: {
   contributors: {
     user: {
-      profilePicture: string;
+      profilePicture: string | null;
     };
   }[];
   contributorsCount: number;
@@ -37,7 +37,7 @@ const ProjectsContributorsNumber = ({
               <Avatar
                 key={id}
                 outline="2px solid #0C0D0D"
-                src={user.user.profilePicture}
+                src={user.user.profilePicture ?? ""}
               />
             ))}
           </AvatarGroup>

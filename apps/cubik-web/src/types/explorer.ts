@@ -1,11 +1,7 @@
 export type ExplorerType = "round" | "hackathon";
 
-enum event {
-  HACKATHON = "hackathon",
-  ROUND = "round",
-  MISC = "misc",
-}
-export type HackathonEvent = {
+
+export interface HackathonEvent {
   id: string;
   eventName: "hackathon";
   amount: number;
@@ -17,9 +13,9 @@ export type HackathonEvent = {
   votingStart: Date;
   votingEnd: Date;
   tracks: any[];
-};
+}
 
-export type RoundEvent = {
+export interface RoundEvent {
   id: string;
   eventName: "round";
   amount: number;
@@ -30,9 +26,9 @@ export type RoundEvent = {
   color: string;
   start: Date;
   end: Date;
-};
+}
 
-export type UnknownEvent = {
+export interface UnknownEvent {
   id: string;
   eventName: "unknown";
   bg?: string;
@@ -41,7 +37,7 @@ export type UnknownEvent = {
   end: Date;
   amount: number;
   name: string;
-};
+}
 
 export type EventType = HackathonEvent | RoundEvent | UnknownEvent;
 

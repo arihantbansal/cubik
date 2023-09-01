@@ -1,5 +1,5 @@
 import LandingPage from "@/app/components/landing-page/landingPage";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 // import { createAdmin } from "@/utils/contract";
 // import { connection } from "@/utils/contract/sdk";
 // import { Button } from "@chakra-ui/react";

@@ -1,4 +1,3 @@
-import { ProjectsDetailedDescription } from "@/app/hackathons/components/ProjectDetailedDescription";
 import { getDomain } from "@/utils/helpers/getDomain";
 import {
   Menu,
@@ -8,15 +7,13 @@ import {
   MenuItem,
   MenuDivider,
   VStack,
-  HStack,
   Avatar,
   Center,
   Stack,
-  Button,
   Box,
   Link,
 } from "@/utils/chakra";
-import { ProjectVerifyStatus } from "@cubik/database";
+import type { ProjectVerifyStatus } from "@cubik/database";
 import React from "react";
 import ThreeDots from "@/theme/icons/three_dots.svg";
 
@@ -30,9 +27,7 @@ interface Props {
 }
 export const AdminProjectDetails = ({
   projectLogo,
-  status,
   projectName,
-  shortDescription,
   project_link,
   id,
 }: Props) => {

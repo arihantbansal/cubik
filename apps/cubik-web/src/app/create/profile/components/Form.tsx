@@ -30,19 +30,19 @@ import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import ProfilePicture from "./ProfilePicture";
 import FramerCarousel from "./FramerCarousel";
 import { createUserIx } from "@/utils/contract";
-import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import type NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 import { connection, web3 } from "@/utils/contract/sdk";
 import { TransactionModel } from "./TransactionModel";
-import { NFTProfile } from "@/types/NFTProfile";
+import type { NFTProfile } from "@/types/NFTProfile";
 import { createUser } from "./handleSubmit";
 import { useUser } from "@/app/context/user";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { checkUsername } from "./checkUsername";
-import { AuthVerifyReturn } from "@/types/auth";
+import type { AuthVerifyReturn } from "@/types/auth";
 
 export const Form = () => {
-  const [userName, setUsername] = useState<string>("");
+  const [, setUsername] = useState<string>("");
   const [userNameIsAvailable, setUserNameIsAvailable] =
     useState<boolean>(false);
 
@@ -103,7 +103,6 @@ export const Form = () => {
     handleSubmit,
     trigger,
     control,
-    clearErrors,
     getValues,
     formState: { errors },
   } = useForm({

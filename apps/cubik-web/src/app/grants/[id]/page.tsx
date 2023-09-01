@@ -1,23 +1,21 @@
 import SEO from "@/app/components/SEO";
 import { prisma } from "@cubik/database";
-import { Prisma } from "@prisma/client";
+import type { Prisma } from "@cubik/database";
 import { Box, Container } from "@/utils/chakra";
 import React from "react";
 import { GrantDetailsHeader } from "../components/GrantDetailsHeader";
-import {
-  GrantDetailsBody,
-  ProjectJoinRoundReturnType,
-} from "../components/GrantDetailsBody";
+import type { ProjectJoinRoundReturnType } from "../components/GrantDetailsBody";
+import { GrantDetailsBody } from "../components/GrantDetailsBody";
 
 type GrantReturnType = Prisma.RoundGetPayload<{
   select: {
-    roundName: true;
+    name: true;
     startTime: true;
     endTime: true;
     matchedPool: true;
-    short_description: true;
+    shortDescription: true;
     description: true;
-    ProjectJoinRound: {
+    projectJoinRound: {
       select: {
         id: true;
         status: true;
@@ -25,10 +23,10 @@ type GrantReturnType = Prisma.RoundGetPayload<{
           select: {
             id: true;
             name: true;
-            short_description: true;
+            shortDescription: true;
             logo: true;
             industry: true;
-            project_links: true;
+            projectLink: true;
             owner: {
               select: {
                 username: true;
@@ -50,13 +48,13 @@ const getGrant = async (
         id: id,
       },
       select: {
-        roundName: true,
+        name: true,
         endTime: true,
         matchedPool: true,
         startTime: true,
-        short_description: true,
+        shortDescription: true,
         description: true,
-        ProjectJoinRound: {
+        projectJoinRound: {
           where: {
             status: "APPROVED",
           },
@@ -67,10 +65,10 @@ const getGrant = async (
               select: {
                 id: true,
                 name: true,
-                short_description: true,
+                shortDescription: true,
                 logo: true,
                 industry: true,
-                project_link: true,
+                projectLink: true,
                 owner: {
                   select: {
                     username: true,
@@ -95,8 +93,8 @@ const GrantPage = async ({ params }: { params: { id: string } }) => {
   return (
     <>
       <SEO
-        title={`${grant?.roundName || "Grant"}`}
-        description={`${grant?.short_description || "Grant Round on Cubik"}`}
+        title={`${grant?.name || "Grant"}`}
+        description={`${grant?.shortDescription || "Grant Round on Cubik"}`}
         image={`https://res.cloudinary.com/demonicirfan/image/upload/v1687266944/Projects_ozybde.png`}
       />
       <main>
@@ -112,8 +110,8 @@ const GrantPage = async ({ params }: { params: { id: string } }) => {
             endTime={grant?.endTime || new Date()}
             isLoading={false}
             matchingPool={grant?.matchedPool || 0}
-            roundName={grant?.roundName || ""}
-            shortDescription={grant?.short_description || ""}
+            roundName={grant?.name || ""}
+            shortDescription={grant?.shortDescription || ""}
             startTime={grant?.startTime || new Date()}
           />
 
@@ -124,7 +122,8 @@ const GrantPage = async ({ params }: { params: { id: string } }) => {
             isError={error}
             isLoading={false}
             projectJoinRound={
-              (grant?.ProjectJoinRound as ProjectJoinRoundReturnType[]) ?? []
+              (grant?.projectJoinRound as unknown as ProjectJoinRoundReturnType[]) ??
+              []
             }
           />
         </Container>

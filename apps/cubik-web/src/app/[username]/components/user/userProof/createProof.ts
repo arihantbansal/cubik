@@ -1,5 +1,6 @@
 "use server";
-import { ProofType, prisma } from "@cubik/database";
+import type { ProofType } from "@cubik/database";
+import { prisma } from "@cubik/database";
 
 interface Data {
   proofInfo: any;

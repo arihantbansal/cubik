@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "@cubik/database";
 export async function GET(request: NextRequest) {
   const id: string = await request.json();

@@ -3,9 +3,6 @@ import { ProjectVerifyStatus } from "@cubik/database";
 
 export const StatusBanner = ({
   status,
-  roundName,
-  startTime,
-  endTime,
 }: {
   status: string;
   roundName?: string;

@@ -1,24 +1,9 @@
 import { prisma } from "@cubik/database";
 // import Details from "./components/details";
-import {
-  Center,
-  Container,
-  Flex,
-  HStack,
-  SkeletonCircle,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Text,
-  VStack,
-} from "@/utils/chakra";
+import { Container, Flex } from "@/utils/chakra";
 import { notFound } from "next/navigation";
-import ProfilePictureAvatar from "@/app/components/common/profile-picture";
-import Username from "../components/common/username";
 import User from "./components/user";
-import { NFTProfile } from "@/types/NFTProfile";
+import type { NFTProfile } from "@/types/NFTProfile";
 
 const getProfile = async (username: string) => {
   return await prisma.user.findUnique({
@@ -56,7 +41,7 @@ const Profile = async ({
     >
       <Flex flexDir={"column"} gap="48px">
         <User
-          NFTProfile={profile.profileNft as NFTProfile}
+          NFTProfile={profile.profileNft as unknown as NFTProfile}
           username={username}
           mainWallet={profile.mainWallet}
           profilePicture={profile.profilePicture!}

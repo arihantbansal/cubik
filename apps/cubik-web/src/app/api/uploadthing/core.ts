@@ -1,7 +1,7 @@
-import { createUploadthing, type FileRouter } from "uploadthing/next";
+import { createUploadthing } from "uploadthing/next";
+import type { FileRouter } from "uploadthing/next";
 
 const f = createUploadthing();
-
 
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
@@ -9,7 +9,7 @@ export const ourFileRouter = {
   imageUploader: f({ image: { maxFileSize: "8MB" } })
     // Set permissions and file types for this FileRoute
 
-    .onUploadComplete(async ({ metadata, file }) => {
+    .onUploadComplete(async ({ file }) => {
       // This code RUNS ON YOUR SERVER after upload
       console.log("file url", file.url);
     }),

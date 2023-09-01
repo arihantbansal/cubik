@@ -1,10 +1,8 @@
 "use client";
-"use client";
 import {
   Box,
   Center,
   VStack,
-  Progress,
   Avatar,
   Table as ChakraTable,
   Thead,
@@ -20,18 +18,15 @@ import {
   useReactTable,
   getCoreRowModel,
   flexRender,
-  getSortedRowModel,
-  SortingState,
 } from "@tanstack/react-table";
 import Image from "next/image";
-import { useMemo, useState, Fragment, useEffect } from "react";
+import { useMemo, useState, Fragment } from "react";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { fetchProjects } from "../Sponsors/data";
 
 const HackathonProjectsView = () => {
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
-  const [sorting, setSorting] = useState<SortingState>([]);
 
   const toggleRowExpanded = (rowId: string) => {
     setExpandedRows((prev) => ({
@@ -47,7 +42,6 @@ const HackathonProjectsView = () => {
 
   const data = useMemo(() => {
     const response = projectsInfo.data?.map((data) => {
-      const NoOfProjectCreators = data.project;
       data.project;
       return {
         project: {
@@ -135,7 +129,7 @@ const HackathonProjectsView = () => {
   );
 
   const tableInstance = useReactTable({
-    data: data || [],
+    data: data ?? [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -192,7 +186,7 @@ const HackathonProjectsView = () => {
                   >
                     {rowIndex + 1}
                   </Td>
-                  {row.getVisibleCells().map((cell, cellIndex) => (
+                  {row.getVisibleCells().map((cell) => (
                     <Td
                       fontSize={{ base: "14px", md: "16px" }}
                       fontWeight="600"

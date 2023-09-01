@@ -10,7 +10,7 @@ import {
 } from "@/utils/chakra";
 import React from "react";
 import { ContributorRow } from "./ContributionRow";
-import { ContributionRowType } from "./Contributions";
+import type { ContributionRowType } from "./Contributions";
 
 interface Props {
   contribution: ContributionRowType[];

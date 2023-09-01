@@ -15,7 +15,6 @@ import {
   SolletExtensionWalletAdapter,
   TokenaryWalletAdapter,
   TorusWalletAdapter,
-  UnsafeBurnerWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 // import { web3 } from "@coral-xyz/anchor";
 import type { FC, ReactNode } from "react";

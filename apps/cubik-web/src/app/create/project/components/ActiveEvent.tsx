@@ -59,7 +59,7 @@ export const ActiveEvent = ({ projectId }: Props) => {
                 options={el.tracks}
                 focusBorderColor="transparent"
                 chakraStyles={{
-                  container: (provided, state) => ({
+                  container: (provided) => ({
                     ...provided,
                     border: "none",
                     background: "surface.input_field",
@@ -92,7 +92,7 @@ export const ActiveEvent = ({ projectId }: Props) => {
                       boxShadow: "0 0 0 2px #E53E3E",
                     },
                   }),
-                  inputContainer: (provided, state) => ({
+                  inputContainer: (provided) => ({
                     ...provided,
                     ps: "8px",
                     fontSize: { base: "12px", md: "14px" },
@@ -101,7 +101,7 @@ export const ActiveEvent = ({ projectId }: Props) => {
                     boxShadow: "none",
                     outline: "none",
                   }),
-                  valueContainer: (provided, state) => ({
+                  valueContainer: (provided) => ({
                     ...provided,
                     ps: "8px",
                     border: "none",
@@ -110,11 +110,11 @@ export const ActiveEvent = ({ projectId }: Props) => {
                     outline: "none",
                   }),
 
-                  clearIndicator: (provided, state) => ({
+                  clearIndicator: (provided) => ({
                     ...provided,
                     display: "none",
                   }),
-                  dropdownIndicator: (provided, state) => ({
+                  dropdownIndicator: (provided) => ({
                     ...provided,
                     background: "",
                     borderColor: "transparent !important",
@@ -123,17 +123,17 @@ export const ActiveEvent = ({ projectId }: Props) => {
                     p: 0,
                     w: "60px",
                   }),
-                  indicatorSeparator: (provided, state) => ({
+                  indicatorSeparator: (provided) => ({
                     ...provided,
                     display: "none",
                   }),
-                  menu: (provided, state) => ({
+                  menu: (provided) => ({
                     ...provided,
                     //border: 'none',
                     transform: "translateY(-10px)",
                     backgroundColor: "#0F0F0F",
                   }),
-                  menuList: (provided, state) => ({
+                  menuList: (provided) => ({
                     ...provided,
                     backgroundColor: "#0F0F0F",
                     border: "1px solid #141414",
@@ -159,7 +159,7 @@ export const ActiveEvent = ({ projectId }: Props) => {
                       backgroundColor: "#0F0F0F",
                     },
                   }),
-                  control: (provided, state) => ({
+                  control: (provided) => ({
                     ...provided,
                     border: "none",
                     backgroundColor: "#0F0F0F",
@@ -170,7 +170,7 @@ export const ActiveEvent = ({ projectId }: Props) => {
                       backgroundColor: "#0F0F0F",
                     },
                   }),
-                  placeholder: (provided, state) => ({
+                  placeholder: (provided) => ({
                     ...provided,
                     textAlign: "start",
                     fontSize: { base: "12px", md: "14px" },

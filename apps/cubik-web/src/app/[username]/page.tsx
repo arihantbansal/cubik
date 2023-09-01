@@ -3,7 +3,7 @@ import ContributionPage from "./components/contributions/contributionTab";
 import { ProjectsTab } from "./components/projects/ProjectsTab";
 import { UserDetails } from "./components/user/UserDetails";
 import { UserProof } from "./components/user/userProof";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 interface Props {
   params: { username: string };

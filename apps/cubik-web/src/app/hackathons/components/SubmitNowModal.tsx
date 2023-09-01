@@ -1,6 +1,5 @@
 "use client";
 import { EmptyStateHOC } from "@/app/components/common/empty-state/EmptyStateHOC";
-import { HackathonTracks } from "@/types/hackathon";
 import {
   Alert,
   AlertDescription,
@@ -25,14 +24,17 @@ import {
   Stack,
   Tag,
   VStack,
-  Select as ChakraSelect,
   useToast,
 } from "@/utils/chakra";
-import { ProjectJoinRoundStatus, ProjectVerifyStatus } from "@cubik/database";
+import type {
+  ProjectJoinRoundStatus,
+  ProjectVerifyStatus,
+} from "@cubik/database";
 import { useQuery } from "@tanstack/react-query";
 import { Select } from "chakra-react-select";
 import React, { useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import {
   createJoinHackathon,
   getUserProjects,
@@ -63,25 +65,18 @@ type FormData = {
 };
 export const SubmitNowModal = ({
   isOpen,
-  hackathonDescription,
   hackathonId,
-  hackathonLogo,
   hackathonName,
   onClose,
   hackathonTracks,
 }: Props) => {
   const {
     control,
-    register,
     handleSubmit,
     watch,
     reset,
-    trigger,
     formState: { errors },
-    setValue,
     getValues,
-    setError,
-    getFieldState,
   } = useForm<FormData>({
     defaultValues: {
       mainTrack: "fully_on_chain_game",
@@ -90,7 +85,7 @@ export const SubmitNowModal = ({
 
   const [step, setStep] = useState(0);
   const [signTransactionLoading, setsignTransactionLoading] = useState(false);
-  const [transactionSignError, setTransactionSignError] = useState(null);
+  const [transactionSignError] = useState(null);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
     null
   );
@@ -333,7 +328,7 @@ export const SubmitNowModal = ({
                           gap="12px"
                           w="full"
                         >
-                          {userProjects.data?.map((project, index) => (
+                          {userProjects.data?.map((project) => (
                             <Tile
                               isSelectAble={
                                 selectedArray.data?.find(
@@ -359,7 +354,6 @@ export const SubmitNowModal = ({
                         name="tracks"
                         render={({
                           field: { onChange, onBlur, value, name, ref },
-                          fieldState: { error },
                         }) => (
                           <FormControl
                             isInvalid={Boolean(errors.tracks)}
@@ -403,7 +397,7 @@ export const SubmitNowModal = ({
                               variant="unstyled"
                               focusBorderColor="transparent"
                               chakraStyles={{
-                                container: (provided, state) => ({
+                                container: (provided) => ({
                                   ...provided,
                                   border: "none",
                                   background: "surface.input_field",
@@ -439,7 +433,7 @@ export const SubmitNowModal = ({
                                     boxShadow: "0 0 0 2px #E53E3E",
                                   },
                                 }),
-                                inputContainer: (provided, state) => ({
+                                inputContainer: (provided) => ({
                                   ...provided,
                                   ps: "8px",
                                   fontSize: { base: "12px", md: "14px" },
@@ -448,7 +442,7 @@ export const SubmitNowModal = ({
                                   boxShadow: "none",
                                   outline: "none",
                                 }),
-                                valueContainer: (provided, state) => ({
+                                valueContainer: (provided) => ({
                                   ...provided,
                                   ps: "8px",
                                   minH: "40px",
@@ -458,11 +452,11 @@ export const SubmitNowModal = ({
                                   outline: "none",
                                 }),
 
-                                clearIndicator: (provided, state) => ({
+                                clearIndicator: (provided) => ({
                                   ...provided,
                                   display: "none",
                                 }),
-                                dropdownIndicator: (provided, state) => ({
+                                dropdownIndicator: (provided) => ({
                                   ...provided,
                                   background: "",
                                   borderColor: "transparent !important",
@@ -471,17 +465,17 @@ export const SubmitNowModal = ({
                                   p: 0,
                                   w: "60px",
                                 }),
-                                indicatorSeparator: (provided, state) => ({
+                                indicatorSeparator: (provided) => ({
                                   ...provided,
                                   display: "none",
                                 }),
-                                menu: (provided, state) => ({
+                                menu: (provided) => ({
                                   ...provided,
                                   //border: 'none',
                                   transform: "translateY(-10px)",
                                   backgroundColor: "#0F0F0F",
                                 }),
-                                menuList: (provided, state) => ({
+                                menuList: (provided) => ({
                                   ...provided,
                                   backgroundColor: "#0F0F0F",
                                   border: "1px solid #141414",
@@ -507,7 +501,7 @@ export const SubmitNowModal = ({
                                     backgroundColor: "#0F0F0F",
                                   },
                                 }),
-                                control: (provided, state) => ({
+                                control: (provided) => ({
                                   ...provided,
                                   border: "none",
                                   backgroundColor: "#0F0F0F",
@@ -518,7 +512,7 @@ export const SubmitNowModal = ({
                                     backgroundColor: "#0F0F0F",
                                   },
                                 }),
-                                placeholder: (provided, state) => ({
+                                placeholder: (provided) => ({
                                   ...provided,
                                   textAlign: "start",
                                   fontSize: { base: "12px", md: "14px" },

@@ -1,8 +1,6 @@
 "use client";
-import { AuthCheckReturn, AuthVerifyReturn } from "@/types/auth";
-import { Box, Button, Center, Spinner, useDisclosure } from "@/utils/chakra";
-import { createMessage } from "@/utils/helpers/getSignatureMessage";
-import { utils } from "@coral-xyz/anchor";
+import type { AuthCheckReturn } from "@/types/auth";
+import { Button, Center, Spinner, useDisclosure } from "@/utils/chakra";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useRouter } from "next/navigation";
@@ -82,6 +80,7 @@ export const WalletConnect = () => {
       }
     };
     connect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [publicKey]);
 
   if (!connected && !publicKey && !user) {

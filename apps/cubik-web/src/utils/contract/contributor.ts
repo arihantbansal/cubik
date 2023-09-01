@@ -1,4 +1,4 @@
-import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import type NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 import { connection, getSdk } from "./sdk";
 import { web3 } from "@coral-xyz/anchor";
 import * as spl from "@solana/spl-token";

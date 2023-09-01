@@ -1,13 +1,12 @@
-import { TokenInfo } from "@/types/token";
-
-export type tokenListType = {
+import type { JSX } from "react";
+export interface tokenListType {
   name: string;
   label: string;
   symbol: string;
   decimals: number;
   address: string;
   icon?: JSX.Element;
-};
+}
 
 export const tokenList = [
   // {

@@ -1,8 +1,9 @@
 import { env } from "@/env.mjs";
 import * as anchor from "@coral-xyz/anchor";
 import * as spl from "@solana/spl-token";
-import { CubikContractV2, IDL } from "./idl";
-import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import type { CubikContractV2 } from "./idl";
+import { IDL } from "./idl";
+import type NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 const PROGRAM_ID =
   env.NEXT_PUBLIC_SOLANA_NETWORK === "mainnet-beta"
     ? "BVo5TquTYMAASZhfX392BcjFUxda6DKzHStNapJE6Wyz"
@@ -67,7 +68,7 @@ export const createContributionV2 = async (
       program.programId
     );
 
-    let [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
+    const [project_account] = anchor.web3.PublicKey.findProgramAddressSync(
       [
         anchor.utils.bytes.utf8.encode("project"),
         new anchor.web3.PublicKey(owner).toBuffer(),
@@ -75,14 +76,15 @@ export const createContributionV2 = async (
       ],
       program.programId
     );
-    let [contributionV2Account] = anchor.web3.PublicKey.findProgramAddressSync(
-      [
-        anchor.utils.bytes.utf8.encode("contribution"),
-        wallet.publicKey.toBuffer(),
-        createKey.publicKey.toBuffer(),
-      ],
-      program.programId
-    );
+    const [contributionV2Account] =
+      anchor.web3.PublicKey.findProgramAddressSync(
+        [
+          anchor.utils.bytes.utf8.encode("contribution"),
+          wallet.publicKey.toBuffer(),
+          createKey.publicKey.toBuffer(),
+        ],
+        program.programId
+      );
 
     // ATAs
     const ata_sender = await spl.getAssociatedTokenAddress(

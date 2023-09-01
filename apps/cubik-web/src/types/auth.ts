@@ -1,5 +1,5 @@
-import { NFTProfile } from "./NFTProfile";
-import { JwtPayload } from "jsonwebtoken";
+import type { NFTProfile } from "./NFTProfile";
+import type { JwtPayload } from "jsonwebtoken";
 
 export type AuthPayload = {
   id: string;
@@ -10,7 +10,7 @@ export type AuthPayload = {
   ip: string;
 } & JwtPayload;
 
-export type AuthCheckReturn = {
+export interface AuthCheckReturn {
   data: {
     accessToken?: string;
     type:
@@ -20,17 +20,15 @@ export type AuthCheckReturn = {
       | "AUTHENTICATED_USER";
   } | null;
   error: string | null;
-};
+}
 
-
-export type AuthVerifyReturn = {
+export interface AuthVerifyReturn {
   data: boolean;
   accessToken?: string;
   error: string | null;
-};
+}
 
-
-export type AuthTokenCheckReturn = {
+export interface AuthTokenCheckReturn {
   data: string | null;
   error: string | null;
-};
+}

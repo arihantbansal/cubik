@@ -1,40 +1,21 @@
 "use client";
+import type { LinkProps } from "@/utils/chakra";
 import {
   Box,
-  Center,
   Stack,
   Text,
   VStack,
-  Button,
   Collapse,
   Link,
-  LinkProps,
   SkeletonText,
 } from "@/utils/chakra";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import ComponentErrors from "@/app/components/common/errors/componentErrors";
 import { useState } from "react";
-//import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-
-const ErrorUI = () => {
-  return (
-    <Center
-      w="full"
-      py={{ base: "16px", sm: "24px" }}
-      border="1px dashed"
-      borderColor={"#1D1F1E"}
-      rounded="12px"
-    >
-      <ComponentErrors />
-    </Center>
-  );
-};
 
 export const ProjectsDetailedDescription = ({
-  isError,
   isLoading,
   description,
   maxH,
@@ -46,12 +27,7 @@ export const ProjectsDetailedDescription = ({
   maxH?: string;
   overflow?: string;
 }) => {
-  const [show, setShow] = useState(false);
-
-  const handleToggle = () => setShow(!show);
-  if (isError) {
-    return <ErrorUI />;
-  }
+  const [show] = useState(false);
 
   const newTheme = {
     a: (props: LinkProps) => {

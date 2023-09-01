@@ -1,9 +1,10 @@
 "use server";
 
 import { decodeToken } from "@/utils/helpers/auth";
-import { Project, Team, prisma } from "@cubik/database";
+import type { Project } from "@cubik/database";
+import { prisma } from "@cubik/database";
 import { cookies } from "next/headers";
-export const handleUpdate = async (project: Partial<Project>, team: Team[]) => {
+export const handleUpdate = async (project: Partial<Project>) => {
   try {
     const auth = cookies().get("authToken");
     if (!auth) {

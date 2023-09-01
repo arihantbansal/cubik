@@ -1,12 +1,7 @@
 "use client";
-import { Box, HStack, Stack, Tooltip, VStack } from "@/utils/chakra";
-import { useEffect, useState } from "react";
+import { Box, HStack, Stack, VStack } from "@/utils/chakra";
 import FlipNumbers from "react-flip-numbers";
 import { StatusBanner } from "./StatusBanner";
-import { RoundStatus } from "@/app/components/common/dates/roundStatus";
-import { HackathonCard } from "@/app/hackathons/components/hackathonCard";
-import { formatNumberWithComma } from "@/utils/helpers/formatNumberWithK";
-import dayjs from "dayjs";
 
 // import { FiInfo } from "react-icons/fi";
 // import RoundStatus from "~/components/common/dates/Status";
@@ -31,21 +26,21 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ date }) => {
     };
   };
 
-  const [timeRemaining, setTimeRemaining] = useState<number>(
-    getTimeRemaining(date).total
-  );
+  // const [timeRemaining, setTimeRemaining] = useState<number>(
+  //   getTimeRemaining(date).total
+  // );
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const time = getTimeRemaining(date);
-      if (time.total <= 0) {
-        clearInterval(interval);
-      }
-      setTimeRemaining(time.total);
-    }, 1000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const time = getTimeRemaining(date);
+  //     if (time.total <= 0) {
+  //       clearInterval(interval);
+  //     }
+  //     setTimeRemaining(time.total);
+  //   }, 1000);
 
-    return () => clearInterval(interval);
-  }, [date]);
+  //   return () => clearInterval(interval);
+  // }, [date]);
 
   const formatNumber = (number: number) => {
     return number < 10 ? "0" + number : number;
@@ -90,21 +85,21 @@ export const CountdownTimerBig: React.FC<CountdownTimerProps> = ({ date }) => {
     };
   };
 
-  const [timeRemaining, setTimeRemaining] = useState<number>(
-    getTimeRemaining(date).total
-  );
+  // const [timeRemaining, setTimeRemaining] = useState<number>(
+  //   getTimeRemaining(date).total
+  // );
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const time = getTimeRemaining(date);
-      if (time.total <= 0) {
-        clearInterval(interval);
-      }
-      setTimeRemaining(time.total);
-    }, 1000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const time = getTimeRemaining(date);
+  //     if (time.total <= 0) {
+  //       clearInterval(interval);
+  //     }
+  //     setTimeRemaining(time.total);
+  //   }, 1000);
 
-    return () => clearInterval(interval);
-  }, [date]);
+  //   return () => clearInterval(interval);
+  // }, [date]);
 
   const formatNumber = (number: number) => {
     return number < 10 ? "0" + number : number;
@@ -187,12 +182,9 @@ const FundingRoundBanner = ({
   submissionEndDate,
   startDate,
   endDate,
-  id,
   name,
   description,
-  matchingPool,
   event,
-  background,
 }: {
   submissionEndDate: Date;
   startDate: Date;

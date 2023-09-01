@@ -1,5 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import { GroupBase, OptionsOrGroups, Select } from "chakra-react-select";
+import { Select } from "chakra-react-select";
 import { category } from "./categories";
 import {
   Box,
@@ -8,15 +9,11 @@ import {
   FormLabel,
   HStack,
 } from "@/utils/chakra";
-import {
-  Control,
-  Controller,
-  FieldErrors,
-  UseFormWatch,
-} from "react-hook-form";
+import type { Control, FieldErrors, UseFormWatch } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { searchTeam } from "@/app/create/project/components/search";
 import { useQuery } from "@tanstack/react-query";
-import { FormData } from "./Form";
+import type { FormData } from "./Form";
 import { useState } from "react";
 
 export const CategorySelect = ({
@@ -28,20 +25,20 @@ export const CategorySelect = ({
   errors: FieldErrors<FormData>;
   watch: UseFormWatch<FormData>;
 }) => {
-  const colors = [
-    "red",
-    "orange",
-    "yellow",
-    "green",
-    "teal",
-    "blue",
-    "cyan",
-    "purple",
-    "pink",
-    "gray",
-  ];
+  // const colors = [
+  //   "red",
+  //   "orange",
+  //   "yellow",
+  //   "green",
+  //   "teal",
+  //   "blue",
+  //   "cyan",
+  //   "purple",
+  //   "pink",
+  //   "gray",
+  // ];
 
-  const categoryWithColors = category.map((item, index) => {
+  const categoryWithColors = category.map((item) => {
     return {
       ...item,
       colorScheme: "#010F0D",
@@ -52,18 +49,12 @@ export const CategorySelect = ({
       control={control}
       name="category"
       rules={{ required: "Please enter at least 1 Tag." }}
-      render={({
-        field: { onChange, onBlur, value, name, ref },
-        fieldState: { error },
-      }) => (
+      render={() => (
         <Controller
           control={control}
           name="category"
           rules={{ required: "Please enter at least 1 Tag." }}
-          render={({
-            field: { onChange, onBlur, value, name, ref },
-            fieldState: { error },
-          }) => (
+          render={({ field: { onChange, onBlur, value, name, ref } }) => (
             <FormControl
               isRequired
               isInvalid={Boolean(errors.category)}
@@ -106,7 +97,7 @@ export const CategorySelect = ({
                 variant="unstyled"
                 focusBorderColor="transparent"
                 chakraStyles={{
-                  container: (provided, state) => ({
+                  container: (provided) => ({
                     ...provided,
                     border: "none",
                     // background: `surface.${}`,
@@ -140,7 +131,7 @@ export const CategorySelect = ({
                       boxShadow: "0 0 0 2px #E53E3E",
                     },
                   }),
-                  inputContainer: (provided, state) => ({
+                  inputContainer: (provided) => ({
                     ...provided,
                     ps: "8px",
                     height: "40px",
@@ -150,7 +141,7 @@ export const CategorySelect = ({
                     boxShadow: "none",
                     outline: "none",
                   }),
-                  valueContainer: (provided, state) => ({
+                  valueContainer: (provided) => ({
                     ...provided,
                     ps: "8px",
                     border: "none",
@@ -158,11 +149,11 @@ export const CategorySelect = ({
                     boxShadow: "none",
                     outline: "none",
                   }),
-                  clearIndicator: (provided, state) => ({
+                  clearIndicator: (provided) => ({
                     ...provided,
                     display: "none",
                   }),
-                  dropdownIndicator: (provided, state) => ({
+                  dropdownIndicator: (provided) => ({
                     ...provided,
                     borderColor: "transparent !important",
                     outline: "0px !important",
@@ -170,16 +161,16 @@ export const CategorySelect = ({
                     p: 0,
                     w: "60px",
                   }),
-                  indicatorSeparator: (provided, state) => ({
+                  indicatorSeparator: (provided) => ({
                     ...provided,
                     display: "none",
                   }),
-                  menu: (provided, state) => ({
+                  menu: (provided) => ({
                     ...provided,
                     transform: "translateY(-10px)",
                     backgroundColor: "#0F0F0F",
                   }),
-                  menuList: (provided, state) => ({
+                  menuList: (provided) => ({
                     ...provided,
                     backgroundColor: "#0F0F0F",
                     border: "1px solid #141414",
@@ -205,7 +196,7 @@ export const CategorySelect = ({
                       backgroundColor: "#0F0F0F",
                     },
                   }),
-                  control: (provided, state) => ({
+                  control: (provided) => ({
                     ...provided,
                     border: "none",
                     backgroundColor: "#0F0F0F",
@@ -216,7 +207,7 @@ export const CategorySelect = ({
                       backgroundColor: "#0F0F0F",
                     },
                   }),
-                  placeholder: (provided, state) => ({
+                  placeholder: (provided) => ({
                     ...provided,
                     textAlign: "start",
                     fontSize: { base: "12px", md: "14px" },
@@ -249,11 +240,7 @@ export const TeamSelect = ({
     string | undefined
   >(undefined);
 
-  const {
-    data: teamSearch,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: teamSearch, isLoading } = useQuery({
     queryFn: ({ queryKey }) => searchTeam(queryKey[1] as string),
     queryKey: ["searchTeam", currentTeammateName],
     enabled: currentTeammateName?.length! > 3 ? true : false,
@@ -263,10 +250,7 @@ export const TeamSelect = ({
     <Controller
       control={control}
       name="team"
-      render={({
-        field: { onChange, onBlur, value, name, ref },
-        fieldState: { error },
-      }) => (
+      render={({ field: { onChange, onBlur, value, name, ref } }) => (
         <FormControl isInvalid={Boolean(errors.team)} id="team">
           <FormLabel
             fontSize={{ base: "12px", md: "14px" }}
@@ -316,7 +300,7 @@ export const TeamSelect = ({
               setCurrentTeammateName(inputValue);
             }}
             chakraStyles={{
-              container: (provided, state) => ({
+              container: (provided) => ({
                 ...provided,
                 border: "none",
                 background:
@@ -350,7 +334,7 @@ export const TeamSelect = ({
                   border: "none",
                 },
               }),
-              inputContainer: (provided, state) => ({
+              inputContainer: (provided) => ({
                 ...provided,
                 ps: "8px",
                 height: "40px",
@@ -360,7 +344,7 @@ export const TeamSelect = ({
                 boxShadow: "none",
                 outline: "none",
               }),
-              valueContainer: (provided, state) => ({
+              valueContainer: (provided) => ({
                 ...provided,
                 ps: "8px",
                 border: "none",
@@ -368,11 +352,11 @@ export const TeamSelect = ({
                 boxShadow: "none",
                 outline: "none",
               }),
-              clearIndicator: (provided, state) => ({
+              clearIndicator: (provided) => ({
                 ...provided,
                 display: "none",
               }),
-              dropdownIndicator: (provided, state) => ({
+              dropdownIndicator: (provided) => ({
                 ...provided,
                 background: "",
                 borderColor: "transparent !important",
@@ -381,17 +365,17 @@ export const TeamSelect = ({
                 p: 0,
                 w: "60px",
               }),
-              indicatorSeparator: (provided, state) => ({
+              indicatorSeparator: (provided) => ({
                 ...provided,
                 display: "none",
               }),
-              menu: (provided, state) => ({
+              menu: (provided) => ({
                 ...provided,
                 //border: 'none',
                 transform: "translateY(-10px)",
                 backgroundColor: "#0F0F0F",
               }),
-              menuList: (provided, state) => ({
+              menuList: (provided) => ({
                 ...provided,
                 backgroundColor: "#0F0F0F",
                 border: "1px solid #141414",
@@ -401,7 +385,7 @@ export const TeamSelect = ({
                 boxShadow: "none",
                 padding: "0px",
               }),
-              option: (provided, state) => ({
+              option: (provided,state) => ({
                 ...provided,
                 color: "neutral.11",
                 fontSize: { base: "12px", md: "14px" },
@@ -418,7 +402,7 @@ export const TeamSelect = ({
                   backgroundColor: "#0F0F0F",
                 },
               }),
-              control: (provided, state) => ({
+              control: (provided) => ({
                 ...provided,
                 border: "none",
                 backgroundColor: "#0F0F0F",
@@ -429,7 +413,7 @@ export const TeamSelect = ({
                   backgroundColor: "#0F0F0F",
                 },
               }),
-              placeholder: (provided, state) => ({
+              placeholder: (provided) => ({
                 ...provided,
                 textAlign: "start",
                 px: "1rem",

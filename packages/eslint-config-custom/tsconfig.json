@@ -1,0 +1,5 @@
+{
+  "extends": "@cubik/tsconfig/base.json",
+  "include": ["."],
+  "exclude": ["node_modules"]
+}

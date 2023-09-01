@@ -1,14 +1,11 @@
-import { AuthPayload, AuthTokenCheckReturn } from "@/types/auth";
-import { sign, verify } from "jsonwebtoken";
+import type { AuthPayload, AuthTokenCheckReturn } from "@/types/auth";
 import { jwtVerify, SignJWT } from "jose";
 
 export const decodeToken = async (
   token: string
 ): Promise<AuthPayload | null> => {
   try {
-    const secret = new TextEncoder().encode(
-      process.env.NEXT_PUBLIC_SECRET as string
-    );
+    const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_SECRET);
     const decodedToken = await jwtVerify(token, secret, {
       algorithms: ["HS256"],
     });
@@ -26,9 +23,7 @@ export const decodeToken = async (
 
 export const createToken = async (tokenPayload: AuthPayload) => {
   try {
-    const secret = new TextEncoder().encode(
-      process.env.NEXT_PUBLIC_SECRET as string
-    );
+    const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_SECRET);
     const alg = "HS256";
     const token = new SignJWT(tokenPayload)
       .setProtectedHeader({ alg })
@@ -63,7 +58,7 @@ export const getToken = async () => {
       method: "GET",
     });
     const data = (await res.json()) as AuthTokenCheckReturn;
-    if (data.error || !data.data) {
+    if (data.error ?? !data.data) {
       return null;
     }
     return data.data;

@@ -1,8 +1,8 @@
-import { Center, Flex, HStack, SkeletonCircle, VStack } from "@/utils/chakra";
+import { Center, HStack, VStack } from "@/utils/chakra";
 import ProfilePictureAvatar from "@/app/components/common/profile-picture";
 import Username from "@/app/components/common/username";
 import { WalletAddress } from "@/app/components/common/wallet";
-import { NFTProfile } from "@/types/NFTProfile";
+import type { NFTProfile } from "@/types/NFTProfile";
 
 const User = ({
   username,

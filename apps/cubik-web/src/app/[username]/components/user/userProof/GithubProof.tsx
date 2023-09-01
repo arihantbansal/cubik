@@ -17,16 +17,11 @@ import {
   useToast,
 } from "@/utils/chakra";
 import { Player } from "@lottiefiles/react-lottie-player";
-import { Proof } from "@cubik/database";
+import type { Proof } from "@cubik/database";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { supabase, useUserSupabase } from "@/utils/helpers/supabase";
-import {
-  useRouter,
-  useParams,
-  usePathname,
-  useSearchParams,
-} from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { env } from "@/env.mjs";
 import { createProof, getUser } from "./createProof";
 import { useUser } from "@/app/context/user";
@@ -38,7 +33,6 @@ interface Props {
 
 export const GithubProof = ({ username, proofs }: Props) => {
   const MotionBox = motion(Box);
-  const params = useParams();
   const pathName = usePathname();
   const searchParams = useSearchParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -78,6 +72,7 @@ export const GithubProof = ({ username, proofs }: Props) => {
       }
     };
     checkGithub();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams?.get("github"), user?.data.user?.user_metadata.user_name]);
   const toast = useToast();
   const createGithubProof = async () => {

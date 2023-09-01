@@ -1,20 +1,19 @@
 export const formateDateInMonths = (date?: Date | string): string => {
   if (!date) return "";
 
-  let parsedDate = typeof date === "string" ? new Date(date) : date;
+  const parsedDate = typeof date === "string" ? new Date(date) : date;
 
   if (
     Object.prototype.toString.call(parsedDate) !== "[object Date]" ||
     isNaN(parsedDate.getTime())
   ) {
-    console.error(`Invalid date: ${date}`);
     return "";
   }
 
-  let day = String(parsedDate.getDate()).padStart(2, "0");
+  const day = String(parsedDate.getDate()).padStart(2, "0");
 
-  let monthIndex = parsedDate.getMonth();
-  let monthNames = [
+  const monthIndex = parsedDate.getMonth();
+  const monthNames = [
     "January",
     "February",
     "March",
@@ -28,11 +27,11 @@ export const formateDateInMonths = (date?: Date | string): string => {
     "November",
     "December",
   ];
-  let monthName = monthNames[monthIndex];
+  const monthName = monthNames[monthIndex];
 
-  let year = parsedDate.getFullYear();
+  const year = parsedDate.getFullYear();
 
-  let formattedDate = `${day} ${monthName} ${year}`;
+  const formattedDate = `${day} ${monthName} ${year}`;
 
   return formattedDate;
 };

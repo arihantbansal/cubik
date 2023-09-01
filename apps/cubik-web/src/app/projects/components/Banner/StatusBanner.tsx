@@ -1,15 +1,9 @@
 import { Box, Center, HStack, chakra, keyframes } from "@chakra-ui/react";
-import {
-  differenceInHours,
-  differenceInDays,
-  isFuture,
-  isPast,
-} from "date-fns";
+import { differenceInDays, isFuture, isPast } from "date-fns";
 // import { AiTwotoneClock } from "react-icons/ai";
 // import { BiInfoCircle } from "react-icons/bi";
 import Clock from "@/theme/icons/clock.svg";
 import InfoCircle from "@/theme/icons/info_circle.svg";
-import { dayjs } from "@/utils/helpers/dayjs";
 
 const random = () => Math.floor(Math.random() * 10);
 
@@ -54,14 +48,14 @@ export const StatusBanner = ({
   if (!startDate || !endDate || !submissionEndDate) return null;
   const now = new Date();
 
-  const daysToSubmissionEnd =
-    differenceInDays(submissionEndDate, now) > 1
-      ? differenceInDays(submissionEndDate, now) + " days"
-      : differenceInHours(submissionEndDate, now) + " hours";
-  const daysToStart: string =
-    differenceInDays(startDate, now) > 1
-      ? differenceInDays(startDate, now) + " days"
-      : differenceInHours(startDate, now) + " hours";
+  // const daysToSubmissionEnd =
+  //   differenceInDays(submissionEndDate, now) > 1
+  //     ? differenceInDays(submissionEndDate, now) + " days"
+  //     : differenceInHours(submissionEndDate, now) + " hours";
+  // const daysToStart: string =
+  //   differenceInDays(startDate, now) > 1
+  //     ? differenceInDays(startDate, now) + " days"
+  //     : differenceInHours(startDate, now) + " hours";
   const daysToEnd = differenceInDays(endDate, now);
   const daysSinceEnd = differenceInDays(now, endDate);
 
@@ -89,7 +83,7 @@ export const StatusBanner = ({
           color="neutral.11"
           textStyle={{ base: "body6", md: "body5" }}
         >
-          {isFuture(submissionEndDate as Date)
+          {isFuture(submissionEndDate)
             ? "Submissions" + ` at 07:30 AM PST`
             : "Contributions Period Starts" + ` at 7:30 AM PST`}
         </Box>

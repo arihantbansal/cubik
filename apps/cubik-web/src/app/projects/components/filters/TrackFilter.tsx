@@ -1,4 +1,4 @@
-import { ProjectExplorerType } from "@/types/explorer";
+import type { ProjectExplorerType } from "@/types/explorer";
 import { Box, Select, VStack } from "@/utils/chakra";
 import React from "react";
 
@@ -91,6 +91,7 @@ export const TrackFilter = ({ setProjects, _projects, tracks }: Props) => {
                 border: "none !important",
                 outline: "none !important",
               }}
+              key={track}
               value={track}
             >
               {track}

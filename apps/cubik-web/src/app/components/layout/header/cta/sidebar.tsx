@@ -1,15 +1,8 @@
-import {
-  Box,
-  Center,
-  HStack,
-  useBreakpointValue,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Center, HStack, useBreakpointValue } from "@chakra-ui/react";
 // import { RxHamburgerMenu } from "react-icons/rx";
 
 const Sidebar = () => {
   const isDesktop = useBreakpointValue({ base: false, md: true });
-  const { isOpen, onToggle, onClose } = useDisclosure();
 
   return !isDesktop ? (
     <HStack justify="end" align="center" w="full" gap="12px">

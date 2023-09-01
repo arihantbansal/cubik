@@ -15,7 +15,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import {
+import type {
   FieldErrors,
   UseFormRegister,
   UseFormSetError,
@@ -28,7 +28,7 @@ import ChainLink from "@/theme/icons/chain_link.svg";
 import ChevronRight from "@/theme/icons/chevron_right.svg";
 import ChevronLeft from "@/theme/icons/chevron_left.svg";
 import Telegram from "@/theme/icons/socials/telegram.svg";
-import { FormData } from "./Form";
+import type { FormData } from "./Form";
 
 type StepTwoProps = {
   trigger: UseFormTrigger<FormData>;
@@ -52,16 +52,7 @@ const StepTwo: React.FC<StepTwoProps> = ({
   register,
   onPrevious,
   errors,
-  setError,
 }: StepTwoProps) => {
-  const handleSubmit = async () => {
-    trigger(["projectLink", "twitter"]).then((isValid) => {
-      if (isValid) {
-        onSubmit;
-      }
-    });
-  };
-
   return (
     <>
       <CardBody>

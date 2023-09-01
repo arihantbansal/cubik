@@ -1,6 +1,6 @@
 import { Box, Center, VStack } from "@/utils/chakra";
 import React from "react";
-import { ReactNode } from "react";
+import type { ReactNode, JSX } from "react";
 
 export const EmptyStateHOC = ({
   heading,

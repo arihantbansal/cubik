@@ -17,12 +17,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { StepOne } from "./StepOne";
 import { useUploadThing } from "@/utils/helpers/uploadthing";
-import Link from "next/link";
 import { useUser } from "@/app/context/user";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { ConfirmUpdateModal } from "./ConfirmUpdateModal";
 import { handleUpdate } from "./handleUpdate";
-import { Team } from "@cubik/database";
+import type { Team } from "@cubik/database";
 import { v4 as uuidV4 } from "uuid";
 import { useRouter } from "next/navigation";
 export type FormData = {
@@ -60,49 +59,6 @@ const Form = ({
 }: Props) => {
   const { user } = useUser();
   const { setVisible } = useWalletModal();
-  if (!user) {
-    return (
-      <Box>
-        <HStack
-          w="full"
-          h="full"
-          justifyContent="center"
-          alignItems="center"
-          flexDir="column"
-          spacing="4rem"
-        >
-          <VStack spacing="1rem">
-            <Box fontSize="2rem" fontWeight="bold">
-              You are not logged in
-            </Box>
-            <Box>
-              <Button onClick={() => setVisible(true)}>Connect Wallet</Button>
-            </Box>
-          </VStack>
-        </HStack>
-      </Box>
-    );
-  }
-  if (user?.mainWallet !== ownerPubkey) {
-    return (
-      <Box>
-        <HStack
-          w="full"
-          h="full"
-          justifyContent="center"
-          alignItems="center"
-          flexDir="column"
-          spacing="4rem"
-        >
-          <VStack spacing="1rem">
-            <Box fontSize="2rem" fontWeight="bold">
-              You don't have access to this edit
-            </Box>
-          </VStack>
-        </HStack>
-      </Box>
-    );
-  }
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [step, setStep] = useState<number>(1);
@@ -113,7 +69,7 @@ const Form = ({
 
   const goToNextStep = () => setStep(step + 1);
 
-  const handleStepOneSubmit = async (event: any) => {
+  const handleStepOneSubmit = async () => {
     // check if there was an error in submitting the form
     goToNextStep();
   };
@@ -217,7 +173,7 @@ const Form = ({
         startUpload(watch("logo"));
       } else {
         setImageUrl(_imageURL);
-         onConfirmModalOpen();
+        onConfirmModalOpen();
       }
       setEditorData(editorData);
     } catch (e) {
@@ -290,6 +246,51 @@ const Form = ({
       setIsLoading(false);
     }
   };
+
+  if (!user) {
+    return (
+      <Box>
+        <HStack
+          w="full"
+          h="full"
+          justifyContent="center"
+          alignItems="center"
+          flexDir="column"
+          spacing="4rem"
+        >
+          <VStack spacing="1rem">
+            <Box fontSize="2rem" fontWeight="bold">
+              You are not logged in
+            </Box>
+            <Box>
+              <Button onClick={() => setVisible(true)}>Connect Wallet</Button>
+            </Box>
+          </VStack>
+        </HStack>
+      </Box>
+    );
+  }
+  if (user?.mainWallet !== ownerPubkey) {
+    return (
+      <Box>
+        <HStack
+          w="full"
+          h="full"
+          justifyContent="center"
+          alignItems="center"
+          flexDir="column"
+          spacing="4rem"
+        >
+          <VStack spacing="1rem">
+            <Box fontSize="2rem" fontWeight="bold">
+              {"You don't have access to this edit"}
+            </Box>
+          </VStack>
+        </HStack>
+      </Box>
+    );
+  }
+
   return (
     <>
       <Suspense fallback={<>loading</>}>

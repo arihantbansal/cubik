@@ -1,12 +1,4 @@
-import {
-  Box,
-  Center,
-  Flex,
-  IconButton,
-  Tag,
-  VStack,
-  Wrap,
-} from "@/utils/chakra";
+import { Box, Center, Flex, IconButton, VStack, Wrap } from "@/utils/chakra";
 import React from "react";
 import Twitter from "@/theme/icons/socials/twitter.svg";
 import Github from "@/theme/icons/socials/github.svg";
@@ -151,8 +143,9 @@ export const ProjectSocials = ({
             },
           }}
         >
-          {tracks.map((track, key) => (
+          {tracks.map((track) => (
             <Center
+              key={track.value}
               minW={"fit-content"}
               rounded="full"
               bg="#222222"

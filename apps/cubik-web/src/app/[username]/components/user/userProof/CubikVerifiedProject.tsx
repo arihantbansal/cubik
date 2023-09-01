@@ -17,7 +17,7 @@ import { motion } from "framer-motion";
 import React, { useRef, useState } from "react";
 import GranteeLogo from "./SVG/CubikVerifiedProject";
 import { Player } from "@lottiefiles/react-lottie-player";
-import { Proof } from "@cubik/database";
+import type { Proof } from "@cubik/database";
 import { useRouter } from "next/navigation";
 import { checkCubikProject } from "./checkCubikProject";
 import { useUser } from "@/app/context/user";
@@ -27,7 +27,7 @@ interface Props {
   proofs: Proof[];
   username: string;
 }
-export const CubikVerifiedProject = ({ proofs, username }: Props) => {
+export const CubikVerifiedProject = ({ proofs }: Props) => {
   const MotionBox = motion(Box);
   const playerRef = useRef<Player>(null);
   const { user } = useUser();
@@ -47,7 +47,7 @@ export const CubikVerifiedProject = ({ proofs, username }: Props) => {
           userId: user?.id as string,
         });
         setIsClaimAble(true);
-          playerRef?.current?.play();
+        playerRef?.current?.play();
         setIsLoading(false);
         onClose();
         router.refresh();

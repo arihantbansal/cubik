@@ -1,6 +1,6 @@
 "use server";
 
-import { NFTProfile } from "@/types/NFTProfile";
+import type { NFTProfile } from "@/types/NFTProfile";
 import { prisma } from "@cubik/database";
 
 export const createUser = async (

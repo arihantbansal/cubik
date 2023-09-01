@@ -1,10 +1,8 @@
 import { Avatar, Box, HStack, Tag, VStack } from "@chakra-ui/react";
-import { Comments, Prisma, User } from "@cubik/database";
+import type { Prisma } from "@cubik/database";
 import Link from "next/link";
 
 const HighlightedCommentBox = ({ text }: { text: string }) => {
-  const hasSpecialChar = text && (text.includes("@") || text.includes("#"));
-
   // Split text into words
   const words = text.split(" ");
 

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { UseFormGetValues } from "react-hook-form";
-import { FormData } from "./Form";
+import type { UseFormGetValues } from "react-hook-form";
+import type { FormData } from "./Form";
 import {
   Alert,
   AlertDescription,
@@ -22,18 +22,15 @@ import {
 } from "@/utils/chakra";
 import { WalletAddress } from "@/app/components/common/wallet";
 import { useUser } from "@/app/context/user";
-import { ActiveEvent } from "./ActiveEvent";
 import { createProjectIx } from "@/utils/contract";
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { createVault, getVault } from "@/utils/squads";
-import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import type NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 import { web3 } from "@coral-xyz/anchor";
 import { v4 as uuidV4 } from "uuid";
 import { connection } from "@/utils/contract/sdk";
 import { createProject } from "./createProjects";
-import { Team } from "@cubik/database";
-import { useQuery } from "@tanstack/react-query";
-import { findCount } from "./findCount";
+import type { Team } from "@cubik/database";
 import Link from "next/link";
 interface Props {
   getValues: UseFormGetValues<FormData>;
@@ -54,7 +51,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
   //   queryKey: ["userProjectCount", user?.mainWallet],
   //   enabled: user?.mainWallet ? true : false,
   // });
-  const [projectId, setProjectId] = useState<string | null>(null);
+  const [, setProjectId] = useState<string | null>(null);
   const HandleTransactionSign = async () => {
     setTransactionLoading(true);
     const id = uuidV4();
@@ -266,7 +263,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
                       <path
                         d="M55.8593 44.3091L55.8594 44.309C56.3557 43.8128 56.3557 43.0195 55.8594 42.5233C55.3632 42.027 54.5699 42.027 54.0737 42.5233L45.2499 51.3471L42.2927 48.3899C41.7965 47.8937 41.0032 47.8937 40.507 48.3899C40.0108 48.8862 40.0108 49.6794 40.507 50.1757L44.3478 54.0165C44.844 54.5127 45.6464 54.5128 46.1426 54.0166C46.1427 54.0166 46.1427 54.0166 46.1427 54.0165L55.8593 44.3091Z"
                         fill="url(#paint3_linear_849_10088)"
-                        fill-opacity="0.48"
+                        fillOpacity="0.48"
                       />
                       <path
                         d="M55.8593 44.3091L55.8594 44.309C56.3557 43.8128 56.3557 43.0195 55.8594 42.5233C55.3632 42.027 54.5699 42.027 54.0737 42.5233L45.2499 51.3471L42.2927 48.3899C41.7965 47.8937 41.0032 47.8937 40.507 48.3899C40.0108 48.8862 40.0108 49.6794 40.507 50.1757L44.3478 54.0165C44.844 54.5127 45.6464 54.5128 46.1426 54.0166C46.1427 54.0166 46.1427 54.0166 46.1427 54.0165L55.8593 44.3091Z"

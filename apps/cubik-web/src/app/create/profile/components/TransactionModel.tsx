@@ -18,7 +18,8 @@ import {
   VStack,
 } from "@/utils/chakra";
 import { useWallet } from "@solana/wallet-adapter-react";
-import React, { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import React from "react";
 
 interface Props {
   isTransactionModalOpen: boolean;
@@ -124,7 +125,7 @@ export const TransactionModel = ({
                     rx="23"
                     fill="url(#paint2_linear_3032_41056)"
                   />
-                  <g clip-path="url(#clip0_3032_41056)">
+                  <g clipPath="url(#clip0_3032_41056)">
                     <path
                       d="M55.8592 44.3094L55.8593 44.3093C56.3556 43.813 56.3556 43.0197 55.8593 42.5235C55.3631 42.0273 54.5698 42.0273 54.0736 42.5235L45.2498 51.3473L42.2927 48.3902C41.7964 47.8939 41.0031 47.8939 40.5069 48.3902C40.0107 48.8864 40.0107 49.6797 40.5069 50.1759L44.3477 54.0168C44.8439 54.513 45.6463 54.513 46.1425 54.0169C46.1426 54.0168 46.1426 54.0168 46.1427 54.0168L55.8592 44.3094Z"
                       fill="#14665B"
@@ -137,7 +138,7 @@ export const TransactionModel = ({
                     <path
                       d="M55.8592 44.3094L55.8593 44.3093C56.3556 43.813 56.3556 43.0197 55.8593 42.5235C55.3631 42.0273 54.5698 42.0273 54.0736 42.5235L45.2498 51.3473L42.2927 48.3902C41.7964 47.8939 41.0031 47.8939 40.5069 48.3902C40.0107 48.8864 40.0107 49.6797 40.5069 50.1759L44.3477 54.0168C44.8439 54.513 45.6463 54.513 46.1425 54.0169C46.1426 54.0168 46.1426 54.0168 46.1427 54.0168L55.8592 44.3094Z"
                       stroke="#14665B"
-                      stroke-width="0.710526"
+                      strokeWidth="0.710526"
                     />
                     <path
                       d="M55.8592 44.3094L55.8593 44.3093C56.3556 43.813 56.3556 43.0197 55.8593 42.5235C55.3631 42.0273 54.5698 42.0273 54.0736 42.5235L45.2498 51.3473L42.2927 48.3902C41.7964 47.8939 41.0031 47.8939 40.5069 48.3902C40.0107 48.8864 40.0107 49.6797 40.5069 50.1759L44.3477 54.0168C44.8439 54.513 45.6463 54.513 46.1425 54.0169C46.1426 54.0168 46.1426 54.0168 46.1427 54.0168L55.8592 44.3094Z"
@@ -185,8 +186,8 @@ export const TransactionModel = ({
                       y2="71"
                       gradientUnits="userSpaceOnUse"
                     >
-                      <stop stop-color="#B3FFF5" />
-                      <stop offset="1" stop-color="#5ACCBD" />
+                      <stop stopColor="#B3FFF5" />
+                      <stop offset="1" stopColor="#5ACCBD" />
                     </linearGradient>
                     <linearGradient
                       id="paint3_linear_3032_41056"

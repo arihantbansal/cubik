@@ -1,5 +1,5 @@
 import { env } from "@/env.mjs";
-import { NftResponseCarousel } from "@/types/NFTProfile";
+import type { NftResponseCarousel } from "@/types/NFTProfile";
 
 interface Nft {
   id: string;

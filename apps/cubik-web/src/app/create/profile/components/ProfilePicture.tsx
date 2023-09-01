@@ -44,9 +44,9 @@ const ProfilePicture = ({
           height="14"
           fill="none"
           stroke="#000"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="3"
         >
           <path d="M6 8.83a30.23 30.23 0 0 1 5.406-5.62A.949.949 0 0 1 12 3m6 5.83a30.233 30.233 0 0 0-5.406-5.62A.949.949 0 0 0 12 3m0 0v18" />
         </svg>

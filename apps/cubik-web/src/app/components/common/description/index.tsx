@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 import { ErrorUI } from "../errors/errorUI";
+import type { LinkProps } from "@/utils/chakra";
 import {
   Box,
   Collapse,
   Link,
-  LinkProps,
   SkeletonText,
   Stack,
   Text,
@@ -29,9 +29,8 @@ export const DetailedDescription = ({
   maxH?: string;
   overflow?: string;
 }) => {
-  const [show, setShow] = useState(false);
+  const [show] = useState(false);
 
-  const handleToggle = () => setShow(!show);
   if (isError) {
     return <ErrorUI />;
   }

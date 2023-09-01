@@ -3,8 +3,6 @@ import { formatNumberWithK } from "@/utils/helpers/formatWithK";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import HackathonStatus from "./statusCounter";
-import { HackathonSchedule } from "@/types/hackathon";
 
 interface Props {
   id: string;

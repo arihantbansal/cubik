@@ -1,8 +1,10 @@
-import { formatNumberWithK } from "@/utils/helpers/formatWithK";
 import { prisma } from "@cubik/database";
-import { Box, Container, HStack, TabList, VStack } from "@/utils/chakra";
-import { ProjectExploreBanner, ProjectExplorerType } from "@/types/explorer";
-import { Metadata } from "next";
+import { Box, Container, VStack } from "@/utils/chakra";
+import type {
+  ProjectExploreBanner,
+  ProjectExplorerType,
+} from "@/types/explorer";
+import type { Metadata } from "next";
 import { ExploreBanner } from "./components/Banner/ExploreBanner";
 import Projects from "./components";
 
@@ -298,12 +300,10 @@ export const projectExplorer = async () => {
 
 export const metadata: Metadata = {
   title: "Projects - Cubik",
- metadataBase: new URL("https://res.cloudinary.com"),
+  metadataBase: new URL("https://res.cloudinary.com"),
   description: "Browse projects and Cubik and support them",
   openGraph: {
-    images: [
-      "/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png",
-    ],
+    images: ["/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png"],
     type: "website",
     title: "Cubik",
     description: "Browse projects and Cubik and support them",
@@ -311,9 +311,7 @@ export const metadata: Metadata = {
   twitter: {
     title: "Cubik",
     card: "summary_large_image",
-    images: [
-      "/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png",
-    ],
+    images: ["/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png"],
     description: "Browse projects and Cubik and support them",
   },
 };

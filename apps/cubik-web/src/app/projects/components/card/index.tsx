@@ -1,33 +1,28 @@
 import CustomTag from "@/app/components/common/tags/CustomTag";
-import { ProjectExplorerType } from "@/types/explorer";
+import type { ProjectExplorerType } from "@/types/explorer";
 import {
   LinkBox,
   Card,
   Center,
   VStack,
   Stack,
-  Avatar,
   HStack,
   SlideFade,
   Button,
   useMediaQuery,
-  useToast,
   Box,
 } from "@/utils/chakra";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { formatNumberWithK } from "@/utils/helpers/formatNumberWithK";
 import ProjectsContributorsNumber from "../ProjectContributorsNumber";
-import { RemoveToast, SuccessToast } from "@/app/components/toasts/Toasts";
 import Image from "next/image";
 
 const ProjectEventBanner = ({
   name,
-  bg,
   color,
 }: {
   name: string;
-  bg?: string;
   color?: string;
 }) => {
   return (
@@ -109,7 +104,6 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
     setIsHovered((prevState) => !prevState);
   };
   const [isLargerThan767] = useMediaQuery("(min-width: 767px)");
-  const toast = useToast();
   // const addProject = useListStore((state) => state.addProject);
   // const removeProject = useListStore((state) => state.removeProject);
   // const projectList = useListStore((state) => state.projectList);
@@ -118,15 +112,11 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
   //   !!projectList.find((item) => item.id === project.id)
   // );
 
-  const industry = JSON.parse(project.industry);
+  const industry = JSON.parse(project.industry) as {
+    label: string;
+    value: string;
+  }[];
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
   // const handleAddOrRemoveProject = () => {
   //   if (addedToList) {
   //     removeProject(project.id);
@@ -212,7 +202,6 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
 
         <ProjectEventBanner
           name={project.projectEvent.name}
-          bg={project.projectEvent?.bg ?? undefined}
           color={project.projectEvent.color ? "teal" : "yellow"}
         />
         <VStack
@@ -285,9 +274,7 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
                   >
                     $
                     {formatNumberWithK(
-                      (parseInt(
-                        project.projectEvent.amount?.toFixed(2) as string
-                      ) as number) ?? 0
+                      parseInt(project.projectEvent.amount?.toFixed(2)) ?? 0
                     )}
                   </Box>
                 </HStack>
@@ -380,7 +367,7 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
                     justify="start"
                     whiteSpace="nowrap" // Set whiteSpace to nowrap
                   >
-                    {industry.map((tag: any, key: any) => {
+                    {industry.map((tag, key) => {
                       return (
                         <CustomTag color={tag.label} key={key}>
                           {tag.label}
@@ -390,7 +377,7 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
                   </HStack>
                 </Box>
                 <ProjectsContributorsNumber
-                  contributors={project.contributors as any[]}
+                  contributors={project.contributors}
                   contributorsCount={project.contributorCount}
                 />
               </HStack>

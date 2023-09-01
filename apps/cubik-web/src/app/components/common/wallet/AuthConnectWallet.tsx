@@ -1,4 +1,4 @@
-import { Box, Button, Center, Text, Container, VStack } from "@/utils/chakra";
+import { Button, Text, Container } from "@/utils/chakra";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import React from "react";
 

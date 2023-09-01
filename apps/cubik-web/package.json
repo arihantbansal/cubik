@@ -30,7 +30,7 @@
     "@splinetool/react-spline": "^2.2.6",
     "@sqds/sdk": "^2.0.4",
     "@supabase/supabase-js": "^2.24.0",
-    "@t3-oss/env-nextjs": "^0.3.1",
+    "@t3-oss/env-nextjs": "^0.6.1",
     "@tanstack/react-query": "^4.26.1",
     "@tiptap/extension-color": "^2.0.0-beta.220",
     "@tiptap/extension-heading": "^2.0.0-beta.220",
@@ -73,24 +73,29 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
-    "@types/eslint": "^8.37.0",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^18.16.0",
     "@types/prettier": "^2.7.2",
     "@types/react": "18.2.8",
     "@types/react-dom": "^18.2.4",
     "@types/request-ip": "^0.0.38",
-    "@typescript-eslint/eslint-plugin": "^5.59.6",
-    "@typescript-eslint/parser": "^5.59.6",
     "autoprefixer": "^10.4.14",
     "eslint": "^8.40.0",
-    "eslint-config-next": "^13.4.2",
     "postcss": "^8.4.21",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.2.8",
     "tailwind-merge": "^1.12.0",
     "tailwindcss": "^3.3.0",
-    "typescript": "4.9.5"
+    "typescript": "4.9.5",
+    "eslint-config-custom": "workspace:*"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "eslint-config-custom/base",
+      "eslint-config-custom/next",
+      "eslint-config-custom/react"
+    ]
   },
   "ct3aMetadata": {
     "initVersion": "7.13.2-beta.ca0b017"

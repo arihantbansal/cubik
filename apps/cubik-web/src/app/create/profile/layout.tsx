@@ -8,7 +8,7 @@ interface Props {
   children: React.JSX.Element | React.JSX.Element[];
 }
 const ProfileLayout = ({ children }: Props) => {
-  const { publicKey, connected } = useWallet();
+  const { connected } = useWallet();
   return (
     <>
       {connected ? (

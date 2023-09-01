@@ -20,7 +20,7 @@ import { DonationStatus } from "./DonationStatus";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useUser } from "@/app/context/user";
 import { DonationModal } from "./DonationModal";
-import { Team } from "@cubik/database";
+import type { Team } from "@cubik/database";
 
 interface Props {
   name: string;
@@ -56,7 +56,6 @@ export const ProjectHeader = ({
 }: Props) => {
   const { user } = useUser();
   const { setVisible } = useWalletModal();
-  const [isHovered, setIsHovered] = useState(false);
   const [donationSuccessful, setDonationSuccessful] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 

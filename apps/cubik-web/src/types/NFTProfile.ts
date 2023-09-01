@@ -1,9 +1,9 @@
-export type NFTProfile = {
+export interface NFTProfile {
   name: string;
   token: string;
   collection: string;
   owner: string;
-};
+} 
 
 export interface NftResponseCarousel {
   id: string;

@@ -24,7 +24,7 @@ export const useUser = () => useContext(UserContext);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const { publicKey, disconnect } = useWallet();
+  const { disconnect } = useWallet();
 
   const logout = () => {
     setUser(null);

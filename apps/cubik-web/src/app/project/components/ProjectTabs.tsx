@@ -1,8 +1,6 @@
 import { DetailedDescription } from "@/app/components/common/description";
 import {
-  Box,
   Container,
-  Stack,
   Tab,
   TabList,
   TabPanel,

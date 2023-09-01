@@ -1,16 +1,12 @@
 import { Box, Center } from "@chakra-ui/react";
-import {
-  OptionProps,
-  Props,
-  Select,
-  SingleValueProps,
-  components,
-} from "chakra-react-select";
+import type { OptionProps, Props, SingleValueProps } from "chakra-react-select";
+import { Select, components } from "chakra-react-select";
 import { useEffect } from "react";
-import { UseControllerProps, useController } from "react-hook-form";
-import { DonationFormType } from "./ProjectDonationSimulator";
+import type { UseControllerProps } from "react-hook-form";
+import { useController } from "react-hook-form";
+import type { DonationFormType } from "./ProjectDonationSimulator";
 import { tokenList } from "@/utils/helpers/tokenlist";
-
+import type { JSX } from "react";
 export const token = tokenList;
 
 type ControlledSelectProps = UseControllerProps<DonationFormType> &
@@ -264,7 +260,7 @@ export const ControlledSelect = ({
           borderRadius: "8px",
           borderColor: "#E0FFFD16",
         }),
-        menuList: (provided, state) => ({
+        menuList: () => ({
           //...provided,
           backgroundColor: "#001F1B",
           borderWidth: "0px",

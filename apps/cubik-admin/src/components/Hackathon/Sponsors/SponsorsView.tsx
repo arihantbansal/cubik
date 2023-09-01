@@ -2,7 +2,6 @@
 import {
   Box,
   Center,
-  VStack,
   Progress,
   Avatar,
   Table as ChakraTable,
@@ -19,35 +18,23 @@ import {
   MenuItem,
   HStack,
   Text,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Button,
-  useDisclosure,
-  Select,
   Link,
 } from "@/utils/chakra";
+import type {
+  SortingState} from "@tanstack/react-table";
 import {
   useReactTable,
   getCoreRowModel,
   flexRender,
-  getSortedRowModel,
-  SortingState,
+  getSortedRowModel
 } from "@tanstack/react-table";
 import Image from "next/image";
 import { useMemo, useState, Fragment } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSponsors } from "./data";
 
-type InnerTableProps = {
-  projectId: string;
-  onProjectSelect: (projectId: string) => void;
-};
-type projectDataType = {
+
+interface projectDataType  {
   index: number;
   project: { id: string; name: string; image: string };
   contributions: number;
@@ -76,12 +63,6 @@ const SponsorSubmissionBar = ({ value }: { value: number }) => {
 
 const ProjectStatusModal = ({
   status,
-  projectId,
-  projectName,
-  projectImage,
-  projectDescription,
-  trackName,
-  prizeBreakdown,
 }: {
   status: string;
   projectId: string;
@@ -91,11 +72,7 @@ const ProjectStatusModal = ({
   trackName: string;
   prizeBreakdown: [{ title: string; value: string; amount: string }];
 }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  function getValues(arg0: string): import("react").ReactNode {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <>
@@ -301,53 +278,8 @@ const ProjectDetailsMenu = ({
   );
 };
 
-const EmptyState = () => {
-  return (
-    <VStack
-      border="1px dashed"
-      borderColor="#212121"
-      rounded="12px"
-      p={{ base: "32px", md: "80px" }}
-    >
-      <Center
-        width={{ base: "200px", sm: "22px", md: "300px" }}
-        height={{ base: "140px", sm: "22px", md: "200px" }}
-        position="relative"
-        right="auto"
-        bottom="auto"
-      >
-        <Image
-          src="/illustrations/table_empty_state.svg"
-          alt="cubik hackathon sponsors empty state"
-          width={"400"}
-          height={"400"}
-        />
-      </Center>
-      <VStack h="full" align="center" spacing={["4px", "6px", "8px"]}>
-        <Box
-          color="white"
-          as="p"
-          fontWeight={"800"}
-          textStyle={{ base: "title3", md: "title1" }}
-        >
-          No Data Available
-        </Box>
-        <Box
-          textAlign={"center"}
-          maxW="16rem"
-          color="#ADB8B6"
-          as="p"
-          textStyle={{ base: "body6", md: "body5" }}
-        >
-          Once the voting period starts the data will be available to view here
-        </Box>
-      </VStack>
-    </VStack>
-  );
-};
 
 const InnerTable = ({
-  rowId,
   prizeBreakdown,
   trackName,
   innerTableData,
@@ -479,10 +411,10 @@ const InnerTable = ({
         ))}
       </Thead>
       <Tbody>
-        {innerTableInstance.getRowModel().rows.map((innerRow, rowIndex) => (
+        {innerTableInstance.getRowModel().rows.map((innerRow) => (
           <Fragment key={innerRow.id}>
             <Tr>
-              {innerRow.getVisibleCells().map((cell, cellIndex) => (
+              {innerRow.getVisibleCells().map((cell) => (
                 <Td
                   fontSize={{ base: "14px", md: "16px" }}
                   fontWeight="600"
@@ -532,14 +464,14 @@ const HackathonSponsorsView = () => {
       let submission = 0;
       const projects: projectDataType[] = [];
       SponsorInfo.data?.projectJoinHackathon.forEach((project) => {
-        const t = (project.tracks as { value: number; label: string }[]) || [];
+        const t = (project.tracks as { value: number; label: string }[]) ?? [];
         if (t && t.length > 0) {
           t?.forEach((track) => {
             if (track.label === sponsor.name) {
               projects.push({
                 contributions: 0,
                 index: projects.length + 1,
-                owner: project.project.owner.username || "",
+                owner: project.project.owner.username ?? "",
                 project: {
                   id: project.projectId,
                   name: project.project.name,
@@ -560,7 +492,7 @@ const HackathonSponsorsView = () => {
             (prize: { value: number; unit: string }) => {
               return `${prize.value} ${prize.unit}`;
             }
-          ) || [],
+          ) ?? [],
         submissions: submission,
         contributions: 0,
         prizeBreakdown: sponsor.prizeBreakdown,
@@ -596,7 +528,7 @@ const HackathonSponsorsView = () => {
   );
 
   const tableInstance = useReactTable({
-    data: data || [],
+    data: data ?? [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -661,7 +593,7 @@ const HackathonSponsorsView = () => {
                   >
                     {rowIndex + 1}
                   </Td>
-                  {row.getVisibleCells().map((cell, cellIndex) => (
+                  {row.getVisibleCells().map((cell) => (
                     <Td
                       fontSize={{ base: "14px", md: "16px" }}
                       fontWeight="600"

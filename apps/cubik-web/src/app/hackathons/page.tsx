@@ -16,7 +16,7 @@ import React from "react";
 import { prisma } from "@cubik/database";
 import { HackathonCard } from "./components/hackathonCard";
 import { EmptyStateHOC } from "../components/common/empty-state/EmptyStateHOC";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Projects - Cubik",

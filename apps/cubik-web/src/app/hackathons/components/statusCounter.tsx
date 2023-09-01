@@ -2,7 +2,7 @@
 import { Box, Center, HStack, chakra, keyframes } from "@/utils/chakra";
 import { isFuture, isPast } from "date-fns";
 //import { AiTwotoneCalendar } from "react-icons/ai";
-import { HackathonSchedule } from "@/types/hackathon";
+import type { HackathonSchedule } from "@/types/hackathon";
 
 const random = () => Math.floor(Math.random() * 10);
 
@@ -75,7 +75,8 @@ const HackathonStatus = ({ show, timeline }: HackathonStatusProps) => {
         </Box>
       </HStack>
     );
-  } else if (registration && isFuture(new Date(hackathon?.start ?? 0))) {
+    // @todo check the condition
+  } else if (!registration && isFuture(new Date(hackathon?.start ?? 0))) {
     return (
       <HStack
         rounded="full"

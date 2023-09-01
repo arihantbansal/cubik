@@ -1,4 +1,4 @@
-import { ProjectExplorerType } from "@/types/explorer";
+import type { ProjectExplorerType } from "@/types/explorer";
 import { Box, VStack, Select } from "@chakra-ui/react";
 import React from "react";
 
@@ -8,7 +8,7 @@ interface Props {
   setProjects: (projects: ProjectExplorerType[]) => void;
 }
 
-export const Sort = ({ _projects, projects, setProjects }: Props) => {
+export const Sort = ({ projects, setProjects }: Props) => {
   const handleFilter = (filter: string) => {
     let filterProjects: ProjectExplorerType[] = projects;
     if (filter === "option1") {

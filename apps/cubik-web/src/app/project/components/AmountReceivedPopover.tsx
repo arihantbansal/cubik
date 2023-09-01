@@ -7,7 +7,6 @@ import {
   PopoverHeader,
   PopoverTrigger,
 } from "@chakra-ui/react";
-import Link from "next/link";
 // import { FiInfo } from "react-icons/fi";
 
 export const AmountReceivedPopover = () => {

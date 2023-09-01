@@ -13,7 +13,6 @@ import {
   SolletExtensionWalletAdapter,
   TokenaryWalletAdapter,
   TorusWalletAdapter,
-  UnsafeBurnerWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 import type { FC, ReactNode } from "react";
 import { useMemo } from "react";

@@ -17,16 +17,10 @@ import { WalletAddress } from "../../../common/wallet";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useState } from "react";
 
-import { utils } from "@coral-xyz/anchor";
-import { getOrCreateUser } from "./get-user";
-import { useRouter } from "next/navigation";
-import { useUser } from "@/app/context/user";
 
 const VerifyWallet = () => {
-  const { publicKey, disconnect, signMessage } = useWallet();
-  const [isLoading, setIsLoading] = useState(false);
-  const { setUser } = useUser();
-  const router = useRouter();
+  const { publicKey, disconnect } = useWallet();
+  const [isLoading] = useState(false);
 
   // const verify = async () => {
   //   if (!publicKey && !signMessage) return;

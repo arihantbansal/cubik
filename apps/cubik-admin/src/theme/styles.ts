@@ -1,4 +1,5 @@
-import { mode, StyleFunctionProps } from "@chakra-ui/theme-tools";
+import type { StyleFunctionProps } from "@chakra-ui/theme-tools";
+import { mode } from "@chakra-ui/theme-tools";
 import "@fontsource/plus-jakarta-sans";
 
 export const styles = {

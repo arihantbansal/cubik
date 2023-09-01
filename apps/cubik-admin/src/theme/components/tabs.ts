@@ -4,8 +4,7 @@ import { createMultiStyleConfigHelpers } from '@chakra-ui/react';
 const { definePartsStyle, defineMultiStyleConfig } =
   createMultiStyleConfigHelpers(tabsAnatomy.keys);
 
-const cubik = definePartsStyle((props) => {
-  const { colorScheme: c } = props; // extract colorScheme from component props
+const cubik = definePartsStyle(() => {
 
   return {
     tablist: {

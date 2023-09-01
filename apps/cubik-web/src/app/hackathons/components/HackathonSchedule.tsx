@@ -28,7 +28,6 @@ interface Props {
   votingEndDate: Date;
 }
 export const HackathonSchedule = ({
-  slug,
   hackathonEndDate,
   hackathonStartDate,
   registrationEndDate,
@@ -83,7 +82,7 @@ export const HackathonSchedule = ({
         index: 3,
       },
     ];
-  const { activeStep, setActiveStep } = useSteps({
+  const { activeStep } = useSteps({
     index: steps.findIndex(isEventActive),
     count: steps.length,
   });

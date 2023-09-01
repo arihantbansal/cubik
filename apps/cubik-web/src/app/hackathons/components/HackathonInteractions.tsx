@@ -1,7 +1,6 @@
 import React from "react";
 import { Avatar, Box, Center, HStack, Skeleton, VStack } from "@/utils/chakra";
-import { HackathonHost } from "@/types/hackathon";
-import { TruncatedAddr } from "@/app/components/common/wallet";
+import type { HackathonHost } from "@/types/hackathon";
 import { formatNumberWithK } from "@/utils/helpers/formatWithK";
 export const HackathonInteractions = ({
   host,
@@ -116,9 +115,9 @@ export const HackathonInteractions = ({
                       width="131.973"
                       height="167.234"
                       filterUnits="userSpaceOnUse"
-                      color-interpolation-filters="sRGB"
+                      colorInterpolationFilters="sRGB"
                     >
-                      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                      <feFlood floodOpacity="0" result="BackgroundImageFix" />
                       <feColorMatrix
                         in="SourceAlpha"
                         type="matrix"

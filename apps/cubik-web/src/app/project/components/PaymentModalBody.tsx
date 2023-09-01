@@ -1,5 +1,6 @@
 import { Stack } from "@/utils/chakra";
-import React, { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { ProjectDonationSimulator } from "./ProjectDonationSimulator";
 
 interface Props {

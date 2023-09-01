@@ -3,20 +3,12 @@ import {
   Box,
   Center,
   HStack,
-  VStack,
-  Avatar,
   useDisclosure,
-  Button,
 } from "@/utils/chakra";
-import React, { useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Portal, Skeleton, Tag } from "@chakra-ui/react";
-const MotionBox = motion(Box);
-import Image from "next/image";
+import React, { useRef } from "react";
 
 const SelectQuadraticEvent = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
+  const { isOpen, onOpen } = useDisclosure();
   const myDiv = useRef<HTMLDivElement | null>(null);
 
   const handleClick = () => {
@@ -25,17 +17,10 @@ const SelectQuadraticEvent = () => {
     }, 0);
     // delay for few seconds
 
-    if (myDiv.current) {
-      const rect = myDiv.current.getBoundingClientRect();
-      const top = rect.top;
-      const left = rect.left;
-      setModalPosition({ top, left });
-    }
+   
   };
   // whe mouse leave
-  const handleMouseLeave = () => {
-    onClose();
-  };
+ 
 
   return (
     <Center ref={myDiv} cursor={"pointer"} position={"relative"}>

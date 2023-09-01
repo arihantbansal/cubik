@@ -1,31 +1,19 @@
 import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Avatar,
-  Box,
   Center,
   Container,
-  HStack,
   Stack,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
-  Tag,
-  TagLabel,
-  TagRightIcon,
-  VStack,
 } from "@/utils/chakra";
 import React from "react";
 import { prisma } from "@cubik/database";
 import { ProjectsDetailedDescription } from "./ProjectDetailedDescription";
 import { HackathonSchedule } from "./HackathonSchedule";
 import { HackathonInteractions } from "./HackathonInteractions";
-import { HackathonHost } from "@/types/hackathon";
+import type { HackathonHost } from "@/types/hackathon";
 import HackathonTracks from "./HackathonTracks";
 const fetchHackathon = async (slug: string) => {
   const res = await prisma.hackathon.findFirst({

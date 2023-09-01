@@ -1,18 +1,8 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  HStack,
-  Skeleton,
-  SkeletonText,
-  Stack,
-  VStack,
-} from "@/utils/chakra";
+import { Box, HStack, Stack, VStack } from "@/utils/chakra";
 import React from "react";
 import { HackathonStatus } from "./HackathonStatus";
 import { prisma } from "@cubik/database";
 import Image from "next/image";
-import { SubmitNowModal } from "./SubmitNowModal";
 import { SubmitNowButton } from "./SubmitNowButton";
 interface Props {
   slug: string;

@@ -6,7 +6,6 @@ import {
   Center,
   Flex,
   HStack,
-  IconButton,
   Input,
   Modal,
   ModalBody,
@@ -26,7 +25,8 @@ import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import parse from "html-react-parser";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import { useEffect, useState } from "react";
 // import {
 //   AiOutlineExpand,
 //   AiOutlineLink,
@@ -39,13 +39,11 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 //  MdOutlineFormatListBulleted,
 //  MdOutlineFormatUnderlined,
 // } from "react-icons/md";
-import ChevronLeft from "@/theme/icons/chevron_left.svg";
 import Expand from "@/theme/icons/expand.svg";
 import { DescriptionPreview } from "./EditorPreview";
 
 const MarkdownEditor = ({
   setIncreasedSize,
-  editorHeading,
   editorData,
   setEditorData,
   componentSize: componentSize,
@@ -58,7 +56,7 @@ const MarkdownEditor = ({
 }) => {
   const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
   const [url, setUrl] = useState<string>("");
-  const [preview, setPreview] = useState(false);
+  const [preview] = useState(false);
   const [HTMLPreviewData, setHTMLPreviewData] = useState("");
   const editor = useEditor({
     extensions: [
@@ -86,7 +84,6 @@ const MarkdownEditor = ({
     ],
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
-      const json = editor.getJSON();
       // @ts-ignore
       setHTMLPreviewData(parse(html as string));
       setEditorData(html);
@@ -122,7 +119,8 @@ const MarkdownEditor = ({
     } else {
       setSize({ base: "8px", sm: "12px", md: "16px" });
     }
-  }, []);
+  }, [componentSize]);
+  
   const EditorArea = (
     <EditorContent
       id="reset-des"

@@ -9,25 +9,17 @@ import {
   Spinner,
   Text,
   VStack,
-  useQuery,
 } from "@/utils/chakra";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { motion } from "framer-motion";
-import {
-  Dispatch,
-  SetStateAction,
-  memo,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import type { Dispatch, SetStateAction } from "react";
+import { useEffect, useRef, useState } from "react";
 // import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 // import { BsImage } from "react-icons/bs";
 import { assestsByOwner } from "./assestsByOwner";
 // import { useUserStore } from "~/store/userStore";
 import Carousel from "./Carousel";
-import { set } from "date-fns";
-import { NFTProfile, NftResponseCarousel } from "@/types/NFTProfile";
+import type { NFTProfile, NftResponseCarousel } from "@/types/NFTProfile";
 
 type CarouselPropsType = {
   onClose: () => void;
@@ -36,12 +28,7 @@ type CarouselPropsType = {
   setNFTProfile: Dispatch<SetStateAction<NFTProfile | undefined>>;
 };
 
-const FramerCarousel = ({
-  onClose,
-  setPFP,
-  PFP,
-  setNFTProfile,
-}: CarouselPropsType) => {
+const FramerCarousel = ({ setPFP, PFP, setNFTProfile }: CarouselPropsType) => {
   const carousel = useRef<HTMLElement>();
   const [carouselWidth, setCarouselWidth] = useState(0);
   const [isLoading, setLoading] = useState(false);
@@ -156,9 +143,9 @@ const FramerCarousel = ({
                 height="18"
                 fill="none"
                 stroke="#000"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="3"
               >
                 <path d="M15 18a30.616 30.616 0 0 1-5.817-5.49.803.803 0 0 1 0-1.02A30.617 30.617 0 0 1 15 6" />
               </svg>
@@ -246,9 +233,9 @@ const FramerCarousel = ({
                 height="18"
                 fill="none"
                 stroke="#000"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="3"
               >
                 <path d="M9 18a30.617 30.617 0 0 0 5.817-5.49.803.803 0 0 0 0-1.02A30.619 30.619 0 0 0 9 6" />
               </svg>

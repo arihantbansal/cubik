@@ -2,7 +2,7 @@
 import { useRef, useState } from "react";
 import CategoryTag from "@/app/components/common/tags/CategoryTags";
 import { Box, Center, HStack } from "@/utils/chakra";
-import { ProjectExplorerType } from "@/types/explorer";
+import type { ProjectExplorerType } from "@/types/explorer";
 import CrossIcon from "@/theme/icons/cross.svg";
 
 export interface Category {
@@ -18,7 +18,6 @@ export interface Category {
 
 const Categories = ({
   _projects,
-  projects,
   setProjects,
 }: {
   _projects: ProjectExplorerType[];

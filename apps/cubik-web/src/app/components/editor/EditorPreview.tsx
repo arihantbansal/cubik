@@ -1,11 +1,12 @@
 "use client";
-import { Box, Stack, Text, VStack, useDisclosure } from "@/utils/chakra";
+import { Box, Stack, Text, VStack } from "@/utils/chakra";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 
-import { Link, LinkProps } from "@/utils/chakra";
+import type { LinkProps } from "@/utils/chakra";
+import { Link } from "@/utils/chakra";
 
 export const DescriptionPreview = ({
   description,
@@ -13,7 +14,6 @@ export const DescriptionPreview = ({
   description: string;
 }) => {
   //const projectDescription = description[0] === '"' ? JSON.parse(description) : description;
-  const { isOpen, onToggle } = useDisclosure();
   const newTheme = {
     a: (props: LinkProps) => {
       const { children } = props;

@@ -1,7 +1,7 @@
 "use client";
-import { web3 } from "@coral-xyz/anchor";
+import type { web3 } from "@coral-xyz/anchor";
 import { getSdk } from "./sdk";
-import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import type NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 
 export const createUserIx = (
   wallet: NodeWallet,

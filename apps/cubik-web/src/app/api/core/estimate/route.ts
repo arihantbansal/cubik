@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "@cubik/database";
 
 export async function POST(request: NextRequest) {
@@ -41,7 +42,7 @@ export async function POST(request: NextRequest) {
       };
     });
 
-    finalCheck.forEach((contri, index) => {
+    finalCheck.forEach((contri) => {
       if (
         projectMapContribution.findIndex(
           (e) => e.projectId === contri.projectId && e.user === contri.user
@@ -104,18 +105,16 @@ export async function POST(request: NextRequest) {
       };
     });
 
-    finalMatch.forEach(async (e) => {
-      const res = await prisma.projectJoinHackathon.update({
-        where: {
-          id: projects.find((r) => r.projectId === e.projectId)?.id,
-        },
-
-        data: {
-          amount: e.amount,
-        },
-      });
-      console.log(res);
-    });
+    // finalMatch.forEach(async (e) => {
+    //   return await prisma.projectJoinHackathon.update({
+    //     where: {
+    //       id: projects.find((r) => r.projectId === e.projectId)?.id,
+    //     },
+    //     data: {
+    //       amount: e.amount,
+    //     },
+    //   });
+    // });
 
     return NextResponse.json({
       e: finalMatch,

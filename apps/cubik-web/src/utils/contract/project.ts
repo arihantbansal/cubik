@@ -1,6 +1,6 @@
-import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import type NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 import { getSdk } from "./sdk";
-import { web3 } from "@coral-xyz/anchor";
+import type { web3 } from "@coral-xyz/anchor";
 
 export const createProjectIx = (
   wallet: NodeWallet,

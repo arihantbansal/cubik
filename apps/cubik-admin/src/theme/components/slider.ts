@@ -3,22 +3,11 @@ import {
   createMultiStyleConfigHelpers,
   defineStyle,
 } from '@chakra-ui/styled-system';
-import { mode } from '@chakra-ui/theme-tools';
 
 const { definePartsStyle, defineMultiStyleConfig } =
   createMultiStyleConfigHelpers(parts.keys);
 
-const baseStyle = definePartsStyle((props) => ({
-  filledTrack: {
-    bg: mode('blue.400', 'blue.300')(props),
-  },
-  thumb: {
-    bg: mode('white', 'gray.200')(props),
-    _hover: {
-      bg: mode('gray.100', 'gray.300')(props),
-    },
-  },
-}));
+
 
 const sizes = {
   xl: definePartsStyle({
@@ -31,13 +20,8 @@ const sizes = {
   }),
 };
 
-const square = definePartsStyle({
-  thumb: defineStyle({
-    rounded: 'none',
-  }),
-});
 
-const cubik = definePartsStyle((props) => ({
+const cubik = definePartsStyle(() => ({
   filledTrack: {
     bg: '#A8F0E6',
     h: 2,

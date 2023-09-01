@@ -16,8 +16,9 @@ import {
 } from "@/utils/chakra";
 import Image from "next/image";
 import { useCallback, useState } from "react";
-import { FileWithPath, useDropzone } from "react-dropzone";
-import {
+import type { FileWithPath } from "react-dropzone";
+import { useDropzone } from "react-dropzone";
+import type {
   Control,
   FieldErrors,
   UseFormGetFieldState,
@@ -30,8 +31,7 @@ import {
 } from "react-hook-form";
 import UploadIcon from "@/theme/icons/upload.svg";
 import ChevronRight from "@/theme/icons/chevron_right.svg";
-import { category } from "./categories";
-import { FormData } from "./Form";
+import type { FormData } from "./Form";
 import { CategorySelect, TeamSelect } from "./ChakraReactSelect";
 
 type StepOneProps = {
@@ -53,7 +53,6 @@ const StepOne: React.FC<StepOneProps> = ({
   onSubmit,
   register,
   errors,
-  setError,
   setValue,
   getValues,
   control,
@@ -61,11 +60,14 @@ const StepOne: React.FC<StepOneProps> = ({
   getFieldState,
   imageURL,
 }) => {
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [, setIsSubmitting] = useState<boolean>(false);
 
-  const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
-    setValue("logo", acceptedFiles);
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFiles: FileWithPath[]) => {
+      setValue("logo", acceptedFiles);
+    },
+    [setValue]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     //@ts-ignore
@@ -74,25 +76,6 @@ const StepOne: React.FC<StepOneProps> = ({
     onDrop,
   });
 
-  const colors = [
-    "red",
-    "orange",
-    "yellow",
-    "green",
-    "teal",
-    "blue",
-    "cyan",
-    "purple",
-    "pink",
-    "gray",
-  ];
-
-  const categoryWithColors = category.map((item, index) => {
-    return {
-      ...item,
-      colorScheme: "#010F0D",
-    };
-  });
   return (
     <>
       <CardBody>

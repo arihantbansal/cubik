@@ -17,7 +17,7 @@ import { Player } from "@lottiefiles/react-lottie-player";
 import { motion } from "framer-motion";
 import React, { useRef, useState } from "react";
 import SuperteamDAO from "./SVG/SuperteamDAO";
-import { Proof } from "@cubik/database";
+import type { Proof } from "@cubik/database";
 import { checkSuperteam } from "./checkSuperteam";
 import { createProofSuperteam } from "./createProof";
 import { useUser } from "@/app/context/user";
@@ -27,7 +27,7 @@ interface Props {
   username: string;
   proofs: Proof[];
 }
-export const SuperteamProof = ({ proofs, username }: Props) => {
+export const SuperteamProof = ({ proofs }: Props) => {
   const MotionBox = motion(Box);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useUser();
@@ -49,7 +49,6 @@ export const SuperteamProof = ({ proofs, username }: Props) => {
           userId: user?.id as string,
         });
         if (ress) {
-
           setIsClaimAble(true);
           playerRef?.current?.play();
           onClose();

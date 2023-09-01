@@ -1,8 +1,8 @@
-import { Input, InputGroup, InputRightAddon } from "@chakra-ui/react";
-import { Control, FieldErrors, UseFormRegister } from "react-hook-form";
-import { DonationFormType } from "./ProjectDonationSimulator";
+import { Input, InputGroup } from "@/utils/chakra";
+import type { Control, FieldErrors, UseFormRegister } from "react-hook-form";
+import type { DonationFormType } from "./ProjectDonationSimulator";
 import { ControlledSelect } from "./ControlledSelect";
-import { tokenListType } from "@/utils/helpers/tokenlist";
+import type { tokenListType } from "@/utils/helpers/tokenlist";
 
 type AmountInputProps = {
   value: number;
@@ -14,15 +14,7 @@ type AmountInputProps = {
   control: Control<DonationFormType | any>;
 };
 
-export const AmountInput = ({
-  value,
-  setValue,
-  register,
-  errors,
-  token,
-  control,
-  seletedToken,
-}: AmountInputProps) => {
+export const AmountInput = ({ value, register, token, control }: AmountInputProps) => {
   return (
     <>
       <InputGroup border="1px solid #141414" rounded={"8px"}>

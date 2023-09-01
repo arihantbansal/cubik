@@ -1,8 +1,9 @@
+import { env } from "@/env.mjs";
 import * as anchor from "@coral-xyz/anchor";
 import nacl from "tweetnacl";
 
-export const createMessage = async (nonce: string) => {
-  const hash = nonce + process.env.NEXT_PUBLIC_SECRET?.slice(0, 10);
+export const createMessage = (nonce: string) => {
+  const hash = nonce + env.NEXT_PUBLIC_SECRET?.slice(0, 10);
   const check = anchor.utils.sha256.hash(hash);
   const message = `🔶 Welcome to Cubik! 🔶\n
 -----------------------------\n
@@ -15,12 +16,12 @@ session: ${check}\n`;
   return data;
 };
 
-export const verifyMessage = async (
+export const verifyMessage = (
   signature: string,
   publicKey: anchor.web3.PublicKey,
   nonce: string
 ) => {
-  const message = await createMessage(nonce);
+  const message = createMessage(nonce);
   const result = nacl.sign.detached.verify(
     message,
     anchor.utils.bytes.bs58.decode(signature),

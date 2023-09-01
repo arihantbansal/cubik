@@ -15,10 +15,7 @@ export const checkProofs = async (userId: string) => {
   }
 };
 
-export const updateData = async (
-  eventId: string,
-  eventType: "hackathon" | "round"
-) => {
+export const updateData = async (eventId: string) => {
   try {
     const matchingPool = 2000;
     let summed = 0;
@@ -54,7 +51,7 @@ export const updateData = async (
       };
     });
 
-    finalCheck.forEach((contri, index) => {
+    finalCheck.forEach((contri) => {
       if (
         projectMapContribution.findIndex(
           (e) => e.projectId === contri.projectId && e.user === contri.user
@@ -116,20 +113,19 @@ export const updateData = async (
       };
     });
 
-    
-       finalMatch.map(
-         async (e) =>
-           await prisma.projectJoinHackathon.update({
-             where: {
-               id: projects.find((r) => r.projectId === e.projectId)?.id!,
-             },
-             data: {
-               amount: e.amount,
-             },
-           })
-       );
+    finalMatch.map(
+      async (e) =>
+        await prisma.projectJoinHackathon.update({
+          where: {
+            id: projects.find((r) => r.projectId === e.projectId)?.id!,
+          },
+          data: {
+            amount: e.amount,
+          },
+        })
+    );
 
-       return "success";
+    return "success";
   } catch (error) {
     console.log(error);
     return "error";
@@ -146,7 +142,6 @@ interface Props {
 export const EstimateUpdate = async ({
   amount,
   eventId,
-  eventType,
   projectId,
   user,
 }: Props) => {
@@ -179,7 +174,7 @@ export const EstimateUpdate = async ({
       };
     });
 
-    [...finalCheck, { projectId, amount, user }].forEach((contri, index) => {
+    [...finalCheck, { projectId, amount, user }].forEach((contri) => {
       if (
         projectMapContribution.findIndex(
           (e) => e.projectId === contri.projectId && e.user === contri.user

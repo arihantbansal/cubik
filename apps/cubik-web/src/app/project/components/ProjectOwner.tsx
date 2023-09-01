@@ -1,6 +1,6 @@
 import { WalletAddress } from "@/app/components/common/wallet";
 import { Avatar, Box, HStack, VStack } from "@/utils/chakra";
-import { User } from "@cubik/database";
+import type { User } from "@cubik/database";
 import Link from "next/link";
 import React from "react";
 

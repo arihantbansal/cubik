@@ -17,11 +17,10 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  Tag,
   VStack,
 } from "@/utils/chakra";
 import React from "react";
-import { Prisma } from "@cubik/database";
+import type { Prisma } from "@cubik/database";
 import { ErrorUI } from "@/app/components/common/errors/errorUI";
 import { DetailedDescription } from "@/app/components/common/description";
 

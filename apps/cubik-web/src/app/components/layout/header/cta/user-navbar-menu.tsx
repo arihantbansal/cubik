@@ -62,7 +62,7 @@ const ProfileDetails = () => {
 };
 
 const UserNavbarMenuButton = () => {
-  const { setUser, logout } = useUser();
+  const { logout } = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { user } = useUser();

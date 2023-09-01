@@ -9,14 +9,10 @@ import {
   AccordionIcon,
   AccordionPanel,
   Box,
-  Tag,
-  TagLabel,
-  TagRightIcon,
   AvatarGroup,
 } from "@/utils/chakra";
 import { formatNumberWithK } from "@/utils/helpers/formatWithK";
 import React from "react";
-import { number } from "zod";
 
 type PropsType = {
   tracks: {
@@ -78,6 +74,7 @@ const HackathonTracks = ({ tracks }: PropsType) => {
                       {track.sponsorOrganizations
                         ? track.sponsorOrganizations?.map((org) => (
                             <Avatar
+                              key={org.name}
                               borderRadius="12px"
                               name={org.name}
                               src={org.logo}

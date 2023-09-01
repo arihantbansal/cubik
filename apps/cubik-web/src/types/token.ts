@@ -1,4 +1,4 @@
-export type TokenInfo = {
+export interface TokenInfo {
   tokenAccount?: string;
   mint: string;
   amount: number;
@@ -6,27 +6,28 @@ export type TokenInfo = {
   decimals: number;
   address?: string;
   name?: string;
-};
+}
 
-export type TokenPriceResponse = {
-  data: {
-    [key: string]: {
+export interface TokenPriceResponse {
+  data: Record<
+    string,
+    {
       id: string;
       mintSymbol: string;
       vsToken: string;
       vsTokenSymbol: string;
       price: number;
-    };
-  };
+    }
+  >;
   timeTaken: number;
-};
+}
 export interface BalanceDataType {
-  tokens: Array<{
+  tokens: {
     tokenAccount: string;
     mint: string;
     amount: number;
     decimals: number;
-  }>;
+  }[];
   nativeBalance: number;
 }
 export interface PriceReturnType {

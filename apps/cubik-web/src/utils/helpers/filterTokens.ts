@@ -1,4 +1,4 @@
-import { TokenInfo } from "@/types/token";
+import type { TokenInfo } from "@/types/token";
 
 export const filterTokens = (tokens: TokenInfo[]) => {
   const tokenAddressesToFilter = [

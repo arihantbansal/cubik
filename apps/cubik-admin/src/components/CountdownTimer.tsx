@@ -1,7 +1,6 @@
 "use client";
 
 import { Box, HStack, VStack } from "@/utils/chakra";
-import { useState, useEffect } from "react";
 import FlipNumbers from "react-flip-numbers";
 
 interface CountdownTimerProps {
@@ -26,22 +25,11 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({
     };
   };
 
-  const [timeRemaining, setTimeRemaining] = useState<number>(
-    getTimeRemaining(finalDate).total
-  );
+ 
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const time = getTimeRemaining(finalDate);
-      if (time.total <= 0) {
-        clearInterval(interval);
-      }
-      setTimeRemaining(time.total);
-    }, 1000);
+ 
 
-    return () => clearInterval(interval);
-  }, [finalDate]);
-
+ 
   const formatNumber = (number: number) => {
     return number < 10 ? "0" + number : number;
   };

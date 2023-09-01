@@ -11,7 +11,6 @@ const Links = () => {
   const isActiveRoute = (route: string): boolean => {
     return path === route;
   };
-  const landingPage = path === "/";
 
   return isDesktop ? (
     <HStack
