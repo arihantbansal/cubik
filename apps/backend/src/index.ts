@@ -1,12 +1,13 @@
 import cors from 'cors';
-import express, { Express } from 'express';
-import logger from './middleware/logger';
-import cookieParser from 'cookie-parser';
-import { config } from 'dotenv';
-import { projectRouter, tokenRouter, uploadRouter } from 'routes';
-import morgan from 'morgan';
-import morganBody from 'morgan-body';
-import helmet from 'helmet';
+import type { Express } from "express";
+import express from "express";
+import logger from "./middleware/logger";
+import cookieParser from "cookie-parser";
+import { config } from "dotenv";
+import { tokenRouter } from "routes";
+import morgan from "morgan";
+import morganBody from "morgan-body";
+import helmet from "helmet";
 const main = async () => {
   config();
 
@@ -35,9 +36,7 @@ const main = async () => {
     res.send("Server is running");
   });
 
-  app.use(basePath + "/upload", uploadRouter);
   app.use(basePath + "/token", tokenRouter);
-  app.use(basePath + "/project", projectRouter);
 
   app.listen(PORT, () => {
     logger.log("info", `Server is running on Port:${PORT}`);

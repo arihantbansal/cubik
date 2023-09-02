@@ -14,13 +14,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-s3": "3.374.0",
     "@cubik/common-types": "workspace:*",
     "@cubik/database": "workspace:*",
     "axios": "^1.3.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "eslint": "^8.48.0",
     "express": "^4.18.2",
     "formidable": "^3.5.0",
     "helmet": "^7.0.0",
@@ -41,6 +41,12 @@
     "@types/multer": "^1.4.7",
     "esbuild": "^0.18.12",
     "tsx": "^3.12.7",
-    "typescript": "4.9.5"
+    "typescript": "4.9.5",
+    "eslint-config-custom": "workspace:*"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint-config-custom/base"
+    ]
   }
 }

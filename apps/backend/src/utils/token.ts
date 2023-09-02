@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Token } from '../types';
+import type { Token } from "../types";
 
 export const getTokens = async () => {
   try {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { TokenPriceResponse } from 'types';
+import type { TokenPriceResponse } from "types";
 
 export const tokenPrice = async (token: string) => {
   try {
