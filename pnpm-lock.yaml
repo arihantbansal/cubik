@@ -934,6 +934,9 @@ importers:
         specifier: ^4.6.0
         version: 4.6.0(eslint@8.45.0)
     devDependencies:
+      '@cubik/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       eslint:
         specifier: ^8.45.0
         version: 8.45.0
