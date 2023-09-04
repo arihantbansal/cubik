@@ -47,7 +47,6 @@ export const getMessage = async (nonce: string) => {
       },
     });
     const data = await res.json();
-    console.log(data.hash);
     return data.hash;
   } catch (error) {
     console.log(error);
