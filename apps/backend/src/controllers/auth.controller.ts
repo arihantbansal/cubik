@@ -6,7 +6,7 @@ import { verifyMessage } from "@cubik/auth";
 import type { AuthCheckReturn, AuthPayload } from "@cubik/common-types";
 import { envConfig } from "config";
 import logger from "middleware/logger";
-
+import requestIp from "request-ip";
 export const check = async (req: Request, res: Response) => {
   try {
     const { wallet } = req.body;
@@ -58,7 +58,12 @@ export const check = async (req: Request, res: Response) => {
       return res.json(returnData);
     } else {
       const decodedToken = await decodeToken(authCookie.value);
-      if (!decodedToken || decodedToken.mainWallet !== wallet) {
+      const clientIp = requestIp.getClientIp(req);
+      if (
+        !decodedToken ||
+        decodedToken.mainWallet !== wallet ||
+        decodedToken.ip !== clientIp
+      ) {
         return res
           .json({
             data: null,
@@ -66,6 +71,7 @@ export const check = async (req: Request, res: Response) => {
           })
           .clearCookie("authToken");
       }
+
       returnData = {
         data: {
           type: "AUTHENTICATED_USER",
@@ -124,9 +130,10 @@ export const verify = async (req: Request, res: Response) => {
           error: "User not found",
         });
       }
+      const clientIp = requestIp.getClientIp(req);
 
       const session = await createToken({
-        ip: "test",
+        ip: clientIp as string,
         mainWallet: publicKey,
         id: user.id,
         profilePicture: user.profilePicture as string,
@@ -134,7 +141,7 @@ export const verify = async (req: Request, res: Response) => {
         profileNft: user.profileNft as any,
       });
       const userSessionPayload: AuthPayload = {
-        ip: "test",
+        ip: clientIp as string,
         mainWallet: publicKey,
         id: user.id,
         profilePicture: user.profilePicture as string,

@@ -12,7 +12,6 @@ export const verifyMessage = (
     return false;
   }
 
-  console.log(signature, publicKey);
 
   const result = nacl.sign.detached.verify(
     message,

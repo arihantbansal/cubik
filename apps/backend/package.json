@@ -19,6 +19,7 @@
     "@cubik/common-types": "workspace:*",
     "@cubik/database": "workspace:*",
     "@types/body-parser": "^1.19.2",
+    "@types/request-ip": "^0.0.38",
     "axios": "^1.3.4",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
@@ -35,6 +36,7 @@
     "morgan-body": "^2.6.9",
     "multer": "1.4.5-lts.1",
     "mysql2": "^3.5.2",
+    "request-ip": "^3.3.0",
     "tsc": "^2.0.4",
     "tweetnacl": "^1.0.3",
     "winston": "^3.10.0"
