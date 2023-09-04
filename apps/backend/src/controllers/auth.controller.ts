@@ -7,6 +7,7 @@ import type { AuthCheckReturn, AuthPayload } from "@cubik/common-types";
 import { envConfig } from "config";
 import logger from "middleware/logger";
 import requestIp from "request-ip";
+
 export const check = async (req: Request, res: Response) => {
   try {
     const { wallet } = req.body;
@@ -64,12 +65,10 @@ export const check = async (req: Request, res: Response) => {
         decodedToken.mainWallet !== wallet ||
         decodedToken.ip !== clientIp
       ) {
-        return res
-          .json({
-            data: null,
-            error: "INVALID_TOKEN",
-          })
-          .clearCookie("authToken");
+        return res.clearCookie("authToken").json({
+          data: null,
+          error: "INVALID_TOKEN",
+        });
       }
 
       returnData = {
