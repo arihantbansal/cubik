@@ -1,0 +1,10 @@
+{
+  "name": "@cubik/auth",
+  "description": "Cubik auth module",
+  "version": "0.0.1",
+  "main": "index.ts",
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.27.0",
+    "tweetnacl": "^1.0.3"
+  }
+}

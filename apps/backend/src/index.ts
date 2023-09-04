@@ -1,4 +1,4 @@
-import cors from 'cors';
+import cors from "cors";
 import type { Express } from "express";
 import express from "express";
 import logger from "./middleware/logger";
@@ -8,10 +8,14 @@ import { tokenRouter } from "routes";
 import morgan from "morgan";
 import morganBody from "morgan-body";
 import helmet from "helmet";
+import { authRouter } from "routes/auth.router";
+import bodyParser from "body-parser";
+import { envConfig } from "config";
+
 const main = async () => {
   config();
 
-  const PORT = process.env.PORT || 8000;
+  const PORT = envConfig.port || 8000;
   const basePath = "/api/v1";
 
   const app: Express = express();
@@ -20,7 +24,7 @@ const main = async () => {
   app.use(express.urlencoded({ extended: true }));
   app.use(cookieParser());
   app.use(cors());
-  // app.use(bodyParser.json());
+  app.use(bodyParser.json());
   app.use(morgan("combined"));
   app.use(
     helmet({
@@ -32,11 +36,12 @@ const main = async () => {
     logResponseBody: false,
   });
 
-  app.get("/", (req, res) => {
+  app.get("/", (_req, res) => {
     res.send("Server is running");
   });
 
   app.use(basePath + "/token", tokenRouter);
+  app.use(basePath + "/auth", authRouter);
 
   app.listen(PORT, () => {
     logger.log("info", `Server is running on Port:${PORT}`);

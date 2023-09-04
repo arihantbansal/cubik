@@ -1,5 +1,19 @@
-import type { NFTProfile } from "./NFTProfile";
 import type { JwtPayload } from "jsonwebtoken";
+
+export interface NFTProfile {
+  name: string;
+  token: string;
+  collection: string;
+  owner: string;
+}
+
+export interface NftResponseCarousel {
+  id: string;
+  name: string;
+  image: string;
+  metadataName: string;
+  tokenMint: string;
+}
 
 export type AuthPayload = {
   id: string;
@@ -24,7 +38,7 @@ export interface AuthCheckReturn {
 
 export interface AuthVerifyReturn {
   data: boolean;
-  user?: AuthPayload | null;
+  accessToken?: string;
   error: string | null;
 }
 

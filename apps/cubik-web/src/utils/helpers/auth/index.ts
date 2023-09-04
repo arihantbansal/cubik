@@ -1,48 +1,15 @@
-import type { AuthPayload, AuthTokenCheckReturn } from "@/types/auth";
-import { jwtVerify, SignJWT } from "jose";
+import { env } from "@/env.mjs";
+import type { AuthTokenCheckReturn } from "@/types/auth";
 
-export const decodeToken = async (
-  token: string
-): Promise<AuthPayload | null> => {
-  try {
-    const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_SECRET);
-    const decodedToken = await jwtVerify(token, secret, {
-      algorithms: ["HS256"],
-    });
-
-    if (!decodedToken) {
-      return null;
-    }
-
-    return decodedToken.payload as AuthPayload;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
-
-export const createToken = async (tokenPayload: AuthPayload) => {
-  try {
-    const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_SECRET);
-    const alg = "HS256";
-    const token = new SignJWT(tokenPayload)
-      .setProtectedHeader({ alg })
-      .setIssuedAt()
-      .setExpirationTime("1h")
-      .sign(secret);
-
-    return token;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
 
 export const handleLogout = async () => {
   try {
-    await fetch("/api/auth/logout", {
+    await fetch(env.NEXT_PUBLIC_BACKEND + "/auth/logout", {
       method: "POST",
       cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     return "success";
   } catch (error) {
@@ -53,7 +20,7 @@ export const handleLogout = async () => {
 
 export const getToken = async () => {
   try {
-    const res = await fetch("/api/auth/token", {
+    const res = await fetch(env.NEXT_PUBLIC_BACKEND + "/auth/token", {
       cache: "no-cache",
       method: "GET",
     });
@@ -62,6 +29,26 @@ export const getToken = async () => {
       return null;
     }
     return data.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+
+export const getMessage = async (nonce: string) => {
+  try {
+    const res = await fetch(env.NEXT_PUBLIC_BACKEND + "/auth/create-message", {
+      cache: "no-cache",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-cubik-nonce": nonce,
+      },
+    });
+    const data = await res.json();
+    console.log(data.hash);
+    return data.hash;
   } catch (error) {
     console.log(error);
     return null;

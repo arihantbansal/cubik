@@ -6,9 +6,10 @@ import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { VerifyModal } from "./verifyModal";
-import { decodeToken, handleLogout } from "@/utils/helpers/auth";
+import { handleLogout } from "@/utils/helpers/auth";
 import { useUser } from "@/app/context/user";
 import UserNavbarMenuButton from "../cta/user-navbar-menu";
+import { env } from "@/env.mjs";
 
 export const WalletConnect = () => {
   const { connected, publicKey, disconnect, signMessage } = useWallet();
@@ -20,16 +21,20 @@ export const WalletConnect = () => {
   const router = useRouter();
   const { setUser, user } = useUser();
   const { isOpen, onClose, onOpen } = useDisclosure();
+
   useEffect(() => {
     const connect = async () => {
       if (connected && publicKey && !user) {
         try {
           setIsLoading(true);
-          const res = await fetch("/api/auth/check", {
+          const res = await fetch(env.NEXT_PUBLIC_BACKEND + "/auth/check", {
             method: "POST",
             body: JSON.stringify({
               wallet: publicKey.toBase58(),
             }),
+            headers: {
+              "Content-Type": "application/json",
+            },
             cache: "no-cache",
           });
           const checkResponse = (await res.json()) as AuthCheckReturn;
@@ -42,10 +47,11 @@ export const WalletConnect = () => {
           }
           if (
             checkResponse.data?.type === "AUTHENTICATED_USER" &&
-            checkResponse.data.accessToken
+            checkResponse.data.user
           ) {
             // ********* Set User *********
-            const user = await decodeToken(checkResponse.data.accessToken);
+            const user = checkResponse.data.user;
+
             if (user) {
               setUser({
                 id: user.id,

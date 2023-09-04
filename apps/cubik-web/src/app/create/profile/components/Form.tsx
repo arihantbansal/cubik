@@ -40,6 +40,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { checkUsername } from "./checkUsername";
 import type { AuthVerifyReturn } from "@/types/auth";
+import { env } from "@/env.mjs";
 
 export const Form = () => {
   const [, setUsername] = useState<string>("");
@@ -155,15 +156,23 @@ export const Form = () => {
         localStorage.getItem("wallet_sig") &&
         localStorage.getItem("wallet_nonce")
       ) {
-        const verify = await fetch("/api/auth/verify", {
-          method: "POST",
-          body: JSON.stringify({
-            signature: localStorage.getItem("wallet_sig"),
-            publicKey: publicKey,
-            nonce: localStorage.getItem("wallet_nonce"),
-          }),
-        });
-        const verifyResponse = (await verify.json()) as AuthVerifyReturn;
+        const verifyRes = await fetch(
+          env.NEXT_PUBLIC_BACKEND + "/auth/verify",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              signature: localStorage.getItem("wallet_sig"),
+              publicKey: publicKey,
+            }),
+            headers: {
+              ["x-cubik-nonce"]: localStorage.getItem("wallet_nonce") ?? "",
+              ["Content-Type"]: "application/json",
+            },
+            cache: "no-cache",
+          }
+        );
+
+        const verifyResponse = (await verifyRes.json()) as AuthVerifyReturn;
         if (verifyResponse.data) {
           setUser({
             id: res?.id as string,

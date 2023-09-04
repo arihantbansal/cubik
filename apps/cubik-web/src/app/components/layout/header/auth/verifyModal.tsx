@@ -1,6 +1,7 @@
 "use client";
 import { WalletAddress } from "@/app/components/common/wallet";
 import type { User } from "@/app/context/user";
+import { env } from "@/env.mjs";
 import type { AuthVerifyReturn } from "@/types/auth";
 import {
   Box,
@@ -15,12 +16,11 @@ import {
   ModalOverlay,
   VStack,
 } from "@/utils/chakra";
-import { decodeToken } from "@/utils/helpers/auth";
-import { createMessage } from "@/utils/helpers/getSignatureMessage";
+import { getMessage } from "@/utils/helpers/auth";
 import { utils } from "@coral-xyz/anchor";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import React, { useState } from "react";
-
+import { createMessage } from "@cubik/auth";
 interface Props {
   publicKey?: string;
   disconnect: () => void;
@@ -46,29 +46,32 @@ export const VerifyModal = ({
     setIsLoading(true);
     if (status === "EXISTING_USER") {
       const nonce = Math.random().toString(36).substring(2, 15);
-      const msg = await createMessage(nonce);
-      const sig = utils.bytes.bs58.encode(await signMessage!(msg));
-
-      const verifyRes = await fetch("/api/auth/verify", {
+      const hash = await getMessage(nonce);
+      const msg = createMessage(hash);
+      const sigBuffer = await signMessage!(msg!);
+      const sig = utils.bytes.bs58.encode(sigBuffer);
+      const verifyRes = await fetch(env.NEXT_PUBLIC_BACKEND + "/auth/verify", {
         method: "POST",
         body: JSON.stringify({
           signature: sig,
           publicKey: publicKey,
-          nonce: nonce,
         }),
+        headers: {
+          ["x-cubik-nonce"]: nonce,
+          ["Content-Type"]: "application/json",
+        },
         cache: "no-cache",
       });
 
       const verifyResponse = (await verifyRes.json()) as AuthVerifyReturn;
       if (verifyResponse.data) {
-        const token = verifyResponse.accessToken;
+        const user = verifyResponse.user;
 
-        if (!token) {
+        if (!user) {
           disconnect();
           return onClose();
         }
 
-        const user = await decodeToken(token);
         if (user) {
           setUser({
             id: user.id,
@@ -84,7 +87,7 @@ export const VerifyModal = ({
       setIsLoading(false);
     } else {
       const nonce = Math.random().toString(36).substring(2, 15);
-      const msg = await createMessage(nonce);
+      const msg = await getMessage(nonce);
       const sig = utils.bytes.bs58.encode(await signMessage!(msg));
       localStorage.setItem("wallet_sig", sig);
       localStorage.setItem("wallet_nonce", nonce);
