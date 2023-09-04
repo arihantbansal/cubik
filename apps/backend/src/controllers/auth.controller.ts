@@ -86,13 +86,10 @@ export const check = async (req: Request, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
   try {
-    return res
-      .json({
-        message: "Logged out successfully",
-      })
-      .clearCookie("authToken");
+    return res.clearCookie("authToken").json({
+      message: "Logged out successfully",
+    });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: "Something went wrong",
     });
@@ -112,7 +109,6 @@ export const verify = async (req: Request, res: Response) => {
       new web3.PublicKey(publicKey),
       check
     );
-    console.log(result, "result");
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     if (result) {
@@ -168,7 +164,6 @@ export const verify = async (req: Request, res: Response) => {
       });
     }
   } catch (error) {
-    console.log("hit error");
     logger.error(error);
     res.status(505).json({
       data: false,
