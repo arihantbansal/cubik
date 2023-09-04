@@ -1,15 +1,15 @@
 import type { Request, Response } from "express";
 import { prisma } from "@cubik/database";
-import { web3 } from "@coral-xyz/anchor";
+import { utils, web3 } from "@coral-xyz/anchor";
 import { createToken, decodeToken } from "utils/auth";
 import { verifyMessage } from "@cubik/auth";
 import type { AuthCheckReturn, AuthPayload } from "@cubik/common-types";
 import { envConfig } from "config";
+import logger from "middleware/logger";
 
 export const check = async (req: Request, res: Response) => {
   try {
     const { wallet } = req.body;
-    console.log(req);
     const authCookie = req.cookies["authToken"];
 
     let returnData: AuthCheckReturn = {
@@ -23,7 +23,6 @@ export const check = async (req: Request, res: Response) => {
           mainWallet: wallet as string,
         },
       });
-      console.log(user);
       // no user then add a user
       if (!user) {
         await prisma.user.create({
@@ -106,19 +105,23 @@ export const verify = async (req: Request, res: Response) => {
 
     // get nonce from headers
     const nonce = req.headers["x-cubik-nonce"] as string;
-
-    const result = await verifyMessage(
+    const hash = nonce + envConfig.secret?.slice(0, 10);
+    const check = utils.sha256.hash(hash);
+    const result = verifyMessage(
       signature,
       new web3.PublicKey(publicKey),
-      nonce
+      check
     );
+    console.log(result, "result");
 
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     if (result) {
       const user = await prisma.user.findUnique({
         where: {
           mainWallet: publicKey,
         },
       });
+
       if (!user) {
         return res.status(404).json({
           data: false,
@@ -142,18 +145,20 @@ export const verify = async (req: Request, res: Response) => {
         username: user.username as string,
         profileNft: user.profileNft as any,
       };
-      const response = res.json({
-        data: result,
-        user: userSessionPayload,
-        error: null,
-      });
-      response.cookie("authToken", session as string, {
-        expires: new Date(Date.now() + 3600000),
-        secure: true,
-        httpOnly: true,
-        sameSite: "strict",
-        path: "/",
-      });
+      const response = res
+
+        .cookie("authToken", session as string, {
+          expires: new Date(Date.now() + 3600000),
+          secure: true,
+          httpOnly: true,
+          sameSite: "strict",
+          path: "/",
+        })
+        .json({
+          data: result,
+          user: userSessionPayload,
+          error: null,
+        });
 
       return response;
     } else {
@@ -163,7 +168,8 @@ export const verify = async (req: Request, res: Response) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.log("hit error");
+    logger.error(error);
     res.status(505).json({
       data: false,
       error: "Error verifying signature",
@@ -174,11 +180,10 @@ export const verify = async (req: Request, res: Response) => {
 export const getMessage = async (req: Request, res: Response) => {
   try {
     const nonce = req.headers["x-cubik-nonce"] as string;
-    console.log(nonce);
     const hash = nonce + envConfig.secret?.slice(0, 10);
-
+    const check = utils.sha256.hash(hash);
     return res.json({
-      hash: hash,
+      hash: check,
     });
   } catch (error) {
     console.log(error);
