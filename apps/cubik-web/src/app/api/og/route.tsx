@@ -240,20 +240,28 @@ export async function GET(req: NextRequest) {
                 style={{
                   width: "280px",
                   height: "280px",
-                  maxHeight: "280px",
-                  maxWidth: "280px",
                   overflow: "hidden",
                   borderRadius: "1000px",
                   backgroundColor: "#FFFFFF",
                   display: "flex",
                   alignItems: "center",
-                  objectFit: "cover",
+                  objectFit: "fill",
                   objectPosition: "center",
                 }}
               >
                 <img
-                  style={{ borderRadius: "1000px" }}
-                  src={logo as string}
+                  style={{
+                    borderRadius: "1000px",
+                    width: "280px",
+                    height: "280px",
+                    maxHeight: "280px",
+                    maxWidth: "280px",
+                    objectFit: "cover",
+                    objectPosition: "center",
+                  }}
+                  src={
+                    "https://uploadthing.com/f/6747f980-142d-4b00-a823-8da5f471d8b6_Screenshot%20from%202023-08-21%2023-02-11.png"
+                  }
                   alt="project logo"
                 />
               </div>
@@ -347,7 +355,9 @@ export async function GET(req: NextRequest) {
                   fontWeight: 600,
                   margin: 0,
                 }}
-              ></p>
+              >
+                Checkout {name} on Cubik
+              </p>
             )}
           </div>
         </div>
@@ -359,25 +369,21 @@ export async function GET(req: NextRequest) {
       fonts: [
         {
           name: "Inter",
-          // data: await font,
           data: interRegular,
           weight: 400,
         },
         {
           name: "Inter",
-          // data: await font,
           data: interMedium,
           weight: 500,
         },
         {
           name: "Inter",
-          // data: await font,
           data: interSemiBold,
           weight: 600,
         },
         {
           name: "Inter",
-          // data: await font,
           data: interBold,
           weight: 700,
         },
