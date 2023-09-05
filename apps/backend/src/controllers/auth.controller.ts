@@ -153,7 +153,7 @@ export const verify = async (req: Request, res: Response) => {
           httpOnly: true,
           sameSite: "lax",
           secure: true,
-          domain: ".cubik.so",
+          domain: "cubik.so",
           path: "/",
         })
         .json({
