@@ -191,7 +191,8 @@ export async function GET(req: NextRequest) {
                   </div>
                   <div
                     style={{
-                      display: comments === 0 || contributors === 0 ? "none" : "flex",
+                      display:
+                        comments === 0 || contributors === 0 ? "none" : "flex",
                       background: "#8C8D8C",
                       width: "4px",
                       height: "4px",
@@ -246,6 +247,8 @@ export async function GET(req: NextRequest) {
                   backgroundColor: "#FFFFFF",
                   display: "flex",
                   alignItems: "center",
+                  objectFit: "cover",
+                  objectPosition: "center",
                 }}
               >
                 <img
