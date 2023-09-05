@@ -259,9 +259,7 @@ export async function GET(req: NextRequest) {
                     objectFit: "cover",
                     objectPosition: "center",
                   }}
-                  src={
-                    "https://uploadthing.com/f/6747f980-142d-4b00-a823-8da5f471d8b6_Screenshot%20from%202023-08-21%2023-02-11.png"
-                  }
+                  src={logo as string}
                   alt="project logo"
                 />
               </div>
