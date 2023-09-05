@@ -4,7 +4,7 @@ import { SideBar } from "../components/Sidebar";
 import type { Prisma, User } from "@cubik/database";
 import { prisma } from "@cubik/database";
 import { Stack } from "@/utils/chakra";
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 import { utils } from "@coral-xyz/anchor";
 // import type { Metadata, ResolvingMetadata } from "next";
 
@@ -119,11 +119,8 @@ interface OgProps {
   searchParams: Record<string, string | string[] | undefined>;
 }
 
-export async function generateMetadata(
-  { params }: OgProps,
-  parent?: ResolvingMetadata
-): Promise<Metadata> {
-  const projects = await prisma.project.findUnique({
+export async function generateMetadata({ params }: OgProps): Promise<Metadata> {
+  const projects = await prisma.project.findFirst({
     where: {
       id: params.id[0],
     },
@@ -131,17 +128,9 @@ export async function generateMetadata(
       name: true,
       shortDescription: true,
       logo: true,
-      ogImage: true,
     },
   });
 
-  // const newImage = await fetch(
-  //   `,
-  //   {
-  //     method: "GET",
-  //     cache: "force-cache",
-  //   }
-  // );
   const newImage = `/api/og?name=${utils.bytes.base64.encode(
     Buffer.from(projects?.name ?? "default")
   )}&tagline=${utils.bytes.base64.encode(
@@ -149,7 +138,6 @@ export async function generateMetadata(
   )}&logo=${utils.bytes.base64.encode(
     Buffer.from(projects?.logo ?? "default")
   )}`;
-  const previousImages = (await parent)?.openGraph?.images ?? [];
 
   return {
     title: projects?.name,
@@ -157,13 +145,13 @@ export async function generateMetadata(
     metadataBase: new URL("https://www.cubik.so"),
     openGraph: {
       type: "website",
-      images: [`${newImage}`, ...previousImages],
+      images: [newImage],
       title: projects?.name,
       description: projects?.shortDescription,
     },
     twitter: {
       card: "summary_large_image",
-      images: [`${newImage}`, ...previousImages],
+      images: [newImage],
       title: projects?.name,
       description: projects?.shortDescription,
     },
