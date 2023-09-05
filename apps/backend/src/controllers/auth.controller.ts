@@ -148,12 +148,12 @@ export const verify = async (req: Request, res: Response) => {
         profileNft: user.profileNft as any,
       };
       const response = res
-
         .cookie("authToken", session as string, {
           expires: new Date(Date.now() + 3600000),
-          secure: true,
           httpOnly: true,
-          sameSite: "strict",
+          sameSite: "lax",
+          secure: true,
+          domain: ".cubik.so",
           path: "/",
         })
         .json({
