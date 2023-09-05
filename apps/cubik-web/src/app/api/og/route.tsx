@@ -17,9 +17,9 @@ export async function GET(req: NextRequest) {
   const logoBuffer = Buffer.from(logoBase64 as string, "base64");
   const logo = logoBuffer.toString();
 
-  const contributors = 205; //todo: @dhruv fetcgh from api
-  const comments = 12; //todo: @dhruv fetcgh from api
-  const participatingGrantsRound = "GR1";
+  const contributors = 0; //todo: @dhruv fetcgh from api
+  const comments = 0; //todo: @dhruv fetcgh from api
+  const participatingGrantsRound = undefined;
 
   const interRegular = await fetch(
     new URL("./Inter-Regular.otf", import.meta.url)
@@ -51,7 +51,7 @@ export async function GET(req: NextRequest) {
         <div
           style={{
             width: "100%",
-            height: "500px",
+            height: "480px",
             display: "flex",
             overflow: "hidden",
             alignItems: "center",
@@ -119,6 +119,11 @@ export async function GET(req: NextRequest) {
                     fontSize: "58px",
                     fontWeight: 700,
                     margin: 0,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
                   }}
                 >
                   {name}
@@ -130,6 +135,11 @@ export async function GET(req: NextRequest) {
                     color: "#515251",
                     fontWeight: 500,
                     margin: 0,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
                   }}
                 >
                   {tagline}
@@ -147,7 +157,7 @@ export async function GET(req: NextRequest) {
                 >
                   <div
                     style={{
-                      display: "flex",
+                      display: contributors === 0 ? "none" : "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       gap: "14px",
@@ -181,7 +191,7 @@ export async function GET(req: NextRequest) {
                   </div>
                   <div
                     style={{
-                      display: "flex",
+                      display: comments === 0 || contributors === 0 ? "none" : "flex",
                       background: "#8C8D8C",
                       width: "4px",
                       height: "4px",
@@ -229,13 +239,17 @@ export async function GET(req: NextRequest) {
                 style={{
                   width: "280px",
                   height: "280px",
-                  color: "#FFFFFF",
+                  maxHeight: "280px",
+                  maxWidth: "280px",
+                  overflow: "hidden",
+                  borderRadius: "1000px",
+                  backgroundColor: "#FFFFFF",
                   display: "flex",
                   alignItems: "center",
                 }}
               >
                 <img
-                  style={{ borderRadius: "100%" }}
+                  style={{ borderRadius: "1000px" }}
                   src={logo as string}
                   alt="project logo"
                 />
@@ -274,37 +288,64 @@ export async function GET(req: NextRequest) {
             style={{
               width: "100%",
               height: "125px",
-              display: participatingGrantsRound ? "flex" : "none",
+              display: "flex",
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "flex-start",
               gap: "12px",
             }}
           >
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 28 28"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="14" cy="14" r="14" fill="black" fillOpacity="0.2" />
-              <circle cx="14" cy="14" r="8" fill="black" fillOpacity="0.4" />
-              <circle cx="14" cy="14" r="4" fill="black" />
-              <circle cx="14" cy="14" r="4" fill="black" />
-            </svg>
-            <p
-              style={{
-                fontSize: "16px",
-                letterSpacing: "1.6px",
-                textTransform: "uppercase",
-                color: "#000",
-                fontWeight: 600,
-                margin: 0,
-              }}
-            >
-              Participating in {participatingGrantsRound}
-            </p>
+            {participatingGrantsRound ? (
+              <>
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 28 28"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="14"
+                    cy="14"
+                    r="14"
+                    fill="black"
+                    fillOpacity="0.2"
+                  />
+                  <circle
+                    cx="14"
+                    cy="14"
+                    r="8"
+                    fill="black"
+                    fillOpacity="0.4"
+                  />
+                  <circle cx="14" cy="14" r="4" fill="black" />
+                  <circle cx="14" cy="14" r="4" fill="black" />
+                </svg>
+                <p
+                  style={{
+                    fontSize: "16px",
+                    letterSpacing: "1.6px",
+                    textTransform: "uppercase",
+                    color: "#000",
+                    fontWeight: 600,
+                    margin: 0,
+                  }}
+                >
+                  Participating in {participatingGrantsRound}
+                </p>
+              </>
+            ) : (
+              <p
+                style={{
+                  fontSize: "16px",
+                  letterSpacing: "1.6px",
+                  textTransform: "uppercase",
+                  color: "#000",
+                  fontWeight: 600,
+                  margin: 0,
+                }}
+              ></p>
+            )}
           </div>
         </div>
       </div>
