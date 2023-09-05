@@ -8,7 +8,7 @@ interface Props {
   params: {
     id: string[];
   };
-  children: React.ReactNode;
+  children: React.JSX.Element | React.JSX.Element[];
 }
 type Event = "preview" | "round" | "hackathon";
 interface ProjectReturnType {
@@ -130,6 +130,8 @@ const fetchProject = async (
     return null;
   }
 };
+
+
 const ProjectPageLayout = async ({ params, children }: Props) => {
   const project = await fetchProject(
     params.id[0]!,

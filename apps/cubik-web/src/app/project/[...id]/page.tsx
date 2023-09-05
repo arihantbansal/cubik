@@ -5,6 +5,7 @@ import type { Prisma, User } from "@cubik/database";
 import { prisma } from "@cubik/database";
 import { Stack } from "@/utils/chakra";
 import type { Metadata, ResolvingMetadata } from "next";
+import { utils } from "@coral-xyz/anchor";
 // import type { Metadata, ResolvingMetadata } from "next";
 
 interface Props {
@@ -134,20 +135,35 @@ export async function generateMetadata(
     },
   });
 
+  // const newImage = await fetch(
+  //   `,
+  //   {
+  //     method: "GET",
+  //     cache: "force-cache",
+  //   }
+  // );
+  const newImage = `/api/og?name=${utils.bytes.base64.encode(
+    Buffer.from(projects?.name ?? "default")
+  )}&tagline=${utils.bytes.base64.encode(
+    Buffer.from(projects?.shortDescription ?? "default")
+  )}&logo=${utils.bytes.base64.encode(
+    Buffer.from(projects?.logo ?? "default")
+  )}`;
   const previousImages = (await parent)?.openGraph?.images ?? [];
 
   return {
     title: projects?.name,
     description: projects?.shortDescription,
+    metadataBase: new URL("https://www.cubik.so"),
     openGraph: {
       type: "website",
-      images: [`${projects?.ogImage}`, ...previousImages],
+      images: [`${newImage}`, ...previousImages],
       title: projects?.name,
       description: projects?.shortDescription,
     },
     twitter: {
       card: "summary_large_image",
-      images: [`${projects?.ogImage}`, ...previousImages],
+      images: [`${newImage}`, ...previousImages],
       title: projects?.name,
       description: projects?.shortDescription,
     },

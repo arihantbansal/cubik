@@ -1,9 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
+import type { NextRequest } from "next/server";
 import { ImageResponse } from "next/server";
 
 export const runtime = "edge";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const nameBase64 = req.nextUrl.searchParams.get("name");
+  const nameBuffer = Buffer.from(nameBase64 as string, "base64");
+  const name = nameBuffer.toString();
+
+  const taglineBase64 = req.nextUrl.searchParams.get("tagline");
+  const taglineBuffer = Buffer.from(taglineBase64 as string, "base64");
+  const tagline = taglineBuffer.toString();
+
+  const logoBase64 = req.nextUrl.searchParams.get("logo");
+  const logoBuffer = Buffer.from(logoBase64 as string, "base64");
+  const logo = logoBuffer.toString();
   return new ImageResponse(
     (
       <div
@@ -40,7 +52,7 @@ export async function GET() {
           >
             <img
               style={{ borderRadius: "1rem" }}
-              src="https://res.cloudinary.com/demonicirfan/image/upload/v1687169182/vckp0atyxrtrgw37kiup.jpg"
+              src={logo as string}
               alt="dasf"
             />
           </div>
@@ -68,7 +80,7 @@ export async function GET() {
                   fontWeight: 800,
                 }}
               >
-                Session Keys
+                {name}
               </div>
             </div>
             <div
@@ -81,8 +93,7 @@ export async function GET() {
                 fontSize: "1.2rem",
               }}
             >
-              wallet & dApps improve their payment experience wallet & dApps
-              improve wallet & dApps improve their payment experience
+              {tagline}
             </div>
           </div>
         </div>
