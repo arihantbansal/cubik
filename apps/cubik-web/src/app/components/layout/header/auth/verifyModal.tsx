@@ -1,7 +1,6 @@
 "use client";
 import { WalletAddress } from "@/app/components/common/wallet";
 import type { User } from "@/app/context/user";
-import { env } from "@/env.mjs";
 import type { AuthVerifyReturn } from "@/types/auth";
 import {
   Box,
@@ -50,7 +49,7 @@ export const VerifyModal = ({
       const msg = createMessage(hash);
       const sigBuffer = await signMessage!(msg!);
       const sig = utils.bytes.bs58.encode(sigBuffer);
-      const verifyRes = await fetch(env.NEXT_PUBLIC_BACKEND + "/auth/verify", {
+      const verifyRes = await fetch("/api/auth/verify", {
         method: "POST",
         body: JSON.stringify({
           signature: sig,

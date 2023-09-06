@@ -4,7 +4,7 @@ import type { AuthTokenCheckReturn } from "@/types/auth";
 
 export const handleLogout = async () => {
   try {
-    await fetch(env.NEXT_PUBLIC_BACKEND + "/auth/logout", {
+    await fetch("/api/auth/logout", {
       method: "POST",
       cache: "no-cache",
       headers: {
@@ -35,10 +35,9 @@ export const getToken = async () => {
   }
 };
 
-
 export const getMessage = async (nonce: string) => {
   try {
-    const res = await fetch(env.NEXT_PUBLIC_BACKEND + "/auth/create-message", {
+    const res = await fetch("/api/auth/createMessage", {
       cache: "no-cache",
       method: "GET",
       headers: {

@@ -7,6 +7,7 @@ export const env = createEnv({
     NODE_ENV: z.enum(["development", "test", "production"]),
     UPLOADTHING_APP_ID: z.string().min(1),
     UPLOADTHING_SECRET: z.string().min(1),
+    SECRET: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_RPC_MAINNET_URL: z.string().min(1),
@@ -21,6 +22,7 @@ export const env = createEnv({
     NEXT_PUBLIC_BACKEND: z.string().min(1),
   },
   runtimeEnv: {
+    SECRET: process.env.SECRET,
     UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
     UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
     NEXT_PUBLIC_BACKEND: process.env.NEXT_PUBLIC_BACKEND,

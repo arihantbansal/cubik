@@ -17,6 +17,7 @@
     "@chakra-ui/theme-tools": "^2.0.18",
     "@coral-xyz/anchor": "^0.27.0",
     "@cubik/auth": "workspace:^",
+    "@cubik/common-types": "workspace:^",
     "@cubik/database": "workspace:*",
     "@hookform/resolvers": "^2.9.11",
     "@lottiefiles/react-lottie-player": "^3.5.3",

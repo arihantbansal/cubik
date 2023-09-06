@@ -9,7 +9,6 @@ import { VerifyModal } from "./verifyModal";
 import { handleLogout } from "@/utils/helpers/auth";
 import { useUser } from "@/app/context/user";
 import UserNavbarMenuButton from "../cta/user-navbar-menu";
-import { env } from "@/env.mjs";
 
 export const WalletConnect = () => {
   const { connected, publicKey, disconnect, signMessage } = useWallet();
@@ -27,7 +26,7 @@ export const WalletConnect = () => {
       if (connected && publicKey && !user) {
         try {
           setIsLoading(true);
-          const res = await fetch(env.NEXT_PUBLIC_BACKEND + "/auth/check", {
+          const res = await fetch("/api/auth/check", {
             method: "POST",
             body: JSON.stringify({
               wallet: publicKey.toBase58(),

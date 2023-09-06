@@ -4,39 +4,31 @@ import React, { useEffect } from "react";
 import Logo from "../../common/logo";
 import Links from "./links";
 import { WalletConnect } from "./auth/handleConnect";
-import { getToken } from "@/utils/helpers/auth";
 import { useUser } from "@/app/context/user";
-import { env } from "@/env.mjs";
 
 const Header = () => {
   const { setUser } = useUser();
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const token = await getToken();
-        if (token) {
-          const userRes = await fetch(
-            env.NEXT_PUBLIC_BACKEND + "/auth/decode",
-            {
-              method: "GET",
-              cache: "no-cache",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          const dataRes = await userRes.json();
-          const user = dataRes.data;
-          if (dataRes.data) {
-            setUser({
-              id: user.id,
-              mainWallet: user.mainWallet,
-              profilePicture: user.profilePicture,
-              username: user.username,
-            });
-          } else {
-            setUser(null);
-          }
+        const userRes = await fetch("/api/auth/decode", {
+          method: "GET",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const dataRes = await userRes.json();
+        const user = dataRes.data;
+        if (dataRes.data) {
+          setUser({
+            id: user.id,
+            mainWallet: user.mainWallet,
+            profilePicture: user.profilePicture,
+            username: user.username,
+          });
+        } else {
+          setUser(null);
         }
       } catch (error) {
         console.log(error);
