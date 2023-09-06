@@ -219,11 +219,17 @@ export async function generateMetadata(
         name: true,
         shortDescription: true,
         logo: true,
+        _count: {
+          select: {
+            comments: true,
+          },
+        },
       },
     });
     name = projects?.name ?? "default";
     tagline = projects?.shortDescription ?? "default";
     logo = projects?.logo ?? "default";
+    comments = projects?._count.comments ?? 0;
   }
 
   const newImage = `/api/og?name=${utils.bytes.base64.encode(
