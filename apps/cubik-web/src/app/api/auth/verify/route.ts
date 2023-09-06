@@ -14,7 +14,6 @@ export const POST = async (req: NextRequest) => {
     const nonce = headersList.get("x-cubik-nonce") as string;
 
     const hash = nonce + env.SECRET?.slice(0, 10);
-    console.log(nonce, env.SECRET?.slice(0, 10), "-----------");
     const check = utils.sha256.hash(hash);
 
     const result = verifyMessage(
@@ -22,7 +21,6 @@ export const POST = async (req: NextRequest) => {
       new web3.PublicKey(publicKey),
       check
     );
-    console.log(result, "-----------");
     if (result) {
       const user = await prisma.user.findUnique({
         where: {

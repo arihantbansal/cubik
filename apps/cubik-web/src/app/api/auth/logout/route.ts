@@ -9,6 +9,7 @@ export const POST = async () => {
       message: "Logged out successfully",
     });
   } catch (error) {
+    console.log(error);
     return NextResponse.json({
       message: "Something went wrong",
     });
