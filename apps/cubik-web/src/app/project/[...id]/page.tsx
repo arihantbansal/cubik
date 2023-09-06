@@ -115,7 +115,7 @@ const ProjectDetails = async (
 };
 
 interface OgProps {
-  params: { id: string };
+  params: { id: string[] };
   searchParams: Record<string, string | string[] | undefined>;
 }
 
@@ -123,49 +123,134 @@ export async function generateMetadata(
   { params }: OgProps,
   parent?: ResolvingMetadata
 ): Promise<Metadata> {
-  const projects = await prisma.project.findUnique({
-    where: {
-      id: params.id[0],
-    },
-    select: {
-      name: true,
-      shortDescription: true,
-      logo: true,
-      ogImage: true,
-    },
-  });
+  let name = "";
+  let tagline = "";
+  let logo = "";
+  let contributors = 0;
+  let comments = 0;
+  let eventName = undefined;
 
-  // const newImage = await fetch(
-  //   `,
-  //   {
-  //     method: "GET",
-  //     cache: "force-cache",
-  //   }
-  // );
+  if (params.id[1] === "hackathon") {
+    const projects = await prisma.project.findUnique({
+      where: {
+        id: params.id[0],
+      },
+      select: {
+        name: true,
+        shortDescription: true,
+        logo: true,
+        projectJoinHackathon: {
+          where: {
+            hackathonId: params.id[2],
+          },
+          select: {
+            hackathon: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        _count: {
+          select: {
+            comments: true,
+            contribution: {
+              where: {
+                hackathonId: params.id[2],
+              },
+            },
+          },
+        },
+      },
+    });
+
+    name = projects?.name ?? "default";
+    tagline = projects?.shortDescription ?? "default";
+    logo = projects?.logo ?? "default";
+    comments = projects?._count?.comments ?? 0;
+    contributors = projects?._count?.contribution ?? 0;
+    eventName = projects?.projectJoinHackathon[0]?.hackathon.name ?? "default";
+  } else if (params.id[1] === "round") {
+    const projects = await prisma.project.findUnique({
+      where: {
+        id: params.id[0],
+      },
+      select: {
+        name: true,
+        shortDescription: true,
+        logo: true,
+        projectJoinRound: {
+          where: {
+            roundId: params.id[2],
+          },
+          select: {
+            round: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        _count: {
+          select: {
+            comments: true,
+            contribution: {
+              where: {
+                hackathonId: params.id[2],
+              },
+            },
+          },
+        },
+      },
+    });
+
+    name = projects?.name ?? "default";
+    tagline = projects?.shortDescription ?? "default";
+    logo = projects?.logo ?? "default";
+    comments = projects?._count?.comments ?? 0;
+    contributors = projects?._count?.contribution ?? 0;
+    eventName = projects?.projectJoinRound[0]?.round.name ?? "default";
+  } else {
+    const projects = await prisma.project.findUnique({
+      where: {
+        id: params.id[0],
+      },
+      select: {
+        name: true,
+        shortDescription: true,
+        logo: true,
+      },
+    });
+    name = projects?.name ?? "default";
+    tagline = projects?.shortDescription ?? "default";
+    logo = projects?.logo ?? "default";
+  }
+
   const newImage = `/api/og?name=${utils.bytes.base64.encode(
-    Buffer.from(projects?.name ?? "default")
+    Buffer.from(name ?? "default")
   )}&tagline=${utils.bytes.base64.encode(
-    Buffer.from(projects?.shortDescription ?? "default")
+    Buffer.from(tagline ?? "default")
   )}&logo=${utils.bytes.base64.encode(
-    Buffer.from(projects?.logo ?? "default")
-  )}`;
+    Buffer.from(logo ?? "default")
+  )}&contributors=${contributors}&comments=${comments}&eventName=${eventName}`;
+
   const previousImages = (await parent)?.openGraph?.images ?? [];
 
   return {
-    title: projects?.name,
-    description: projects?.shortDescription,
+    title: name,
+    description: tagline,
     metadataBase: new URL("https://www.cubik.so"),
     openGraph: {
       type: "website",
       images: [`${newImage}`, ...previousImages],
-      title: projects?.name,
-      description: projects?.shortDescription,
+      title: name,
+      description: tagline,
     },
     twitter: {
       card: "summary_large_image",
       images: [`${newImage}`, ...previousImages],
-      title: projects?.name,
-      description: projects?.shortDescription,
+      title: name,
+      description: tagline,
     },
   };
 }

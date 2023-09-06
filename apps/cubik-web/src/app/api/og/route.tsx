@@ -17,9 +17,12 @@ export async function GET(req: NextRequest) {
   const logoBuffer = Buffer.from(logoBase64 as string, "base64");
   const logo = logoBuffer.toString();
 
-  const contributors = 0; //todo: @dhruv fetcgh from api
-  const comments = 0; //todo: @dhruv fetcgh from api
-  const participatingGrantsRound = undefined;
+  const contributors =
+    parseInt(req.nextUrl.searchParams.get("contributors") ?? "0") ?? 10;
+  const comments =
+    parseInt(req.nextUrl.searchParams.get("comments") ?? "0") ?? 10;
+  const participatingGrantsRound =
+    req.nextUrl.searchParams.get("eventName") ?? undefined;
 
   const interRegular = await fetch(
     new URL("./Inter-Regular.otf", import.meta.url)
@@ -337,7 +340,8 @@ export async function GET(req: NextRequest) {
                     textTransform: "uppercase",
                     color: "#000",
                     fontWeight: 600,
-                    margin: 0,
+                    marginTop: 6,
+                    marginLeft: 4,
                   }}
                 >
                   Participating in {participatingGrantsRound}
