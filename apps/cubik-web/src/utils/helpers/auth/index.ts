@@ -37,9 +37,9 @@ export const getToken = async () => {
 
 export const getMessage = async (nonce: string) => {
   try {
-    const res = await fetch("/api/auth/createMessage", {
+    const res = await fetch("/api/auth/createmessage", {
       cache: "no-cache",
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         "x-cubik-nonce": nonce,

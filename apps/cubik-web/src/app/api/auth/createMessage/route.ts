@@ -3,7 +3,9 @@ import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { env } from "@/env.mjs";
 
-export async function GET() {
+
+
+export const POST = async () => {
   try {
     const headersList = headers();
     const nonce = headersList.get("x-cubik-nonce") as string;
@@ -25,4 +27,4 @@ export async function GET() {
       }
     );
   }
-}
+};
