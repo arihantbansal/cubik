@@ -14,7 +14,9 @@ export const POST = async (req: NextRequest) => {
     const nonce = headersList.get("x-cubik-nonce") as string;
 
     const hash = nonce + env.SECRET?.slice(0, 10);
+    console.log(nonce, env.SECRET?.slice(0, 10), "-----------");
     const check = utils.sha256.hash(hash);
+
     const result = verifyMessage(
       signature,
       new web3.PublicKey(publicKey),

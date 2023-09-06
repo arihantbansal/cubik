@@ -46,6 +46,9 @@ export const VerifyModal = ({
     if (status === "EXISTING_USER") {
       const nonce = Math.random().toString(36).substring(2, 15);
       const hash = await getMessage(nonce);
+      if (!hash) {
+        throw new Error("Hash is undefined");
+      }
       const msg = createMessage(hash);
       const sigBuffer = await signMessage!(msg!);
       const sig = utils.bytes.bs58.encode(sigBuffer);
@@ -87,6 +90,9 @@ export const VerifyModal = ({
     } else {
       const nonce = Math.random().toString(36).substring(2, 15);
       const msg = await getMessage(nonce);
+      if (!msg) {
+        throw new Error("Message is undefined");
+      }
       const sig = utils.bytes.bs58.encode(await signMessage!(msg));
       localStorage.setItem("wallet_sig", sig);
       localStorage.setItem("wallet_nonce", nonce);
