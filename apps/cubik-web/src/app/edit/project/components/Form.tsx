@@ -202,7 +202,7 @@ const Form = ({
             };
           });
       }
-      let finalTeam: Team[] = [
+      const finalTeam: Team[] = [
         {
           id: uuidV4(),
           projectId: projectId,
@@ -233,8 +233,8 @@ const Form = ({
           telegramLink: getValues("telegram"),
           twitterHandle: getValues("twitter"),
           id: projectId,
-        },
-        finalTeam
+        }
+        // finalTeam
       );
       if (res) {
         router.push(`/project/${projectId}`);

@@ -2,6 +2,9 @@ import Form from "../components/Form";
 import { Container } from "@/utils/chakra";
 import React from "react";
 import { prisma } from "@cubik/database";
+import { cookies } from "next/headers";
+import { decodeToken } from "@cubik/auth";
+import { notFound } from "next/navigation";
 
 const getProject = async (id: string) => {
   try {
@@ -28,7 +31,18 @@ interface Props {
   };
 }
 const EditProjectPage = async ({ params: { id } }: Props) => {
+  const authToken = cookies().get("authToken");
+
+  if (!authToken) {
+    notFound();
+  }
+  const user = await decodeToken(authToken.value);
+
   const projectData = await getProject(id);
+
+  if (user?.mainWallet !== projectData?.ownerPublickey) {
+    notFound();
+  }
   return (
     <>
       <Container

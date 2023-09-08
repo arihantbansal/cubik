@@ -1,5 +1,6 @@
 import { AuthPayload } from "@cubik/common-types";
 import { jwtVerify } from "jose";
+
 export const decodeToken = async (
   token: string
 ): Promise<AuthPayload | null> => {
