@@ -1,10 +1,7 @@
-"use client";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Header from "@/app/components/layout/header";
 import WalletContext from "@/app/components/wallet/context";
 import { AuthProvider } from "./context/user";
-import { useState } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Providers } from "./provider";
 
 const PlusJakartaSans = Plus_Jakarta_Sans({
@@ -12,24 +9,17 @@ const PlusJakartaSans = Plus_Jakarta_Sans({
   weight: ["200", "300", "400", "500", "600", "700", "800"],
 });
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [client] = useState(() => new QueryClient());
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={`${PlusJakartaSans.className}`}>
         <WalletContext>
-          <QueryClientProvider client={client}>
-            <AuthProvider>
-              <Providers>
-                <Header />
-                {children}
-              </Providers>
-            </AuthProvider>
-          </QueryClientProvider>
+          <AuthProvider>
+            <Providers>
+              <Header />
+              {children}
+            </Providers>
+          </AuthProvider>
         </WalletContext>
       </body>
     </html>

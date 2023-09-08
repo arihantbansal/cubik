@@ -293,10 +293,7 @@ export const projectExplorer = async () => {
   }
 };
 
-// export const metadata: Metadata = {
-//   title: `Projects - Cubik`,
-//   description: `Browse projects and Cubik and support them`,
-// };
+
 
 export const metadata: Metadata = {
   title: "Projects - Cubik",

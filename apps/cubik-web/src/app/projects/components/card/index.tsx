@@ -33,26 +33,6 @@ const ProjectEventBanner = ({
       position={"relative"}
       overflow={"hidden"}
     >
-      {/* {bg && (
-        <Center
-          zIndex={"0"}
-          alignItems={"end"}
-          bg="red"
-          w="28rem"
-          h="8.5rem"
-          transform={"translateY(31%)"}
-          position={"absolute"}
-          overflow={"hidden"}
-        >
-          <Image
-            src={bg as string}
-            alt={name as string}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="center"
-          />
-        </Center>
-      )} */}
       <HStack
         zIndex={"1"}
         w="full"
@@ -240,9 +220,9 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
                 <Image
                   src={project.logo}
                   alt={project.title}
-                  objectFit="cover"
-                  layout="fill"
+                  fill={true}
                   style={{
+                    objectFit: "cover",
                     background: "transparent",
                     borderRadius: "8px",
                   }}

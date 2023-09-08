@@ -61,9 +61,11 @@ const HackathonPage = async ({ params: { slug } }: Props) => {
             <Image
               src={hackathon?.background as string}
               alt={hackathon?.name as string}
-              layout="fill"
-              objectFit="cover"
-              objectPosition="center"
+              fill={true}
+              style={{
+                objectFit: "cover",
+                objectPosition: "center",
+              }}
             />
           </Center>
           <Container

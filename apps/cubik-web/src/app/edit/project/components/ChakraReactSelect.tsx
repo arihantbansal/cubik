@@ -245,6 +245,7 @@ export const TeamSelect = ({
     queryKey: ["searchTeam", currentTeammateName],
     enabled: currentTeammateName?.length! > 3 ? true : false,
   });
+
   const options = [...watch("team"), ...(teamSearch || [])];
   return (
     <Controller
@@ -385,7 +386,7 @@ export const TeamSelect = ({
                 boxShadow: "none",
                 padding: "0px",
               }),
-              option: (provided,state) => ({
+              option: (provided, state) => ({
                 ...provided,
                 color: "neutral.11",
                 fontSize: { base: "12px", md: "14px" },

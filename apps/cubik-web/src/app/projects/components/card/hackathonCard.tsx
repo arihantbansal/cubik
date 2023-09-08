@@ -84,8 +84,10 @@ export const hackathonCard = (props: Props) => {
                   src={props.background}
                   alt={"hackathon"}
                   layout="fill"
-                  objectFit="cover"
-                  objectPosition="center"
+                  style={{
+                    objectFit: "cover",
+                    objectPosition: "center",
+                  }}
                 />
               </Center>
             </Center>
