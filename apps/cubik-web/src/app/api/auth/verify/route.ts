@@ -6,6 +6,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { prisma } from "@cubik/database";
 import { env } from "@/env.mjs";
+import { getTrackInfo } from "@/utils/helpers/track";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -40,9 +41,9 @@ export const POST = async (req: NextRequest) => {
           }
         );
       }
-
+      const trackInfo = await getTrackInfo();
       const session = await createToken({
-        ip: "test" as string,
+        ip: trackInfo?.ip as string,
         mainWallet: publicKey,
         id: user.id,
         profilePicture: user.profilePicture as string,
@@ -51,13 +52,14 @@ export const POST = async (req: NextRequest) => {
       });
 
       const userSessionPayload: AuthPayload = {
-        ip: "test",
+        ip: trackInfo?.ip as string,
         mainWallet: publicKey,
         id: user.id,
         profilePicture: user.profilePicture as string,
         username: user.username as string,
         profileNft: user.profileNft as any,
       };
+
       const response = NextResponse.json({
         data: result,
         user: userSessionPayload,
@@ -72,6 +74,18 @@ export const POST = async (req: NextRequest) => {
         path: "/",
       });
 
+      await prisma.session.create({
+        data: {
+          userId: user.id,
+          ipAddress: trackInfo?.ip as string,
+          userAgent: trackInfo?.userAgent as string,
+          country: trackInfo?.country as string,
+          latitude: trackInfo?.latitude as string,
+          longitude: trackInfo?.longitude as string,
+          createdAt: new Date(),
+        },
+      });
+
       return response;
     } else {
       return NextResponse.json({
@@ -80,7 +94,7 @@ export const POST = async (req: NextRequest) => {
       });
     }
   } catch (error) {
-    console.log(error, "-----------");
+    console.log(error);
     NextResponse.json(
       {
         data: false,

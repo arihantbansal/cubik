@@ -7,16 +7,17 @@ import Squads, {
   TransactionAccount,
   InstructionAccount,
 } from '@sqds/sdk';
-import { create } from 'domain';
-import { env } from '~/env.mjs';
+
+import { create } from "domain";
+import { env } from "~/env.mjs";
 
 const RPC_URL =
-  env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta'
+  env.NEXT_PUBLIC_SOLANA_NETWORK === "mainnet-beta"
     ? env.NEXT_PUBLIC_RPC_MAINNET_URL
     : env.NEXT_PUBLIC_RPC_DEVNET_URL;
 
 const getSquads = async (wallet: NodeWallet): Promise<Squads> => {
-  if (env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta') {
+  if (env.NEXT_PUBLIC_SOLANA_NETWORK === "mainnet-beta") {
     const squads = Squads.endpoint(RPC_URL, wallet);
 
     return squads;
@@ -53,10 +54,10 @@ export const getVault = async (
 
   const [authority] = anchor.web3.PublicKey.findProgramAddressSync(
     [
-      anchor.utils.bytes.utf8.encode('squad'),
+      anchor.utils.bytes.utf8.encode("squad"),
       mutliSigAccount.toBuffer(),
-      new anchor.BN(1).toArrayLike(Buffer, 'le', 4),
-      anchor.utils.bytes.utf8.encode('authority'),
+      new anchor.BN(1).toArrayLike(Buffer, "le", 4),
+      anchor.utils.bytes.utf8.encode("authority"),
     ],
     squads.multisigProgramId
   );
@@ -69,9 +70,9 @@ export const getMsAddress = async (wallet: NodeWallet, createKey: string) => {
 
   const [multiSigAccount] = anchor.web3.PublicKey.findProgramAddressSync(
     [
-      anchor.utils.bytes.utf8.encode('squad'),
+      anchor.utils.bytes.utf8.encode("squad"),
       new anchor.web3.PublicKey(createKey).toBuffer(),
-      anchor.utils.bytes.utf8.encode('multisig'),
+      anchor.utils.bytes.utf8.encode("multisig"),
     ],
     squads.multisigProgramId
   );
@@ -89,9 +90,9 @@ export const getAllTx = async (wallet: NodeWallet, createKey: string) => {
 
     const [multiSigAccount] = anchor.web3.PublicKey.findProgramAddressSync(
       [
-        anchor.utils.bytes.utf8.encode('squad'),
+        anchor.utils.bytes.utf8.encode("squad"),
         new anchor.web3.PublicKey(createKey).toBuffer(),
-        anchor.utils.bytes.utf8.encode('multisig'),
+        anchor.utils.bytes.utf8.encode("multisig"),
       ],
       squads.multisigProgramId
     );

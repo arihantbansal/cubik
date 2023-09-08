@@ -54,6 +54,9 @@ model Session {
   id        String   @id @default(uuid())
   ipAddress String
   userAgent String
+  latitude  String  @default("0")
+  longitude String  @default("0")
+  country   String  @default("default")
   createdAt DateTime @default(now())
   userId    String
   User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)

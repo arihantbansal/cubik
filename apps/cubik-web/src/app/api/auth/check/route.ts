@@ -4,6 +4,7 @@ import { prisma } from "@cubik/database";
 import { NextResponse } from "next/server";
 import type { AuthCheckReturn } from "@cubik/common-types";
 import { decodeToken } from "@cubik/auth";
+import { getTrackInfo } from "@/utils/helpers/track";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -64,11 +65,11 @@ export const POST = async (req: NextRequest) => {
       });
     } else {
       const decodedToken = await decodeToken(authCookie.value);
-      //   const clientIp = requestIp.getClientIp(req);
+      const trackInfo = await getTrackInfo();
       if (
         !decodedToken ||
-        decodedToken.mainWallet !== wallet
-        // decodedToken.ip !== clientIp
+        decodedToken.mainWallet !== wallet ||
+        decodedToken?.ip !== trackInfo?.ip
       ) {
         return NextResponse.json({
           data: null,
