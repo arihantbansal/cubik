@@ -662,9 +662,6 @@ importers:
       '@lottiefiles/react-lottie-player':
         specifier: ^3.5.3
         version: 3.5.3(react@18.2.0)
-      '@next/font':
-        specifier: ^13.4.18
-        version: 13.4.18
       '@prisma/nextjs-monorepo-workaround-plugin':
         specifier: ^5.1.1
         version: 5.1.1
@@ -6828,10 +6825,6 @@ packages:
     resolution: {integrity: sha512-N/O+zGb6wZQdwu6atMZHbR7T9Np5SUFUjZqCbj0sXm+MwQO35M8TazVB4otm87GkXYs2l6OPwARd3/PUWhZBVQ==}
     dependencies:
       glob: 7.1.7
-    dev: false
-
-  /@next/font@13.4.18:
-    resolution: {integrity: sha512-Xypz8ERqDRLru0+bUa+9z6qMrK2bIiFhNB2rWWvb/wGiXtGTgbNPrJLqXa+NgY1Vrzu/4GkR09USEgRkDsLqaA==}
     dev: false
 
   /@next/swc-android-arm-eabi@13.2.4:
