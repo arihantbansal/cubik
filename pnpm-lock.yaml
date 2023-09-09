@@ -725,6 +725,9 @@ importers:
       '@tiptap/starter-kit':
         specifier: ^2.0.0-beta.220
         version: 2.0.0-beta.220(@tiptap/pm@2.0.4)
+      '@types/luxon':
+        specifier: ^3.3.2
+        version: 3.3.2
       '@types/uuid':
         specifier: ^9.0.1
         version: 9.0.1
@@ -764,6 +767,9 @@ importers:
       jsonwebtoken:
         specifier: ^9.0.1
         version: 9.0.1
+      luxon:
+        specifier: ^3.4.3
+        version: 3.4.3
       next:
         specifier: ^13.4.16
         version: 13.4.16(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)
@@ -10870,6 +10876,10 @@ packages:
     resolution: {integrity: sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==}
     dev: false
 
+  /@types/luxon@3.3.2:
+    resolution: {integrity: sha512-l5cpE57br4BIjK+9BSkFBOsWtwv6J9bJpC7gdXIzZyI0vuKvNTk0wZZrkQxMGsUAuGW9+WMNWF2IJMD7br2yeQ==}
+    dev: false
+
   /@types/markdown-it@12.2.3:
     resolution: {integrity: sha512-GKMHFfv3458yYy+v/N8gjufHO6MSZKCOXpZc5GXIWWy8uldwfmPn98vp81gZ5f9SVw8YYBctgfJ22a2d7AOMeQ==}
     dependencies:
@@ -17486,6 +17496,11 @@ packages:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 17.0.2
+    dev: false
+
+  /luxon@3.4.3:
+    resolution: {integrity: sha512-tFWBiv3h7z+T/tDaoxA8rqTxy1CHV6gHS//QdaH4pulbq/JuBSGgQspQQqcgnwdAx6pNI7cmvz5Sv/addzHmUg==}
+    engines: {node: '>=12'}
     dev: false
 
   /make-dir@2.1.0:
