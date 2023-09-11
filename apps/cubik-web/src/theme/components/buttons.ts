@@ -301,14 +301,12 @@ export const Button = {
 
     // custom cubik buttons
     cubikFilled: () => ({
-      color: "#031513",
-      backgroundColor: "#E0FFFD",
+      color: "#000",
+      backgroundColor: "#FFF",
       rounded: "12px",
-      border: "2px solid #E0FFFD",
       _hover: {
-        color: "#031513",
-        backgroundColor: "#A8F0E6",
-        borderColor: "#A8F0E6",
+        color: "#000",
+        backgroundColor: "#DDD",
       },
       _disabled: {
         color: "#9E9E9E",
@@ -322,20 +320,19 @@ export const Button = {
       },
     }),
     cubikOutlined: () => ({
-      color: "#E0FFFD",
+      color: "#FFF",
       backgroundColor: "transparent",
       rounded: "12px",
-      border: "2px solid #E0FFFD",
+      border: "2px solid #313131",
       _hover: {
         color: "#031513",
-        backgroundColor: "#E0FFFD",
-        borderColor: "#E0FFFD",
-        // outline: "1px solid #E0FFFD",
+        backgroundColor: "#FFF",
+        borderColor: "#FFF",
       },
       _disabled: {
         color: "#9E9E9E",
         backgroundColor: "transparent !important",
-        border: "1px solid #9E9E9E",
+        border: "2px solid #9E9E9E",
         outline: "none",
         _hover: {
           color: "#9E9E9E",

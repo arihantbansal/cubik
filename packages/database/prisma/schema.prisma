@@ -4,9 +4,9 @@ generator client {
 }
 
 datasource db {
-  provider          = "mysql"
-  url               = env("PROD_DATABASE_URL")
-  relationMode      = "prisma"
+  provider     = "mysql"
+  url          = env("PROD_DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model User {
@@ -46,7 +46,6 @@ model Proof {
   isArchive Boolean   @default(false)
   user      User      @relation(fields: [userId], references: [id])
 
-
   @@index([userId])
 }
 
@@ -54,9 +53,9 @@ model Session {
   id        String   @id @default(uuid())
   ipAddress String
   userAgent String
-  latitude  String  @default("0")
-  longitude String  @default("0")
-  country   String  @default("default")
+  latitude  String   @default("0")
+  longitude String   @default("0")
+  country   String   @default("default")
   createdAt DateTime @default(now())
   userId    String
   User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -67,6 +66,8 @@ model Session {
 model Project {
   id                   String                 @id @default(uuid()) @map("_id")
   name                 String
+  slug                 String?                @default("")
+  slides               Json?
   shortDescription     String                 @db.VarChar(2000)
   logo                 String                 @db.VarChar(1000)
   ownerPublickey       String

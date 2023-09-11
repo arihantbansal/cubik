@@ -55,6 +55,7 @@ export const projectExplorer = async () => {
 
         project: {
           select: {
+            slug: true,
             owner: {
               select: {
                 username: true,
@@ -85,6 +86,7 @@ export const projectExplorer = async () => {
         tracks: true,
         project: {
           select: {
+            slug: true,
             owner: {
               select: {
                 username: true,
@@ -181,6 +183,7 @@ export const projectExplorer = async () => {
         logo: project.project.logo,
         industry: project.project.industry,
         title: project.project.name,
+        slug: project.project.slug || "",
         contributorCount:
           project.round.contribution.filter(
             (e) => e.projectId === project.project.id
@@ -221,6 +224,7 @@ export const projectExplorer = async () => {
         id: project.project.id,
         logo: project.project.logo,
         industry: project.project.industry,
+        slug: project.project.slug || "",
         title: project.project.name,
         contributorCount: users.length > 3 ? users.length - 3 : 0,
         contributors:

@@ -120,7 +120,7 @@ export const ProjectCard = ({ project }: { project: ProjectExplorerType }) => {
     // if (project.projectEvent.eventName === "round") {
     //   return `/${project.ownerName}/${project.id}/${project.projectEvent.id}`;
     // }
-    return `/project/${project.id}/${project.projectEvent.eventName}/${project.projectEvent.id}`;
+    return `/project/${project.slug}`;
   };
 
   //  border={addedToList ? '2px solid #659C95' : '2px solid transparent'}

@@ -1,4 +1,3 @@
-import SEO from "@/app/components/SEO";
 import { prisma } from "@cubik/database";
 import type { Prisma } from "@cubik/database";
 import { Box, Container } from "@/utils/chakra";
@@ -92,11 +91,6 @@ const GrantPage = async ({ params }: { params: { id: string } }) => {
   const [grant, error] = await getGrant(params.id);
   return (
     <>
-      <SEO
-        title={`${grant?.name || "Grant"}`}
-        description={`${grant?.shortDescription || "Grant Round on Cubik"}`}
-        image={`https://res.cloudinary.com/demonicirfan/image/upload/v1687266944/Projects_ozybde.png`}
-      />
       <main>
         <Container
           py={{ base: "32px", md: "80px" }}

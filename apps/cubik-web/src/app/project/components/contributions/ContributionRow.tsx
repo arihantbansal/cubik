@@ -28,7 +28,7 @@ export const ContributorRow: React.FC<Props> = (props) => {
         router.push(`/${props?.username}`);
       }}
       cursor="pointer"
-      _hover={{ backgroundColor: "#0C0D0D" }}
+      _hover={{ backgroundColor: "#0000008A" }}
     >
       <Td p="18px">
         <HStack align={"start"} gap={{ base: "8px", md: "16px" }}>
@@ -94,7 +94,20 @@ export const ContributorRow: React.FC<Props> = (props) => {
           {timeSince(new Date(props.timestamp))}
         </Box>
       </Td>
-      <Td p="18px">{/* <BiChevronRight size="24" /> */}</Td>
+      <Td p="18px">
+        <svg
+          width="8"
+          height="12"
+          viewBox="0 0 8 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6.94994 6.70698L7.65694 5.99998L1.99994 0.342983L0.585938 1.75698L4.82794 5.99998L0.585938 10.243L1.99994 11.657L6.94994 6.70698Z"
+            fill="white"
+          />
+        </svg>
+      </Td>
     </Tr>
   );
 };

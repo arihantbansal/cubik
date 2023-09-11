@@ -45,6 +45,7 @@ export interface ProjectExplorerType {
   id: string;
   logo: string;
   title: string;
+  slug: string;
   projectShortDescription: string;
   ownerName: string;
   industry: string;

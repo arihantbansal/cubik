@@ -1,0 +1,265 @@
+"use client";
+import {
+  Box,
+  Button,
+  HStack,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverTrigger,
+  Portal,
+  Stack,
+  VStack,
+} from "@/utils/chakra";
+import React, { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { InterFont } from "@/utils/fonts/inter";
+import type { ProjectPageLayoutType } from "@/types/project";
+import { EventSelector } from "./eventSelector";
+
+interface Props {
+  projectWithEvent: ProjectPageLayoutType;
+}
+export const ProjectHeader = ({ projectWithEvent }: Props) => {
+  const [isHovered, setIsHovered] = useState<boolean>(true);
+
+  return (
+    <>
+      <Stack
+        className={InterFont.className}
+        direction={{ base: "column", md: "row" }}
+        gap={12}
+        width={"full"}
+        alignItems={{
+          base: "center",
+          md: "end",
+        }}
+        py={{
+          base: 8,
+          md: 10,
+        }}
+        h="full"
+        justifyContent={"center"}
+      >
+        <Stack
+          direction={{ base: "row", md: "row" }}
+          gap={{
+            base: 4,
+            md: 6,
+          }}
+          width={"full"}
+          align={"start"}
+          flexDirection={"column"}
+        >
+          <Box position={"relative"} width={24} height={24}>
+            <Image
+              src={projectWithEvent.logo}
+              alt={projectWithEvent.name}
+              priority
+              fill
+              style={{
+                borderRadius: "10px",
+                objectFit: "cover",
+              }}
+            />
+          </Box>
+          <VStack
+            justify={"center"}
+            gap={{ base: 3, md: 5 }}
+            alignItems={"start"}
+            justifyContent="center"
+            w="full"
+          >
+            <HStack align="center" spacing="1px">
+              <Box
+                textStyle={{ base: "title2", sm: "title1", md: "headline3" }}
+                fontSize={{ base: "1.5rem", md: "2rem" }}
+                textTransform="capitalize"
+                color="neutral.11"
+                noOfLines={1}
+                overflow="hidden"
+                whiteSpace="nowrap"
+                textOverflow="ellipsis"
+              >
+                {projectWithEvent.name}
+              </Box>
+            </HStack>
+
+            <Box
+              color="cubik.grey.100"
+              noOfLines={2}
+              fontSize={{ base: "1rem", md: "1.25rem" }}
+              fontWeight={600}
+              textOverflow="ellipsis"
+            >
+              {projectWithEvent.shortDescription}
+            </Box>
+          </VStack>
+        </Stack>
+        <Box
+          minW={{
+            base: "full",
+            md: "20rem",
+          }}
+          maxW={"30rem"}
+          w={"full"}
+          minH={20}
+          gap={{
+            base: 10,
+            md: 0,
+          }}
+          alignItems={"end"}
+          display={"flex"}
+          flexDirection={"column"}
+        >
+          <HStack
+            w="full"
+            flexDirection={{
+              base: "column",
+              md: "row",
+            }}
+            h={{
+              base: 28,
+              md: 14,
+            }}
+            gap={{
+              base: 4,
+              md: 6,
+            }}
+          >
+            <Button
+              leftIcon={
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10.0001 10.8334V8.33342M10.0001 8.33342V5.83341M10.0001 8.33342H7.50008M10.0001 8.33342H12.5001M15.8334 18.3334V7.50008C15.8334 5.94901 15.8334 5.17348 15.6295 4.54584C15.2173 3.27735 14.2228 2.28284 12.9543 1.87068C12.3267 1.66675 11.5511 1.66675 10.0001 1.66675C8.44901 1.66675 7.67348 1.66675 7.04584 1.87068C5.77735 2.28284 4.78284 3.27735 4.37068 4.54584C4.16675 5.17348 4.16675 5.94901 4.16675 7.50008V18.3334L5.66147 17.0522C7.20136 15.7323 7.9713 15.0724 8.83479 14.8208C9.59583 14.5992 10.4043 14.5992 11.1654 14.8208C12.0289 15.0724 12.7988 15.7323 14.3387 17.0522L15.8334 18.3334Z"
+                    stroke="#848484"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              }
+              color={"#848484"}
+              borderRadius={5}
+              h={"full"}
+              variant="ghost"
+              w="full"
+              minH={10}
+              _hover={{
+                bg: "white",
+                color: "black",
+              }}
+            >
+              Collect
+            </Button>
+            <Link
+              style={{
+                width: "100%",
+                height: "100%",
+              }}
+              href={projectWithEvent.projectLink}
+            >
+              <Button
+                borderRadius={5}
+                h={"full"}
+                minH={10}
+                variant="cubikOutlined"
+                w="full"
+              >
+                Visit
+              </Button>
+            </Link>
+
+            <Popover
+              isOpen={isHovered}
+              onClose={() => setIsHovered(false)}
+              placement={"top"}
+              closeOnBlur={false}
+            >
+              <PopoverTrigger>
+                <Button
+                  minH={10}
+                  leftIcon={
+                    <svg
+                      width="20"
+                      height="18"
+                      viewBox="0 0 20 18"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12.8609 11.6733H16.8105C18.0156 11.6733 19.8747 13.1738 18.5343 14.3389C14.6952 17.8994 8.51028 17.8994 4.53425 14.2642M4.53425 14.2642V14.3416C4.53425 14.8134 4.34807 15.2659 4.01667 15.5995C3.68527 15.9331 3.23579 16.1205 2.76712 16.1205C2.29845 16.1205 1.84898 15.9331 1.51758 15.5995C1.18618 15.2659 1 14.8134 1 14.3416V9.89441C1.00078 9.43262 1.17991 8.98923 1.49954 8.65798C1.81917 8.32673 2.25423 8.13358 2.71275 8.11938C3.17128 8.10517 3.61732 8.27101 3.95658 8.58185C4.29584 8.89268 4.50173 9.32414 4.53071 9.78501M4.53425 14.2642V9.89441C4.53425 9.85883 4.53425 9.82147 4.53071 9.78501M8.0685 13.4522H12.3432C13.0182 13.4522 13.4565 12.7379 13.1552 12.1305C12.9542 11.7257 12.6453 11.3853 12.2629 11.1475C11.8805 10.9096 11.4399 10.7837 10.9904 10.7838H9.99908C9.89171 10.7837 9.78585 10.7584 9.68983 10.71C8.09471 9.90737 6.30305 9.58613 4.53071 9.78501M16.4623 2.44712C16.9718 2.80401 17.3627 3.30696 17.5844 3.89055C17.8061 4.47414 17.8481 5.11137 17.7052 5.71936C17.5622 6.32735 17.2408 6.87797 16.7828 7.2996C16.3248 7.72124 15.7513 7.99438 15.137 8.08351M14.2534 4.11304C14.2534 4.93867 13.9276 5.73049 13.3477 6.3143C12.7677 6.8981 11.9811 7.22608 11.161 7.22608C10.3408 7.22608 9.55421 6.8981 8.97426 6.3143C8.39431 5.73049 8.0685 4.93867 8.0685 4.11304C8.0685 3.28741 8.39431 2.4956 8.97426 1.91179C9.55421 1.32798 10.3408 1 11.161 1C11.9811 1 12.7677 1.32798 13.3477 1.91179C13.9276 2.4956 14.2534 3.28741 14.2534 4.11304Z"
+                        stroke="black"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  }
+                  borderRadius={5}
+                  h={"full"}
+                  w={"full"}
+                  fontWeight={600}
+                  fontFamily={"Inter"}
+                  variant={"cubikFilled"}
+                >
+                  Contribute
+                </Button>
+              </PopoverTrigger>
+              <Portal>
+                <PopoverContent
+                  display={{
+                    base: "none",
+                    md: "block",
+                  }}
+                >
+                  <PopoverArrow />
+                  <PopoverCloseButton color={"black"} />
+                  <PopoverBody p={4} borderRadius={5} bg={"#FFD600"} minH={32}>
+                    <Box color={"black"} fontSize={"sm"} fontWeight={600}>
+                      WTF is Contribute?
+                    </Box>
+                    <Box
+                      my={2}
+                      color={"black"}
+                      fontSize={"xs"}
+                      fontWeight={500}
+                    >
+                      When you contribute to a project your contribution matches
+                      a portion from the matching pool based on the amount of
+                      your donation.
+                    </Box>
+                    <Button
+                      fontSize={"sm"}
+                      py={0}
+                      px={3}
+                      borderRadius={"full"}
+                      color={"white"}
+                      bg={"black"}
+                      _hover={{
+                        bg: "black",
+                      }}
+                      onClick={() => setIsHovered(false)}
+                    >
+                      Dismiss
+                    </Button>
+                  </PopoverBody>
+                </PopoverContent>
+              </Portal>
+            </Popover>
+          </HStack>
+          <EventSelector events={projectWithEvent.events} />
+        </Box>
+      </Stack>
+    </>
+  );
+};
