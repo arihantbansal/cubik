@@ -1,7 +1,19 @@
-import { Box, HStack, VStack } from "@/utils/chakra";
+"use client";
+import { Box, HStack, VStack } from "@chakra-ui/react";
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useProjectEventStore } from "../store";
+import { getStats } from "./stats";
 
 export const RoundStats = () => {
+  const { event } = useProjectEventStore();
+
+  const stats = useQuery({
+    queryFn: () => getStats(event),
+    queryKey: ["round-stats"],
+    enabled: event ? true : false,
+  });
+
   return (
     <>
       <VStack gap={4} align={"start"} w="full">
@@ -65,7 +77,7 @@ export const RoundStats = () => {
               Estimated Match
             </Box>
             <Box color={"white"} fontSize={"lg"} fontWeight={700}>
-              $6.8k
+              ${stats.data?.estimatedMatch.toFixed(2)}
             </Box>
           </VStack>
         </HStack>
@@ -108,7 +120,7 @@ export const RoundStats = () => {
               Community Contributions
             </Box>
             <Box color={"white"} fontSize={"lg"} fontWeight={700}>
-              $236
+              ${stats.data?.communityMatch}
             </Box>
           </VStack>
         </HStack>
@@ -151,7 +163,7 @@ export const RoundStats = () => {
               Contributors
             </Box>
             <Box color={"white"} fontSize={"lg"} fontWeight={700}>
-              43
+              {stats.data?.contributors}
             </Box>
           </VStack>
         </HStack>
