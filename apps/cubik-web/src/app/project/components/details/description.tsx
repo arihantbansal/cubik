@@ -90,6 +90,7 @@ export const Description = ({ longDescription }: Props) => {
       );
     },
   };
+  const isShortDescription = longDescription.length < 800;
   const [readMore, setReadMore] = useState<boolean>(false);
   return (
     <>
@@ -122,7 +123,7 @@ export const Description = ({ longDescription }: Props) => {
             position={"absolute"}
             bottom={0}
             left={0}
-            display={readMore ? "none" : "block"}
+            display={isShortDescription ? "none" : !readMore ? "block" : "none"}
             right={0}
             bg="linear-gradient(180deg, rgba(13, 13, 13, 0.00) -86.99%, #0D0D0D 100%)"
             w={"full"}
@@ -131,6 +132,7 @@ export const Description = ({ longDescription }: Props) => {
           <Box pt={5}>
             {/* Need to update the icon */}
             <Button
+              display={isShortDescription ? "none" : "flex"}
               p={0}
               rightIcon={
                 <svg

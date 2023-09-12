@@ -57,7 +57,7 @@ export const CustomModal = ({ children }: Props) => {
         <Box
           w={{
             base: "90%",
-            md: "70%",
+            md: "80%",
           }}
           pb={20}
           mx="auto"
