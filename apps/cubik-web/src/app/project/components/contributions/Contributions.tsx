@@ -5,6 +5,7 @@ import { EmptyStateHOC } from "@/app/components/common/empty-state/EmptyStateHOC
 import Link from "next/link";
 import { ContributionTable } from "./ContributionTable";
 import type { ContributionRowType } from "./index";
+import { useProjectEventStore } from "../store";
 
 interface Props {
   contributions: ContributionRowType[];
@@ -12,7 +13,7 @@ interface Props {
 }
 
 export const Contributions = ({ contributions, isLoading }: Props) => {
-  if (isLoading) {
+  if (isLoading && !contributions) {
     return (
       <>
         <Spinner />
