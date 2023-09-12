@@ -8,11 +8,14 @@ import { getStats } from "./stats";
 export const RoundStats = () => {
   const { event } = useProjectEventStore();
 
+
   const stats = useQuery({
     queryFn: () => getStats(event),
     queryKey: ["round-stats"],
     enabled: event ? true : false,
   });
+
+  if (!event) return <></>;
 
   return (
     <>

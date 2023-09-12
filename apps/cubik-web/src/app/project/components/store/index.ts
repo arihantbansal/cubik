@@ -5,7 +5,7 @@ import { create } from "zustand";
 
 interface ProjectEventStore {
   event: ProjectPageEventType | null;
-  setEvent: (event: ProjectPageEventType) => void;
+  setEvent: (event: ProjectPageEventType | null) => void;
 }
 
 export const useProjectEventStore = create<ProjectEventStore>((set) => ({

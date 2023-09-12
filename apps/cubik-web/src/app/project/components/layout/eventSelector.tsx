@@ -4,6 +4,13 @@ import type { ProjectPageEventType } from "@/types/project";
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@/utils/chakra";
 import React, { useEffect } from "react";
 import { useProjectEventStore } from "../store";
+import {
+  isFutureAndHowMuch,
+  isPastAndHowMuch,
+  parseDateISO,
+} from "@/utils/helpers/date";
+import { DateTime } from "luxon";
+import { daysInWeek, isFuture, isPast } from "date-fns";
 
 interface Props {
   events: ProjectPageEventType[];
@@ -13,8 +20,13 @@ export const EventSelector = ({ events }: Props) => {
 
   useEffect(() => {
     const handleDefaultEvent = () => {
-      if (events[0] && !event) {
-        setEvent(events[0]);
+      const findFutureTime = events.find(
+        (event) =>
+          isFuture(parseDateISO(event.endTime.toISOString())) &&
+          isPast(parseDateISO(event.startTime.toISOString()))
+      );
+      if (events[0] && !event && findFutureTime) {
+        setEvent(findFutureTime);
       }
     };
     handleDefaultEvent();
@@ -24,7 +36,6 @@ export const EventSelector = ({ events }: Props) => {
     <>
       <Menu>
         <MenuButton
-          display={event ? "flex" : "none"}
           mt={1}
           as={Button}
           color={"#9A9A9A"}
@@ -53,9 +64,24 @@ export const EventSelector = ({ events }: Props) => {
             </svg>
           }
         >
-          {event?.name}
+          {event ? event.name : "No Active Grants Round"}
         </MenuButton>
         <MenuList borderRadius={8} bg={"#212121"}>
+          <MenuItem
+            bg="#212121"
+            onClick={() => setEvent(null)}
+            _hover={{
+              bg: "transparent",
+            }}
+            _focus={{
+              bg: "transparent",
+            }}
+            _active={{
+              bg: "transparent",
+            }}
+          >
+            Tip Project Team
+          </MenuItem>
           {events.map((event) => {
             return (
               <MenuItem
