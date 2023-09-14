@@ -20,6 +20,8 @@ import { InterFont } from "@/utils/fonts/inter";
 import type { ProjectPageLayoutType } from "@/types/project";
 import { EventSelector } from "./eventSelector";
 import { useProjectEventStore } from "../store";
+import { isFuture, isPast } from "date-fns";
+import { parseDateISO } from "@/utils/helpers/date";
 
 interface Props {
   projectWithEvent: ProjectPageLayoutType;
@@ -180,7 +182,7 @@ export const ProjectHeader = ({ projectWithEvent }: Props) => {
               </Button>
             </Link>
 
-            {event ? (
+            {event && isFuture(parseDateISO(event.endTime.toISOString())) ? (
               <Popover
                 isOpen={isHovered}
                 onClose={() => setIsHovered(false)}
