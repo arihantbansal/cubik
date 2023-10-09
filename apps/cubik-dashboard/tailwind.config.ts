@@ -19,6 +19,7 @@ const config: Config = {
     },
     extend: {
       colors: {
+        danger: "var(--danger-btn)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -51,6 +52,25 @@ const config: Config = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        surface: {
+          blue: {
+            400: "#3898FF",
+            500: "#007BFF",
+          },
+          neutral: {
+            500: "#808080",
+            600: "#666666",
+            800: "#333333",
+            820: "#2E2E2E",
+            880: "#1F1F1F",
+          },
+          orange: {
+            500: "#F57F45",
+          },
+          red: {
+            600: "#CC214C",
+          },
         },
       },
       borderRadius: {
