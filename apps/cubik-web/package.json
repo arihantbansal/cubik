@@ -73,7 +73,8 @@
     "uuid": "^9.0.0",
     "yup": "^1.2.0",
     "zod": "^3.21.4",
-    "zustand": "^4.3.8"
+    "zustand": "^4.3.8",
+    "@cubik/config":"workspace:*"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
@@ -85,7 +86,6 @@
     "@types/request-ip": "^0.0.38",
     "autoprefixer": "^10.4.14",
     "eslint": "^8.40.0",
-    "eslint-config-custom": "workspace:*",
     "postcss": "^8.4.21",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.2.8",
@@ -93,12 +93,12 @@
     "tailwindcss": "^3.3.0",
     "typescript": "4.9.5"
   },
+  "prettier": "@cubik/config/prettier",
   "eslintConfig": {
-    "root": true,
     "extends": [
-      "eslint-config-custom/base",
-      "eslint-config-custom/next",
-      "eslint-config-custom/react"
+      "@cubik/config/eslint/base",
+      "@cubik/config/eslint/next",
+      "@cubik/config/eslint/react"
     ]
   },
   "ct3aMetadata": {

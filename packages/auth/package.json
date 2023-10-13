@@ -5,8 +5,15 @@
   "main": "index.ts",
   "dependencies": {
     "@coral-xyz/anchor": "^0.27.0",
-    "@cubik/common-types": "workspace:^",
+    "@cubik/common-types": "workspace:*",
+    "@cubik/config": "workspace:*",
     "jose": "^4.14.4",
     "tweetnacl": "^1.0.3"
+  },
+  "prettier": "@cubik/config/prettier",
+  "eslintConfig": {
+    "extends": [
+      "@cubik/config/eslint/base"
+    ]
   }
 }

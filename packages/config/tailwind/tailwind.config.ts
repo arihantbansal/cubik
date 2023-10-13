@@ -1,15 +1,15 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  jit: true,
-  darkMode: ["class"],
+import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
+const config: Config = {
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "../../packages/ui/components/**/*.{ts,tsx}",
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    colors: {
+      ...colors,
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -19,19 +19,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        black: "#000",
-        teal: {
-          50: "#A8F0E6",
-          100: "#81E6D9",
-          200: "#4AA599",
-          300: "#14665B",
-          400: "#14665B",
-          500: "#0D4E45",
-          600: "#073730",
-          700: "#001F1B",
-          800: "#010F0D",
-          900: "#040A09",
-        },
+        danger: "var(--danger-btn)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -65,6 +53,25 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        surface: {
+          blue: {
+            400: "#3898FF",
+            500: "#007BFF",
+          },
+          neutral: {
+            500: "#808080",
+            600: "#666666",
+            800: "#333333",
+            820: "#2E2E2E",
+            880: "#1F1F1F",
+          },
+          orange: {
+            500: "#F57F45",
+          },
+          red: {
+            600: "#CC214C",
+          },
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -73,12 +80,12 @@ module.exports = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: 0 },
+          from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
+          to: { height: "0" },
         },
       },
       animation: {
@@ -88,4 +95,6 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
+  darkMode: "class",
 };
+export default config;

@@ -1,16 +1,6 @@
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@cubik/ui";
+import { Table, TableHeader, TableRow, TableHead, TableBody } from "@cubik/ui";
 import React from "react";
 import { TableRows } from "./TableRow";
-
-
 export const PendingTable = () => {
   return (
     <>

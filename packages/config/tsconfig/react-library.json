@@ -3,6 +3,9 @@
   "display": "React Library",
   "extends": "./base.json",
   "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "composite": true,
     "jsx": "react-jsx",
     "lib": ["ES2015", "DOM"],
     "module": "ESNext",
