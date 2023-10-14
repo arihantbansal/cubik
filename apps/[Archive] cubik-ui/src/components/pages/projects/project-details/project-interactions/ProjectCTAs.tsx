@@ -14,30 +14,43 @@ import {
   Stack,
   useDisclosure,
   VStack,
-} from '@chakra-ui/react';
-import { HackathonSchedule } from '@cubik/common-types';
-import { Contribution, ProjectsModel, Round, Team, UserModel } from '@cubik/database';
-import { useWalletModal } from '@solana/wallet-adapter-react-ui';
-import { isFuture, isPast } from 'date-fns';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { BsTwitter } from 'react-icons/bs';
-import { MdArrowForward } from 'react-icons/md';
+} from "@chakra-ui/react";
+import { HackathonSchedule } from "@cubik/common-types";
+import {
+  Contribution,
+  ProjectsModel,
+  Round,
+  Team,
+  UserModel,
+} from "@cubik/database";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { isFuture, isPast } from "date-fns";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { BsTwitter } from "react-icons/bs";
+import { MdArrowForward } from "react-icons/md";
 import {
   ProofsValidation,
   RoundEndedBanner,
   RoundStartingSoon,
-} from '~/components/common/donationCTA/DonationCTA';
-import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
-import { useUserStore } from '~/store/userStore';
-import { UserProof } from '~/types/user';
-import { DonationStatus } from '../../details/ProjectInteraction/DonationStatus';
+} from "~/components/common/donationCTA/DonationCTA";
+import PaymentModalBody from "~/components/common/payment-modal/PaymentModalBody";
+import { useUserStore } from "~/store/userStore";
+import { UserProof } from "~/types/user";
+import { DonationStatus } from "../../details/ProjectInteraction/DonationStatus";
 
 const AnimatedArrowIcon = (props: IconProps & { animate: boolean }) => {
-  const transition = 'all 0.2s ease-in-out';
-  const transform = props.animate ? 'translateX(0.5rem)' : '';
+  const transition = "all 0.2s ease-in-out";
+  const transform = props.animate ? "translateX(0.5rem)" : "";
 
-  return <Box as={MdArrowForward} transition={transition} transform={transform} {...props} />;
+  return (
+    <Box
+      as={MdArrowForward}
+      transition={transition}
+      transform={transform}
+      {...props}
+    />
+  );
 };
 
 // export const ProjectCTAs = ({
@@ -473,15 +486,20 @@ export const ProjectCTAsMobile = (props: {
 
   return (
     <>
-      <Box display={{ base: 'block', lg: 'none' }} w="full">
-        <VStack ml="auto" right="20rem" w={'full'} alignItems={{ base: 'center', lg: 'start' }}>
+      <Box display={{ base: "block", lg: "none" }} w="full">
+        <VStack
+          ml="auto"
+          right="20rem"
+          w={"full"}
+          alignItems={{ base: "center", lg: "start" }}
+        >
           <Stack
             direction={{
-              base: 'column',
-              lg: 'column',
+              base: "column",
+              lg: "column",
             }}
             gap="16px"
-            align={'end'}
+            align={"end"}
             spacing="0"
             w="full"
             pb="0.5rem"
@@ -493,12 +511,12 @@ export const ProjectCTAsMobile = (props: {
             />
             <Skeleton
               fadeDuration={2.5}
-              opacity={props.loading ? '0.3' : 1}
+              opacity={props.loading ? "0.3" : 1}
               isLoaded={!props.loading}
               w="full"
             >
               <Button
-                rightIcon={<Box as={MdArrowForward} boxSize={'16px'} />}
+                rightIcon={<Box as={MdArrowForward} boxSize={"16px"} />}
                 variant="cubikOutlined"
                 w="full"
                 as="a"

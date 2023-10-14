@@ -1,5 +1,5 @@
-import { Box, Center, VStack } from '@chakra-ui/react';
-import { FaRegComments } from 'react-icons/fa';
+import { Box, Center, VStack } from "@chakra-ui/react";
+import { FaRegComments } from "react-icons/fa";
 
 const NoInformation = () => {
   return (
@@ -8,9 +8,9 @@ const NoInformation = () => {
       spacing="16px"
       py="80px"
       w="full"
-      textAlign={'center'}
+      textAlign={"center"}
       border="1px dashed"
-      borderColor={'#1D1F1E'}
+      borderColor={"#1D1F1E"}
       rounded="12px"
     >
       <Center>
@@ -33,12 +33,12 @@ const NoInformation = () => {
       </Center>
       <Box
         as="p"
-        textStyle={{ base: 'body3', md: 'title2' }}
+        textStyle={{ base: "body3", md: "title2" }}
         color="neutral.11"
       >
         No Information
       </Box>
-      <Box as="p" textStyle={{ base: 'body5', md: 'body4' }} color="neutral.8">
+      <Box as="p" textStyle={{ base: "body5", md: "body4" }} color="neutral.8">
         There is no information to show here at this time.
       </Box>
     </VStack>
@@ -51,26 +51,26 @@ export const NoComments = () => {
       spacing="16px"
       py="80px"
       w="full"
-      textAlign={'center'}
+      textAlign={"center"}
       border="1px dashed"
-      borderColor={'#1D1F1E'}
+      borderColor={"#1D1F1E"}
       rounded="12px"
     >
-      <Center bg="#A8F0E6" p={{ base: '12px', md: '16px' }} rounded="full">
+      <Center bg="#A8F0E6" p={{ base: "12px", md: "16px" }} rounded="full">
         <Box
           as={FaRegComments}
-          boxSize={{ base: '20px', md: '32px' }}
-          color={'#001F1B'}
+          boxSize={{ base: "20px", md: "32px" }}
+          color={"#001F1B"}
         />
       </Center>
       <Box
         as="p"
-        textStyle={{ base: 'body3', md: 'title2' }}
+        textStyle={{ base: "body3", md: "title2" }}
         color="neutral.11"
       >
         No Comments yet
       </Box>
-      <Box as="p" textStyle={{ base: 'body5', md: 'body4' }} color="neutral.8">
+      <Box as="p" textStyle={{ base: "body5", md: "body4" }} color="neutral.8">
         Start a conversation by adding the first comment.
       </Box>
     </VStack>

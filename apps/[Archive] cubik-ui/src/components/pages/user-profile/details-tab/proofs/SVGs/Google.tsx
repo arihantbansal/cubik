@@ -1,6 +1,6 @@
-import { Center } from '@chakra-ui/react';
-import Image from 'next/image';
-import React from 'react';
+import { Center } from "@chakra-ui/react";
+import Image from "next/image";
+import React from "react";
 
 const GoogleLogo = ({ size }: { size: string }) => {
   return (
@@ -8,8 +8,8 @@ const GoogleLogo = ({ size }: { size: string }) => {
       <Image
         src="https://res.cloudinary.com/demonicirfan/image/upload/v1686469723/google_proof_tlsuyi.png"
         alt="Twitter Logo"
-        width={'300'}
-        height={'300'}
+        width={"300"}
+        height={"300"}
       />
     </Center>
   );

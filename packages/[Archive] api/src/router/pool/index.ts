@@ -1,7 +1,12 @@
-import { Prisma } from '@cubik/database';
-import { createTRPCRouter, publicProcedure } from '../../trpc';
-import { z } from 'zod';
-import { qfV1, qfEstimated, HackathonAllType, qfEstimatedHackathon } from '../../utils/qf';
+import { Prisma } from "@cubik/database";
+import { createTRPCRouter, publicProcedure } from "../../trpc";
+import { z } from "zod";
+import {
+  qfV1,
+  qfEstimated,
+  HackathonAllType,
+  qfEstimatedHackathon,
+} from "../../utils/qf";
 type RoundAllType = Prisma.RoundGetPayload<{
   include: {
     Contribution: {
@@ -18,7 +23,7 @@ export const poolRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string().nonempty(),
-      }),
+      })
     )
     .query(async ({ input, ctx: { prisma } }) => {
       const res = await prisma.round.findFirst({
@@ -40,7 +45,7 @@ export const poolRouter = createTRPCRouter({
       });
       if (!res) return null;
       const filterdContributions = res.Contribution.filter(
-        element => element.ProjectsModel.isArchive === false,
+        (element) => element.ProjectsModel.isArchive === false
       );
       const filterdProjectJoinRound: RoundAllType = {
         ...res,
@@ -57,7 +62,7 @@ export const poolRouter = createTRPCRouter({
         projectId: z.string().nonempty(),
         roundId: z.string().nonempty(),
         amount: z.number(),
-      }),
+      })
     )
     .query(async ({ input, ctx: { prisma, session } }) => {
       const res = await prisma.hackathon.findFirst({
@@ -79,7 +84,7 @@ export const poolRouter = createTRPCRouter({
       });
       if (!res) return null;
       const filterdContributions = res.contribution.filter(
-        element => element.ProjectsModel.isArchive === false,
+        (element) => element.ProjectsModel.isArchive === false
       );
       const filterdProjectJoinRound: HackathonAllType = {
         ...res,
@@ -89,7 +94,7 @@ export const poolRouter = createTRPCRouter({
         filterdProjectJoinRound,
         input.projectId,
         input.amount,
-        session.user?.id ?? '',
+        session.user?.id ?? ""
       );
 
       return amount;

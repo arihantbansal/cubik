@@ -1,10 +1,10 @@
-import Head from 'next/head';
-import config from '~/config/general.config';
-import SeoPropsType from '~/types/seo';
+import Head from "next/head";
+import config from "~/config/general.config";
+import SeoPropsType from "~/types/seo";
 
 const SEO = ({ title, description, image }: SeoPropsType) => {
   const domain = `https://${config.general.domain}/`;
-  const absoluteImageUrl = image.startsWith('http')
+  const absoluteImageUrl = image.startsWith("http")
     ? image
     : `${domain}${image}`;
 

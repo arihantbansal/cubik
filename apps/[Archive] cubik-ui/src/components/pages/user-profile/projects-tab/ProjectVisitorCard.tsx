@@ -1,11 +1,11 @@
-import { Card, CardHeader } from '@chakra-ui/card';
-import { Skeleton } from '@chakra-ui/skeleton';
-import { ProjectVerifyStatus, ProjectsModel } from '@cubik/database';
+import { Card, CardHeader } from "@chakra-ui/card";
+import { Skeleton } from "@chakra-ui/skeleton";
+import { ProjectVerifyStatus, ProjectsModel } from "@cubik/database";
 
-import ProjectHeaderVisitorView from './ProjectHeaderVisitorView';
-import ProjectBanner from './ProjectStatusBanner';
-import ProjectVisitorRoundsView from './ProjectVisitorRoundsView';
-import { ProjectProfileCard } from '~/types/projects';
+import ProjectHeaderVisitorView from "./ProjectHeaderVisitorView";
+import ProjectBanner from "./ProjectStatusBanner";
+import ProjectVisitorRoundsView from "./ProjectVisitorRoundsView";
+import { ProjectProfileCard } from "~/types/projects";
 
 const ProjectVisitorCard = ({
   userName,
@@ -19,9 +19,9 @@ const ProjectVisitorCard = ({
   return (
     <Card
       px="0px"
-      pt={{ base: '16px', sm: '20px', md: '24px' }}
-      pb={{ base: '16px', sm: '20px', md: '24px' }}
-      gap={{ base: '16px', sm: '20px', md: '24px' }}
+      pt={{ base: "16px", sm: "20px", md: "24px" }}
+      pb={{ base: "16px", sm: "20px", md: "24px" }}
+      gap={{ base: "16px", sm: "20px", md: "24px" }}
       w="100%"
     >
       <ProjectBanner status={status} />
@@ -34,7 +34,7 @@ const ProjectVisitorCard = ({
         <Skeleton
           w="full"
           fadeDuration={0.5}
-          opacity={isLoading ? '0.5' : '1'}
+          opacity={isLoading ? "0.5" : "1"}
           isLoaded={!isLoading}
         >
           {project.status === ProjectVerifyStatus.VERIFIED && ( // todo: check if this check is required

@@ -3,7 +3,7 @@ export interface NFTProfile {
   token: string;
   collection: string;
   owner: string;
-} 
+}
 
 export interface NftResponseCarousel {
   id: string;

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useUserStore } from '~/store/userStore';
+import { useState } from "react";
+import { useUserStore } from "~/store/userStore";
 
 const useCheckVerifiedProfile = () => {
   const [verifiedProfile, setverifiedProfile] = useState(false);

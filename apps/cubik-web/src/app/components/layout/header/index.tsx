@@ -6,9 +6,6 @@ import Links from "./links";
 import { WalletConnect } from "./auth/handleConnect";
 import { useUser } from "@/app/context/user";
 
-
-
-
 const Header = () => {
   const { setUser } = useUser();
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
 type PaginationProps = {
   totalCount: number;
@@ -7,7 +7,7 @@ type PaginationProps = {
   siblingCount: number;
 };
 
-export const DOTS = '...';
+export const DOTS = "...";
 
 export const usePagination = ({
   totalCount,

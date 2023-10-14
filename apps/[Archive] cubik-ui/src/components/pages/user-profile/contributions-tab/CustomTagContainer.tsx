@@ -1,6 +1,6 @@
-import { Box, Center, HStack } from '@chakra-ui/layout';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import CustomTag from '~/components/common/tags/CustomTag';
+import { Box, Center, HStack } from "@chakra-ui/layout";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import CustomTag from "~/components/common/tags/CustomTag";
 
 const CustomTagsContainer: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -17,10 +17,10 @@ const CustomTagsContainer: React.FC = () => {
     tagsRef.current.forEach((tag, index) => {
       if (tag) {
         if (tagsWidth + tag.offsetWidth + tag.offsetLeft > containerWidth) {
-          tag.style.display = 'none';
+          tag.style.display = "none";
           hiddenCount++;
         } else {
-          tag.style.display = 'inline-block';
+          tag.style.display = "inline-block";
           tagsWidth += tag.offsetWidth;
         }
       }
@@ -53,7 +53,7 @@ const CustomTagsContainer: React.FC = () => {
   return (
     <Box position="relative" ref={containerRef}>
       <Box w="fit-content" maxW="13rem" overflow="hidden">
-        <HStack w={containerWidth ? `${containerWidth}px` : 'auto'}>
+        <HStack w={containerWidth ? `${containerWidth}px` : "auto"}>
           <CustomTag ref={(el) => (tagsRef.current[0] = el)}>
             Youtube Content
           </CustomTag>
@@ -75,7 +75,7 @@ const CustomTagsContainer: React.FC = () => {
           right="8"
           zIndex="1"
           color="#D7E0DF"
-          textStyle={{ base: 'body6', md: 'body5' }}
+          textStyle={{ base: "body6", md: "body5" }}
         >
           +{hiddenTags}
         </Center>

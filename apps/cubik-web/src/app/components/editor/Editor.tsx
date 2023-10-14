@@ -120,7 +120,7 @@ const MarkdownEditor = ({
       setSize({ base: "8px", sm: "12px", md: "16px" });
     }
   }, [componentSize]);
-  
+
   const EditorArea = (
     <EditorContent
       id="reset-des"

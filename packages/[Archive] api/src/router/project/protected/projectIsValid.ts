@@ -1,4 +1,4 @@
-import { protectedProcedure } from '../../../trpc';
+import { protectedProcedure } from "../../../trpc";
 
 export const projectIsValid = protectedProcedure.query(async ({ ctx }) => {
   try {

@@ -1,29 +1,29 @@
-import { alertAnatomy as parts } from '@chakra-ui/anatomy';
+import { alertAnatomy as parts } from "@chakra-ui/anatomy";
 import {
   createMultiStyleConfigHelpers,
   defineStyle,
-} from '@chakra-ui/styled-system';
+} from "@chakra-ui/styled-system";
 
 const { definePartsStyle, defineMultiStyleConfig } =
   createMultiStyleConfigHelpers(parts.keys);
 
 const baseStyle = definePartsStyle({
   container: {
-    borderRadius: '12px',
-    padding: '12px 12px',
-    display: 'flex',
-    flexDirection: 'row',
-    gap: '12px',
-    spacing: '12px',
-    alignItems: 'start',
-    justifyContent: 'start',
+    borderRadius: "12px",
+    padding: "12px 12px",
+    display: "flex",
+    flexDirection: "row",
+    gap: "12px",
+    spacing: "12px",
+    alignItems: "start",
+    justifyContent: "start",
   },
   icon: {
-    backgroundColor: 'black',
-    margin: '0px',
+    backgroundColor: "black",
+    margin: "0px",
   },
   title: {
-    fontSize: { base: '12px', md: '14px' },
+    fontSize: { base: "12px", md: "14px" },
   },
   description: {},
 });
@@ -33,57 +33,57 @@ const cubik = definePartsStyle((props) => {
 
   return {
     container: {
-      border: '2px solid',
+      border: "2px solid",
       borderColor:
-        status === 'error'
-          ? '#FF333D'
-          : status === 'warning'
-          ? 'yellow.400'
-          : status === 'info'
-          ? '#1D1F1E'
-          : status === 'success'
-          ? 'green.400'
-          : 'gray.400',
-      background: '#0C0D0D',
+        status === "error"
+          ? "#FF333D"
+          : status === "warning"
+          ? "yellow.400"
+          : status === "info"
+          ? "#1D1F1E"
+          : status === "success"
+          ? "green.400"
+          : "gray.400",
+      background: "#0C0D0D",
     },
     icon: {
-      mt: '4px',
-      width: '14px',
-      height: '14px',
+      mt: "4px",
+      width: "14px",
+      height: "14px",
       color:
-        status === 'error'
-          ? '#FF333D'
-          : status === 'warning'
-          ? 'yellow.400'
-          : status === 'info'
-          ? '#636666'
-          : status === 'success'
-          ? 'green.400'
-          : 'gray.400',
+        status === "error"
+          ? "#FF333D"
+          : status === "warning"
+          ? "yellow.400"
+          : status === "info"
+          ? "#636666"
+          : status === "success"
+          ? "green.400"
+          : "gray.400",
     },
     title: {
       color:
-        status === 'error'
-          ? '#FF333D'
-          : status === 'warning'
-          ? 'yellow.400'
-          : status === 'info'
-          ? '#636666'
-          : status === 'success'
-          ? 'green.400'
-          : 'gray.400',
+        status === "error"
+          ? "#FF333D"
+          : status === "warning"
+          ? "yellow.400"
+          : status === "info"
+          ? "#636666"
+          : status === "success"
+          ? "green.400"
+          : "gray.400",
     },
     description: {
       color:
-        status === 'error'
-          ? '#FF333D'
-          : status === 'warning'
-          ? 'yellow.400'
-          : status === 'info'
-          ? '#636666'
-          : status === 'success'
-          ? 'green.400'
-          : 'gray.400',
+        status === "error"
+          ? "#FF333D"
+          : status === "warning"
+          ? "yellow.400"
+          : status === "info"
+          ? "#636666"
+          : status === "success"
+          ? "green.400"
+          : "gray.400",
     },
   };
 });
@@ -110,6 +110,6 @@ export const Alert = defineMultiStyleConfig({
   variants,
   sizes,
   defaultProps: {
-    variant: 'cubik',
+    variant: "cubik",
   },
 });

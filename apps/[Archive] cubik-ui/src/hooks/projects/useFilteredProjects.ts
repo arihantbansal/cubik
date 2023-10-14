@@ -1,17 +1,17 @@
-import { useMemo, useState } from 'react';
-import { category } from '~/components/pages/create-project/projectCategories';
-import { CategoryType } from '~/components/pages/projects/project-explorer/body/ProjectListWithFilter';
-import { trpc } from '~/utils/trpc';
+import { useMemo, useState } from "react";
+import { category } from "~/components/pages/create-project/projectCategories";
+import { CategoryType } from "~/components/pages/projects/project-explorer/body/ProjectListWithFilter";
+import { trpc } from "~/utils/trpc";
 
 function isMobileDevice() {
   return (
-    typeof window.orientation !== 'undefined' ||
-    navigator.userAgent.indexOf('IEMobile') !== -1
+    typeof window.orientation !== "undefined" ||
+    navigator.userAgent.indexOf("IEMobile") !== -1
   );
 }
 
 export const useFilteredProjects = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const shuffleSeed = useMemo(() => Math.round(Math.random() * 10), []);
   const [roundIds, setRoundIds] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] =

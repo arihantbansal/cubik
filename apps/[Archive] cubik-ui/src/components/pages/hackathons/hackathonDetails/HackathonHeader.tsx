@@ -10,35 +10,35 @@ import {
   Stack,
   useDisclosure,
   VStack,
-} from '@chakra-ui/react';
-import { SkeletonCircle, Skeleton, SkeletonText } from '@chakra-ui/skeleton';
-import { Player } from '@lottiefiles/react-lottie-player';
-import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
-import { useWalletModal } from '@solana/wallet-adapter-react-ui';
-import { useEffect, useRef, useState } from 'react';
-import { BsTwitter } from 'react-icons/bs';
-import { useUserStore } from '~/store/userStore';
-import { trpc } from '~/utils/trpc';
-import * as anchor from '@coral-xyz/anchor';
+} from "@chakra-ui/react";
+import { SkeletonCircle, Skeleton, SkeletonText } from "@chakra-ui/skeleton";
+import { Player } from "@lottiefiles/react-lottie-player";
+import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { useEffect, useRef, useState } from "react";
+import { BsTwitter } from "react-icons/bs";
+import { useUserStore } from "~/store/userStore";
+import { trpc } from "~/utils/trpc";
+import * as anchor from "@coral-xyz/anchor";
 import {
   checkParticipant,
   createParticipant,
   HackathonInit,
   connection,
-} from '~/utils/hackathon/contract';
-import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import axios from 'axios';
-import { env } from '~/env.mjs';
-import HackathonSchedule from './HackathonSchedule';
-import { isPast } from 'date-fns';
-import SelectProjectToSubmitToHackathon from '../SelectProjectToSubmitToHackathon';
-import { HackathonTracks } from '~/types/hackathon';
-import HackathonStatus from '../HackathonStatus';
+} from "~/utils/hackathon/contract";
+import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import axios from "axios";
+import { env } from "~/env.mjs";
+import HackathonSchedule from "./HackathonSchedule";
+import { isPast } from "date-fns";
+import SelectProjectToSubmitToHackathon from "../SelectProjectToSubmitToHackathon";
+import { HackathonTracks } from "~/types/hackathon";
+import HackathonStatus from "../HackathonStatus";
 import {
   HackathonEndSoon,
   HackathonVotingStartSoon,
-} from '~/components/common/donationCTA/DonationCTA';
-import moment from 'moment';
+} from "~/components/common/donationCTA/DonationCTA";
+import moment from "moment";
 
 interface Props {
   isOpen: boolean;
@@ -49,7 +49,7 @@ export const HackathonRegistrationSuccess = ({ isOpen, onClose }: Props) => {
   return (
     <>
       <Modal
-        variant={'cubik'}
+        variant={"cubik"}
         size="4xl"
         isOpen={isOpen}
         onClose={() => {
@@ -62,20 +62,20 @@ export const HackathonRegistrationSuccess = ({ isOpen, onClose }: Props) => {
           width="fit-content"
           padding="40px"
           overflow="hidden"
-          position={'relative'}
+          position={"relative"}
           _before={{
             content: '""',
-            position: 'absolute',
-            top: '-10%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            rounded: '50%',
-            filter: 'blur(80px)',
-            width: '6rem',
-            height: '6rem',
-            background: 'linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)',
-            borderRadius: '8px 8px 0px 0px',
-            zIndex: '-1',
+            position: "absolute",
+            top: "-10%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            rounded: "50%",
+            filter: "blur(80px)",
+            width: "6rem",
+            height: "6rem",
+            background: "linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)",
+            borderRadius: "8px 8px 0px 0px",
+            zIndex: "-1",
           }}
         >
           <VStack gap="18px">
@@ -149,7 +149,14 @@ export const HackathonRegistrationSuccess = ({ isOpen, onClose }: Props) => {
                     strokeWidth="0.710526"
                   />
                 </g>
-                <rect x="25.0001" y="25" width="46" height="46" rx="23" stroke="#001F1B" />
+                <rect
+                  x="25.0001"
+                  y="25"
+                  width="46"
+                  height="46"
+                  rx="23"
+                  stroke="#001F1B"
+                />
                 <defs>
                   <linearGradient
                     id="paint0_linear_849_10088"
@@ -207,35 +214,41 @@ export const HackathonRegistrationSuccess = ({ isOpen, onClose }: Props) => {
                     <stop offset="1" />
                   </linearGradient>
                   <clipPath id="clip0_849_10088">
-                    <rect width="22" height="22" fill="white" transform="translate(37.0001 37)" />
+                    <rect
+                      width="22"
+                      height="22"
+                      fill="white"
+                      transform="translate(37.0001 37)"
+                    />
                   </clipPath>
                 </defs>
               </svg>
             </Center>
             <Box
               maxW="22rem"
-              textAlign={'center'}
+              textAlign={"center"}
               as="p"
-              textStyle={{ base: 'title4', md: 'title3' }}
+              textStyle={{ base: "title4", md: "title3" }}
               color="white"
             >
               Congratulations, your have succesfully registered for the Game Jam
             </Box>
             <VStack
               backgroundColor="#0C0D0D"
-              rounded={'24px'}
-              gap={'16px'}
+              rounded={"24px"}
+              gap={"16px"}
               maxW="22rem"
               p="24px"
-              alignItems={'start'}
-              position={'relative'}
+              alignItems={"start"}
+              position={"relative"}
             >
               <VStack spacing="12px" align="start">
-                <Box as="p" textStyle={'title4'} color="white">
+                <Box as="p" textStyle={"title4"} color="white">
                   Spread the word!
                 </Box>
-                <Box as="p" textStyle={'body5'} color="neutral.8">
-                  Share with others and inspire more more people to participate in the Game Jam.
+                <Box as="p" textStyle={"body5"} color="neutral.8">
+                  Share with others and inspire more more people to participate
+                  in the Game Jam.
                 </Box>
               </VStack>
               <HStack
@@ -243,15 +256,15 @@ export const HackathonRegistrationSuccess = ({ isOpen, onClose }: Props) => {
                 rounded="12px"
                 border="1px solid"
                 w="full"
-                textAlign={'center'}
+                textAlign={"center"}
                 align="center"
-                justify={'center'}
+                justify={"center"}
                 gap="8px"
                 color="#1D9BF0"
                 backgroundColor="#1D9BF016"
                 borderColor="transparent"
                 _hover={{
-                  borderColor: '#1D9BF0',
+                  borderColor: "#1D9BF0",
                 }}
                 p="12px"
                 as="a"
@@ -259,7 +272,7 @@ export const HackathonRegistrationSuccess = ({ isOpen, onClose }: Props) => {
                 rel="noopener noreferrer"
               >
                 <BsTwitter size={20} color="#1D9BF0" />
-                <Box as="p" fontStyle={'body6'}>
+                <Box as="p" fontStyle={"body6"}>
                   Share on Twitter
                 </Box>
               </HStack>
@@ -275,7 +288,9 @@ export const HackathonRegistrationSuccess = ({ isOpen, onClose }: Props) => {
                   loop={false}
                   autoplay={true}
                   speed={0.7}
-                  src={'https://assets4.lottiefiles.com/packages/lf20_obhph3sh.json'}
+                  src={
+                    "https://assets4.lottiefiles.com/packages/lf20_obhph3sh.json"
+                  }
                   style={{ height: `400px`, width: `400px` }}
                 />
               </Center>
@@ -324,8 +339,8 @@ const HackathonHeader = ({
       setLoading(false);
       onOpen();
     },
-    onError: error => {
-      console.log('error - ', error.message);
+    onError: (error) => {
+      console.log("error - ", error.message);
     },
   });
   const { user } = useUserStore();
@@ -335,7 +350,7 @@ const HackathonHeader = ({
     },
     {
       refetchOnWindowFocus: false,
-    },
+    }
   );
   const { isOpen, onClose, onOpen } = useDisclosure();
   const {
@@ -363,7 +378,7 @@ const HackathonHeader = ({
       `${env.NEXT_PUBLIC_IMAGE_SERVER_URL}/api/v1/metadata/${address}`,
       {
         metadata: JSON.parse(metadata),
-      },
+      }
     );
 
     return data.Location;
@@ -375,31 +390,32 @@ const HackathonHeader = ({
     try {
       const link = await uploadJSON(
         JSON.stringify({
-          name: 'Solana Speedrun',
-          symbol: 'SPED',
+          name: "Solana Speedrun",
+          symbol: "SPED",
           description:
-            'The first community-run Game Jam on Solana, presented by LamportDAO, Magicblock and Solana Foundation.',
+            "The first community-run Game Jam on Solana, presented by LamportDAO, Magicblock and Solana Foundation.",
           seller_fee_basis_points: 1000,
-          image: 'https://cubik-open-cdn.s3.ap-south-1.amazonaws.com/square.png',
-          external_url: 'https://solanaspeedrun.com/',
+          image:
+            "https://cubik-open-cdn.s3.ap-south-1.amazonaws.com/square.png",
+          external_url: "https://solanaspeedrun.com/",
           attributes: [],
           properties: {
             files: [
               {
-                uri: 'https://cubik-open-cdn.s3.ap-south-1.amazonaws.com/square.png',
-                type: 'image/png',
+                uri: "https://cubik-open-cdn.s3.ap-south-1.amazonaws.com/square.png",
+                type: "image/png",
               },
             ],
-            category: 'image',
+            category: "image",
             creators: [
               {
-                address: 'A8jqb4ntQBKTBUE7EJCEU5VP25oDyJ31ccRws3bHkX2h',
+                address: "A8jqb4ntQBKTBUE7EJCEU5VP25oDyJ31ccRws3bHkX2h",
                 share: 100,
               },
             ],
           },
         }),
-        anchorWallet?.publicKey?.toBase58()!,
+        anchorWallet?.publicKey?.toBase58()!
       );
       // console.log('link', link);
       if (!link) return;
@@ -409,20 +425,22 @@ const HackathonHeader = ({
       const ix = await createParticipant(
         anchorWallet as NodeWallet,
         1,
-        'Solana Speedrun',
-        'SPED',
+        "Solana Speedrun",
+        "SPED",
         link,
         nftMint,
-        'AhFfjBPCoNRDExEDFYuNK2NXCWNa1gi2VUbdA7cF19CD', //
+        "AhFfjBPCoNRDExEDFYuNK2NXCWNa1gi2VUbdA7cF19CD" //
       );
 
       tx.add(ix);
-      const modifyComputeUnits = anchor.web3.ComputeBudgetProgram.setComputeUnitLimit({
-        units: 1000000,
-      });
-      const addPriorityFee = anchor.web3.ComputeBudgetProgram.setComputeUnitPrice({
-        microLamports: 1,
-      });
+      const modifyComputeUnits =
+        anchor.web3.ComputeBudgetProgram.setComputeUnitLimit({
+          units: 1000000,
+        });
+      const addPriorityFee =
+        anchor.web3.ComputeBudgetProgram.setComputeUnitPrice({
+          microLamports: 1,
+        });
       const { blockhash } = await connection.getLatestBlockhash();
       tx.feePayer = anchorWallet?.publicKey;
       tx.recentBlockhash = blockhash;
@@ -436,7 +454,7 @@ const HackathonHeader = ({
       return txid;
     } catch (error) {
       setLoading(false);
-      console.log('error - ', error);
+      console.log("error - ", error);
       return null;
     }
   };
@@ -450,7 +468,7 @@ const HackathonHeader = ({
           const check = await checkParticipant(
             anchorWallet as NodeWallet,
             1,
-            'AhFfjBPCoNRDExEDFYuNK2NXCWNa1gi2VUbdA7cF19CD', //
+            "AhFfjBPCoNRDExEDFYuNK2NXCWNa1gi2VUbdA7cF19CD" //
           );
 
           if (check) {
@@ -460,7 +478,7 @@ const HackathonHeader = ({
           }
         }
       } catch (error) {
-        console.log('error - ', error);
+        console.log("error - ", error);
         setMinted(false);
       }
     };
@@ -469,41 +487,43 @@ const HackathonHeader = ({
 
   return (
     <>
-      <VStack w="full" gap="24px" align={'start'}>
-        {isOpen && <HackathonRegistrationSuccess isOpen={isOpen} onClose={onClose} />}
+      <VStack w="full" gap="24px" align={"start"}>
+        {isOpen && (
+          <HackathonRegistrationSuccess isOpen={isOpen} onClose={onClose} />
+        )}
         <SkeletonCircle
           isLoaded={!isLoading}
           fadeDuration={1}
-          borderRadius={'12px'}
-          opacity={isLoading ? '0.6' : '1'}
-          width={{ base: '5.5rem', md: '7rem' }}
-          height={{ base: '5.5rem', md: '7rem' }}
+          borderRadius={"12px"}
+          opacity={isLoading ? "0.6" : "1"}
+          width={{ base: "5.5rem", md: "7rem" }}
+          height={{ base: "5.5rem", md: "7rem" }}
         >
           <Avatar
             borderRadius="12px"
-            backgroundColor={'#1C1C1C'}
+            backgroundColor={"#1C1C1C"}
             src={logo}
-            width={{ base: '5.5rem', md: '7rem' }}
-            height={{ base: '5.5rem', md: '7rem' }}
+            width={{ base: "5.5rem", md: "7rem" }}
+            height={{ base: "5.5rem", md: "7rem" }}
           />
         </SkeletonCircle>
         <Stack
-          gap={{ base: '16px', md: '24px', lg: '12vw' }}
+          gap={{ base: "16px", md: "24px", lg: "12vw" }}
           w="full"
           alignItems="end"
-          direction={{ base: 'column', lg: 'row' }}
+          direction={{ base: "column", lg: "row" }}
         >
           <VStack flex={3} alignItems="start" w="full" spacing="16px">
             <HStack>
               <Skeleton
                 isLoaded={!isLoading}
                 fadeDuration={1}
-                borderRadius={'12px'}
-                opacity={isLoading ? '0.6' : '1'}
+                borderRadius={"12px"}
+                opacity={isLoading ? "0.6" : "1"}
               >
                 <Box
                   as="p"
-                  textStyle={{ base: 'title1', md: 'headline3' }}
+                  textStyle={{ base: "title1", md: "headline3" }}
                   textTransform="capitalize"
                   color="neutral.11"
                   noOfLines={1}
@@ -521,13 +541,13 @@ const HackathonHeader = ({
               w="full"
               fadeDuration={2}
               noOfLines={2}
-              opacity={isLoading ? '0.5' : '1'}
+              opacity={isLoading ? "0.5" : "1"}
               skeletonHeight="12px"
               spacing="4"
             >
               <Box
                 as="p"
-                textStyle={{ base: 'body4', md: 'body2' }}
+                textStyle={{ base: "body4", md: "body2" }}
                 color="neutral.9"
                 noOfLines={2}
                 textOverflow="ellipsis"
@@ -536,7 +556,7 @@ const HackathonHeader = ({
               </Box>
             </SkeletonText>
           </VStack>
-          <VStack w={'full'} alignItems="start" flex={1.5} spacing="16px">
+          <VStack w={"full"} alignItems="start" flex={1.5} spacing="16px">
             <Center w="full">
               {/* {hasRegistered.data ? (
                 <VStack w="full" gap="16px">
@@ -684,7 +704,7 @@ const HackathonHeader = ({
                 </Button>
               </Skeleton> */}
             </Center>
-{/*             {timeline && moment(new Date(timeline[1].end!)) > moment(new Date()) && (
+            {/*             {timeline && moment(new Date(timeline[1].end!)) > moment(new Date()) && (
               <HackathonEndSoon
                 isLoading={isLoading}
                 endingDate={
@@ -710,11 +730,11 @@ const HackathonHeader = ({
         </Stack>
       </VStack>
       <SelectProjectToSubmitToHackathon
-        hackathonName={name || ''}
+        hackathonName={name || ""}
         isOpen={submitForHackathonIsOpen}
         onClose={submitForHackathonOnClose}
-        hackathonLogo={logo || ''}
-        hackathonDescription={short_description || ''}
+        hackathonLogo={logo || ""}
+        hackathonDescription={short_description || ""}
         hackathonTracks={tracks as HackathonTracks[]}
         hackathonId={hackathonId}
       />

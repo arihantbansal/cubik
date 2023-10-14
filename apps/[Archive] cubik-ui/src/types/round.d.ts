@@ -1,4 +1,4 @@
-import { Prisma } from '@cubik/database';
+import { Prisma } from "@cubik/database";
 
 export type RoundDetailsWithProjectsWithContributionsType =
   Prisma.RoundGetPayload<{

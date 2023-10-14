@@ -1,16 +1,16 @@
-import { Alert, AlertDescription, AlertIcon } from '@chakra-ui/alert';
-import { Avatar } from '@chakra-ui/avatar';
-import { Button } from '@chakra-ui/button';
-import { CardBody, CardFooter } from '@chakra-ui/card';
+import { Alert, AlertDescription, AlertIcon } from "@chakra-ui/alert";
+import { Avatar } from "@chakra-ui/avatar";
+import { Button } from "@chakra-ui/button";
+import { CardBody, CardFooter } from "@chakra-ui/card";
 import {
   FormControl,
   FormErrorMessage,
   FormHelperText,
   FormLabel,
-} from '@chakra-ui/form-control';
-import { useDisclosure } from '@chakra-ui/hooks';
-import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
-import { Box, Center, HStack, VStack } from '@chakra-ui/layout';
+} from "@chakra-ui/form-control";
+import { useDisclosure } from "@chakra-ui/hooks";
+import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
+import { Box, Center, HStack, VStack } from "@chakra-ui/layout";
 import {
   Modal,
   ModalBody,
@@ -18,39 +18,39 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-} from '@chakra-ui/modal';
-import { Spinner } from '@chakra-ui/spinner';
-import { useToast } from '@chakra-ui/toast';
-import { Collapse } from '@chakra-ui/transition';
-import * as anchor from '@coral-xyz/anchor';
-import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { UserModel } from '@cubik/database';
-import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
-import { useWalletModal } from '@solana/wallet-adapter-react-ui';
-import axios from 'axios';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+} from "@chakra-ui/modal";
+import { Spinner } from "@chakra-ui/spinner";
+import { useToast } from "@chakra-ui/toast";
+import { Collapse } from "@chakra-ui/transition";
+import * as anchor from "@coral-xyz/anchor";
+import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { UserModel } from "@cubik/database";
+import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import axios from "axios";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import {
   Controller,
   FieldValues,
   SubmitHandler,
   useForm,
-} from 'react-hook-form';
-import { HiCheck } from 'react-icons/hi';
-import * as yup from 'yup';
-import { FailureToast, SuccessToast } from '~/components/common/toasts/Toasts';
+} from "react-hook-form";
+import { HiCheck } from "react-icons/hi";
+import * as yup from "yup";
+import { FailureToast, SuccessToast } from "~/components/common/toasts/Toasts";
 import {
   TruncatedAddr,
   WalletAddress,
-} from '~/components/common/wallet/WalletAdd';
-import { useAuthStore } from '~/store/authStore';
-import { useUserStore } from '~/store/userStore';
-import { connection, createUser } from '~/utils/program/contract';
-import { supabase, useUser } from '~/utils/supabase';
-import { trpc } from '~/utils/trpc';
-import FramerCarousel from './FramerNFTCarousel';
-import ProfilePicture from './ProfilePicture';
+} from "~/components/common/wallet/WalletAdd";
+import { useAuthStore } from "~/store/authStore";
+import { useUserStore } from "~/store/userStore";
+import { connection, createUser } from "~/utils/program/contract";
+import { supabase, useUser } from "~/utils/supabase";
+import { trpc } from "~/utils/trpc";
+import FramerCarousel from "./FramerNFTCarousel";
+import ProfilePicture from "./ProfilePicture";
 
 type CreateProfileStepThreeTypes = {
   handleSubmit: any;
@@ -71,7 +71,7 @@ const CreateProfileStepThree = ({
     onOpen: onTransactionModalOpen,
     onClose: onTransactionModalClose,
   } = useDisclosure();
-  const [userName, setUsername] = useState<string>('');
+  const [userName, setUsername] = useState<string>("");
   const { setVisible } = useWalletModal();
   const { publicKey, connected } = useWallet();
   const [loadingUserName, setLoadingUserName] = useState(false);
@@ -89,7 +89,7 @@ const CreateProfileStepThree = ({
 
   const UserProfilePicture = user?.data.user?.user_metadata.picture || pfp;
   const UserName = user?.data.user?.user_metadata.full_name
-    .replace(/\s/g, '')
+    .replace(/\s/g, "")
     .toLowerCase();
 
   const { key } = useAuthStore();
@@ -98,12 +98,12 @@ const CreateProfileStepThree = ({
   const schema = yup.object().shape({
     username: yup
       .string()
-      .required('Username is required')
-      .min(0, 'Username must be at least 4 characters')
+      .required("Username is required")
+      .min(0, "Username must be at least 4 characters")
       .max(15)
-      .matches(/^[a-zA-Z0-9]+$/, 'Username must be alphanumeric and no spaces')
+      .matches(/^[a-zA-Z0-9]+$/, "Username must be alphanumeric and no spaces")
       .test(
-        'is-unique',
+        "is-unique",
         // @ts-ignore
         async function (username: string) {
           setLoadingUserName(true); // Set loading state
@@ -116,9 +116,9 @@ const CreateProfileStepThree = ({
             // await refetch();
             if (usercheck) {
               throw new yup.ValidationError(
-                username + ' is not available',
+                username + " is not available",
                 null,
-                'username'
+                "username"
               );
             } else {
               return true;
@@ -149,24 +149,24 @@ const CreateProfileStepThree = ({
     onSuccess: async () => {
       try {
         if (publicKey && connected) {
-          const { data } = await axios.post('/api/me/login', {
-            id: localStorage.getItem('anon_id'),
-            signature: localStorage.getItem('anon_sig'),
+          const { data } = await axios.post("/api/me/login", {
+            id: localStorage.getItem("anon_id"),
+            signature: localStorage.getItem("anon_sig"),
           });
-          localStorage.setItem('wallet_auth', data.data.access_token);
+          localStorage.setItem("wallet_auth", data.data.access_token);
           setUser(data.data.user as UserModel);
           setProfileCreated(true);
-          SuccessToast({ toast, message: 'Profile Created Successfully' });
+          SuccessToast({ toast, message: "Profile Created Successfully" });
           setSigningTransaction(false);
         } else {
-          throw new Error('No signature found');
+          throw new Error("No signature found");
         }
       } catch (error: any) {
-        FailureToast({ toast, message: error.message || 'Failed to Sign in' });
+        FailureToast({ toast, message: error.message || "Failed to Sign in" });
       }
     },
     onError: (error: any) => {
-      FailureToast({ toast, message: error.message || 'Failed to Sign in' });
+      FailureToast({ toast, message: error.message || "Failed to Sign in" });
     },
   });
 
@@ -203,7 +203,7 @@ const CreateProfileStepThree = ({
     if (!sig) return;
     userCreateMutation.mutate({
       username: data.username,
-      id: localStorage.getItem('anon_id') ?? '',
+      id: localStorage.getItem("anon_id") ?? "",
       profilePicture: pfp,
       tx: sig,
       mainWallet: publicKey?.toBase58() as string,
@@ -222,15 +222,15 @@ const CreateProfileStepThree = ({
       <CardBody>
         <form
           style={{
-            gap: '32px',
-            display: 'flex',
-            flexDirection: 'column',
+            gap: "32px",
+            display: "flex",
+            flexDirection: "column",
           }}
           onSubmit={handleSubmit(onSubmit)}
         >
-          <FormControl w="full" variant={'outline'} colorScheme={'pink'}>
+          <FormControl w="full" variant={"outline"} colorScheme={"pink"}>
             <FormLabel
-              fontSize={{ base: 'xs', md: 'sm' }}
+              fontSize={{ base: "xs", md: "sm" }}
               htmlFor="profilePicture"
             >
               Profile Picture
@@ -244,14 +244,14 @@ const CreateProfileStepThree = ({
           </FormControl>
           <Collapse in={isOpen} animateOpacity>
             <FramerCarousel onClose={onClose} setPFP={setPFP} PFP={pfp} />
-          </Collapse>{' '}
+          </Collapse>{" "}
           <FormControl
-            variant={'outline'}
-            colorScheme={'pink'}
+            variant={"outline"}
+            colorScheme={"pink"}
             isInvalid={!!errors.username}
             isRequired
           >
-            <FormLabel fontSize={{ base: 'xs', md: 'sm' }} htmlFor="username">
+            <FormLabel fontSize={{ base: "xs", md: "sm" }} htmlFor="username">
               Username
             </FormLabel>
 
@@ -272,7 +272,7 @@ const CreateProfileStepThree = ({
                       setUserNameIsAvailable(false);
                       onChange(value);
                       if (value.length > 3)
-                        trigger('username')
+                        trigger("username")
                           .then((res: boolean) => {
                             if (res) {
                               setUserNameIsAvailable(true);
@@ -280,7 +280,7 @@ const CreateProfileStepThree = ({
                           })
                           .catch(
                             (e: any) =>
-                              new Error(e.message || 'there was an error')
+                              new Error(e.message || "there was an error")
                           );
                     }}
                   />
@@ -288,20 +288,20 @@ const CreateProfileStepThree = ({
               />
               {
                 <InputRightElement fontSize="18px">
-                  {loadingUserName && <Spinner size={'xs'} thickness="1px" />}
+                  {loadingUserName && <Spinner size={"xs"} thickness="1px" />}
                   {!errors.username && userNameIsAvailable && (
-                    <HiCheck color={'#A8F0E6'} />
+                    <HiCheck color={"#A8F0E6"} />
                   )}
                 </InputRightElement>
               }
             </InputGroup>
             {errors.username ? (
-              <FormErrorMessage textAlign={'start'}>
+              <FormErrorMessage textAlign={"start"}>
                 {errors.username && <>{errors.username.message}</>}
               </FormErrorMessage>
             ) : (
               <FormHelperText
-                fontSize={{ base: '12px', md: '14px' }}
+                fontSize={{ base: "12px", md: "14px" }}
                 color="neutral.6"
               >
                 Username can&apos;t be changed.
@@ -309,7 +309,7 @@ const CreateProfileStepThree = ({
             )}
           </FormControl>
           <FormControl isRequired>
-            <FormLabel fontSize={{ base: 'xs', md: 'sm' }} htmlFor="publickey">
+            <FormLabel fontSize={{ base: "xs", md: "sm" }} htmlFor="publickey">
               Wallet Address
             </FormLabel>
             <HStack>
@@ -328,17 +328,17 @@ const CreateProfileStepThree = ({
                 />
               </Center>
               <Button
-                variant={'unstyled'}
+                variant={"unstyled"}
                 border="1px solid #A8F0E630"
                 w="10rem"
-                lineHeight={{ base: '14px', md: '16px' }}
-                fontSize={'14px'}
+                lineHeight={{ base: "14px", md: "16px" }}
+                fontSize={"14px"}
                 fontWeight="400"
                 background="#A8F0E610"
                 color="#A8F0E6"
                 height="2.5rem"
                 _hover={{
-                  background: '#A8F0E630',
+                  background: "#A8F0E630",
                 }}
                 onClick={() => {
                   setVisible(true);
@@ -353,17 +353,17 @@ const CreateProfileStepThree = ({
           </FormControl>
           <VStack
             p="0"
-            pt={{ base: '24px', md: '56px' }}
+            pt={{ base: "24px", md: "56px" }}
             w="full"
-            align={'start'}
+            align={"start"}
             justify="start"
-            gap={{ base: '8px', md: '18px' }}
+            gap={{ base: "8px", md: "18px" }}
           >
-            {' '}
+            {" "}
             <CardFooter>
               <Button
                 w="full"
-                size={{ base: 'cubikMini', md: 'cubikSmall' }}
+                size={{ base: "cubikMini", md: "cubikSmall" }}
                 variant="cubikFilled"
                 loadingText="Submitting"
                 type="submit"
@@ -375,8 +375,8 @@ const CreateProfileStepThree = ({
             <Alert status="info" variant="cubik">
               <AlertIcon />
               <AlertDescription
-                fontSize={{ base: '10px', md: '11px', xl: '12px' }}
-                lineHeight={{ base: '14px', md: '14px', xl: '16px' }}
+                fontSize={{ base: "10px", md: "11px", xl: "12px" }}
+                lineHeight={{ base: "14px", md: "14px", xl: "16px" }}
               >
                 By clicking submit, you&apos;ll initiate a profile creation
                 transaction from connected wallet. Ensure you have enough SOL to
@@ -388,34 +388,34 @@ const CreateProfileStepThree = ({
       </CardBody>
       <Modal
         closeOnOverlayClick={!profileCreated}
-        variant={'cubik'}
+        variant={"cubik"}
         isOpen={isTransactionModalOpen}
         onClose={onTransactionModalClose}
       >
         <ModalOverlay />
         <ModalContent
-          mx={{ base: '1rem', md: '0rem' }}
-          overflow={'hidden'}
-          position={'relative'}
-          gap={{ base: '28px', md: '40px' }}
+          mx={{ base: "1rem", md: "0rem" }}
+          overflow={"hidden"}
+          position={"relative"}
+          gap={{ base: "28px", md: "40px" }}
           _before={{
             content: '""',
-            position: 'absolute',
-            top: '-10%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            rounded: '50%',
-            filter: 'blur(80px)',
-            width: '6rem',
-            height: '6rem',
-            background: 'linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)',
-            borderRadius: '8px 8px 0px 0px',
-            zIndex: '-1',
+            position: "absolute",
+            top: "-10%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            rounded: "50%",
+            filter: "blur(80px)",
+            width: "6rem",
+            height: "6rem",
+            background: "linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)",
+            borderRadius: "8px 8px 0px 0px",
+            zIndex: "-1",
           }}
         >
           <ModalHeader>
             {profileCreated ? (
-              <VStack w="full" gap={{ base: '18px', md: '24px' }}>
+              <VStack w="full" gap={{ base: "18px", md: "24px" }}>
                 <Center>
                   <svg
                     width="96"
@@ -561,13 +561,13 @@ const CreateProfileStepThree = ({
                     </defs>
                   </svg>
                 </Center>
-                <VStack spacing={{ base: '4px', md: '8px' }} w="full">
-                  <Box as="p" textStyle={{ base: 'title2', md: 'headline4' }}>
+                <VStack spacing={{ base: "4px", md: "8px" }} w="full">
+                  <Box as="p" textStyle={{ base: "title2", md: "headline4" }}>
                     Welcome to Cubik @{userName}
                   </Box>
                   <Box
                     as="p"
-                    textStyle={{ base: 'title4', md: 'body3' }}
+                    textStyle={{ base: "title4", md: "body3" }}
                     color="neutral.8"
                   >
                     You are all set to help your favorite projects.
@@ -575,7 +575,7 @@ const CreateProfileStepThree = ({
                 </VStack>
                 <Link href={`/${userName}`}>
                   <Button
-                    size={{ base: 'cubikMini', md: 'cubikSmall' }}
+                    size={{ base: "cubikMini", md: "cubikSmall" }}
                     variant="cubikFilled"
                   >
                     Go to profile
@@ -585,20 +585,20 @@ const CreateProfileStepThree = ({
             ) : (
               <VStack
                 w="full"
-                spacing={{ base: '4px', md: '8px' }}
-                align={'center'}
+                spacing={{ base: "4px", md: "8px" }}
+                align={"center"}
                 justify="center"
               >
                 <Box
                   as="p"
-                  textStyle={{ base: 'title2', md: 'title1' }}
+                  textStyle={{ base: "title2", md: "title1" }}
                   color="neutral.11"
                 >
                   Review & Sign
                 </Box>
                 <Box
                   as="p"
-                  textStyle={{ base: 'body5', md: 'body4' }}
+                  textStyle={{ base: "body5", md: "body4" }}
                   color="neutral.9"
                 >
                   Sign transaction to create Profile
@@ -609,43 +609,43 @@ const CreateProfileStepThree = ({
           {!profileCreated && (
             <>
               <ModalBody>
-                <VStack align={'start'} spacing={{ base: '16px', md: '32px' }}>
+                <VStack align={"start"} spacing={{ base: "16px", md: "32px" }}>
                   <Avatar
                     outline="1px solid white"
                     src={pfp}
-                    width={{ base: '64px', md: '84px' }}
-                    height={{ base: '64px', md: '84px' }}
-                    borderRadius={'8px'}
+                    width={{ base: "64px", md: "84px" }}
+                    height={{ base: "64px", md: "84px" }}
+                    borderRadius={"8px"}
                   />
-                  <VStack align={'start'} spacing={{ base: '4px', md: '8px' }}>
+                  <VStack align={"start"} spacing={{ base: "4px", md: "8px" }}>
                     <Box
                       as="p"
-                      textStyle={{ base: 'title6', md: 'title5' }}
-                      color={'neutral.6'}
+                      textStyle={{ base: "title6", md: "title5" }}
+                      color={"neutral.6"}
                     >
                       Username
                     </Box>
                     <Box
                       as="p"
-                      textStyle={{ base: 'title5', md: 'title4' }}
-                      color={'neutral.11'}
+                      textStyle={{ base: "title5", md: "title4" }}
+                      color={"neutral.11"}
                     >
                       @{userName}
                     </Box>
                   </VStack>
-                  <VStack align={'start'} spacing={{ base: '4px', md: '8px' }}>
+                  <VStack align={"start"} spacing={{ base: "4px", md: "8px" }}>
                     <Box
                       as="p"
-                      textStyle={{ base: 'title6', md: 'title5' }}
-                      color={'neutral.6'}
+                      textStyle={{ base: "title6", md: "title5" }}
+                      color={"neutral.6"}
                     >
                       Wallet Address
                     </Box>
                     {publicKey && (
                       <Box
                         as="p"
-                        textStyle={{ base: 'title5', md: 'title4' }}
-                        color={'neutral.11'}
+                        textStyle={{ base: "title5", md: "title4" }}
+                        color={"neutral.11"}
                       >
                         {TruncatedAddr({
                           walletAddress: publicKey?.toBase58(),
@@ -657,8 +657,8 @@ const CreateProfileStepThree = ({
                     <Alert status="error" variant="cubik">
                       <AlertIcon />
                       <AlertDescription
-                        fontSize={{ base: '10px', md: '11px', xl: '12px' }}
-                        lineHeight={{ base: '14px', md: '14px', xl: '16px' }}
+                        fontSize={{ base: "10px", md: "11px", xl: "12px" }}
+                        lineHeight={{ base: "14px", md: "14px", xl: "16px" }}
                       >
                         {transactionError}
                       </AlertDescription>
@@ -668,12 +668,12 @@ const CreateProfileStepThree = ({
               </ModalBody>
               <ModalFooter
                 display="flex"
-                h={'fit-content'}
-                justifyContent={profileCreated ? 'center' : 'space-between'}
+                h={"fit-content"}
+                justifyContent={profileCreated ? "center" : "space-between"}
                 w="full"
               >
                 <Button
-                  size={{ base: 'cubikMini', md: 'cubikSmall' }}
+                  size={{ base: "cubikMini", md: "cubikSmall" }}
                   variant="cubikOutlined"
                   onClick={() => {
                     onTransactionModalClose();
@@ -683,7 +683,7 @@ const CreateProfileStepThree = ({
                   Cancel
                 </Button>
                 <Button
-                  size={{ base: 'cubikMini', md: 'cubikSmall' }}
+                  size={{ base: "cubikMini", md: "cubikSmall" }}
                   variant="cubikFilled"
                   px="32px"
                   loadingText="Confirming"

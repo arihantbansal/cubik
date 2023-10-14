@@ -1,8 +1,8 @@
-import { useMediaQuery } from '@chakra-ui/react';
-import Spline from '@splinetool/react-spline';
+import { useMediaQuery } from "@chakra-ui/react";
+import Spline from "@splinetool/react-spline";
 
 export default function SplineAsset() {
-  const [isSmallerThan800] = useMediaQuery('(max-width: 800px)', {
+  const [isSmallerThan800] = useMediaQuery("(max-width: 800px)", {
     ssr: true,
     fallback: false, // return false on the server, and re-evaluate on the client side
   });

@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { publicProcedure } from '../../../trpc';
+import { z } from "zod";
+import { publicProcedure } from "../../../trpc";
 
 export const findOneProject = publicProcedure
   .input(
@@ -24,7 +24,7 @@ export const findOneProject = publicProcedure
             user: true,
           },
           orderBy: {
-            createdAt: 'asc',
+            createdAt: "asc",
           },
         },
       },

@@ -1,5 +1,5 @@
-import { Box, Center, VStack } from '@chakra-ui/react';
-import React from 'react';
+import { Box, Center, VStack } from "@chakra-ui/react";
+import React from "react";
 
 const NoInformation = () => {
   return (
@@ -8,9 +8,9 @@ const NoInformation = () => {
       spacing="16px"
       py="80px"
       w="full"
-      textAlign={'center'}
+      textAlign={"center"}
       border="1px dashed"
-      borderColor={'#1D1F1E'}
+      borderColor={"#1D1F1E"}
       rounded="12px"
     >
       <Center>
@@ -33,12 +33,12 @@ const NoInformation = () => {
       </Center>
       <Box
         as="p"
-        textStyle={{ base: 'body3', md: 'title2' }}
+        textStyle={{ base: "body3", md: "title2" }}
         color="neutral.11"
       >
         No Tokens
       </Box>
-      <Box as="p" textStyle={{ base: 'body5', md: 'body4' }} color="neutral.8">
+      <Box as="p" textStyle={{ base: "body5", md: "body4" }} color="neutral.8">
         You do not have any tokens in the vault right now.
       </Box>
     </VStack>

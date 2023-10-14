@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { protectedProcedure } from '../../../trpc';
+import { z } from "zod";
+import { protectedProcedure } from "../../../trpc";
 export const projectCount = protectedProcedure
   .input(
     z.object({

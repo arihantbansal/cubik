@@ -1,10 +1,10 @@
-import { Box, Stack, Text, VStack, useDisclosure } from '@chakra-ui/react';
-import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
-import rehypeRaw from 'rehype-raw';
-import remarkGfm from 'remark-gfm';
+import { Box, Stack, Text, VStack, useDisclosure } from "@chakra-ui/react";
+import ChakraUIRenderer from "chakra-ui-markdown-renderer";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 
-import { Link, LinkProps } from '@chakra-ui/react';
+import { Link, LinkProps } from "@chakra-ui/react";
 
 export const DescriptionPreview = ({
   description,
@@ -26,8 +26,8 @@ export const DescriptionPreview = ({
       const { children } = props;
       return (
         <Text
-          fontSize={{ base: '14px', md: '16px' }}
-          lineHeight={{ base: '22px', md: '24px' }}
+          fontSize={{ base: "14px", md: "16px" }}
+          lineHeight={{ base: "22px", md: "24px" }}
           fontWeight="400"
           letterSpacing="normal"
           color="#D7E0DF"
@@ -39,7 +39,7 @@ export const DescriptionPreview = ({
     h1: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={'title2'} color="#FFFFFF">
+        <Box as="p" textStyle={"title2"} color="#FFFFFF">
           {children}
         </Box>
       );
@@ -47,7 +47,7 @@ export const DescriptionPreview = ({
     h2: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={'title2'} color="#FFFFFF">
+        <Box as="p" textStyle={"title2"} color="#FFFFFF">
           {children}
         </Box>
       );
@@ -55,7 +55,7 @@ export const DescriptionPreview = ({
     h3: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={'title2'} color="#FFFFFF">
+        <Box as="p" textStyle={"title2"} color="#FFFFFF">
           {children}
         </Box>
       );
@@ -63,7 +63,7 @@ export const DescriptionPreview = ({
     h4: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={'title2'} color="#FFFFFF">
+        <Box as="p" textStyle={"title2"} color="#FFFFFF">
           {children}
         </Box>
       );
@@ -71,7 +71,7 @@ export const DescriptionPreview = ({
     h5: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={'title2'} color="#FFFFFF">
+        <Box as="p" textStyle={"title2"} color="#FFFFFF">
           {children}
         </Box>
       );
@@ -82,8 +82,8 @@ export const DescriptionPreview = ({
         <Text
           as="li"
           ml="1rem"
-          fontSize={{ base: '14px', md: '16px' }}
-          lineHeight={{ base: '24px', md: '24px' }}
+          fontSize={{ base: "14px", md: "16px" }}
+          lineHeight={{ base: "24px", md: "24px" }}
           fontWeight="400"
           letterSpacing="normal"
           color="#D7E0DF"
@@ -96,19 +96,19 @@ export const DescriptionPreview = ({
 
   return (
     <Stack
-      alignSelf={'start'}
+      alignSelf={"start"}
       minH="10rem"
       w="full"
-      direction={'column'}
+      direction={"column"}
       gap="0.5rem"
     >
-      <VStack overflow={'scroll'} align="start" gap="0.5rem">
+      <VStack overflow={"scroll"} align="start" gap="0.5rem">
         <ReactMarkdown
           components={ChakraUIRenderer(newTheme)}
           rehypePlugins={[rehypeRaw]}
           remarkPlugins={[remarkGfm]}
         >
-          {description ? description : ''}
+          {description ? description : ""}
         </ReactMarkdown>
       </VStack>
     </Stack>

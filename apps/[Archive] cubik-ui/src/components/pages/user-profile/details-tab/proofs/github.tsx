@@ -12,17 +12,17 @@ import {
   useDisclosure,
   useToast,
   VStack,
-} from '@chakra-ui/react';
-import { Player } from '@lottiefiles/react-lottie-player';
-import { useRouter } from 'next/router';
-import { useEffect, useRef } from 'react';
-import { BiCheck } from 'react-icons/bi';
-import { SuccessToast } from '~/components/common/toasts/Toasts';
-import { env } from '~/env.mjs';
-import { useUserStore } from '~/store/userStore';
-import { supabase, useUser } from '~/utils/supabase';
-import { trpc } from '~/utils/trpc';
-import GithubLogo from './SVGs/Github';
+} from "@chakra-ui/react";
+import { Player } from "@lottiefiles/react-lottie-player";
+import { useRouter } from "next/router";
+import { useEffect, useRef } from "react";
+import { BiCheck } from "react-icons/bi";
+import { SuccessToast } from "~/components/common/toasts/Toasts";
+import { env } from "~/env.mjs";
+import { useUserStore } from "~/store/userStore";
+import { supabase, useUser } from "~/utils/supabase";
+import { trpc } from "~/utils/trpc";
+import GithubLogo from "./SVGs/Github";
 
 interface Props {
   minted: boolean;

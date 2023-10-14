@@ -1,9 +1,9 @@
-import React from 'react';
-import { ProjectCreatorAndLinks } from './ProjectCreatorAndLinks';
-import { ProjectsModel, Team, UserModel } from '@prisma/client';
-import { ProjectCTAs } from './ProjectCTAs';
-import { Stack } from '@chakra-ui/layout';
-import { HackathonSchedule } from '@cubik/common-types';
+import React from "react";
+import { ProjectCreatorAndLinks } from "./ProjectCreatorAndLinks";
+import { ProjectsModel, Team, UserModel } from "@prisma/client";
+import { ProjectCTAs } from "./ProjectCTAs";
+import { Stack } from "@chakra-ui/layout";
+import { HackathonSchedule } from "@cubik/common-types";
 
 interface Props {
   funding: number;
@@ -44,7 +44,14 @@ export const ProjectInteractions = ({
   const timelineSorted = timeline?.sort((a, b) => a.index - b.index);
   return (
     <>
-      <Stack w="full" maxW="26rem" flex="1" gap="48px" flexDir="column" justifyContent="start">
+      <Stack
+        w="full"
+        maxW="26rem"
+        flex="1"
+        gap="48px"
+        flexDir="column"
+        justifyContent="start"
+      >
         {roundId && (
           <ProjectCTAs
             project={project}

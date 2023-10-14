@@ -1,12 +1,10 @@
-import { inferAsyncReturnType, initTRPC, TRPCError } from '@trpc/server';
-import { type CreateNextContextOptions } from '@trpc/server/adapters/next';
-import superjson from 'superjson';
-import { ZodError } from 'zod';
+import { inferAsyncReturnType, initTRPC, TRPCError } from "@trpc/server";
+import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+import superjson from "superjson";
+import { ZodError } from "zod";
 
-import { authHandler } from './auth';
-import { prisma, UserModel } from '@cubik/database';
-
-
+import { authHandler } from "./auth";
+import { prisma, UserModel } from "@cubik/database";
 
 type CreateContextOptions = {
   user: UserModel | null;
@@ -52,7 +50,7 @@ export const publicProcedure = t.procedure;
 
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session?.user) {
-    throw new TRPCError({ code: 'UNAUTHORIZED' });
+    throw new TRPCError({ code: "UNAUTHORIZED" });
   }
   return next({
     ctx: {

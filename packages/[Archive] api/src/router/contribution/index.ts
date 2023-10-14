@@ -2,11 +2,15 @@ import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from '../../trpc';
-import { z } from 'zod';
-import { v4 as uuid } from 'uuid';
-import { qfV1, qfV1Hackathon } from '../../utils/qf';
-import { Prisma, ProjectJoinHackathons, ProjectJoinRound } from '@cubik/database';
+} from "../../trpc";
+import { z } from "zod";
+import { v4 as uuid } from "uuid";
+import { qfV1, qfV1Hackathon } from "../../utils/qf";
+import {
+  Prisma,
+  ProjectJoinHackathons,
+  ProjectJoinRound,
+} from "@cubik/database";
 export const contributionRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
@@ -20,7 +24,7 @@ export const contributionRouter = createTRPCRouter({
         projectId: z.string().nonempty(),
         roundId: z.string().nonempty(),
         projectJoinRoundId: z.string().nonempty(),
-      }),
+      })
     )
     .mutation(async ({ input, ctx: { prisma } }) => {
       const contribution = await prisma.contribution.findFirst({
@@ -89,7 +93,7 @@ export const contributionRouter = createTRPCRouter({
         totalAmount: z.number(),
         usd: z.number().positive(),
         hackathonId: z.string().nonempty(),
-      }),
+      })
     )
     .mutation(async ({ input, ctx: { prisma, session } }) => {
       try {
@@ -124,7 +128,7 @@ export const contributionRouter = createTRPCRouter({
         projectJoinRoundId: z.string().nonempty(),
         roundId: z.string().nonempty(),
         projectId: z.string().nonempty(),
-      }),
+      })
     )
     .mutation(async ({ input, ctx: { prisma } }) => {
       const res = await prisma.hackathon.findUnique({
@@ -149,14 +153,15 @@ export const contributionRouter = createTRPCRouter({
           hackathonId: input.roundId,
         },
       });
-      const updatePromise: Prisma.Prisma__ProjectJoinHackathonsClient<ProjectJoinHackathons>[] = [];
-      allProjects.forEach(async e => {
+      const updatePromise: Prisma.Prisma__ProjectJoinHackathonsClient<ProjectJoinHackathons>[] =
+        [];
+      allProjects.forEach(async (e) => {
         const a = prisma.projectJoinHackathons.update({
           where: {
             id: e.id,
           },
           data: {
-            amount: qf.find(el => el.projectId === e.projectId)?.amount ?? 0,
+            amount: qf.find((el) => el.projectId === e.projectId)?.amount ?? 0,
           },
         });
         updatePromise.push(a);
@@ -171,7 +176,7 @@ export const contributionRouter = createTRPCRouter({
         roundId: z.string().optional(),
         hackthonId: z.string().optional(),
         skip: z.number().default(0),
-      }),
+      })
     )
     .query(async ({ input, ctx: { prisma } }) => {
       if (input.roundId) {
@@ -181,7 +186,7 @@ export const contributionRouter = createTRPCRouter({
             roundId: input.roundId,
           },
           orderBy: {
-            createdAt: 'desc',
+            createdAt: "desc",
           },
           skip: input.skip,
           select: {
@@ -196,14 +201,14 @@ export const contributionRouter = createTRPCRouter({
         });
         return contributions;
       } else if (input.hackthonId) {
-        console.log(input.hackthonId, '----');
+        console.log(input.hackthonId, "----");
         const contributions = await prisma.contribution.findMany({
           where: {
             projectId: input.projectId,
             hackathonId: input.hackthonId,
           },
           orderBy: {
-            createdAt: 'desc',
+            createdAt: "desc",
           },
           skip: input.skip,
           select: {
@@ -227,7 +232,7 @@ export const contributionRouter = createTRPCRouter({
     .input(
       z.object({
         userId: z.string().nonempty(),
-      }),
+      })
     )
     .query(async ({ input, ctx: { prisma } }) => {
       const contributions = await prisma.contribution.findMany({
@@ -255,7 +260,7 @@ export const contributionRouter = createTRPCRouter({
     .input(
       z.object({
         roundId: z.string().nonempty(),
-      }),
+      })
     )
     .query(async ({ input, ctx: { prisma } }) => {
       const contributions = await prisma.contribution.findMany({

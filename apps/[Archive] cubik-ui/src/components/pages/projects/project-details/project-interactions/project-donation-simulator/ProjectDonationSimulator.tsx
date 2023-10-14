@@ -12,19 +12,22 @@ import {
   Stack,
   useToast,
   VStack,
-} from '@chakra-ui/react';
-import * as anchor from '@coral-xyz/anchor';
-import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
-import { useState } from 'react';
-import FlipNumbers from 'react-flip-numbers';
-import { useForm } from 'react-hook-form';
-import { FailureToast, SuccessToast } from '~/components/common/toasts/Toasts';
-import { tokens } from '~/components/common/tokens/DonationTokens';
-import { DonationFormType } from '~/interfaces/donationForm';
-import { tokenGroup } from '~/interfaces/token';
-import { useUserStore } from '~/store/userStore';
-import { TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
+} from "@chakra-ui/react";
+import * as anchor from "@coral-xyz/anchor";
+import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
+import { useState } from "react";
+import FlipNumbers from "react-flip-numbers";
+import { useForm } from "react-hook-form";
+import { FailureToast, SuccessToast } from "~/components/common/toasts/Toasts";
+import { tokens } from "~/components/common/tokens/DonationTokens";
+import { DonationFormType } from "~/interfaces/donationForm";
+import { tokenGroup } from "~/interfaces/token";
+import { useUserStore } from "~/store/userStore";
+import {
+  TOKEN_PROGRAM_ID,
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+} from "@solana/spl-token";
 import {
   AmountReceivedPopover,
   CubikMatchingPoolDonationPopover,
@@ -35,21 +38,20 @@ import {
   sendAndConfirmTransaction,
   TransactionMessage,
   VersionedTransaction,
-} from '@solana/web3.js';
-import axios from 'axios';
-import useCurrentTokenPrice from '~/hooks/useCurrentTokenPrice';
+} from "@solana/web3.js";
+import axios from "axios";
+import useCurrentTokenPrice from "~/hooks/useCurrentTokenPrice";
 import {
   connection,
   contributeSOL,
   contributeSPL,
   createContributionV2,
-} from '~/utils/program/contract';
-import { trpc } from '~/utils/trpc';
-import { AmountInput } from './form/DonationAmountInput';
-import { env } from '~/env.mjs';
+} from "~/utils/program/contract";
+import { trpc } from "~/utils/trpc";
+import { AmountInput } from "./form/DonationAmountInput";
+import { env } from "~/env.mjs";
 
 type ProjectDonationSimulatorProps = {
-  projectDetails: ;
   height: number;
   width: number;
   setDonationSuccessful?: any;
@@ -71,7 +73,7 @@ export const ProjectDonationSimulator = ({
 }: ProjectDonationSimulatorProps) => {
   const [txnError, setTxnError] = useState<string | null>(null);
   const toast = useToast();
-  const { data: price } = useCurrentTokenPrice(['solana']);
+  const { data: price } = useCurrentTokenPrice(["solana"]);
   const {
     handleSubmit,
     setValue,
@@ -88,47 +90,48 @@ export const ProjectDonationSimulator = ({
     },
   });
   const { user } = useUserStore();
-  const donation: number = watch('amount');
+  const donation: number = watch("amount");
   const { publicKey } = useWallet();
-  const selectedToken: tokenGroup = watch('token');
+  const selectedToken: tokenGroup = watch("token");
 
   const setDonationAndAmount = (donation: number) => {
-    if (selectedToken.label === 'sol') {
-      setValue('amount', donation * 22);
-    } else if (selectedToken.label === 'usdc') {
-      setValue('amount', donation);
+    if (selectedToken.label === "sol") {
+      setValue("amount", donation * 22);
+    } else if (selectedToken.label === "usdc") {
+      setValue("amount", donation);
     } else {
-      setValue('amount', 0);
+      setValue("amount", 0);
     }
   };
   // In component:
   const utils = trpc.useContext();
   const updateProjectRaise = trpc.contribution.updateProjectRaise.useMutation();
 
-  const createContributionMutation = trpc.contribution.createHackathon.useMutation({
-    onSuccess: async (data: any) => {
-      SuccessToast({ toast, message: 'Donation Successful' });
-      updateProjectRaise.mutate({
-        projectId: projectDetails.id,
-        projectJoinRoundId: projectJoinRoundId,
-        roundId: roundId,
-      });
-      utils.project.findOneHackthon.invalidate({
-        id: projectDetails.id,
-      });
-      utils.contribution.getProjectContributors.invalidate({
-        projectId: projectDetails.id, // check once if the value is right or not for project Id
-      });
-      setDonationSuccessful(true);
-    },
-    onError: error => {
-      setTxnError('Trpc returned an error');
-      FailureToast({ toast, message: 'Donation Failed' });
-    },
-  });
+  const createContributionMutation =
+    trpc.contribution.createHackathon.useMutation({
+      onSuccess: async (data: any) => {
+        SuccessToast({ toast, message: "Donation Successful" });
+        updateProjectRaise.mutate({
+          projectId: projectDetails.id,
+          projectJoinRoundId: projectJoinRoundId,
+          roundId: roundId,
+        });
+        utils.project.findOneHackthon.invalidate({
+          id: projectDetails.id,
+        });
+        utils.contribution.getProjectContributors.invalidate({
+          projectId: projectDetails.id, // check once if the value is right or not for project Id
+        });
+        setDonationSuccessful(true);
+      },
+      onError: (error) => {
+        setTxnError("Trpc returned an error");
+        FailureToast({ toast, message: "Donation Failed" });
+      },
+    });
   const getBalances = async (address: string) => {
     const { data } = await axios.get(
-      `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${env.NEXT_PUBLIC_HELIUS_API_KEY}`,
+      `https://api.helius.xyz/v0/addresses/${address}/balances?api-key=${env.NEXT_PUBLIC_HELIUS_API_KEY}`
     );
     return data;
   };
@@ -144,16 +147,18 @@ export const ProjectDonationSimulator = ({
 
     if (
       balance.tokens.find(
-        (token: any) => token.mint === 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+        (token: any) =>
+          token.mint === "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
       ) &&
       balance.tokens.find(
-        (token: any) => token.mint === 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+        (token: any) =>
+          token.mint === "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
       ).amount <
         _values.amount * 1000000
     ) {
-      return setTxnError('Insufficient balance');
+      return setTxnError("Insufficient balance");
     }
-    if (String(_values.token.value).includes('sol')) {
+    if (String(_values.token.value).includes("sol")) {
       return;
       // sig = await donateSOL(
       //   name as string,
@@ -176,7 +181,7 @@ export const ProjectDonationSimulator = ({
       sig = await donateSPL(
         projectDetails.owner_publickey,
         projectDetails.projectUserCount,
-        _values.amount,
+        _values.amount
       );
       if (!sig) return;
 
@@ -205,7 +210,11 @@ export const ProjectDonationSimulator = ({
     // onOpen();
   }
 
-  const donateSPL = async (owner: string, count: number, total: number): Promise<string | null> => {
+  const donateSPL = async (
+    owner: string,
+    count: number,
+    total: number
+  ): Promise<string | null> => {
     try {
       const [ix, ix2, ix3] = await createContributionV2(
         anchorWallet as NodeWallet,
@@ -214,7 +223,7 @@ export const ProjectDonationSimulator = ({
         owner,
         roundId,
         count,
-        'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
       );
       const tx = new anchor.web3.Transaction();
       const { blockhash } = await connection.getLatestBlockhash();
@@ -235,7 +244,7 @@ export const ProjectDonationSimulator = ({
       console.log(txid);
       return txid;
     } catch (error: any) {
-      setTxnError(error.message || 'There was some error');
+      setTxnError(error.message || "There was some error");
       return null;
     }
   };
@@ -246,7 +255,7 @@ export const ProjectDonationSimulator = ({
     count: number,
     split: number,
     total: number,
-    usd: number,
+    usd: number
   ): Promise<string | null> => {
     try {
       const res = await fetch(
@@ -254,15 +263,15 @@ export const ProjectDonationSimulator = ({
           usd * 1000000
         }&swapMode=ExactOut&slippageBps=1`,
         {
-          method: 'GET',
-        },
+          method: "GET",
+        }
       );
       const routes = await res.json();
       console.log(routes);
-      const transactionsres = await fetch('https://quote-api.jup.ag/v4/swap', {
-        method: 'POST',
+      const transactionsres = await fetch("https://quote-api.jup.ag/v4/swap", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           // route from /quote api
@@ -274,22 +283,22 @@ export const ProjectDonationSimulator = ({
 
       const { swapTransaction } = transactions;
 
-      const swapTransactionBuf = Buffer.from(swapTransaction, 'base64');
+      const swapTransactionBuf = Buffer.from(swapTransaction, "base64");
       var transaction = VersionedTransaction.deserialize(swapTransactionBuf);
       console.log(transaction);
 
       // get address lookup table accounts
       const addressLookupTableAccounts = await Promise.all(
-        transaction.message.addressTableLookups.map(async lookup => {
+        transaction.message.addressTableLookups.map(async (lookup) => {
           return new AddressLookupTableAccount({
             key: lookup.accountKey,
             state: AddressLookupTableAccount.deserialize(
               (await connection
                 .getAccountInfo(lookup.accountKey)
-                .then(res => res?.data)) as Uint8Array,
+                .then((res) => res?.data)) as Uint8Array
             ),
           });
-        }),
+        })
       );
       var message = TransactionMessage.decompile(transaction.message, {
         addressLookupTableAccounts: addressLookupTableAccounts,
@@ -302,12 +311,14 @@ export const ProjectDonationSimulator = ({
         owner,
         roundId,
         count,
-        'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
       );
       // message.instructions.push(ix!);
 
       // compile the message and update the transaction
-      transaction.message = message.compileToV0Message(addressLookupTableAccounts);
+      transaction.message = message.compileToV0Message(
+        addressLookupTableAccounts
+      );
       // const signedTransaction = await sendAndConfirmTransaction(connection,transaction, {
       //   skipPreflight: true,
       //   preflightCommitment: 'confirmed',
@@ -325,36 +336,36 @@ export const ProjectDonationSimulator = ({
       return txid;
     } catch (error: any) {
       console.log(error);
-      setTxnError(error.message || 'There was some error');
+      setTxnError(error.message || "There was some error");
       return null;
     }
   };
   const EstimatedAmmount = trpc.pool.findEstimated.useQuery({
-    amount: watch('amount') as number,
+    amount: watch("amount") as number,
     projectId: projectDetails.id,
     roundId: roundId,
   });
 
   return (
     <Stack
-      w={{ base: '22rem', sm: '22rem', md: '26rem' }}
+      w={{ base: "22rem", sm: "22rem", md: "26rem" }}
       gap="40px"
       h="full"
-      direction={'row'}
-      overflow={'hidden'}
+      direction={"row"}
+      overflow={"hidden"}
       maxW="98vw"
       mx="auto"
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{
-          width: 'full',
-          height: '100%',
-          display: 'flex',
-          gap: '80px',
-          flex: '1',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
+          width: "full",
+          height: "100%",
+          display: "flex",
+          gap: "80px",
+          flex: "1",
+          flexDirection: "column",
+          justifyContent: "space-between",
         }}
       >
         <VStack w="full" gap="32px">
@@ -362,7 +373,7 @@ export const ProjectDonationSimulator = ({
             <FormLabel
               pb="12px"
               htmlFor="name"
-              textStyle={{ base: 'body6', md: 'title4' }}
+              textStyle={{ base: "body6", md: "title4" }}
               color="neutral.11"
             >
               Enter Donation Amount
@@ -378,7 +389,7 @@ export const ProjectDonationSimulator = ({
                 control={control}
               />
             </HStack>
-            <FormErrorMessage textStyle={{ base: 'body5', md: 'body4' }}>
+            <FormErrorMessage textStyle={{ base: "body5", md: "body4" }}>
               <>{errors.amount && errors.amount.message}</>
             </FormErrorMessage>
             {/* <WalletBalanceError selectedToken={selectedToken} data={data} /> */}
@@ -454,9 +465,9 @@ export const ProjectDonationSimulator = ({
         </VStack>
         <VStack w="full" gap="16px">
           <VStack w="full" align="center" gap="8px">
-            <HStack w="full" justify={'space-between'}>
+            <HStack w="full" justify={"space-between"}>
               <HStack>
-                <Box as="p" textStyle={'body4'}>
+                <Box as="p" textStyle={"body4"}>
                   Final Amount Received
                 </Box>
                 <AmountReceivedPopover />
@@ -468,7 +479,10 @@ export const ProjectDonationSimulator = ({
                   color="#A8F0E6"
                   play
                   perspective={700}
-                  numbers={'$' + String(((EstimatedAmmount.data ?? 0) + donation).toFixed(3))}
+                  numbers={
+                    "$" +
+                    String(((EstimatedAmmount.data ?? 0) + donation).toFixed(3))
+                  }
                 />
               </Center>
             </HStack>
@@ -477,15 +491,15 @@ export const ProjectDonationSimulator = ({
             <Alert status="error" variant="cubik">
               <AlertIcon />
               <AlertDescription
-                fontSize={{ base: '10px', md: '11px', xl: '12px' }}
-                lineHeight={{ base: '14px', md: '14px', xl: '16px' }}
+                fontSize={{ base: "10px", md: "11px", xl: "12px" }}
+                lineHeight={{ base: "14px", md: "14px", xl: "16px" }}
               >
                 {txnError}
               </AlertDescription>
             </Alert>
           )}
           <Button
-            variant={'cubikFilled'}
+            variant={"cubikFilled"}
             w="full"
             height="44px"
             mt={4}

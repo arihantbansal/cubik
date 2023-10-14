@@ -1,5 +1,5 @@
-import type { Prisma } from '@cubik/database';
-import type { ProofType } from '~/utils/program/contract';
+import type { Prisma } from "@cubik/database";
+import type { ProofType } from "~/utils/program/contract";
 
 export interface ProfileNftType {
   name: string;

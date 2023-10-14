@@ -10,21 +10,21 @@ import {
   Tooltip,
   VStack,
   Wrap,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 import {
   Contribution,
   ProjectJoinRound,
   ProjectsModel,
   Round,
   UserModel,
-} from '@cubik/database';
-import React from 'react';
-import { BiPlus } from 'react-icons/bi';
-import { WalletAddress } from '~/components/common/wallet/WalletAdd';
-import { formatNumberWithK } from '~/utils/formatWithK';
-import ProjectsFundsPayout from '../ProjectsFundsPayout';
-import NoInformation from '~/components/common/empty-state/NoInformation';
-import { isFuture } from 'date-fns';
+} from "@cubik/database";
+import React from "react";
+import { BiPlus } from "react-icons/bi";
+import { WalletAddress } from "~/components/common/wallet/WalletAdd";
+import { formatNumberWithK } from "~/utils/formatWithK";
+import ProjectsFundsPayout from "../ProjectsFundsPayout";
+import NoInformation from "~/components/common/empty-state/NoInformation";
+import { isFuture } from "date-fns";
 
 const ProjectsFundsPayouts = ({
   roundData,
@@ -66,14 +66,14 @@ const ProjectsFundsPayouts = ({
   };
 
   return (
-    <VStack gap="16px" w="full" align={'start'}>
+    <VStack gap="16px" w="full" align={"start"}>
       <Stack
         direction="column"
         w="full"
-        justify={'space-between'}
-        align={'start'}
+        justify={"space-between"}
+        align={"start"}
       >
-        <Box textStyle={{ base: 'title3', md: 'title2' }} color="neutral.11">
+        <Box textStyle={{ base: "title3", md: "title2" }} color="neutral.11">
           Fund Projects
         </Box>
       </Stack>
@@ -97,14 +97,14 @@ const ProjectsFundsPayouts = ({
 
 const SquadsVaultAdminAccess = () => {
   return (
-    <VStack gap="16px" w="full" align={'start'}>
+    <VStack gap="16px" w="full" align={"start"}>
       <Stack
         direction="row"
         w="full"
-        justify={'space-between'}
-        align={'center'}
+        justify={"space-between"}
+        align={"center"}
       >
-        <Box textStyle={{ base: 'title3', md: 'title2' }} color="neutral.11">
+        <Box textStyle={{ base: "title3", md: "title2" }} color="neutral.11">
           Multisig
         </Box>
       </Stack>
@@ -115,31 +115,31 @@ const SquadsVaultAdminAccess = () => {
           mb="12px"
           align="start"
         >
-          <VStack w="full" align={'start'}>
+          <VStack w="full" align={"start"}>
             <StatLabel
-              whiteSpace={'nowrap'}
+              whiteSpace={"nowrap"}
               overflow="hidden"
-              textStyle={{ base: 'title6', md: 'title5' }}
+              textStyle={{ base: "title6", md: "title5" }}
               color="neutral8"
             >
               Balance
             </StatLabel>
             <HStack gap="8px">
               <StatNumber
-                textStyle={{ base: 'title3', sm: 'title2', md: 'title1' }}
+                textStyle={{ base: "title3", sm: "title2", md: "title1" }}
               >
                 $10,000
-              </StatNumber>{' '}
+              </StatNumber>{" "}
               <WalletAddress
-                walletAddress={'3df89dk238sh34qo23df8sk35hw934'}
-                size={'sm'}
+                walletAddress={"3df89dk238sh34qo23df8sk35hw934"}
+                size={"sm"}
                 copy={true}
               >
                 <Tooltip
                   label="Squads Multisig"
                   aria-label="A tooltip"
                   backgroundColor="neutral.8"
-                  fontSize={'sm'}
+                  fontSize={"sm"}
                   color="neutral.10"
                 >
                   <svg
@@ -161,9 +161,9 @@ const SquadsVaultAdminAccess = () => {
           <Stack direction="row">
             <Button
               variant="cubikOutlined"
-              size={{ base: 'cubikMini', md: 'cubikMini' }}
+              size={{ base: "cubikMini", md: "cubikMini" }}
               leftIcon={
-                <Box as={BiPlus} boxSize={{ base: '12px', md: '16px' }} />
+                <Box as={BiPlus} boxSize={{ base: "12px", md: "16px" }} />
               }
             >
               Add Funds
@@ -198,7 +198,7 @@ const GrantMatchingPoolAdminPanel = ({
   })[];
 }) => {
   return (
-    <VStack gap="40px" w="full" align={'start'}>
+    <VStack gap="40px" w="full" align={"start"}>
       <SquadsVaultAdminAccess />
       <ProjectsFundsPayouts
         roundData={roundData}

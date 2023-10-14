@@ -1,3 +1,3 @@
-import { borders } from './borders';
+import { borders } from "./borders";
 
 export { borders };

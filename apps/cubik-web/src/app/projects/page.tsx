@@ -297,8 +297,6 @@ export const projectExplorer = async () => {
   }
 };
 
-
-
 export const metadata: Metadata = {
   title: "Projects - Cubik",
   metadataBase: new URL("https://res.cloudinary.com"),

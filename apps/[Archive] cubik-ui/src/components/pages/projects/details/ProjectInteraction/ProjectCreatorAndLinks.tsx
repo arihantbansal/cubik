@@ -1,12 +1,12 @@
-import { Box, VStack } from '@chakra-ui/layout';
-import { ProjectSocials } from './ProjectSocials';
-import { ProjectFundingData } from './ProjectFundingData';
-import { ProjectOwner } from './ProjectOwner';
-import { SimilarProject } from './SimilarProject';
-import { ProjectsModel, Team, UserModel } from '@prisma/client';
-import { Alert, AlertDescription, AlertIcon } from '@chakra-ui/alert';
-import { CloseButton } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Box, VStack } from "@chakra-ui/layout";
+import { ProjectSocials } from "./ProjectSocials";
+import { ProjectFundingData } from "./ProjectFundingData";
+import { ProjectOwner } from "./ProjectOwner";
+import { SimilarProject } from "./SimilarProject";
+import { ProjectsModel, Team, UserModel } from "@prisma/client";
+import { Alert, AlertDescription, AlertIcon } from "@chakra-ui/alert";
+import { CloseButton } from "@chakra-ui/react";
+import { useState } from "react";
 
 interface Props {
   isLoading: boolean;
@@ -36,12 +36,12 @@ export const ProjectCreatorAndLinks = ({
   const [isOpen, setIsOpen] = useState<boolean>(true);
   return (
     <VStack
-      gap={{ base: '24px', md: '64px' }}
+      gap={{ base: "24px", md: "64px" }}
       w="full"
-      justify={'space-between'}
-      direction={'column'}
-      justifyContent={'start'}
-      display={{ base: 'none', lg: 'flex' }}
+      justify={"space-between"}
+      direction={"column"}
+      justifyContent={"start"}
+      display={{ base: "none", lg: "flex" }}
     >
       {/* <VStack>
         <Box mb={2} fontWeight={600} color={'white'} fontSize={'md'}>
@@ -57,17 +57,26 @@ export const ProjectCreatorAndLinks = ({
       </VStack> */}
 
       {isOpen && (
-        <Box zIndex={10000} position="fixed" bottom="30px" right="30px" width="25rem">
-          <Alert bg={'teal.700'} variant="solid" px={5} py={10}>
+        <Box
+          zIndex={10000}
+          position="fixed"
+          bottom="30px"
+          right="30px"
+          width="25rem"
+        >
+          <Alert bg={"teal.700"} variant="solid" px={5} py={10}>
             <AlertDescription>
               <VStack>
-                <Box mb={2} fontWeight={600} color={'white'} fontSize={'md'}>
+                <Box mb={2} fontWeight={600} color={"white"} fontSize={"md"}>
                   When voting, consider the following guidelines
                 </Box>
-                <VStack gap={2} fontSize={'sm'} align={'start'}>
+                <VStack gap={2} fontSize={"sm"} align={"start"}>
                   <Box>1. Is the game playable and fun?</Box>
                   <Box>2. Does it follow the theme?</Box>
-                  <Box>3. how deeply is it integrated with Solana? is it fully on-chain?</Box>
+                  <Box>
+                    3. how deeply is it integrated with Solana? is it fully
+                    on-chain?
+                  </Box>
                   <Box>4. Is the idea original?</Box>
                   <Box>5. General feel (art, sound, lore etc)</Box>
                 </VStack>
@@ -82,7 +91,11 @@ export const ProjectCreatorAndLinks = ({
           </Alert>
         </Box>
       )}
-      <ProjectSocials tracks={tracks} isLoading={isLoading} projectDetails={project} />
+      <ProjectSocials
+        tracks={tracks}
+        isLoading={isLoading}
+        projectDetails={project}
+      />
 
       {!preview && (
         <ProjectFundingData

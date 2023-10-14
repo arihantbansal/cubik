@@ -15,19 +15,19 @@ import {
   Thead,
   Tr,
   VStack,
-} from '@chakra-ui/react';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { BiChevronDown, BiChevronRight, BiChevronUp } from 'react-icons/bi';
-import ContributionsEmptyState from '~/components/common/empty-state/ContributionsEmptyState';
-import Pagination from '~/components/common/pagination/Pagination';
-import { SOL, USDC } from '~/components/common/tokens/token';
-import Username from '~/components/common/username/Username';
-import { TruncatedAddr } from '~/components/common/wallet/WalletAdd';
-import { UserProof } from '~/types/user';
-import { formatNumberWithK } from '~/utils/formatWithK';
-import { timeSince } from '~/utils/gettimeSince';
-import { trpc } from '~/utils/trpc';
+} from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { BiChevronDown, BiChevronRight, BiChevronUp } from "react-icons/bi";
+import ContributionsEmptyState from "~/components/common/empty-state/ContributionsEmptyState";
+import Pagination from "~/components/common/pagination/Pagination";
+import { SOL, USDC } from "~/components/common/tokens/token";
+import Username from "~/components/common/username/Username";
+import { TruncatedAddr } from "~/components/common/wallet/WalletAdd";
+import { UserProof } from "~/types/user";
+import { formatNumberWithK } from "~/utils/formatWithK";
+import { timeSince } from "~/utils/gettimeSince";
+import { trpc } from "~/utils/trpc";
 
 type Props = {
   id: string;
@@ -80,24 +80,24 @@ export const ContributorRow: React.FC<Props> = (props) => {
   const router = useRouter();
   return (
     <Tr
-      w={'full'}
+      w={"full"}
       onClick={() => {
         router.push(`/${props?.username}`);
       }}
       cursor="pointer"
-      _hover={{ backgroundColor: '#0C0D0D' }}
+      _hover={{ backgroundColor: "#0C0D0D" }}
     >
       <Td p="18px">
-        <HStack align={'start'} gap={{ base: '8px', md: '16px' }}>
+        <HStack align={"start"} gap={{ base: "8px", md: "16px" }}>
           <Avatar
-            width={{ base: '36px', md: '44px' }}
-            height={{ base: '36px', md: '44px' }}
+            width={{ base: "36px", md: "44px" }}
+            height={{ base: "36px", md: "44px" }}
             src={props.avatar}
           />
           <VStack
-            align={'start'}
+            align={"start"}
             justify="center"
-            spacing={{ base: '8px', md: '8px' }}
+            spacing={{ base: "8px", md: "8px" }}
           >
             <Username
               isLoading={false}
@@ -107,7 +107,7 @@ export const ContributorRow: React.FC<Props> = (props) => {
             />
             <Box
               as="p"
-              textStyle={{ base: 'body6', md: 'body5' }}
+              textStyle={{ base: "body6", md: "body5" }}
               color="neutral.7"
             >
               {TruncatedAddr({
@@ -118,20 +118,20 @@ export const ContributorRow: React.FC<Props> = (props) => {
         </HStack>
       </Td>
       <Td p="18px">
-        <HStack gap="8px" align={'center'}>
+        <HStack gap="8px" align={"center"}>
           <Center>
-            {props.token.includes('sol') ? (
-              <SOL size={'28px'} />
+            {props.token.includes("sol") ? (
+              <SOL size={"28px"} />
             ) : (
-              <USDC size={'28px'} />
+              <USDC size={"28px"} />
             )}
           </Center>
-          <VStack justify={'center'} spacing="2px" align={'start'}>
-            <HStack align={'baseline'} color="white">
-              <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
+          <VStack justify={"center"} spacing="2px" align={"start"}>
+            <HStack align={"baseline"} color="white">
+              <Box as="p" textStyle={{ base: "title5", md: "title4" }}>
                 {formatNumberWithK(props.amount)}
               </Box>
-              <Box as="p" textStyle={{ base: 'title6', md: 'title7' }}>
+              <Box as="p" textStyle={{ base: "title6", md: "title7" }}>
                 {props.token.toUpperCase()}
               </Box>
             </HStack>
@@ -139,7 +139,7 @@ export const ContributorRow: React.FC<Props> = (props) => {
             <Box
               as="p"
               color="neutral.8"
-              textStyle={{ base: 'body6', md: 'body5' }}
+              textStyle={{ base: "body6", md: "body5" }}
             >
               ${formatNumberWithK(props.usd)}
             </Box>
@@ -149,7 +149,7 @@ export const ContributorRow: React.FC<Props> = (props) => {
       <Td p="18px">
         <Box
           as="p"
-          textStyle={{ base: 'body5', md: 'body4' }}
+          textStyle={{ base: "body5", md: "body4" }}
           color="neutral.11"
         >
           {timeSince(new Date(props.timestamp))}
@@ -174,8 +174,8 @@ const ProjectContributors = ({
   isHackathon: boolean;
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortField, setSortField] = useState('timestamp');
-  const [sortDirection, setSortDirection] = useState('desc');
+  const [sortField, setSortField] = useState("timestamp");
+  const [sortDirection, setSortDirection] = useState("desc");
 
   const {
     data: contributorsData,
@@ -214,55 +214,62 @@ const ProjectContributors = ({
 
   const handleSortChange = (field: string) => {
     if (field === sortField) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
       setSortField(field);
-      setSortDirection('asc');
+      setSortDirection("asc");
     }
   };
 
   return (
     <VStack
       w="full"
-      align={currentContributors?.length === 0 ? 'center' : { base: 'start', md: 'end' }}
+      align={
+        currentContributors?.length === 0
+          ? "center"
+          : { base: "start", md: "end" }
+      }
     >
       {currentContributors?.length === 0 ? (
         <ContributionsEmptyState />
       ) : (
         <>
           <Table w="full" minW="34rem" overflowX="scroll" variant="unstyled">
-            <Thead color="neutral.8" fontFamily={'Plus Jakarta Sans, sans-serif'}>
+            <Thead
+              color="neutral.8"
+              fontFamily={"Plus Jakarta Sans, sans-serif"}
+            >
               <Tr>
-                <Th w={'40%'} p="0px 18px">
+                <Th w={"40%"} p="0px 18px">
                   <Text
-                    fontSize={{ base: '12px', md: '14px' }}
-                    textTransform={'capitalize'}
+                    fontSize={{ base: "12px", md: "14px" }}
+                    textTransform={"capitalize"}
                     fontWeight="500"
                   >
                     Contributor
                   </Text>
                 </Th>
-                <Th w={'25%'} p="0px 18px">
+                <Th w={"25%"} p="0px 18px">
                   <ButtonGroup
-                    onClick={() => handleSortChange('amount')}
+                    onClick={() => handleSortChange("amount")}
                     variant="unstyled"
                     gap="8px"
                     isAttached
                   >
                     <Button
-                      textAlign={'center'}
-                      alignContent={'center'}
+                      textAlign={"center"}
+                      alignContent={"center"}
                       variant="unstyled"
                       fontWeight="500"
-                      fontSize={{ base: '12px', md: '14px' }}
-                      textTransform={'capitalize'}
+                      fontSize={{ base: "12px", md: "14px" }}
+                      textTransform={"capitalize"}
                     >
                       Amount
                     </Button>
                     <IconButton
                       aria-label="Sort by Amount"
                       icon={
-                        sortField === 'amount' && sortDirection === 'asc' ? (
+                        sortField === "amount" && sortDirection === "asc" ? (
                           <BiChevronUp size={20} />
                         ) : (
                           <BiChevronDown size={20} />
@@ -271,27 +278,27 @@ const ProjectContributors = ({
                     />
                   </ButtonGroup>
                 </Th>
-                <Th w={'25%'} p="0px 18px">
+                <Th w={"25%"} p="0px 18px">
                   <ButtonGroup
-                    onClick={() => handleSortChange('timestamp')}
+                    onClick={() => handleSortChange("timestamp")}
                     variant="unstyled"
                     gap="8px"
                     isAttached
                   >
                     <Button
-                      textAlign={'center'}
-                      alignContent={'center'}
+                      textAlign={"center"}
+                      alignContent={"center"}
                       variant="unstyled"
                       fontWeight="500"
-                      fontSize={{ base: '12px', md: '14px' }}
-                      textTransform={'capitalize'}
+                      fontSize={{ base: "12px", md: "14px" }}
+                      textTransform={"capitalize"}
                     >
                       Time
                     </Button>
                     <IconButton
                       aria-label="Sort by time"
                       icon={
-                        sortField === 'timestamp' && sortDirection === 'asc' ? (
+                        sortField === "timestamp" && sortDirection === "asc" ? (
                           <BiChevronDown size={20} />
                         ) : (
                           <BiChevronUp size={20} />
@@ -300,7 +307,7 @@ const ProjectContributors = ({
                     />
                   </ButtonGroup>
                 </Th>
-                <Th w={'10%'} p="18px"></Th>
+                <Th w={"10%"} p="18px"></Th>
               </Tr>
             </Thead>
             {isLoading || loadingContributors ? (
@@ -310,7 +317,7 @@ const ProjectContributors = ({
                 {currentContributors.length === 0 ? (
                   <></>
                 ) : (
-                  currentContributors.map(contributor => (
+                  currentContributors.map((contributor) => (
                     <ContributorRow
                       key={contributor.id}
                       amount={contributor.total}

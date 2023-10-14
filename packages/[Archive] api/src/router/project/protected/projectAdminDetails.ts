@@ -1,5 +1,5 @@
-import { protectedProcedure } from '../../../trpc';
-import { z } from 'zod';
+import { protectedProcedure } from "../../../trpc";
+import { z } from "zod";
 
 export const projectAdminDetails = protectedProcedure
   .input(

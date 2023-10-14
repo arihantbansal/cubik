@@ -1,5 +1,5 @@
-import { ProjectsModel } from '@cubik/database';
-import { tokenGroup } from './token';
+import { ProjectsModel } from "@cubik/database";
+import { tokenGroup } from "./token";
 
 export interface DonationFormType {
   amount: number;

@@ -1,7 +1,7 @@
-import { Alert, AlertDescription, AlertIcon } from '@chakra-ui/alert';
-import { Button } from '@chakra-ui/button';
-import { Card, CardFooter } from '@chakra-ui/card';
-import { useDisclosure } from '@chakra-ui/hooks';
+import { Alert, AlertDescription, AlertIcon } from "@chakra-ui/alert";
+import { Button } from "@chakra-ui/button";
+import { Card, CardFooter } from "@chakra-ui/card";
+import { useDisclosure } from "@chakra-ui/hooks";
 import {
   Box,
   Center,
@@ -9,7 +9,7 @@ import {
   HStack,
   Link,
   VStack,
-} from '@chakra-ui/layout';
+} from "@chakra-ui/layout";
 import {
   Modal,
   ModalBody,
@@ -17,27 +17,27 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-} from '@chakra-ui/modal';
-import * as anchor from '@coral-xyz/anchor';
-import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useAnchorWallet } from '@solana/wallet-adapter-react';
-import { addDays } from 'date-fns';
-import enGB from 'date-fns/locale/en-GB';
-import { useState } from 'react';
-import { registerLocale } from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { UseFormGetValues, useForm } from 'react-hook-form';
-import { BiChevronLeft } from 'react-icons/bi';
-import * as yup from 'yup';
-import GrantStepOne from '~/components/pages/grants/create-grant/GrantStepOne';
-import GrantStepTwo from '~/components/pages/grants/create-grant/GrantStepTwo';
-import GrantStepZero from '~/components/pages/grants/create-grant/GrantStepZero';
-import { useUserStore } from '~/store/userStore';
-import { connection, createRoundIx } from '~/utils/program/contract';
-import { trpc } from '~/utils/trpc';
+} from "@chakra-ui/modal";
+import * as anchor from "@coral-xyz/anchor";
+import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useAnchorWallet } from "@solana/wallet-adapter-react";
+import { addDays } from "date-fns";
+import enGB from "date-fns/locale/en-GB";
+import { useState } from "react";
+import { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { UseFormGetValues, useForm } from "react-hook-form";
+import { BiChevronLeft } from "react-icons/bi";
+import * as yup from "yup";
+import GrantStepOne from "~/components/pages/grants/create-grant/GrantStepOne";
+import GrantStepTwo from "~/components/pages/grants/create-grant/GrantStepTwo";
+import GrantStepZero from "~/components/pages/grants/create-grant/GrantStepZero";
+import { useUserStore } from "~/store/userStore";
+import { connection, createRoundIx } from "~/utils/program/contract";
+import { trpc } from "~/utils/trpc";
 
-registerLocale('en-gb', enGB);
+registerLocale("en-gb", enGB);
 
 function isValidDate(date: any) {
   return date instanceof Date && !isNaN(date.getTime());
@@ -66,27 +66,27 @@ const CardFooterData = ({ step }: { step: number }) => {
   return (
     <>
       <Box
-        display={step === 0 ? 'block' : 'none'}
-        px={{ base: '24px', md: '32px', lg: '56px' }}
-        pb={{ base: '0px', sm: '12px', md: '24px' }}
-        textStyle={{ base: 'body5', md: 'body3' }}
-        color={'neutral.9'}
+        display={step === 0 ? "block" : "none"}
+        px={{ base: "24px", md: "32px", lg: "56px" }}
+        pb={{ base: "0px", sm: "12px", md: "24px" }}
+        textStyle={{ base: "body5", md: "body3" }}
+        color={"neutral.9"}
       >
-        For more detailed instructions on how to deploy a Grant Round,{' '}
-        <Link style={{ color: '#8FFFF0' }} href="/about/grant">
+        For more detailed instructions on how to deploy a Grant Round,{" "}
+        <Link style={{ color: "#8FFFF0" }} href="/about/grant">
           click here.
         </Link>
       </Box>
       <CardFooter
-        display={step === 0 ? 'block' : 'none'}
-        px={{ base: '24px', md: '32px', lg: '56px' }}
-        py={{ base: '18px', md: '32px' }}
+        display={step === 0 ? "block" : "none"}
+        px={{ base: "24px", md: "32px", lg: "56px" }}
+        py={{ base: "18px", md: "32px" }}
         borderBottomRadius="16px"
-        backgroundColor={'#141414'}
+        backgroundColor={"#141414"}
       >
         <Box
           as="p"
-          textStyle={{ base: 'body5', md: 'body3' }}
+          textStyle={{ base: "body5", md: "body3" }}
           color="neutral.9"
         >
           <b>Note:</b> Multiple grant managers can be added to facilitate round
@@ -108,7 +108,7 @@ const CreateGrantRound = () => {
   const [step, setStep] = useState(0);
   const [editorData, setEditorData] = useState();
   const [success, setSuccess] = useState<boolean>(false);
-  const [grantId, setGrantId] = useState<string>('');
+  const [grantId, setGrantId] = useState<string>("");
   const [transactionError, setTransactionError] = useState<string | null>(null);
   const [signTransactionLoading, setSignTransactionLoading] = useState(false);
 
@@ -120,7 +120,7 @@ const CreateGrantRound = () => {
   });
 
   const schema = yup.object().shape({
-    name: yup.string().required('Name is required for Round'),
+    name: yup.string().required("Name is required for Round"),
     team: yup.array().of(
       yup.object().shape({
         username: yup.string(),
@@ -129,60 +129,60 @@ const CreateGrantRound = () => {
     ),
     registrationStartDate: yup
       .date()
-      .required('Registration Start Date is required')
+      .required("Registration Start Date is required")
       .test(
-        'is-date',
-        'Registration Start Date must be a valid date',
+        "is-date",
+        "Registration Start Date must be a valid date",
         (value) => !!Date.parse(value as any)
       ),
     registrationEndDate: yup
       .date()
-      .required('Registration End Date is required')
+      .required("Registration End Date is required")
       .test(
-        'is-date',
-        'Registration End Date must be a valid date',
+        "is-date",
+        "Registration End Date must be a valid date",
         (value) => !!Date.parse(value as any)
       )
-      .when('registrationStartDate', (registrationStartDate: any, yup: any) =>
+      .when("registrationStartDate", (registrationStartDate: any, yup: any) =>
         yup.test(
-          'is-greater',
-          'Registration End Date should be after Registration Start Date',
+          "is-greater",
+          "Registration End Date should be after Registration Start Date",
           (value: string) =>
             Date.parse(value) > Date.parse(registrationStartDate)
         )
       ),
     startDate: yup
       .date()
-      .required('Round Start Date is required')
-      .min(new Date(), 'Round Start Date cannot be in the past')
-      .when('registrationEndDate', (registrationEndDate: any, yup: any) =>
+      .required("Round Start Date is required")
+      .min(new Date(), "Round Start Date cannot be in the past")
+      .when("registrationEndDate", (registrationEndDate: any, yup: any) =>
         yup.test(
-          'is-greater',
-          'Round Start Date should be after Registration End Date',
+          "is-greater",
+          "Round Start Date should be after Registration End Date",
           (value: string) => Date.parse(value) > Date.parse(registrationEndDate)
         )
       ),
     endDate: yup
       .date()
-      .required('Round End Date is required')
-      .min(new Date(), 'Round End Date cannot be in the past')
+      .required("Round End Date is required")
+      .min(new Date(), "Round End Date cannot be in the past")
       .when(
-        'startDate',
+        "startDate",
         (startDate: any, yup: any) =>
           startDate &&
           yup.test(
-            'is-greater',
-            'Round End Date should be after Round Start Date',
+            "is-greater",
+            "Round End Date should be after Round Start Date",
             (value: string) => Date.parse(value) > Date.parse(startDate)
           )
       ),
     // amount: yup.number().required('Amount is required'),
-    pool: yup.string().required('Matching Pool for Round is Required'),
+    pool: yup.string().required("Matching Pool for Round is Required"),
     projects: yup
       .string()
-      .required('Maximum No of participating projects is required'),
+      .required("Maximum No of participating projects is required"),
     colorScheme: yup.string(),
-    short_description: yup.string().required('Short Description is required'),
+    short_description: yup.string().required("Short Description is required"),
     detailed_description: yup.string(),
     round_managers: yup.array().of(yup.string()),
     requirements: yup.string(),
@@ -248,12 +248,12 @@ const CreateGrantRound = () => {
       const signed = await anchorWallet?.signTransaction(tx);
       const txid = await connection.sendRawTransaction(signed!.serialize());
       if (!txid) {
-        throw new Error('txid is null');
+        throw new Error("txid is null");
       }
       createRoundMutation.mutate({
         matchingPool: parseInt(pool),
         name: name,
-        notionPage: 'https://www.notion.so/round1',
+        notionPage: "https://www.notion.so/round1",
         projectCount: parseInt(project),
         tx: txid,
         colorScheme: colorScheme,
@@ -261,13 +261,13 @@ const CreateGrantRound = () => {
         startTime: start?.toISOString() as string,
         endTime: end?.toISOString() as string,
         description: description,
-        manager: (user?.username as string) ?? '',
-        registrationEndDate: getValues('registrationEndDate'),
-        registrationStartDate: getValues('registrationStartDate'),
+        manager: (user?.username as string) ?? "",
+        registrationEndDate: getValues("registrationEndDate"),
+        registrationStartDate: getValues("registrationStartDate"),
       });
       onClose();
     } catch (error: any) {
-      setTransactionError(error.message || 'Error while signing transaction');
+      setTransactionError(error.message || "Error while signing transaction");
     }
   };
 
@@ -282,15 +282,15 @@ const CreateGrantRound = () => {
     setSignTransactionLoading(true);
     try {
       const formValues = getValues(); // get the form values here
-      const startMoment = new Date(getValues('startDate'));
-      const endMoment = new Date(getValues('endDate'));
+      const startMoment = new Date(getValues("startDate"));
+      const endMoment = new Date(getValues("endDate"));
       createRound(
         anchorWallet,
         formValues.name,
         formValues.pool,
         formValues.projects,
         formValues.colorScheme,
-        (description as string) ?? '',
+        (description as string) ?? "",
         formValues.short_description,
         startMoment,
         endMoment,
@@ -298,7 +298,7 @@ const CreateGrantRound = () => {
         setTransactionError
       );
     } catch (error: any) {
-      setTransactionError(error.message || 'there was an error');
+      setTransactionError(error.message || "there was an error");
     } finally {
       setSignTransactionLoading(false);
     }
@@ -307,12 +307,12 @@ const CreateGrantRound = () => {
     <Container
       transition="all .25s ease"
       maxW="full"
-      px={'16px'}
-      py={{ base: '1.5rem', md: '3rem' }}
+      px={"16px"}
+      py={{ base: "1.5rem", md: "3rem" }}
     >
       <form
         style={{
-          width: '100%',
+          width: "100%",
         }}
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -320,22 +320,22 @@ const CreateGrantRound = () => {
           maxW="7xl"
           align="start"
           mx="auto"
-          w={'full'}
+          w={"full"}
           gap={{
-            base: '12px',
-            lg: '12px',
+            base: "12px",
+            lg: "12px",
           }}
           padding={{
-            base: step === 1 ? '24px' : '0px',
-            md: step === 1 ? '40px' : '0px',
+            base: step === 1 ? "24px" : "0px",
+            md: step === 1 ? "40px" : "0px",
           }}
         >
           <Center
             w="full"
             gap={{
-              base: '12px',
-              md: '18px',
-              lg: '40px',
+              base: "12px",
+              md: "18px",
+              lg: "40px",
             }}
           >
             {step === 0 ? (
@@ -363,59 +363,59 @@ const CreateGrantRound = () => {
           </Center>
           <HStack
             w="full"
-            justify={'space-between'}
+            justify={"space-between"}
             pt={{
-              base: step === 1 ? '24px' : '0px',
-              md: step === 1 ? '24px' : '0px',
+              base: step === 1 ? "24px" : "0px",
+              md: step === 1 ? "24px" : "0px",
             }}
             px={{
-              base: step === 1 ? '0px' : '24px',
-              md: step === 1 ? '0px' : '32px',
-              lg: step === 1 ? '0px' : '54px',
+              base: step === 1 ? "0px" : "24px",
+              md: step === 1 ? "0px" : "32px",
+              lg: step === 1 ? "0px" : "54px",
             }}
             pb={{
-              base: step === 2 ? '12px' : 'auto',
-              md: step === 2 ? '54px' : 'auto',
+              base: step === 2 ? "12px" : "auto",
+              md: step === 2 ? "54px" : "auto",
             }}
           >
             {step > 0 && (
               <Button
                 type="button" // make it explicit this doesn't submit
-                variant={'cubikText'}
+                variant={"cubikText"}
                 leftIcon={
                   <Box
                     as={BiChevronLeft}
-                    boxSize={{ base: '14px', md: '18px' }}
+                    boxSize={{ base: "14px", md: "18px" }}
                   />
                 }
-                size={{ base: 'cubikMini', md: 'cubikSmall' }}
+                size={{ base: "cubikMini", md: "cubikSmall" }}
                 onClick={() => setStep(step - 1)}
               >
                 Back
               </Button>
             )}
             <Button
-              width={{ base: step === 0 ? 'full' : 'auto', md: 'auto' }}
-              type={'button'} // this will trigger form submission only at the last step
+              width={{ base: step === 0 ? "full" : "auto", md: "auto" }}
+              type={"button"} // this will trigger form submission only at the last step
               variant="cubikFilled"
               size={{
-                base: 'cubikMini',
-                md: step === 0 ? 'cubikMedium' : 'cubikSmall',
+                base: "cubikMini",
+                md: step === 0 ? "cubikMedium" : "cubikSmall",
               }}
               onClick={onSubmit} // onClick handler is needed for step 0 and 1
             >
-              {step === 0 ? 'Get Started' : step === 1 ? 'Next Step' : 'Submit'}
+              {step === 0 ? "Get Started" : step === 1 ? "Next Step" : "Submit"}
             </Button>
           </HStack>
           <CardFooterData step={step} />
         </Card>
       </form>
-      <Modal variant={'cubik'} isOpen={isOpen} onClose={onClose}>
+      <Modal variant={"cubik"} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         {success ? (
           <ModalContent>
             <ModalHeader
-              display={'flex'}
+              display={"flex"}
               flexDirection="column"
               gap="24px"
               w="full"
@@ -566,14 +566,14 @@ const CreateGrantRound = () => {
                 </svg>
               </Center>
               <VStack gap="6px">
-                <Box as="p" textStyle={{ base: 'title3', md: 'headline4' }}>
+                <Box as="p" textStyle={{ base: "title3", md: "headline4" }}>
                   Grant Successfully Created
                 </Box>
                 <Box
                   maxW="22rem"
-                  textAlign={'center'}
+                  textAlign={"center"}
                   as="p"
-                  textStyle={'body3'}
+                  textStyle={"body3"}
                   color="neutral.8"
                 >
                   Your Grant is Live now and you can start accepting
@@ -585,7 +585,7 @@ const CreateGrantRound = () => {
                 href={`/grant/${grantId}`}
                 mx="auto"
                 variant="cubikFilled"
-                size={{ based: 'cubikMini', md: 'cubikSmall' }}
+                size={{ based: "cubikMini", md: "cubikSmall" }}
                 w="12rem"
               >
                 View Grant
@@ -599,7 +599,7 @@ const CreateGrantRound = () => {
                 <HStack>
                   <Box
                     as="p"
-                    textStyle={{ base: 'title3', md: 'title2' }}
+                    textStyle={{ base: "title3", md: "title2" }}
                     color="neutral.11"
                   >
                     Sign Transaction
@@ -607,10 +607,10 @@ const CreateGrantRound = () => {
                 </HStack>
               </ModalHeader>
               <ModalBody>
-                <VStack pt="12px" align={'start'} gap="16px">
+                <VStack pt="12px" align={"start"} gap="16px">
                   <Box
                     as="p"
-                    textStyle={{ base: 'body5', md: 'body4' }}
+                    textStyle={{ base: "body5", md: "body4" }}
                     color="neutral.9"
                   >
                     Signing a transaction will create the Grants round and you
@@ -620,8 +620,8 @@ const CreateGrantRound = () => {
                     <Alert status="error" variant="cubik">
                       <AlertIcon />
                       <AlertDescription
-                        fontSize={{ base: '10px', md: '11px', xl: '12px' }}
-                        lineHeight={{ base: '14px', md: '14px', xl: '16px' }}
+                        fontSize={{ base: "10px", md: "11px", xl: "12px" }}
+                        lineHeight={{ base: "14px", md: "14px", xl: "16px" }}
                       >
                         {transactionError}
                       </AlertDescription>

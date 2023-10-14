@@ -1,6 +1,6 @@
-import { ProjectVerifyStatus } from '@cubik/database';
-import { z } from 'zod';
-import { publicProcedure } from '../../../trpc';
+import { ProjectVerifyStatus } from "@cubik/database";
+import { z } from "zod";
+import { publicProcedure } from "../../../trpc";
 export const searchProjects = publicProcedure
   .input(
     z.object({

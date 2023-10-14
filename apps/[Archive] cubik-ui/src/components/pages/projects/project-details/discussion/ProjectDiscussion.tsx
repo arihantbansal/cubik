@@ -1,6 +1,6 @@
-import { Avatar } from '@chakra-ui/avatar';
-import { Button } from '@chakra-ui/button';
-import { HStack, Box, Text, VStack } from '@chakra-ui/layout';
+import { Avatar } from "@chakra-ui/avatar";
+import { Button } from "@chakra-ui/button";
+import { HStack, Box, Text, VStack } from "@chakra-ui/layout";
 import {
   Center,
   FormControl,
@@ -14,34 +14,34 @@ import {
   SkeletonText,
   Spinner,
   Tag,
-} from '@chakra-ui/react';
-import { Textarea } from '@chakra-ui/textarea';
-import { Comments } from '@cubik/database';
-import { useWallet } from '@solana/wallet-adapter-react';
-import { useWalletModal } from '@solana/wallet-adapter-react-ui';
-import { register } from 'mixpanel-browser';
-import Link from 'next/link';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { BiChevronDown } from 'react-icons/bi';
-import { v4 as uuid } from 'uuid';
-import { NoComments } from '~/components/common/empty-state/NoInformation';
-import ComponentErrors from '~/components/errors/ComponentErrors';
-import { useUserStore } from '~/store/userStore';
-import { getCommentType } from '~/types/comments';
-import { trpc } from '~/utils/trpc';
+} from "@chakra-ui/react";
+import { Textarea } from "@chakra-ui/textarea";
+import { Comments } from "@cubik/database";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { register } from "mixpanel-browser";
+import Link from "next/link";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { BiChevronDown } from "react-icons/bi";
+import { v4 as uuid } from "uuid";
+import { NoComments } from "~/components/common/empty-state/NoInformation";
+import ComponentErrors from "~/components/errors/ComponentErrors";
+import { useUserStore } from "~/store/userStore";
+import { getCommentType } from "~/types/comments";
+import { trpc } from "~/utils/trpc";
 
 const HighlightedCommentBox = ({ text }: { text: string }) => {
-  const hasSpecialChar = text && (text.includes('@') || text.includes('#'));
+  const hasSpecialChar = text && (text.includes("@") || text.includes("#"));
 
   // Split text into words
-  const words = text.split(' ');
+  const words = text.split(" ");
 
   return (
-    <Box as="p" textStyle={{ base: 'body4', md: 'body3' }} color="neutral.8">
+    <Box as="p" textStyle={{ base: "body4", md: "body3" }} color="neutral.8">
       {words.map((word, index) => {
         // Check if the word starts with '@'
-        if (word.startsWith('@')) {
+        if (word.startsWith("@")) {
           // Remove '@' and use the rest as the username
           const username = word.slice(1);
 
@@ -52,21 +52,21 @@ const HighlightedCommentBox = ({ text }: { text: string }) => {
                 as={Link}
                 href={`/profile/${username}`}
                 color="surface.yellow.1"
-                backgroundColor={'surface.yellow.3'}
+                backgroundColor={"surface.yellow.3"}
                 rounded="full"
                 px="8px"
                 pb="4px"
-                transform={'translateY(-2px)'}
+                transform={"translateY(-2px)"}
               >
                 {word}
-              </Box>{' '}
+              </Box>{" "}
             </Box>
           );
         }
         // If it's not a mention, return the word as is
         return (
           <Box as="span" key={index}>
-            {word}{' '}
+            {word}{" "}
           </Box>
         );
       })}
@@ -89,33 +89,33 @@ const CommentComponent = ({
       rounded="8px"
       w="full"
       key={el.id}
-      align={'start'}
-      spacing={{ base: '12px', md: '16px' }}
+      align={"start"}
+      spacing={{ base: "12px", md: "16px" }}
     >
       <Avatar
         as={Link}
         href={`/profile/${el?.user?.username}`}
         mt="4px"
-        size={{ base: 'sm', md: 'md' }}
+        size={{ base: "sm", md: "md" }}
         src={el.user?.profilePicture}
       />
-      <VStack align={'start'} spacing={{ base: '4px', md: '8px' }}>
+      <VStack align={"start"} spacing={{ base: "4px", md: "8px" }}>
         <HStack>
           <Box
             as="p"
-            textStyle={{ base: 'title5', md: 'title4' }}
+            textStyle={{ base: "title5", md: "title4" }}
             color="neutral.11"
           >
             @{el?.user.username}
           </Box>
           {el?.user.username === ownerName && (
             <Tag
-              size={{ base: 'sm', md: 'sm' }}
+              size={{ base: "sm", md: "sm" }}
               px="16px"
               py="6px"
-              fontWeight={'700'}
-              color={'surface.green.2'}
-              background={'surface.green.3'}
+              fontWeight={"700"}
+              color={"surface.green.2"}
+              background={"surface.green.3"}
               rounded="full"
             >
               Owner
@@ -123,12 +123,12 @@ const CommentComponent = ({
           )}
           <Box
             as="p"
-            textStyle={{ base: 'body5', md: 'body4' }}
+            textStyle={{ base: "body5", md: "body4" }}
             color="neutral.7"
           >
-            {date.toLocaleTimeString('en-US', {
-              hour: '2-digit',
-              minute: '2-digit',
+            {date.toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
             })}
           </Box>
         </HStack>
@@ -206,9 +206,9 @@ export const ProjectDiscussion = ({
     return (
       <Center
         w="full"
-        py={{ base: '16px', sm: '24px' }}
+        py={{ base: "16px", sm: "24px" }}
         border="1px dashed"
-        borderColor={'#1D1F1E'}
+        borderColor={"#1D1F1E"}
         rounded="12px"
       >
         <ComponentErrors />
@@ -217,18 +217,18 @@ export const ProjectDiscussion = ({
   }
 
   return (
-    <VStack gap={{ base: '12px', md: '24px' }} w="full" align="start">
+    <VStack gap={{ base: "12px", md: "24px" }} w="full" align="start">
       <form
         // @ts-ignore
         onSubmit={handleSubmit(onSubmit)}
-        style={{ width: '100%' }}
+        style={{ width: "100%" }}
       >
-        <HStack w={'full'} gap="8px" align="top">
+        <HStack w={"full"} gap="8px" align="top">
           {user && (
             <Avatar
               //  borderRadius={{ base: '4px', md: '8px' }}
-              width={{ base: '38px', md: '40px' }}
-              height={{ base: '38px', md: '40px' }}
+              width={{ base: "38px", md: "40px" }}
+              height={{ base: "38px", md: "40px" }}
               src={user?.profilePicture}
             />
           )}
@@ -243,50 +243,50 @@ export const ProjectDiscussion = ({
                   id="comment"
                   placeholder="write a comment"
                   color={
-                    watch('comment')?.length > 200
-                      ? 'surface.red.2'
-                      : 'neutral.9'
+                    watch("comment")?.length > 200
+                      ? "surface.red.2"
+                      : "neutral.9"
                   }
                   _hover={{
                     color:
-                      watch('comment')?.length > 200
-                        ? 'surface.red.2'
-                        : 'neutral.9',
+                      watch("comment")?.length > 200
+                        ? "surface.red.2"
+                        : "neutral.9",
                   }}
                   type="text"
-                  {...register('comment', {
-                    required: 'This is required',
+                  {...register("comment", {
+                    required: "This is required",
                     minLength: {
                       value: 1,
-                      message: 'Minimum length should be 1',
+                      message: "Minimum length should be 1",
                     },
                     maxLength: {
                       value: 320,
-                      message: 'Maximum length should be 320',
+                      message: "Maximum length should be 320",
                     },
                   })}
-                />{' '}
+                />{" "}
                 <InputRightAddon>
-                  <Center minW={'3rem'}>
+                  <Center minW={"3rem"}>
                     <Box
                       as="p"
-                      fontSize={{ base: '10px', md: '12px' }}
+                      fontSize={{ base: "10px", md: "12px" }}
                       color={
-                        watch('comment')?.length > 320
-                          ? 'surface.red.2'
-                          : watch('comment')?.length > 0
-                          ? 'surface.green.2'
-                          : 'neutral.7'
+                        watch("comment")?.length > 320
+                          ? "surface.red.2"
+                          : watch("comment")?.length > 0
+                          ? "surface.green.2"
+                          : "neutral.7"
                       }
-                      fontWeight={'600'}
+                      fontWeight={"600"}
                     >
-                      {watch('comment')
-                        ? watch('comment').length + '/320'
-                        : '0/320'}
+                      {watch("comment")
+                        ? watch("comment").length + "/320"
+                        : "0/320"}
                     </Box>
                   </Center>
                 </InputRightAddon>
-              </InputGroup>{' '}
+              </InputGroup>{" "}
             </Skeleton>
 
             {errors && (
@@ -294,7 +294,7 @@ export const ProjectDiscussion = ({
                 <>{errors?.comment && errors?.comment.message}</>
               </FormErrorMessage>
             )}
-          </FormControl>{' '}
+          </FormControl>{" "}
           <Skeleton
             isLoaded={!commentsIsLoading}
             opacity={commentsIsLoading ? 0.15 : 1}
@@ -304,17 +304,17 @@ export const ProjectDiscussion = ({
             <Button
               w="6rem"
               h="2.55rem"
-              variant={'cubikFilled'}
-              size={'cubikMini'}
+              variant={"cubikFilled"}
+              size={"cubikMini"}
               isLoading={isSubmitting}
               type="submit"
             >
               Post
             </Button>
           </Skeleton>
-        </HStack>{' '}
+        </HStack>{" "}
       </form>
-      <VStack gap="8px" align={'start'} w={'full'}>
+      <VStack gap="8px" align={"start"} w={"full"}>
         {comments ? (
           comments?.map((el) => {
             return (
@@ -325,16 +325,16 @@ export const ProjectDiscussion = ({
           <>
             <HStack
               w="full"
-              align={'start'}
-              spacing={{ base: '12px', md: '16px' }}
+              align={"start"}
+              spacing={{ base: "12px", md: "16px" }}
             >
               <SkeletonCircle
                 opacity={0.5}
-                borderRadius={{ base: '4px', md: '8px' }}
-                width={{ base: '2rem', md: '3.5rem' }}
-                height={{ base: '2rem', md: '3.5rem' }}
+                borderRadius={{ base: "4px", md: "8px" }}
+                width={{ base: "2rem", md: "3.5rem" }}
+                height={{ base: "2rem", md: "3.5rem" }}
               />
-              <VStack align={'start'} w="full" spacing="1rem">
+              <VStack align={"start"} w="full" spacing="1rem">
                 <HStack>
                   <Skeleton w="8rem" h="1rem" opacity={0.4} />
                   <Skeleton w="4rem" h="1rem" opacity={0.2} />
@@ -350,16 +350,16 @@ export const ProjectDiscussion = ({
             </HStack>
             <HStack
               w="full"
-              align={'start'}
-              spacing={{ base: '12px', md: '16px' }}
+              align={"start"}
+              spacing={{ base: "12px", md: "16px" }}
             >
               <SkeletonCircle
                 opacity={0.5}
-                borderRadius={{ base: '4px', md: '8px' }}
-                width={{ base: '2rem', md: '3.5rem' }}
-                height={{ base: '2rem', md: '3.5rem' }}
+                borderRadius={{ base: "4px", md: "8px" }}
+                width={{ base: "2rem", md: "3.5rem" }}
+                height={{ base: "2rem", md: "3.5rem" }}
               />
-              <VStack align={'start'} w="full" spacing="1rem">
+              <VStack align={"start"} w="full" spacing="1rem">
                 <HStack>
                   <Skeleton w="8rem" h="1rem" opacity={0.4} />
                   <Skeleton w="4rem" h="1rem" opacity={0.2} />
@@ -391,14 +391,14 @@ export const ProjectDiscussion = ({
           >
             <Button
               variant="cubikOutlined"
-              size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+              size={{ base: "cubikSmall", md: "cubikMedium" }}
               //px="0 !important"
               //py="0 !important"
               _hover={{
-                bg: 'transparent',
+                bg: "transparent",
               }}
               rightIcon={
-                <Box as={BiChevronDown} boxSize={{ base: '2px', md: '22px' }} />
+                <Box as={BiChevronDown} boxSize={{ base: "2px", md: "22px" }} />
               }
               onClick={() => {
                 loadMoreCommentsMutation.mutate({

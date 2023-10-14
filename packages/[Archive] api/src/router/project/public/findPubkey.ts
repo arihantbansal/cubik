@@ -1,6 +1,6 @@
-import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
-import { publicProcedure } from '../../../trpc';
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+import { publicProcedure } from "../../../trpc";
 
 export const findPubkey = publicProcedure
   .input(
@@ -11,8 +11,8 @@ export const findPubkey = publicProcedure
   .query(async ({ input, ctx: { prisma } }) => {
     if (!input.publickey) {
       return new TRPCError({
-        message: 'Publickey does not exist',
-        code: 'BAD_REQUEST',
+        message: "Publickey does not exist",
+        code: "BAD_REQUEST",
       });
     }
     const res = await prisma.projectsModel.findMany({

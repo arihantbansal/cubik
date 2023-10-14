@@ -18,19 +18,19 @@ import {
   Stack,
   Text,
   VStack,
-} from '@chakra-ui/react';
-import { ProjectsModel } from '@cubik/database';
-import { memo, useCallback, useEffect, useState } from 'react';
-import { useForm, UseFormRegister, UseFormSetValue } from 'react-hook-form';
-import { AiOutlineDelete } from 'react-icons/ai';
-import { TiFlash } from 'react-icons/ti';
-import { ActionMeta } from 'react-select';
-import EmptyStateHOC from '~/components/HOC/EmptyState';
-import { ListDonationFormType } from '~/interfaces/donationForm';
-import { tokenGroup } from '~/interfaces/token';
-import useListStore from '~/store/listStore';
-import { ControlledSelect } from '../../common/select/ControlledSelect';
-import { tokens } from '../../common/tokens/DonationTokens';
+} from "@chakra-ui/react";
+import { ProjectsModel } from "@cubik/database";
+import { memo, useCallback, useEffect, useState } from "react";
+import { useForm, UseFormRegister, UseFormSetValue } from "react-hook-form";
+import { AiOutlineDelete } from "react-icons/ai";
+import { TiFlash } from "react-icons/ti";
+import { ActionMeta } from "react-select";
+import EmptyStateHOC from "~/components/HOC/EmptyState";
+import { ListDonationFormType } from "~/interfaces/donationForm";
+import { tokenGroup } from "~/interfaces/token";
+import useListStore from "~/store/listStore";
+import { ControlledSelect } from "../../common/select/ControlledSelect";
+import { tokens } from "../../common/tokens/DonationTokens";
 
 export const token: tokenGroup[] = tokens;
 
@@ -47,18 +47,18 @@ const ProjectListCard: React.FC<ProjectListCardProps> = memo(
     const removeProject = useListStore((state) => state.removeProject);
     return (
       <Box w="full" p="0" key={project.id}>
-        <HStack justify={'space-between'} w="full">
-          <HStack justifyItems={'start'} align="center" w="full">
+        <HStack justify={"space-between"} w="full">
+          <HStack justifyItems={"start"} align="center" w="full">
             <Avatar
               src={project.logo}
-              backgroundColor={'neutral.7'}
+              backgroundColor={"neutral.7"}
               name="anchor"
-              borderRadius={'8px'}
+              borderRadius={"8px"}
               size="sm"
             />
             <Box>{project.name}</Box>
           </HStack>
-          <Stack direction={'row'} alignItems={'end'} alignSelf={'end'}>
+          <Stack direction={"row"} alignItems={"end"} alignSelf={"end"}>
             <NumberInput
               id={`number-input-${project.id}`}
               variant="cubik"
@@ -90,14 +90,14 @@ const ProjectListCard: React.FC<ProjectListCardProps> = memo(
               />
 
               <NumberInputStepper>
-                <NumberIncrementStepper fontSize={'12px'} width={'22'} />
-                <NumberDecrementStepper fontSize={'12px'} width={'22'} />
+                <NumberIncrementStepper fontSize={"12px"} width={"22"} />
+                <NumberDecrementStepper fontSize={"12px"} width={"22"} />
               </NumberInputStepper>
             </NumberInput>
             <IconButton
-              display={'flex'}
-              alignContent={'center'}
-              variant={'unstyled'}
+              display={"flex"}
+              alignContent={"center"}
+              variant={"unstyled"}
               p="0"
               w="2rem"
               h="2rem"
@@ -114,14 +114,14 @@ const ProjectListCard: React.FC<ProjectListCardProps> = memo(
   }
 );
 
-ProjectListCard.displayName = 'ProjectListCard';
+ProjectListCard.displayName = "ProjectListCard";
 
 const IconButtonBadge = () => {
   const count = useListStore((state) => state.count());
   const projectList = useListStore((state) => state.projectList);
   const [listItemsCount, setListItemsCount] = useState(count);
   const [totalDonation, setTotalDonation] = useState(0);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const [inputAmountValue, setInputAmountValue] = useState<
     number | undefined
@@ -178,10 +178,10 @@ const IconButtonBadge = () => {
 
       setDonationData(newDonationData);
       setTotalDonation(newTotalDonation);
-      setMessage(''); // Clear the message
+      setMessage(""); // Clear the message
     } else {
       setMessage(
-        'Please enter an amount and select a token before applying to all projects.'
+        "Please enter an amount and select a token before applying to all projects."
       );
     }
   }, [inputAmountValue, selectedToken, setValue, projectList]);
@@ -208,56 +208,56 @@ const IconButtonBadge = () => {
   return (
     <>
       <Menu closeOnSelect={false} closeOnBlur={true}>
-        <HStack gap={{ base: '2px', md: '16px' }}>
+        <HStack gap={{ base: "2px", md: "16px" }}>
           <MenuButton
-            color={'#A8F0E6'}
+            color={"#A8F0E6"}
             border="1px solid"
-            borderColor={{ base: 'transparent', md: '#A8F0E6' }}
+            borderColor={{ base: "transparent", md: "#A8F0E6" }}
             rounded="8px"
             borderRadius="8px"
-            background={'transparent'}
+            background={"transparent"}
             aria-label="list"
-            p={{ base: '6px', md: '6px' }}
-            fontSize={{ base: '18px', md: '22px' }}
+            p={{ base: "6px", md: "6px" }}
+            fontSize={{ base: "18px", md: "22px" }}
           >
             <TiFlash />
           </MenuButton>
           {listItemsCount > 0 && (
             <Badge
-              position={'absolute'}
+              position={"absolute"}
               transform={{
-                base: 'translate(14px, -8px)',
-                md: 'translate(18px, -18px)',
+                base: "translate(14px, -8px)",
+                md: "translate(18px, -18px)",
               }}
               rounded="full"
-              backgroundColor={'#FFE53D'}
-              minW={{ base: '1rem', md: '1.2rem' }}
-              minH={{ base: '1rem', md: '1.2rem' }}
-              display={'flex'}
+              backgroundColor={"#FFE53D"}
+              minW={{ base: "1rem", md: "1.2rem" }}
+              minH={{ base: "1rem", md: "1.2rem" }}
+              display={"flex"}
               alignItems="center"
-              justifyContent={'center'}
+              justifyContent={"center"}
               colorScheme="green"
             >
-              <Text fontSize={{ base: '8px', md: '10px' }}>
+              <Text fontSize={{ base: "8px", md: "10px" }}>
                 {listItemsCount}
               </Text>
             </Badge>
           )}
         </HStack>
         <MenuList
-          outline={'none'}
+          outline={"none"}
           border="none"
           height="80vh"
-          maxH={'70rem'}
+          maxH={"70rem"}
           w="380px"
           gap="24px"
-          display={'flex'}
+          display={"flex"}
           flexDir="column"
-          alignItems={'start'}
+          alignItems={"start"}
           padding="24px"
           backgroundImage="linear-gradient(322.35deg, #000000 0%, #0F0F0F 100%)"
         >
-          <VStack align={'start'}>
+          <VStack align={"start"}>
             <Box as="p" textStyle="title2" color="neutral.11">
               Review and Donate
             </Box>
@@ -265,23 +265,23 @@ const IconButtonBadge = () => {
               Please review your donations thoroughly before proceeding to pay.
             </Box>
           </VStack>
-          <Box w="full" h="1px" background={'#272929'} />
+          <Box w="full" h="1px" background={"#272929"} />
 
           <form
             onSubmit={handleSubmit(onSubmit)}
             style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'start',
-              gap: '24px',
-              height: '100%',
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "start",
+              gap: "24px",
+              height: "100%",
             }}
           >
             <Box p="0">
               {projectList.length > 0 && (
                 <VStack w="full" gap="12px">
-                  <HStack justify={'space-between'} w="full" gap="12px">
+                  <HStack justify={"space-between"} w="full" gap="12px">
                     <Input
                       placeholder="Enter Amount"
                       type="number"
@@ -296,7 +296,7 @@ const IconButtonBadge = () => {
                       name="token"
                       id="token"
                       options={token}
-                      label={'Token'}
+                      label={"Token"}
                       onChange={(
                         newValue: unknown,
                         actionMeta: ActionMeta<unknown>
@@ -306,7 +306,7 @@ const IconButtonBadge = () => {
                     />
                   </HStack>
                   <Button
-                    variant={'connect_wallet'}
+                    variant={"connect_wallet"}
                     w="full"
                     onClick={applyAmountToAll}
                   >
@@ -320,14 +320,14 @@ const IconButtonBadge = () => {
                 </VStack>
               )}
             </Box>
-            <Box w="full" h="1px" background={'#272929'} />
-            <VStack w="full" alignItems={'start'} h="100%" gap="24px">
+            <Box w="full" h="1px" background={"#272929"} />
+            <VStack w="full" alignItems={"start"} h="100%" gap="24px">
               {projectList.length < 1 ? (
                 <Center w="full" minH="18vh" rounded="12px">
                   <EmptyStateHOC
-                    heading={'List is Empty'}
+                    heading={"List is Empty"}
                     subHeading={
-                      'Looks like you have not added any projects to your list'
+                      "Looks like you have not added any projects to your list"
                     }
                   />
                 </Center>
@@ -352,9 +352,9 @@ const IconButtonBadge = () => {
               mt="auto"
               textStyle="body3"
               color="neutral.11"
-              backgroundColor={'transparent'}
+              backgroundColor={"transparent"}
             >
-              <VStack justify={'bottom'} w="full">
+              <VStack justify={"bottom"} w="full">
                 <Button
                   onClick={handleSubmit(onSubmit)}
                   variant="cubikFilled"

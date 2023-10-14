@@ -12,7 +12,6 @@ export const verifyMessage = (
     return false;
   }
 
-
   const result = nacl.sign.detached.verify(
     message,
     utils.bytes.bs58.decode(signature),

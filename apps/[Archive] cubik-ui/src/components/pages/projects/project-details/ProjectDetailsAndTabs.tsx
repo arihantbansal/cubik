@@ -1,6 +1,6 @@
-import { Avatar } from '@chakra-ui/avatar';
-import { useDisclosure } from '@chakra-ui/hooks';
-import { Box, Container, HStack, VStack } from '@chakra-ui/layout';
+import { Avatar } from "@chakra-ui/avatar";
+import { useDisclosure } from "@chakra-ui/hooks";
+import { Box, Container, HStack, VStack } from "@chakra-ui/layout";
 import {
   Drawer,
   DrawerBody,
@@ -8,26 +8,26 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-} from '@chakra-ui/modal';
+} from "@chakra-ui/modal";
 import {
   Contribution,
   ProjectsModel,
   Round,
   Team,
   UserModel,
-} from '@cubik/database';
-import { useState } from 'react';
-import { WalletAddress } from '~/components/common/wallet/WalletAdd';
-import ProjectDetailsHeader from './ProjectDetailsHeader';
-import { ProjectsTabs } from './ProjectTabs';
-import { ProjectCTAsMobile } from './project-interactions/ProjectCTAs';
+} from "@cubik/database";
+import { useState } from "react";
+import { WalletAddress } from "~/components/common/wallet/WalletAdd";
+import ProjectDetailsHeader from "./ProjectDetailsHeader";
+import { ProjectsTabs } from "./ProjectTabs";
+import { ProjectCTAsMobile } from "./project-interactions/ProjectCTAs";
 import {
   ProjectFundingData,
   ProjectOwner,
   ProjectSocials,
-} from './project-interactions/ProjectInteractions';
-import { ProjectDonationSimulator } from './project-interactions/project-donation-simulator/ProjectDonationSimulator';
-import { HackathonSchedule } from '@cubik/common-types';
+} from "./project-interactions/ProjectInteractions";
+import { ProjectDonationSimulator } from "./project-interactions/project-donation-simulator/ProjectDonationSimulator";
+import { HackathonSchedule } from "@cubik/common-types";
 
 type MobileDrawerTypes = {
   logo: string;
@@ -55,18 +55,23 @@ const MobileDrawer = ({
   name,
 }: MobileDrawerTypes) => {
   return (
-    <Drawer isOpen={isOpen} placement="bottom" onClose={onClose} variant="cubik">
+    <Drawer
+      isOpen={isOpen}
+      placement="bottom"
+      onClose={onClose}
+      variant="cubik"
+    >
       <DrawerOverlay />
-      <DrawerContent w={{ base: '26rem', md: '30rem' }} mx="auto" pt="0">
+      <DrawerContent w={{ base: "26rem", md: "30rem" }} mx="auto" pt="0">
         <DrawerCloseButton top="28px" backgroundColor="none" />
-        <DrawerHeader p="16px" roundedTop={'16px'} backgroundColor="black">
+        <DrawerHeader p="16px" roundedTop={"16px"} backgroundColor="black">
           <HStack>
             <Avatar src={logo} size="md" />
-            <VStack gap="0" align={'start'}>
-              <Box as="p" textStyle={'title3'} lineHeight="16px">
+            <VStack gap="0" align={"start"}>
+              <Box as="p" textStyle={"title3"} lineHeight="16px">
                 {projectName}
               </Box>
-              <WalletAddress walletAddress={walletAddress} size={'sm'} />
+              <WalletAddress walletAddress={walletAddress} size={"sm"} />
             </VStack>
           </HStack>
         </DrawerHeader>
@@ -130,7 +135,7 @@ const MobileOnlyViews = ({
 
   return (
     <>
-      <VStack gap="32px" w="full" display={{ base: 'flex', lg: 'none' }}>
+      <VStack gap="32px" w="full" display={{ base: "flex", lg: "none" }}>
         {hackathonId && (
           <ProjectCTAsMobile
             onOpen={onOpen}
@@ -172,7 +177,7 @@ const MobileOnlyViews = ({
         isOpen={isOpen}
         onClose={onClose}
         projectJoinRoundId={roundId as string}
-        roundId={roundId || ''}
+        roundId={roundId || ""}
         setDonationSuccessful={setDonationSuccessful}
       />
     </>
@@ -216,14 +221,14 @@ export const ProjectDetailsAndTabs = ({
 }) => {
   return (
     <Container
-      display={'flex'}
+      display={"flex"}
       w="full"
       maxW="50rem"
       flex="3"
       flexDir="column"
-      alignItems={{ base: 'end', lg: 'center' }}
+      alignItems={{ base: "end", lg: "center" }}
       justifyContent="start"
-      gap={{ base: '32px', lg: '64px' }}
+      gap={{ base: "32px", lg: "64px" }}
       p="0"
     >
       <ProjectDetailsHeader
@@ -265,7 +270,7 @@ export const ProjectDetailsAndTabs = ({
       )}
       <ProjectsTabs
         ownerName={projectDetails?.owner?.username as string}
-        roundId={roundId || ''}
+        roundId={roundId || ""}
         projectDetails={projectDetails}
         isLoading={isLoading}
       />

@@ -1,9 +1,9 @@
-import { Box, Center, HStack, Skeleton } from '@chakra-ui/react';
-import { Player } from '@lottiefiles/react-lottie-player';
-import Link from 'next/link';
-import { CgShapeHexagon } from 'react-icons/cg';
-import { CountdownTimer } from '~/components/pages/projects/project-explorer/header/FundingRoundBanner';
-import moment from 'moment';
+import { Box, Center, HStack, Skeleton } from "@chakra-ui/react";
+import { Player } from "@lottiefiles/react-lottie-player";
+import Link from "next/link";
+import { CgShapeHexagon } from "react-icons/cg";
+import { CountdownTimer } from "~/components/pages/projects/project-explorer/header/FundingRoundBanner";
+import moment from "moment";
 
 export const RoundEndedBanner = ({
   endDate,
@@ -15,7 +15,12 @@ export const RoundEndedBanner = ({
   isLoading: boolean;
 }) => {
   return (
-    <Skeleton opacity={isLoading ? '0.5' : 1} fadeDuration={2} isLoaded={!isLoading} w="full">
+    <Skeleton
+      opacity={isLoading ? "0.5" : 1}
+      fadeDuration={2}
+      isLoaded={!isLoading}
+      w="full"
+    >
       <HStack p="16px" rounded="12px" gap="12px" bg="#33000260">
         <Center p="8px" bg="#330002" rounded="full">
           <Center>
@@ -34,14 +39,14 @@ export const RoundEndedBanner = ({
               />
             </svg>
           </Center>
-        </Center>{' '}
-        <Box as={'p'} textStyle={'body5'} color="white" textAlign={'start'}>
-          Current {isHackathon ? 'hackathon' : 'Round'} has ended! Stay tuned till the next{' '}
-          {isHackathon ? 'hackathon' : 'Round'} starts.{' '}
+        </Center>{" "}
+        <Box as={"p"} textStyle={"body5"} color="white" textAlign={"start"}>
+          Current {isHackathon ? "hackathon" : "Round"} has ended! Stay tuned
+          till the next {isHackathon ? "hackathon" : "Round"} starts.{" "}
           <Link
             href="https://twitter.com/_cubik"
             target="_blank"
-            style={{ textDecoration: 'underline' }}
+            style={{ textDecoration: "underline" }}
           >
             Learn more
           </Link>
@@ -60,17 +65,23 @@ export const ProofsValidation = ({
   isHackathon?: boolean;
 }) => {
   return (
-    <Skeleton opacity={isLoading ? '0.5' : 1} fadeDuration={2} isLoaded={!isLoading} w="full">
+    <Skeleton
+      opacity={isLoading ? "0.5" : 1}
+      fadeDuration={2}
+      isLoaded={!isLoading}
+      w="full"
+    >
       <HStack p="16px" rounded="12px" gap="12px" bg="#2D2A14">
         <Center p="8px" bg="#FFD83D20" rounded="full">
           <Center>
-            <Box as={CgShapeHexagon} boxSize={'20px'} color="#FFD83D" />
+            <Box as={CgShapeHexagon} boxSize={"20px"} color="#FFD83D" />
           </Center>
-        </Center>{' '}
-        <Box as={'p'} textStyle={'body5'} color="#FEF08A" textAlign={'start'}>
-          At least two proofs are need to contribute to a project in this hackathon
+        </Center>{" "}
+        <Box as={"p"} textStyle={"body5"} color="#FEF08A" textAlign={"start"}>
+          At least two proofs are need to contribute to a project in this
+          hackathon
           <Link href={`/${username}`}>
-            <Box style={{ textDecoration: 'underline' }}>collect Proofs</Box>
+            <Box style={{ textDecoration: "underline" }}>collect Proofs</Box>
           </Link>
         </Box>
       </HStack>
@@ -87,21 +98,27 @@ export const RoundStartingSoon = ({
   isHackathon?: boolean;
 }) => {
   return (
-    <Skeleton opacity={isLoading ? '0.5' : 1} fadeDuration={2} isLoaded={!isLoading} w="full">
+    <Skeleton
+      opacity={isLoading ? "0.5" : 1}
+      fadeDuration={2}
+      isLoaded={!isLoading}
+      w="full"
+    >
       <HStack p="16px" rounded="12px" gap="12px" bg="#31F57910">
         <Center p="8px" bg="#071A0F" rounded="full">
           <Player
             autoplay
             loop={true}
-            src={'https://assets7.lottiefiles.com/packages/lf20_4htoEB.json'}
+            src={"https://assets7.lottiefiles.com/packages/lf20_4htoEB.json"}
             style={{ height: `24px`, width: `24px` }}
           />
         </Center>
-        <Box as={'p'} textStyle={'body5'} color="white" textAlign={'start'}>
-          You can donate to the project once {isHackathon ? 'voting' : 'grant round'} starts -{' '}
-          <Box as="span" display={'inline-block'}>
+        <Box as={"p"} textStyle={"body5"} color="white" textAlign={"start"}>
+          You can donate to the project once{" "}
+          {isHackathon ? "voting" : "grant round"} starts -{" "}
+          <Box as="span" display={"inline-block"}>
             {CountdownTimer({ date: new Date(startDate) })}
-          </Box>{' '}
+          </Box>{" "}
           to go
         </Box>
       </HStack>
@@ -118,21 +135,26 @@ export const HackathonEndSoon = ({
   isHackathon?: boolean;
 }) => {
   return (
-    <Skeleton opacity={isLoading ? '0.5' : 1} fadeDuration={2} isLoaded={!isLoading} w="full">
+    <Skeleton
+      opacity={isLoading ? "0.5" : 1}
+      fadeDuration={2}
+      isLoaded={!isLoading}
+      w="full"
+    >
       <HStack p="16px" rounded="12px" gap="12px" bg="#31F57910">
         <Center p="8px" bg="#071A0F" rounded="full">
           <Player
             autoplay
             loop={true}
-            src={'https://assets7.lottiefiles.com/packages/lf20_4htoEB.json'}
+            src={"https://assets7.lottiefiles.com/packages/lf20_4htoEB.json"}
             style={{ height: `24px`, width: `24px` }}
           />
         </Center>
-        <Box as={'p'} textStyle={'body5'} color="white" textAlign={'start'}>
-          Submission ends in{'  '}
-          <Box as="span" display={'inline-block'}>
+        <Box as={"p"} textStyle={"body5"} color="white" textAlign={"start"}>
+          Submission ends in{"  "}
+          <Box as="span" display={"inline-block"}>
             {CountdownTimer({ date: moment(endingDate).utc().toDate() })}
-          </Box>{' '}
+          </Box>{" "}
         </Box>
       </HStack>
     </Skeleton>
@@ -148,21 +170,26 @@ export const HackathonVotingStartSoon = ({
   isHackathon?: boolean;
 }) => {
   return (
-    <Skeleton opacity={isLoading ? '0.5' : 1} fadeDuration={2} isLoaded={!isLoading} w="full">
+    <Skeleton
+      opacity={isLoading ? "0.5" : 1}
+      fadeDuration={2}
+      isLoaded={!isLoading}
+      w="full"
+    >
       <HStack p="16px" rounded="12px" gap="12px" bg="#31F57910">
         <Center p="8px" bg="#071A0F" rounded="full">
           <Player
             autoplay
             loop={true}
-            src={'https://assets7.lottiefiles.com/packages/lf20_4htoEB.json'}
+            src={"https://assets7.lottiefiles.com/packages/lf20_4htoEB.json"}
             style={{ height: `24px`, width: `24px` }}
           />
         </Center>
-        <Box as={'p'} textStyle={'body5'} color="white" textAlign={'start'}>
-          Voting ending in{'  '}
-          <Box as="span" display={'inline-block'}>
+        <Box as={"p"} textStyle={"body5"} color="white" textAlign={"start"}>
+          Voting ending in{"  "}
+          <Box as="span" display={"inline-block"}>
             {CountdownTimer({ date: moment(endingDate).utc().toDate() })}
-          </Box>{' '}
+          </Box>{" "}
         </Box>
       </HStack>
     </Skeleton>

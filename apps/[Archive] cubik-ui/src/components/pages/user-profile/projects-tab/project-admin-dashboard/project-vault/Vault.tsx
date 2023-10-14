@@ -1,19 +1,19 @@
-import { Box, Flex, Link, VStack } from '@chakra-ui/layout';
-import { Skeleton } from '@chakra-ui/skeleton';
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
-import WalletBalance from '~/components/app/navbar-menu/WalletBalance';
-import { useErrorBoundary } from '~/hooks/useErrorBoundary';
-import VaultHeader from './VaultHeader';
-import MultisigTransactions from './project-vault-tabs/Transactions';
-import { useEffect, useState } from 'react';
-import { VaultTx, getAllTx, getMsAddress } from '~/utils/vault';
-import { useAnchorWallet } from '@solana/wallet-adapter-react';
-import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import * as anchor from '@coral-xyz/anchor';
-import { useUserStore } from '~/store/userStore';
-import NoInformation from '~/components/common/empty-state/NoInformation';
-import { useQuery } from 'react-query';
-import axios from 'axios';
+import { Box, Flex, Link, VStack } from "@chakra-ui/layout";
+import { Skeleton } from "@chakra-ui/skeleton";
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/tabs";
+import WalletBalance from "~/components/app/navbar-menu/WalletBalance";
+import { useErrorBoundary } from "~/hooks/useErrorBoundary";
+import VaultHeader from "./VaultHeader";
+import MultisigTransactions from "./project-vault-tabs/Transactions";
+import { useEffect, useState } from "react";
+import { VaultTx, getAllTx, getMsAddress } from "~/utils/vault";
+import { useAnchorWallet } from "@solana/wallet-adapter-react";
+import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import * as anchor from "@coral-xyz/anchor";
+import { useUserStore } from "~/store/userStore";
+import NoInformation from "~/components/common/empty-state/NoInformation";
+import { useQuery } from "react-query";
+import axios from "axios";
 const Vault = ({
   isLoading,
   multisigAddress,
@@ -26,15 +26,15 @@ const Vault = ({
   const anchorWallet = useAnchorWallet();
   const { ErrorBoundaryWrapper } = useErrorBoundary();
   const [tx, setTx] = useState<VaultTx[]>([]);
-  const [ms, setMS] = useState<string>('');
-  const [key, setKey] = useState<string>('');
+  const [ms, setMS] = useState<string>("");
+  const [key, setKey] = useState<string>("");
   const { user } = useUserStore();
   const [update, setUpdate] = useState<boolean>(false);
 
   const usdcBalance = useQuery({
-    queryKey: ['usdcBalance', multisigAddress],
+    queryKey: ["usdcBalance", multisigAddress],
     queryFn: async (): Promise<number> => {
-      const { data } = await axios.post('/api/info/balance', {
+      const { data } = await axios.post("/api/info/balance", {
         address: multisigAddress,
       });
       return data.balance as number;
@@ -52,7 +52,7 @@ const Vault = ({
       if (!createKey) return;
       const tx = await getAllTx(anchorWallet as NodeWallet, createKey);
       if (tx) {
-        console.log('tx', tx);
+        console.log("tx", tx);
         setTx(tx);
       } else {
         setTx([]);
@@ -72,23 +72,23 @@ const Vault = ({
     <ErrorBoundaryWrapper>
       <VStack
         w="full"
-        pt={'16px'}
-        alignItems={'start'}
-        px={{ base: '12px', sm: '16px', md: '24px' }}
-        gap={{ base: '16px', sm: '20px', md: '24px' }}
+        pt={"16px"}
+        alignItems={"start"}
+        px={{ base: "12px", sm: "16px", md: "24px" }}
+        gap={{ base: "16px", sm: "20px", md: "24px" }}
       >
         <VaultHeader
           balance={usdcBalance.data || 0}
           isLoading={isLoading}
           multiSigAddress={multisigAddress}
         />
-        <Box height="1px" width="full" background={'neutral.3'} />
-        <Tabs w="full" variant={'cubik'}>
+        <Box height="1px" width="full" background={"neutral.3"} />
+        <Tabs w="full" variant={"cubik"}>
           <TabList>
             <Tab>Transactions</Tab>
             <Tab>Assets</Tab>
           </TabList>
-          <TabPanels w="full" p={'0'}>
+          <TabPanels w="full" p={"0"}>
             <TabPanel w="full">
               <VStack w="full" gap="12px">
                 {tx.length > 0 ? (
@@ -100,7 +100,7 @@ const Vault = ({
                         ms={ms}
                         wallet={user?.mainWallet as string}
                         tx={t}
-                        key={index.toString() + '000'}
+                        key={index.toString() + "000"}
                       />
                     );
                   })
@@ -112,7 +112,7 @@ const Vault = ({
             <TabPanel w="full">
               <Skeleton w="full" isLoaded={!isLoading}>
                 <WalletBalance
-                  size={'lg'}
+                  size={"lg"}
                   walletAddress={multisigAddress as string}
                 />
               </Skeleton>

@@ -17,15 +17,15 @@ import {
   Tabs,
   VStack,
 } from "@chakra-ui/react";
-import Link from 'next/link';
-import RoundStatus from '~/components/common/dates/Status';
-import { formatNumberWithK } from '~/utils/formatWithK';
-import { trpc } from '~/utils/trpc';
-import Image from 'next/image';
-import { useErrorBoundary } from '~/hooks/useErrorBoundary';
-import EmptyStateHOC from '~/components/HOC/EmptyState';
-import HackathonStatus from '~/components/pages/hackathons/HackathonStatus';
-import { HackathonSchedule } from '~/types/hackathon';
+import Link from "next/link";
+import RoundStatus from "~/components/common/dates/Status";
+import { formatNumberWithK } from "~/utils/formatWithK";
+import { trpc } from "~/utils/trpc";
+import Image from "next/image";
+import { useErrorBoundary } from "~/hooks/useErrorBoundary";
+import EmptyStateHOC from "~/components/HOC/EmptyState";
+import HackathonStatus from "~/components/pages/hackathons/HackathonStatus";
+import { HackathonSchedule } from "~/types/hackathon";
 
 const HackathonsPage = () => {
   const { ErrorBoundaryWrapper } = useErrorBoundary();

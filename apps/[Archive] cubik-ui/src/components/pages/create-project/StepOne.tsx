@@ -12,11 +12,11 @@ import {
   Input,
   Textarea,
   VStack,
-} from '@chakra-ui/react';
-import { GroupBase, OptionsOrGroups, Select } from 'chakra-react-select';
-import Image from 'next/image';
-import { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+} from "@chakra-ui/react";
+import { GroupBase, OptionsOrGroups, Select } from "chakra-react-select";
+import Image from "next/image";
+import { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import {
   Control,
   Controller,
@@ -28,12 +28,12 @@ import {
   UseFormSetValue,
   UseFormTrigger,
   UseFormWatch,
-} from 'react-hook-form';
-import { FiChevronRight } from 'react-icons/fi';
-import { VscCloudUpload } from 'react-icons/vsc';
-import useTeamSearch from '~/hooks/useTeamSearch';
-import { FormData } from '~/pages/submit-project';
-import { category } from './projectCategories';
+} from "react-hook-form";
+import { FiChevronRight } from "react-icons/fi";
+import { VscCloudUpload } from "react-icons/vsc";
+import useTeamSearch from "~/hooks/useTeamSearch";
+import { FormData } from "~/pages/submit-project";
+import { category } from "./projectCategories";
 
 type StepOneProps = {
   onSubmit: (data: any) => void;
@@ -78,10 +78,10 @@ const StepOne: React.FC<StepOneProps> = ({
       // Check file size, should be less than or equal to 5MB
       // file.size is in bytes, so 5MB is 5 * 1024 * 1024 bytes
       if (file.size <= 5 * 1024 * 1024) {
-        setValue('logo', file);
+        setValue("logo", file);
       } else {
-        setError('logo', {
-          message: 'File size should be less than or equal to 5MB',
+        setError("logo", {
+          message: "File size should be less than or equal to 5MB",
         });
       }
     }
@@ -89,7 +89,7 @@ const StepOne: React.FC<StepOneProps> = ({
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     // @ts-ignore
-    accept: 'image/*',
+    accept: "image/*",
     multiple: false, // prevent multiple file selection
     onDrop,
   });
@@ -104,16 +104,16 @@ const StepOne: React.FC<StepOneProps> = ({
     }) || [];
 
   const colors = [
-    'red',
-    'orange',
-    'yellow',
-    'green',
-    'teal',
-    'blue',
-    'cyan',
-    'purple',
-    'pink',
-    'gray',
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "teal",
+    "blue",
+    "cyan",
+    "purple",
+    "pink",
+    "gray",
   ];
 
   const categoryWithColors = category.map((item, index) => {
@@ -132,7 +132,7 @@ const StepOne: React.FC<StepOneProps> = ({
           isInvalid={Boolean(errors.projectName)}
         >
           <FormLabel
-            fontSize={{ base: '12px', md: '14px' }}
+            fontSize={{ base: "12px", md: "14px" }}
             pb="0.5rem"
             htmlFor="projectName"
           >
@@ -140,72 +140,72 @@ const StepOne: React.FC<StepOneProps> = ({
           </FormLabel>
           <Input
             id="projectName"
-            fontSize={{ base: '12px', md: '14px' }}
+            fontSize={{ base: "12px", md: "14px" }}
             placeholder="Enter your project name"
             _placeholder={{
-              fontSize: { base: '12px', md: '14px' },
-              color: '#3B3D3D',
+              fontSize: { base: "12px", md: "14px" },
+              color: "#3B3D3D",
             }}
-            {...register('projectName', {
+            {...register("projectName", {
               required: true,
-              maxLength: { value: 36, message: 'Max length is 36' },
+              maxLength: { value: 36, message: "Max length is 36" },
             })}
           />
           {errors.projectName && (
-            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+            <FormErrorMessage fontSize={{ base: "12px", md: "14px" }}>
               {errors.projectName.message}
             </FormErrorMessage>
           )}
         </FormControl>
         <FormControl isRequired isInvalid={Boolean(errors.tagline)}>
-          <HStack w="full" pb="0.5rem" justify={'space-between'}>
+          <HStack w="full" pb="0.5rem" justify={"space-between"}>
             <FormLabel
-              fontSize={{ base: '12px', md: '14px' }}
+              fontSize={{ base: "12px", md: "14px" }}
               htmlFor="tagline"
             >
               Tagline
             </FormLabel>
             <Box
               as="p"
-              fontSize={{ base: '10px', md: '12px' }}
+              fontSize={{ base: "10px", md: "12px" }}
               color={
-                watch('tagline')?.length === 0
-                  ? 'neutral.7'
-                  : watch('tagline')?.length > 120
-                  ? 'surface.red.2'
-                  : 'surface.green.2'
+                watch("tagline")?.length === 0
+                  ? "neutral.7"
+                  : watch("tagline")?.length > 120
+                  ? "surface.red.2"
+                  : "surface.green.2"
               }
-              fontWeight={'600'}
+              fontWeight={"600"}
             >
-              {watch('tagline') ? watch('tagline').length + '/120' : '0/120'}
+              {watch("tagline") ? watch("tagline").length + "/120" : "0/120"}
             </Box>
           </HStack>
           <Textarea
-            height={'100px'}
+            height={"100px"}
             resize="none"
             id="tagline"
-            fontSize={{ base: '12px', md: '14px' }}
+            fontSize={{ base: "12px", md: "14px" }}
             placeholder="A one sentence description of the project"
             _invalid={{
-              boxShadow: '0 0 0 2px #E53E3E',
+              boxShadow: "0 0 0 2px #E53E3E",
             }}
             _placeholder={{
-              fontSize: { base: '12px', md: '14px' },
-              color: '#3B3D3D',
+              fontSize: { base: "12px", md: "14px" },
+              color: "#3B3D3D",
             }}
-            {...register('tagline', {
+            {...register("tagline", {
               required: true,
-              maxLength: { value: 240, message: 'Max length is 240' },
+              maxLength: { value: 240, message: "Max length is 240" },
             })}
           />
           {errors.tagline ? (
-            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+            <FormErrorMessage fontSize={{ base: "12px", md: "14px" }}>
               {errors.tagline.message}
             </FormErrorMessage>
           ) : (
-            getFieldState('tagline')?.isDirty && (
+            getFieldState("tagline")?.isDirty && (
               <FormHelperText
-                fontSize={{ base: '12px', md: '14px' }}
+                fontSize={{ base: "12px", md: "14px" }}
                 color="neutral.6"
               >
                 Keep the tagline concise, engaging, and descriptive. It should
@@ -216,7 +216,7 @@ const StepOne: React.FC<StepOneProps> = ({
         </FormControl>
         <FormControl isRequired isInvalid={Boolean(errors.email)} w="full">
           <FormLabel
-            fontSize={{ base: '12px', md: '14px' }}
+            fontSize={{ base: "12px", md: "14px" }}
             pb="0.5rem"
             htmlFor="email"
           >
@@ -226,19 +226,19 @@ const StepOne: React.FC<StepOneProps> = ({
             id="email"
             placeholder="Enter your email address"
             _placeholder={{
-              fontSize: { base: '12px', md: '14px' },
-              color: '#3B3D3D',
+              fontSize: { base: "12px", md: "14px" },
+              color: "#3B3D3D",
             }}
-            {...register('email', {
+            {...register("email", {
               required: true,
             })}
           />
-          <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+          <FormErrorMessage fontSize={{ base: "12px", md: "14px" }}>
             {errors.email && errors.email.message}
           </FormErrorMessage>
-          {getFieldState('email')?.isDirty && (
+          {getFieldState("email")?.isDirty && (
             <FormHelperText
-              fontSize={{ base: '12px', md: '14px' }}
+              fontSize={{ base: "12px", md: "14px" }}
               color="neutral.6"
             >
               This email will be used to share important information about your
@@ -249,7 +249,7 @@ const StepOne: React.FC<StepOneProps> = ({
         <Controller
           control={control}
           name="category"
-          rules={{ required: 'Please enter at least 1 Tag.' }}
+          rules={{ required: "Please enter at least 1 Tag." }}
           render={({
             field: { onChange, onBlur, value, name, ref },
             fieldState: { error },
@@ -259,9 +259,9 @@ const StepOne: React.FC<StepOneProps> = ({
               isInvalid={Boolean(errors.category)}
               id="category"
             >
-              <HStack w="full" pb="0.5rem" justify={'space-between'}>
+              <HStack w="full" pb="0.5rem" justify={"space-between"}>
                 <FormLabel
-                  fontSize={{ base: '12px', md: '14px' }}
+                  fontSize={{ base: "12px", md: "14px" }}
                   pb="0.5rem"
                   htmlFor="category"
                 >
@@ -269,17 +269,17 @@ const StepOne: React.FC<StepOneProps> = ({
                 </FormLabel>
                 <Box
                   as="p"
-                  fontSize={{ base: '10px', md: '12px' }}
+                  fontSize={{ base: "10px", md: "12px" }}
                   color={
-                    watch('category')?.length > 3
-                      ? 'surface.red.2'
-                      : watch('category')?.length > 0
-                      ? 'surface.green.2'
-                      : 'neutral.7'
+                    watch("category")?.length > 3
+                      ? "surface.red.2"
+                      : watch("category")?.length > 0
+                      ? "surface.green.2"
+                      : "neutral.7"
                   }
-                  fontWeight={'600'}
+                  fontWeight={"600"}
                 >
-                  {watch('category') ? watch('category').length + '/3' : '0/3'}
+                  {watch("category") ? watch("category").length + "/3" : "0/3"}
                 </Box>
               </HStack>
               <Select
@@ -298,122 +298,122 @@ const StepOne: React.FC<StepOneProps> = ({
                 chakraStyles={{
                   container: (provided, state) => ({
                     ...provided,
-                    border: 'none',
-                    background: 'surface.input_field',
-                    outline: '0px !important',
-                    borderRadius: '8px',
-                    height: '40px',
-                    boxShadow: errors.category ? '0 0 0 2px #E53E3E' : '0',
-                    ps: '0rem',
-                    w: 'full',
-                    ':focus': {
-                      outline: 'none',
-                      boxShadow: '0',
-                      border: 'none',
+                    border: "none",
+                    background: "surface.input_field",
+                    outline: "0px !important",
+                    borderRadius: "8px",
+                    height: "40px",
+                    boxShadow: errors.category ? "0 0 0 2px #E53E3E" : "0",
+                    ps: "0rem",
+                    w: "full",
+                    ":focus": {
+                      outline: "none",
+                      boxShadow: "0",
+                      border: "none",
                     },
-                    ':hover': {
-                      outline: 'none',
-                      boxShadow: '0 !important',
-                      border: 'none !important',
+                    ":hover": {
+                      outline: "none",
+                      boxShadow: "0 !important",
+                      border: "none !important",
                     },
-                    ':active': {
-                      outline: 'none',
-                      boxShadow: '0',
-                      border: 'none',
+                    ":active": {
+                      outline: "none",
+                      boxShadow: "0",
+                      border: "none",
                     },
-                    ':selected': {
-                      outline: 'none',
-                      boxShadow: '0',
-                      border: 'none',
+                    ":selected": {
+                      outline: "none",
+                      boxShadow: "0",
+                      border: "none",
                     },
-                    ':invalid': {
-                      boxShadow: '0 0 0 2px #E53E3E',
+                    ":invalid": {
+                      boxShadow: "0 0 0 2px #E53E3E",
                     },
                   }),
                   inputContainer: (provided, state) => ({
                     ...provided,
-                    ps: '8px',
-                    fontSize: { base: '12px', md: '14px' },
-                    backgroundColor: 'transparent',
+                    ps: "8px",
+                    fontSize: { base: "12px", md: "14px" },
+                    backgroundColor: "transparent",
                     //  border: 'none',
-                    boxShadow: 'none',
-                    outline: 'none',
+                    boxShadow: "none",
+                    outline: "none",
                   }),
                   valueContainer: (provided, state) => ({
                     ...provided,
-                    ps: '8px',
-                    border: 'none',
-                    backgroundColor: 'transparent',
-                    boxShadow: 'none',
-                    outline: 'none',
+                    ps: "8px",
+                    border: "none",
+                    backgroundColor: "transparent",
+                    boxShadow: "none",
+                    outline: "none",
                   }),
 
                   clearIndicator: (provided, state) => ({
                     ...provided,
-                    display: 'none',
+                    display: "none",
                   }),
                   dropdownIndicator: (provided, state) => ({
                     ...provided,
-                    background: '',
-                    borderColor: 'transparent !important',
-                    outline: '0px !important',
-                    boxShadow: '0',
+                    background: "",
+                    borderColor: "transparent !important",
+                    outline: "0px !important",
+                    boxShadow: "0",
                     p: 0,
-                    w: '60px',
+                    w: "60px",
                   }),
                   indicatorSeparator: (provided, state) => ({
                     ...provided,
-                    display: 'none',
+                    display: "none",
                   }),
                   menu: (provided, state) => ({
                     ...provided,
                     //border: 'none',
-                    transform: 'translateY(-10px)',
-                    backgroundColor: '#0F0F0F',
+                    transform: "translateY(-10px)",
+                    backgroundColor: "#0F0F0F",
                   }),
                   menuList: (provided, state) => ({
                     ...provided,
-                    backgroundColor: '#0F0F0F',
-                    border: '1px solid #141414',
-                    borderTop: 'none',
-                    borderTopRadius: 'none',
-                    boxShadow: 'none',
-                    padding: '0px',
+                    backgroundColor: "#0F0F0F",
+                    border: "1px solid #141414",
+                    borderTop: "none",
+                    borderTopRadius: "none",
+                    boxShadow: "none",
+                    padding: "0px",
                   }),
                   option: (provided, state) => ({
                     ...provided,
-                    color: 'neutral.11',
-                    fontSize: { base: '12px', md: '14px' },
-                    fontWeight: '400',
+                    color: "neutral.11",
+                    fontSize: { base: "12px", md: "14px" },
+                    fontWeight: "400",
                     backgroundColor: state.isSelected
-                      ? '#010F0D'
+                      ? "#010F0D"
                       : state.isFocused
-                      ? '#010F0D'
-                      : '#0F0F0F',
+                      ? "#010F0D"
+                      : "#0F0F0F",
                     _hover: {
-                      backgroundColor: '#010F0D',
+                      backgroundColor: "#010F0D",
                     },
-                    ':active': {
-                      backgroundColor: '#0F0F0F',
+                    ":active": {
+                      backgroundColor: "#0F0F0F",
                     },
                   }),
                   control: (provided, state) => ({
                     ...provided,
-                    border: 'none',
-                    backgroundColor: '#0F0F0F',
-                    boxShadow: 'none',
-                    outline: 'none',
-                    ':hover': {
-                      border: 'none',
-                      backgroundColor: '#0F0F0F',
+                    border: "none",
+                    backgroundColor: "#0F0F0F",
+                    boxShadow: "none",
+                    outline: "none",
+                    ":hover": {
+                      border: "none",
+                      backgroundColor: "#0F0F0F",
                     },
                   }),
                   placeholder: (provided, state) => ({
                     ...provided,
-                    textAlign: 'start',
-                    fontSize: { base: '12px', md: '14px' },
-                    color: '#3B3D3D',
-                    px: '1rem',
+                    textAlign: "start",
+                    fontSize: { base: "12px", md: "14px" },
+                    color: "#3B3D3D",
+                    px: "1rem",
                   }),
                 }}
               />
@@ -432,7 +432,7 @@ const StepOne: React.FC<StepOneProps> = ({
           }) => (
             <FormControl isInvalid={Boolean(errors.team)} id="team">
               <FormLabel
-                fontSize={{ base: '12px', md: '14px' }}
+                fontSize={{ base: "12px", md: "14px" }}
                 pb="0.5rem"
                 htmlFor="team"
               >
@@ -454,9 +454,9 @@ const StepOne: React.FC<StepOneProps> = ({
                 formatOptionLabel={({ label, icon }) => (
                   <div
                     style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0px',
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0px",
                     }}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -464,10 +464,10 @@ const StepOne: React.FC<StepOneProps> = ({
                       src={icon}
                       alt={label}
                       style={{
-                        marginRight: '10px',
-                        borderRadius: '100%',
-                        width: '16px',
-                        height: '16px',
+                        marginRight: "10px",
+                        borderRadius: "100%",
+                        width: "16px",
+                        height: "16px",
                       }}
                     />
                     {label}
@@ -487,119 +487,119 @@ const StepOne: React.FC<StepOneProps> = ({
                 chakraStyles={{
                   container: (provided, state) => ({
                     ...provided,
-                    border: 'none',
-                    background: 'surface.input_field',
-                    outline: '0px !important',
-                    borderRadius: '8px',
-                    height: '40px',
-                    boxShadow: errors.team ? '0 0 0 2px #E53E3E' : '0',
-                    ps: '0rem',
-                    w: 'full',
-                    ':focus': {
-                      outline: 'none',
-                      boxShadow: '0',
-                      border: 'none',
+                    border: "none",
+                    background: "surface.input_field",
+                    outline: "0px !important",
+                    borderRadius: "8px",
+                    height: "40px",
+                    boxShadow: errors.team ? "0 0 0 2px #E53E3E" : "0",
+                    ps: "0rem",
+                    w: "full",
+                    ":focus": {
+                      outline: "none",
+                      boxShadow: "0",
+                      border: "none",
                     },
-                    ':hover': {
-                      outline: 'none',
-                      boxShadow: '0 !important',
-                      border: 'none !important',
+                    ":hover": {
+                      outline: "none",
+                      boxShadow: "0 !important",
+                      border: "none !important",
                     },
-                    ':active': {
-                      outline: 'none',
-                      boxShadow: '0',
-                      border: 'none',
+                    ":active": {
+                      outline: "none",
+                      boxShadow: "0",
+                      border: "none",
                     },
-                    ':selected': {
-                      outline: 'none',
-                      boxShadow: '0',
-                      border: 'none',
+                    ":selected": {
+                      outline: "none",
+                      boxShadow: "0",
+                      border: "none",
                     },
                   }),
                   inputContainer: (provided, state) => ({
                     ...provided,
-                    ps: '8px',
-                    fontSize: { base: '12px', md: '14px' },
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    boxShadow: 'none',
-                    outline: 'none',
+                    ps: "8px",
+                    fontSize: { base: "12px", md: "14px" },
+                    backgroundColor: "transparent",
+                    border: "none",
+                    boxShadow: "none",
+                    outline: "none",
                   }),
                   valueContainer: (provided, state) => ({
                     ...provided,
-                    ps: '8px',
-                    border: 'none',
-                    backgroundColor: 'transparent',
-                    boxShadow: 'none',
-                    outline: 'none',
+                    ps: "8px",
+                    border: "none",
+                    backgroundColor: "transparent",
+                    boxShadow: "none",
+                    outline: "none",
                   }),
                   clearIndicator: (provided, state) => ({
                     ...provided,
-                    display: 'none',
+                    display: "none",
                   }),
                   dropdownIndicator: (provided, state) => ({
                     ...provided,
-                    background: '',
-                    borderColor: 'transparent !important',
-                    outline: '0px !important',
-                    boxShadow: '0',
+                    background: "",
+                    borderColor: "transparent !important",
+                    outline: "0px !important",
+                    boxShadow: "0",
                     p: 0,
-                    w: '60px',
+                    w: "60px",
                   }),
                   indicatorSeparator: (provided, state) => ({
                     ...provided,
-                    display: 'none',
+                    display: "none",
                   }),
                   menu: (provided, state) => ({
                     ...provided,
                     //border: 'none',
-                    transform: 'translateY(-10px)',
-                    backgroundColor: '#0F0F0F',
+                    transform: "translateY(-10px)",
+                    backgroundColor: "#0F0F0F",
                   }),
                   menuList: (provided, state) => ({
                     ...provided,
-                    backgroundColor: '#0F0F0F',
-                    border: '1px solid #141414',
-                    fontSize: { base: '12px', md: '14px' },
-                    borderTop: 'none',
-                    borderTopRadius: 'none',
-                    boxShadow: 'none',
-                    padding: '0px',
+                    backgroundColor: "#0F0F0F",
+                    border: "1px solid #141414",
+                    fontSize: { base: "12px", md: "14px" },
+                    borderTop: "none",
+                    borderTopRadius: "none",
+                    boxShadow: "none",
+                    padding: "0px",
                   }),
                   option: (provided, state) => ({
                     ...provided,
-                    color: 'neutral.11',
-                    fontSize: { base: '12px', md: '14px' },
-                    fontWeight: '400',
+                    color: "neutral.11",
+                    fontSize: { base: "12px", md: "14px" },
+                    fontWeight: "400",
                     backgroundColor: state.isSelected
-                      ? '#010F0D'
+                      ? "#010F0D"
                       : state.isFocused
-                      ? '#010F0D'
-                      : '#0F0F0F',
+                      ? "#010F0D"
+                      : "#0F0F0F",
                     _hover: {
-                      backgroundColor: '#010F0D',
+                      backgroundColor: "#010F0D",
                     },
-                    ':active': {
-                      backgroundColor: '#0F0F0F',
+                    ":active": {
+                      backgroundColor: "#0F0F0F",
                     },
                   }),
                   control: (provided, state) => ({
                     ...provided,
-                    border: 'none',
-                    backgroundColor: '#0F0F0F',
-                    boxShadow: 'none',
-                    outline: 'none',
-                    ':hover': {
-                      border: 'none',
-                      backgroundColor: '#0F0F0F',
+                    border: "none",
+                    backgroundColor: "#0F0F0F",
+                    boxShadow: "none",
+                    outline: "none",
+                    ":hover": {
+                      border: "none",
+                      backgroundColor: "#0F0F0F",
                     },
                   }),
                   placeholder: (provided, state) => ({
                     ...provided,
-                    textAlign: 'start',
-                    px: '1rem',
-                    fontSize: { base: '12px', md: '14px' },
-                    color: '#3B3D3D',
+                    textAlign: "start",
+                    px: "1rem",
+                    fontSize: { base: "12px", md: "14px" },
+                    color: "#3B3D3D",
                   }),
                 }}
               />
@@ -611,7 +611,7 @@ const StepOne: React.FC<StepOneProps> = ({
         />
         <FormControl isRequired isInvalid={Boolean(errors.logo)} id="logo">
           <FormLabel
-            fontSize={{ base: '12px', md: '14px' }}
+            fontSize={{ base: "12px", md: "14px" }}
             pb="0.5rem"
             htmlFor="logo"
           >
@@ -620,18 +620,18 @@ const StepOne: React.FC<StepOneProps> = ({
           <HStack h="full" gap="1rem">
             {isDragActive ? (
               <Center
-                maxW={'7xl'}
+                maxW={"7xl"}
                 mx="auto"
                 w="full"
-                py={{ base: '16px', sm: '24px' }}
+                py={{ base: "16px", sm: "24px" }}
                 border="1px dashed"
-                borderColor={'#1D1F1E'}
+                borderColor={"#1D1F1E"}
                 rounded="12px"
               >
                 <Box
                   as="p"
-                  textStyle={{ base: 'body4', md: 'body3' }}
-                  color={'neutral.7'}
+                  textStyle={{ base: "body4", md: "body3" }}
+                  color={"neutral.7"}
                 >
                   Drop File Here...
                 </Box>
@@ -639,55 +639,55 @@ const StepOne: React.FC<StepOneProps> = ({
             ) : (
               <>
                 <Center
-                  border={'2px dashed'}
+                  border={"2px dashed"}
                   rounded="20px"
-                  borderColor={errors.logo ? ' #E53E3E' : 'brand.teal6'}
-                  minW={{ base: '5rem', md: '6rem' }}
-                  h={{ base: '5rem', md: '6rem' }}
-                  position={'relative'}
+                  borderColor={errors.logo ? " #E53E3E" : "brand.teal6"}
+                  minW={{ base: "5rem", md: "6rem" }}
+                  h={{ base: "5rem", md: "6rem" }}
+                  position={"relative"}
                 >
-                  {getValues('logo') ? (
+                  {getValues("logo") ? (
                     <Center
                       position="absolute"
-                      w={{ base: '3rem', md: '5rem' }}
-                      h={{ base: '3rem', md: '5rem' }}
-                      rounded={'18px'}
+                      w={{ base: "3rem", md: "5rem" }}
+                      h={{ base: "3rem", md: "5rem" }}
+                      rounded={"18px"}
                       overflow="hidden"
                     >
                       <Image
                         src={
-                          getValues('logo') &&
+                          getValues("logo") &&
                           // @ts-ignore
-                          URL.createObjectURL(getValues('logo'))
+                          URL.createObjectURL(getValues("logo"))
                         }
                         alt="project logo"
                         fill={true}
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: "cover" }}
                       />
                     </Center>
                   ) : (
-                    <VscCloudUpload size={34} color={'#A8F0E6'} />
+                    <VscCloudUpload size={34} color={"#A8F0E6"} />
                   )}
                 </Center>
                 <VStack
-                  align={'start'}
+                  align={"start"}
                   justify="space-between"
                   gap="0.5rem"
-                  height={'full'}
+                  height={"full"}
                 >
                   <Center {...getRootProps()}>
-                    <input {...getInputProps()} />{' '}
+                    <input {...getInputProps()} />{" "}
                     <Button
-                      variant={'primary'}
-                      fontSize={{ base: 'xs', md: 'md' }}
+                      variant={"primary"}
+                      fontSize={{ base: "xs", md: "md" }}
                     >
-                      {getValues('logo') ? 'Upload New Image' : 'Upload Image'}
-                    </Button>{' '}
+                      {getValues("logo") ? "Upload New Image" : "Upload Image"}
+                    </Button>{" "}
                   </Center>
                   <Box
-                    textAlign={'start'}
+                    textAlign={"start"}
                     as="p"
-                    textStyle={{ base: 'body5', md: 'body4' }}
+                    textStyle={{ base: "body5", md: "body4" }}
                     color="neutral8"
                   >
                     Upload a 1:1 aspect ration Image of size at max 5MB.
@@ -704,21 +704,21 @@ const StepOne: React.FC<StepOneProps> = ({
       <CardFooter>
         <CardFooter>
           <Button
-            variant={'cubikText'}
-            size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+            variant={"cubikText"}
+            size={{ base: "cubikSmall", md: "cubikMedium" }}
             rightIcon={
-              <Box boxSize={{ base: '14px', md: '18px' }} as={FiChevronRight} />
+              <Box boxSize={{ base: "14px", md: "18px" }} as={FiChevronRight} />
             }
             ml="auto"
             onClick={async () => {
               setIsSubmitting(true);
               const isValid = await trigger([
-                'projectName',
-                'tagline',
-                'category',
-                'team',
-                'email',
-                'logo',
+                "projectName",
+                "tagline",
+                "category",
+                "team",
+                "email",
+                "logo",
               ]);
 
               if (isValid) {

@@ -4,10 +4,10 @@ import {
   InputGroup,
   InputLeftAddon,
   InputProps as ChakraInputProps,
-} from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
-import { FaRegCalendarAlt } from 'react-icons/fa';
-import { format, parseISO, isValid } from 'date-fns';
+} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { format, parseISO, isValid } from "date-fns";
 
 interface DatePickerInputProps {
   onClick?: () => void;
@@ -23,22 +23,22 @@ const DatePickerInput: React.FC<DatePickerInputProps> = ({
 }) => {
   const [dateValue, setDateValue] = useState(() => {
     if (value instanceof Date && isValid(value)) {
-      return format(value, 'dd MMMM yyyy');
-    } else if (typeof value === 'string' && isValid(parseISO(value))) {
-      return format(parseISO(value), 'dd MMMM yyyy');
+      return format(value, "dd MMMM yyyy");
+    } else if (typeof value === "string" && isValid(parseISO(value))) {
+      return format(parseISO(value), "dd MMMM yyyy");
     } else {
-      return '';
+      return "";
     }
   });
 
   useEffect(() => {
     if (updatedValue instanceof Date && isValid(updatedValue)) {
-      setDateValue(format(updatedValue, 'dd MMMM yyyy'));
+      setDateValue(format(updatedValue, "dd MMMM yyyy"));
     } else if (
-      typeof updatedValue === 'string' &&
+      typeof updatedValue === "string" &&
       isValid(parseISO(updatedValue))
     ) {
-      setDateValue(format(parseISO(updatedValue), 'dd MMMM yyyy'));
+      setDateValue(format(parseISO(updatedValue), "dd MMMM yyyy"));
     }
   }, [updatedValue]);
 

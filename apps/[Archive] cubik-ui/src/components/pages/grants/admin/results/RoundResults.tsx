@@ -1,5 +1,5 @@
-import React from 'react';
-import NoInformation from '~/components/common/empty-state/NoInformation';
+import React from "react";
+import NoInformation from "~/components/common/empty-state/NoInformation";
 
 const RoundResults = ({
   roundData,

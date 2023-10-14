@@ -1,4 +1,4 @@
-import { sliderAnatomy as parts } from '@chakra-ui/anatomy';
+import { sliderAnatomy as parts } from "@chakra-ui/anatomy";
 import {
   createMultiStyleConfigHelpers,
   defineStyle,
@@ -6,8 +6,6 @@ import {
 
 const { definePartsStyle, defineMultiStyleConfig } =
   createMultiStyleConfigHelpers(parts.keys);
-
-
 
 const sizes = {
   xl: definePartsStyle({
@@ -19,8 +17,6 @@ const sizes = {
     }),
   }),
 };
-
-
 
 const cubik = definePartsStyle(() => ({
   filledTrack: {

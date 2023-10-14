@@ -1,8 +1,8 @@
-import { useQuery } from 'react-query';
-import { QueryFunction } from 'react-query/types/core/types';
+import { useQuery } from "react-query";
+import { QueryFunction } from "react-query/types/core/types";
 
 export function useGetNftFromMetaData(NFTMetadataURIs: string[]) {
-  return useQuery(['nftMetadata', NFTMetadataURIs], getNftFromMetaData, {
+  return useQuery(["nftMetadata", NFTMetadataURIs], getNftFromMetaData, {
     enabled: !!NFTMetadataURIs.length,
   });
 }

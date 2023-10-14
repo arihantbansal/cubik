@@ -1,5 +1,5 @@
-import { UseFormSetValue } from 'react-hook-form';
-import { DonationFormType } from '~/interfaces/donationForm';
+import { UseFormSetValue } from "react-hook-form";
+import { DonationFormType } from "~/interfaces/donationForm";
 
 interface GraphProps {
   width: number;

@@ -1,5 +1,5 @@
-import { Box, Center, VStack } from '@chakra-ui/react';
-import { ReactNode } from 'react';
+import { Box, Center, VStack } from "@chakra-ui/react";
+import { ReactNode } from "react";
 
 const EmptyStateHOC = ({
   heading,
@@ -16,8 +16,8 @@ const EmptyStateHOC = ({
 }) => {
   return (
     <VStack
-      my={margin ? margin : '6rem'}
-      alignContent={'center'}
+      my={margin ? margin : "6rem"}
+      alignContent={"center"}
       mx="auto"
       p="24px"
       align="center"
@@ -26,7 +26,7 @@ const EmptyStateHOC = ({
       {children ? (
         <>{children}</>
       ) : (
-        <Center width={{ base: '15vw', md: '8vw' }} height="12vh">
+        <Center width={{ base: "15vw", md: "8vw" }} height="12vh">
           <svg
             width="128"
             height="132"
@@ -93,17 +93,17 @@ const EmptyStateHOC = ({
       <VStack w="full" gap="8px">
         <Box
           as="p"
-          textStyle={{ base: 'title3', md: 'title2' }}
+          textStyle={{ base: "title3", md: "title2" }}
           color="neutral.11"
         >
           {heading}
         </Box>
         <Box
-          maxW={'24rem'}
+          maxW={"24rem"}
           textAlign="center"
           mx="auto"
           as="p"
-          textStyle={{ base: 'body5', md: 'body4' }}
+          textStyle={{ base: "body5", md: "body4" }}
           color="neutral.7"
         >
           {subHeading}

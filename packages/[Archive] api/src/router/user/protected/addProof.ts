@@ -1,16 +1,16 @@
-import { Prisma } from '@cubik/database';
-import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
-import { protectedProcedure } from '../../../trpc';
+import { Prisma } from "@cubik/database";
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+import { protectedProcedure } from "../../../trpc";
 
 export type ProofType =
-  | 'LAMPORT'
-  | 'SUPERTEAM'
-  | 'MONKEYDAO'
-  | 'CIVIC'
-  | 'SOCIAL'
-  | 'GOOGLE'
-  | 'DRIPS01';
+  | "LAMPORT"
+  | "SUPERTEAM"
+  | "MONKEYDAO"
+  | "CIVIC"
+  | "SOCIAL"
+  | "GOOGLE"
+  | "DRIPS01";
 export type UserProof = {
   name: ProofType;
   timestamp: Date;
@@ -22,15 +22,15 @@ export const addProof = protectedProcedure
   .input(
     z.object({
       name: z.enum([
-        'LAMPORT',
-        'SUPERTEAM',
-        'MONKEYDAO',
-        'CIVIC',
-        'SOCIAL',
-        'GOOGLE',
-        'DROPS01',
-        'GITHUB',
-        'CUBIKGRANTEE',
+        "LAMPORT",
+        "SUPERTEAM",
+        "MONKEYDAO",
+        "CIVIC",
+        "SOCIAL",
+        "GOOGLE",
+        "DROPS01",
+        "GITHUB",
+        "CUBIKGRANTEE",
       ]),
       tx: z.string().nonempty(),
       email: z.string().optional(),
@@ -42,7 +42,7 @@ export const addProof = protectedProcedure
     const prisma = ctx.prisma;
     let otherInfo = {};
     let otherInfoProof = {};
-    if (input.name === 'GOOGLE') {
+    if (input.name === "GOOGLE") {
       otherInfo = {
         email: input.email,
       };
@@ -53,13 +53,13 @@ export const addProof = protectedProcedure
       });
       if (check) {
         throw new TRPCError({
-          code: 'BAD_REQUEST',
-          cause: 'The Google Account is Already linked by another user',
-          message: 'The Google Account is Already linked by another user',
+          code: "BAD_REQUEST",
+          cause: "The Google Account is Already linked by another user",
+          message: "The Google Account is Already linked by another user",
         });
       }
     }
-    if (input.name === 'GITHUB') {
+    if (input.name === "GITHUB") {
       otherInfoProof = {
         githubUsername: input.githubUsername,
       };
@@ -67,7 +67,7 @@ export const addProof = protectedProcedure
       const check = await prisma.userModel.findFirst({
         where: {
           proof: {
-            path: '$[*].githubUsername',
+            path: "$[*].githubUsername",
             array_contains: input.githubUsername,
           },
         },
@@ -75,9 +75,9 @@ export const addProof = protectedProcedure
 
       if (check) {
         throw new TRPCError({
-          code: 'BAD_REQUEST',
-          cause: 'The Github Account is Already linked by another user',
-          message: 'The Github Account is Already linked by another user',
+          code: "BAD_REQUEST",
+          cause: "The Github Account is Already linked by another user",
+          message: "The Github Account is Already linked by another user",
         });
       }
     }
@@ -89,8 +89,8 @@ export const addProof = protectedProcedure
     });
     if (!res) {
       throw new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'User not found',
+        code: "BAD_REQUEST",
+        message: "User not found",
       });
     }
 
@@ -98,8 +98,8 @@ export const addProof = protectedProcedure
 
     if (alreadyClaimedProofs.find((e) => e.name === input.name)) {
       throw new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'Proof already claimed',
+        code: "BAD_REQUEST",
+        message: "Proof already claimed",
       });
     }
     const updatedUser = await prisma.userModel.update({

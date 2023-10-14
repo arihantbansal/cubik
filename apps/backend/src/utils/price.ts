@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import type { TokenPriceResponse } from "types";
 
 export const tokenPrice = async (token: string) => {

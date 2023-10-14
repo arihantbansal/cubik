@@ -1,7 +1,7 @@
 import { utils } from "@coral-xyz/anchor";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-import {env} from "@/env.mjs"
+import { env } from "@/env.mjs";
 export async function POST() {
   try {
     const headersList = headers();

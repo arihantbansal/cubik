@@ -1,20 +1,20 @@
-import { Center, HStack } from '@chakra-ui/react';
+import { Center, HStack } from "@chakra-ui/react";
 
 export const BONK = ({ size }: { size: string | object }) => {
   return (
     <HStack>
       <Center width={size} height={size}>
-        {' '}
+        {" "}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={
-            'https://assets.coingecko.com/coins/images/28600/small/bonk.jpg?1672304290'
+            "https://assets.coingecko.com/coins/images/28600/small/bonk.jpg?1672304290"
           }
-          alt={'bonk'}
+          alt={"bonk"}
           style={{
-            width: '100%',
-            height: '100%',
-            borderRadius: '100%',
+            width: "100%",
+            height: "100%",
+            borderRadius: "100%",
           }}
         />
       </Center>
@@ -48,12 +48,12 @@ export const USDC = ({ size }: { size: string | object }) => {
       <Center width={size} height={size}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={'https://cryptologos.cc/logos/usd-coin-usdc-logo.png'}
-          alt={'usdc'}
+          src={"https://cryptologos.cc/logos/usd-coin-usdc-logo.png"}
+          alt={"usdc"}
           style={{
-            width: '100%',
-            height: '100%',
-            borderRadius: '100%',
+            width: "100%",
+            height: "100%",
+            borderRadius: "100%",
           }}
         />
       </Center>

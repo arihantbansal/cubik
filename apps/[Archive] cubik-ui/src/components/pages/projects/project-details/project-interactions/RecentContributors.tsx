@@ -1,14 +1,14 @@
-import { Avatar, AvatarGroup } from '@chakra-ui/avatar';
-import { Box, Center, Flex, HStack, VStack } from '@chakra-ui/layout';
-import { Skeleton, SkeletonCircle } from '@chakra-ui/skeleton';
-import { Contribution, UserModel } from '@cubik/database';
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { SOL } from '~/components/common/tokens/token';
-import { formatNumberWithK } from '~/utils/formatWithK';
+import { Avatar, AvatarGroup } from "@chakra-ui/avatar";
+import { Box, Center, Flex, HStack, VStack } from "@chakra-ui/layout";
+import { Skeleton, SkeletonCircle } from "@chakra-ui/skeleton";
+import { Contribution, UserModel } from "@cubik/database";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { SOL } from "~/components/common/tokens/token";
+import { formatNumberWithK } from "~/utils/formatWithK";
 
 const transition = {
-  type: 'spring',
+  type: "spring",
   stiffness: 30,
   damping: 10,
   duration: 2,
@@ -73,9 +73,9 @@ export const RecentContributions = ({
   }, [contributorsData, visibleContributors]);
 
   return (
-    <VStack gap="16px" align={'start'} w={{ base: 'full', lg: 'full' }}>
-      <HStack w="full" justify={'space-between'}>
-        <Box as="p" textStyle={{ base: 'title4', md: 'title3' }} color="white">
+    <VStack gap="16px" align={"start"} w={{ base: "full", lg: "full" }}>
+      <HStack w="full" justify={"space-between"}>
+        <Box as="p" textStyle={{ base: "title4", md: "title3" }} color="white">
           Recent Contributors
         </Box>
         {/* <Button
@@ -91,8 +91,8 @@ export const RecentContributions = ({
           </Button> */}
       </HStack>
       <VStack
-        display={{ base: 'none', md: 'flex' }}
-        align={'start'}
+        display={{ base: "none", md: "flex" }}
+        align={"start"}
         w="full"
         spacing="2px"
         color="#CBCBCB"
@@ -114,33 +114,33 @@ export const RecentContributions = ({
               exit="exit"
               transition={i === 0 ? yTransition : transition} // only apply y-transition for the first item
               style={{
-                width: '100%',
+                width: "100%",
               }}
             >
               <HStack
                 // border="none"
                 py="8px"
                 w="full"
-                direction={'row'}
+                direction={"row"}
                 gap="12px"
-                align={'center'}
-                justify={'center'}
+                align={"center"}
+                justify={"center"}
               >
                 <Avatar
-                  alignSelf={'center'}
+                  alignSelf={"center"}
                   size="sm"
                   name={contributor.user.username}
                   src={contributor.user.profilePicture}
                 />
                 <VStack
                   w="full"
-                  alignItems={'start'}
+                  alignItems={"start"}
                   textAlign="start"
                   spacing="4px"
                 >
                   <Box
                     as="p"
-                    textStyle={{ sm: 'title6', md: 'title5' }}
+                    textStyle={{ sm: "title6", md: "title5" }}
                     color="white"
                   >
                     @{contributor.user.username}
@@ -148,20 +148,20 @@ export const RecentContributions = ({
                   <Box
                     as="p"
                     color="#B4B0B2"
-                    textStyle={{ base: 'body6', md: 'body5' }}
+                    textStyle={{ base: "body6", md: "body5" }}
                   >
-                    {'asd..asdf'}
+                    {"asd..asdf"}
                   </Box>
                 </VStack>
-                <HStack gap="8px" align={'center'}>
+                <HStack gap="8px" align={"center"}>
                   <Center>
-                    <SOL size={'22px'} />
+                    <SOL size={"22px"} />
                   </Center>
-                  <HStack align={'baseline'} color="white">
-                    <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
+                  <HStack align={"baseline"} color="white">
+                    <Box as="p" textStyle={{ base: "title5", md: "title4" }}>
                       {formatNumberWithK(contributor.currentusdTotal)}
                     </Box>
-                    <Box as="p" textStyle={{ base: 'title6', md: 'title7' }}>
+                    <Box as="p" textStyle={{ base: "title6", md: "title7" }}>
                       SOL
                     </Box>
                   </HStack>
@@ -171,46 +171,46 @@ export const RecentContributions = ({
           ))
         ) : (
           <MotionCenter
-            display={isLoading ? 'none' : 'flex'}
-            maxW={'7xl'}
+            display={isLoading ? "none" : "flex"}
+            maxW={"7xl"}
             mx="auto"
             w="full"
-            py={{ base: '16px', sm: '24px' }}
+            py={{ base: "16px", sm: "24px" }}
             border="1px dashed"
-            borderColor={'#1D1F1E'}
+            borderColor={"#1D1F1E"}
             rounded="12px"
-            initial={isLoading ? 'hidden' : 'show'}
-            animate={isLoading ? 'hidden' : 'show'}
+            initial={isLoading ? "hidden" : "show"}
+            animate={isLoading ? "hidden" : "show"}
             transition={{ duration: 3 }}
             variants={{
               hidden: { opacity: 0 },
               show: { opacity: 1 },
             }}
           >
-            <Box as="p" textStyle={{ base: 'body4' }} color="neutral.6">
+            <Box as="p" textStyle={{ base: "body4" }} color="neutral.6">
               No Contributors yet
             </Box>
           </MotionCenter>
         )}
       </VStack>
       <Flex
-        display={{ base: 'flex', md: 'none' }}
+        display={{ base: "flex", md: "none" }}
         justify="start"
-        align={'end'}
+        align={"end"}
         flex="1"
-        w={'full'}
+        w={"full"}
         gap="4px"
         position="relative"
         zIndex="1"
       >
-        <AvatarGroup size="sm" max={5} gap={'0.3rem'}>
+        <AvatarGroup size="sm" max={5} gap={"0.3rem"}>
           {isLoading && (
             <HStack spacing="-10px">
               <Center
                 rounded="full"
                 border="3px solid black"
-                bgColor={'black'}
-                zIndex={'4'}
+                bgColor={"black"}
+                zIndex={"4"}
               >
                 <SkeletonCircle
                   fadeDuration={1.5}
@@ -222,8 +222,8 @@ export const RecentContributions = ({
               <Center
                 rounded="full"
                 border="3px solid black"
-                bgColor={'black'}
-                zIndex={'3'}
+                bgColor={"black"}
+                zIndex={"3"}
               >
                 <SkeletonCircle
                   fadeDuration={1.5}
@@ -235,8 +235,8 @@ export const RecentContributions = ({
               <Center
                 rounded="full"
                 border="3px solid black"
-                bgColor={'black'}
-                zIndex={'2'}
+                bgColor={"black"}
+                zIndex={"2"}
               >
                 <SkeletonCircle
                   fadeDuration={1.5}
@@ -248,8 +248,8 @@ export const RecentContributions = ({
               <Center
                 rounded="full"
                 border="3px solid black"
-                bgColor={'black'}
-                zIndex={'1'}
+                bgColor={"black"}
+                zIndex={"1"}
               >
                 <SkeletonCircle
                   fadeDuration={1.5}
@@ -269,13 +269,13 @@ export const RecentContributions = ({
             />
           ))}
         </AvatarGroup>
-        <Box as="p" color="white" textStyle={{ base: 'body4', md: 'body3' }}>
+        <Box as="p" color="white" textStyle={{ base: "body4", md: "body3" }}>
           {contributorsData &&
             (contributorsData?.length === 0
-              ? '- -'
+              ? "- -"
               : contributorsData?.length > 5
-              ? '+' + (contributorsData?.length - 5) + ' more'
-              : '')}
+              ? "+" + (contributorsData?.length - 5) + " more"
+              : "")}
         </Box>
       </Flex>
     </VStack>

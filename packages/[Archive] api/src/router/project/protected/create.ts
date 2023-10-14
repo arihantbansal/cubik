@@ -1,8 +1,8 @@
-import { protectedProcedure } from '../../../trpc';
-import { z } from 'zod';
-import { Prisma, ProjectVerifyStatus } from '@cubik/database';
-import { TRPCError } from '@trpc/server';
-import { v4 as uuid } from 'uuid';
+import { protectedProcedure } from "../../../trpc";
+import { z } from "zod";
+import { Prisma, ProjectVerifyStatus } from "@cubik/database";
+import { TRPCError } from "@trpc/server";
+import { v4 as uuid } from "uuid";
 
 export const createProject = protectedProcedure
   .input(
@@ -79,7 +79,7 @@ export const createProject = protectedProcedure
       return res;
     } catch (error) {
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
+        code: "INTERNAL_SERVER_ERROR",
         message: (error as Error).message,
         cause: (error as Error).stack,
       });

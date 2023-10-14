@@ -1,4 +1,4 @@
-import { publicProcedure } from '../../../trpc';
+import { publicProcedure } from "../../../trpc";
 
 export const findManyRejected = publicProcedure.query(
   async ({ ctx: { prisma } }) => {
@@ -13,13 +13,13 @@ export const findManyRejected = publicProcedure.query(
           owner: true,
         },
         where: {
-          status: 'FAILED',
+          status: "FAILED",
           isArchive: false,
         },
       });
       return res;
     } catch (error: any) {
-      throw new Error(error.message || 'There was some error');
+      throw new Error(error.message || "There was some error");
     }
   }
 );

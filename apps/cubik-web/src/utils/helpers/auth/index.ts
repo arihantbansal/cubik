@@ -1,7 +1,6 @@
 import { env } from "@/env.mjs";
 import type { AuthTokenCheckReturn } from "@/types/auth";
 
-
 export const handleLogout = async () => {
   try {
     await fetch("/api/auth/logout", {

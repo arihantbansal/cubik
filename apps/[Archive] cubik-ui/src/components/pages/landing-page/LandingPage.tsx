@@ -1,17 +1,17 @@
-import { Button } from '@chakra-ui/button';
-import { Box, Center, Container, Flex, VStack } from '@chakra-ui/layout';
-import { useWallet } from '@solana/wallet-adapter-react';
-import { useWalletModal } from '@solana/wallet-adapter-react-ui';
-import { motion } from 'framer-motion';
-import Image from 'next/legacy/image';
-import Link from 'next/link';
+import { Button } from "@chakra-ui/button";
+import { Box, Center, Container, Flex, VStack } from "@chakra-ui/layout";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { motion } from "framer-motion";
+import Image from "next/legacy/image";
+import Link from "next/link";
 
 import {
   MouseParallaxChild,
   MouseParallaxContainer,
-} from 'react-parallax-mouse';
-import DetailsSection from './DetailsSection';
-import SplineAsset from './SplineAsset';
+} from "react-parallax-mouse";
+import DetailsSection from "./DetailsSection";
+import SplineAsset from "./SplineAsset";
 
 const MotionBox = motion(Box);
 
@@ -25,25 +25,25 @@ const BackgroundImageWrapper = ({
   return (
     <MouseParallaxChild
       style={{
-        zIndex: '1',
-        position: 'absolute',
-        bottom: '50%',
-        left: '50%',
-        transform: 'translate(-50%,50%)',
-        width: '100%',
-        height: '100%',
+        zIndex: "1",
+        position: "absolute",
+        bottom: "50%",
+        left: "50%",
+        transform: "translate(-50%,50%)",
+        width: "100%",
+        height: "100%",
       }}
       factorX={factor}
       factorY={factor}
     >
       <Box
-        w={{ base: '50rem', md: '80rem' }}
-        height={{ base: '37rem', md: '58rem' }}
-        overflow={'hidden'}
-        position={'absolute'}
+        w={{ base: "50rem", md: "80rem" }}
+        height={{ base: "37rem", md: "58rem" }}
+        overflow={"hidden"}
+        position={"absolute"}
         top="50%"
         left="50%"
-        transform={'translate(-50%,-50%)'}
+        transform={"translate(-50%,-50%)"}
       >
         <Image
           src={imgURL}
@@ -64,52 +64,52 @@ const LandingPage = () => {
   return (
     <Container background="black" maxW="full" px="0">
       <MouseParallaxContainer globalFactorX={0.1} globalFactorY={0.1}>
-        <Center bg="black" height={{ base: '37rem', md: '56rem' }} w="full">
-          <Center overflow={'hidden'} background="black" position={'fixed'}>
+        <Center bg="black" height={{ base: "37rem", md: "56rem" }} w="full">
+          <Center overflow={"hidden"} background="black" position={"fixed"}>
             <Flex
-              overflow={'hidden'}
-              zIndex={'1'}
+              overflow={"hidden"}
+              zIndex={"1"}
               h="60rem"
               w="80rem"
               maxW="90rem"
               _before={{
                 content: '""',
-                zIndex: '10',
-                position: 'absolute',
+                zIndex: "10",
+                position: "absolute",
                 top: 0,
                 left: 0,
                 bottom: 0,
-                width: '25vw',
-                height: '100vh',
+                width: "25vw",
+                height: "100vh",
                 background:
-                  'linear-gradient(90deg, #000000 1%, rgb(0 0 0 / 0%) 50%)',
+                  "linear-gradient(90deg, #000000 1%, rgb(0 0 0 / 0%) 50%)",
               }}
               _after={{
                 content: '""',
-                zIndex: '10',
-                position: 'absolute',
+                zIndex: "10",
+                position: "absolute",
                 top: 0,
                 right: 0,
                 bottom: 0,
-                width: '25vw',
-                height: '100vh',
+                width: "25vw",
+                height: "100vh",
                 background:
-                  'linear-gradient(271deg, #000000 1%, rgb(0 0 0 / 0%) 50%)',
+                  "linear-gradient(271deg, #000000 1%, rgb(0 0 0 / 0%) 50%)",
               }}
             >
-              <Box position={'relative'} h="56rem" w="100vw" overflow="hidden">
+              <Box position={"relative"} h="56rem" w="100vw" overflow="hidden">
                 <Box
-                  w={'80rem'}
+                  w={"80rem"}
                   h="57rem"
-                  overflow={'hidden'}
-                  position={'absolute'}
+                  overflow={"hidden"}
+                  position={"absolute"}
                   top="50%"
                   left="50%"
-                  transform={'translate(-50%,-50%)'}
+                  transform={"translate(-50%,-50%)"}
                 >
                   <Image
                     // background Image
-                    src={'https://d1yweukyu067aq.cloudfront.net/images/6.png'}
+                    src={"https://d1yweukyu067aq.cloudfront.net/images/6.png"}
                     alt="hero background"
                     layout="responsive"
                     width={1200}
@@ -119,40 +119,40 @@ const LandingPage = () => {
                 </Box>
               </Box>
               <BackgroundImageWrapper
-                imgURL={'https://d1yweukyu067aq.cloudfront.net/images/4.png'}
+                imgURL={"https://d1yweukyu067aq.cloudfront.net/images/4.png"}
                 factor={0.1}
               />
               <BackgroundImageWrapper
-                imgURL={'https://d1yweukyu067aq.cloudfront.net/images/3.png'}
+                imgURL={"https://d1yweukyu067aq.cloudfront.net/images/3.png"}
                 factor={0.15}
               />
               <BackgroundImageWrapper
-                imgURL={'https://d1yweukyu067aq.cloudfront.net/images/2.PNG'}
+                imgURL={"https://d1yweukyu067aq.cloudfront.net/images/2.PNG"}
                 factor={0.0}
               />
               <BackgroundImageWrapper
-                imgURL={'https://d1yweukyu067aq.cloudfront.net/images/1.PNG'}
+                imgURL={"https://d1yweukyu067aq.cloudfront.net/images/1.PNG"}
                 factor={0.25}
               />
             </Flex>
             <VStack
-              zIndex={'2'}
+              zIndex={"2"}
               h="1rem"
-              position={'absolute'}
+              position={"absolute"}
               textAlign="center"
               mx="auto"
-              maxW={{ base: '100vw', md: '4xl' }}
-              alignItems={'center'}
+              maxW={{ base: "100vw", md: "4xl" }}
+              alignItems={"center"}
               justify="center"
-              gap={{ base: '0rem', lg: '1.4rem' }}
-              px={{ base: '1rem', md: '8rem', lg: '2rem' }}
-              pt={'1rem'}
+              gap={{ base: "0rem", lg: "1.4rem" }}
+              px={{ base: "1rem", md: "8rem", lg: "2rem" }}
+              pt={"1rem"}
             >
               <Center
-                maxW={{ base: '30rem', md: 'full' }}
+                maxW={{ base: "30rem", md: "full" }}
                 pt="1rem"
                 w="full"
-                flexDirection={'column'}
+                flexDirection={"column"}
               >
                 <MotionBox
                   initial={{ opacity: 0, y: 40 }}
@@ -165,8 +165,8 @@ const LandingPage = () => {
                   pb="0.4rem"
                   as="p"
                   textStyle={{
-                    base: 'overline3',
-                    lg: 'overline1',
+                    base: "overline3",
+                    lg: "overline1",
                   }}
                   color="brand.teal4"
                 >
@@ -181,11 +181,11 @@ const LandingPage = () => {
                   }}
                   zIndex={1}
                   as="p"
-                  lineHeight={{ base: '1.2', md: '1.4' }}
+                  lineHeight={{ base: "1.2", md: "1.4" }}
                   textStyle={{
-                    base: 'headline2',
-                    md: 'display3',
-                    lg: 'display1',
+                    base: "headline2",
+                    md: "display3",
+                    lg: "display1",
                   }}
                 >
                   Fund Public Goods Through Community Voting On Solana
@@ -193,14 +193,14 @@ const LandingPage = () => {
               </Center>
               <MotionBox
                 w="md"
-                px={{ base: '1rem', md: '0' }}
+                px={{ base: "1rem", md: "0" }}
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
-                pt={{ base: '1rem', md: '0rem' }}
-                flexDirection={{ base: 'column', md: 'row' }}
-                maxW={{ base: '20rem', md: 'full' }}
-                gap={{ base: '0.6rem', md: '1rem' }}
+                pt={{ base: "1rem", md: "0rem" }}
+                flexDirection={{ base: "column", md: "row" }}
+                maxW={{ base: "20rem", md: "full" }}
+                gap={{ base: "0.6rem", md: "1rem" }}
                 initial={{ opacity: 0, y: 40 }}
                 animate={{
                   opacity: 1,
@@ -221,11 +221,11 @@ const LandingPage = () => {
               </MotionBox>
               <Center
                 transform={{
-                  base: 'translateY(-1rem)',
-                  md: 'translateY(0rem)',
+                  base: "translateY(-1rem)",
+                  md: "translateY(0rem)",
                 }}
                 zIndex="0"
-                minH={{ base: '280px', md: '500px' }}
+                minH={{ base: "280px", md: "500px" }}
               >
                 <SplineAsset />
               </Center>
@@ -234,11 +234,11 @@ const LandingPage = () => {
         </Center>
       </MouseParallaxContainer>
       <Center
-        position={'relative'}
+        position={"relative"}
         h="full"
         w="full"
         zIndex="1"
-        background={'black'}
+        background={"black"}
         borderRadius="50px 50px 0px 0px"
       >
         <DetailsSection />

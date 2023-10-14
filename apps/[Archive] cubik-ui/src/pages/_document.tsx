@@ -1,6 +1,6 @@
-import { Head, Html, Main, NextScript } from 'next/document';
-import Script from 'next/script';
-import { env } from '~/env.mjs';
+import { Head, Html, Main, NextScript } from "next/document";
+import Script from "next/script";
+import { env } from "~/env.mjs";
 export default function Document() {
   return (
     <Html>
@@ -14,7 +14,7 @@ export default function Document() {
       </Head>
       <body>
         <Main />
-        <NextScript />{' '}
+        <NextScript />{" "}
         <Script
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${env.NEXT_PUBLIC_GA_TRACKING_ID}`}

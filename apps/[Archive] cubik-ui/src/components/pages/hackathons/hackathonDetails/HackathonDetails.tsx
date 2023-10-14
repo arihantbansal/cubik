@@ -1,14 +1,14 @@
-import { Container } from '@chakra-ui/react';
-import HackathonBody from './HackathonBody';
-import HackathonHeader from './HackathonHeader';
-import { JSONValue } from 'superjson/dist/types';
-import { Team, UserModel } from '@cubik/database';
+import { Container } from "@chakra-ui/react";
+import HackathonBody from "./HackathonBody";
+import HackathonHeader from "./HackathonHeader";
+import { JSONValue } from "superjson/dist/types";
+import { Team, UserModel } from "@cubik/database";
 import {
   HackathonHost,
   HackathonSchedule,
   HackathonSocial,
   HackathonTracks,
-} from '~/types/hackathon';
+} from "~/types/hackathon";
 
 type HackathonDetailsPropsType = {
   id: string;
@@ -32,12 +32,12 @@ const HackathonDetails = (props: HackathonDetailsPropsType) => {
   return (
     <Container
       maxW="7xl"
-      zIndex={'1'}
-      transform={'translateY(-10rem)'}
+      zIndex={"1"}
+      transform={"translateY(-10rem)"}
       display="flex"
-      flexDirection={'column'}
+      flexDirection={"column"}
       gap="48px"
-      px={{ base: '2rem', md: '3rem', xl: '1rem' }}
+      px={{ base: "2rem", md: "3rem", xl: "1rem" }}
     >
       <HackathonHeader
         timeline={props.timeline as HackathonSchedule}

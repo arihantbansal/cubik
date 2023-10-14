@@ -5,10 +5,10 @@ import {
   CardFooter,
   HStack,
   VStack,
-} from '@chakra-ui/react';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { FiChevronLeft } from 'react-icons/fi';
-import MarkdownEditor from '~/components/common/editor/MarkdownEditor';
+} from "@chakra-ui/react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { FiChevronLeft } from "react-icons/fi";
+import MarkdownEditor from "~/components/common/editor/MarkdownEditor";
 
 const StepThree = ({
   setIncreasedSize,
@@ -33,26 +33,26 @@ const StepThree = ({
 
   return (
     <>
-      <VStack gap="12px" w="full" align={'start'}>
+      <VStack gap="12px" w="full" align={"start"}>
         <HStack>
           <Box
             as="p"
-            textStyle={{ base: 'title5', md: 'title4' }}
+            textStyle={{ base: "title5", md: "title4" }}
             color="white"
             _after={{
               content: '"*"',
-              padding: '4px',
-              color: 'red',
+              padding: "4px",
+              color: "red",
             }}
           >
             Detailed Description
           </Box>
         </HStack>
         <CardBody
-          rounded={'8px'}
+          rounded={"8px"}
           p="0"
           gap="1rem"
-          border={'1px solid'}
+          border={"1px solid"}
           borderColor="neutral.3"
         >
           <MarkdownEditor
@@ -65,17 +65,17 @@ const StepThree = ({
       </VStack>
       <CardFooter>
         <Button
-          size={{ base: 'cubikMini', md: 'cubikSmall' }}
-          variant={'cubikText'}
+          size={{ base: "cubikMini", md: "cubikSmall" }}
+          variant={"cubikText"}
           onClick={onPrevious}
           leftIcon={
-            <Box boxSize={{ base: '14px', md: '18px' }} as={FiChevronLeft} />
+            <Box boxSize={{ base: "14px", md: "18px" }} as={FiChevronLeft} />
           }
         >
           Previous
         </Button>
         <Button
-          size={{ base: 'cubikMini', md: 'cubikSmall' }}
+          size={{ base: "cubikMini", md: "cubikSmall" }}
           variant="cubikFilled"
           loadingText="Submitting"
           isDisabled={!editorData}

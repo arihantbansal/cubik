@@ -1,6 +1,6 @@
-import { Box, Modal, useDisclosure, VStack } from '@chakra-ui/react';
+import { Box, Modal, useDisclosure, VStack } from "@chakra-ui/react";
 
-import { formatNumberWithK } from '~/utils/formatWithK';
+import { formatNumberWithK } from "~/utils/formatWithK";
 
 const VoteModalBody = () => {
   return <></>;
@@ -13,7 +13,7 @@ export const ProjectsDonation = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box display={{ base: 'none', md: 'block' }}>
+    <Box display={{ base: "none", md: "block" }}>
       <Modal isOpen={isOpen} onClose={onClose}>
         {/* <ModalOverlay />
         <ModalContent
@@ -64,10 +64,10 @@ export const ProjectsDonation = ({
       <VStack
         ml="auto"
         right="20rem"
-        w={'fit-content'}
-        alignItems={{ base: 'center', md: 'start' }}
+        w={"fit-content"}
+        alignItems={{ base: "center", md: "start" }}
       >
-        <VStack align={'end'} gap="0" spacing="0" pb="0.5rem">
+        <VStack align={"end"} gap="0" spacing="0" pb="0.5rem">
           <Box as="p" textStyle="display3" color="neutral.11">
             {formatNumberWithK(
               // Number(((projectDetails.usd_total as number) * 19).toFixed(2))

@@ -1,26 +1,26 @@
-import * as anchor from '@coral-xyz/anchor';
-import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import * as spl from '@solana/spl-token';
-import { getAssociatedTokenAddressSync } from '@solana/spl-token';
-import { env } from '~/env.mjs';
+import * as anchor from "@coral-xyz/anchor";
+import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import * as spl from "@solana/spl-token";
+import { getAssociatedTokenAddressSync } from "@solana/spl-token";
+import { env } from "~/env.mjs";
 
-import type { CubikHackathon } from './idl';
-import { IDL } from './idl';
+import type { CubikHackathon } from "./idl";
+import { IDL } from "./idl";
 
-export const PROGRAM_ID = 'DQDrRfiaqSzbSJCL9BMzPd6TfgLmDHxCEQDCrjoK9jCF';
+export const PROGRAM_ID = "DQDrRfiaqSzbSJCL9BMzPd6TfgLmDHxCEQDCrjoK9jCF";
 
 const RPC_URL =
-  env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta'
+  env.NEXT_PUBLIC_SOLANA_NETWORK === "mainnet-beta"
     ? env.NEXT_PUBLIC_RPC_MAINNET_URL
-    : 'https://api.devnet.solana.com' || env.NEXT_PUBLIC_RPC_DEVNET_URL;
+    : "https://api.devnet.solana.com" || env.NEXT_PUBLIC_RPC_DEVNET_URL;
 
-export const connection = new anchor.web3.Connection(RPC_URL, 'confirmed');
+export const connection = new anchor.web3.Connection(RPC_URL, "confirmed");
 const TOKEN_METADATA_PROGRAM_ID = new anchor.web3.PublicKey(
-  'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s'
+  "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
 );
 export const getProvider = (wallet: anchor.Wallet) => {
   const opts = {
-    preflightCommitment: 'processed' as anchor.web3.ConfirmOptions,
+    preflightCommitment: "processed" as anchor.web3.ConfirmOptions,
   };
 
   const provider = new anchor.AnchorProvider(
@@ -47,9 +47,9 @@ export const HackathonInit = async (wallet: anchor.Wallet, counter: number) => {
   const program = anchorProgram(wallet);
   const [hackathon_account] = anchor.web3.PublicKey.findProgramAddressSync(
     [
-      Buffer.from('hackathon'),
+      Buffer.from("hackathon"),
       wallet.publicKey.toBuffer(),
-      new anchor.BN(counter).toArrayLike(Buffer, 'le', 2),
+      new anchor.BN(counter).toArrayLike(Buffer, "le", 2),
     ],
     program.programId
   );
@@ -78,17 +78,17 @@ export const createParticipant = async (
   const program = anchorProgram(wallet);
   const [masterKey] = await anchor.web3.PublicKey.findProgramAddress(
     [
-      Buffer.from('metadata'),
+      Buffer.from("metadata"),
       TOKEN_METADATA_PROGRAM_ID.toBuffer(),
       nftMint.publicKey.toBuffer(),
-      Buffer.from('edition'),
+      Buffer.from("edition"),
     ],
     TOKEN_METADATA_PROGRAM_ID
   );
 
   const [metadatakey] = await anchor.web3.PublicKey.findProgramAddress(
     [
-      Buffer.from('metadata'),
+      Buffer.from("metadata"),
       TOKEN_METADATA_PROGRAM_ID.toBuffer(),
       nftMint.publicKey.toBuffer(),
     ],
@@ -96,15 +96,15 @@ export const createParticipant = async (
   );
   const [hackathon_account] = anchor.web3.PublicKey.findProgramAddressSync(
     [
-      Buffer.from('hackathon'),
+      Buffer.from("hackathon"),
       new anchor.web3.PublicKey(hackathon_authority).toBuffer(),
-      new anchor.BN(counter).toArrayLike(Buffer, 'le', 2),
+      new anchor.BN(counter).toArrayLike(Buffer, "le", 2),
     ],
     program.programId
   );
   const [participant_account] = anchor.web3.PublicKey.findProgramAddressSync(
     [
-      Buffer.from('participant'),
+      Buffer.from("participant"),
       hackathon_account.toBuffer(),
       wallet.publicKey.toBuffer(),
     ],
@@ -150,15 +150,15 @@ export const checkParticipant = async (
   try {
     const [hackathon_account] = anchor.web3.PublicKey.findProgramAddressSync(
       [
-        Buffer.from('hackathon'),
+        Buffer.from("hackathon"),
         new anchor.web3.PublicKey(hackathon_owner).toBuffer(),
-        new anchor.BN(counter).toArrayLike(Buffer, 'le', 2),
+        new anchor.BN(counter).toArrayLike(Buffer, "le", 2),
       ],
       program.programId
     );
     const [participant_account] = anchor.web3.PublicKey.findProgramAddressSync(
       [
-        Buffer.from('participant'),
+        Buffer.from("participant"),
         hackathon_account.toBuffer(),
         wallet.publicKey.toBuffer(),
       ],

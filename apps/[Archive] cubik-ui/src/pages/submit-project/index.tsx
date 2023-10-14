@@ -1,17 +1,17 @@
-import { Card, CardHeader } from '@chakra-ui/card';
-import { useDisclosure } from '@chakra-ui/hooks';
-import { Box, Container, HStack } from '@chakra-ui/layout';
-import { yupResolver } from '@hookform/resolvers/yup';
-import type { ProjectsModel } from '@cubik/database';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { array, object, string } from 'yup';
-import withAuth from '~/components/HOC/WithAuth';
-import SEO from '~/components/SEO';
-import CustomStepper from '~/components/common/stepper/CustomStepper';
-import { StepOne, StepThree, StepTwo } from '~/components/pages/create-project';
-import CreateProjectTransactionModal from '~/components/pages/create-project/TransactionSignModal';
-import { uploadToCloudinary } from '~/utils/upload';
+import { Card, CardHeader } from "@chakra-ui/card";
+import { useDisclosure } from "@chakra-ui/hooks";
+import { Box, Container, HStack } from "@chakra-ui/layout";
+import { yupResolver } from "@hookform/resolvers/yup";
+import type { ProjectsModel } from "@cubik/database";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { array, object, string } from "yup";
+import withAuth from "~/components/HOC/WithAuth";
+import SEO from "~/components/SEO";
+import CustomStepper from "~/components/common/stepper/CustomStepper";
+import { StepOne, StepThree, StepTwo } from "~/components/pages/create-project";
+import CreateProjectTransactionModal from "~/components/pages/create-project/TransactionSignModal";
+import { uploadToCloudinary } from "~/utils/upload";
 
 type SubmitProjectProps = {
   onSubmit: (_project: Project) => void;
@@ -65,14 +65,14 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
       object().shape({
         projectName: string()
           .required("Project name can't be empty")
-          .max(36, 'Must be at most 36 characters'),
+          .max(36, "Must be at most 36 characters"),
         tagline: string()
           .required("Tagline can't be empty")
-          .max(120, 'Tagline can not be more than 120 characters'),
+          .max(120, "Tagline can not be more than 120 characters"),
         logo: string().required("Logo can't be empty"),
         email: string()
           .required("Email can't be empty")
-          .email('Email is not valid'),
+          .email("Email is not valid"),
         category: array()
           .of(
             object({
@@ -81,8 +81,8 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
               colorScheme: string().required(),
             })
           )
-          .max(3, 'Must be at most 3 categories')
-          .required('Must select at least one category'),
+          .max(3, "Must be at most 3 categories")
+          .required("Must select at least one category"),
         twitter: string().required("Twitter handle can't be empty"),
         projectLink: string().required("Project Link can't be empty"),
         github: string(),
@@ -90,13 +90,13 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
         discord: string(),
         description: string()
           .required("Description can't be empty")
-          .max(30000, 'Must be at most 3000 characters'),
+          .max(30000, "Must be at most 3000 characters"),
       })
     ),
-    mode: 'onChange',
+    mode: "onChange",
     defaultValues: {
-      twitter: 'https://twitter.com/@username',
-      projectLink: 'https://example.com',
+      twitter: "https://twitter.com/@username",
+      projectLink: "https://example.com",
     },
   });
 
@@ -115,7 +115,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
 
   const handleStepThreeSubmit = async (editorData: string) => {
     try {
-      const imageUrl = await uploadToCloudinary(getValues('logo')).catch(
+      const imageUrl = await uploadToCloudinary(getValues("logo")).catch(
         (error) => {
           throw new Error(
             `Error uploading image to Cloudinary: ${error.message}`
@@ -126,7 +126,7 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
       setEditorData(editorData);
       onTransactionModalOpen();
     } catch (e) {
-      console.error('There was an error uploading the image', e);
+      console.error("There was an error uploading the image", e);
     } finally {
       setLoadingSubmit(false);
     }
@@ -142,47 +142,47 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
       <Container
         transition="all .25s ease"
         maxW="7xl"
-        p={{ base: '1rem', md: '0' }}
-        my={{ base: '2rem', md: '5rem', lg: '6rem', xl: '8rem' }}
+        p={{ base: "1rem", md: "0" }}
+        my={{ base: "2rem", md: "5rem", lg: "6rem", xl: "8rem" }}
         outline="none"
       >
         <Card
           maxW={{
-            base: increasedSize ? '98%' : '28rem',
-            md: increasedSize ? '90%' : '32rem',
+            base: increasedSize ? "98%" : "28rem",
+            md: increasedSize ? "90%" : "32rem",
           }}
           mx="auto"
-          padding={{ base: '24px', md: '40px' }}
+          padding={{ base: "24px", md: "40px" }}
         >
           {!(step === 4) && (
             <>
-              <CardHeader maxW={{ base: '28rem', md: '36rem' }} mx="auto">
+              <CardHeader maxW={{ base: "28rem", md: "36rem" }} mx="auto">
                 <Box
                   as="h1"
                   color="neutral.11"
-                  textStyle={{ base: 'title2', md: 'title1' }}
+                  textStyle={{ base: "title2", md: "title1" }}
                 >
                   Create New Project
                 </Box>
                 <Box
                   as="p"
-                  textStyle={{ base: 'body5', md: 'body4' }}
+                  textStyle={{ base: "body5", md: "body4" }}
                   color="neutral.9"
                 >
                   Bring your vision to life! Create a project, receive grants
                   through public donations, and make an impact.
-                </Box>{' '}
+                </Box>{" "}
                 <HStack
                   pt="18px"
                   w="full"
-                  spacing={{ base: '0px', md: '8px' }}
-                  justify={{ base: 'center', md: 'space-between' }}
+                  spacing={{ base: "0px", md: "8px" }}
+                  justify={{ base: "center", md: "space-between" }}
                 >
                   <CustomStepper
                     steps={[
-                      { index: 1, name: 'Basic Information' },
-                      { index: 2, name: 'Project Links' },
-                      { index: 3, name: 'Detailed Info' },
+                      { index: 1, name: "Basic Information" },
+                      { index: 2, name: "Project Links" },
+                      { index: 3, name: "Detailed Info" },
                     ]}
                     currentStep={step}
                   />
@@ -194,11 +194,11 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
             // @ts-ignore
             onSubmit={handleSubmit(onSubmit)}
             style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'start',
-              gap: '2rem',
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "start",
+              gap: "2rem",
             }}
           >
             {step === 1 && (
@@ -249,4 +249,4 @@ const SubmitProject: React.FC<SubmitProjectProps> = ({ onSubmit }) => {
   );
 };
 
-export default withAuth(SubmitProject, { redirect: '/' });
+export default withAuth(SubmitProject, { redirect: "/" });

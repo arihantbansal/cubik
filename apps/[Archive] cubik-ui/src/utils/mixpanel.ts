@@ -1,6 +1,6 @@
-import type { Dict, Query } from 'mixpanel-browser';
-import mixpanel from 'mixpanel-browser';
-import { env } from '~/env.mjs';
+import type { Dict, Query } from "mixpanel-browser";
+import mixpanel from "mixpanel-browser";
+import { env } from "~/env.mjs";
 mixpanel.init(env.NEXT_PUBLIC_MIXPANEL as string);
 
 export const Mixpanel = {

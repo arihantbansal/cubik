@@ -1,7 +1,7 @@
-import { ProjectJoinRoundStatus } from '@cubik/database';
-import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
-import { protectedProcedure } from '../../../trpc';
+import { ProjectJoinRoundStatus } from "@cubik/database";
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+import { protectedProcedure } from "../../../trpc";
 
 export const joinRound = protectedProcedure
   .input(
@@ -16,9 +16,9 @@ export const joinRound = protectedProcedure
     const { prisma } = ctx;
     if (!ctx.session.user) {
       throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: 'Session not found',
-        cause: 'User not logged in',
+        code: "FORBIDDEN",
+        message: "Session not found",
+        cause: "User not logged in",
       });
     }
     const project = await prisma.projectsModel.findUnique({
@@ -28,9 +28,9 @@ export const joinRound = protectedProcedure
     });
     if (project?.owner_publickey !== ctx.session.user.mainWallet) {
       throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: 'User is not the owner for this project',
-        cause: 'Invalid User ',
+        code: "FORBIDDEN",
+        message: "User is not the owner for this project",
+        cause: "Invalid User ",
       });
     }
     const round = await prisma.round.findUnique({
@@ -40,9 +40,9 @@ export const joinRound = protectedProcedure
     });
     if (!round) {
       throw new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'Round not found',
-        cause: 'Invalid Round ',
+        code: "BAD_REQUEST",
+        message: "Round not found",
+        cause: "Invalid Round ",
       });
     }
 

@@ -1,11 +1,11 @@
-import { Center, Skeleton, VStack } from '@chakra-ui/react';
-import { isPast } from 'date-fns';
-import ComponentErrors from '~/components/errors/ComponentErrors';
-import { trpc } from '~/utils/trpc';
-import FundingRoundBanner from './FundingRoundBanner';
-import GrantsCarousel from './GrantsCaruosel';
-import RoundsCarouselLoadingState from './LoadingState';
-import { ProjectExploreBanner } from '@cubik/common-types';
+import { Center, Skeleton, VStack } from "@chakra-ui/react";
+import { isPast } from "date-fns";
+import ComponentErrors from "~/components/errors/ComponentErrors";
+import { trpc } from "~/utils/trpc";
+import FundingRoundBanner from "./FundingRoundBanner";
+import GrantsCarousel from "./GrantsCaruosel";
+import RoundsCarouselLoadingState from "./LoadingState";
+import { ProjectExploreBanner } from "@cubik/common-types";
 
 const ExplorePageHeader = ({ banner }: { banner: ProjectExploreBanner[] }) => {
   console.log(banner);
@@ -39,14 +39,14 @@ const ExplorePageHeader = ({ banner }: { banner: ProjectExploreBanner[] }) => {
       ) : ( */}
       <GrantsCarousel>
         {banner ? (
-          banner?.map(resource_distribution_event => (
+          banner?.map((resource_distribution_event) => (
             <FundingRoundBanner
               key={resource_distribution_event.id}
               startDate={new Date(resource_distribution_event.startTime)}
               endDate={new Date(resource_distribution_event.endTime)}
               id={resource_distribution_event.id}
               name={resource_distribution_event.name}
-              description={resource_distribution_event?.shortDescription || ''}
+              description={resource_distribution_event?.shortDescription || ""}
               matchingPool={resource_distribution_event.matchingPool}
             />
           ))

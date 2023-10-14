@@ -1,11 +1,11 @@
-import { tokenGroup } from '~/interfaces/token';
+import { tokenGroup } from "~/interfaces/token";
 
 export const tokens: tokenGroup[] = [
   {
-    label: 'USDC',
-    value: 'usd',
-    devNetAdd: '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU',
-    mainNetAdd: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+    label: "USDC",
+    value: "usd",
+    devNetAdd: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+    mainNetAdd: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
     icon: (
       <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0_789_9405)">

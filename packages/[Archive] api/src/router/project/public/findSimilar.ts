@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { publicProcedure } from '../../../trpc';
+import { z } from "zod";
+import { publicProcedure } from "../../../trpc";
 
 export const findSimilar = publicProcedure
   .input(
@@ -13,7 +13,7 @@ export const findSimilar = publicProcedure
         isArchive: false,
       },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: "desc",
       },
       include: {
         owner: true,

@@ -1,7 +1,7 @@
-import { Prisma } from '@cubik/database';
-import { TRPCError } from '@trpc/server';
-import { protectedProcedure } from '../../../trpc';
-import { ProofType, UserProof } from './addProof';
+import { Prisma } from "@cubik/database";
+import { TRPCError } from "@trpc/server";
+import { protectedProcedure } from "../../../trpc";
+import { ProofType, UserProof } from "./addProof";
 
 export const dripProof = protectedProcedure.mutation(async ({ ctx }) => {
   try {
@@ -42,16 +42,16 @@ export const dripProof = protectedProcedure.mutation(async ({ ctx }) => {
           ? [
               ...(userProofs as unknown as ProofType[]),
               {
-                name: 'DRIPS01' as ProofType,
+                name: "DRIPS01" as ProofType,
                 timestamp: new Date(),
-                tx: '',
+                tx: "",
               },
             ]
           : [
               {
-                name: 'DRIPS01' as ProofType,
+                name: "DRIPS01" as ProofType,
                 timestamp: new Date(),
-                tx: '',
+                tx: "",
               },
             ]) as unknown as Prisma.JsonArray,
       },
@@ -61,9 +61,9 @@ export const dripProof = protectedProcedure.mutation(async ({ ctx }) => {
   } catch (e) {
     console.log(e);
     throw new TRPCError({
-      code: 'INTERNAL_SERVER_ERROR',
-      cause: 'Internal Server Error',
-      message: 'Internal Server Error',
+      code: "INTERNAL_SERVER_ERROR",
+      cause: "Internal Server Error",
+      message: "Internal Server Error",
     });
   }
 });

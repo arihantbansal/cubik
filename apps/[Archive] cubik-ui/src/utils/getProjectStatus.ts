@@ -3,9 +3,9 @@ import {
   ProjectJoinRoundStatus,
   ProjectVerifyStatus,
   Round,
-} from '@cubik/database';
-import { isFuture, isPast } from 'date-fns';
-import { projectWithFundingRoundType } from '~/types/project';
+} from "@cubik/database";
+import { isFuture, isPast } from "date-fns";
+import { projectWithFundingRoundType } from "~/types/project";
 
 type projectRoundAndVerifyType = {
   round?:
@@ -17,8 +17,8 @@ type projectRoundAndVerifyType = {
   status:
     | ProjectJoinRoundStatus
     | ProjectVerifyStatus
-    | 'LIVE'
-    | 'ENDED'
+    | "LIVE"
+    | "ENDED"
     | undefined
     | null;
   startTime?: Date;
@@ -57,14 +57,14 @@ export const ProjectStatus = ({
               } else if (isFuture(projectJoinRound.fundingRound.endTime)) {
                 projectRoundData = {
                   round: projectJoinRound,
-                  status: 'LIVE',
+                  status: "LIVE",
                   startTime: projectJoinRound.fundingRound.startTime,
                   endTime: projectJoinRound.fundingRound.endTime,
                 };
               } else if (isPast(projectJoinRound.fundingRound.endTime)) {
                 projectRoundData = {
                   round: projectJoinRound,
-                  status: 'ENDED',
+                  status: "ENDED",
                   startTime: projectJoinRound.fundingRound.startTime,
                   endTime: projectJoinRound.fundingRound.endTime,
                 };
@@ -78,7 +78,7 @@ export const ProjectStatus = ({
           } else {
             projectRoundData = {
               round: projectJoinRound,
-              status: 'ENDED',
+              status: "ENDED",
             };
           }
         }

@@ -1,11 +1,11 @@
-import { z } from 'zod';
-import { publicProcedure } from '../../../trpc';
+import { z } from "zod";
+import { publicProcedure } from "../../../trpc";
 
 export const findOneHackthon = publicProcedure
   .input(
     z.object({
       id: z.string().nonempty(),
-    }),
+    })
   )
   .query(async ({ ctx, input }) => {
     try {

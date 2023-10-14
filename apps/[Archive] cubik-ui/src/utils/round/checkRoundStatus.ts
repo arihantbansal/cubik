@@ -1,10 +1,10 @@
-import { isFuture, isPast } from 'date-fns';
+import { isFuture, isPast } from "date-fns";
 
 export enum GRANT_STATUS {
-  notStarted = 'NOT_YET_STARTED',
-  onGoing = 'ONGOING',
-  ended = 'ENDED',
-  invalid = 'INVALID',
+  notStarted = "NOT_YET_STARTED",
+  onGoing = "ONGOING",
+  ended = "ENDED",
+  invalid = "INVALID",
 }
 
 export function checkRoundStatus(startDate: Date, endDate: Date): GRANT_STATUS {

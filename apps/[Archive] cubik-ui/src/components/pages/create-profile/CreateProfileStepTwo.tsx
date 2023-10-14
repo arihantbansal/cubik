@@ -1,10 +1,10 @@
-import { Box, Button, CardBody, CardFooter, VStack } from '@chakra-ui/react';
-import React, { use, useEffect, useState } from 'react';
-import { BsGoogle } from 'react-icons/bs';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import { getURL } from '~/utils/getURL';
-import { supabase, useUser } from '~/utils/supabase';
-import { trpc } from '~/utils/trpc';
+import { Box, Button, CardBody, CardFooter, VStack } from "@chakra-ui/react";
+import React, { use, useEffect, useState } from "react";
+import { BsGoogle } from "react-icons/bs";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { getURL } from "~/utils/getURL";
+import { supabase, useUser } from "~/utils/supabase";
+import { trpc } from "~/utils/trpc";
 
 const CreateProfileStepTwo = ({
   onNext,
@@ -19,7 +19,7 @@ const CreateProfileStepTwo = ({
   const checkEmailMutation = trpc.user.checkEmail.useMutation();
   const handleClick = async () => {
     const a = await supabase.auth.signInWithOAuth({
-      provider: 'google',
+      provider: "google",
       options: {
         redirectTo: `https://devnet.cubik.so/create-profile`,
       },
@@ -44,11 +44,11 @@ const CreateProfileStepTwo = ({
         <VStack py="16px" spacing="12px" w="full" align="start">
           <Button
             w="full"
-            size={{ base: 'cubikMini', md: 'cubikSmall' }}
+            size={{ base: "cubikMini", md: "cubikSmall" }}
             variant="cubikOutlined"
             loadingText="Submitting"
             leftIcon={
-              <Box as={BsGoogle} boxSize={{ base: '12px', md: '13px' }} />
+              <Box as={BsGoogle} boxSize={{ base: "12px", md: "13px" }} />
             }
             onClick={() => {
               handleClick();
@@ -56,13 +56,13 @@ const CreateProfileStepTwo = ({
           >
             {user?.data?.user?.email
               ? user?.data?.user?.email
-              : 'Connect Google'}
+              : "Connect Google"}
           </Button>
           {user?.data.user?.email && (
             <Box
-              display={emailUnique ? 'none' : 'block'}
+              display={emailUnique ? "none" : "block"}
               as="p"
-              textStyle={{ base: 'body5', md: 'body4' }}
+              textStyle={{ base: "body5", md: "body4" }}
               color="surface.red.2"
             >
               *Email belongs to a different account. Connect different Google
@@ -73,8 +73,8 @@ const CreateProfileStepTwo = ({
       </CardBody>
       <CardFooter>
         <Button
-          size={{ base: 'cubikMini', md: 'cubikSmall' }}
-          variant={'cubikText'}
+          size={{ base: "cubikMini", md: "cubikSmall" }}
+          variant={"cubikText"}
           leftIcon={<Box as={FiChevronLeft} width={5} height={5} />}
           onClick={async () => {
             onPrevious();
@@ -83,12 +83,12 @@ const CreateProfileStepTwo = ({
           Previous
         </Button>
         <Button
-          size={{ base: 'cubikMini', md: 'cubikSmall' }}
+          size={{ base: "cubikMini", md: "cubikSmall" }}
           variant="cubikFilled"
           loadingText="Submitting"
           isDisabled={!emailUnique}
           rightIcon={
-            <Box as={FiChevronRight} boxSize={['10px', '12px', '16px']} />
+            <Box as={FiChevronRight} boxSize={["10px", "12px", "16px"]} />
           }
           onClick={() => onNext()}
         >

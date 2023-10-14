@@ -1,24 +1,24 @@
-import { defineStyle, defineStyleConfig } from '@chakra-ui/react';
+import { defineStyle, defineStyleConfig } from "@chakra-ui/react";
 
 // define custom sizes
 const sizes = {
   sm: defineStyle({
-    fontSize: '8px',
-    py: '1',
-    px: '2',
-    maxW: '200px',
+    fontSize: "8px",
+    py: "1",
+    px: "2",
+    maxW: "200px",
   }),
   md: defineStyle({
-    fontSize: '10px',
-    py: '2',
-    px: '3',
-    maxW: '300px',
+    fontSize: "10px",
+    py: "2",
+    px: "3",
+    maxW: "300px",
   }),
   lg: defineStyle({
-    fontSize: '12px',
-    py: '2',
-    px: '4',
-    maxW: '350px',
+    fontSize: "12px",
+    py: "2",
+    px: "4",
+    maxW: "350px",
   }),
 };
 

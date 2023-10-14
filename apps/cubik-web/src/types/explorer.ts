@@ -1,6 +1,5 @@
 export type ExplorerType = "round" | "hackathon";
 
-
 export interface HackathonEvent {
   id: string;
   eventName: "hackathon";

@@ -1,4 +1,4 @@
-import { protectedProcedure } from '../../../trpc';
+import { protectedProcedure } from "../../../trpc";
 export const checkProof = protectedProcedure.query(async ({ ctx, input }) => {
   const prisma = ctx.prisma;
   const res = await prisma.userModel.findFirst({
@@ -8,12 +8,12 @@ export const checkProof = protectedProcedure.query(async ({ ctx, input }) => {
     include: {
       project: {
         where: {
-          status: 'VERIFIED',
+          status: "VERIFIED",
         },
         include: {
           ProjectJoinRound: {
             where: {
-              status: 'APPROVED',
+              status: "APPROVED",
             },
           },
         },

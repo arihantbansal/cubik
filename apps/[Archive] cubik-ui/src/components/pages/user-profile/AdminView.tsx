@@ -1,15 +1,15 @@
-import { Flex } from '@chakra-ui/layout';
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
-import { ProjectsModel } from '@cubik/database';
-import { FC, Key } from 'react';
-import { useErrorBoundary } from '~/hooks/useErrorBoundary';
-import { UserProof, UserWithProjectType } from '~/types/user';
-import ProfileHeader from './ProfileHeader';
-import UserContributions from './contributions-tab/UserContributions';
-import UserDetails from './details-tab/UserDetails';
-import UserProofs from './details-tab/UserProofs';
-import { AdminProjectEmptyState } from './empty-states/ProjectEmptyState';
-import ProjectAdminCard from './projects-tab/ProjectAdminCard';
+import { Flex } from "@chakra-ui/layout";
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/tabs";
+import { ProjectsModel } from "@cubik/database";
+import { FC, Key } from "react";
+import { useErrorBoundary } from "~/hooks/useErrorBoundary";
+import { UserProof, UserWithProjectType } from "~/types/user";
+import ProfileHeader from "./ProfileHeader";
+import UserContributions from "./contributions-tab/UserContributions";
+import UserDetails from "./details-tab/UserDetails";
+import UserProofs from "./details-tab/UserProofs";
+import { AdminProjectEmptyState } from "./empty-states/ProjectEmptyState";
+import ProjectAdminCard from "./projects-tab/ProjectAdminCard";
 
 type adminViewType = {
   user: UserWithProjectType | null | undefined;
@@ -22,22 +22,30 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
   return (
     <ErrorBoundaryWrapper>
       <Flex
-        overflow={'none'}
-        w={'full'}
-        flexDir={'column'}
-        gap={{ base: '32px', sm: '40px', md: '56px' }}
+        overflow={"none"}
+        w={"full"}
+        flexDir={"column"}
+        gap={{ base: "32px", sm: "40px", md: "56px" }}
       >
         {/* <ProfileHeader isLoading={isLoading} user={user} /> */}
-        <Tabs variant={'cubik'}>
+        <Tabs variant={"cubik"}>
           <TabList>
             <Tab>Details</Tab>
             <Tab>Projects</Tab>
             <Tab>Contributions</Tab>
           </TabList>
-          <TabPanels p={'0'}>
+          <TabPanels p={"0"}>
             <TabPanel w="full">
-              <Flex gap={{ base: '24px', md: '32px' }} w={'full'} p="0" flexDir="column">
-                <UserDetails userId={user?.id as string} isLoading={isLoading} />
+              <Flex
+                gap={{ base: "24px", md: "32px" }}
+                w={"full"}
+                p="0"
+                flexDir="column"
+              >
+                <UserDetails
+                  userId={user?.id as string}
+                  isLoading={isLoading}
+                />
                 <UserProofs
                   wallet={user?.mainWallet as string}
                   isLoading={isLoading}
@@ -46,15 +54,21 @@ const AdminView: FC<adminViewType> = ({ user, isLoading }: adminViewType) => {
               </Flex>
             </TabPanel>
             <TabPanel>
-              <Flex direction="column" w="full" gap={{ base: '24px', md: '32px' }}>
+              <Flex
+                direction="column"
+                w="full"
+                gap={{ base: "24px", md: "32px" }}
+              >
                 {user?.project.length ? (
-                  user?.project.map((project: ProjectsModel, key: Key | null | undefined) => {
-                    return !project.isArchive ? (
-                      <ProjectAdminCard project={project} key={key} />
-                    ) : (
-                      <></>
-                    );
-                  })
+                  user?.project.map(
+                    (project: ProjectsModel, key: Key | null | undefined) => {
+                      return !project.isArchive ? (
+                        <ProjectAdminCard project={project} key={key} />
+                      ) : (
+                        <></>
+                      );
+                    }
+                  )
                 ) : (
                   <AdminProjectEmptyState />
                 )}

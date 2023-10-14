@@ -1,15 +1,15 @@
-import { Button } from '@chakra-ui/button';
-import { Skeleton } from '@chakra-ui/skeleton';
-import { useWalletModal } from '@solana/wallet-adapter-react-ui';
-import { isFuture, isPast } from 'date-fns';
-import moment from 'moment';
+import { Button } from "@chakra-ui/button";
+import { Skeleton } from "@chakra-ui/skeleton";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { isFuture, isPast } from "date-fns";
+import moment from "moment";
 import {
   ProofsValidation,
   RoundEndedBanner,
   RoundStartingSoon,
-} from '~/components/common/donationCTA/DonationCTA';
-import { useUserStore } from '~/store/userStore';
-import { UserProof } from '~/types/user';
+} from "~/components/common/donationCTA/DonationCTA";
+import { useUserStore } from "~/store/userStore";
+import { UserProof } from "~/types/user";
 
 interface Props {
   roundId?: string;
@@ -30,21 +30,34 @@ export const DonationStatus = (props: Props) => {
   if (props.roundId && props.projectJoinId) {
     // hackathon is starting soon
     if (isFuture(new Date(props.startTime))) {
-      return <RoundStartingSoon startDate={props.startTime} isLoading={props.loading} />;
+      return (
+        <RoundStartingSoon
+          startDate={props.startTime}
+          isLoading={props.loading}
+        />
+      );
     }
 
     // hackathon is live
-    if (isPast(new Date(props.startTime)) && isFuture(new Date(props.endTime))) {
+    if (
+      isPast(new Date(props.startTime)) &&
+      isFuture(new Date(props.endTime))
+    ) {
       // when no user is connected
       if (!user) {
         return (
           <Skeleton
-            opacity={props.loading ? '0.5' : 1}
+            opacity={props.loading ? "0.5" : 1}
             fadeDuration={2}
             isLoaded={!props.loading}
             w="full"
           >
-            <Button onClick={() => setVisible(true)} variant="cubikFilled" size="md" w="full">
+            <Button
+              onClick={() => setVisible(true)}
+              variant="cubikFilled"
+              size="md"
+              w="full"
+            >
               Connect Wallet
             </Button>
           </Skeleton>
@@ -53,12 +66,17 @@ export const DonationStatus = (props: Props) => {
 
       return (
         <Skeleton
-          opacity={props.loading ? '0.5' : 1}
+          opacity={props.loading ? "0.5" : 1}
           fadeDuration={2}
           isLoaded={!props.loading}
           w="full"
         >
-          <Button onClick={props.onDonateHandler} variant="cubikFilled" size="md" w="full">
+          <Button
+            onClick={props.onDonateHandler}
+            variant="cubikFilled"
+            size="md"
+            w="full"
+          >
             Donate
           </Button>
         </Skeleton>
@@ -67,7 +85,9 @@ export const DonationStatus = (props: Props) => {
 
     // hackathon has ended
     if (isPast(new Date(props.endTime))) {
-      return <RoundEndedBanner endDate={props.endTime} isLoading={props.loading} />;
+      return (
+        <RoundEndedBanner endDate={props.endTime} isLoading={props.loading} />
+      );
     }
     return <></>;
   }
@@ -134,12 +154,15 @@ export const DonationStatus = (props: Props) => {
     //     </Button>
     //   </Skeleton>
     // );
-      
 
     // hackathon has ended
     if (isPast(moment(props.endTime).utc().toDate())) {
       return (
-        <RoundEndedBanner isHackathon={true} endDate={props.endTime} isLoading={props.loading} />
+        <RoundEndedBanner
+          isHackathon={true}
+          endDate={props.endTime}
+          isLoading={props.loading}
+        />
       );
     }
     // default nothing

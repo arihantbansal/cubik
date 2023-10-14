@@ -1,6 +1,6 @@
-import { CardBody } from '@chakra-ui/react';
-import { Dispatch, SetStateAction } from 'react';
-import MarkdownEditor from '~/components/common/editor/MarkdownEditor';
+import { CardBody } from "@chakra-ui/react";
+import { Dispatch, SetStateAction } from "react";
+import MarkdownEditor from "~/components/common/editor/MarkdownEditor";
 
 const GrantStepTwo = ({
   setIncreasedSize,
@@ -20,12 +20,12 @@ const GrantStepTwo = ({
   return (
     <>
       <CardBody
-        rounded={'8px'}
-        gap={{ base: '0px', md: '12px' }}
-        backgroundColor={'transparent'}
+        rounded={"8px"}
+        gap={{ base: "0px", md: "12px" }}
+        backgroundColor={"transparent"}
         minH="70vh"
-        py={{ base: '12px', md: '32px', lg: '32px' }}
-        position={'relative'}
+        py={{ base: "12px", md: "32px", lg: "32px" }}
+        position={"relative"}
       >
         <MarkdownEditor
           editorHeading="Round Description"

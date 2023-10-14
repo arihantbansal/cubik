@@ -1,6 +1,6 @@
-import { Tooltip } from '@chakra-ui/react';
-import * as d3 from 'd3';
-import FlipNumbers from 'react-flip-numbers';
+import { Tooltip } from "@chakra-ui/react";
+import * as d3 from "d3";
+import FlipNumbers from "react-flip-numbers";
 
 interface GraphLineProps {
   width: number;
@@ -73,7 +73,7 @@ export const BonkLine: React.FC<GraphLineProps> = ({
       <path d={dPath} fill="none" stroke="#DF9D33" strokeWidth="1.2" />
       <Tooltip
         isOpen={true}
-        background={'transparent'}
+        background={"transparent"}
         label={
           <FlipNumbers
             height={16}
@@ -85,11 +85,11 @@ export const BonkLine: React.FC<GraphLineProps> = ({
             // }}
             play
             perspective={300}
-            numbers={'$' + markerAdditionalMatch.toFixed(1)}
+            numbers={"$" + markerAdditionalMatch.toFixed(1)}
           />
         }
         color="#fff"
-        fontWeight={'700'}
+        fontWeight={"700"}
         fontSize="16px"
         placement="right"
       >

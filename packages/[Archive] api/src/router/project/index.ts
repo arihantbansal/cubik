@@ -1,4 +1,4 @@
-import { createTRPCRouter } from '../../trpc';
+import { createTRPCRouter } from "../../trpc";
 import {
   findAllProject,
   findManyProjects,
@@ -17,7 +17,7 @@ import {
   projectVisitorsDetail,
   getProjects,
   findOneHackthon,
-} from './public';
+} from "./public";
 import {
   createProject,
   joinRound,
@@ -25,7 +25,7 @@ import {
   projectCount,
   projectIsValid,
   projectsHackathonSubmit,
-} from './protected';
+} from "./protected";
 export const projectRouter = createTRPCRouter({
   findAll: findAllProject,
   findMany: findManyProjects,

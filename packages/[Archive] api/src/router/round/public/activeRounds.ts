@@ -1,4 +1,4 @@
-import { publicProcedure } from '../../../trpc';
+import { publicProcedure } from "../../../trpc";
 
 export const activeRounds = publicProcedure.query(
   async ({ ctx: { prisma } }) => {
@@ -24,7 +24,7 @@ export const activeRounds = publicProcedure.query(
     } catch (error) {
       console.log(error);
 
-      throw new Error('Error fetching active rounds');
+      throw new Error("Error fetching active rounds");
     }
   }
 );

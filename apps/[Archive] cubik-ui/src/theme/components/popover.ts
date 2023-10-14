@@ -1,5 +1,5 @@
-import { popoverAnatomy as parts } from '@chakra-ui/anatomy';
-import { createMultiStyleConfigHelpers } from '@chakra-ui/styled-system';
+import { popoverAnatomy as parts } from "@chakra-ui/anatomy";
+import { createMultiStyleConfigHelpers } from "@chakra-ui/styled-system";
 
 const { definePartsStyle, defineMultiStyleConfig } =
   createMultiStyleConfigHelpers(parts.keys);
@@ -25,22 +25,22 @@ const baseStyle = definePartsStyle(() => ({
 
 const cubik = definePartsStyle({
   content: {
-    outline: 'none',
-    rounded: '12px',
-    p: '16px',
-    gap: '12px',
+    outline: "none",
+    rounded: "12px",
+    p: "16px",
+    gap: "12px",
   },
   header: {
-    maxW: 'full',
-    border: 'none',
+    maxW: "full",
+    border: "none",
   },
   body: {
-    fontSize: { base: '9px', md: '11px' },
-    fontWeight: '400',
+    fontSize: { base: "9px", md: "11px" },
+    fontWeight: "400",
   },
   arrow: {},
   closeButton: {
-    border: 'none',
+    border: "none",
   },
 });
 

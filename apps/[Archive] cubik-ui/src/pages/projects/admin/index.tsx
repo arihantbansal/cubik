@@ -1,17 +1,17 @@
-import { Box, Container, HStack } from '@chakra-ui/layout';
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
-import { Tag } from '@chakra-ui/tag';
-import { useWallet } from '@solana/wallet-adapter-react';
-import { useState } from 'react';
-import CustomTag from '~/components/common/tags/CustomTag';
-import AllProjectsTab from '~/components/pages/projects/admin/AllProjectsTab';
-import ParticipatingProjectsTab from '~/components/pages/projects/admin/ParticipatingProjectsTab';
-import RejectedProjectsTab from '~/components/pages/projects/admin/RejectedProjectsTab';
-import ReviewProjectsTab from '~/components/pages/projects/admin/ReviewProjectsTab';
-import VerifiedProjectsTab from '~/components/pages/projects/admin/VerifiedProjectsTab';
-import { useUserStore } from '~/store/userStore';
+import { Box, Container, HStack } from "@chakra-ui/layout";
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/tabs";
+import { Tag } from "@chakra-ui/tag";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useState } from "react";
+import CustomTag from "~/components/common/tags/CustomTag";
+import AllProjectsTab from "~/components/pages/projects/admin/AllProjectsTab";
+import ParticipatingProjectsTab from "~/components/pages/projects/admin/ParticipatingProjectsTab";
+import RejectedProjectsTab from "~/components/pages/projects/admin/RejectedProjectsTab";
+import ReviewProjectsTab from "~/components/pages/projects/admin/ReviewProjectsTab";
+import VerifiedProjectsTab from "~/components/pages/projects/admin/VerifiedProjectsTab";
+import { useUserStore } from "~/store/userStore";
 
-const AdminWallet = ['52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ'];
+const AdminWallet = ["52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ"];
 
 const ProjectAuthenticationRoute = () => {
   const { publicKey, connected } = useWallet();
@@ -42,7 +42,7 @@ const ProjectAuthenticationRoute = () => {
         <HStack w="full" align="start" pb="32px">
           <Box
             as="p"
-            whiteSpace={'nowrap'}
+            whiteSpace={"nowrap"}
             textStyle="title2"
             color="neutral.11"
           >
@@ -50,17 +50,17 @@ const ProjectAuthenticationRoute = () => {
           </Box>
           <CustomTag>Admin</CustomTag>
         </HStack>
-        <Tabs variant={'cubik'} alignSelf={'start'} w="full">
+        <Tabs variant={"cubik"} alignSelf={"start"} w="full">
           <TabList
-            overflowY={{ base: 'hidden', md: 'inherit' }}
-            overflowX={{ base: 'scroll', md: 'inherit' }}
-            gap={{ base: '0.5rem', md: '1rem' }}
+            overflowY={{ base: "hidden", md: "inherit" }}
+            overflowX={{ base: "scroll", md: "inherit" }}
+            gap={{ base: "0.5rem", md: "1rem" }}
           >
-            <Tab boxShadow={'none'} gap="8px" display={'flex'}>
+            <Tab boxShadow={"none"} gap="8px" display={"flex"}>
               <Box
                 as="p"
-                whiteSpace={'nowrap'}
-                textStyle={{ base: 'title5', md: 'title4' }}
+                whiteSpace={"nowrap"}
+                textStyle={{ base: "title5", md: "title4" }}
               >
                 All Projects
               </Box>
@@ -68,11 +68,11 @@ const ProjectAuthenticationRoute = () => {
                 {projectsNumberByStatus.all}
               </Tag>
             </Tab>
-            <Tab boxShadow={'none'} gap="8px" display={'flex'}>
+            <Tab boxShadow={"none"} gap="8px" display={"flex"}>
               <Box
                 as="p"
-                whiteSpace={'nowrap'}
-                textStyle={{ base: 'title5', md: 'title4' }}
+                whiteSpace={"nowrap"}
+                textStyle={{ base: "title5", md: "title4" }}
               >
                 Under Review
               </Box>
@@ -85,11 +85,11 @@ const ProjectAuthenticationRoute = () => {
                 {projectsNumberByStatus.review}
               </Tag>
             </Tab>
-            <Tab boxShadow={'none'} gap="8px" display={'flex'}>
+            <Tab boxShadow={"none"} gap="8px" display={"flex"}>
               <Box
                 as="p"
-                whiteSpace={'nowrap'}
-                textStyle={{ base: 'title5', md: 'title4' }}
+                whiteSpace={"nowrap"}
+                textStyle={{ base: "title5", md: "title4" }}
               >
                 Verified
               </Box>
@@ -102,11 +102,11 @@ const ProjectAuthenticationRoute = () => {
                 {projectsNumberByStatus.verified}
               </Tag>
             </Tab>
-            <Tab boxShadow={'none'} gap="8px" display={'flex'}>
+            <Tab boxShadow={"none"} gap="8px" display={"flex"}>
               <Box
                 as="p"
-                whiteSpace={'nowrap'}
-                textStyle={{ base: 'title5', md: 'title4' }}
+                whiteSpace={"nowrap"}
+                textStyle={{ base: "title5", md: "title4" }}
               >
                 Rejected
               </Box>
@@ -119,11 +119,11 @@ const ProjectAuthenticationRoute = () => {
                 {projectsNumberByStatus.rejected}
               </Tag>
             </Tab>
-            <Tab boxShadow={'none'} gap="8px" display={'flex'}>
+            <Tab boxShadow={"none"} gap="8px" display={"flex"}>
               <Box
                 as="p"
-                whiteSpace={'nowrap'}
-                textStyle={{ base: 'title5', md: 'title4' }}
+                whiteSpace={"nowrap"}
+                textStyle={{ base: "title5", md: "title4" }}
               >
                 Participating
               </Box>

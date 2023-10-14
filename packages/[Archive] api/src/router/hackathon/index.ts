@@ -1,6 +1,10 @@
-import { createTRPCRouter } from '../../trpc';
-import { get, getAll, participants } from './public';
-import { haveRegistered, projectJoinHackathon, registration } from './protected';
+import { createTRPCRouter } from "../../trpc";
+import { get, getAll, participants } from "./public";
+import {
+  haveRegistered,
+  projectJoinHackathon,
+  registration,
+} from "./protected";
 
 export const hackathonRouter = createTRPCRouter({
   get: get,

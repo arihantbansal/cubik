@@ -1,4 +1,4 @@
-import { publicProcedure } from '../../../trpc';
+import { publicProcedure } from "../../../trpc";
 
 export const findManyVerifiedWithContributions = publicProcedure.query(
   async ({ ctx: { prisma } }) => {
@@ -21,13 +21,13 @@ export const findManyVerifiedWithContributions = publicProcedure.query(
           owner: true,
         },
         where: {
-          status: 'VERIFIED',
+          status: "VERIFIED",
           isArchive: false,
         },
       });
       return res;
     } catch (error: any) {
-      throw new Error(error.message || 'There was some error');
+      throw new Error(error.message || "There was some error");
     }
   }
 );

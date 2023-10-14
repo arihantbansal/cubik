@@ -1,6 +1,6 @@
-import { protectedProcedure } from '../../../trpc';
-import { z } from 'zod';
-import { TRPCError } from '@trpc/server';
+import { protectedProcedure } from "../../../trpc";
+import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 export const haveRegistered = protectedProcedure
   .input(
     z.object({
@@ -25,7 +25,7 @@ export const haveRegistered = protectedProcedure
     } catch (error) {
       console.log(error);
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
+        code: "INTERNAL_SERVER_ERROR",
         message: "Couldn't register user to hackathon",
       });
     }

@@ -1,12 +1,12 @@
-import { Center, HStack, Skeleton, Spinner } from '@chakra-ui/react';
-import { useWallet } from '@solana/wallet-adapter-react';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useUserStore } from '~/store/userStore';
-import ComponentErrors from '../errors/ComponentErrors';
-import UserNavMenu from './navbar-menu/UserNavMenu';
+import { Center, HStack, Skeleton, Spinner } from "@chakra-ui/react";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useUserStore } from "~/store/userStore";
+import ComponentErrors from "../errors/ComponentErrors";
+import UserNavMenu from "./navbar-menu/UserNavMenu";
 
 export interface UserContextProps {
   isOpen: boolean;
@@ -16,7 +16,7 @@ export interface UserContextProps {
 }
 
 const NavbarCTA = () => {
-  const [currentPath, setCurrentPath] = useState('');
+  const [currentPath, setCurrentPath] = useState("");
   const [error, setError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { setUser, user } = useUserStore();
@@ -33,15 +33,15 @@ const NavbarCTA = () => {
       setIsLoading(true);
       try {
         if (connected && publicKey && !disconnecting) {
-          const { data, status } = await axios.post('/api/me/id', {
+          const { data, status } = await axios.post("/api/me/id", {
             publicKey: publicKey.toBase58(),
           });
 
           if (status === 200) {
-            localStorage.setItem('anon_id', data.data.id);
+            localStorage.setItem("anon_id", data.data.id);
 
-            if (localStorage.getItem('wallet_auth')) {
-              const { data: user, status } = await axios.post('/api/me', {
+            if (localStorage.getItem("wallet_auth")) {
+              const { data: user, status } = await axios.post("/api/me", {
                 id: data.data.id,
               });
               setUser(user);
@@ -50,9 +50,9 @@ const NavbarCTA = () => {
             return;
           }
           if (status === 201) {
-            localStorage.setItem('anon_id', data.data.id);
-            localStorage.removeItem('wallet_auth');
-            router.push('/create-profile');
+            localStorage.setItem("anon_id", data.data.id);
+            localStorage.removeItem("wallet_auth");
+            router.push("/create-profile");
             setIsLoading(false);
             return;
           }
@@ -68,7 +68,7 @@ const NavbarCTA = () => {
   }, [connected, publicKey]);
 
   // If on create-profile page, don't show anything
-  if (currentPath === '/create-profile') {
+  if (currentPath === "/create-profile") {
     return null;
   }
   if (error) return <ComponentErrors />;
@@ -86,7 +86,7 @@ const NavbarCTA = () => {
 
   if (connected && publicKey && user) {
     return (
-      <HStack gap={{ base: '2px', md: '16px' }}>
+      <HStack gap={{ base: "2px", md: "16px" }}>
         {/* <MemoizedIconButtonBadge /> */}
         <UserNavMenu />
       </HStack>
@@ -100,8 +100,8 @@ const NavbarCTA = () => {
       onClick={() => {
         disconnect();
         setUser(null);
-        localStorage.removeItem('anon_sig');
-        localStorage.removeItem('wallet_auth');
+        localStorage.removeItem("anon_sig");
+        localStorage.removeItem("wallet_auth");
       }}
     >
       <Spinner size="sm" color="teal" />

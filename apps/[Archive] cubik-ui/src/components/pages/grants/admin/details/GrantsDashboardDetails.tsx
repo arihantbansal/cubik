@@ -14,16 +14,16 @@ import {
   Tag,
   VStack,
   Wrap,
-} from '@chakra-ui/react';
-import { Round } from '@cubik/database';
-import { isFuture, isPast } from 'date-fns';
-import React, { useEffect, useState } from 'react';
-import FlipNumbers from 'react-flip-numbers';
-import { OverviewStatsCard } from '~/components/common/card/OverviewStatsCard';
-import RoundStatus from '~/components/common/dates/Status';
-import GrantUnderReviewProjects from '~/components/pages/grants/admin/details/tabs/GrantUnderReviewProjects';
-import GrantAcceptedProjects from './tabs/GrantAcceptedProjects';
-import GrantRejectedProjects from './tabs/GrantRejectedProjects';
+} from "@chakra-ui/react";
+import { Round } from "@cubik/database";
+import { isFuture, isPast } from "date-fns";
+import React, { useEffect, useState } from "react";
+import FlipNumbers from "react-flip-numbers";
+import { OverviewStatsCard } from "~/components/common/card/OverviewStatsCard";
+import RoundStatus from "~/components/common/dates/Status";
+import GrantUnderReviewProjects from "~/components/pages/grants/admin/details/tabs/GrantUnderReviewProjects";
+import GrantAcceptedProjects from "./tabs/GrantAcceptedProjects";
+import GrantRejectedProjects from "./tabs/GrantRejectedProjects";
 
 interface CountdownTimerProps {
   finalDate: Date;
@@ -62,20 +62,20 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
   }, [finalDate]);
 
   const formatNumber = (number: number) => {
-    return number < 10 ? '0' + number : number;
+    return number < 10 ? "0" + number : number;
   };
 
   return (
     <Box
       display="flex"
-      alignItems={{ base: 'start', md: 'center' }}
+      alignItems={{ base: "start", md: "center" }}
       justifyContent="center"
-      fontWeight={'700'}
+      fontWeight={"700"}
     >
-      <HStack gap={{ base: '1.8rem', md: '2rem' }}>
+      <HStack gap={{ base: "1.8rem", md: "2rem" }}>
         {getTimeRemaining(finalDate).days && (
           <VStack>
-            <Box as="p" textStyle={'headline3'}>
+            <Box as="p" textStyle={"headline3"}>
               <Box as="p" textStyle="headline3">
                 <FlipNumbers
                   height={30}
@@ -101,7 +101,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
         )}
         {getTimeRemaining(finalDate).hours && (
           <VStack>
-            <Box as="p" textStyle={'headline3'}>
+            <Box as="p" textStyle={"headline3"}>
               <Box as="p" textStyle="headline3">
                 <FlipNumbers
                   height={30}
@@ -127,7 +127,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ finalDate }) => {
         )}
         {getTimeRemaining(finalDate).minutes && (
           <VStack>
-            <Box as="p" textStyle={'headline3'}>
+            <Box as="p" textStyle={"headline3"}>
               <Box as="p" textStyle="headline3">
                 <FlipNumbers
                   height={30}
@@ -179,36 +179,36 @@ const GrantAdminDashboardOverview = ({
 }) => {
   const today = new Date();
   return (
-    <VStack align={'start'} w="full" gap="16px">
+    <VStack align={"start"} w="full" gap="16px">
       <Skeleton isLoaded={!isLoading} fadeDuration={1}>
-        <Box textStyle={{ base: 'title3', md: 'title2' }} color="neutral.11">
+        <Box textStyle={{ base: "title3", md: "title2" }} color="neutral.11">
           Overview
         </Box>
       </Skeleton>
       <Wrap
-        direction={{ base: 'column', sm: 'row' }}
-        justify={'start'}
-        align={'start'}
+        direction={{ base: "column", sm: "row" }}
+        justify={"start"}
+        align={"start"}
         spacing="16px"
         w="full"
       >
         <OverviewStatsCard
-          title={'Total Donation'}
+          title={"Total Donation"}
           value={totalContribution}
           isLoading={isLoading}
         >
           <HStack
             w="full"
-            justify={'space-between'}
+            justify={"space-between"}
             rounded="8px"
             p="16px"
-            background={'#141414'}
+            background={"#141414"}
             borderTop="1px solid #1D1F1E"
           >
             <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <Box
                 as="p"
-                textStyle={{ base: 'overline5', md: 'overline4' }}
+                textStyle={{ base: "overline5", md: "overline4" }}
                 color="neutral.8"
               >
                 Last Contribution
@@ -217,7 +217,7 @@ const GrantAdminDashboardOverview = ({
             <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <Box
                 as="p"
-                textStyle={{ base: 'title6', md: 'title5' }}
+                textStyle={{ base: "title6", md: "title5" }}
                 color="neutral.11"
               >
                 ${lastContribution}
@@ -226,22 +226,22 @@ const GrantAdminDashboardOverview = ({
           </HStack>
         </OverviewStatsCard>
         <OverviewStatsCard
-          title={'Average Contribution'}
+          title={"Average Contribution"}
           value={avgContribution}
           isLoading={isLoading}
         >
           <HStack
             w="full"
-            justify={'space-between'}
+            justify={"space-between"}
             rounded="8px"
             p="16px"
-            background={'#141414'}
+            background={"#141414"}
             borderTop="1px solid #1D1F1E"
           >
             <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <Box
                 as="p"
-                textStyle={{ base: 'overline5', md: 'overline4' }}
+                textStyle={{ base: "overline5", md: "overline4" }}
                 color="neutral.8"
               >
                 Todays Average
@@ -250,7 +250,7 @@ const GrantAdminDashboardOverview = ({
             <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <Box
                 as="p"
-                textStyle={{ base: 'title6', md: 'title5' }}
+                textStyle={{ base: "title6", md: "title5" }}
                 color="neutral.11"
               >
                 ${todayAverage}
@@ -259,22 +259,22 @@ const GrantAdminDashboardOverview = ({
           </HStack>
         </OverviewStatsCard>
         <OverviewStatsCard
-          title={'Total Contributors'}
+          title={"Total Contributors"}
           value={totalContributors}
           isLoading={isLoading}
         >
           <HStack
             w="full"
-            justify={'space-between'}
+            justify={"space-between"}
             rounded="8px"
             p="16px"
-            background={'#141414'}
+            background={"#141414"}
             borderTop="1px solid #1D1F1E"
           >
             <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <Box
                 as="p"
-                textStyle={{ base: 'overline5', md: 'overline4' }}
+                textStyle={{ base: "overline5", md: "overline4" }}
                 color="neutral.8"
               >
                 Todays Contributors
@@ -283,7 +283,7 @@ const GrantAdminDashboardOverview = ({
             <Skeleton isLoaded={!isLoading} fadeDuration={1}>
               <Box
                 as="p"
-                textStyle={{ base: 'title6', md: 'title5' }}
+                textStyle={{ base: "title6", md: "title5" }}
                 color="neutral.11"
               >
                 {todayContributors}
@@ -292,8 +292,8 @@ const GrantAdminDashboardOverview = ({
           </HStack>
         </OverviewStatsCard>
         <Stat
-          w={'full'}
-          maxW={{ base: '88vw', sm: 'full', md: 'full' }}
+          w={"full"}
+          maxW={{ base: "88vw", sm: "full", md: "full" }}
           minW="12rem"
           variant="cubik"
           overflow="hidden"
@@ -337,27 +337,27 @@ const GrantAdminDashboardProjects = ({
     rejected: 0,
   });
   return (
-    <VStack align={'start'} w="full" gap="16px">
+    <VStack align={"start"} w="full" gap="16px">
       <Skeleton isLoaded={!isLoading} fadeDuration={1}>
-        <Box textStyle={{ base: 'title3', md: 'title2' }} color="neutral.11">
+        <Box textStyle={{ base: "title3", md: "title2" }} color="neutral.11">
           Projects
         </Box>
       </Skeleton>
-      <Tabs variant={'cubik'} alignSelf={'start'} w="full">
-        <TabList gap={{ base: '0.5rem', md: '1rem' }}>
+      <Tabs variant={"cubik"} alignSelf={"start"} w="full">
+        <TabList gap={{ base: "0.5rem", md: "1rem" }}>
           <Skeleton isLoaded={!isLoading} fadeDuration={1}>
-            <Tab gap="8px" display={'flex'}>
+            <Tab gap="8px" display={"flex"}>
               <Box
-                whiteSpace={'nowrap'}
+                whiteSpace={"nowrap"}
                 overflow="hidden"
                 as="p"
-                textStyle={{ base: 'title5', md: 'title4' }}
+                textStyle={{ base: "title5", md: "title4" }}
               >
                 Under Review
               </Box>
               {projectsNumberByStatus.review > 0 && (
                 <Tag
-                  fontSize={{ base: '10px', md: '12px' }}
+                  fontSize={{ base: "10px", md: "12px" }}
                   rounded="full"
                   variant="colorful"
                 >
@@ -368,13 +368,13 @@ const GrantAdminDashboardProjects = ({
             </Tab>
           </Skeleton>
           <Skeleton isLoaded={!isLoading} fadeDuration={1}>
-            <Tab gap="8px" display={'flex'}>
-              <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
+            <Tab gap="8px" display={"flex"}>
+              <Box as="p" textStyle={{ base: "title5", md: "title4" }}>
                 Accepted
               </Box>
               {projectsNumberByStatus.accepted > 0 && (
                 <Tag
-                  fontSize={{ base: '10px', md: '12px' }}
+                  fontSize={{ base: "10px", md: "12px" }}
                   rounded="full"
                   variant="colorful"
                   color="#FFF066"
@@ -386,13 +386,13 @@ const GrantAdminDashboardProjects = ({
             </Tab>
           </Skeleton>
           <Skeleton isLoaded={!isLoading} fadeDuration={1}>
-            <Tab gap="8px" display={'flex'}>
-              <Box as="p" textStyle={{ base: 'title5', md: 'title4' }}>
+            <Tab gap="8px" display={"flex"}>
+              <Box as="p" textStyle={{ base: "title5", md: "title4" }}>
                 Rejected
               </Box>
               {projectsNumberByStatus.rejected > 0 && (
                 <Tag
-                  fontSize={{ base: '10px', md: '12px' }}
+                  fontSize={{ base: "10px", md: "12px" }}
                   rounded="full"
                   variant="colorful"
                   color="#FF1F1F"

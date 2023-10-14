@@ -2,13 +2,13 @@ import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from './../../trpc';
-import { z } from 'zod';
-import { v4 as uuid } from 'uuid';
-import { Prisma, ProjectJoinRoundStatus } from '@cubik/database';
-import { activeRounds, findPastRound, leaderBoard } from './public';
-import { TRPCError } from '@trpc/server';
-import { createSponsor } from './protected';
+} from "./../../trpc";
+import { z } from "zod";
+import { v4 as uuid } from "uuid";
+import { Prisma, ProjectJoinRoundStatus } from "@cubik/database";
+import { activeRounds, findPastRound, leaderBoard } from "./public";
+import { TRPCError } from "@trpc/server";
+import { createSponsor } from "./protected";
 export const roundRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
@@ -100,7 +100,7 @@ export const roundRouter = createTRPCRouter({
         include: {
           ProjectJoinRound: {
             where: {
-              status: 'PENDING',
+              status: "PENDING",
             },
             include: {
               project: {
@@ -203,7 +203,7 @@ export const roundRouter = createTRPCRouter({
       z.object({
         roundId: z.string().nonempty(),
         projectJoinRoundId: z.string().nonempty(),
-        status: z.enum(['ACCEPTED', 'REJECTED']),
+        status: z.enum(["ACCEPTED", "REJECTED"]),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -215,27 +215,27 @@ export const roundRouter = createTRPCRouter({
       });
       if (!roundInfo) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Round not found',
-          cause: 'Round not found',
+          code: "NOT_FOUND",
+          message: "Round not found",
+          cause: "Round not found",
         });
       }
 
       if (roundInfo.userId !== ctx.session?.user?.id) {
         throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: 'Invalid Round Admin',
-          cause: 'round user id doesnt match login user id',
+          code: "FORBIDDEN",
+          message: "Invalid Round Admin",
+          cause: "round user id doesnt match login user id",
         });
       }
 
-      if (input.status === 'REJECTED') {
+      if (input.status === "REJECTED") {
         const roundRes = await prisma.projectJoinRound.update({
           where: {
             id: input.projectJoinRoundId,
           },
           data: {
-            status: 'REJECTED',
+            status: "REJECTED",
           },
         });
         return roundRes;
@@ -245,7 +245,7 @@ export const roundRouter = createTRPCRouter({
             id: input.projectJoinRoundId,
           },
           data: {
-            status: 'APPROVED',
+            status: "APPROVED",
           },
         });
         return roundRes;
@@ -283,17 +283,17 @@ export const roundRouter = createTRPCRouter({
       });
       if (!res) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Round not found',
-          cause: 'Round not found',
+          code: "NOT_FOUND",
+          message: "Round not found",
+          cause: "Round not found",
         });
       }
 
       if (res.userId !== ctx.session?.user?.id) {
         throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: 'Invalid Round Admin',
-          cause: 'round user id doesnt match login user id',
+          code: "FORBIDDEN",
+          message: "Invalid Round Admin",
+          cause: "round user id doesnt match login user id",
         });
       }
 

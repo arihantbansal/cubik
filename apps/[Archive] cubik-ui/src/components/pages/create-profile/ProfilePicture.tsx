@@ -1,5 +1,5 @@
-import { Center, Avatar as ChakraAvatar } from '@chakra-ui/react';
-import { BiUpArrowAlt } from 'react-icons/bi';
+import { Center, Avatar as ChakraAvatar } from "@chakra-ui/react";
+import { BiUpArrowAlt } from "react-icons/bi";
 
 const ProfilePicture = ({
   onOpen,
@@ -14,9 +14,9 @@ const ProfilePicture = ({
 }) => {
   return (
     <Center
-      cursor={'pointer'}
+      cursor={"pointer"}
       w="fit-content"
-      transform={{ base: 'scale(0.9)', md: 'scale(1)' }}
+      transform={{ base: "scale(0.9)", md: "scale(1)" }}
       position="relative"
       onClick={() => {
         if (isOpen) {
@@ -27,18 +27,18 @@ const ProfilePicture = ({
       }}
     >
       <Center
-        cursor={'pointer'}
-        position={'absolute'}
+        cursor={"pointer"}
+        position={"absolute"}
         bottom="-4px"
         right="-4px"
         rounded="full"
         bg="white"
         p="0.1rem"
-        zIndex={'10'}
+        zIndex={"10"}
       >
         <BiUpArrowAlt color="black" />
       </Center>
-      <ChakraAvatar src={pfp} width="84px" height="84px" borderRadius={'8px'} />
+      <ChakraAvatar src={pfp} width="84px" height="84px" borderRadius={"8px"} />
     </Center>
   );
 };

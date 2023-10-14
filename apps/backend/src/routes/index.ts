@@ -1,2 +1,2 @@
-import { tokenRouter } from './token.router';
+import { tokenRouter } from "./token.router";
 export { tokenRouter };

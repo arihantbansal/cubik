@@ -1,4 +1,4 @@
-import { projectWithFundingRoundType } from '~/types/project';
+import { projectWithFundingRoundType } from "~/types/project";
 
 export const ProjectRound = ({
   project,
@@ -13,12 +13,12 @@ export const ProjectRound = ({
     const activeRound = activeRounds[0];
     return {
       roundName: activeRound.fundingRound.roundName,
-      colorScheme: activeRound.fundingRound.colorScheme || 'teal',
+      colorScheme: activeRound.fundingRound.colorScheme || "teal",
     };
   } else {
     return {
-      roundName: '',
-      colorScheme: 'teal',
+      roundName: "",
+      colorScheme: "teal",
     };
   }
 };

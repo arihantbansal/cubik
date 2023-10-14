@@ -1,5 +1,5 @@
-import * as trpcNext from '@trpc/server/adapters/next';
-import { appRouter, createTRPCContext } from '@cubik/api';
+import * as trpcNext from "@trpc/server/adapters/next";
+import { appRouter, createTRPCContext } from "@cubik/api";
 
 export default trpcNext.createNextApiHandler({
   router: appRouter,

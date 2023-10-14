@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '@cubik/database';
+import { NextApiRequest, NextApiResponse } from "next";
+import { prisma } from "@cubik/database";
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -46,7 +46,7 @@ export default async function handler(
     return res.status(500).send({
       data: null,
       code: 500,
-      error: 'Something went wrong',
+      error: "Something went wrong",
     });
   }
 }

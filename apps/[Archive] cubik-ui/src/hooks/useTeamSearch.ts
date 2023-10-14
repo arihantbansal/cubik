@@ -1,6 +1,6 @@
-import { trpc } from '~/utils/trpc';
+import { trpc } from "~/utils/trpc";
 
-const useTeamSearch = (currentTeammateName = '') => {
+const useTeamSearch = (currentTeammateName = "") => {
   const { data, error, isLoading } = trpc.user.search.useQuery({
     username: currentTeammateName,
   });

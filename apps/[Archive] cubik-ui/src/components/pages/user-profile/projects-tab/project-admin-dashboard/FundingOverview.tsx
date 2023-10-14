@@ -1,8 +1,8 @@
-import { Box, Center, HStack, VStack } from '@chakra-ui/layout';
-import { Spinner } from '@chakra-ui/spinner';
-import ComponentErrors from '~/components/errors/ComponentErrors';
-import { trpc } from '~/utils/trpc';
-import { FundingChart } from './Charts';
+import { Box, Center, HStack, VStack } from "@chakra-ui/layout";
+import { Spinner } from "@chakra-ui/spinner";
+import ComponentErrors from "~/components/errors/ComponentErrors";
+import { trpc } from "~/utils/trpc";
+import { FundingChart } from "./Charts";
 
 const FundingOverview = ({
   projectId,
@@ -37,31 +37,31 @@ const FundingOverview = ({
 
   return (
     <VStack
-      flex={'50%'}
-      align={'start'}
+      flex={"50%"}
+      align={"start"}
       width="full"
-      gap={{ base: '16px', sm: '20px', md: '24px' }}
+      gap={{ base: "16px", sm: "20px", md: "24px" }}
     >
       <Box
         as="p"
-        textStyle={{ base: 'title3', md: 'title2' }}
-        color={'neutral.11'}
+        textStyle={{ base: "title3", md: "title2" }}
+        color={"neutral.11"}
       >
         Funding Overview
       </Box>
-      <VStack align={'start'} w="full">
+      <VStack align={"start"} w="full">
         <HStack>
           <Box
             as="p"
-            textStyle={{ base: 'body5', md: 'body4' }}
-            color={'neutral.8'}
+            textStyle={{ base: "body5", md: "body4" }}
+            color={"neutral.8"}
           >
             Total Amount Raised
           </Box>
         </HStack>
         <Box
           as="p"
-          textStyle={{ base: 'title4', md: 'title3' }}
+          textStyle={{ base: "title4", md: "title3" }}
           color="neutral.11"
         >
           $
@@ -71,37 +71,37 @@ const FundingOverview = ({
         </Box>
       </VStack>
       <Center
-        gap={{ base: '16px', sm: '20px', md: '24px' }}
-        w={'full'}
-        flexDir={{ base: 'column', md: 'row' }}
+        gap={{ base: "16px", sm: "20px", md: "24px" }}
+        w={"full"}
+        flexDir={{ base: "column", md: "row" }}
       >
-        <VStack align={'start'} flex="50%" w="full">
+        <VStack align={"start"} flex="50%" w="full">
           <Box
             as="p"
-            textStyle={{ base: 'body5', md: 'body4' }}
-            color={'neutral.8'}
+            textStyle={{ base: "body5", md: "body4" }}
+            color={"neutral.8"}
           >
             Community Donation
           </Box>
           <Box
             as="p"
-            textStyle={{ base: 'title4', md: 'title3' }}
+            textStyle={{ base: "title4", md: "title3" }}
             color="neutral.11"
           >
             ${totalCommunityDonation.toFixed(2)}
           </Box>
         </VStack>
-        <VStack align={'start'} flex="50%" w="full">
+        <VStack align={"start"} flex="50%" w="full">
           <Box
             as="p"
-            textStyle={{ base: 'body5', md: 'body4' }}
-            color={'neutral.8'}
+            textStyle={{ base: "body5", md: "body4" }}
+            color={"neutral.8"}
           >
             Estimated Match
           </Box>
           <Box
             as="p"
-            textStyle={{ base: 'title4', md: 'title3' }}
+            textStyle={{ base: "title4", md: "title3" }}
             color="neutral.11"
           >
             ${parseInt(amountRaise.toFixed(2)).toLocaleString()}

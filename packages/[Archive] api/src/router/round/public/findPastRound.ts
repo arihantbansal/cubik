@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { publicProcedure } from '../../../trpc';
+import { z } from "zod";
+import { publicProcedure } from "../../../trpc";
 
 export const findPastRound = publicProcedure.query(async ({ ctx }) => {
   const { prisma } = ctx;
@@ -25,6 +25,6 @@ export const findPastRound = publicProcedure.query(async ({ ctx }) => {
   } catch (error) {
     console.log(error);
 
-    throw new Error('Error fetching active rounds');
+    throw new Error("Error fetching active rounds");
   }
 });

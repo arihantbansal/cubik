@@ -119,9 +119,7 @@ interface Props {
   params: { slug: string };
 }
 
-const ProjectPage = async ({ params:{
-  slug
-} }: Props) => {
+const ProjectPage = async ({ params: { slug } }: Props) => {
   return (
     <>
       <ProjectTabs slug={slug} />

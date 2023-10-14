@@ -1,10 +1,10 @@
-import { VStack } from '@chakra-ui/react';
-import React, { useMemo } from 'react';
-import EmptyProjectsState from './empty-state/ProjectsEmptyState';
-import ProjectsList from './ProjectsList';
-import { trpc } from '~/utils/trpc';
-import ProjectListLoadingSkeleton from '../../skeletons/ProjectListLoadingSkeleton';
-import { ProjectExplorerType } from '@cubik/common-types';
+import { VStack } from "@chakra-ui/react";
+import React, { useMemo } from "react";
+import EmptyProjectsState from "./empty-state/ProjectsEmptyState";
+import ProjectsList from "./ProjectsList";
+import { trpc } from "~/utils/trpc";
+import ProjectListLoadingSkeleton from "../../skeletons/ProjectListLoadingSkeleton";
+import { ProjectExplorerType } from "@cubik/common-types";
 
 export type RoundTypes = {
   name: string;

@@ -1,34 +1,34 @@
-import { Avatar } from '@chakra-ui/avatar';
-import { Button } from '@chakra-ui/button';
-import { Box, HStack, Stack, VStack } from '@chakra-ui/layout';
-import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/menu';
-import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/skeleton';
-import React from 'react';
-import { BiChevronDown } from 'react-icons/bi';
+import { Avatar } from "@chakra-ui/avatar";
+import { Button } from "@chakra-ui/button";
+import { Box, HStack, Stack, VStack } from "@chakra-ui/layout";
+import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu";
+import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/skeleton";
+import React from "react";
+import { BiChevronDown } from "react-icons/bi";
 import {
   FaDiscord,
   FaGithub,
   FaTelegramPlane,
   FaTwitter,
   FaYoutube,
-} from 'react-icons/fa';
-import { HiLink } from 'react-icons/hi';
-import { MdReportGmailerrorred } from 'react-icons/md';
-import CustomTag from '~/components/common/tags/CustomTag';
+} from "react-icons/fa";
+import { HiLink } from "react-icons/hi";
+import { MdReportGmailerrorred } from "react-icons/md";
+import CustomTag from "~/components/common/tags/CustomTag";
 
 export const ProjectLink = ({ urlName }: { urlName: string }) => {
   switch (urlName) {
-    case 'url':
+    case "url":
       return <HiLink color="#E0FFFD" size={18} />;
-    case 'twitter':
+    case "twitter":
       return <FaTwitter color="#E0FFFD" size={18} />;
-    case 'discord':
+    case "discord":
       return <FaDiscord color="#E0FFFD" size={18} />;
-    case 'telegram':
+    case "telegram":
       return <FaTelegramPlane color="#E0FFFD" size={18} />;
-    case 'youtube':
+    case "youtube":
       return <FaYoutube color="#E0FFFD" size={18} />;
-    case 'github':
+    case "github":
       return <FaGithub color="#E0FFFD" size={18} />;
     default:
       return <></>;
@@ -50,43 +50,43 @@ const ProjectDetailsHeader = ({
 }) => {
   return (
     <Stack
-      direction={{ base: 'row', md: 'row' }}
-      gap={{ base: '8px', md: '24px' }}
-      width={'full'}
-      alignItems={'center'}
+      direction={{ base: "row", md: "row" }}
+      gap={{ base: "8px", md: "24px" }}
+      width={"full"}
+      alignItems={"center"}
     >
       <SkeletonCircle
         isLoaded={!isLoading}
         fadeDuration={1.5}
-        opacity={isLoading ? '0.6' : '1'}
-        width={{ base: '4.4rem', md: '6.2rem' }}
-        height={{ base: '4.4rem', md: '6.2rem' }}
+        opacity={isLoading ? "0.6" : "1"}
+        width={{ base: "4.4rem", md: "6.2rem" }}
+        height={{ base: "4.4rem", md: "6.2rem" }}
       >
         <Avatar
-          backgroundColor={'#1C1C1C'}
+          backgroundColor={"#1C1C1C"}
           src={logo}
-          width={{ base: '4.4rem', md: '6.2rem' }}
-          height={{ base: '4.4rem', md: '6.2rem' }}
+          width={{ base: "4.4rem", md: "6.2rem" }}
+          height={{ base: "4.4rem", md: "6.2rem" }}
         />
       </SkeletonCircle>
       <VStack
-        justify={'center'}
-        gap={{ base: '2px', md: '14px' }}
-        alignItems={'start'}
+        justify={"center"}
+        gap={{ base: "2px", md: "14px" }}
+        alignItems={"start"}
         justifyContent="center"
         w="full"
       >
-        <Stack direction={'row'} justify={'center'}>
+        <Stack direction={"row"} justify={"center"}>
           <Skeleton
             isLoaded={!isLoading}
             fadeDuration={1.5}
-            opacity={isLoading ? '0.6' : '1'}
-            minW={isLoading ? '10rem' : 'auto'}
+            opacity={isLoading ? "0.6" : "1"}
+            minW={isLoading ? "10rem" : "auto"}
           >
             <HStack align="center" spacing="1px">
               <Box
                 as="p"
-                textStyle={{ base: 'title2', sm: 'title1', md: 'headline3' }}
+                textStyle={{ base: "title2", sm: "title1", md: "headline3" }}
                 textTransform="capitalize"
                 color="neutral.11"
                 noOfLines={1}
@@ -98,14 +98,14 @@ const ProjectDetailsHeader = ({
               </Box>
               <Menu>
                 <MenuButton
-                  w={{ base: '4px !important', md: '8px !important' }}
+                  w={{ base: "4px !important", md: "8px !important" }}
                   display="flex"
-                  marginInline={'0px'}
-                  alignContent={'center'}
-                  justifyContent={'center'}
+                  marginInline={"0px"}
+                  alignContent={"center"}
+                  justifyContent={"center"}
                   m="0 !important"
                   as={Button}
-                  iconSpacing={'0px'}
+                  iconSpacing={"0px"}
                   variant="cubikText"
                   maxH="1rem"
                   rightIcon={<BiChevronDown size={26} color="white" />}
@@ -131,15 +131,15 @@ const ProjectDetailsHeader = ({
           <Skeleton
             isLoaded={!isLoading}
             fadeDuration={2}
-            opacity={isLoading ? '0.4' : '1'}
+            opacity={isLoading ? "0.4" : "1"}
           >
             <HStack
-              overflow={'hidden'}
+              overflow={"hidden"}
               alignItems="center"
-              justifyContent={'center'}
+              justifyContent={"center"}
               spacing="0.4rem"
               h="full"
-              display={{ base: 'none', md: 'flex' }}
+              display={{ base: "none", md: "flex" }}
             >
               {industry &&
                 JSON.parse(industry)?.map((tag: any, key: React.Key) => {
@@ -157,13 +157,13 @@ const ProjectDetailsHeader = ({
           w="full"
           fadeDuration={2.5}
           noOfLines={2}
-          opacity={isLoading ? '0.5' : '1'}
+          opacity={isLoading ? "0.5" : "1"}
           skeletonHeight="16px"
           spacing="4"
         >
           <Box
             as="p"
-            textStyle={{ base: 'body4', md: 'body2' }}
+            textStyle={{ base: "body4", md: "body2" }}
             color="neutral.9"
             noOfLines={2}
             textOverflow="ellipsis"

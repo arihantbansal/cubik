@@ -1,9 +1,9 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { env } from '~/env.mjs';
-import { prisma } from '@cubik/database';
-import jwt from 'jsonwebtoken';
-import { verifyMessage } from '~/utils/getsignMessage';
-import * as anchor from '@coral-xyz/anchor';
+import { NextApiRequest, NextApiResponse } from "next";
+import { env } from "~/env.mjs";
+import { prisma } from "@cubik/database";
+import jwt from "jsonwebtoken";
+import { verifyMessage } from "~/utils/getsignMessage";
+import * as anchor from "@coral-xyz/anchor";
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,7 +21,7 @@ export default async function handler(
       return res.status(204).send({
         data: null,
         code: 204,
-        error: 'User not found',
+        error: "User not found",
       });
     }
 
@@ -35,7 +35,7 @@ export default async function handler(
       return res.status(401).send({
         data: null,
         code: 401,
-        error: 'Invalid signature',
+        error: "Invalid signature",
       });
     }
 
@@ -46,7 +46,7 @@ export default async function handler(
       },
       env.NEXTAUTH_SECRET as string,
       {
-        expiresIn: '6h',
+        expiresIn: "6h",
       }
     );
 
@@ -61,7 +61,6 @@ export default async function handler(
   } catch (error) {
     console.log(error);
 
-    return res.status(500).send('Something went wrong');
+    return res.status(500).send("Something went wrong");
   }
 }
-

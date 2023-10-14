@@ -8,13 +8,13 @@ import {
   HStack,
   Stack,
   VStack,
-} from '@chakra-ui/react';
-import { useEffect } from 'react';
-import GetFormattedLink from '~/components/HOC/GetLink';
-import { projectWithFundingRoundType } from '~/types/project';
-import { ProjectStatus } from '~/utils/getProjectStatus';
-import { trpc } from '~/utils/trpc';
-import ProjectStatusBanner from '../../user-profile/projects-tab/ProjectStatusBanner';
+} from "@chakra-ui/react";
+import { useEffect } from "react";
+import GetFormattedLink from "~/components/HOC/GetLink";
+import { projectWithFundingRoundType } from "~/types/project";
+import { ProjectStatus } from "~/utils/getProjectStatus";
+import { trpc } from "~/utils/trpc";
+import ProjectStatusBanner from "../../user-profile/projects-tab/ProjectStatusBanner";
 
 const VerifiedProjectsTab = ({ setProjectsNumberByStatus }: any) => {
   const {
@@ -38,10 +38,10 @@ const VerifiedProjectsTab = ({ setProjectsNumberByStatus }: any) => {
         <Card
           key={project.id}
           px="0px"
-          pb={{ base: '16px', sm: '20px', md: '24px' }}
-          gap={{ base: '16px', sm: '20px', md: '24px' }}
+          pb={{ base: "16px", sm: "20px", md: "24px" }}
+          gap={{ base: "16px", sm: "20px", md: "24px" }}
           w="100%"
-          border={'none'}
+          border={"none"}
         >
           <ProjectStatusBanner
             status={
@@ -61,40 +61,40 @@ const VerifiedProjectsTab = ({ setProjectsNumberByStatus }: any) => {
           />
           <CardHeader>
             <Stack
-              direction={{ base: 'column', sm: 'row' }}
+              direction={{ base: "column", sm: "row" }}
               px={{
-                base: '16px',
-                sm: '20px',
-                md: '24px',
+                base: "16px",
+                sm: "20px",
+                md: "24px",
               }}
-              gap={'12px'}
+              gap={"12px"}
               w="full"
             >
               <Stack
                 w="full"
                 direction="row"
-                gap={{ base: '8px', sm: '12px', md: '16px' }}
+                gap={{ base: "8px", sm: "12px", md: "16px" }}
               >
                 <Center>
                   <Avatar
                     src={project.logo}
                     name={project.name}
-                    width={{ base: '36px', sm: '48px', md: '52px' }}
-                    height={{ base: '36px', sm: '48px', md: '52px' }}
+                    width={{ base: "36px", sm: "48px", md: "52px" }}
+                    height={{ base: "36px", sm: "48px", md: "52px" }}
                   />
                 </Center>
                 <VStack
-                  alignItems={'start'}
-                  align={'center'}
+                  alignItems={"start"}
+                  align={"center"}
                   justify="center"
-                  spacing={{ base: '2px', sm: '4px', md: '6px' }}
+                  spacing={{ base: "2px", sm: "4px", md: "6px" }}
                 >
                   <Box
                     as="p"
                     textStyle={{
-                      base: 'title4',
-                      sm: 'title3',
-                      md: 'title2',
+                      base: "title4",
+                      sm: "title3",
+                      md: "title2",
                     }}
                     noOfLines={1}
                     textAlign="left"
@@ -105,23 +105,23 @@ const VerifiedProjectsTab = ({ setProjectsNumberByStatus }: any) => {
                   <GetFormattedLink link={project.project_link} />
                 </VStack>
               </Stack>
-              <HStack justifyContent={'end'}>
+              <HStack justifyContent={"end"}>
                 <Button
-                  variant={'unstyled'}
+                  variant={"unstyled"}
                   px="2rem"
                   h="full"
-                  minH={'2.4rem'}
+                  minH={"2.4rem"}
                   w="full"
                   backgroundColor="brand.teal2"
                   color="brand.teal5"
                   border="1px solid"
-                  borderColor={'brand.teal2'}
+                  borderColor={"brand.teal2"}
                   rounded="8px"
                   _hover={{
-                    border: '1px solid',
-                    borderColor: 'brand.teal5',
+                    border: "1px solid",
+                    borderColor: "brand.teal5",
                   }}
-                  maxW={{ base: 'full', sm: '8rem', md: '20rem' }}
+                  maxW={{ base: "full", sm: "8rem", md: "20rem" }}
                   onClick={() => {}}
                 >
                   View Details

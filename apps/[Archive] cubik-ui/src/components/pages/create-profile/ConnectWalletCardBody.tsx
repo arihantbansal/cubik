@@ -7,22 +7,22 @@ import {
   Spinner,
   Text,
   useMediaQuery,
-  Wrap
-} from '@chakra-ui/react';
-import type { WalletName } from '@solana/wallet-adapter-base';
-import { WalletReadyState } from '@solana/wallet-adapter-base';
-import type { Wallet } from '@solana/wallet-adapter-react';
-import { useWallet } from '@solana/wallet-adapter-react';
-import Image from 'next/image';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
+  Wrap,
+} from "@chakra-ui/react";
+import type { WalletName } from "@solana/wallet-adapter-base";
+import { WalletReadyState } from "@solana/wallet-adapter-base";
+import type { Wallet } from "@solana/wallet-adapter-react";
+import { useWallet } from "@solana/wallet-adapter-react";
+import Image from "next/image";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
 export const ConnectWalletCardBody = () => {
-  const [isLargerThan480] = useMediaQuery('(max-width: 600px)');
+  const [isLargerThan480] = useMediaQuery("(max-width: 600px)");
   const { wallets, select, publicKey, connecting } = useWallet();
   const [showMore, setShowMore] = useState(false);
   const [spinning, setSpinning] = useState(true);
-  const [connectingWallet, setConnectingWallet] = useState('');
+  const [connectingWallet, setConnectingWallet] = useState("");
 
   const [listedWallets, collapsedWallets] = useMemo(() => {
     const installed: Wallet[] = [];
@@ -74,13 +74,13 @@ export const ConnectWalletCardBody = () => {
   }, [publicKey, connecting]);
 
   function shortenWalletName(walletName: string) {
-    return walletName.split(' ')[0];
+    return walletName.split(" ")[0];
   }
 
   const WalletButton = ({ wallet }: { wallet: Wallet }) => {
     return (
       <Flex
-        minW={isLargerThan480 ? '96px' : '110px'}
+        minW={isLargerThan480 ? "96px" : "110px"}
         // h="88px"
         p="16px"
         rounded="12px"
@@ -88,9 +88,9 @@ export const ConnectWalletCardBody = () => {
         as="button"
         flexDir="column"
         align="center"
-        background={isLargerThan480 ? 'transparent' : '#FFFFFF08'}
+        background={isLargerThan480 ? "transparent" : "#FFFFFF08"}
         _hover={{
-          background: '#FFFFFF18',
+          background: "#FFFFFF18",
         }}
         cursor="pointer"
         transition="all 0.5s ease-out"
@@ -104,8 +104,8 @@ export const ConnectWalletCardBody = () => {
         }}
       >
         <Center
-          width={isLargerThan480 ? '48px' : '32px'}
-          height={isLargerThan480 ? '48px' : '32px'}
+          width={isLargerThan480 ? "48px" : "32px"}
+          height={isLargerThan480 ? "48px" : "32px"}
         >
           {spinning ? (
             wallet.adapter.name === connectingWallet ? (
@@ -123,7 +123,7 @@ export const ConnectWalletCardBody = () => {
                 width={isLargerThan480 ? 52 : 32}
                 height={isLargerThan480 ? 53 : 32}
                 src={
-                  wallet.adapter.name === 'Ledger'
+                  wallet.adapter.name === "Ledger"
                     ? wallet.adapter.icon
                     : wallet.adapter.icon
                 }
@@ -135,7 +135,7 @@ export const ConnectWalletCardBody = () => {
               width={24}
               height={24}
               src={
-                wallet.adapter.name === 'Ledger'
+                wallet.adapter.name === "Ledger"
                   ? wallet.adapter.icon
                   : wallet.adapter.icon
               }
@@ -147,8 +147,8 @@ export const ConnectWalletCardBody = () => {
           as="p"
           w="full"
           noOfLines={1}
-          textStyle={'title5'}
-          textAlign={'center'}
+          textStyle={"title5"}
+          textAlign={"center"}
         >
           {shortenWalletName(wallet.adapter.name)}
         </Box>
@@ -159,21 +159,21 @@ export const ConnectWalletCardBody = () => {
   return (
     <>
       {isLargerThan480 ? (
-        <HStack overflow={'scroll'} gap="0">
+        <HStack overflow={"scroll"} gap="0">
           {[...listedWallets, ...collapsedWallets].map((wallet) => (
             <WalletButton wallet={wallet} key={wallet.adapter.name} />
           ))}
         </HStack>
       ) : (
         <>
-          {' '}
+          {" "}
           <Wrap gap="16px">
             {listedWallets.length > 0 ? (
               listedWallets.map((wallet) => (
                 <WalletButton wallet={wallet} key={wallet.adapter.name} />
               ))
             ) : (
-              <Text fontSize={{ base: 'xs', md: 'sm' }} ml={2} fontWeight={600}>
+              <Text fontSize={{ base: "xs", md: "sm" }} ml={2} fontWeight={600}>
                 No Wallets Detected
               </Text>
             )}
@@ -199,8 +199,8 @@ export const ConnectWalletCardBody = () => {
                 )
               }
             >
-              <Text fontSize={{ base: 'xs', md: 'sm' }} ml={2} fontWeight={600}>
-                Show {showMore ? 'less' : 'More'}
+              <Text fontSize={{ base: "xs", md: "sm" }} ml={2} fontWeight={600}>
+                Show {showMore ? "less" : "More"}
               </Text>
             </Button>
           </Center>

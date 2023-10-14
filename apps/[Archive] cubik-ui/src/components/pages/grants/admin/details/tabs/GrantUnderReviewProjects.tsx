@@ -17,23 +17,23 @@ import {
   useDisclosure,
   useToast,
   VStack,
-} from '@chakra-ui/react';
-import * as anchor from '@coral-xyz/anchor';
-import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { ProjectsModel } from '@cubik/database';
-import { useAnchorWallet } from '@solana/wallet-adapter-react';
-import { useEffect, useState } from 'react';
-import { FailureToast, SuccessToast } from '~/components/common/toasts/Toasts';
-import ComponentErrors from '~/components/errors/ComponentErrors';
-import GetFormattedLink from '~/components/HOC/GetLink';
+} from "@chakra-ui/react";
+import * as anchor from "@coral-xyz/anchor";
+import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import { ProjectsModel } from "@cubik/database";
+import { useAnchorWallet } from "@solana/wallet-adapter-react";
+import { useEffect, useState } from "react";
+import { FailureToast, SuccessToast } from "~/components/common/toasts/Toasts";
+import ComponentErrors from "~/components/errors/ComponentErrors";
+import GetFormattedLink from "~/components/HOC/GetLink";
 import {
   connection,
   updateProjectRoundVerified,
-} from '~/utils/program/contract';
-import { trpc } from '~/utils/trpc';
-import { ProjectEmptyState } from '../../../../user-profile/empty-states/ProjectEmptyState';
-import ProjectsLoadingState from '../../loadingState/ProjectsLoadingState';
-import ProjectRoundManagerCardPendingStatus from '../../ProjectCard';
+} from "~/utils/program/contract";
+import { trpc } from "~/utils/trpc";
+import { ProjectEmptyState } from "../../../../user-profile/empty-states/ProjectEmptyState";
+import ProjectsLoadingState from "../../loadingState/ProjectsLoadingState";
+import ProjectRoundManagerCardPendingStatus from "../../ProjectCard";
 
 const GrantUnderReviewProjects = ({
   roundId,
@@ -63,10 +63,10 @@ const GrantUnderReviewProjects = ({
 
   const updateRound = trpc.round.updateStatus.useMutation({
     onSuccess: () => {
-      SuccessToast({ toast, message: 'Project Accepted in Round' });
+      SuccessToast({ toast, message: "Project Accepted in Round" });
     },
     onError: (error) => {
-      FailureToast({ toast, message: 'Something went wrong!' });
+      FailureToast({ toast, message: "Something went wrong!" });
     },
   });
   const [transactionLoading, setTransactionLoading] = useState(false);
@@ -116,7 +116,7 @@ const GrantUnderReviewProjects = ({
     updateRound.mutate({
       roundId: roundId,
       projectJoinRoundId: projectJoinRoundId,
-      status: 'ACCEPTED',
+      status: "ACCEPTED",
     });
     onAcceptModelClose();
   };
@@ -142,12 +142,12 @@ const GrantUnderReviewProjects = ({
     const txid = await connection.sendRawTransaction(signed!.serialize());
 
     if (!txid) {
-      throw new Error('txid is null');
+      throw new Error("txid is null");
     }
     updateRound.mutate({
       roundId,
       projectJoinRoundId,
-      status: 'REJECTED',
+      status: "REJECTED",
     });
   };
 
@@ -158,9 +158,9 @@ const GrantUnderReviewProjects = ({
       ) : isError ? (
         <Center
           w="full"
-          py={{ base: '16px', sm: '24px' }}
+          py={{ base: "16px", sm: "24px" }}
           border="1px dashed"
-          borderColor={'#1D1F1E'}
+          borderColor={"#1D1F1E"}
           rounded="12px"
         >
           <ComponentErrors />
@@ -185,8 +185,8 @@ const GrantUnderReviewProjects = ({
           {/* Accept Model */}
           {projectToBeAccepted && (
             <Modal
-              key={'accept' + projectToBeAccepted?.id}
-              variant={'cubik'}
+              key={"accept" + projectToBeAccepted?.id}
+              variant={"cubik"}
               isOpen={isAcceptModalOpen}
               onClose={() => {
                 onAcceptModalOpen();
@@ -194,34 +194,34 @@ const GrantUnderReviewProjects = ({
                 setTransactionSignError(null);
               }}
             >
-              <ModalOverlay opacity={'1%'} />
+              <ModalOverlay opacity={"1%"} />
               <ModalContent
-                minW={{ base: '24rem', md: '36rem' }}
-                overflow={'hidden'}
-                position={'relative'}
-                gap={{ base: '32px', md: '48px' }}
-                textAlign={'center'}
+                minW={{ base: "24rem", md: "36rem" }}
+                overflow={"hidden"}
+                position={"relative"}
+                gap={{ base: "32px", md: "48px" }}
+                textAlign={"center"}
                 _before={{
                   content: '""',
-                  position: 'absolute',
-                  top: '-10%',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  rounded: '50%',
-                  filter: 'blur(80px)',
-                  width: '6rem',
-                  height: '6rem',
+                  position: "absolute",
+                  top: "-10%",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  rounded: "50%",
+                  filter: "blur(80px)",
+                  width: "6rem",
+                  height: "6rem",
                   background:
-                    'linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)',
-                  borderRadius: '8px 8px 0px 0px',
-                  zIndex: '-1',
+                    "linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)",
+                  borderRadius: "8px 8px 0px 0px",
+                  zIndex: "-1",
                 }}
               >
                 <ModalHeader>
                   <VStack
                     w="full"
                     spacing="8px"
-                    align={'center'}
+                    align={"center"}
                     justify="center"
                   >
                     <Box as="p" textStyle="title1" color="neutral.11">
@@ -233,27 +233,27 @@ const GrantUnderReviewProjects = ({
                   </VStack>
                 </ModalHeader>
                 <ModalBody>
-                  <VStack textAlign={'start'} align={'start'} spacing="24px">
-                    <VStack align={'start'} spacing="16px">
-                      <HStack align={'start'} gap="16px">
+                  <VStack textAlign={"start"} align={"start"} spacing="24px">
+                    <VStack align={"start"} spacing="16px">
+                      <HStack align={"start"} gap="16px">
                         <Avatar
                           src={projectToBeAccepted?.logo}
                           name={projectToBeAccepted?.name}
                           borderRadius="8px"
-                          width={{ base: '60px', md: '80px' }}
-                          height={{ base: '60px', md: '80px' }}
+                          width={{ base: "60px", md: "80px" }}
+                          height={{ base: "60px", md: "80px" }}
                         />
-                        <VStack textAlign={'start'} align={'start'} gap="8px">
+                        <VStack textAlign={"start"} align={"start"} gap="8px">
                           <Box
                             as="p"
-                            textStyle={{ base: 'title3', md: 'title2' }}
+                            textStyle={{ base: "title3", md: "title2" }}
                             color="neutral.11"
                           >
                             {projectToBeAccepted?.name}
                           </Box>
                           <Box
                             as="p"
-                            textStyle={{ base: 'title6', md: 'title5' }}
+                            textStyle={{ base: "title6", md: "title5" }}
                             color="neutral.8"
                           >
                             {projectToBeAccepted?.short_description}
@@ -262,39 +262,39 @@ const GrantUnderReviewProjects = ({
                       </HStack>
                     </VStack>
                     <Stack
-                      justify={'start'}
+                      justify={"start"}
                       gap="32px"
-                      direction={{ base: 'column', md: 'row' }}
+                      direction={{ base: "column", md: "row" }}
                     >
-                      <VStack align={'start'} textAlign="start" spacing="8px">
+                      <VStack align={"start"} textAlign="start" spacing="8px">
                         <Box
                           as="p"
-                          textStyle={{ base: 'title6', md: 'title5' }}
+                          textStyle={{ base: "title6", md: "title5" }}
                           color="neutral.6"
-                          textTransform={'uppercase'}
+                          textTransform={"uppercase"}
                         >
                           Email Address
                         </Box>
                         <Box
                           as="p"
-                          textStyle={{ base: 'title6', md: 'title5' }}
+                          textStyle={{ base: "title6", md: "title5" }}
                           color="neutral.11"
                         >
                           {projectToBeAccepted?.email}
                         </Box>
                       </VStack>
-                      <VStack align={'start'} textAlign="start" spacing="8px">
+                      <VStack align={"start"} textAlign="start" spacing="8px">
                         <Box
                           as="p"
-                          textStyle={{ base: 'title6', md: 'title5' }}
+                          textStyle={{ base: "title6", md: "title5" }}
                           color="neutral.6"
-                          textTransform={'uppercase'}
+                          textTransform={"uppercase"}
                         >
                           Twitter
                         </Box>
                         <Box
                           as="p"
-                          textStyle={{ base: 'title6', md: 'title5' }}
+                          textStyle={{ base: "title6", md: "title5" }}
                           color="neutral.11"
                         >
                           {GetFormattedLink({
@@ -303,38 +303,38 @@ const GrantUnderReviewProjects = ({
                         </Box>
                       </VStack>
                     </Stack>
-                    <VStack w="full" align={'start'} spacing="32px">
+                    <VStack w="full" align={"start"} spacing="32px">
                       {transactionSignError ? (
                         <Alert w="full" status="error" variant="cubik">
                           <AlertIcon />
                           <AlertDescription
                             fontSize={{
-                              base: '10px',
-                              md: '11px',
-                              xl: '12px',
+                              base: "10px",
+                              md: "11px",
+                              xl: "12px",
                             }}
                             lineHeight={{
-                              base: '14px',
-                              md: '14px',
-                              xl: '16px',
+                              base: "14px",
+                              md: "14px",
+                              xl: "16px",
                             }}
                           >
                             {transactionSignError}
                           </AlertDescription>
                         </Alert>
                       ) : (
-                        <Alert status={'info'} variant="cubik">
+                        <Alert status={"info"} variant="cubik">
                           <AlertIcon />
                           <AlertDescription
                             fontSize={{
-                              base: '10px',
-                              md: '11px',
-                              xl: '12px',
+                              base: "10px",
+                              md: "11px",
+                              xl: "12px",
                             }}
                             lineHeight={{
-                              base: '14px',
-                              md: '14px',
-                              xl: '16px',
+                              base: "14px",
+                              md: "14px",
+                              xl: "16px",
                             }}
                           >
                             By signing the transaction, the project will be
@@ -348,13 +348,13 @@ const GrantUnderReviewProjects = ({
                 </ModalBody>
                 <ModalFooter
                   display="flex"
-                  h={'fit-content'}
+                  h={"fit-content"}
                   justifyContent="space-between"
                 >
                   <Button
-                    w={{ base: 'full', md: '8rem' }}
+                    w={{ base: "full", md: "8rem" }}
                     variant="cubikOutlined"
-                    size={{ bae: 'cubikMini', md: 'cubikSmall' }}
+                    size={{ bae: "cubikMini", md: "cubikSmall" }}
                     onClick={() => {
                       onAcceptModelClose();
                       setTransactionLoading(false);
@@ -367,12 +367,12 @@ const GrantUnderReviewProjects = ({
                     px="32px"
                     variant="cubikFilled"
                     loadingText="Signing"
-                    size={{ bae: 'cubikMini', md: 'cubikSmall' }}
+                    size={{ bae: "cubikMini", md: "cubikSmall" }}
                     onClick={() =>
                       markVerified(
                         roundData?.ProjectJoinRound.find(
                           (e) => e.projectId === projectToBeAccepted.id
-                        )?.id ?? '',
+                        )?.id ?? "",
                         projectToBeAccepted?.owner_publickey,
                         projectToBeAccepted?.projectUserCount
                       )
@@ -388,8 +388,8 @@ const GrantUnderReviewProjects = ({
           {/* Reject Model */}
           {projectToBeRejected && (
             <Modal
-              key={'reject' + projectToBeRejected?.id}
-              variant={'cubik'}
+              key={"reject" + projectToBeRejected?.id}
+              variant={"cubik"}
               isOpen={isRejectModalOpen}
               onClose={() => {
                 onRejectModelClose();
@@ -397,34 +397,34 @@ const GrantUnderReviewProjects = ({
                 setTransactionSignError(null);
               }}
             >
-              <ModalOverlay opacity={'1%'} />
+              <ModalOverlay opacity={"1%"} />
               <ModalContent
-                minW={{ base: '24rem', md: '36rem' }}
-                overflow={'hidden'}
-                position={'relative'}
-                gap={{ base: '32px', md: '48px' }}
-                textAlign={'center'}
+                minW={{ base: "24rem", md: "36rem" }}
+                overflow={"hidden"}
+                position={"relative"}
+                gap={{ base: "32px", md: "48px" }}
+                textAlign={"center"}
                 _before={{
                   content: '""',
-                  position: 'absolute',
-                  top: '-10%',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  rounded: '50%',
-                  filter: 'blur(80px)',
-                  width: '6rem',
-                  height: '6rem',
+                  position: "absolute",
+                  top: "-10%",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  rounded: "50%",
+                  filter: "blur(80px)",
+                  width: "6rem",
+                  height: "6rem",
                   background:
-                    'linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)',
-                  borderRadius: '8px 8px 0px 0px',
-                  zIndex: '-1',
+                    "linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)",
+                  borderRadius: "8px 8px 0px 0px",
+                  zIndex: "-1",
                 }}
               >
                 <ModalHeader>
                   <VStack
                     w="full"
                     spacing="8px"
-                    align={'center'}
+                    align={"center"}
                     justify="center"
                   >
                     <Box as="p" textStyle="title1" color="neutral.11">
@@ -436,27 +436,27 @@ const GrantUnderReviewProjects = ({
                   </VStack>
                 </ModalHeader>
                 <ModalBody>
-                  <VStack textAlign={'start'} align={'start'} spacing="24px">
-                    <VStack align={'start'} spacing="16px">
-                      <HStack align={'start'} gap="16px">
+                  <VStack textAlign={"start"} align={"start"} spacing="24px">
+                    <VStack align={"start"} spacing="16px">
+                      <HStack align={"start"} gap="16px">
                         <Avatar
                           src={projectToBeRejected?.logo}
                           name={projectToBeRejected?.name}
                           borderRadius="8px"
-                          width={{ base: '60px', md: '80px' }}
-                          height={{ base: '60px', md: '80px' }}
+                          width={{ base: "60px", md: "80px" }}
+                          height={{ base: "60px", md: "80px" }}
                         />
-                        <VStack textAlign={'start'} align={'start'} gap="8px">
+                        <VStack textAlign={"start"} align={"start"} gap="8px">
                           <Box
                             as="p"
-                            textStyle={{ base: 'title3', md: 'title2' }}
+                            textStyle={{ base: "title3", md: "title2" }}
                             color="neutral.11"
                           >
                             {projectToBeRejected?.name}
                           </Box>
                           <Box
                             as="p"
-                            textStyle={{ base: 'title6', md: 'title5' }}
+                            textStyle={{ base: "title6", md: "title5" }}
                             color="neutral.8"
                           >
                             {projectToBeRejected?.short_description}
@@ -465,39 +465,39 @@ const GrantUnderReviewProjects = ({
                       </HStack>
                     </VStack>
                     <Stack
-                      justify={'start'}
+                      justify={"start"}
                       gap="32px"
-                      direction={{ base: 'column', md: 'row' }}
+                      direction={{ base: "column", md: "row" }}
                     >
-                      <VStack align={'start'} textAlign="start" spacing="8px">
+                      <VStack align={"start"} textAlign="start" spacing="8px">
                         <Box
                           as="p"
-                          textStyle={{ base: 'title6', md: 'title5' }}
+                          textStyle={{ base: "title6", md: "title5" }}
                           color="neutral.6"
-                          textTransform={'uppercase'}
+                          textTransform={"uppercase"}
                         >
                           Email Address
                         </Box>
                         <Box
                           as="p"
-                          textStyle={{ base: 'title6', md: 'title5' }}
+                          textStyle={{ base: "title6", md: "title5" }}
                           color="neutral.11"
                         >
                           {projectToBeRejected?.email}
                         </Box>
                       </VStack>
-                      <VStack align={'start'} textAlign="start" spacing="8px">
+                      <VStack align={"start"} textAlign="start" spacing="8px">
                         <Box
                           as="p"
-                          textStyle={{ base: 'title6', md: 'title5' }}
+                          textStyle={{ base: "title6", md: "title5" }}
                           color="neutral.6"
-                          textTransform={'uppercase'}
+                          textTransform={"uppercase"}
                         >
                           Twitter
                         </Box>
                         <Box
                           as="p"
-                          textStyle={{ base: 'title6', md: 'title5' }}
+                          textStyle={{ base: "title6", md: "title5" }}
                           color="neutral.11"
                         >
                           {GetFormattedLink({
@@ -506,38 +506,38 @@ const GrantUnderReviewProjects = ({
                         </Box>
                       </VStack>
                     </Stack>
-                    <VStack w="full" align={'start'} spacing="32px">
+                    <VStack w="full" align={"start"} spacing="32px">
                       {transactionSignError ? (
                         <Alert w="full" status="error" variant="cubik">
                           <AlertIcon />
                           <AlertDescription
                             fontSize={{
-                              base: '10px',
-                              md: '11px',
-                              xl: '12px',
+                              base: "10px",
+                              md: "11px",
+                              xl: "12px",
                             }}
                             lineHeight={{
-                              base: '14px',
-                              md: '14px',
-                              xl: '16px',
+                              base: "14px",
+                              md: "14px",
+                              xl: "16px",
                             }}
                           >
                             {transactionSignError}
                           </AlertDescription>
                         </Alert>
                       ) : (
-                        <Alert status={'error'} variant="cubik">
+                        <Alert status={"error"} variant="cubik">
                           <AlertIcon />
                           <AlertDescription
                             fontSize={{
-                              base: '10px',
-                              md: '11px',
-                              xl: '12px',
+                              base: "10px",
+                              md: "11px",
+                              xl: "12px",
                             }}
                             lineHeight={{
-                              base: '14px',
-                              md: '14px',
-                              xl: '16px',
+                              base: "14px",
+                              md: "14px",
+                              xl: "16px",
                             }}
                           >
                             By signing the transaction, the project will be
@@ -550,13 +550,13 @@ const GrantUnderReviewProjects = ({
                 </ModalBody>
                 <ModalFooter
                   display="flex"
-                  h={'fit-content'}
+                  h={"fit-content"}
                   justifyContent="space-between"
                 >
                   <Button
                     w="8rem"
                     variant="cubikOutlined"
-                    size={'cubikSmall'}
+                    size={"cubikSmall"}
                     onClick={() => {
                       onRejectModelClose();
                       setTransactionLoading(false);
@@ -569,12 +569,12 @@ const GrantUnderReviewProjects = ({
                     px="32px"
                     variant="cubikFilled"
                     loadingText="Signing"
-                    size={'cubikSmall'}
+                    size={"cubikSmall"}
                     onClick={() =>
                       markUnverified(
                         roundData?.ProjectJoinRound.find(
                           (e) => e.projectId === projectToBeRejected.id
-                        )?.id ?? '',
+                        )?.id ?? "",
                         projectToBeRejected?.owner_publickey,
                         projectToBeRejected?.projectUserCount
                       )

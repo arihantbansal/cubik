@@ -1,15 +1,15 @@
-import { HStack, VStack } from '@chakra-ui/layout';
-import { Box, Skeleton } from '@chakra-ui/react';
-import { useWallet } from '@solana/wallet-adapter-react';
-import { LAMPORTS_PER_SOL } from '@solana/web3.js';
-import axios from 'axios';
-import { useQuery } from 'react-query';
-import ComponentErrors from '~/components/errors/ComponentErrors';
-import { env } from '~/env.mjs';
-import useCurrentTokenPrice from '~/hooks/useCurrentTokenPrice';
-import { useUserStore } from '~/store/userStore';
-import { formatNumberWithK } from '~/utils/formatWithK';
-import { BONK, SOL, USDC } from '../../common/tokens/token';
+import { HStack, VStack } from "@chakra-ui/layout";
+import { Box, Skeleton } from "@chakra-ui/react";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+import axios from "axios";
+import { useQuery } from "react-query";
+import ComponentErrors from "~/components/errors/ComponentErrors";
+import { env } from "~/env.mjs";
+import useCurrentTokenPrice from "~/hooks/useCurrentTokenPrice";
+import { useUserStore } from "~/store/userStore";
+import { formatNumberWithK } from "~/utils/formatWithK";
+import { BONK, SOL, USDC } from "../../common/tokens/token";
 
 type TokenInfo = {
   tokenAccount: string;
@@ -20,8 +20,8 @@ type TokenInfo = {
 
 const filterTokens = (tokens: TokenInfo[]) => {
   const tokenAddressesToFilter = [
-    'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', //usdc
-    'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263', //bonk
+    "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", //usdc
+    "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263", //bonk
     // Add more token addresses here if needed
   ];
 
@@ -43,14 +43,14 @@ const WalletBalance = ({
   size,
   walletAddress,
 }: {
-  size?: 'sm' | 'md' | 'lg' | string;
+  size?: "sm" | "md" | "lg" | string;
   walletAddress?: string;
 }) => {
   const {
     data: price,
     isLoading: priceLoading,
     error: priceError,
-  } = useCurrentTokenPrice(['solana']);
+  } = useCurrentTokenPrice(["solana"]);
 
   const { user } = useUserStore();
   const { publicKey } = useWallet();
@@ -60,7 +60,7 @@ const WalletBalance = ({
     error: balanceFetchingError,
     data,
   } = useQuery(
-    ['balances', walletAddress],
+    ["balances", walletAddress],
     () =>
       getBalances(
         walletAddress
@@ -89,33 +89,33 @@ const WalletBalance = ({
     if (data.nativeBalance / LAMPORTS_PER_SOL === 0) return 0;
 
     if (data.nativeBalance / LAMPORTS_PER_SOL < 0.01) {
-      return 0.01 * price?.find((p) => p.token === 'Sol')?.price! ?? 0;
+      return 0.01 * price?.find((p) => p.token === "Sol")?.price! ?? 0;
     }
 
     return (
       (data.nativeBalance / LAMPORTS_PER_SOL) *
-      price?.find((p) => p.token === 'Sol')?.price!
+      price?.find((p) => p.token === "Sol")?.price!
     );
   };
   return (
     <VStack
       gap={
         size
-          ? size === 'sm'
-            ? { base: '2px', md: '4px' }
-            : size === 'md'
-            ? { base: '6px', md: '10px' }
-            : { base: '8px', md: '12px' }
-          : { base: '2px', md: '2px' }
+          ? size === "sm"
+            ? { base: "2px", md: "4px" }
+            : size === "md"
+            ? { base: "6px", md: "10px" }
+            : { base: "8px", md: "12px" }
+          : { base: "2px", md: "2px" }
       }
       px="8px"
       w="full"
     >
       <Box
-        display={size === 'lg' ? 'none' : 'block'}
+        display={size === "lg" ? "none" : "block"}
         w="full"
         as="p"
-        textStyle={'body5'}
+        textStyle={"body5"}
         color="neutral.8"
         p="8px 2px"
       >
@@ -127,39 +127,39 @@ const WalletBalance = ({
             <SOL
               size={
                 size
-                  ? size === 'sm'
-                    ? { base: '18px', md: '20px' }
-                    : size === 'md'
-                    ? { base: '24px', md: '30px' }
-                    : { base: '28px', md: '38px' }
-                  : { base: '18px', md: '20px' }
+                  ? size === "sm"
+                    ? { base: "18px", md: "20px" }
+                    : size === "md"
+                    ? { base: "24px", md: "30px" }
+                    : { base: "28px", md: "38px" }
+                  : { base: "18px", md: "20px" }
               }
             />
             <Box
               as="p"
               textStyle={
                 size
-                  ? size === 'md'
-                    ? { base: 'body4', md: 'body3' }
-                    : { base: 'body3', md: 'body2' }
-                  : { base: 'body5', md: 'body4' }
+                  ? size === "md"
+                    ? { base: "body4", md: "body3" }
+                    : { base: "body3", md: "body2" }
+                  : { base: "body5", md: "body4" }
               }
               color="neutral.11"
             >
               SOL
             </Box>
-            <HStack alignItems={'end'} justify={'end'} w="full">
+            <HStack alignItems={"end"} justify={"end"} w="full">
               <Skeleton isLoaded={!priceLoading}>
                 <Box
-                  display={size === 'lg' ? 'block' : 'none'}
-                  textAlign={'end'}
+                  display={size === "lg" ? "block" : "none"}
+                  textAlign={"end"}
                   as="p"
                   textStyle={
                     size
-                      ? size === 'md'
-                        ? { base: 'body5', md: 'body4' }
-                        : { base: 'body4', md: 'body3' }
-                      : { base: 'body5', md: 'body4' }
+                      ? size === "md"
+                        ? { base: "body5", md: "body4" }
+                        : { base: "body4", md: "body3" }
+                      : { base: "body5", md: "body4" }
                   }
                   color="neutral.7"
                 >
@@ -168,14 +168,14 @@ const WalletBalance = ({
               </Skeleton>
               <Skeleton isLoaded={!priceLoading}>
                 <Box
-                  textAlign={'end'}
+                  textAlign={"end"}
                   as="p"
                   textStyle={
                     size
-                      ? size === 'md'
-                        ? { base: 'title4', md: 'title3' }
-                        : { base: 'title3', md: 'title2' }
-                      : { base: 'title6', md: 'title5' }
+                      ? size === "md"
+                        ? { base: "title4", md: "title3" }
+                        : { base: "title3", md: "title2" }
+                      : { base: "title6", md: "title5" }
                   }
                   color="neutral.11"
                 >
@@ -192,44 +192,44 @@ const WalletBalance = ({
       )}
       {filteredData?.map((token) => {
         const tokenBalance = token.amount / 10 ** token.decimals;
-        return token.mint == 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v' ? (
+        return token.mint == "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" ? (
           <HStack p="0px 2px" gap="8px" w="full" key={token.tokenAccount}>
             <USDC
               size={
                 size
-                  ? size === 'sm'
-                    ? { base: '18px', md: '20px' }
-                    : size === 'md'
-                    ? { base: '24px', md: '30px' }
-                    : { base: '28px', md: '38px' }
-                  : { base: '18px', md: '20px' }
+                  ? size === "sm"
+                    ? { base: "18px", md: "20px" }
+                    : size === "md"
+                    ? { base: "24px", md: "30px" }
+                    : { base: "28px", md: "38px" }
+                  : { base: "18px", md: "20px" }
               }
             />
             <Box
               as="p"
               textStyle={
                 size
-                  ? size === 'md'
-                    ? { base: 'body4', md: 'body3' }
-                    : { base: 'body3', md: 'body2' }
-                  : { base: 'body5', md: 'body4' }
+                  ? size === "md"
+                    ? { base: "body4", md: "body3" }
+                    : { base: "body3", md: "body2" }
+                  : { base: "body5", md: "body4" }
               }
               color="neutral.11"
             >
               USDC
             </Box>
-            <HStack alignItems={'end'} justify={'end'} w="full">
+            <HStack alignItems={"end"} justify={"end"} w="full">
               <Skeleton isLoaded={!priceLoading}>
                 <Box
-                  display={size === 'lg' ? 'block' : 'none'}
-                  textAlign={'end'}
+                  display={size === "lg" ? "block" : "none"}
+                  textAlign={"end"}
                   as="p"
                   textStyle={
                     size
-                      ? size === 'md'
-                        ? { base: 'body5', md: 'body4' }
-                        : { base: 'body4', md: 'body3' }
-                      : { base: 'body5', md: 'body4' }
+                      ? size === "md"
+                        ? { base: "body5", md: "body4" }
+                        : { base: "body4", md: "body3" }
+                      : { base: "body5", md: "body4" }
                   }
                   color="neutral.7"
                 >
@@ -243,14 +243,14 @@ const WalletBalance = ({
               </Skeleton>
               <Skeleton isLoaded={!priceLoading}>
                 <Box
-                  textAlign={'end'}
+                  textAlign={"end"}
                   as="p"
                   textStyle={
                     size
-                      ? size === 'md'
-                        ? { base: 'title4', md: 'title3' }
-                        : { base: 'title3', md: 'title2' }
-                      : { base: 'title6', md: 'title5' }
+                      ? size === "md"
+                        ? { base: "title4", md: "title3" }
+                        : { base: "title3", md: "title2" }
+                      : { base: "title6", md: "title5" }
                   }
                   color="neutral.11"
                 >

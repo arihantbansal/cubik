@@ -1,14 +1,14 @@
-import { Container, Stack } from '@chakra-ui/layout';
-import { Skeleton } from '@chakra-ui/skeleton';
-import { isPast } from 'date-fns';
-import { GetServerSideProps } from 'next';
-import ComponentErrors from '~/components/errors/ComponentErrors';
-import { ProjectInteractions } from '~/components/pages/projects/project-details/project-interactions/ProjectInteractions';
-import { ProjectDetailsAndTabs } from '~/components/pages/projects/project-details/ProjectDetailsAndTabs';
-import ProjectDetailsLiveRoundStatus from '~/components/pages/projects/project-details/ProjectDetailsLiveRoundStatus';
-import SEO from '~/components/SEO';
-import { Mixpanel } from '~/utils/mixpanel';
-import { trpc } from '~/utils/trpc';
+import { Container, Stack } from "@chakra-ui/layout";
+import { Skeleton } from "@chakra-ui/skeleton";
+import { isPast } from "date-fns";
+import { GetServerSideProps } from "next";
+import ComponentErrors from "~/components/errors/ComponentErrors";
+import { ProjectInteractions } from "~/components/pages/projects/project-details/project-interactions/ProjectInteractions";
+import { ProjectDetailsAndTabs } from "~/components/pages/projects/project-details/ProjectDetailsAndTabs";
+import ProjectDetailsLiveRoundStatus from "~/components/pages/projects/project-details/ProjectDetailsLiveRoundStatus";
+import SEO from "~/components/SEO";
+import { Mixpanel } from "~/utils/mixpanel";
+import { trpc } from "~/utils/trpc";
 
 const ProjectDetails = ({
   projectId,
@@ -29,7 +29,7 @@ const ProjectDetails = ({
       }
     );
 
-  Mixpanel.track('project_page_load', {
+  Mixpanel.track("project_page_load", {
     id: projectId,
     name: data?.project.name,
   });
@@ -44,7 +44,7 @@ const ProjectDetails = ({
         <ProjectDetailsLiveRoundStatus
           endTime={data?.fundingRound.endTime as Date}
           startTime={data?.fundingRound.startTime as Date}
-          status={'LIVE'}
+          status={"LIVE"}
           show={true}
           roundName={data?.fundingRound.roundName as string}
         />
@@ -52,17 +52,17 @@ const ProjectDetails = ({
     } else return <></>;
   };
   if (data?.project.isArchive === true) {
-    return <ComponentErrors error={{ message: 'This project is been ban' }} />;
+    return <ComponentErrors error={{ message: "This project is been ban" }} />;
   }
   return (
     <>
       <SEO
-        title={`${data ? data?.project?.name : 'Project'} - Cubik`}
-        description={`${data ? data?.project?.short_description : ''}`}
-        image={data ? data?.project?.logo : ''}
+        title={`${data ? data?.project?.name : "Project"} - Cubik`}
+        description={`${data ? data?.project?.short_description : ""}`}
+        image={data ? data?.project?.logo : ""}
       />
-      <main style={{ width: 'full' }}>
-        <Container maxW={'full'}>
+      <main style={{ width: "full" }}>
+        <Container maxW={"full"}>
           {joinId && (
             <Skeleton
               isLoaded={!isLoading}
@@ -71,7 +71,7 @@ const ProjectDetails = ({
               mx="auto"
               fadeDuration={2}
               opacity={isLoading ? 0.3 : 1}
-              h={isLoading ? '3rem' : 'auto'}
+              h={isLoading ? "3rem" : "auto"}
             >
               <RoundStatusBanner />
             </Skeleton>
@@ -79,12 +79,12 @@ const ProjectDetails = ({
           <Stack
             maxW="7xl"
             mx="auto"
-            direction={{ base: 'column', lg: 'row' }}
-            gap={{ base: '24px', md: '12px', lg: '60px', xl: '100px' }}
-            px={{ base: '0.5rem', sm: '2rem', md: '2rem', xl: '1rem' }}
-            py={{ base: '24px', md: '64px' }}
-            alignItems={'start'}
-            justifyContent={'start'}
+            direction={{ base: "column", lg: "row" }}
+            gap={{ base: "24px", md: "12px", lg: "60px", xl: "100px" }}
+            px={{ base: "0.5rem", sm: "2rem", md: "2rem", xl: "1rem" }}
+            py={{ base: "24px", md: "64px" }}
+            alignItems={"start"}
+            justifyContent={"start"}
           >
             {/* <ProjectDetailsAndTabs
               joinId={joinId}

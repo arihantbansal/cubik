@@ -1,8 +1,8 @@
-import { Box, Center, VStack } from '@chakra-ui/layout';
-import { Spinner } from '@chakra-ui/spinner';
-import ComponentErrors from '~/components/errors/ComponentErrors';
-import { trpc } from '~/utils/trpc';
-import { VisitorsChart } from './Charts';
+import { Box, Center, VStack } from "@chakra-ui/layout";
+import { Spinner } from "@chakra-ui/spinner";
+import ComponentErrors from "~/components/errors/ComponentErrors";
+import { trpc } from "~/utils/trpc";
+import { VisitorsChart } from "./Charts";
 
 const ProjectInsights = ({
   projectId,
@@ -37,11 +37,11 @@ const ProjectInsights = ({
 
   return (
     <VStack
-      flex={'50%'}
-      align={'start'}
+      flex={"50%"}
+      align={"start"}
       width="full"
-      gap={{ base: '16px', sm: '20px', md: '24px' }}
-      position={'relative'}
+      gap={{ base: "16px", sm: "20px", md: "24px" }}
+      position={"relative"}
     >
       {/* <Box
         zIndex="8"
@@ -62,51 +62,51 @@ const ProjectInsights = ({
       </Box> */}
       <Box
         as="p"
-        textStyle={{ base: 'title3', md: 'title2' }}
-        color={'neutral.11'}
+        textStyle={{ base: "title3", md: "title2" }}
+        color={"neutral.11"}
       >
         Project Insights
       </Box>
-      <VStack align={'start'} w="full">
+      <VStack align={"start"} w="full">
         <Box
           as="p"
-          textStyle={{ base: 'body6', md: 'body5' }}
-          color={'neutral.8'}
+          textStyle={{ base: "body6", md: "body5" }}
+          color={"neutral.8"}
         >
           Conversion Rate
         </Box>
         <Box
           as="p"
-          textStyle={{ base: 'title4', md: 'title3' }}
+          textStyle={{ base: "title4", md: "title3" }}
           color="neutral.11"
         >
           --
         </Box>
       </VStack>
       <Center
-        gap={{ base: '16px', sm: '20px', md: '24px' }}
-        w={'full'}
-        flexDir={{ base: 'column', md: 'row' }}
+        gap={{ base: "16px", sm: "20px", md: "24px" }}
+        w={"full"}
+        flexDir={{ base: "column", md: "row" }}
       >
-        <VStack align={'start'} flex="50%" w="full">
-          <Box as="p" textStyle="body5" color={'neutral.8'}>
+        <VStack align={"start"} flex="50%" w="full">
+          <Box as="p" textStyle="body5" color={"neutral.8"}>
             Unique Visitors
           </Box>
           <Box
             as="p"
-            textStyle={{ base: 'title4', md: 'title3' }}
+            textStyle={{ base: "title4", md: "title3" }}
             color="neutral.11"
           >
             --
           </Box>
         </VStack>
-        <VStack align={'start'} flex="50%" w="full">
-          <Box as="p" textStyle="body5" color={'neutral.8'}>
+        <VStack align={"start"} flex="50%" w="full">
+          <Box as="p" textStyle="body5" color={"neutral.8"}>
             Unique Contributors
           </Box>
           <Box
             as="p"
-            textStyle={{ base: 'title4', md: 'title3' }}
+            textStyle={{ base: "title4", md: "title3" }}
             color="neutral.11"
           >
             {totalNoOfUniqueContributors() === 0

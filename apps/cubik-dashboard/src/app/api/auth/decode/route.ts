@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import {decodeToken} from "@cubik/auth/src/admin"
+import { decodeToken } from "@cubik/auth/src/admin";
 
 export const GET = async () => {
-     const cookieStore = cookies();
+  const cookieStore = cookies();
   const authCookie = cookieStore.get("authToken");
 
   if (!authCookie?.value) {
@@ -19,7 +19,7 @@ export const GET = async () => {
     );
   }
 
-   try {
+  try {
     const decodedToken = await decodeToken(authCookie?.value);
     if (!decodedToken) {
       return NextResponse.json(
@@ -51,4 +51,4 @@ export const GET = async () => {
       }
     );
   }
-}
+};

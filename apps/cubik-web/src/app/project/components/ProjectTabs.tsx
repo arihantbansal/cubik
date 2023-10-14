@@ -12,7 +12,6 @@ import { DetailSection } from "./details";
 import { ContributionSection } from "./contributions/index";
 import { TeamSection } from "./team";
 
-
 interface Props {
   slug: string;
 }

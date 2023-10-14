@@ -1,4 +1,4 @@
-import { Prisma, ProjectJoinRoundStatus } from '@cubik/database';
+import { Prisma, ProjectJoinRoundStatus } from "@cubik/database";
 
 interface ProjectCommon {
   id: string;

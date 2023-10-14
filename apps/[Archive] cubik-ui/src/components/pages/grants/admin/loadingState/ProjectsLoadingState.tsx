@@ -1,5 +1,5 @@
-import { VStack, Skeleton } from '@chakra-ui/react';
-import React from 'react';
+import { VStack, Skeleton } from "@chakra-ui/react";
+import React from "react";
 
 const ProjectsLoadingState = (isLoading: { isLoading: boolean }) => {
   return (
@@ -8,21 +8,21 @@ const ProjectsLoadingState = (isLoading: { isLoading: boolean }) => {
         w="full"
         h="6rem"
         rounded="12px"
-        opacity={'0.5'}
+        opacity={"0.5"}
         isLoaded={!isLoading}
       />
       <Skeleton
         w="full"
         h="6rem"
         rounded="12px"
-        opacity={'0.3'}
+        opacity={"0.3"}
         isLoaded={!isLoading}
       />
       <Skeleton
         w="full"
         h="6rem"
         rounded="12px"
-        opacity={'0.1'}
+        opacity={"0.1"}
         isLoaded={!isLoading}
       />
     </VStack>

@@ -6,14 +6,14 @@ import {
   SliderTrack,
   Tooltip,
   VStack,
-} from '@chakra-ui/react';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import FlipNumbers from 'react-flip-numbers';
-import GraphProps from '~/types/graphProps';
-import { calculateProjectMatchingFund } from '~/utils/calculateProjectMatchingFund';
-import { trpc } from '~/utils/trpc';
-import { GraphLine } from './GraphLines';
+} from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import FlipNumbers from "react-flip-numbers";
+import GraphProps from "~/types/graphProps";
+import { calculateProjectMatchingFund } from "~/utils/calculateProjectMatchingFund";
+import { trpc } from "~/utils/trpc";
+import { GraphLine } from "./GraphLines";
 
 const Graph: React.FC<GraphProps> = ({
   width,
@@ -55,7 +55,7 @@ const Graph: React.FC<GraphProps> = ({
   // }, [graphData]);
 
   return (
-    <VStack flex="1" p="1rem" width={'100%'} gap="0">
+    <VStack flex="1" p="1rem" width={"100%"} gap="0">
       <Box
         ml="0.8rem"
         as="svg"
@@ -88,9 +88,9 @@ const Graph: React.FC<GraphProps> = ({
         max={maximumDonationValue}
         step={1}
         onChange={(value) => handleSliderChange(value)}
-        w={'94%'}
+        w={"94%"}
         mt="-5px !important"
-        transform={'translateX(18px)'}
+        transform={"translateX(18px)"}
         py="0"
         value={Math.round(donationAmount)}
       >
@@ -110,10 +110,10 @@ const Graph: React.FC<GraphProps> = ({
         <SliderThumb />
         <Tooltip
           isOpen
-          boxShadow={'xl'}
+          boxShadow={"xl"}
           bg="transparent"
           color="white"
-          fontWeight={'700'}
+          fontWeight={"700"}
           placement="bottom"
           label={
             <FlipNumbers
@@ -123,7 +123,7 @@ const Graph: React.FC<GraphProps> = ({
               //background="black"
               play
               perspective={300}
-              numbers={'$' + String(donationAmount)}
+              numbers={"$" + String(donationAmount)}
             />
           }
         >

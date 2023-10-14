@@ -1,15 +1,15 @@
-import { prisma } from '@cubik/database';
-import { decode } from 'jsonwebtoken';
-import type { JwtPayload } from 'jsonwebtoken';
+import { prisma } from "@cubik/database";
+import { decode } from "jsonwebtoken";
+import type { JwtPayload } from "jsonwebtoken";
 
 export const authHandler = async (token: string | undefined) => {
   if (!token) {
     return null;
   }
 
-  const tokenSplit = token.split(' ')[1];
+  const tokenSplit = token.split(" ")[1];
 
-  if (tokenSplit === 'null') {
+  if (tokenSplit === "null") {
     return null;
   }
 

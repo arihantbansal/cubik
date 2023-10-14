@@ -1,5 +1,5 @@
-import { Box, Tag } from '@chakra-ui/react';
-import React, { forwardRef } from 'react';
+import { Box, Tag } from "@chakra-ui/react";
+import React, { forwardRef } from "react";
 
 interface CustomTagProps {
   color?: string;
@@ -24,7 +24,7 @@ const CustomTag = forwardRef<HTMLDivElement, CustomTagProps>((props, ref) => {
         as="p"
         whiteSpace="pre"
         color="#D7E0DF"
-        textStyle={{ base: 'body6', md: 'body5' }}
+        textStyle={{ base: "body6", md: "body5" }}
       >
         {children}
       </Box>
@@ -32,6 +32,6 @@ const CustomTag = forwardRef<HTMLDivElement, CustomTagProps>((props, ref) => {
   );
 });
 
-CustomTag.displayName = 'CustomTag';
+CustomTag.displayName = "CustomTag";
 
 export default CustomTag;

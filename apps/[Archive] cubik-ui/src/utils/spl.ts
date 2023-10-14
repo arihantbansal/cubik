@@ -2,9 +2,9 @@ import {
   createAssociatedTokenAccountInstruction,
   createTransferInstruction,
   getAssociatedTokenAddress,
-} from '@solana/spl-token';
-import { PublicKey, TransactionInstruction } from '@solana/web3.js';
-import { connection } from './program/contract';
+} from "@solana/spl-token";
+import { PublicKey, TransactionInstruction } from "@solana/web3.js";
+import { connection } from "./program/contract";
 export const sendSPL = async (
   mint: string,
   fromPubKey: PublicKey,
@@ -43,6 +43,6 @@ export const sendSPL = async (
 
     return ix;
   } catch (e) {
-    console.log('Error in Send SPL function:', e);
+    console.log("Error in Send SPL function:", e);
   }
 };

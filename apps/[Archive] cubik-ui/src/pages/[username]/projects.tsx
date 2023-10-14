@@ -1,20 +1,20 @@
-import { Box, Center, Container, Flex, Heading, Link } from '@chakra-ui/layout';
-import React, { use } from 'react';
-import SEO from '~/components/SEO';
-import { Prisma, ProjectVerifyStatus, prisma } from '@cubik/database';
-import { ProfileNftType } from '~/types/user';
-import ProfileHeader from '~/components/pages/user-profile/ProfileHeader';
-import UserContributions from '~/components/pages/user-profile/contributions-tab/UserContributions';
+import { Box, Center, Container, Flex, Heading, Link } from "@chakra-ui/layout";
+import React, { use } from "react";
+import SEO from "~/components/SEO";
+import { Prisma, ProjectVerifyStatus, prisma } from "@cubik/database";
+import { ProfileNftType } from "~/types/user";
+import ProfileHeader from "~/components/pages/user-profile/ProfileHeader";
+import UserContributions from "~/components/pages/user-profile/contributions-tab/UserContributions";
 import {
   AdminProjectEmptyState,
   VisitorProjectEmptyState,
-} from '~/components/pages/user-profile/empty-states/ProjectEmptyState';
-import ProjectVisitorCard from '~/components/pages/user-profile/projects-tab/ProjectVisitorCard';
-import { trpc } from '~/utils/trpc';
-import { UserPageLayout } from '~/layouts/userPageLayout';
-import ComponentErrors from '~/components/errors/ComponentErrors';
-import ProjectAdminCard from '~/components/pages/user-profile/projects-tab/ProjectAdminCard';
-import { useUserStore } from '~/store/userStore';
+} from "~/components/pages/user-profile/empty-states/ProjectEmptyState";
+import ProjectVisitorCard from "~/components/pages/user-profile/projects-tab/ProjectVisitorCard";
+import { trpc } from "~/utils/trpc";
+import { UserPageLayout } from "~/layouts/userPageLayout";
+import ComponentErrors from "~/components/errors/ComponentErrors";
+import ProjectAdminCard from "~/components/pages/user-profile/projects-tab/ProjectAdminCard";
+import { useUserStore } from "~/store/userStore";
 interface Props {
   username: string;
 }
@@ -26,7 +26,7 @@ const UserProjects = (props: Props) => {
     },
     {
       refetchOnWindowFocus: false,
-    },
+    }
   );
   const projects = trpc.project.getProjects.useQuery(
     {
@@ -37,28 +37,37 @@ const UserProjects = (props: Props) => {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-    },
+    }
   );
 
   if (isError) return <ComponentErrors error={error} />;
   if (!isLoading && !data) {
     return (
       <>
-        <SEO title={`Error 404`} description={`There was some error!!`} image={`error`} />
+        <SEO
+          title={`Error 404`}
+          description={`There was some error!!`}
+          image={`error`}
+        />
         <Container maxW="full">
-          <Center gap="16px" flexDir={'column'} maxW="4xl" mx="auto" py="14rem">
+          <Center gap="16px" flexDir={"column"} maxW="4xl" mx="auto" py="14rem">
             <Heading fontSize="9xl">404</Heading>
-            <Box as="p" textStyle={{ base: 'title3', md: 'title1' }}>
+            <Box as="p" textStyle={{ base: "title3", md: "title1" }}>
               Page Not Found
             </Box>
             <Box
-              textAlign={'center'}
+              textAlign={"center"}
               maxW="22rem"
               as="p"
-              textStyle={{ base: 'body4', md: 'body2' }}
+              textStyle={{ base: "body4", md: "body2" }}
             >
               The page you are looking for does not exist. Go back
-              <Box as={Link} href="/projects" color="brand.teal5" textDecoration={'underline'}>
+              <Box
+                as={Link}
+                href="/projects"
+                color="brand.teal5"
+                textDecoration={"underline"}
+              >
                 home
               </Box>
             </Box>
@@ -70,8 +79,8 @@ const UserProjects = (props: Props) => {
   return (
     <>
       <SEO
-        title={`@${data ? props.username : 'User'}`}
-        description={`@${data ? props.username : 'User'}'s profile`}
+        title={`@${data ? props.username : "User"}`}
+        description={`@${data ? props.username : "User"}'s profile`}
         image={`https://res.cloudinary.com/demonicirfan/image/upload/v1684179451/cubik%20og.png`}
       />
       <UserPageLayout
@@ -81,7 +90,7 @@ const UserProjects = (props: Props) => {
         username={props.username}
       >
         {user && user.id === data?.id ? (
-          <Flex direction="column" w="full" gap={{ base: '24px', md: '32px' }}>
+          <Flex direction="column" w="full" gap={{ base: "24px", md: "32px" }}>
             {projects.data && projects.data.length > 0 ? (
               projects.data.map((project, key) => {
                 return !project.isArchive ? (
@@ -98,7 +107,9 @@ const UserProjects = (props: Props) => {
           <Flex direction="column" w="full" gap="32px">
             {projects.data && projects.data?.length > 0 ? (
               projects.data
-                .filter(project => project.status === ProjectVerifyStatus.VERIFIED)
+                .filter(
+                  (project) => project.status === ProjectVerifyStatus.VERIFIED
+                )
                 .map((project, key) => (
                   <ProjectVisitorCard
                     userName={props.username}
@@ -116,7 +127,9 @@ const UserProjects = (props: Props) => {
     </>
   );
 };
-export async function getServerSideProps(context: { query: { username: string } }) {
+export async function getServerSideProps(context: {
+  query: { username: string };
+}) {
   const username = context.query.username;
 
   return {

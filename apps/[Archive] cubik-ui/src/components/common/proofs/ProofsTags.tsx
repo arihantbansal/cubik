@@ -1,40 +1,40 @@
-import { Tag } from '@chakra-ui/tag';
+import { Tag } from "@chakra-ui/tag";
 
 export enum PROOF_STATE {
-  CLAIM = 'claim',
-  MINT = 'mint',
-  MINTED = 'minted',
-  NOT_CLAIMABLE = 'not_claimable',
+  CLAIM = "claim",
+  MINT = "mint",
+  MINTED = "minted",
+  NOT_CLAIMABLE = "not_claimable",
 }
 
 const ProofsTags = ({ state }: { state: PROOF_STATE }) => {
   return (
     <Tag
-      size={{ base: 'xs', md: 'sm' }}
+      size={{ base: "xs", md: "sm" }}
       px="12px"
       py="4px"
       color={
         PROOF_STATE.MINTED
-          ? 'surface.green.2'
+          ? "surface.green.2"
           : PROOF_STATE.MINT
-          ? 'surface.yellow.2'
-          : 'surface.red.2'
+          ? "surface.yellow.2"
+          : "surface.red.2"
       }
       background={
         PROOF_STATE.MINTED
-          ? 'surface.green.3'
+          ? "surface.green.3"
           : PROOF_STATE.MINT
-          ? 'surface.yellow.3'
-          : 'surface.red.3'
+          ? "surface.yellow.3"
+          : "surface.red.3"
       }
       rounded="full"
-      fontSize={{ base: '10px', sm: '12px', md: '14px' }}
+      fontSize={{ base: "10px", sm: "12px", md: "14px" }}
     >
       {PROOF_STATE.MINTED
-        ? 'Minted'
+        ? "Minted"
         : PROOF_STATE.MINT
-        ? 'Mint'
-        : 'Can’t Claim'}
+        ? "Mint"
+        : "Can’t Claim"}
     </Tag>
   );
 };

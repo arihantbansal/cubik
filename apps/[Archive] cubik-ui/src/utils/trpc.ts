@@ -1,12 +1,12 @@
-import { httpBatchLink, loggerLink } from '@trpc/client';
-import { createTRPCNext } from '@trpc/next';
-import superjson from 'superjson';
-import type { AppRouter } from '@cubik/api';
+import { httpBatchLink, loggerLink } from "@trpc/client";
+import { createTRPCNext } from "@trpc/next";
+import superjson from "superjson";
+import type { AppRouter } from "@cubik/api";
 
 function getBaseUrl() {
-  if (typeof window !== 'undefined')
+  if (typeof window !== "undefined")
     // browser should use relative path
-    return '';
+    return "";
   if (process.env.VERCEL_URL) {
     // reference for vercel.com
     return `https://${process.env.VERCEL_URL}`;
@@ -26,15 +26,15 @@ export const trpc = createTRPCNext<AppRouter>({
           url: `${getBaseUrl()}/api/trpc`,
           headers() {
             return {
-              Authorization: `Bearer ${localStorage.getItem('wallet_auth')}`,
+              Authorization: `Bearer ${localStorage.getItem("wallet_auth")}`,
             };
           },
         }),
 
         loggerLink({
           enabled: (opts) =>
-            process.env.NODE_ENV === 'development' ||
-            (opts.direction === 'down' && opts.result instanceof Error),
+            process.env.NODE_ENV === "development" ||
+            (opts.direction === "down" && opts.result instanceof Error),
         }),
       ],
     };
@@ -42,4 +42,4 @@ export const trpc = createTRPCNext<AppRouter>({
   ssr: true,
 });
 
-export { type RouterInputs, type RouterOutputs } from '@cubik/api';
+export { type RouterInputs, type RouterOutputs } from "@cubik/api";

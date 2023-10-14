@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
-import { Button } from '@chakra-ui/button';
-import { useDisclosure } from '@chakra-ui/hooks';
-import { Box, HStack, Stack, VStack } from '@chakra-ui/layout';
+import { Button } from "@chakra-ui/button";
+import { useDisclosure } from "@chakra-ui/hooks";
+import { Box, HStack, Stack, VStack } from "@chakra-ui/layout";
 import {
   Modal,
   ModalBody,
@@ -9,17 +9,17 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-} from '@chakra-ui/modal';
-import { Skeleton } from '@chakra-ui/skeleton';
-import { Tooltip } from '@chakra-ui/tooltip';
+} from "@chakra-ui/modal";
+import { Skeleton } from "@chakra-ui/skeleton";
+import { Tooltip } from "@chakra-ui/tooltip";
 import {
   HiArrowNarrowDown,
   HiArrowNarrowUp,
   HiExternalLink,
-} from 'react-icons/hi';
-import { WalletAddress } from '~/components/common/wallet/WalletAdd';
+} from "react-icons/hi";
+import { WalletAddress } from "~/components/common/wallet/WalletAdd";
 
-import WithdrawFundsTransactionModal from './WithdrawFundsTransactionModal';
+import WithdrawFundsTransactionModal from "./WithdrawFundsTransactionModal";
 
 const VaultHeader = ({
   isLoading,
@@ -32,43 +32,43 @@ const VaultHeader = ({
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  let squadsURL: string = '';
+  let squadsURL: string = "";
 
   squadsURL = `https://v3.squads.so/dashboard`;
 
   return (
     <Stack
       key={multiSigAddress}
-      direction={{ base: 'column', sm: 'row' }}
-      gap={{ base: '16px', sm: '20px', md: '24px' }}
+      direction={{ base: "column", sm: "row" }}
+      gap={{ base: "16px", sm: "20px", md: "24px" }}
       w="full"
-      justify={'space-between'}
+      justify={"space-between"}
     >
-      <VStack alignItems={'start'}>
+      <VStack alignItems={"start"}>
         {multiSigAddress && (
           <Button
             as="a"
             href={squadsURL}
             p="0 !important"
-            color={'neutral.8'}
-            size={{ base: 'cubikMini', md: 'cubikSmall' }}
-            variant={'cubikText'}
-            iconSpacing={{ base: '0px', md: '4px' }}
+            color={"neutral.8"}
+            size={{ base: "cubikMini", md: "cubikSmall" }}
+            variant={"cubikText"}
+            iconSpacing={{ base: "0px", md: "4px" }}
             _hover={{
-              bg: 'transparent',
+              bg: "transparent",
             }}
             rightIcon={
-              <Box as={HiExternalLink} boxSize={{ base: '14px', md: '16px' }} />
+              <Box as={HiExternalLink} boxSize={{ base: "14px", md: "16px" }} />
             }
           >
             Project Vault
           </Button>
         )}
-        <HStack gap="6px" align={{ base: 'center', md: 'center' }}>
+        <HStack gap="6px" align={{ base: "center", md: "center" }}>
           <Skeleton fadeDuration={2.5} isLoaded={!isLoading}>
             <Box
               as="p"
-              textStyle={{ base: 'title3', sm: 'title2', md: 'title1' }}
+              textStyle={{ base: "title3", sm: "title2", md: "title1" }}
               color="neutral.11"
             >
               ${balance}
@@ -77,13 +77,13 @@ const VaultHeader = ({
           <Skeleton fadeDuration={2.5} isLoaded={!isLoading}>
             <WalletAddress
               walletAddress={multiSigAddress as string}
-              size={'sm'}
+              size={"sm"}
               copy={true}
             >
               <Tooltip
                 label="Squads Multisig"
                 aria-label="A tooltip"
-                variant={'cubik'}
+                variant={"cubik"}
               >
                 <svg
                   width="33"
@@ -103,9 +103,9 @@ const VaultHeader = ({
         </HStack>
       </VStack>
       <HStack
-        justifyContent={{ base: 'flex-start', sm: 'end' }}
-        alignItems={{ base: 'start', sm: 'center' }}
-        w={{ base: 'full', md: 'fit-content' }}
+        justifyContent={{ base: "flex-start", sm: "end" }}
+        alignItems={{ base: "start", sm: "center" }}
+        w={{ base: "full", md: "fit-content" }}
       >
         <Tooltip
           openDelay={500}
@@ -114,14 +114,14 @@ const VaultHeader = ({
           fontSize="sm"
         >
           <Button
-            size={{ base: 'cubikMini', md: 'cubikSmall' }}
-            variant={'cubikReject'}
+            size={{ base: "cubikMini", md: "cubikSmall" }}
+            variant={"cubikReject"}
             isDisabled
-            iconSpacing={{ base: '2px', md: '2px' }}
+            iconSpacing={{ base: "2px", md: "2px" }}
             rightIcon={
               <Box
                 as={HiArrowNarrowDown}
-                boxSize={{ base: '14px', md: '18px' }}
+                boxSize={{ base: "14px", md: "18px" }}
                 color="#ADB8B6"
               />
             }
@@ -134,29 +134,29 @@ const VaultHeader = ({
           fontSize="sm"
         >
           <Button
-            size={{ base: 'cubikMini', md: 'cubikSmall' }}
-            variant={'cubikAccept'}
+            size={{ base: "cubikMini", md: "cubikSmall" }}
+            variant={"cubikAccept"}
             isDisabled
-            iconSpacing={{ base: '2px', md: '2px' }}
+            iconSpacing={{ base: "2px", md: "2px" }}
             onClick={onOpen}
             rightIcon={
               <Box
                 as={HiArrowNarrowUp}
-                boxSize={{ base: '14px', md: '18px' }}
+                boxSize={{ base: "14px", md: "18px" }}
                 color="#31F579"
               />
             }
           />
         </Tooltip>
       </HStack>
-      <Modal variant={'cubik'} size="md" isOpen={isOpen} onClose={onClose}>
+      <Modal variant={"cubik"} size="md" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
             <HStack>
               <Box
                 as="p"
-                textStyle={{ base: 'title3', md: 'title2' }}
+                textStyle={{ base: "title3", md: "title2" }}
                 color="neutral.11"
               >
                 Create Transaction
@@ -164,7 +164,7 @@ const VaultHeader = ({
             </HStack>
           </ModalHeader>
           <ModalBody>
-            <VStack pt="12px" align={'start'} gap="16px">
+            <VStack pt="12px" align={"start"} gap="16px">
               <WithdrawFundsTransactionModal />
               {/* {transactionError && (
                     <Alert status="error" variant="cubik">

@@ -38,11 +38,3 @@ export const createToken = async (tokenPayload: AuthPayload) => {
     return null;
   }
 };
-
-
-
-
-
-
-
-

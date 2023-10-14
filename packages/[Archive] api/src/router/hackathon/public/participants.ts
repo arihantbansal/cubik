@@ -1,6 +1,6 @@
-import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
-import { publicProcedure } from '../../../trpc';
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+import { publicProcedure } from "../../../trpc";
 export const participants = publicProcedure
   .input(
     z.object({
@@ -28,8 +28,8 @@ export const participants = publicProcedure
     } catch (error) {
       console.log(error);
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
-        message: 'Something went wrong',
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Something went wrong",
       });
     }
   });

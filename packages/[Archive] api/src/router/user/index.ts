@@ -1,11 +1,11 @@
-import { createTRPCRouter } from '../../trpc';
+import { createTRPCRouter } from "../../trpc";
 import {
   addProof,
   checkProof,
   dripProof,
   findOneWithProjectAndRoundDetails,
-} from './protected';
-import { checkEmail, checkUsername, create, findOne, search } from './public';
+} from "./protected";
+import { checkEmail, checkUsername, create, findOne, search } from "./public";
 
 export const userRouter = createTRPCRouter({
   checkUsername,

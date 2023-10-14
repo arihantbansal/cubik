@@ -24,11 +24,12 @@
 
 ## About the Project
 
-Cubik is a platform designed to revolutionize the way open-source projects are funded and supported. It is created with a developer-centric approach, catering to the unique challenges faced by developers while endorsing the power of community participation. 
+Cubik is a platform designed to revolutionize the way open-source projects are funded and supported. It is created with a developer-centric approach, catering to the unique challenges faced by developers while endorsing the power of community participation.
 
-Cubik is built on the Solana blockchain, which allows for fast, secure, and low-cost transactions. The platform is powered by a quadratic funding mechanism, which ensures that even small contributions can have a meaningful impact.  
+Cubik is built on the Solana blockchain, which allows for fast, secure, and low-cost transactions. The platform is powered by a quadratic funding mechanism, which ensures that even small contributions can have a meaningful impact.
 
 #### Features
+
 **Quadratic Voting**: Cubik integrates quadratic voting, ensuring that even small contributions can have a meaningful impact. This approach encourages equitable funding allocations.
 
 **Active Community Participation**: Cubik fosters an engaged community that plays an essential role in resource distribution. This involvement ensures transparency and fairness.
@@ -66,6 +67,7 @@ Here is what you need to be able to run cubik.so.
 #### Quick start with `yarn dx`
 
 #### Development tip
+
 ## Deployment
 
 ### Vercel

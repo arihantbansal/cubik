@@ -8,15 +8,15 @@ import {
   HStack,
   Stack,
   VStack,
-} from '@chakra-ui/react';
-import Link from 'next/link';
-import { useEffect } from 'react';
-import GetFormattedLink from '~/components/HOC/GetLink';
-import ComponentErrors from '~/components/errors/ComponentErrors';
-import { useErrorBoundary } from '~/hooks/useErrorBoundary';
-import { trpc } from '~/utils/trpc';
-import { ProjectEmptyState } from '../../../../user-profile/empty-states/ProjectEmptyState';
-import ProjectsLoadingState from '../../loadingState/ProjectsLoadingState';
+} from "@chakra-ui/react";
+import Link from "next/link";
+import { useEffect } from "react";
+import GetFormattedLink from "~/components/HOC/GetLink";
+import ComponentErrors from "~/components/errors/ComponentErrors";
+import { useErrorBoundary } from "~/hooks/useErrorBoundary";
+import { trpc } from "~/utils/trpc";
+import { ProjectEmptyState } from "../../../../user-profile/empty-states/ProjectEmptyState";
+import ProjectsLoadingState from "../../loadingState/ProjectsLoadingState";
 
 const GrantAcceptedProjects = ({
   roundId,
@@ -57,9 +57,9 @@ const GrantAcceptedProjects = ({
         ) : isError ? (
           <Center
             w="full"
-            py={{ base: '16px', sm: '24px' }}
+            py={{ base: "16px", sm: "24px" }}
             border="1px dashed"
-            borderColor={'#1D1F1E'}
+            borderColor={"#1D1F1E"}
             rounded="12px"
           >
             <ComponentErrors />
@@ -79,42 +79,42 @@ const GrantAcceptedProjects = ({
               >
                 <CardBody
                   h="full"
-                  justifyContent={'space-between'}
+                  justifyContent={"space-between"}
                   gap="12px"
                   p="0"
                 >
                   <Stack
-                    p={{ base: '16px', sm: '20px', md: '24px' }}
+                    p={{ base: "16px", sm: "20px", md: "24px" }}
                     pt="0"
-                    direction={{ base: 'column', sm: 'row' }}
+                    direction={{ base: "column", sm: "row" }}
                     w="full"
                     gap="12px"
                   >
                     <Stack
                       w="full"
                       direction="row"
-                      gap={{ base: '8px', sm: '12px', md: '16px' }}
+                      gap={{ base: "8px", sm: "12px", md: "16px" }}
                     >
                       <Center>
                         <Avatar
                           src={projectJoinRound.project.logo}
                           name={projectJoinRound.project.name}
-                          width={{ base: '36px', sm: '48px', md: '52px' }}
-                          height={{ base: '36px', sm: '48px', md: '52px' }}
+                          width={{ base: "36px", sm: "48px", md: "52px" }}
+                          height={{ base: "36px", sm: "48px", md: "52px" }}
                         />
                       </Center>
                       <VStack
-                        alignItems={'start'}
-                        align={'center'}
+                        alignItems={"start"}
+                        align={"center"}
                         justify="center"
-                        spacing={{ base: '2px', sm: '4px', md: '6px' }}
+                        spacing={{ base: "2px", sm: "4px", md: "6px" }}
                       >
                         <Box
                           as="p"
                           textStyle={{
-                            base: 'title4',
-                            sm: 'title3',
-                            md: 'title2',
+                            base: "title4",
+                            sm: "title3",
+                            md: "title2",
                           }}
                           noOfLines={1}
                           textAlign="left"
@@ -127,13 +127,13 @@ const GrantAcceptedProjects = ({
                         />
                       </VStack>
                     </Stack>
-                    <HStack justifyContent={'end'}>
+                    <HStack justifyContent={"end"}>
                       <Button
                         as={Link}
                         href={`/${projectJoinRound.project.owner.username}/${projectJoinRound.id}/${projectJoinRound.roundId}`}
-                        variant={'cubikOutlined'}
-                        size={{ base: 'cubikMini', md: 'CubikSmall' }}
-                        w={{ base: 'full', sm: '8rem', md: '10rem' }}
+                        variant={"cubikOutlined"}
+                        size={{ base: "cubikMini", md: "CubikSmall" }}
+                        w={{ base: "full", sm: "8rem", md: "10rem" }}
                         h="3rem"
                       >
                         View Details

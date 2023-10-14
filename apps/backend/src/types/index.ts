@@ -24,4 +24,4 @@ export type TokenPriceResponse = {
   timeTaken: number;
 };
 
-export type ContentType = 'file' | 'image';
+export type ContentType = "file" | "image";

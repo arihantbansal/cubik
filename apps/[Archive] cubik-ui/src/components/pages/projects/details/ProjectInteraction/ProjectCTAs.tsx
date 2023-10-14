@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { DonationStatus } from './DonationStatus';
-import { useDisclosure } from '@chakra-ui/hooks';
-import { useWalletModal } from '@solana/wallet-adapter-react-ui';
-import { useUserStore } from '~/store/userStore';
-import { Button } from '@chakra-ui/button';
-import { VStack, Center, HStack, Box } from '@chakra-ui/layout';
+import React, { useState } from "react";
+import { DonationStatus } from "./DonationStatus";
+import { useDisclosure } from "@chakra-ui/hooks";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { useUserStore } from "~/store/userStore";
+import { Button } from "@chakra-ui/button";
+import { VStack, Center, HStack, Box } from "@chakra-ui/layout";
 import {
   Modal,
   ModalOverlay,
@@ -12,19 +12,26 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-} from '@chakra-ui/modal';
-import { Skeleton } from '@chakra-ui/skeleton';
-import { BsTwitter } from 'react-icons/bs';
-import { ProjectsModel } from '@prisma/client';
-import { MdArrowForward } from 'react-icons/md';
-import { IconProps } from '@chakra-ui/react';
-import PaymentModalBody from '~/components/common/payment-modal/PaymentModalBody';
+} from "@chakra-ui/modal";
+import { Skeleton } from "@chakra-ui/skeleton";
+import { BsTwitter } from "react-icons/bs";
+import { ProjectsModel } from "@prisma/client";
+import { MdArrowForward } from "react-icons/md";
+import { IconProps } from "@chakra-ui/react";
+import PaymentModalBody from "~/components/common/payment-modal/PaymentModalBody";
 
 const AnimatedArrowIcon = (props: IconProps & { animate: boolean }) => {
-  const transition = 'all 0.2s ease-in-out';
-  const transform = props.animate ? 'translateX(0.5rem)' : '';
+  const transition = "all 0.2s ease-in-out";
+  const transform = props.animate ? "translateX(0.5rem)" : "";
 
-  return <Box as={MdArrowForward} transition={transition} transform={transform} {...props} />;
+  return (
+    <Box
+      as={MdArrowForward}
+      transition={transition}
+      transform={transform}
+      {...props}
+    />
+  );
 };
 
 interface Props {
@@ -54,7 +61,7 @@ export const ProjectCTAs = (props: Props) => {
   return (
     <>
       <Modal
-        variant={'cubik'}
+        variant={"cubik"}
         size="4xl"
         isOpen={isOpen}
         onClose={() => {
@@ -68,20 +75,20 @@ export const ProjectCTAs = (props: Props) => {
             width="fit-content"
             padding="40px"
             overflow="hidden"
-            position={'relative'}
+            position={"relative"}
             _before={{
               content: '""',
-              position: 'absolute',
-              top: '-10%',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              rounded: '50%',
-              filter: 'blur(80px)',
-              width: '6rem',
-              height: '6rem',
-              background: 'linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)',
-              borderRadius: '8px 8px 0px 0px',
-              zIndex: '-1',
+              position: "absolute",
+              top: "-10%",
+              left: "50%",
+              transform: "translateX(-50%)",
+              rounded: "50%",
+              filter: "blur(80px)",
+              width: "6rem",
+              height: "6rem",
+              background: "linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)",
+              borderRadius: "8px 8px 0px 0px",
+              zIndex: "-1",
             }}
           >
             <VStack gap="18px">
@@ -155,7 +162,14 @@ export const ProjectCTAs = (props: Props) => {
                       strokeWidth="0.710526"
                     />
                   </g>
-                  <rect x="25.0001" y="25" width="46" height="46" rx="23" stroke="#001F1B" />
+                  <rect
+                    x="25.0001"
+                    y="25"
+                    width="46"
+                    height="46"
+                    rx="23"
+                    stroke="#001F1B"
+                  />
                   <defs>
                     <linearGradient
                       id="paint0_linear_849_10088"
@@ -213,49 +227,55 @@ export const ProjectCTAs = (props: Props) => {
                       <stop offset="1" />
                     </linearGradient>
                     <clipPath id="clip0_849_10088">
-                      <rect width="22" height="22" fill="white" transform="translate(37.0001 37)" />
+                      <rect
+                        width="22"
+                        height="22"
+                        fill="white"
+                        transform="translate(37.0001 37)"
+                      />
                     </clipPath>
                   </defs>
                 </svg>
               </Center>
               <Box
                 maxW="22rem"
-                textAlign={'center'}
+                textAlign={"center"}
                 as="p"
-                textStyle={{ base: 'title4', md: 'title3' }}
+                textStyle={{ base: "title4", md: "title3" }}
                 color="white"
               >
                 Congratulations, your donation has been successfully processed!
               </Box>
               <VStack
                 backgroundColor="#0C0D0D"
-                rounded={'24px'}
-                gap={'16px'}
+                rounded={"24px"}
+                gap={"16px"}
                 maxW="22rem"
                 p="24px"
-                alignItems={'start'}
+                alignItems={"start"}
               >
                 <VStack spacing="12px" align="start">
-                  <Box as="p" textStyle={'title4'} color="white">
+                  <Box as="p" textStyle={"title4"} color="white">
                     Spread the word!
                   </Box>
-                  <Box as="p" textStyle={'body5'} color="neutral.8">
-                    Share your contribution with others and inspire more support for this project.
+                  <Box as="p" textStyle={"body5"} color="neutral.8">
+                    Share your contribution with others and inspire more support
+                    for this project.
                   </Box>
                 </VStack>
                 <HStack
                   rounded="12px"
                   border="1px solid"
                   w="full"
-                  textAlign={'center'}
+                  textAlign={"center"}
                   align="center"
-                  justify={'center'}
+                  justify={"center"}
                   gap="8px"
                   color="#1D9BF0"
                   backgroundColor="#1D9BF016"
                   borderColor="transparent"
                   _hover={{
-                    borderColor: '#1D9BF0',
+                    borderColor: "#1D9BF0",
                   }}
                   p="12px"
                   as="a"
@@ -263,7 +283,7 @@ export const ProjectCTAs = (props: Props) => {
                   target="_blank"
                 >
                   <BsTwitter size={20} color="#1D9BF0" />
-                  <Box as="p" fontStyle={'body6'}>
+                  <Box as="p" fontStyle={"body6"}>
                     Share on Twitter
                   </Box>
                 </HStack>
@@ -277,7 +297,7 @@ export const ProjectCTAs = (props: Props) => {
               h="full"
               pt="24px !important"
               pb="24px !important"
-              roundedTop={'24px'}
+              roundedTop={"24px"}
             >
               Donate to {props.project.name}
             </ModalHeader>
@@ -287,7 +307,7 @@ export const ProjectCTAs = (props: Props) => {
                 <PaymentModalBody
                   projectJoinRoundId={props.hackathonJoinId as string}
                   roundId={props.hackathonId as string}
-                  name={'Speedrun'}
+                  name={"Speedrun"}
                   setDonationSuccessful={setDonationSuccessful}
                   projectDetails={props.project}
                 />
@@ -296,9 +316,14 @@ export const ProjectCTAs = (props: Props) => {
           </ModalContent>
         )}
       </Modal>
-      <Box display={{ base: 'none', lg: 'block' }}>
-        <VStack ml="auto" right="20rem" w={'full'} alignItems={{ base: 'center', lg: 'start' }}>
-          <VStack gap="16px" align={'end'} spacing="0" w="full" pb="0.5rem">
+      <Box display={{ base: "none", lg: "block" }}>
+        <VStack
+          ml="auto"
+          right="20rem"
+          w={"full"}
+          alignItems={{ base: "center", lg: "start" }}
+        >
+          <VStack gap="16px" align={"end"} spacing="0" w="full" pb="0.5rem">
             <DonationStatus
               owner={props.project.owner_publickey}
               onDonateHandler={onDonateHandler}
@@ -311,7 +336,13 @@ export const ProjectCTAs = (props: Props) => {
               w="full"
             >
               <Button
-                rightIcon={<AnimatedArrowIcon animate={isHovered} width={18} height={18} />}
+                rightIcon={
+                  <AnimatedArrowIcon
+                    animate={isHovered}
+                    width={18}
+                    height={18}
+                  />
+                }
                 variant="cubikOutlined"
                 w="full"
                 as="a"

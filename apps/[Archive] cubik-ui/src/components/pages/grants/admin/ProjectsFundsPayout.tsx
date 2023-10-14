@@ -10,15 +10,15 @@ import {
   Th,
   Thead,
   Tr,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 import {
   Contribution,
   ProjectJoinRound,
   ProjectsModel,
   UserModel,
-} from '@cubik/database';
-import React, { ReactElement, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+} from "@cubik/database";
+import React, { ReactElement, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 
 type TFormValues = Record<string, boolean>;
 
@@ -70,10 +70,10 @@ const ProjectsFundsPayout = ({
   });
 
   return (
-    <form onSubmit={onSubmit} style={{ width: '100%' }}>
+    <form onSubmit={onSubmit} style={{ width: "100%" }}>
       <Table
         w="full"
-        minW={{ base: '28rem', md: '34rem' }}
+        minW={{ base: "28rem", md: "34rem" }}
         overflowX="scroll"
         variant="unstyled"
         mt="16px"
@@ -82,10 +82,10 @@ const ProjectsFundsPayout = ({
           w="full"
           h="1rem"
           color="neutral.8"
-          fontFamily={'Plus Jakarta Sans, sans-serif'}
+          fontFamily={"Plus Jakarta Sans, sans-serif"}
         >
           <Tr>
-            <Th w={'5%'} p={{ base: '10px', md: '4px 16px' }}>
+            <Th w={"5%"} p={{ base: "10px", md: "4px 16px" }}>
               <Center>
                 <Checkbox
                   colorScheme="teal"
@@ -94,16 +94,16 @@ const ProjectsFundsPayout = ({
                 />
               </Center>
             </Th>
-            <Th w={'25%'} p={{ base: '10px', md: '4px 16px' }}>
+            <Th w={"25%"} p={{ base: "10px", md: "4px 16px" }}>
               Project
             </Th>
-            <Th w={'40%'} p={{ base: '10px', md: '4px 16px' }}>
+            <Th w={"40%"} p={{ base: "10px", md: "4px 16px" }}>
               Public Address
             </Th>
-            <Th w={'15%'} p={{ base: '10px', md: '4px 16px' }}>
+            <Th w={"15%"} p={{ base: "10px", md: "4px 16px" }}>
               Contributors
             </Th>
-            <Th w={'15%'} p={{ base: '10px', md: '4px 16px' }}>
+            <Th w={"15%"} p={{ base: "10px", md: "4px 16px" }}>
               Matching
             </Th>
           </Tr>
@@ -143,13 +143,13 @@ const ProjectsFundsPayout = ({
                         height="40px"
                         src={projectJoinRound.project.logo}
                       />
-                      <Box as="p" textStyle={'title4'} color="neutral.11">
+                      <Box as="p" textStyle={"title4"} color="neutral.11">
                         {projectJoinRound.project.name}
                       </Box>
                     </HStack>
                   </Td>
                   <Td px="12px">
-                    <Box textStyle={'body4'} color="neutral.8">
+                    <Box textStyle={"body4"} color="neutral.8">
                       {projectJoinRound.project.mutliSigAddress}
                     </Box>
                   </Td>
@@ -171,8 +171,8 @@ const ProjectsFundsPayout = ({
                       ? (
                           (projectJoinRound.amountRaise / matchingPoolAmount) *
                           100
-                        ).toFixed(1) + '%'
-                      : '0%'}
+                        ).toFixed(1) + "%"
+                      : "0%"}
                   </Td>
                 </Tr>
               );

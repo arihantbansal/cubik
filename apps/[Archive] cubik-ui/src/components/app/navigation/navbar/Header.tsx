@@ -12,19 +12,19 @@ import {
   Stack,
   useDisclosure,
   useMediaQuery,
-} from '@chakra-ui/react';
-import { useWallet } from '@solana/wallet-adapter-react';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { memo, useState } from 'react';
-import { MdClear } from 'react-icons/md';
-import { RxHamburgerMenu } from 'react-icons/rx';
-import Logo from '~/components/common/logo/Logo';
-import { SearchBar } from '~/components/common/searchbar';
-import { MobileNavCollapsible } from './MobileNav';
-import { set } from 'nprogress';
-import SEO from '~/components/SEO';
+} from "@chakra-ui/react";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { memo, useState } from "react";
+import { MdClear } from "react-icons/md";
+import { RxHamburgerMenu } from "react-icons/rx";
+import Logo from "~/components/common/logo/Logo";
+import { SearchBar } from "~/components/common/searchbar";
+import { MobileNavCollapsible } from "./MobileNav";
+import { set } from "nprogress";
+import SEO from "~/components/SEO";
 
 export const Header = memo(function Header({
   children,
@@ -39,20 +39,20 @@ export const Header = memo(function Header({
     onClose: onCloseDrawer,
   } = useDisclosure();
   const { isOpen, onToggle, onClose } = useDisclosure();
-  const [isDesktop] = useMediaQuery('(min-width: 768px)');
+  const [isDesktop] = useMediaQuery("(min-width: 768px)");
   const [drawerOpenedOnce, setDrawerOpenedOnce] = useState(true);
-  const isCreateProfilePage = router.pathname !== '/create-profile';
+  const isCreateProfilePage = router.pathname !== "/create-profile";
 
   const isActiveRoute = (route: string): boolean => {
     return router.pathname === route;
   };
 
-  const landingPage = router.pathname === '/';
+  const landingPage = router.pathname === "/";
 
   const NavbarCTA: React.FC<any> = ({ children }) => {
     return (
       <Center
-        h={{ base: '2rem', md: '2.6rem' }}
+        h={{ base: "2rem", md: "2.6rem" }}
         justifyContent="flex-end"
         alignItems="end"
         w="full"
@@ -62,14 +62,14 @@ export const Header = memo(function Header({
           <Center w="fit-content">{children}</Center>
         ) : (
           <HStack justify="end" align="center" w="full" gap="12px">
-            <Center display={{ base: 'flex', md: 'none' }} gap="12px">
+            <Center display={{ base: "flex", md: "none" }} gap="12px">
               {children}
               <Box
                 as={RxHamburgerMenu}
-                boxSize={'26px'}
+                boxSize={"26px"}
                 color="white"
                 onClick={onToggle}
-              />{' '}
+              />{" "}
             </Center>
           </HStack>
         )}
@@ -88,21 +88,21 @@ export const Header = memo(function Header({
     return isDesktop && isCreateProfilePage ? (
       <>
         <SearchBar
-          display={landingPage ? 'none' : 'flex'}
-          width={{ base: 'full', sm: 'full', md: '8rem', lg: '14rem' }}
+          display={landingPage ? "none" : "flex"}
+          width={{ base: "full", sm: "full", md: "8rem", lg: "14rem" }}
         />
         <HStack
-          gap={{ base: '28px', lg: '32px' }}
-          alignItems={'center'}
-          justifyContent={landingPage ? 'center' : 'flex-start'}
+          gap={{ base: "28px", lg: "32px" }}
+          alignItems={"center"}
+          justifyContent={landingPage ? "center" : "flex-start"}
           mx="auto"
         >
           <Link href="/projects">
             <Box
               as="p"
-              textStyle={'title4'}
-              color={isActiveRoute('/projects') ? 'brand.teal5' : 'neutral.8'}
-              cursor={'pointer'}
+              textStyle={"title4"}
+              color={isActiveRoute("/projects") ? "brand.teal5" : "neutral.8"}
+              cursor={"pointer"}
             >
               Projects
             </Box>
@@ -110,9 +110,9 @@ export const Header = memo(function Header({
           <Link href="/grants">
             <Box
               as="p"
-              textStyle={'title4'}
-              color={isActiveRoute('/grants') ? 'brand.teal5' : 'neutral.8'}
-              cursor={'pointer'}
+              textStyle={"title4"}
+              color={isActiveRoute("/grants") ? "brand.teal5" : "neutral.8"}
+              cursor={"pointer"}
             >
               Grants
             </Box>
@@ -120,9 +120,9 @@ export const Header = memo(function Header({
           <Link href="/hackathons">
             <Box
               as="p"
-              textStyle={'title4'}
-              color={isActiveRoute('/hackathons') ? 'brand.teal5' : 'neutral.8'}
-              cursor={'pointer'}
+              textStyle={"title4"}
+              color={isActiveRoute("/hackathons") ? "brand.teal5" : "neutral.8"}
+              cursor={"pointer"}
             >
               Hackathons
             </Box>
@@ -145,27 +145,27 @@ export const Header = memo(function Header({
         <Container
           w="full"
           zIndex="10"
-          maxW={'full'}
+          maxW={"full"}
           position="fixed"
           top="0px"
           minH="4rem"
           p="0"
           bg="transparent"
           sx={{
-            backdropFilter: 'blur(20px)',
-            margin: '0px !important',
-            marginTop: '0px !important',
+            backdropFilter: "blur(20px)",
+            margin: "0px !important",
+            marginTop: "0px !important",
           }}
         >
           <Flex
             mx="auto"
-            p={{ base: '14px 12px', sm: '16px 24px', md: '20px 20px' }}
+            p={{ base: "14px 12px", sm: "16px 24px", md: "20px 20px" }}
             maxW="7xl"
-            alignItems={'center'}
-            justifyContent={'space-between'}
-            gap={'24px'}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+            gap={"24px"}
           >
-            <HStack w="full" gap={{ base: '28px', lg: '32px' }}>
+            <HStack w="full" gap={{ base: "28px", lg: "32px" }}>
               <Logo />
               <DeskNavbarItems />
             </HStack>

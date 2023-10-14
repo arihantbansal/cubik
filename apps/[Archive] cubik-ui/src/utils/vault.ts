@@ -1,12 +1,12 @@
-import * as anchor from '@coral-xyz/anchor';
-import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
-import { PublicKey } from '@solana/web3.js';
+import * as anchor from "@coral-xyz/anchor";
+import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+import { PublicKey } from "@solana/web3.js";
 import Squads, {
   getTxPDA,
   getIxPDA,
   TransactionAccount,
   InstructionAccount,
-} from '@sqds/sdk';
+} from "@sqds/sdk";
 
 import { create } from "domain";
 import { env } from "~/env.mjs";

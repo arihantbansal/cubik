@@ -1,6 +1,6 @@
-import { UserModel } from '@cubik/database';
-import axios from 'axios';
-import { create } from 'zustand';
+import { UserModel } from "@cubik/database";
+import axios from "axios";
+import { create } from "zustand";
 
 type State = {
   user: UserModel | null;

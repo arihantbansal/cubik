@@ -1,7 +1,7 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
-export * from '@prisma/client';
-import { PrismaClient } from '@prisma/client';
-import { config } from 'dotenv';
+export * from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+import { config } from "dotenv";
 
 config();
 declare global {
@@ -21,4 +21,4 @@ if (typeof window === "undefined") {
 }
 
 // const prisma = new PrismaClient();
-export { prisma };  
+export { prisma };

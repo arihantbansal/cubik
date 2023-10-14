@@ -89,15 +89,15 @@ export const VerifyModal = ({
       setIsLoading(false);
     } else {
       const nonce = Math.random().toString(36).substring(2, 15);
-  const hash = await getMessage(nonce);
-  if (!hash) {
-    throw new Error("Message is undefined");
-  }
-  const msg = createMessage(hash);
-  const sigBuffer = await signMessage!(msg!);
-  const sig = utils.bytes.bs58.encode(sigBuffer);
-  localStorage.setItem("wallet_sig", sig);
-  localStorage.setItem("wallet_nonce", nonce);
+      const hash = await getMessage(nonce);
+      if (!hash) {
+        throw new Error("Message is undefined");
+      }
+      const msg = createMessage(hash);
+      const sigBuffer = await signMessage!(msg!);
+      const sig = utils.bytes.bs58.encode(sigBuffer);
+      localStorage.setItem("wallet_sig", sig);
+      localStorage.setItem("wallet_nonce", nonce);
 
       router.push("/create/profile");
       onClose();

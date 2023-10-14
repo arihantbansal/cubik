@@ -2,9 +2,9 @@ import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from '../../trpc';
-import { z } from 'zod';
-import { TRPCError } from '@trpc/server';
+} from "../../trpc";
+import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 
 export const commentRouter = createTRPCRouter({
   createComment: protectedProcedure
@@ -57,15 +57,15 @@ export const commentRouter = createTRPCRouter({
             createdAt: true,
           },
           orderBy: {
-            createdAt: 'desc',
+            createdAt: "desc",
           },
         });
         return res;
       } catch (error) {
         console.log(error);
         throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'Something went wrong',
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Something went wrong",
         });
       }
     }),
@@ -94,15 +94,15 @@ export const commentRouter = createTRPCRouter({
             createdAt: true,
           },
           orderBy: {
-            createdAt: 'desc',
+            createdAt: "desc",
           },
         });
         return res;
       } catch (error) {
         console.log(error);
         throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'Something went wrong',
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Something went wrong",
         });
       }
     }),

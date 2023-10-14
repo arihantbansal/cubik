@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { publicProcedure } from '../../../trpc';
+import { z } from "zod";
+import { publicProcedure } from "../../../trpc";
 
 export const findManyVerifiedUser = publicProcedure
   .input(

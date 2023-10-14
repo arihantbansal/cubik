@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { useQuery, UseQueryResult } from 'react-query';
-import { env } from '~/env.mjs';
+import axios from "axios";
+import { useQuery, UseQueryResult } from "react-query";
+import { env } from "~/env.mjs";
 
 interface TokenData {
   tokenAccount: string;
@@ -19,8 +19,8 @@ async function fetchTokenBalance(
     }>(
       `https://api.helius.xyz/v0/addresses/${walletAddress}/balances?api-key=${env.NEXT_PUBLIC_HELIUS_API_KEY}`
     );
-    console.log('data', data);
-    if (tokenAddress === '') {
+    console.log("data", data);
+    if (tokenAddress === "") {
       return data.nativeBalance;
     }
     const token = data.tokens.find(
@@ -46,7 +46,7 @@ export const useTokenBalance = (
   walletAddress: string
 ): UseQueryResult<number, Error> => {
   return useQuery(
-    ['tokenBalance', tokenAddress, walletAddress],
+    ["tokenBalance", tokenAddress, walletAddress],
     () => fetchTokenBalance(tokenAddress, walletAddress),
     {
       staleTime: 1000 * 60 * 5, // data will become stale after 5 minutes

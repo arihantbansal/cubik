@@ -1,7 +1,7 @@
-import { Box, Flex, Skeleton } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import { Key, memo, useState } from 'react';
-import { useUserStore } from '~/store/userStore';
+import { Box, Flex, Skeleton } from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import { Key, memo, useState } from "react";
+import { useUserStore } from "~/store/userStore";
 
 const Carousel = memo(function Carousel({
   carouselWidth,
@@ -39,14 +39,14 @@ const Carousel = memo(function Carousel({
       minH="5rem"
       as={motion.div}
       _hover={{
-        outline: '1px solid #fff',
+        outline: "1px solid #fff",
       }}
       onClick={() => {
         if (!isDragging) {
           setPFP(nft.image);
         }
       }}
-      pointerEvents={isDragging ? 'none' : 'all'}
+      pointerEvents={isDragging ? "none" : "all"}
     >
       <Skeleton
         isLoaded={!isDragging}
@@ -63,12 +63,12 @@ const Carousel = memo(function Carousel({
           loading="lazy"
           style={{
             outline:
-              user?.profilePicture === nft.image ? '1px solid #fff' : 'none',
-            pointerEvents: 'none',
-            borderRadius: '6px',
-            width: '5rem',
-            height: '5rem',
-            objectFit: 'cover',
+              user?.profilePicture === nft.image ? "1px solid #fff" : "none",
+            pointerEvents: "none",
+            borderRadius: "6px",
+            width: "5rem",
+            height: "5rem",
+            objectFit: "cover",
           }}
         />
       </Skeleton>
@@ -89,7 +89,7 @@ const Carousel = memo(function Carousel({
       as={motion.div}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      px={'6px'}
+      px={"6px"}
     >
       {nftsData.map((nft: any, key: Key) => (
         <NFTImg nft={nft} key={key} />

@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { publicProcedure } from '../../../trpc';
-import { TRPCError } from '@trpc/server';
+import { z } from "zod";
+import { publicProcedure } from "../../../trpc";
+import { TRPCError } from "@trpc/server";
 
 export const search = publicProcedure
   .input(
@@ -22,7 +22,7 @@ export const search = publicProcedure
       return res;
     } catch (error) {
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
+        code: "INTERNAL_SERVER_ERROR",
         message: `Error processing payment with error ${error}`,
       });
     }

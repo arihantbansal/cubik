@@ -1,7 +1,7 @@
 // components/ErrorBoundary.tsx
-import { Center } from '@chakra-ui/react';
-import { Component, ErrorInfo, ReactNode } from 'react';
-import ComponentErrors from './ComponentErrors';
+import { Center } from "@chakra-ui/react";
+import { Component, ErrorInfo, ReactNode } from "react";
+import ComponentErrors from "./ComponentErrors";
 
 interface Props {
   children: ReactNode;
@@ -22,7 +22,7 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Uncaught error:', error, errorInfo);
+    console.error("Uncaught error:", error, errorInfo);
     if (this.props.onError) {
       this.props.onError();
     }
@@ -32,12 +32,12 @@ class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <Center
-          maxW={'7xl'}
+          maxW={"7xl"}
           mx="auto"
           w="full"
-          py={{ base: '16px', sm: '24px' }}
+          py={{ base: "16px", sm: "24px" }}
           border="1px dashed"
-          borderColor={'#1D1F1E'}
+          borderColor={"#1D1F1E"}
           rounded="12px"
         >
           <ComponentErrors />

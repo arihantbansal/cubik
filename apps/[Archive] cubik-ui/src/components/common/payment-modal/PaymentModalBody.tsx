@@ -1,7 +1,7 @@
-import { Stack } from '@chakra-ui/react';
-import { ProjectsModel } from '@cubik/database';
-import { ProjectDonationSimulator } from '~/components/pages/projects/project-details/project-interactions/project-donation-simulator/ProjectDonationSimulator';
-import { ProjectWithRoundDetailsWithOwnerWithTeamType } from '~/types/project';
+import { Stack } from "@chakra-ui/react";
+import { ProjectsModel } from "@cubik/database";
+import { ProjectDonationSimulator } from "~/components/pages/projects/project-details/project-interactions/project-donation-simulator/ProjectDonationSimulator";
+import { ProjectWithRoundDetailsWithOwnerWithTeamType } from "~/types/project";
 
 const PaymentModalBody = ({
   setDonationSuccessful,

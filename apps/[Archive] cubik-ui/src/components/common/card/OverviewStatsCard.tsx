@@ -1,7 +1,7 @@
-import { VStack } from '@chakra-ui/layout';
-import { Skeleton } from '@chakra-ui/skeleton';
-import { Stat, StatLabel, StatNumber } from '@chakra-ui/stat';
-import { formatNumberWithK } from '~/utils/formatWithK';
+import { VStack } from "@chakra-ui/layout";
+import { Skeleton } from "@chakra-ui/skeleton";
+import { Stat, StatLabel, StatNumber } from "@chakra-ui/stat";
+import { formatNumberWithK } from "~/utils/formatWithK";
 
 export const OverviewStatsCard = ({
   height,
@@ -19,19 +19,19 @@ export const OverviewStatsCard = ({
   return (
     <Stat
       variant="cubik"
-      w={'full'}
-      maxW={{ base: '88vw', sm: '90vw' }}
+      w={"full"}
+      maxW={{ base: "88vw", sm: "90vw" }}
       minW="12rem"
       overflow="hidden"
-      h={height ? height : 'auto'}
-      justifyContent={'space-between'}
+      h={height ? height : "auto"}
+      justifyContent={"space-between"}
     >
       <VStack p="24px" mb="12px" align="start" h="full">
         <Skeleton isLoaded={!isLoading} fadeDuration={0.5}>
           <StatLabel
-            whiteSpace={'nowrap'}
+            whiteSpace={"nowrap"}
             overflow="hidden"
-            textStyle={{ base: 'title6', md: 'title5' }}
+            textStyle={{ base: "title6", md: "title5" }}
             color="neutral8"
           >
             {title}

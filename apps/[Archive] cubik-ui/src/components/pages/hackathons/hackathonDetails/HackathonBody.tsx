@@ -20,19 +20,19 @@ import {
   TagLabel,
   TagLeftIcon,
   TagRightIcon,
-} from '@chakra-ui/react';
-import HackathonInteractions from './HackathonInteractions';
-import { ProjectsDetailedDescription } from '../../projects/project-details/ProjectDetailedDescription';
-import { Team, UserModel } from '@cubik/database';
+} from "@chakra-ui/react";
+import HackathonInteractions from "./HackathonInteractions";
+import { ProjectsDetailedDescription } from "../../projects/project-details/ProjectDetailedDescription";
+import { Team, UserModel } from "@cubik/database";
 import {
   HackathonHost,
   HackathonSchedule as HackathonScheduleType,
   HackathonSocial,
   HackathonSponsor,
   HackathonTracks,
-} from '~/types/hackathon';
-import HackathonSchedule from './HackathonSchedule';
-import { CgExternal } from 'react-icons/cg';
+} from "~/types/hackathon";
+import HackathonSchedule from "./HackathonSchedule";
+import { CgExternal } from "react-icons/cg";
 
 const HackathonBody = ({
   isLoading,
@@ -58,21 +58,21 @@ const HackathonBody = ({
   hackathonId: string;
 }) => {
   // get all the sponsors array with name and logo from sponsor array
-  const sponsors = tracks?.map(track => track.sponsor).flat();
+  const sponsors = tracks?.map((track) => track.sponsor).flat();
   return (
     <Container p="0px" maxW="full">
       <Stack
-        gap={{ base: '12px', md: '24px', lg: '8rem' }}
+        gap={{ base: "12px", md: "24px", lg: "8rem" }}
         w="full"
         alignItems="top"
-        direction={{ base: 'column-reverse', lg: 'row' }}
+        direction={{ base: "column-reverse", lg: "row" }}
       >
         <Center w="full" flex={3.5}>
-          <Tabs variant={'cubik'} alignSelf={'start'} w="full">
+          <Tabs variant={"cubik"} alignSelf={"start"} w="full">
             <TabList
-              overflowY={{ base: 'hidden', md: 'inherit' }}
-              overflowX={{ base: 'scroll', md: 'inherit' }}
-              gap={{ base: '24px', md: '32px' }}
+              overflowY={{ base: "hidden", md: "inherit" }}
+              overflowX={{ base: "scroll", md: "inherit" }}
+              gap={{ base: "24px", md: "32px" }}
             >
               <Tab>Details</Tab>
               <Tab>Schedule</Tab>
@@ -80,7 +80,10 @@ const HackathonBody = ({
             </TabList>
             <TabPanels p="0 !important">
               <TabPanel>
-                <ProjectsDetailedDescription isLoading={isLoading} description={description} />
+                <ProjectsDetailedDescription
+                  isLoading={isLoading}
+                  description={description}
+                />
               </TabPanel>
               <TabPanel>
                 <HackathonSchedule
@@ -89,9 +92,15 @@ const HackathonBody = ({
                 />
               </TabPanel>
               <TabPanel p="0 !important" overflowX="scroll">
-                <Accordion m="0" border="none" gap="1rem" width="full" allowToggle>
+                <Accordion
+                  m="0"
+                  border="none"
+                  gap="1rem"
+                  width="full"
+                  allowToggle
+                >
                   {tracks &&
-                    tracks?.map(track => (
+                    tracks?.map((track) => (
                       <>
                         <AccordionItem
                           id={track.name}
@@ -106,23 +115,31 @@ const HackathonBody = ({
                             rounded="16px"
                             backgroundColor="neutral.2"
                             _hover={{
-                              bg: 'neutral.2',
+                              bg: "neutral.2",
                             }}
                           >
-                            <HStack gap={'16px'} w="full">
-                              {track.sponsor.map(track_sponsor => (
-                                <Avatar size="lg" borderRadius="12px" src={track_sponsor.logo} />
+                            <HStack gap={"16px"} w="full">
+                              {track.sponsor.map((track_sponsor) => (
+                                <Avatar
+                                  size="lg"
+                                  borderRadius="12px"
+                                  src={track_sponsor.logo}
+                                />
                               ))}
                               <VStack color="neutral.11" align="start">
-                                <Box as="p" textStyle={'title2'} textAlign="left">
+                                <Box
+                                  as="p"
+                                  textStyle={"title2"}
+                                  textAlign="left"
+                                >
                                   {track.name}
                                 </Box>
                                 <Box
                                   as="p"
-                                  textStyle={'body4'}
+                                  textStyle={"body4"}
                                   textAlign="left"
                                   noOfLines={1}
-                                  maxW={'80%'}
+                                  maxW={"80%"}
                                 >
                                   {track.description}
                                 </Box>
@@ -163,30 +180,50 @@ const HackathonBody = ({
                                   </Box>
                                 </HStack> */}
                               </VStack>
-                              <Center ml="auto" p="4px" bg="neutral.4" rounded="full">
+                              <Center
+                                ml="auto"
+                                p="4px"
+                                bg="neutral.4"
+                                rounded="full"
+                              >
                                 <AccordionIcon />
                               </Center>
                             </HStack>
                           </AccordionButton>
                           <AccordionPanel pb={4}>
-                            <VStack color="white" align="start" gap="18px" p="12px">
-                              <Box pb="4px" as="p" textStyle={'title1'} textAlign="left">
+                            <VStack
+                              color="white"
+                              align="start"
+                              gap="18px"
+                              p="12px"
+                            >
+                              <Box
+                                pb="4px"
+                                as="p"
+                                textStyle={"title1"}
+                                textAlign="left"
+                              >
                                 {track.prizeWorth} {track.prizeUnit}
                               </Box>
-                              <Box as="p" textStyle={'body4'} textAlign="left">
+                              <Box as="p" textStyle={"body4"} textAlign="left">
                                 {track.description}
                               </Box>
                               <HStack gap="8px">
-                                {track.links.map(link => (
+                                {track.links.map((link) => (
                                   <Tag
                                     as="a"
-                                    cursor={'pointer'}
+                                    cursor={"pointer"}
                                     href={link.link}
                                     target="_blank"
                                     p="8px 12px"
                                   >
-                                    <TagLabel fontWeight="700">{link.title}</TagLabel>
-                                    <TagRightIcon boxSize="12px" as={CgExternal} />
+                                    <TagLabel fontWeight="700">
+                                      {link.title}
+                                    </TagLabel>
+                                    <TagRightIcon
+                                      boxSize="12px"
+                                      as={CgExternal}
+                                    />
                                   </Tag>
                                 ))}
                               </HStack>
@@ -203,7 +240,7 @@ const HackathonBody = ({
         <Center w="full" h="full" flex={1.5}>
           <HackathonInteractions
             hackathonId={hackathonId as string}
-            prizePool={prize_pool?.toLocaleString() ?? '0'}
+            prizePool={prize_pool?.toLocaleString() ?? "0"}
             isLoading={isLoading}
             team={team}
             sponsors={sponsors}

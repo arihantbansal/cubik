@@ -1,21 +1,21 @@
-import * as anchor from '@coral-xyz/anchor';
-import nacl from 'tweetnacl';
+import * as anchor from "@coral-xyz/anchor";
+import nacl from "tweetnacl";
 
 export const createMessage = async (token?: string | undefined) => {
   const message =
-    'Welcome to Cubik a platform where community helps projects to grow'; //todo: isko change karna hai
-  let id: string | undefined = '';
+    "Welcome to Cubik a platform where community helps projects to grow"; //todo: isko change karna hai
+  let id: string | undefined = "";
   if (token) {
     id = token;
   } else {
-    id = localStorage.getItem('anon_id') ?? undefined;
+    id = localStorage.getItem("anon_id") ?? undefined;
   }
 
   if (!id) {
-    throw new Error('id not found');
+    throw new Error("id not found");
   }
 
-  const data = new TextEncoder().encode(message + '-' + id);
+  const data = new TextEncoder().encode(message + "-" + id);
 
   return data;
 };

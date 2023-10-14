@@ -5,7 +5,7 @@ import {
   SkeletonText,
   VStack,
   Wrap,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 const ProjectCardSkeleton = () => {
   return (
@@ -15,44 +15,44 @@ const ProjectCardSkeleton = () => {
       h="22rem"
       cursor="pointer"
       maxW={{
-        base: '92vw',
-        sm: '87vw',
-        md: '44vw',
-        lg: '29.5vw',
-        xl: '25.5rem',
+        base: "92vw",
+        sm: "87vw",
+        md: "44vw",
+        lg: "29.5vw",
+        xl: "25.5rem",
       }}
-      background={'#0C0D0D'}
+      background={"#0C0D0D"}
       border="none"
     >
       <Skeleton
-        w={{ base: 'full', md: 'full' }}
-        h={{ base: '2.5rem', md: '3.3rem' }}
+        w={{ base: "full", md: "full" }}
+        h={{ base: "2.5rem", md: "3.3rem" }}
       />
-      <VStack gap="18px" w="full" alignItems={'start'} justifyContent="start">
-        <HStack justifyContent={'space-between'}>
+      <VStack gap="18px" w="full" alignItems={"start"} justifyContent="start">
+        <HStack justifyContent={"space-between"}>
           <Skeleton
-            w={{ base: '3rem', md: '4rem' }}
-            h={{ base: '3rem', md: '4rem' }}
+            w={{ base: "3rem", md: "4rem" }}
+            h={{ base: "3rem", md: "4rem" }}
           />
         </HStack>
         <VStack gap="0.8rem" spacing="0" w="full">
-          <HStack align={'end'} w="full" justify="space-between">
-            <Skeleton w="10rem" h="1.3rem" opacity={'0.6'} />
-            <Skeleton w="4rem" h="2rem" opacity={'0.6'} />
+          <HStack align={"end"} w="full" justify="space-between">
+            <Skeleton w="10rem" h="1.3rem" opacity={"0.6"} />
+            <Skeleton w="4rem" h="2rem" opacity={"0.6"} />
           </HStack>
           <HStack w="full" justify="space-between">
-            <Skeleton w="4rem" h="0.5rem" opacity={'0.6'} />
-            <Skeleton w="4rem" h="0.5rem" opacity={'0.6'} />
-          </HStack>{' '}
-        </VStack>{' '}
-        <VStack gap="8px" w="full" align={'start'}>
+            <Skeleton w="4rem" h="0.5rem" opacity={"0.6"} />
+            <Skeleton w="4rem" h="0.5rem" opacity={"0.6"} />
+          </HStack>{" "}
+        </VStack>{" "}
+        <VStack gap="8px" w="full" align={"start"}>
           <SkeletonText
-            w={'full'}
+            w={"full"}
             noOfLines={2}
             height="28px"
-            opacity={'0.6'}
+            opacity={"0.6"}
           />
-          <Skeleton w="10rem" h="1.5rem" opacity={'0.4'} />
+          <Skeleton w="10rem" h="1.5rem" opacity={"0.4"} />
         </VStack>
       </VStack>
     </Card>
@@ -66,9 +66,9 @@ const ProjectListLoadingSkeleton = () => {
       w="100%"
       margin="0"
       p="0"
-      justify={'center'}
+      justify={"center"}
       align="center"
-      direction={{ base: 'column', sm: 'row', md: 'row' }}
+      direction={{ base: "column", sm: "row", md: "row" }}
     >
       <ProjectCardSkeleton />
       <ProjectCardSkeleton />

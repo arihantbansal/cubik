@@ -69,7 +69,6 @@ const UserNavbarMenuButton = () => {
   async function handleSignOut() {
     await handleLogout();
     logout();
-    
   }
 
   const NavMenuButtons = () => {

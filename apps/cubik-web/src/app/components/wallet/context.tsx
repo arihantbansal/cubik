@@ -19,10 +19,7 @@ const WalletContext: FC<{ children: ReactNode }> = ({ children }) => {
       ? WalletAdapterNetwork.Mainnet
       : WalletAdapterNetwork.Devnet;
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-  const wallets = useMemo(
-    () => [],
-    []
-  );
+  const wallets = useMemo(() => [], []);
 
   return (
     <ConnectionProvider endpoint={endpoint}>

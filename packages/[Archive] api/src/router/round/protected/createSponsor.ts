@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { protectedProcedure } from '../../../trpc';
-import { TRPCError } from '@trpc/server';
+import { z } from "zod";
+import { protectedProcedure } from "../../../trpc";
+import { TRPCError } from "@trpc/server";
 
 export const createSponsor = protectedProcedure
   .input(
@@ -21,9 +21,9 @@ export const createSponsor = protectedProcedure
       });
       if (!round) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Round not found',
-          cause: 'Round not found',
+          code: "NOT_FOUND",
+          message: "Round not found",
+          cause: "Round not found",
         });
       }
 
@@ -47,8 +47,8 @@ export const createSponsor = protectedProcedure
     } catch (error) {
       console.log(error);
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
-        message: 'Internal Server Error',
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Internal Server Error",
       });
     }
   });

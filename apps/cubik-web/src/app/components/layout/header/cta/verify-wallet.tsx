@@ -17,7 +17,6 @@ import { WalletAddress } from "../../../common/wallet";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useState } from "react";
 
-
 const VerifyWallet = () => {
   const { publicKey, disconnect } = useWallet();
   const [isLoading] = useState(false);

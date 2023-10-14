@@ -1,4 +1,4 @@
-import { createTRPCRouter } from './trpc';
+import { createTRPCRouter } from "./trpc";
 import {
   projectRouter,
   userRouter,
@@ -7,7 +7,7 @@ import {
   roundRouter,
   poolRouter,
   commentRouter,
-} from './router';
+} from "./router";
 
 export const appRouter = createTRPCRouter({
   user: userRouter,

@@ -12,22 +12,22 @@ import {
   InputLeftAddon,
   Text,
   VStack,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 import {
   FieldErrors,
   UseFormRegister,
   UseFormSetError,
   UseFormTrigger,
-} from 'react-hook-form';
+} from "react-hook-form";
 import {
   FaDiscord,
   FaGithub,
   FaLink,
   FaTelegramPlane,
   FaTwitter,
-} from 'react-icons/fa';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import { FormData } from '~/pages/submit-project';
+} from "react-icons/fa";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FormData } from "~/pages/submit-project";
 
 type StepTwoProps = {
   trigger: UseFormTrigger<FormData>;
@@ -54,7 +54,7 @@ const StepTwo: React.FC<StepTwoProps> = ({
   setError,
 }: StepTwoProps) => {
   const handleSubmit = async () => {
-    trigger(['projectLink', 'twitter']).then((isValid) => {
+    trigger(["projectLink", "twitter"]).then((isValid) => {
       if (isValid) {
         onSubmit;
       }
@@ -77,7 +77,7 @@ const StepTwo: React.FC<StepTwoProps> = ({
           <Input
             placeholder="https://example.com"
             type="url"
-            {...register('projectLink', {
+            {...register("projectLink", {
               required: true,
             })}
           />
@@ -87,7 +87,7 @@ const StepTwo: React.FC<StepTwoProps> = ({
             <FormHelperText></FormHelperText>
           )}
         </FormControl>
-        <VStack align={'start'} gap="16px">
+        <VStack align={"start"} gap="16px">
           <Box as="p" textStyle="title5" color="neutral.11">
             Socials
           </Box>
@@ -98,7 +98,7 @@ const StepTwo: React.FC<StepTwoProps> = ({
           >
             <InputGroup>
               <InputLeftAddon pointerEvents="none">
-                <FaTwitter size={'16'} />
+                <FaTwitter size={"16"} />
                 <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="400">
                   Twitter
                 </Text>
@@ -106,19 +106,19 @@ const StepTwo: React.FC<StepTwoProps> = ({
               <Input
                 placeholder="https://twitter.com.com/twitter"
                 type="twitter"
-                {...register('twitter', {
+                {...register("twitter", {
                   required: true,
                 })}
               />
             </InputGroup>
-            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
+            <FormErrorMessage fontSize={{ base: "12px", md: "14px" }}>
               {errors.twitter && errors.twitter.message}
             </FormErrorMessage>
           </FormControl>
           <FormControl id="github">
             <InputGroup>
               <InputLeftAddon pointerEvents="none">
-                <FaGithub size={'16'} />
+                <FaGithub size={"16"} />
                 <Text pl="8px" color="#ADB8B6" fontSize="14px" fontWeight="400">
                   Github
                 </Text>
@@ -126,7 +126,7 @@ const StepTwo: React.FC<StepTwoProps> = ({
               <Input
                 placeholder="https://github.com/example"
                 type="url"
-                {...register('github')}
+                {...register("github")}
               />
             </InputGroup>
           </FormControl>
@@ -141,7 +141,7 @@ const StepTwo: React.FC<StepTwoProps> = ({
               <Input
                 placeholder="https://telegram.com"
                 type="url"
-                {...register('telegram')}
+                {...register("telegram")}
               />
             </InputGroup>
           </FormControl>
@@ -156,7 +156,7 @@ const StepTwo: React.FC<StepTwoProps> = ({
               <Input
                 placeholder="https://discord.gg"
                 type="url"
-                {...register('discord')}
+                {...register("discord")}
               />
             </InputGroup>
           </FormControl>
@@ -175,7 +175,7 @@ const StepTwo: React.FC<StepTwoProps> = ({
               <Input
                 placeholder="https://example.com"
                 type="url"
-                {...register('discord')}
+                {...register("discord")}
               />
             </InputGroup>
           </FormControl>
@@ -183,23 +183,23 @@ const StepTwo: React.FC<StepTwoProps> = ({
       </CardBody>
       <CardFooter>
         <Button
-          variant={'cubikText'}
-          size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+          variant={"cubikText"}
+          size={{ base: "cubikSmall", md: "cubikMedium" }}
           leftIcon={
-            <Box boxSize={{ base: '14px', md: '18px' }} as={FiChevronLeft} />
+            <Box boxSize={{ base: "14px", md: "18px" }} as={FiChevronLeft} />
           }
           onClick={onPrevious}
         >
           Previous
         </Button>
         <Button
-          variant={'cubikText'}
-          size={{ base: 'cubikSmall', md: 'cubikMedium' }}
+          variant={"cubikText"}
+          size={{ base: "cubikSmall", md: "cubikMedium" }}
           rightIcon={
-            <Box boxSize={{ base: '14px', md: '18px' }} as={FiChevronRight} />
+            <Box boxSize={{ base: "14px", md: "18px" }} as={FiChevronRight} />
           }
           onClick={async () => {
-            const isValid = await trigger(['projectLink', 'twitter']);
+            const isValid = await trigger(["projectLink", "twitter"]);
             if (isValid) {
               //@ts-ignore
               onSubmit();

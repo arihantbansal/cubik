@@ -1,8 +1,8 @@
 export const formatDate = (date?: Date): string => {
-  if (!date) return ''; // you may want to return a different default value
+  if (!date) return ""; // you may want to return a different default value
 
-  const monthFormatter = new Intl.DateTimeFormat('en', { month: 'short' });
-  const dayFormatter = new Intl.DateTimeFormat('en', { day: '2-digit' });
+  const monthFormatter = new Intl.DateTimeFormat("en", { month: "short" });
+  const dayFormatter = new Intl.DateTimeFormat("en", { day: "2-digit" });
 
   const startMonth = monthFormatter.format(date);
   const startDay = dayFormatter.format(date);
@@ -17,34 +17,34 @@ export const formatDate = (date?: Date): string => {
 };
 
 export const formateDateInMonths = (date?: Date | string): string => {
-  if (!date) return '';
+  if (!date) return "";
 
-  let parsedDate = typeof date === 'string' ? new Date(date) : date;
+  let parsedDate = typeof date === "string" ? new Date(date) : date;
 
   if (
-    Object.prototype.toString.call(parsedDate) !== '[object Date]' ||
+    Object.prototype.toString.call(parsedDate) !== "[object Date]" ||
     isNaN(parsedDate.getTime())
   ) {
     console.error(`Invalid date: ${date}`);
-    return '';
+    return "";
   }
 
-  let day = String(parsedDate.getDate()).padStart(2, '0');
+  let day = String(parsedDate.getDate()).padStart(2, "0");
 
   let monthIndex = parsedDate.getMonth();
   let monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
   let monthName = monthNames[monthIndex];
 

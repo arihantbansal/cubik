@@ -1,210 +1,210 @@
 export type CubikHackathon = {
-  version: '0.1.0';
-  name: 'cubik_hackathon';
+  version: "0.1.0";
+  name: "cubik_hackathon";
   instructions: [
     {
-      name: 'hackathonInit';
+      name: "hackathonInit";
       accounts: [
         {
-          name: 'authority';
+          name: "authority";
           isMut: true;
           isSigner: true;
         },
         {
-          name: 'hackathonAccount';
+          name: "hackathonAccount";
           isMut: true;
           isSigner: false;
         },
         {
-          name: 'systemProgram';
+          name: "systemProgram";
           isMut: false;
           isSigner: false;
         },
         {
-          name: 'rent';
+          name: "rent";
           isMut: false;
           isSigner: false;
         }
       ];
       args: [
         {
-          name: 'counter';
-          type: 'u16';
+          name: "counter";
+          type: "u16";
         }
       ];
     },
     {
-      name: 'createParticipantNft';
+      name: "createParticipantNft";
       accounts: [
         {
-          name: 'authority';
+          name: "authority";
           isMut: true;
           isSigner: true;
         },
         {
-          name: 'mint';
+          name: "mint";
           isMut: true;
           isSigner: true;
         },
         {
-          name: 'participantAccount';
+          name: "participantAccount";
           isMut: true;
           isSigner: false;
         },
         {
-          name: 'hackathonAccount';
+          name: "hackathonAccount";
           isMut: true;
           isSigner: false;
         },
         {
-          name: 'powNftAta';
+          name: "powNftAta";
           isMut: true;
           isSigner: false;
         },
         {
-          name: 'mplProgram';
+          name: "mplProgram";
           isMut: false;
           isSigner: false;
         },
         {
-          name: 'metadata';
+          name: "metadata";
           isMut: true;
           isSigner: false;
         },
         {
-          name: 'masterEdition';
+          name: "masterEdition";
           isMut: true;
           isSigner: false;
         },
         {
-          name: 'associatedTokenProgram';
+          name: "associatedTokenProgram";
           isMut: false;
           isSigner: false;
         },
         {
-          name: 'tokenProgram';
+          name: "tokenProgram";
           isMut: false;
           isSigner: false;
         },
         {
-          name: 'systemProgram';
+          name: "systemProgram";
           isMut: false;
           isSigner: false;
         },
         {
-          name: 'rent';
+          name: "rent";
           isMut: false;
           isSigner: false;
         }
       ];
       args: [
         {
-          name: 'counter';
-          type: 'u16';
+          name: "counter";
+          type: "u16";
         },
         {
-          name: 'hackathonAccountAuthority';
-          type: 'publicKey';
+          name: "hackathonAccountAuthority";
+          type: "publicKey";
         },
         {
-          name: 'name';
-          type: 'string';
+          name: "name";
+          type: "string";
         },
         {
-          name: 'symbol';
-          type: 'string';
+          name: "symbol";
+          type: "string";
         },
         {
-          name: 'metadataUrl';
-          type: 'string';
+          name: "metadataUrl";
+          type: "string";
         }
       ];
     },
     {
-      name: 'participant';
+      name: "participant";
       accounts: [
         {
-          name: 'authority';
+          name: "authority";
           isMut: true;
           isSigner: true;
         },
         {
-          name: 'participantAccount';
+          name: "participantAccount";
           isMut: true;
           isSigner: false;
         },
         {
-          name: 'systemProgram';
+          name: "systemProgram";
           isMut: false;
           isSigner: false;
         },
         {
-          name: 'rent';
+          name: "rent";
           isMut: false;
           isSigner: false;
         }
       ];
       args: [
         {
-          name: 'name';
-          type: 'string';
+          name: "name";
+          type: "string";
         },
         {
-          name: 'symbol';
-          type: 'string';
+          name: "symbol";
+          type: "string";
         },
         {
-          name: 'metadataUrl';
-          type: 'string';
+          name: "metadataUrl";
+          type: "string";
         },
         {
-          name: 'counter';
-          type: 'u16';
+          name: "counter";
+          type: "u16";
         },
         {
-          name: 'createKey';
-          type: 'publicKey';
+          name: "createKey";
+          type: "publicKey";
         }
       ];
     }
   ];
   accounts: [
     {
-      name: 'hackathon';
+      name: "hackathon";
       type: {
-        kind: 'struct';
+        kind: "struct";
         fields: [
           {
-            name: 'authority';
-            type: 'publicKey';
+            name: "authority";
+            type: "publicKey";
           },
           {
-            name: 'counter';
-            type: 'u16';
+            name: "counter";
+            type: "u16";
           },
           {
-            name: 'bump';
-            type: 'u8';
+            name: "bump";
+            type: "u8";
           }
         ];
       };
     },
     {
-      name: 'participant';
+      name: "participant";
       type: {
-        kind: 'struct';
+        kind: "struct";
         fields: [
           {
-            name: 'authority';
-            type: 'publicKey';
+            name: "authority";
+            type: "publicKey";
           },
           {
-            name: 'isWinner';
-            type: 'bool';
+            name: "isWinner";
+            type: "bool";
           },
           {
-            name: 'bump';
-            type: 'u8';
+            name: "bump";
+            type: "u8";
           }
         ];
       };
@@ -213,212 +213,212 @@ export type CubikHackathon = {
 };
 
 export const IDL: CubikHackathon = {
-  version: '0.1.0',
-  name: 'cubik_hackathon',
+  version: "0.1.0",
+  name: "cubik_hackathon",
   instructions: [
     {
-      name: 'hackathonInit',
+      name: "hackathonInit",
       accounts: [
         {
-          name: 'authority',
+          name: "authority",
           isMut: true,
           isSigner: true,
         },
         {
-          name: 'hackathonAccount',
+          name: "hackathonAccount",
           isMut: true,
           isSigner: false,
         },
         {
-          name: 'systemProgram',
+          name: "systemProgram",
           isMut: false,
           isSigner: false,
         },
         {
-          name: 'rent',
+          name: "rent",
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: 'counter',
-          type: 'u16',
+          name: "counter",
+          type: "u16",
         },
       ],
     },
     {
-      name: 'createParticipantNft',
+      name: "createParticipantNft",
       accounts: [
         {
-          name: 'authority',
+          name: "authority",
           isMut: true,
           isSigner: true,
         },
         {
-          name: 'mint',
+          name: "mint",
           isMut: true,
           isSigner: true,
         },
         {
-          name: 'participantAccount',
+          name: "participantAccount",
           isMut: true,
           isSigner: false,
         },
         {
-          name: 'hackathonAccount',
+          name: "hackathonAccount",
           isMut: true,
           isSigner: false,
         },
         {
-          name: 'powNftAta',
+          name: "powNftAta",
           isMut: true,
           isSigner: false,
         },
         {
-          name: 'mplProgram',
+          name: "mplProgram",
           isMut: false,
           isSigner: false,
         },
         {
-          name: 'metadata',
+          name: "metadata",
           isMut: true,
           isSigner: false,
         },
         {
-          name: 'masterEdition',
+          name: "masterEdition",
           isMut: true,
           isSigner: false,
         },
         {
-          name: 'associatedTokenProgram',
+          name: "associatedTokenProgram",
           isMut: false,
           isSigner: false,
         },
         {
-          name: 'tokenProgram',
+          name: "tokenProgram",
           isMut: false,
           isSigner: false,
         },
         {
-          name: 'systemProgram',
+          name: "systemProgram",
           isMut: false,
           isSigner: false,
         },
         {
-          name: 'rent',
+          name: "rent",
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: 'counter',
-          type: 'u16',
+          name: "counter",
+          type: "u16",
         },
         {
-          name: 'hackathonAccountAuthority',
-          type: 'publicKey',
+          name: "hackathonAccountAuthority",
+          type: "publicKey",
         },
         {
-          name: 'name',
-          type: 'string',
+          name: "name",
+          type: "string",
         },
         {
-          name: 'symbol',
-          type: 'string',
+          name: "symbol",
+          type: "string",
         },
         {
-          name: 'metadataUrl',
-          type: 'string',
+          name: "metadataUrl",
+          type: "string",
         },
       ],
     },
     {
-      name: 'participant',
+      name: "participant",
       accounts: [
         {
-          name: 'authority',
+          name: "authority",
           isMut: true,
           isSigner: true,
         },
         {
-          name: 'participantAccount',
+          name: "participantAccount",
           isMut: true,
           isSigner: false,
         },
         {
-          name: 'systemProgram',
+          name: "systemProgram",
           isMut: false,
           isSigner: false,
         },
         {
-          name: 'rent',
+          name: "rent",
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: 'name',
-          type: 'string',
+          name: "name",
+          type: "string",
         },
         {
-          name: 'symbol',
-          type: 'string',
+          name: "symbol",
+          type: "string",
         },
         {
-          name: 'metadataUrl',
-          type: 'string',
+          name: "metadataUrl",
+          type: "string",
         },
         {
-          name: 'counter',
-          type: 'u16',
+          name: "counter",
+          type: "u16",
         },
         {
-          name: 'createKey',
-          type: 'publicKey',
+          name: "createKey",
+          type: "publicKey",
         },
       ],
     },
   ],
   accounts: [
     {
-      name: 'hackathon',
+      name: "hackathon",
       type: {
-        kind: 'struct',
+        kind: "struct",
         fields: [
           {
-            name: 'authority',
-            type: 'publicKey',
+            name: "authority",
+            type: "publicKey",
           },
           {
-            name: 'counter',
-            type: 'u16',
+            name: "counter",
+            type: "u16",
           },
           {
-            name: 'bump',
-            type: 'u8',
+            name: "bump",
+            type: "u8",
           },
         ],
       },
     },
     {
-      name: 'participant',
+      name: "participant",
       type: {
-        kind: 'struct',
+        kind: "struct",
         fields: [
           {
-            name: 'authority',
-            type: 'publicKey',
+            name: "authority",
+            type: "publicKey",
           },
           {
-            name: 'isWinner',
-            type: 'bool',
+            name: "isWinner",
+            type: "bool",
           },
           {
-            name: 'bump',
-            type: 'u8',
+            name: "bump",
+            type: "u8",
           },
         ],
       },

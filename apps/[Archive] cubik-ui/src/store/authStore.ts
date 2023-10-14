@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 type Key = {
   sig: string;
@@ -15,6 +15,6 @@ type State = {
 export const useAuthStore = create<State>((set) => ({
   authenticated: false,
   setAuthenticated: (value: boolean) => set({ authenticated: value }),
-  key: { sig: '', wallet: '' },
+  key: { sig: "", wallet: "" },
   setKey: (value: Key) => set({ key: value }),
 }));

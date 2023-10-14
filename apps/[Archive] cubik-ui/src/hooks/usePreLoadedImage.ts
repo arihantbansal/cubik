@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export function usePreloadedImage(src: string | null): string | null {
   const [loadedSrc, setLoadedSrc] = useState<string | null>(null);

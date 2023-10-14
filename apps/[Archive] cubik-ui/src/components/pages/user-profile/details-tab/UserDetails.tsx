@@ -1,9 +1,9 @@
-import { Card } from '@chakra-ui/card';
-import { Box, Center, HStack, Stack, VStack } from '@chakra-ui/layout';
-import { Skeleton } from '@chakra-ui/skeleton';
-import { OverviewStatsCard } from '~/components/common/card/OverviewStatsCard';
-import { useErrorBoundary } from '~/hooks/useErrorBoundary';
-import { trpc } from '~/utils/trpc';
+import { Card } from "@chakra-ui/card";
+import { Box, Center, HStack, Stack, VStack } from "@chakra-ui/layout";
+import { Skeleton } from "@chakra-ui/skeleton";
+import { OverviewStatsCard } from "~/components/common/card/OverviewStatsCard";
+import { useErrorBoundary } from "~/hooks/useErrorBoundary";
+import { trpc } from "~/utils/trpc";
 
 const UserDetails = ({
   isLoading,
@@ -18,7 +18,7 @@ const UserDetails = ({
 
   const { data: amountRaiseCount, isLoading: amountRaisedIsLoading } =
     trpc.project.findManyVerifiedUser.useQuery({
-      id: userId ?? '',
+      id: userId ?? "",
     });
 
   const userTotalContributionsAmount = data?.reduce((acc, contribution) => {

@@ -1,8 +1,8 @@
-import { Box, Center, HStack, chakra, keyframes } from '@chakra-ui/react';
-import { differenceInDays, isFuture, isPast } from 'date-fns';
-import { AiTwotoneCalendar } from 'react-icons/ai';
-import { BiInfoCircle } from 'react-icons/bi';
-import { HackathonSchedule } from '~/types/hackathon';
+import { Box, Center, HStack, chakra, keyframes } from "@chakra-ui/react";
+import { differenceInDays, isFuture, isPast } from "date-fns";
+import { AiTwotoneCalendar } from "react-icons/ai";
+import { BiInfoCircle } from "react-icons/bi";
+import { HackathonSchedule } from "~/types/hackathon";
 
 const random = () => Math.floor(Math.random() * 10);
 
@@ -23,10 +23,10 @@ const ripple = keyframes`
 
 const CircleRipple = chakra(Box, {
   baseStyle: {
-    backgroundColor: '#31F579',
-    width: { base: '0.8em', md: '1em' },
-    height: { base: '0.8em', md: '1em' },
-    rounded: 'full',
+    backgroundColor: "#31F579",
+    width: { base: "0.8em", md: "1em" },
+    height: { base: "0.8em", md: "1em" },
+    rounded: "full",
     animation: `${ripple} 1.${random()}s linear infinite`,
   },
 });
@@ -41,9 +41,11 @@ const HackathonStatus = ({ show, timeline }: HackathonStatusProps) => {
   // check registration start date
   if (!timeline) return <></>;
 
-  const registration = timeline.find(element => element.name === 'Registration');
-  const hackathon = timeline.find(element => element.name === 'Game Jam');
-  const voting = timeline.find(element => element.name === 'Voting');
+  const registration = timeline.find(
+    (element) => element.name === "Registration"
+  );
+  const hackathon = timeline.find((element) => element.name === "Game Jam");
+  const voting = timeline.find((element) => element.name === "Voting");
 
   if (registration && isFuture(new Date(hackathon?.start ?? 0))) {
     return (
@@ -52,17 +54,21 @@ const HackathonStatus = ({ show, timeline }: HackathonStatusProps) => {
         backgroundColor="#1D1F1E"
         p="0px 12px"
         spacing="8px"
-        minH={'22px'}
+        minH={"22px"}
         mx={1}
       >
-        <Box as={AiTwotoneCalendar} color="white" boxSize={['12px', '14px', '18px']} />
+        <Box
+          as={AiTwotoneCalendar}
+          color="white"
+          boxSize={["12px", "14px", "18px"]}
+        />
         <Box
           p="8px 12px"
           ps="0px"
           as="p"
           whiteSpace="pre"
           color="neutral.11"
-          textStyle={{ base: 'body6', md: 'body5' }}
+          textStyle={{ base: "body6", md: "body5" }}
         >
           Coming Soon
         </Box>
@@ -75,17 +81,21 @@ const HackathonStatus = ({ show, timeline }: HackathonStatusProps) => {
         backgroundColor="#1D1F1E"
         p="0px 12px"
         spacing="8px"
-        minH={'22px'}
+        minH={"22px"}
         mx={1}
       >
-        <Box as={AiTwotoneCalendar} color="white" boxSize={['12px', '14px', '18px']} />
+        <Box
+          as={AiTwotoneCalendar}
+          color="white"
+          boxSize={["12px", "14px", "18px"]}
+        />
         <Box
           p="8px 12px"
           ps="0px"
           as="p"
           whiteSpace="pre"
           color="neutral.11"
-          textStyle={{ base: 'body6', md: 'body5' }}
+          textStyle={{ base: "body6", md: "body5" }}
         >
           Registration Open
         </Box>
@@ -98,16 +108,16 @@ const HackathonStatus = ({ show, timeline }: HackathonStatusProps) => {
   ) {
     return (
       <HStack
-        rounded={'full'}
+        rounded={"full"}
         backgroundColor="#071A0F50"
         //blur
-        backdropFilter={'blur(px)'}
+        backdropFilter={"blur(px)"}
         mx={1}
         spacing="0"
-        overflow={'hidden'}
-        w={'fit-content'}
+        overflow={"hidden"}
+        w={"fit-content"}
       >
-        <Center rounded="full" p={{ base: '6px', md: '8px' }}>
+        <Center rounded="full" p={{ base: "6px", md: "8px" }}>
           <CircleRipple />
         </Center>
         <Box
@@ -117,8 +127,8 @@ const HackathonStatus = ({ show, timeline }: HackathonStatusProps) => {
           as="p"
           whiteSpace="pre"
           color="#31F579"
-          textStyle={{ base: 'body6', md: 'overline3' }}
-          display={{ base: show ? 'block' : 'none', md: 'block' }}
+          textStyle={{ base: "body6", md: "overline3" }}
+          display={{ base: show ? "block" : "none", md: "block" }}
         >
           Live
         </Box>
@@ -131,16 +141,16 @@ const HackathonStatus = ({ show, timeline }: HackathonStatusProps) => {
   ) {
     return (
       <HStack
-        rounded={'full'}
+        rounded={"full"}
         backgroundColor="#071A0F50"
         //blur
-        backdropFilter={'blur(px)'}
+        backdropFilter={"blur(px)"}
         mx={1}
         spacing="0"
-        overflow={'hidden'}
-        w={'fit-content'}
+        overflow={"hidden"}
+        w={"fit-content"}
       >
-        <Center rounded="full" p={{ base: '6px', md: '8px' }}>
+        <Center rounded="full" p={{ base: "6px", md: "8px" }}>
           <CircleRipple />
         </Center>
         <Box
@@ -150,8 +160,8 @@ const HackathonStatus = ({ show, timeline }: HackathonStatusProps) => {
           as="p"
           whiteSpace="pre"
           color="neutral.11"
-          textStyle={{ base: 'body6', md: 'overline3' }}
-          display={{ base: show ? 'block' : 'none', md: 'block' }}
+          textStyle={{ base: "body6", md: "overline3" }}
+          display={{ base: show ? "block" : "none", md: "block" }}
         >
           Voting Live
         </Box>

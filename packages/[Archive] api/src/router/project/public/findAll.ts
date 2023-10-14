@@ -1,4 +1,4 @@
-import { publicProcedure } from '../../../trpc';
+import { publicProcedure } from "../../../trpc";
 
 export const findAllProject = publicProcedure.query(
   async ({ ctx: { prisma } }) => {
@@ -17,7 +17,7 @@ export const findAllProject = publicProcedure.query(
       });
       return res;
     } catch (error: any) {
-      throw new Error(error.message || 'There was some error');
+      throw new Error(error.message || "There was some error");
     }
   }
 );

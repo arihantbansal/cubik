@@ -1,13 +1,13 @@
-import { Box, Center, Container, Flex, Heading } from '@chakra-ui/layout';
-import Link from 'next/link';
-import SEO from 'src/components/SEO';
-import ComponentErrors from '~/components/errors/ComponentErrors';
-import UserDetails from '~/components/pages/user-profile/details-tab/UserDetails';
-import UserProofs from '~/components/pages/user-profile/details-tab/UserProofs';
-import { UserPageLayout } from '~/layouts/userPageLayout';
-import { useUserStore } from '~/store/userStore';
-import { UserProof } from '~/types/user';
-import { trpc } from '~/utils/trpc';
+import { Box, Center, Container, Flex, Heading } from "@chakra-ui/layout";
+import Link from "next/link";
+import SEO from "src/components/SEO";
+import ComponentErrors from "~/components/errors/ComponentErrors";
+import UserDetails from "~/components/pages/user-profile/details-tab/UserDetails";
+import UserProofs from "~/components/pages/user-profile/details-tab/UserProofs";
+import { UserPageLayout } from "~/layouts/userPageLayout";
+import { useUserStore } from "~/store/userStore";
+import { UserProof } from "~/types/user";
+import { trpc } from "~/utils/trpc";
 
 const ProfilePage = ({ username }: { username: string }) => {
   const { user } = useUserStore();
@@ -18,28 +18,37 @@ const ProfilePage = ({ username }: { username: string }) => {
     },
     {
       refetchOnWindowFocus: false,
-    },
+    }
   );
 
   if (isError) return <ComponentErrors error={error} />;
   if (!isLoading && !data) {
     return (
       <>
-        <SEO title={`Error 404`} description={`There was some error!!`} image={`error`} />
+        <SEO
+          title={`Error 404`}
+          description={`There was some error!!`}
+          image={`error`}
+        />
         <Container maxW="full">
-          <Center gap="16px" flexDir={'column'} maxW="4xl" mx="auto" py="14rem">
+          <Center gap="16px" flexDir={"column"} maxW="4xl" mx="auto" py="14rem">
             <Heading fontSize="9xl">404</Heading>
-            <Box as="p" textStyle={{ base: 'title3', md: 'title1' }}>
+            <Box as="p" textStyle={{ base: "title3", md: "title1" }}>
               Page Not Found
             </Box>
             <Box
-              textAlign={'center'}
+              textAlign={"center"}
               maxW="22rem"
               as="p"
-              textStyle={{ base: 'body4', md: 'body2' }}
+              textStyle={{ base: "body4", md: "body2" }}
             >
               The page you are looking for does not exist. Go back
-              <Box as={Link} href="/projects" color="brand.teal5" textDecoration={'underline'}>
+              <Box
+                as={Link}
+                href="/projects"
+                color="brand.teal5"
+                textDecoration={"underline"}
+              >
                 home
               </Box>
             </Box>
@@ -57,7 +66,12 @@ const ProfilePage = ({ username }: { username: string }) => {
         profilePicture={data?.profilePicture as string}
         username={username}
       >
-        <Flex gap={{ base: '24px', md: '32px' }} w={'full'} p="0" flexDir="column">
+        <Flex
+          gap={{ base: "24px", md: "32px" }}
+          w={"full"}
+          p="0"
+          flexDir="column"
+        >
           <UserDetails userId={data?.id as string} isLoading={isLoading} />
           {user && user?.id === data?.id && (
             <UserProofs
@@ -72,7 +86,9 @@ const ProfilePage = ({ username }: { username: string }) => {
   );
 };
 
-export async function getServerSideProps(context: { query: { username: string } }) {
+export async function getServerSideProps(context: {
+  query: { username: string };
+}) {
   const username = context.query.username;
 
   return {

@@ -1,5 +1,5 @@
-import { ProjectJoinRoundStatus } from '@cubik/database';
-import { publicProcedure } from '../../../trpc';
+import { ProjectJoinRoundStatus } from "@cubik/database";
+import { publicProcedure } from "../../../trpc";
 
 export const findManyProjects = publicProcedure.query(
   async ({ ctx: { prisma } }) => {
@@ -27,7 +27,7 @@ export const findManyProjects = publicProcedure.query(
       });
       return res;
     } catch (error: any) {
-      throw new Error(error.message || 'There was some error in trpc call');
+      throw new Error(error.message || "There was some error in trpc call");
     }
   }
 );

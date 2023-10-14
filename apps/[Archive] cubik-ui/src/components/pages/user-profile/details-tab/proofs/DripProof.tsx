@@ -12,14 +12,14 @@ import {
   useDisclosure,
   useToast,
   VStack,
-} from '@chakra-ui/react';
-import { Player } from '@lottiefiles/react-lottie-player';
-import axios from 'axios';
-import { useRef, useState } from 'react';
-import { SuccessToast } from '~/components/common/toasts/Toasts';
-import { useUserStore } from '~/store/userStore';
-import { trpc } from '~/utils/trpc';
-import DripHauz from './SVGs/DripHauz';
+} from "@chakra-ui/react";
+import { Player } from "@lottiefiles/react-lottie-player";
+import axios from "axios";
+import { useRef, useState } from "react";
+import { SuccessToast } from "~/components/common/toasts/Toasts";
+import { useUserStore } from "~/store/userStore";
+import { trpc } from "~/utils/trpc";
+import DripHauz from "./SVGs/DripHauz";
 
 interface Props {
   claimed: boolean;
@@ -28,7 +28,7 @@ const DripProof = ({ claimed }: Props) => {
   const { user } = useUserStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [canClaim, setCanClaimed] = useState<boolean>(true);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const playerRef = useRef<Player>(null);
   const toast = useToast();
@@ -43,7 +43,7 @@ const DripProof = ({ claimed }: Props) => {
         onClose();
         SuccessToast({
           toast,
-          message: 'Proof minted successfully',
+          message: "Proof minted successfully",
         });
       }, 2000);
     },
@@ -52,9 +52,9 @@ const DripProof = ({ claimed }: Props) => {
   const handleClaim = async () => {
     try {
       setLoading(true);
-      const res = await axios.post('/api/info/nft', {
+      const res = await axios.post("/api/info/nft", {
         address: user?.mainWallet,
-        collection: 'F8FdDYD3PWndYoae9TrBcucXDWFwDvm6bZU2LQT1PwyB',
+        collection: "F8FdDYD3PWndYoae9TrBcucXDWFwDvm6bZU2LQT1PwyB",
       });
       if (res.data.data > 0) {
         setCanClaimed(true);
@@ -67,7 +67,7 @@ const DripProof = ({ claimed }: Props) => {
     } catch (err) {
       console.log(err);
       setCanClaimed(false);
-      setError('Something went wrong, please try again later.');
+      setError("Something went wrong, please try again later.");
       setLoading(false);
     }
   };
@@ -75,65 +75,65 @@ const DripProof = ({ claimed }: Props) => {
   return (
     <>
       <VStack onClick={onOpen} p="32px" gap="8px" align="start">
-        <DripHauz size={'60px'} />
+        <DripHauz size={"60px"} />
         <HStack spacing="8px">
           <Box
             as="p"
-            textStyle={{ base: '', md: 'title3' }}
-            color={'neutral.11'}
+            textStyle={{ base: "", md: "title3" }}
+            color={"neutral.11"}
           >
             Drip Hauz
           </Box>
           <Tag
-            size={{ base: 'xs', md: 'sm' }}
+            size={{ base: "xs", md: "sm" }}
             px="12px"
             py="4px"
             color="surface.green.2"
-            background={'surface.green.3'}
+            background={"surface.green.3"}
             rounded="full"
           >
-            {claimed ? 'Claimed' : 'claim'}
+            {claimed ? "Claimed" : "claim"}
           </Tag>
         </HStack>
-        <Box as="p" textStyle={{ base: '', md: 'body5' }} color={'neutral.7'}>
+        <Box as="p" textStyle={{ base: "", md: "body5" }} color={"neutral.7"}>
           If Drip S1 NFTs were airdropped to you can collect this proof
         </Box>
         <Modal
           size="sm"
           motionPreset="scale"
-          variant={'cubik'}
+          variant={"cubik"}
           isOpen={isOpen}
           onClose={onClose}
         >
           <ModalOverlay />
           <ModalContent
-            position={'relative'}
-            overflow={'hidden'}
+            position={"relative"}
+            overflow={"hidden"}
             _before={{
               content: '""',
-              position: 'absolute',
-              top: '-10%',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              rounded: '50%',
-              filter: 'blur(80px)',
-              width: '6rem',
-              height: '6rem',
-              background: 'linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)',
-              borderRadius: '8px 8px 0px 0px',
-              zIndex: '-1',
+              position: "absolute",
+              top: "-10%",
+              left: "50%",
+              transform: "translateX(-50%)",
+              rounded: "50%",
+              filter: "blur(80px)",
+              width: "6rem",
+              height: "6rem",
+              background: "linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)",
+              borderRadius: "8px 8px 0px 0px",
+              zIndex: "-1",
             }}
           >
             <ModalBody>
               <VStack
                 py="32px"
                 gap="32px"
-                textAlign={'center'}
+                textAlign={"center"}
                 maxW="16rem"
                 mx="auto"
               >
                 <VStack spacing="24px">
-                  <Center transform={'scale(2)'} h="130px">
+                  <Center transform={"scale(2)"} h="130px">
                     <Center
                       h="0"
                       overflow="visible"
@@ -146,27 +146,27 @@ const DripProof = ({ claimed }: Props) => {
                         controls={true}
                         speed={0.7}
                         src={
-                          'https://assets4.lottiefiles.com/packages/lf20_obhph3sh.json'
+                          "https://assets4.lottiefiles.com/packages/lf20_obhph3sh.json"
                         }
                         style={{ height: `300px`, width: `300px` }}
                       />
                     </Center>
-                    <DripHauz size={'60px'} />
+                    <DripHauz size={"60px"} />
                   </Center>
                   <VStack spacing="12px">
-                    <Box as="p" textStyle={'title2'} color="neutral.11">
+                    <Box as="p" textStyle={"title2"} color="neutral.11">
                       Drip Haus Proof
                     </Box>
                     <Box
                       as="p"
-                      textStyle={'overline3'}
+                      textStyle={"overline3"}
                       color="neutral.8"
-                      textTransform={'uppercase'}
+                      textTransform={"uppercase"}
                     >
                       Drip S1 NFTs Holder
                     </Box>
                   </VStack>
-                  <Box as="p" textStyle={'title5'} color="neutral.11">
+                  <Box as="p" textStyle={"title5"} color="neutral.11">
                     Claim your drip proof by verifying your wallet that holds
                     drip s1 NFTs.
                   </Box>
@@ -174,7 +174,7 @@ const DripProof = ({ claimed }: Props) => {
 
                 {claimed ? (
                   <>
-                    <Button isDisabled variant={'connect_wallet'} w="12rem">
+                    <Button isDisabled variant={"connect_wallet"} w="12rem">
                       Proof Collected
                     </Button>
                   </>
@@ -182,7 +182,7 @@ const DripProof = ({ claimed }: Props) => {
                   <>
                     <Button
                       onClick={handleClaim}
-                      variant={'connect_wallet'}
+                      variant={"connect_wallet"}
                       w="12rem"
                       isLoading={loading}
                     >

@@ -2,9 +2,9 @@ import {
   createClient,
   SupabaseClient,
   UserResponse,
-} from '@supabase/supabase-js';
-import { useEffect, useState } from 'react';
-import { env } from '~/env.mjs';
+} from "@supabase/supabase-js";
+import { useEffect, useState } from "react";
+import { env } from "~/env.mjs";
 
 export const supabase = createClient(
   env.NEXT_PUBLIC_SUPABASE_URL,
@@ -25,9 +25,9 @@ const useUser = (client: SupabaseClient) => {
   useEffect(() => {
     client.auth.onAuthStateChange((event) => {
       fetchUser();
-      event === 'SIGNED_IN'
+      event === "SIGNED_IN"
         ? setUser(user)
-        : event === 'SIGNED_OUT'
+        : event === "SIGNED_OUT"
         ? setUser(null)
         : null;
 

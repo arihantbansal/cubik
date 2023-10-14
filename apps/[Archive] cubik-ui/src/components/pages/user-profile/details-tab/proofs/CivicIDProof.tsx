@@ -1,11 +1,11 @@
-import { Box, Center, VStack } from '@chakra-ui/react';
+import { Box, Center, VStack } from "@chakra-ui/react";
 
 const CivicIdProof = () => {
   return (
     <VStack p="32px" gap="8px" align="start">
       <Center
-        width={{ base: '50px', md: '58px' }}
-        height={{ base: '50px', md: '58px' }}
+        width={{ base: "50px", md: "58px" }}
+        height={{ base: "50px", md: "58px" }}
       >
         <svg
           width="88"
@@ -24,15 +24,15 @@ const CivicIdProof = () => {
       </Center>
       <Box
         as="p"
-        textStyle={{ base: 'title4', md: 'title3' }}
-        color={'neutral.7'}
+        textStyle={{ base: "title4", md: "title3" }}
+        color={"neutral.7"}
       >
         Civic Id
       </Box>
       <Box
         as="p"
-        textStyle={{ base: 'body5', md: 'body5' }}
-        color={'neutral.7'}
+        textStyle={{ base: "body5", md: "body5" }}
+        color={"neutral.7"}
       >
         Prove your a real person by connecting your Civic ID and claim the badge
       </Box>

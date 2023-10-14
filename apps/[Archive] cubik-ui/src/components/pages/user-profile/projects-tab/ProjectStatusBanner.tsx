@@ -1,8 +1,8 @@
-import { Box, Flex, HStack } from '@chakra-ui/layout';
-import { ProjectVerifyStatus } from '@cubik/database';
-import { AiOutlineWarning } from 'react-icons/ai';
-import { MdVerified } from 'react-icons/md';
-import { TbListSearch } from 'react-icons/tb';
+import { Box, Flex, HStack } from "@chakra-ui/layout";
+import { ProjectVerifyStatus } from "@cubik/database";
+import { AiOutlineWarning } from "react-icons/ai";
+import { MdVerified } from "react-icons/md";
+import { TbListSearch } from "react-icons/tb";
 
 const ProjectStatusBanner = ({
   status,
@@ -20,14 +20,14 @@ const ProjectStatusBanner = ({
     case ProjectVerifyStatus.REVIEW:
       return (
         <Flex
-          flexDirection={{ base: 'column', sm: 'row' }}
-          padding={{ base: '10px 16px', md: '12px 24px' }}
+          flexDirection={{ base: "column", sm: "row" }}
+          padding={{ base: "10px 16px", md: "12px 24px" }}
           w="full"
-          align={{ base: 'start', sm: 'center' }}
+          align={{ base: "start", sm: "center" }}
           gap="8px"
           borderBottom="1px solid"
-          borderTopRadius={'16px'}
-          backgroundColor={'#FFD83D08'}
+          borderTopRadius={"16px"}
+          backgroundColor={"#FFD83D08"}
           borderColor="#FFD83D40"
           boxShadow="0px 4px 20px rgba(0, 0, 0, 0.4)"
         >
@@ -35,13 +35,13 @@ const ProjectStatusBanner = ({
             <Box
               as={TbListSearch}
               color="#FFE747"
-              boxSize={['10px', '12px', '13px', '14px']}
+              boxSize={["10px", "12px", "13px", "14px"]}
             />
             <Box
               as="p"
               noOfLines={1}
-              whiteSpace={'nowrap'}
-              textStyle={{ base: 'body6', md: 'body5' }}
+              whiteSpace={"nowrap"}
+              textStyle={{ base: "body6", md: "body5" }}
               color="surface.yellow.2"
             >
               Under Review
@@ -50,9 +50,9 @@ const ProjectStatusBanner = ({
           <Box
             as="p"
             noOfLines={{ base: 2, md: 1 }}
-            display={{ base: 'none', md: 'block' }}
-            whiteSpace={{ base: 'normal', md: 'nowrap' }}
-            textStyle={{ base: 'body6', md: 'body5' }}
+            display={{ base: "none", md: "block" }}
+            whiteSpace={{ base: "normal", md: "nowrap" }}
+            textStyle={{ base: "body6", md: "body5" }}
             color="surface.yellow.1"
           >
             Thank you for submitting. Your project is under review.
@@ -63,38 +63,38 @@ const ProjectStatusBanner = ({
       return (
         <Flex
           zIndex="9"
-          flexDirection={{ base: 'column', sm: 'row' }}
-          padding={{ base: '10px 16px', md: '12px 24px' }}
+          flexDirection={{ base: "column", sm: "row" }}
+          padding={{ base: "10px 16px", md: "12px 24px" }}
           w="full"
-          align={{ base: 'start', sm: 'center' }}
+          align={{ base: "start", sm: "center" }}
           gap="8px"
           borderBottom="1px solid"
-          borderTopRadius={'16px'}
+          borderTopRadius={"16px"}
           borderColor="#1C7CEB22"
-          backgroundColor={'#1C7CEB08'}
+          backgroundColor={"#1C7CEB08"}
         >
           <HStack w="fit-content" rounded="full" p="6px 10px" bg="#1C7CEB">
             <Box
               as={MdVerified}
               color="#fff"
-              boxSize={['10px', '12px', '13px', '14px']}
+              boxSize={["10px", "12px", "13px", "14px"]}
             />
             <Box
               as="p"
               noOfLines={1}
-              whiteSpace={'nowrap'}
-              textStyle={{ base: 'body6', md: 'body5' }}
+              whiteSpace={"nowrap"}
+              textStyle={{ base: "body6", md: "body5" }}
               color="white"
             >
               Verified
-            </Box>{' '}
-          </HStack>{' '}
+            </Box>{" "}
+          </HStack>{" "}
           <Box
             as="p"
             noOfLines={{ base: 2, md: 1 }}
-            display={{ base: 'none', md: 'block' }}
-            whiteSpace={{ base: 'normal', md: 'nowrap' }}
-            textStyle={{ base: 'body6', md: 'body5' }}
+            display={{ base: "none", md: "block" }}
+            whiteSpace={{ base: "normal", md: "nowrap" }}
+            textStyle={{ base: "body6", md: "body5" }}
             color="surface.blue.1"
           >
             Congratulations! Your project has been verified. You can now apply
@@ -106,27 +106,27 @@ const ProjectStatusBanner = ({
       return (
         <Flex
           zIndex="9"
-          flexDirection={{ base: 'column', sm: 'row' }}
-          padding={{ base: '10px 16px', md: '12px 24px' }}
+          flexDirection={{ base: "column", sm: "row" }}
+          padding={{ base: "10px 16px", md: "12px 24px" }}
           w="full"
-          align={{ base: 'start', sm: 'center' }}
+          align={{ base: "start", sm: "center" }}
           gap="8px"
           borderBottom="1px solid"
-          borderTopRadius={'16px'}
+          borderTopRadius={"16px"}
           borderColor="surface.red.1"
-          backgroundColor={'#140001'}
+          backgroundColor={"#140001"}
         >
           <HStack w="fit-content" rounded="full" p="6px 10px" bg="#660005">
             <Box
               as={AiOutlineWarning}
               color="#FFCAC2"
-              boxSize={['10px', '12px', '13px', '14px']}
+              boxSize={["10px", "12px", "13px", "14px"]}
             />
             <Box
               as="p"
               noOfLines={1}
-              whiteSpace={'nowrap'}
-              textStyle={{ base: 'body6', md: 'body5' }}
+              whiteSpace={"nowrap"}
+              textStyle={{ base: "body6", md: "body5" }}
               color="#FFCAC2"
             >
               Approval Failed
@@ -135,9 +135,9 @@ const ProjectStatusBanner = ({
           <Box
             as="p"
             noOfLines={{ base: 2, md: 1 }}
-            display={{ base: 'none', md: 'block' }}
-            whiteSpace={{ base: 'normal', md: 'nowrap' }}
-            textStyle={{ base: 'body6', md: 'body5' }}
+            display={{ base: "none", md: "block" }}
+            whiteSpace={{ base: "normal", md: "nowrap" }}
+            textStyle={{ base: "body6", md: "body5" }}
             color="#FFCAC2"
           >
             Unfortunately your project did not meet the review criteria.

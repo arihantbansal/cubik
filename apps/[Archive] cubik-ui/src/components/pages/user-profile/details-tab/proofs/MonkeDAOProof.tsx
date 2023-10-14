@@ -1,4 +1,4 @@
-import { Box, Center, VStack } from '@chakra-ui/react';
+import { Box, Center, VStack } from "@chakra-ui/react";
 
 const MonkeDAOProof = () => {
   return (
@@ -19,10 +19,10 @@ const MonkeDAOProof = () => {
           />
         </svg>
       </Center>
-      <Box as="p" textStyle={{ base: '', md: 'title3' }} color={'neutral.7'}>
-        Monke DAO{' '}
+      <Box as="p" textStyle={{ base: "", md: "title3" }} color={"neutral.7"}>
+        Monke DAO{" "}
       </Box>
-      <Box as="p" textStyle={{ base: '', md: 'body5' }} color={'neutral.7'}>
+      <Box as="p" textStyle={{ base: "", md: "body5" }} color={"neutral.7"}>
         Collect the Proof of Monke by verifying your wallet
       </Box>
     </VStack>
