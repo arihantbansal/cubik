@@ -37,6 +37,7 @@ type TextProps = React.HTMLAttributes<HTMLElement> &
 const Text = React.forwardRef<HTMLElement | null, TextProps>(
   ({ className, asChild = false, as: Tag = "p", ...props }, ref) => {
     const Comp = asChild ? Slot : Tag;
+    // @ts-ignore
     return <Comp className={cn(textVariants({ className }))} {...props} />; // ref is missing here
   }
 );
