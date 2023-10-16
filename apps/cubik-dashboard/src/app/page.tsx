@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <>
-      <Button onClick={() => setVisible(true)} variant={"destructive"}>
+      <Button onClick={() => setVisible(true)} variant={"link"}>
         {publicKey ? publicKey.toBase58() : "Connect"}
       </Button>
     </>
