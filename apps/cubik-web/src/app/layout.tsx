@@ -1,3 +1,4 @@
+import "./../styles/globals.css";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Header from "@/app/components/layout/header";
 import WalletContext from "@/app/components/wallet/context";

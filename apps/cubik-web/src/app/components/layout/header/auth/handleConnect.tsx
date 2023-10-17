@@ -101,8 +101,9 @@ export const WalletConnect = () => {
           onClick={() => setVisible(true)}
           variant="cubikFilled"
           size={{ base: "cubikMini", md: "cubikSmall" }}
+          className="bg-white"
         >
-          Connect Wallet
+          Login
         </Button>
       </Center>
     );

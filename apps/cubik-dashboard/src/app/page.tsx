@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@cubik/ui";
+import { Button, Input } from "@cubik/ui";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useEffect } from "react";
@@ -26,6 +26,9 @@ export default function Home() {
       <Button onClick={() => setVisible(true)} variant={"link"}>
         {publicKey ? publicKey.toBase58() : "Connect"}
       </Button>
+      <div className="w-64">
+        <Input />
+      </div>
     </>
   );
 }

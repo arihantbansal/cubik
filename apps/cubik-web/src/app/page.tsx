@@ -1,5 +1,6 @@
-import LandingPage from "@/app/components/landing-page/landingPage";
+// import LandingPage from "@/app/components/landing-page/landingPage";
 import type { Metadata } from "next";
+import { Explorer } from "./components/explorer-page/Explorer";
 // import { createAdmin } from "@/utils/contract";
 // import { connection } from "@/utils/contract/sdk";
 // import { Button } from "@chakra-ui/react";
@@ -44,7 +45,7 @@ export default function Home() {
       >
         Admin
       </Button> */}
-      <LandingPage />
+      <Explorer />
     </>
   );
 }
