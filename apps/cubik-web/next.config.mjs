@@ -19,7 +19,7 @@ const config = {
     });
     return config;
   },
-  transpilePackages: ["@cubik/database", "ui"],
+  transpilePackages: ["@cubik/database", "@cubik/ui"],
   experimental: { serverActions: true, appDir: true },
 
   images: {
