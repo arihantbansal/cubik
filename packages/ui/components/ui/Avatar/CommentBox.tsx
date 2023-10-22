@@ -1,0 +1,28 @@
+import React from 'react';
+import {CommentReplies} from './CommentReplies';
+import {AvatarLabelGroup} from './AvatarLabelGroup';
+
+interface CommentBoxProps {
+  size: 'sm' | 'md' | 'lg';
+  sticker: boolean;
+  replies: boolean;
+}
+
+const CommentBox: React.FC<CommentBoxProps> = ({ size, sticker, replies }) => {
+  return (
+    <div>
+      <div className="comment-header">
+        {sticker && <div className="sticker">Sticker Icon Here</div>}
+        <AvatarLabelGroup size={size} variant="someVariant" />
+      </div>
+      
+      <div className="comment-content">
+        Comment content here...
+      </div>
+      
+      {replies && <CommentReplies size={size} show={true} repliesCount={0} />}
+    </div>
+  );
+};
+
+export  {CommentBox};

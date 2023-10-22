@@ -1,0 +1,51 @@
+import React, { useState } from 'react';
+import { ToggleSwitch } from './ToggleSwitch';
+import { InputLabel } from './inputLabel';
+import { HelperText } from './helperText';
+
+interface SwitchProps {
+  labelText?: string;
+  helperText?: string;
+  iconVariant?: 'info' | 'warning' | 'error' | 'default';
+  checked?: boolean;
+  onChange?: (checked: boolean) => void;
+  size?: "sm" | "md" | "default";
+  required?: boolean;
+}
+
+const Switch: React.FC<SwitchProps> = ({
+  labelText,
+  helperText,
+  iconVariant = 'default',
+  checked: propsChecked = false,
+  onChange,
+  size = "default",
+  required = false,
+}) => {
+  // Introduce local state to manage checked status
+  const [checked, setChecked] = useState<boolean>(propsChecked);
+
+  // Handle toggle switch change
+  const handleToggleChange = (isChecked: boolean) => {
+    setChecked(isChecked);  // Update local state
+    onChange && onChange(isChecked);  // Invoke parent's onChange if provided
+  }
+
+  const fontSize = size === "sm" ? "sm" : size === "md" ? "md" : "default";
+
+  return (
+    <div className="flex flex-col gap-2">
+      {labelText && (
+        <InputLabel size={size} required={required} variant={iconVariant}>
+          {labelText}
+        </InputLabel>
+      )}
+      <div className="flex items-center gap-4">
+        <ToggleSwitch checked={checked} onChange={handleToggleChange} size={size} />
+        {helperText && <HelperText variant="default" fontSize={fontSize}>{helperText}</HelperText>}
+      </div>
+    </div>
+  );
+};
+
+export { Switch };

@@ -1,5 +1,5 @@
 "use client";
-import { Button, Input } from "@cubik/ui";
+import { Button, HelperText, Input } from "@cubik/ui";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useEffect } from "react";
@@ -27,7 +27,9 @@ export default function Home() {
         {publicKey ? publicKey.toBase58() : "Connect"}
       </Button>
       <div className="w-64">
-        <Input />
+        <Input
+          helperText={<HelperText variant={"success"}>asdfadsf</HelperText>}
+        />
       </div>
     </>
   );
