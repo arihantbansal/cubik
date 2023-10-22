@@ -34,6 +34,9 @@
     "eslint": "^8.45.0",
     "typescript": "^5.1.6"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"

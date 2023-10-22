@@ -1,6 +1,9 @@
 import { env } from "@/env.mjs";
 import { utils, web3 } from "@coral-xyz/anchor";
 import { verifyMessage } from "@cubik/auth";
+import { createToken } from "@cubik/auth/src/admin";
+import { AccessScope, AuthPayload } from "@cubik/common-types/src/admin";
+import { prisma } from "@cubik/database";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -40,9 +43,88 @@ export const POST = async (req: NextRequest) => {
         }
       );
     }
+
+    const user = await prisma.adminAccess.findMany({
+      where: {
+        user: {
+          mainWallet: publicKey,
+          isActive: true,
+          isArchive: false,
+        },
+        isActive: true,
+      },
+      select: {
+        roundId: true,
+        hackathonId: true,
+        user: true,
+        hackathon: {
+          select: {
+            name: true,
+          },
+        },
+        round: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+    if (user.length > 0) {
+      const accessScope: AccessScope[] = [];
+
+      user.forEach((e) =>
+        accessScope.push({
+          event_id: e.roundId || (e.hackathonId as string),
+          event_name: e.roundId
+            ? (e.round?.name as string)
+            : (e.hackathon?.name as string),
+          event_type: e.roundId ? "grant" : "hackathon",
+        })
+      );
+
+      const session = await createToken({
+        mainWallet: publicKey,
+        id: user[0].user.id,
+        profilePicture: user[0].user.profilePicture as string,
+        username: user[0].user.username as string,
+        profileNft: user[0].user.profileNft as any,
+        accessScope: accessScope,
+        accessType: "ADMIN",
+      });
+
+      const userSessionPayload: AuthPayload = {
+        mainWallet: publicKey,
+        id: user[0].user.id,
+        profilePicture: user[0].user.profilePicture as string,
+        username: user[0].user.username as string,
+        profileNft: user[0].user.profileNft as any,
+        accessScope: accessScope,
+        accessType: "ADMIN",
+      };
+
+      const response = NextResponse.json({
+        data: result,
+        user: userSessionPayload,
+        error: null,
+      });
+
+      response.cookies.set("authToken", session as string, {
+        expires: new Date(Date.now() + 3600000),
+        secure: true,
+        httpOnly: true,
+        sameSite: "strict",
+        path: "/",
+      });
+
+      return response;
+    } else {
+      return NextResponse.json({
+        error: "User Doesn't have access",
+      });
+    }
   } catch (error) {
     console.error(error);
-    NextResponse.json(
+    return NextResponse.json(
       {
         data: false,
         error: "Error while making message",

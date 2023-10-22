@@ -1,4 +1,3 @@
-import { Headers } from "@/components/Headers";
 import React from "react";
 
 interface Props {
@@ -7,10 +6,7 @@ interface Props {
 const EventLayout = ({ children }: Props) => {
   return (
     <>
-      <div>
-        <Headers />
-        {children}
-      </div>
+      <div>{children}</div>
     </>
   );
 };

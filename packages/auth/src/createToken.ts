@@ -3,7 +3,8 @@ import { SignJWT } from "jose";
 
 export const createToken = async (tokenPayload: AuthPayload) => {
   try {
-    const secret = new TextEncoder().encode(process.env.SECRET);
+    let secret = new TextEncoder().encode(process.env.SECRET);
+
     const alg = "HS256";
     const token = new SignJWT(tokenPayload)
       .setProtectedHeader({ alg })

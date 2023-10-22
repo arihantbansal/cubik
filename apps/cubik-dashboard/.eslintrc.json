@@ -1,3 +1,0 @@
-{
-  "extends": ["plugin:tailwindcss/recommended", "@cubik/config/eslint/next"]
-}

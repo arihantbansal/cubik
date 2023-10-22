@@ -60,6 +60,7 @@ const config: Config = {
             500: "#007BFF",
           },
           neutral: {
+            300: "#B2B2B2",
             500: "#808080",
             600: "#666666",
             800: "#333333",
@@ -70,8 +71,12 @@ const config: Config = {
             500: "#F57F45",
           },
           red: {
+            500: '#F53D6B',
             600: "#CC214C",
           },
+          green:{
+            500: '#45F562'
+          }
         },
       },
       borderRadius: {

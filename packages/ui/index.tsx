@@ -4,6 +4,7 @@ export * from "./components/ui/tabs";
 export * from "./components/ui/table";
 export * from "./components/ui/input";
 export * from "./components/ui/accordion";
+export * from "./components/ui/sidePannel";
 export * from "./icons/icon";
 export * from "./components/ui/helperText";
 export * from "./components/ui/InputField";
