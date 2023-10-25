@@ -304,6 +304,9 @@ importers:
       '@cubik/database':
         specifier: workspace:*
         version: link:../../packages/database
+      '@fontsource/plus-jakarta-sans':
+        specifier: ^5.0.17
+        version: 5.0.17
       '@hookform/resolvers':
         specifier: ^2.9.11
         version: 2.9.11(react-hook-form@7.43.7)
@@ -4096,6 +4099,10 @@ packages:
 
   /@floating-ui/utils@0.1.1:
     resolution: {integrity: sha512-m0G6wlnhm/AX0H12IOWtK8gASEMffnX08RtKkCgTdHb9JpHKGloI7icFfLg9ZmQeavcvR0PKmzxClyuFPSjKWw==}
+    dev: false
+
+  /@fontsource/plus-jakarta-sans@5.0.17:
+    resolution: {integrity: sha512-A3NerN+0qNsotzuEz+slG5dvyGQXSEufzoDLz1CS5cicHzlpnjlB0xPRTZvB67lmVLEzDR1pyAbrmbNr7UzoEQ==}
     dev: false
 
   /@fractalwagmi/popup-connection@1.1.1(react-dom@18.2.0)(react@18.2.0):

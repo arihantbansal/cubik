@@ -18,7 +18,9 @@
     "@coral-xyz/anchor": "^0.27.0",
     "@cubik/auth": "workspace:^",
     "@cubik/common-types": "workspace:^",
+    "@cubik/config": "workspace:*",
     "@cubik/database": "workspace:*",
+    "@fontsource/plus-jakarta-sans": "^5.0.17",
     "@hookform/resolvers": "^2.9.11",
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "@prisma/nextjs-monorepo-workaround-plugin": "^5.1.1",
@@ -73,8 +75,7 @@
     "uuid": "^9.0.0",
     "yup": "^1.2.0",
     "zod": "^3.21.4",
-    "zustand": "^4.3.8",
-    "@cubik/config": "workspace:*"
+    "zustand": "^4.3.8"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
