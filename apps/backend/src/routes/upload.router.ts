@@ -4,5 +4,3 @@ import { validate } from "middleware/validate";
 import { uploadFromURLSchema } from "schema/upload";
 
 export const uploadRouter = Router();
-
-uploadRouter.post("/urls", uploadFromURL);

@@ -1,3 +1,6 @@
+import FormData from "form-data";
+import axios from "axios";
+import { CloudflareResponseType } from "types/cloudflare";
 import { UTApi } from "uploadthing/server";
 
 export const utapi = new UTApi({
@@ -29,4 +32,24 @@ export const UploadURLs = async (urls: string[]) => {
     console.log(error);
     return null;
   }
+};
+const API_URL =
+  "https://api.cloudflare.com/client/v4/accounts/45b542611c912b111b00f7a4e8271ab9/images/v1";
+
+export const uploadURLsToCloudflare = async (url: string, id: string) => {
+  const headers = {
+    Authorization: `Bearer ${process.env.CLOUDFLARE_KEY}`,
+    "Content-Type": "multipart/form-data",
+  };
+
+  const formData = new FormData();
+  formData.append("url", url);
+  formData.append("id", id);
+  formData.append("requireSignedURLs", "false");
+
+  const response = await axios.post(API_URL, formData, {
+    headers,
+  });
+
+  return response.data as CloudflareResponseType;
 };
