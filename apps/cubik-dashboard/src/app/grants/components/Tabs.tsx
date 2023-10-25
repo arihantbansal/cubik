@@ -2,6 +2,7 @@
 import React from "react";
 import { RegistrationsSection } from "./sections/registration-section/Registrations";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@cubik/ui";
+import { MultisigSection } from "./sections/multisig-section/Multisigs";
 
 export const TabsSection = () => {
   return (
@@ -11,9 +12,9 @@ export const TabsSection = () => {
           <div className="w-full max-w-7xl mx-auto">
             <TabsTrigger value="details">Details</TabsTrigger>
             <TabsTrigger value="registrations">Registrations</TabsTrigger>
-            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-            <TabsTrigger value="payout">Payout</TabsTrigger>
+            <TabsTrigger value="multisigs">Multisigs</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
           </div>
         </TabsList>
         <div className="w-full max-w-7xl mx-auto">
@@ -23,13 +24,13 @@ export const TabsSection = () => {
           <TabsContent value="registrations">
             <RegistrationsSection />
           </TabsContent>
-          <TabsContent value="dashboard">
-            Change your password here.
+          <TabsContent value="multisigs">
+            <MultisigSection />
           </TabsContent>
-          <TabsContent value="payout">Change your password here.</TabsContent>
           <TabsContent value="analytics">
             Change your password here.
           </TabsContent>
+          <TabsContent value="settings">Change your password here.</TabsContent>
         </div>
       </Tabs>
     </div>

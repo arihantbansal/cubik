@@ -9,3 +9,8 @@ export * from "./icons/icon";
 export * from "./components/ui/helperText";
 export * from "./components/ui/InputField";
 export * from "./components/ui/Avatar/TitleWithIcon";
+export * from "./components/ui/Avatar/AvatarLabelGroup";
+export * from "./components/ui/Avatar/AvatarGroup";
+export * from "./components/ui/Avatar/Avatar";
+export * from "./components/ui/subhead";
+export * from "./components/ui/tag";

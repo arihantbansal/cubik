@@ -1,21 +1,44 @@
-import { cn } from "@ui/lib/utils";
-import * as React from "react"
-interface Props extends React.HTMLAttributes<HTMLButtonElement> {
-    selected: boolean;
-    text: string;
+import { Icon } from "../../icons/icon";
+import { iconLibrary } from "@ui/icons/iconLibrary";
+import { cn } from "../../lib/utils";
+import { FunctionComponent } from "react";
+import React from "react";
+
+interface Props {
+  selected?: boolean;
+  text: string;
+  iconName: keyof typeof iconLibrary;
+  color: string;
+  className: string;
 }
 
-const Tag = React.forwardRef<HTMLButtonElement, Props>(
-    ({ className, ...props }, ref) => {
-        return (
-            <button {...props} className={cn("relative rounded-[100px] overflow-hidden shrink-0 flex flex-row items-center justify-center py-1 px-3 box-border text-center text-[12px] text-tag-solid-text-tag-solid-text-blue", props.selected ? "bg-tag-solid-surface-tag-solid-surface-blue" : "bg-tag-subtle-surface-tag-subtle-surface-default")}>
-                <div className="flex flex-row items-center justify-center p-1">
-                    <div className="relative leading-[16px] font-medium">{props.text}</div>
-                </div>
-            </button>
-        );
-    });
-
-export { Tag };
-export type { Props as TagProps };
-
+const Tag: FunctionComponent<Props> = ({
+  selected,
+  text,
+  iconName,
+  color,
+  className,
+}) => {
+  return (
+    <div className="">
+      <div
+        className={cn(
+          "inline-flex px-3 py-1 rounded-full space-x-1 items-center",
+          className
+        )}
+      >
+        <Icon
+          name={iconName}
+          stroke={color}
+          strokeWidth={1}
+          fill="none"
+          height={18}
+          width={18}
+        />
+        <div className="relative leading-[16px] text-xs font-medium">
+          {text}
+        </div>
+      </div>
+    </div>
+  );
+};

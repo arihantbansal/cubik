@@ -89,6 +89,9 @@ const config: Config = {
           },
           green: {
             500: '#45F562'
+          },
+          purple:{
+            500:'#9D7FF5'
           }
         },
       },
