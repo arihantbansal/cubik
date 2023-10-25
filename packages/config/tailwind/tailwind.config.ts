@@ -4,12 +4,15 @@ const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}", 
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     '../../packages/ui/components/**/*.{ts,tsx}',
   ],
   theme: {
     colors: {
       ...colors,
+    },
+    spacing: {
+      '4.5': '18px'
     },
     container: {
       center: true,
@@ -17,8 +20,12 @@ const config: Config = {
       screens: {
         "2xl": "1400px",
       },
+      
     },
     extend: {
+      fontFamily: {
+        "text-xs-500": "Inter",
+      },
       colors: {
         danger: "var(--danger-btn)",
         border: "hsl(var(--border))",
@@ -54,6 +61,10 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "tag-solid-surface-tag-solid-surface-blue": "#007bff",
+        "tag-solid-text-tag-solid-text-blue": "#f0f7ff",
+        "tag-subtle-surface-tag-subtle-surface-default": "#141414",
+        "tag-subtle-text-tag-subtle-text-default": "#f2f2f2",
         surface: {
           blue: {
             400: "#3898FF",
@@ -74,7 +85,7 @@ const config: Config = {
             500: '#F53D6B',
             600: "#CC214C",
           },
-          green:{
+          green: {
             500: '#45F562'
           }
         },

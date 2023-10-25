@@ -1,7 +1,8 @@
-import { Icon } from "@ui/icons/icon";
+import { Icon } from "../../../icons/icon";
 import { cn } from "../../../lib/utils";
+import React from "react";
 
-interface AvatarProps {
+interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
     src?: string;
     alt?: string;
     size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
@@ -19,12 +20,15 @@ const sizeClasses = {
     '3xl': "w-48 h-48",
 };
 
-const Avatar: React.FC<AvatarProps> = ({ src, alt, size = 'md', shape = 'circle', withIcon = false }) => {
-    const roundedClass = shape === 'circle' ? 'rounded-full' : 'rounded-md';
+const Avatar = React.forwardRef<HTMLButtonElement, AvatarProps>(
+    ({ className, ...props }, ref) => {
+    const roundedClass = props.shape === 'circle' ? 'rounded-full' : 'rounded-md';
+    const size = props.size || 'md';
+    const withIcon = props.withIcon || false;
 
     return (
-        <div className={cn("bg-zinc-800 flex justify-center items-center relative border-2 border-gray-600 overflow-hidden", sizeClasses[size], roundedClass)}>
-            <img src={src} alt={alt} className="object-cover w-full h-full z-5" />
+        <div {...props} className={cn("bg-zinc-800 flex justify-center items-center relative border-2 border-gray-600 overflow-hidden rounded-xl", sizeClasses[size], roundedClass, className)}>
+            <img src={props.src} alt={props.alt} className="object-cover w-full h-full z-5" />
             {withIcon && (
                 <div className="absolute bottom-1 right-1 p-1 bg-zinc-800 border-2 border-gray-600 rounded-full z-200">
                     <Icon name="CircleDot" fill='#007BFF' stroke='#050505' className="w-2 h-2" />
@@ -32,7 +36,7 @@ const Avatar: React.FC<AvatarProps> = ({ src, alt, size = 'md', shape = 'circle'
             )}
         </div>
     );
-};
+});
 
 export { Avatar };    export type { AvatarProps };
 

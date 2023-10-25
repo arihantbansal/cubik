@@ -36,13 +36,16 @@ const Switch: React.FC<SwitchProps> = ({
   return (
     <div className="flex flex-col gap-2">
       {labelText && (
+        // @ts-ignore
         <InputLabel size={size} required={required} variant={iconVariant}>
           {labelText}
         </InputLabel>
       )}
       <div className="flex items-center gap-4">
         <ToggleSwitch checked={checked} onChange={handleToggleChange} size={size} />
-        {helperText && <HelperText variant="default" fontSize={fontSize}>{helperText}</HelperText>}
+        {helperText && <HelperText variant="default" 
+        // @ts-ignore
+        fontSize={fontSize}>{helperText}</HelperText>}
       </div>
     </div>
   );

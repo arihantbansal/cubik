@@ -1,6 +1,7 @@
 // import LandingPage from "@/app/components/landing-page/landingPage";
 import type { Metadata } from "next";
 import { Explorer } from "./components/explorer-page/Explorer";
+import { prisma } from "@cubik/database";
 // import { createAdmin } from "@/utils/contract";
 // import { connection } from "@/utils/contract/sdk";
 // import { Button } from "@chakra-ui/react";
@@ -22,7 +23,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const projects = await prisma.project.findMany({
+    select: {
+      id: true,
+      name: true,
+      logo: true,
+      shortDescription: true,
+    },
+    take: 10
+  })
   return (
     <>
       {/* <Button
@@ -45,7 +55,7 @@ export default function Home() {
       >
         Admin
       </Button> */}
-      <Explorer />
+      <Explorer projects={projects} />
     </>
   );
 }

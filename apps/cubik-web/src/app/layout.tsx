@@ -4,6 +4,7 @@ import Header from "@/app/components/layout/header";
 import WalletContext from "@/app/components/wallet/context";
 import { AuthProvider } from "./context/user";
 import { Providers } from "./provider";
+import { Toaster } from 'sonner';
 import "./globals.css";
 const PlusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -23,6 +24,7 @@ export default function RootLayout({
             <Providers>
               <Header />
               {children}
+              <Toaster />
             </Providers>
           </AuthProvider>
         </WalletContext>

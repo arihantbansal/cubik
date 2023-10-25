@@ -1,64 +1,59 @@
 "use client";
 import { Container } from "@chakra-ui/react";
-import { FC, useState } from "react";
 import Projects from "./Projects";
 import { Input } from '@ui/components/input';
-import { Switch } from '@ui/components/Switch';
-import { BaseCheckboxGroup } from '@ui/components/BaseCheckboxGroup';
-import Toast from '@ui/components/Toast';
-import { AvatarLabelGroup } from '@ui/components/Avatar/AvatarLabelGroup';
-import { Dropdown } from '@ui/components/Dropdown';
+import Search from '@ui/icons/svgs/search';
+import {GridOne} from '@ui/icons/svgs/grid-one';
+import { FC } from "react";
+import { Project } from "@cubik/database";
 
-export const Explorer: FC = () => {
-    const [showToast, setShowToast] = useState(true);
-
+export const Explorer: FC<{projects: Partial<Project>[]}> = ({projects}) => {
     return (
         <Container mt="4.5rem" background="black" maxW="full" px="0">
             <div className="grid grid-cols-3">
                 <div className="col-span-2 p-4">
-                    <Projects />
+                    <Projects projects={projects} />
                 </div>
                 <div className="col-span-1 p-4">
-                    <div className="relative">
-                        <Input
-                            type="text"
-                            placeholder="Search projects, communities, people...."
-                            className="py-2 pl-10 w-64 pr-4 rounded-full bg-slate-800 text-gray-500 focus:border-blue-500"
-                        />
-                        <div className="absolute top-0 left-0 mt-2 ml-3 text-gray-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                            </svg>
+                    <Input placeholder="Search..." className="rounded-xl bg-[#333333] border-gray-600 max-w-sm" leftIcon={<Search/>} />
+                    <div className="mt-4">
+                        <div className="flex flex-col">
+                            <div className="flex justify-between max-w-sm flex-row gap-2">
+                                <div className="flex flex-row gap-2">
+                                    <GridOne className="w-5"/>
+                                    <h1 className="font-bold text-lg">Collections</h1>
+                                </div>
+                                <div className="flex flex-col items-start justify-start text-[#3776CC]">
+                                    <div className="relative leading-[16px] font-medium text-sm mt-2">View More</div>
+                                </div>
+                            </div>
+                            <div className="relative w-sm flex flex-row items-center justify-start py-1 px-4 box-border gap-[14px] text-left text-xl text-colors-foreground-color-fg-primary font-text-xl-600">
+                                <div className="relative w-24 h-24 overflow-hidden shrink-0">
+                                    <img className="absolute top-[4px] left-[4px] rounded w-[42px] h-[42px] object-cover" alt="" src="https://pbs.twimg.com/profile_images/1621492955868545024/CpsOM4M3_400x400.jpg" />
+                                    <img className="absolute top-[4px] left-[50px] rounded w-[42px] h-[42px] object-cover" alt="" src="https://pbs.twimg.com/profile_images/1621492955868545024/CpsOM4M3_400x400.jpg" />
+                                    <img className="absolute top-[50px] left-[4px] rounded w-[42px] h-[42px] object-cover" alt="" src="https://pbs.twimg.com/profile_images/1621492955868545024/CpsOM4M3_400x400.jpg" />
+                                    <div className="absolute top-[60px] left-[57px] leading-[16px] font-medium">+9</div>
+                                </div>
+                                <div className="flex-1 flex flex-col items-start justify-start gap-[4px]">
+                                    <div className="w-[271px] flex flex-row items-end justify-start">
+                                        <div className="relative leading-[28px] font-semibold">Solana Social</div>
+                                    </div>
+                                    <div className="self-stretch relative text-[12px] leading-[18px] [display:-webkit-inline-box] overflow-hidden text-ellipsis [-webkit-line-clamp:2] [-webkit-box-orient:vertical]">Web3 Social apps that are built on Solana blockchain</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="mt-4">
-                        <AvatarLabelGroup
-                            avatarSrc="path_to_avatar_image" 
-                            title="John Doe"
-                            subtitle="Software Developer"
-                            description="5 years of experience"
-                            size="md"
-                            variant={1}
-                        />
+
                     </div>
                     <div className="mt-4">
-                        <Dropdown colorScheme="secondary" size="sm"/>
+
                     </div>
                     <div className="mt-4">
-                        <Switch size="sm" labelText="Enable Notifications" helperText="Turn on to receive notifications" />
-                    </div>
-                    <div className="mt-4">
-                        <BaseCheckboxGroup
-                            items={[
-                                { id: '1', label: 'Checkbox 1', isChecked: false },
-                                { id: '2', label: 'Checkbox 2', isChecked: false, indeterminate: true },
-                                { id: '3', label: 'Checkbox 3', isChecked: false, isDisabled: true }
-                            ]}
-                            onChange={updatedItems => console.log(updatedItems)}
-                        />
+
                     </div>
                     <div className="mt-6">
-                        <Toast title="Notification" content="You have 3 new messages!" buttonText="View" onButtonClick={() => setShowToast(false)} />
+
                     </div>
                 </div>
             </div>

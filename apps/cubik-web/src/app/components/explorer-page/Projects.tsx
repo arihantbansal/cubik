@@ -1,65 +1,18 @@
 import { Button } from '@ui/components/button';
 import Subhead from '@ui/components/subhead';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
+import { toast } from 'sonner';
+import {Tag} from '@ui/components/ui/tag';
+import { FilterLines } from '@ui/icons/svgs/filter-lines';
+import { Avatar } from '@ui/components/ui/Avatar/Avatar';
+import { Project } from '@cubik/database';
+import { SaveIcon } from '@ui/icons/svgs/save';
 
-const projectsData = [
-    {
-        "name": "Project 1",
-        "image": "https://candypay.fun/assets/logo.png",
-        "description": "A decentralized finance (DeFi) project",
-        "tag": ["defi"]
-    },
-    {
-        "name": "Project 2",
-        "image": "https://candypay.fun/assets/logo.png",
-        "description": "Consumer-focused application",
-        "tag": ["consumer"]
-    },
-    {
-        "name": "Project 3",
-        "image": "https://candypay.fun/assets/logo.png",
-        "description": "Highly recommended tool for developers",
-        "tag": ["recommended", "dev tool"]
-    },
-    {
-        "name": "Project 4",
-        "image": "https://candypay.fun/assets/logo.png",
-        "description": "Another DeFi platform",
-        "tag": ["defi"]
-    },
-    {
-        "name": "Project 5",
-        "image": "https://candypay.fun/assets/logo.png",
-        "description": "Consumer product",
-        "tag": ["consumer"]
-    },
-    {
-        "name": "Project 6",
-        "image": "image6.jpg",
-        "description": "Recommended developer tool",
-        "tag": ["recommended", "dev tool"]
-    },
-    {
-        "name": "Project 7",
-        "image": "https://candypay.fun/assets/logo.png",
-        "description": "Yet another DeFi project",
-        "tag": ["defi"]
-    },
-    {
-        "name": "Project 8",
-        "image": "https://candypay.fun/assets/logo.png",
-        "description": "Consumer-oriented service",
-        "tag": ["consumer"]
-    },
-];
-
-const ProjectTabs = () => {
-    const [activeTab, setActiveTab] = useState('Recommended');
-
+const ProjectTabs: FC<{projects: Partial<Project>[]}> = ({projects}) => {
     // Filter projects based on the selected tab
-    const filteredProjects = activeTab === 'Recommended'
-        ? projectsData
-        : projectsData.filter(project => project.tag.includes(activeTab.toLowerCase()));
+    // const filteredProjects = activeTab === 'Recommended'
+    //     ? projectsData
+    //     : projectsData.filter(project => project.tag.includes(activeTab.toLowerCase()));
 
     const categories = [
         'Recommended',
@@ -72,29 +25,42 @@ const ProjectTabs = () => {
 
     return (
         <div className="w-full sm:w-2/3 mx-auto mt-8">
-            <Subhead/>
-            <div className="flex space-x-2 mt-2">
+            <Subhead text='Projects' endElement={<FilterLines />} />
+            <div className="flex space-x-2 mt-2 overflow-y-scroll">
                 {categories.map(category => (
-                    <Button
-                        size="sm"
+                    <Tag
+                        // size="sm"
                         key={category}
-                        onClick={() => setActiveTab(category)}
-                        className={`rounded-full bg-slate-800 text-white px-4 py-2 focus:outline-none ${activeTab === category ? 'bg-blue-700' : ''}`}
+                        selected={true}
+                        // selected={activeTab.toLowerCase() === category.toLowerCase()}
+                        text={category}
+                        // onClick={() => setActiveTab(category)}
+                        // className={`rounded-full bg-slate-800 text-white px-4 py-2 focus:outline-none ${activeTab === category ? 'bg-blue-700' : ''}`}
                     >
                         {category}
-                    </Button>
+                    </Tag>
                 ))}
             </div>
-            <div className="mt-4">
-                {filteredProjects.map((project, index) => (
-                    <div>
-                        <div key={index} className="mb-4 rounded-xl p-4 border border-gray-300 flex">
-                            <img src={project.image} alt={project.name} className="w-20 h-20 mr-4" />
+            <div className="mt-4 gap-2">
+                {projects.map((project, index) => (
+                    <div className='flex flex-row justify-between gap-2 max-w-lg'>
+                        <div key={index} className="mb-2 rounded-xl p-4 gap-2 flex">
+                            {/* <img src={project.image} alt={project.name} className="w-20 h-20 mr-4 rounded-lg" /> */}
+                            <Avatar className='rounded-[10px] min-w-fit' size='xl' shape='square' src={project.logo}/>
                             <div className="flex-grow">
                                 <h3 className="text-xl font-semibold">{project.name}</h3>
-                                <p className="mt-2">{project.description}</p>
+                                <p className="mt-2">{project.shortDescription}</p>
                             </div>
                         </div>
+                        <Button onClick={() => toast(`Saved ${project.name}`, {
+                            style: {
+                                background: '#000',
+                                color: '#fff',
+                            }
+                        })} className='gap-2 rounded-[8px] mt-3' variant="outline">
+                            <SaveIcon/>
+                            Save
+                        </Button>
                     </div>
                 ))}
             </div>
