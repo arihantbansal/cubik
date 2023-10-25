@@ -5,14 +5,12 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     '../../packages/ui/components/**/*.{ts,tsx}',
   ],
   theme: {
     colors: {
       ...colors,
-    },
-    spacing: {
-      '4.5': '18px'
     },
     container: {
       center: true,
@@ -21,10 +19,14 @@ const config: Config = {
         "2xl": "1400px",
       },
       
+      
     },
     extend: {
       fontFamily: {
         "text-xs-500": "Inter",
+      },
+      spacing: {
+        '4.5': '18px'
       },
       colors: {
         danger: "var(--danger-btn)",
