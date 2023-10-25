@@ -104,9 +104,15 @@ importers:
       tweetnacl:
         specifier: ^1.0.3
         version: 1.0.3
+      uploadthing:
+        specifier: ^5.7.2
+        version: 5.7.2(zod@3.22.4)
       winston:
         specifier: ^3.10.0
         version: 3.10.0
+      zod:
+        specifier: ^3.21.4
+        version: 3.22.4
     devDependencies:
       '@types/cookie-parser':
         specifier: ^1.4.3
@@ -9689,6 +9695,10 @@ packages:
     resolution: {integrity: sha512-nRcdyM622+GYT9SdaJIVLknqoc8i7krItinfuBPtvmPc+UNGDJ+pMkr4AatYp88cEc4iYtPlN8flJvZ3dNtgrg==}
     dev: false
 
+  /@uploadthing/mime-types@0.2.1:
+    resolution: {integrity: sha512-UDySsPbdi7wp52WG7mp5CiZwaTvokDubqhm1xhFm73Bqhp0PsGbwSSF5PdCXH4fe8Y4EKGrMyWQ4i1fF9+DVVQ==}
+    dev: false
+
   /@uploadthing/react@5.2.1(react-dropzone@14.2.3)(react@18.2.0)(uploadthing@5.3.2)(zod@3.21.4):
     resolution: {integrity: sha512-fYvNpX4V7YLqzs6sK43zWlVYiS7OrpCU+6O3is2bVPRWvfanBlLGnl7cEl1GuQD7g07GKQVBDhVeLjX7H3zvsg==}
     peerDependencies:
@@ -9716,6 +9726,19 @@ packages:
     dependencies:
       '@uploadthing/mime-types': 0.2.0
       zod: 3.21.4
+    dev: false
+
+  /@uploadthing/shared@5.2.5(@uploadthing/mime-types@0.2.1)(zod@3.22.4):
+    resolution: {integrity: sha512-b6Nr0YzV9iinVK9OydBVQH0xPQEPgw7ty/q9aQbEnRQedc4TqARaYQEoMvTu7bRuiK7MIpKodzVTQdFKHhMLTg==}
+    peerDependencies:
+      '@uploadthing/mime-types': ^0.2.0
+      zod: ^3.22.3
+    peerDependenciesMeta:
+      '@uploadthing/mime-types':
+        optional: true
+    dependencies:
+      '@uploadthing/mime-types': 0.2.1
+      zod: 3.22.4
     dev: false
 
   /@vitejs/plugin-react@3.1.0(vite@4.4.5):
@@ -19924,6 +19947,16 @@ packages:
       - zod
     dev: false
 
+  /uploadthing@5.7.2(zod@3.22.4):
+    resolution: {integrity: sha512-VgNJP+gn4k835BV6E+oOq7FLGNAlh9fUB+jAotvplvQBxCkglEKlI7Hd7iynydbx0wLC1R/idRpJJNiMCAR33A==}
+    engines: {node: '>=18.13.0'}
+    dependencies:
+      '@uploadthing/mime-types': 0.2.1
+      '@uploadthing/shared': 5.2.5(@uploadthing/mime-types@0.2.1)(zod@3.22.4)
+    transitivePeerDependencies:
+      - zod
+    dev: false
+
   /upper-case-first@1.1.2:
     resolution: {integrity: sha512-wINKYvI3Db8dtjikdAqoBbZoP6Q+PZUyfMR7pmwHzjC2quzSkUq5DmPrTtPEqHaz8AGtmsB4TqwapMTM1QAQOQ==}
     dependencies:
@@ -20570,6 +20603,10 @@ packages:
 
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
+    dev: false
+
+  /zod@3.22.4:
+    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
     dev: false
 
   /zustand@3.7.2(react@18.2.0):
