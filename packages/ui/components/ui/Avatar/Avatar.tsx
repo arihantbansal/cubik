@@ -7,8 +7,7 @@ interface AvatarProps {
   alt?: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
   shape?: "square" | "circle";
-  withIcon?: boolean;
-  iconComponent?: boolean;
+  Icon?: React.ReactNode;
 }
 
 const sizeClasses = {
@@ -26,32 +25,38 @@ const Avatar: React.FC<AvatarProps> = ({
   alt,
   size = "md",
   shape = "circle",
-  withIcon = false,
-  iconComponent = false,
+  Icon,
 }) => {
-  const roundedClass = shape === "circle" ? "rounded-full" : "rounded-md";
+  const roundedClass = shape === "circle" ? "rounded-full" : "rounded";
 
   return (
     <div
       className={cn(
-        "bg-zinc-800 flex justify-center items-center relative border-2  overflow-hidden",
+        "bg-zinc-800 flex  justify-center items-center relative border-2  ",
         sizeClasses[size],
         roundedClass
       )}
     >
-      {typeof src === "string" ? (
-        <img src={src} alt={alt} className="object-cover w-full h-full z-5" />
-      ) : (
-        iconComponent && src
+      {typeof src === "string" && (
+        <img
+          src={src}
+          alt={alt}
+          className={cn(
+            "object-cover relative w-full h-full z-5",
+            roundedClass
+          )}
+        />
       )}
-      {withIcon && (
-        <div className="absolute bottom-1 right-1 p-1 bg-zinc-800 border-2 border-gray-600 rounded-full z-200">
-          <Icon
-            name="CircleDot"
-            fill="#007BFF"
-            stroke="#050505"
-            className="w-2 h-2"
-          />
+      {Icon && (
+        <div
+          className={cn(
+            shape === "square" &&
+              "absolute -bottom-2 -right-2 p-1 bg-zinc-800  rounded-full z-200",
+            shape === "circle" &&
+              "absolute bottom-5 right-8 p-1 bg-zinc-800  rounded-full z-200"
+          )}
+        >
+          {Icon}
         </div>
       )}
     </div>

@@ -25,23 +25,24 @@ export const AvatarGroup: React.FC<AvatarGroupProps> = ({
   shape = "circle",
   maxCount = 3,
 }) => {
-  const overflowCount = avatars.length - maxCount;
+  const overflowCount = avatars.length > 3 ? true : false;
 
   return (
-    <div className={cn("flex -space-x-4", sizeToSpacingClass[size])}>
-      {avatars.slice(0, maxCount).map((avatar, index) => (
-        <Avatar
-          key={index}
-          src={avatar.src}
-          alt={avatar.alt}
-          size={size}
-          shape={shape}
-          withIcon={avatar.withIcon}
-        />
-      ))}
-      {overflowCount > 0 && (
-        <span className="inline-flex items-center justify-center bg-gray-500 text-white text-xs font-medium rounded-full">
-          +{overflowCount}
+    <div className="flex items-center gap-2">
+      <div className={cn("flex relative", sizeToSpacingClass[size])}>
+        {avatars.slice(0, maxCount).map((avatar, index) => (
+          <Avatar
+            key={index}
+            src={avatar.src}
+            alt={avatar.alt}
+            size={size}
+            shape={shape}
+          />
+        ))}
+      </div>
+      {overflowCount && (
+        <span className="flex items-end p-0.5 justify-end bg-gray-500  text-white text-xs font-medium rounded-full">
+          +{avatars.length - 3}
         </span>
       )}
     </div>
