@@ -1,5 +1,5 @@
 import { Icon } from "../../icons/icon";
-import { iconLibrary } from "@ui/icons/iconLibrary";
+import { iconLibrary } from "../../icons/iconLibrary";
 import { cn } from "../../lib/utils";
 import { FunctionComponent } from "react";
 import React from "react";
@@ -12,7 +12,7 @@ interface Props {
   className: string;
 }
 
-const Tag: FunctionComponent<Props> = ({
+export const Tag: FunctionComponent<Props> = ({
   selected,
   text,
   iconName,

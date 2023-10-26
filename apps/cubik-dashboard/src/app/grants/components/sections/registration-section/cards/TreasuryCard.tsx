@@ -34,7 +34,6 @@ const TreasuryCard = ({
           />
         }
         shape="square"
-        iconComponent={true}
       />
       <div className="flex justify-between flex-col">
         <p className="text-xs text-white opacity-60">{title}</p>

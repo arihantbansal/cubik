@@ -36,7 +36,7 @@ const AvatarLabelGroup: React.FC<AvatarLabelProps> = ({
       )}
 
       <div className={cn("flex flex-col")}>
-        <TitleWithIcon text={title} size={size} />
+        <TitleWithIcon text={title} variant={size} />
         {showSubtitle && (
           <span className={cn("text-gray-600")}>{subtitle}</span>
         )}
