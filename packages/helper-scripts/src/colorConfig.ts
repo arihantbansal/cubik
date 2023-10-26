@@ -57,5 +57,28 @@ function rgbToHex(r: number, g: number, b: number): string {
 
 export const createColor = () => {
   const newD = convertColorsToHex(colorDump);
-  fs.writeFileSync("colors.json", JSON.stringify(newD));
+  let colors = new Object();
+  newD.forEach((e) => {
+    colors = {
+      [e.name]: e.color,
+      ...colors,
+    };
+  });
+  const colorKeys = Object.keys(colors);
+
+  // Sort the color keys based on their numeric index
+  colorKeys.sort((a, b) => {
+    const [, aIndex] = a.split("-");
+    const [, bIndex] = b.split("-");
+    return Number(bIndex) - Number(aIndex);
+  });
+
+  // Create a new object with the reordered colors
+  const reorderedColors = {};
+  for (const key of colorKeys) {
+    //@ts-ignore
+    reorderedColors[key] = colors[key];
+  }
+
+  fs.writeFileSync("colors.json", JSON.stringify(colors));
 };
