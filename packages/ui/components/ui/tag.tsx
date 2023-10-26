@@ -9,7 +9,7 @@ interface Props {
   text: string;
   iconName: keyof typeof iconLibrary;
   color: string;
-  className: string;
+  className?: string;
 }
 
 export const Tag: FunctionComponent<Props> = ({

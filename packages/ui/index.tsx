@@ -14,3 +14,5 @@ export * from "./components/ui/Avatar/AvatarGroup";
 export * from "./components/ui/Avatar/Avatar";
 export * from "./components/ui/subhead";
 export * from "./components/ui/tag";
+export * from "./components/ui/inputLabel";
+export * from "./components/ui/text-area";

@@ -1,7 +1,7 @@
 import { cn } from "../../lib/utils";
 import { VariantProps, cva } from "class-variance-authority";
 import { forwardRef } from "react";
-import { Icon } from "@ui/icons/icon";
+import { Icon } from "../../icons/icon";
 import React from "react";
 
 const inputLabelVariants = cva("transition-colors", {
@@ -23,15 +23,14 @@ const inputLabelVariants = cva("transition-colors", {
       regular: "font-normal",
       medium: "font-medium",
       bold: "font-bold",
-    }
+    },
   },
   defaultVariants: {
     fontSize: "md",
     fontWeight: "medium",
-    variant: "icon"
+    variant: "icon",
   },
 });
-
 
 type InputLabelProps = React.HTMLAttributes<HTMLElement> &
   VariantProps<typeof inputLabelVariants> & {
@@ -42,7 +41,14 @@ type InputLabelProps = React.HTMLAttributes<HTMLElement> &
 const InputLabel = forwardRef<HTMLSpanElement, InputLabelProps>(
   ({ children, className, ...props }, ref) => {
     return (
-      <span className={cn(inputLabelVariants({ className }), "flex items-center space-x-2")} {...props} ref={ref}>
+      <span
+        className={cn(
+          inputLabelVariants({ className }),
+          "flex items-center space-x-2"
+        )}
+        {...props}
+        ref={ref}
+      >
         <Icon
           name="infoCircle"
           stroke="#808080"
@@ -55,7 +61,6 @@ const InputLabel = forwardRef<HTMLSpanElement, InputLabelProps>(
     );
   }
 );
-
 
 InputLabel.displayName = "InputLabel";
 
