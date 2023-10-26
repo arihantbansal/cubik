@@ -1,6 +1,6 @@
 console.log("Helper Script Started");
 import { config } from "dotenv";
-import { moveImagesToCloudflare } from "./src/moveImages";
+import { createColor } from "./src/colorConfig";
 config();
 
-moveImagesToCloudflare();
+createColor();
