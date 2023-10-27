@@ -1,6 +1,6 @@
 
 
-html[data-theme="light"],:root {
+html[data-theme="light"], :root {
     --Color: #FFFFFF;
     --color-feedback-warning-shade: #FFFFFF;
     --color-feedback-warning-tint: #FFFFFF;
