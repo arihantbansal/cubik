@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import "@cubik/presets/styles/style.css";
+import "@cubik/presets/styles/lightColor.style.css";
+import "@cubik/presets/styles/darkColors.styles.css";
+import "@cubik/presets/styles/component.style.css";
 
 const inter = Inter({ subsets: ['latin'] })
 

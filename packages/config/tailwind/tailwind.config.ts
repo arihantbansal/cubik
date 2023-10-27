@@ -71,6 +71,7 @@ const config: Config = {
           blue: {
             400: "#3898FF",
             500: "#007BFF",
+            100:"var(--black)"
           },
           neutral: {
             300: "#B2B2B2",

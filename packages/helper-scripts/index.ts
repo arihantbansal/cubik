@@ -1,6 +1,7 @@
 console.log("Helper Script Started");
 import { config } from "dotenv";
-import { createColor } from "./src/colorConfig";
+import { generateSemantic } from "./src/color/semantic";
+import { createComponentNames } from "./src/color/component";
 config();
 
-createColor();
+createComponentNames();

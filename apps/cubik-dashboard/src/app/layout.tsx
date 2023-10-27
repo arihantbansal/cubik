@@ -1,4 +1,8 @@
 import "./globals.css";
+import "@cubik/presets/styles/style.css";
+import "@cubik/presets/styles/lightColor.style.css";
+import "@cubik/presets/styles/darkColors.styles.css";
+import "@cubik/presets/styles/component.style.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Provider } from "./provider";
@@ -14,7 +18,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: JSX.Element }) {
   return (
     <html className="dark" lang="en">
-      <body className={`bg-white dark:bg-[#141414] ${inter.className}`}>
+      <body
+        className={`bg-[var(--button-success-surface-disabled)]  dark:bg-[var(--button-success-surface-disabled)] ${inter.className}`}
+      >
         <Provider>
           <>
             <Header />

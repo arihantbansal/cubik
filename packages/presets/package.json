@@ -1,0 +1,24 @@
+{
+  "name": "@cubik/presets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "files": [
+    "eslint-preset.js",
+    "prettier-preset.js"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.2.1",
+    "eslint-plugin-prettier": "^5.0.1",
+    "prettier": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.6",
+    "tailwindcss": "^3.3.5",
+    "typescript": "^5.2.2"
+  }
+}
