@@ -823,6 +823,25 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
+  packages/squads:
+    dependencies:
+      '@coral-xyz/anchor':
+        specifier: ^0.27.0
+        version: 0.27.0
+      '@cubik/config':
+        specifier: workspace:*
+        version: link:../config
+      '@sqds/multisig':
+        specifier: ^1.10.0
+        version: 1.10.0
+      dotenv:
+        specifier: ^16.3.1
+        version: 16.3.1
+    devDependencies:
+      typescript:
+        specifier: ^5.1.3
+        version: 5.2.2
+
   packages/ui:
     dependencies:
       '@headlessui/react':
@@ -4653,6 +4672,34 @@ packages:
       - supports-color
     dev: false
 
+  /@metaplex-foundation/beet-solana@0.4.0:
+    resolution: {integrity: sha512-B1L94N3ZGMo53b0uOSoznbuM5GBNJ8LwSeznxBxJ+OThvfHQ4B5oMUqb+0zdLRfkKGS7Q6tpHK9P+QK0j3w2cQ==}
+    dependencies:
+      '@metaplex-foundation/beet': 0.7.1
+      '@solana/web3.js': 1.78.4
+      bs58: 5.0.0
+      debug: 4.3.4
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - supports-color
+      - utf-8-validate
+    dev: false
+
+  /@metaplex-foundation/beet@0.7.1:
+    resolution: {integrity: sha512-hNCEnS2WyCiYyko82rwuISsBY3KYpe828ubsd2ckeqZr7tl0WVLivGkoyA/qdiaaHEBGdGl71OpfWa2rqL3DiA==}
+    dependencies:
+      ansicolors: 0.3.2
+      bn.js: 5.2.1
+      debug: 4.3.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@metaplex-foundation/cusper@0.0.2:
+    resolution: {integrity: sha512-S9RulC2fFCFOQraz61bij+5YCHhSO9llJegK8c8Y6731fSi6snUSQJdCUqYS8AIgR0TKbQvdvgSyIIdbDFZbBA==}
+    dev: false
+
   /@next/env@13.4.19:
     resolution: {integrity: sha512-FsAT5x0jF2kkhNkKkukhsyYOrRqtSxrEhfliniIq0bwWbuXLgyt3Gv0Ml+b91XwjwArmuP7NxCiGd++GGKdNMQ==}
     dev: false
@@ -6320,6 +6367,22 @@ packages:
       - utf-8-validate
     dev: false
 
+  /@solana/spl-token@0.3.8(@solana/web3.js@1.78.4):
+    resolution: {integrity: sha512-ogwGDcunP9Lkj+9CODOWMiVJEdRtqHAtX2rWF62KxnnSWtMZtV9rDhTrZFshiyJmxDnRL/1nKE1yJHg4jjs3gg==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      '@solana/web3.js': ^1.47.4
+    dependencies:
+      '@solana/buffer-layout': 4.0.1
+      '@solana/buffer-layout-utils': 0.2.0
+      '@solana/web3.js': 1.78.4
+      buffer: 6.0.3
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
+    dev: false
+
   /@solana/wallet-adapter-alpha@0.1.10(@solana/web3.js@1.74.0):
     resolution: {integrity: sha512-TOUhDyUNSmp8bqeUueN0LPmurTAEmYm3PTrPGSnsq6JFeTzwTv5xZRygtCvULpBzCPZu/7AfIqh/TSoz4P92aw==}
     engines: {node: '>=16'}
@@ -7159,6 +7222,26 @@ packages:
     dependencies:
       on-change: 4.0.2
       semver-compare: 1.0.0
+    dev: false
+
+  /@sqds/multisig@1.10.0:
+    resolution: {integrity: sha512-MW2C70QqSOsaeTto93bvJxxWfSITxoyNuQ2z23hDtYH+pImXjH+0B4BJghnPgY1fYxu+QNNbez7GHuWHepRgxA==}
+    dependencies:
+      '@metaplex-foundation/beet': 0.7.1
+      '@metaplex-foundation/beet-solana': 0.4.0
+      '@metaplex-foundation/cusper': 0.0.2
+      '@solana/spl-token': 0.3.8(@solana/web3.js@1.78.4)
+      '@solana/web3.js': 1.78.4
+      '@types/bn.js': 5.1.3
+      assert: 2.0.0
+      bn.js: 5.2.1
+      buffer: 6.0.3
+      invariant: 2.2.4
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - supports-color
+      - utf-8-validate
     dev: false
 
   /@sqds/sdk@2.0.4:
@@ -8293,6 +8376,12 @@ packages:
       '@babel/types': 7.23.0
     dev: false
 
+  /@types/bn.js@5.1.3:
+    resolution: {integrity: sha512-wT1B4iIO82ecXkdN6waCK8Ou7E71WU+mP1osDA5Q8c6Ur+ozU2vIKUIhSpUr6uE5L2YHocKS1Z2jG2fBC1YVeg==}
+    dependencies:
+      '@types/node': 20.8.3
+    dev: false
+
   /@types/body-parser@1.19.2:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
@@ -9350,6 +9439,10 @@ packages:
   /ansi-styles@6.2.1:
     resolution: {integrity: sha512-bN798gFfQX+viw3R7yrGWRqnrN2oRkEkUjjl4JNn4E8GxxbjtG3FbrEIIY3l8/hrwUwIeCZvi4QuOTP4MErVug==}
     engines: {node: '>=12'}
+    dev: false
+
+  /ansicolors@0.3.2:
+    resolution: {integrity: sha512-QXu7BPrP29VllRxH8GwB7x5iX5qWKAAMLqKQGWTeLWVlNHNOpVMJ91dsxQAIWXpjuW5wqvxu3Jd/nRjrJ+0pqg==}
     dev: false
 
   /any-promise@1.3.0:
