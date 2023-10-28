@@ -16,11 +16,6 @@
       "dependsOn": ["^build", "^db:generate"],
       "outputs": [".next/**", ".expo/**"]
     },
-    "cubik-ui#build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**"],
-      "env": ["NEXT_PUBLIC_SITE_URL", "NEXT_PUBLIC_VERCEL_URL", "NODE_ENV"]
-    },
     "type-check": {
       "dependsOn": ["^db:generate"],
       "cache": false
