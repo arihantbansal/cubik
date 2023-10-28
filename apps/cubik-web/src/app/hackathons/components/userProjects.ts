@@ -1,6 +1,6 @@
-"use server";
+'use server';
 
-import { prisma } from "@cubik/database";
+import { prisma } from '@cubik/database';
 
 export const getUserProjects = async (mainWallet: string) => {
   try {
@@ -54,11 +54,11 @@ export const isValidProject = async (mainWallet: string) => {
 export const createJoinHackathon = (
   hackathonId: string,
   projectId: string,
-  tracks: any[]
+  tracks: any[],
 ) => {
   const res = prisma.projectJoinHackathon.create({
     data: {
-      tx: "asdfasdf",
+      tx: 'asdfasdf',
       hackathonId: hackathonId,
       projectId: projectId,
       tracks: tracks || {},

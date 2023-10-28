@@ -1,6 +1,7 @@
 import React from 'react';
-import {CommentReplies} from './CommentReplies';
-import {AvatarLabelGroup} from './AvatarLabelGroup';
+
+import { AvatarLabelGroup } from './AvatarLabelGroup';
+import { CommentReplies } from './CommentReplies';
 
 interface CommentBoxProps {
   size: 'sm' | 'md' | 'lg';
@@ -15,14 +16,12 @@ const CommentBox: React.FC<CommentBoxProps> = ({ size, sticker, replies }) => {
         {sticker && <div className="sticker">Sticker Icon Here</div>}
         <AvatarLabelGroup size={size} variant="someVariant" />
       </div>
-      
-      <div className="comment-content">
-        Comment content here...
-      </div>
-      
+
+      <div className="comment-content">Comment content here...</div>
+
       {replies && <CommentReplies size={size} show={true} repliesCount={0} />}
     </div>
   );
 };
 
-export  {CommentBox};
+export { CommentBox };

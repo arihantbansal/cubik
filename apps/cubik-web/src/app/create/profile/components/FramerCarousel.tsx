@@ -1,5 +1,8 @@
-"use client";
+'use client';
 
+import type { Dispatch, SetStateAction } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { NFTProfile, NftResponseCarousel } from '@/types/NFTProfile';
 import {
   Box,
   Button,
@@ -9,17 +12,15 @@ import {
   Spinner,
   Text,
   VStack,
-} from "@/utils/chakra";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { motion } from "framer-motion";
-import type { Dispatch, SetStateAction } from "react";
-import { useEffect, useRef, useState } from "react";
+} from '@/utils/chakra';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { motion } from 'framer-motion';
+
 // import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 // import { BsImage } from "react-icons/bs";
-import { assestsByOwner } from "./assestsByOwner";
+import { assestsByOwner } from './assestsByOwner';
 // import { useUserStore } from "~/store/userStore";
-import Carousel from "./Carousel";
-import type { NFTProfile, NftResponseCarousel } from "@/types/NFTProfile";
+import Carousel from './Carousel';
 
 type CarouselPropsType = {
   onClose: () => void;
@@ -41,7 +42,7 @@ const FramerCarousel = ({ setPFP, PFP, setNFTProfile }: CarouselPropsType) => {
     const fetch = async () => {
       try {
         setLoading(true);
-        const data = await assestsByOwner(publicKey?.toBase58() || "");
+        const data = await assestsByOwner(publicKey?.toBase58() || '');
         if (data[0]) {
           setNftData(data[0]);
           setError(false);
@@ -63,22 +64,22 @@ const FramerCarousel = ({ setPFP, PFP, setNFTProfile }: CarouselPropsType) => {
   useEffect(() => {
     if (carousel.current) {
       setCarouselWidth(
-        carousel.current.scrollWidth - carousel.current.offsetWidth
+        carousel.current.scrollWidth - carousel.current.offsetWidth,
       );
     }
   }, [carouselWidth]);
 
-  const scrollCarousel = (direction: "left" | "right") => {
+  const scrollCarousel = (direction: 'left' | 'right') => {
     if (carousel.current) {
       const scrollAmount = carousel.current.offsetWidth;
       const newPosition =
-        direction === "left"
+        direction === 'left'
           ? carousel.current.scrollLeft - scrollAmount
           : carousel.current.scrollLeft + scrollAmount;
 
       carousel.current.scrollTo({
         left: newPosition,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     }
   };
@@ -90,12 +91,12 @@ const FramerCarousel = ({ setPFP, PFP, setNFTProfile }: CarouselPropsType) => {
 
   return (
     <>
-      <HStack pb="12px" w="full" justify={"space-between"}>
-        <Text textAlign={"center"} fontSize={{ base: "xs", md: "sm" }}>
+      <HStack pb="12px" w="full" justify={'space-between'}>
+        <Text textAlign={'center'} fontSize={{ base: 'xs', md: 'sm' }}>
           Select NFT
         </Text>
         <Button
-          fontSize={{ base: "xs", md: "sm" }}
+          fontSize={{ base: 'xs', md: 'sm' }}
           fontWeight="400"
           bg="white"
           color="black"
@@ -112,26 +113,26 @@ const FramerCarousel = ({ setPFP, PFP, setNFTProfile }: CarouselPropsType) => {
             // }
           }}
         >
-          {!nftData ? (PFP ? "Select" : "Cancel") : "Close"}
+          {!nftData ? (PFP ? 'Select' : 'Cancel') : 'Close'}
         </Button>
       </HStack>
       <HStack
         w="full"
-        alignItems={"center"}
-        position={"relative"}
+        alignItems={'center'}
+        position={'relative'}
         overflow="visible"
       >
         <IconButton
-          display={nftData && nftData?.length > 0 ? "block" : "none"}
-          position={"absolute"}
+          display={nftData && nftData?.length > 0 ? 'block' : 'none'}
+          position={'absolute'}
           variant="unstyled"
           rounded="full"
-          background={"#ffffff80"}
-          h={"26px !important"}
-          w={"26px !important"}
+          background={'#ffffff80'}
+          h={'26px !important'}
+          w={'26px !important'}
           maxW="26px"
-          minW={"26px"}
-          zIndex={"2"}
+          minW={'26px'}
+          zIndex={'2'}
           aria-label="go to left"
           // @todo:  icon={<BiChevronLeft size={24} />}
           icon={
@@ -151,7 +152,7 @@ const FramerCarousel = ({ setPFP, PFP, setNFTProfile }: CarouselPropsType) => {
               </svg>
             </Center>
           }
-          onClick={() => scrollCarousel("left")}
+          onClick={() => scrollCarousel('left')}
         />
         <Box
           w="full"
@@ -162,11 +163,11 @@ const FramerCarousel = ({ setPFP, PFP, setNFTProfile }: CarouselPropsType) => {
           overflowX="scroll"
           width="full"
           css={{
-            "&::-webkit-scrollbar": {
-              display: "none",
+            '&::-webkit-scrollbar': {
+              display: 'none',
             },
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
           }}
         >
           {nftData && nftData?.length > 0 ? (
@@ -186,7 +187,7 @@ const FramerCarousel = ({ setPFP, PFP, setNFTProfile }: CarouselPropsType) => {
               bg="#141414"
               width="100%"
               height="7rem"
-              align={"center"}
+              align={'center'}
               gap="0"
               spacing="0"
               py="0.8rem"
@@ -199,7 +200,7 @@ const FramerCarousel = ({ setPFP, PFP, setNFTProfile }: CarouselPropsType) => {
               ) : (
                 <VStack gap="4px" p="0">
                   {/* @todo: <BsImage size="22" /> */}
-                  <Text fontSize="xs" maxW="12rem" textAlign={"center"}>
+                  <Text fontSize="xs" maxW="12rem" textAlign={'center'}>
                     You do not have NFTs in your wallet to use as Profile
                     Picture.
                   </Text>
@@ -210,18 +211,18 @@ const FramerCarousel = ({ setPFP, PFP, setNFTProfile }: CarouselPropsType) => {
         </Box>
         <IconButton
           display={
-            nftData && nftData?.length > 0 && !isLoading ? "block" : "none"
+            nftData && nftData?.length > 0 && !isLoading ? 'block' : 'none'
           }
-          position={"absolute"}
+          position={'absolute'}
           variant="unstyled"
           rounded="full"
           right="0px"
-          background={"#ffffff80"}
-          zIndex={"2"}
-          h={"26px !important"}
-          w={"26px !important"}
+          background={'#ffffff80'}
+          zIndex={'2'}
+          h={'26px !important'}
+          w={'26px !important'}
           maxW="26px"
-          minW={"26px"}
+          minW={'26px'}
           aria-label="go to left"
           // @todo:  icon={<BiChevronRight size={24} />}
           icon={
@@ -241,7 +242,7 @@ const FramerCarousel = ({ setPFP, PFP, setNFTProfile }: CarouselPropsType) => {
               </svg>
             </Center>
           }
-          onClick={() => scrollCarousel("right")}
+          onClick={() => scrollCarousel('right')}
         />
       </HStack>
     </>

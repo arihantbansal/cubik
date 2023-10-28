@@ -1,6 +1,8 @@
-"use client";
-import { Box, Center, HStack, chakra, keyframes } from "@chakra-ui/react";
-import { isFuture, isPast } from "date-fns";
+'use client';
+
+import { Box, Center, chakra, HStack, keyframes } from '@chakra-ui/react';
+import { isFuture, isPast } from 'date-fns';
+
 //import { AiTwotoneCalendar } from "react-icons/ai";
 
 const random = () => Math.floor(Math.random() * 10);
@@ -22,10 +24,10 @@ const ripple = keyframes`
 
 const CircleRipple = chakra(Box, {
   baseStyle: {
-    backgroundColor: "#31F579",
-    width: { base: "0.8em", md: "1em" },
-    height: { base: "0.8em", md: "1em" },
-    rounded: "full",
+    backgroundColor: '#31F579',
+    width: { base: '0.8em', md: '1em' },
+    height: { base: '0.8em', md: '1em' },
+    rounded: 'full',
     animation: `${ripple} 1.${random()}s linear infinite`,
   },
 });
@@ -60,7 +62,7 @@ export const HackathonStatus = ({
         backgroundColor="#1D1F1E"
         p="0px 12px"
         spacing="8px"
-        minH={"22px"}
+        minH={'22px'}
         mx={1}
       >
         {/* @todo <Box
@@ -74,7 +76,7 @@ export const HackathonStatus = ({
           as="p"
           whiteSpace="pre"
           color="neutral.11"
-          textStyle={{ base: "body6", md: "body5" }}
+          textStyle={{ base: 'body6', md: 'body5' }}
         >
           Coming Soon
         </Box>
@@ -87,7 +89,7 @@ export const HackathonStatus = ({
         backgroundColor="#1D1F1E"
         p="0px 12px"
         spacing="8px"
-        minH={"22px"}
+        minH={'22px'}
         mx={1}
       >
         {/* @todo <Box
@@ -101,7 +103,7 @@ export const HackathonStatus = ({
           as="p"
           whiteSpace="pre"
           color="neutral.11"
-          textStyle={{ base: "body6", md: "body5" }}
+          textStyle={{ base: 'body6', md: 'body5' }}
         >
           Registration Open
         </Box>
@@ -110,16 +112,16 @@ export const HackathonStatus = ({
   } else if (isPast(hackathonStartDate) && isFuture(hackathonEndDate)) {
     return (
       <HStack
-        rounded={"full"}
+        rounded={'full'}
         backgroundColor="#071A0F50"
         //blur
-        backdropFilter={"blur(px)"}
+        backdropFilter={'blur(px)'}
         mx={1}
         spacing="0"
-        overflow={"hidden"}
-        w={"fit-content"}
+        overflow={'hidden'}
+        w={'fit-content'}
       >
-        <Center rounded="full" p={{ base: "6px", md: "8px" }}>
+        <Center rounded="full" p={{ base: '6px', md: '8px' }}>
           <CircleRipple />
         </Center>
         <Box
@@ -129,8 +131,8 @@ export const HackathonStatus = ({
           as="p"
           whiteSpace="pre"
           color="#31F579"
-          textStyle={{ base: "body6", md: "overline3" }}
-          display={{ base: show ? "block" : "none", md: "block" }}
+          textStyle={{ base: 'body6', md: 'overline3' }}
+          display={{ base: show ? 'block' : 'none', md: 'block' }}
         >
           Live
         </Box>
@@ -139,16 +141,16 @@ export const HackathonStatus = ({
   } else if (isPast(votingStartDate) && isFuture(votingEndDate)) {
     return (
       <HStack
-        rounded={"full"}
+        rounded={'full'}
         backgroundColor="#071A0F50"
         //blur
-        backdropFilter={"blur(px)"}
+        backdropFilter={'blur(px)'}
         mx={1}
         spacing="0"
-        overflow={"hidden"}
-        w={"fit-content"}
+        overflow={'hidden'}
+        w={'fit-content'}
       >
-        <Center rounded="full" p={{ base: "6px", md: "8px" }}>
+        <Center rounded="full" p={{ base: '6px', md: '8px' }}>
           <CircleRipple />
         </Center>
         <Box
@@ -158,8 +160,8 @@ export const HackathonStatus = ({
           as="p"
           whiteSpace="pre"
           color="neutral.11"
-          textStyle={{ base: "body6", md: "overline3" }}
-          display={{ base: show ? "block" : "none", md: "block" }}
+          textStyle={{ base: 'body6', md: 'overline3' }}
+          display={{ base: show ? 'block' : 'none', md: 'block' }}
         >
           Voting Live
         </Box>
@@ -169,16 +171,16 @@ export const HackathonStatus = ({
 
   if (isFuture(resultDate)) {
     <HStack
-      rounded={"full"}
+      rounded={'full'}
       backgroundColor="#071A0F50"
       //blur
-      backdropFilter={"blur(px)"}
+      backdropFilter={'blur(px)'}
       mx={1}
       spacing="0"
-      overflow={"hidden"}
-      w={"fit-content"}
+      overflow={'hidden'}
+      w={'fit-content'}
     >
-      <Center rounded="full" p={{ base: "6px", md: "8px" }}>
+      <Center rounded="full" p={{ base: '6px', md: '8px' }}>
         <CircleRipple />
       </Center>
       <Box
@@ -188,8 +190,8 @@ export const HackathonStatus = ({
         as="p"
         whiteSpace="pre"
         color="neutral.11"
-        textStyle={{ base: "body6", md: "overline3" }}
-        display={{ base: show ? "block" : "none", md: "block" }}
+        textStyle={{ base: 'body6', md: 'overline3' }}
+        display={{ base: show ? 'block' : 'none', md: 'block' }}
       >
         Results Announced
       </Box>

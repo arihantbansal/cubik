@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+
 import {
   Button,
   Icon,
@@ -6,10 +7,11 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@cubik/ui";
-import { SponsorsTable } from "../table/tables/SponsorsTable";
-import { TransactionsTable } from "../table/tables/TransactionsTable";
-import { PayoutsTable } from "../table/tables/PayoutsTable";
+} from '@cubik/ui';
+
+import { PayoutsTable } from '../table/tables/PayoutsTable';
+import { SponsorsTable } from '../table/tables/SponsorsTable';
+import { TransactionsTable } from '../table/tables/TransactionsTable';
 
 const MultisigCard = () => {
   return (
@@ -17,11 +19,11 @@ const MultisigCard = () => {
       <div className="flex items-center justify-between border-b border-gray-700 p-4">
         <h3 className="text-lg font-semibold">Cubik Multisig</h3>
         <div>
-          <Button variant={"ghost"} className="underline underline-offset-4">
+          <Button variant={'ghost'} className="underline underline-offset-4">
             Open Multisig
           </Button>
           <Button
-            variant={"ghost"}
+            variant={'ghost'}
             className="border border-neutral-800 space-x-1 "
           >
             <p>Add Funds</p>
@@ -77,8 +79,8 @@ const MultisigCard = () => {
               <>
                 <SponsorsTable />
                 <Button
-                  variant={"ghost"}
-                  size={"lg"}
+                  variant={'ghost'}
+                  size={'lg'}
                   className=" border-neutral-800 border w-full space-x-1 mt-4 "
                 >
                   <p>Add a Sponsor</p>

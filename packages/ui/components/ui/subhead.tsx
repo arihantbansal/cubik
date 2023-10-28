@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   text: string;
@@ -24,7 +24,7 @@ const Subhead = React.forwardRef<HTMLDivElement, Props>(
         )}
       </div>
     );
-  }
+  },
 );
 
 export default Subhead;

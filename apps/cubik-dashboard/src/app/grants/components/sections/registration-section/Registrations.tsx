@@ -1,12 +1,13 @@
-import React from "react";
-import { EmailCard } from "./cards/EmailCard";
-import { TableCard } from "./table/TableCard";
+import React from 'react';
+
+import { EmailCard } from './cards/EmailCard';
+import { TableCard } from './table/TableCard';
 
 export const RegistrationsSection = () => {
   const segments = [
-    { color: "bg-surface-orange-500", width: 10 },
-    { color: "bg-surface-blue-400", width: 10 },
-    { color: "bg-surface-red-600", width: 10 },
+    { color: 'bg-surface-orange-500', width: 10 },
+    { color: 'bg-surface-blue-400', width: 10 },
+    { color: 'bg-surface-red-600', width: 10 },
   ];
   return (
     <>

@@ -1,5 +1,5 @@
-import { Center, HStack, Text } from "@/utils/chakra";
-import { Player } from "@lottiefiles/react-lottie-player";
+import { Center, HStack, Text } from '@/utils/chakra';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 export const Toast = ({
   url,
@@ -21,7 +21,7 @@ export const Toast = ({
       bg="white"
       m="1rem"
       rounded="6px"
-      alignItems={"center"}
+      alignItems={'center'}
       justify="center"
     >
       <Player
@@ -31,7 +31,7 @@ export const Toast = ({
         src={url}
         style={{ height: `${size}px`, width: `${size}px` }}
       />
-      <Text fontSize="sm" color={color} fontWeight={"md"}>
+      <Text fontSize="sm" color={color} fontWeight={'md'}>
         {text}
       </Text>
     </HStack>
@@ -40,7 +40,7 @@ export const Toast = ({
 
 const SuccessToast = ({ toast, message }: any) => {
   return toast({
-    position: "bottom",
+    position: 'bottom',
     duration: 2100,
 
     render: () => (
@@ -52,17 +52,17 @@ const SuccessToast = ({ toast, message }: any) => {
           m="1rem"
           maxW="fit-content"
           rounded="6px"
-          alignItems={"center"}
+          alignItems={'center'}
           justify="center"
         >
           <Player
             autoplay
             keepLastFrame
             speed={0.7}
-            src={"https://assets7.lottiefiles.com/packages/lf20_cyqip6dr.json"}
+            src={'https://assets7.lottiefiles.com/packages/lf20_cyqip6dr.json'}
             style={{ height: `22px`, width: `22px` }}
           />
-          <Text fontSize="sm" color={"black"} fontWeight={"500"}>
+          <Text fontSize="sm" color={'black'} fontWeight={'500'}>
             {message}
           </Text>
         </HStack>
@@ -72,7 +72,7 @@ const SuccessToast = ({ toast, message }: any) => {
 };
 const RemoveToast = ({ toast, message }: any) => {
   return toast({
-    position: "bottom",
+    position: 'bottom',
     duration: 2100,
 
     render: () => (
@@ -84,17 +84,17 @@ const RemoveToast = ({ toast, message }: any) => {
           m="1rem"
           maxW="fit-content"
           rounded="6px"
-          alignItems={"center"}
+          alignItems={'center'}
           justify="center"
         >
           <Player
             autoplay
             keepLastFrame
             speed={0.7}
-            src={"https://assets10.lottiefiles.com/packages/lf20_bga6c7jv.json"}
+            src={'https://assets10.lottiefiles.com/packages/lf20_bga6c7jv.json'}
             style={{ height: `22px`, width: `22px` }}
           />
-          <Text fontSize="sm" color={"black"} fontWeight={"500"}>
+          <Text fontSize="sm" color={'black'} fontWeight={'500'}>
             {message}
           </Text>
         </HStack>
@@ -104,7 +104,7 @@ const RemoveToast = ({ toast, message }: any) => {
 };
 const FailureToast = ({ toast }: any) => {
   return toast({
-    position: "bottom",
+    position: 'bottom',
     duration: 5000,
     render: () => (
       <HStack
@@ -113,18 +113,18 @@ const FailureToast = ({ toast }: any) => {
         bg="white"
         mx="auto"
         rounded="6px"
-        width={"15rem"}
-        alignItems={"center"}
+        width={'15rem'}
+        alignItems={'center'}
         justify="center"
       >
         <Player
           autoplay
           keepLastFrame
           speed={1}
-          src={"https://assets8.lottiefiles.com/packages/lf20_bmtax5uq.json"}
-          style={{ height: "32px", width: "32px" }}
+          src={'https://assets8.lottiefiles.com/packages/lf20_bmtax5uq.json'}
+          style={{ height: '32px', width: '32px' }}
         />
-        <Text w="fit-content" fontSize="md" color={"black"} fontWeight={"500"}>
+        <Text w="fit-content" fontSize="md" color={'black'} fontWeight={'500'}>
           There was an error
         </Text>
       </HStack>

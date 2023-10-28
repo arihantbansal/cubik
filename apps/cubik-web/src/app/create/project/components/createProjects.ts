@@ -1,15 +1,16 @@
-"use server";
-import { decodeToken } from "@cubik/auth";
-import type { Project, Team } from "@cubik/database";
-import { prisma } from "@cubik/database";
+'use server';
 
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers';
+
+import { decodeToken } from '@cubik/auth';
+import type { Project, Team } from '@cubik/database';
+import { prisma } from '@cubik/database';
 
 export const createProject = async (project: Project, team: Team[]) => {
   try {
-    const auth = cookies().get("authToken");
+    const auth = cookies().get('authToken');
     if (!auth) {
-      throw new Error("Not authorized");
+      throw new Error('Not authorized');
     }
 
     const user = await decodeToken(auth.value);

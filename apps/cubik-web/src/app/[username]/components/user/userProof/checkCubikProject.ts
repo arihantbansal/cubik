@@ -1,5 +1,7 @@
-"use server";
-import { prisma } from "@cubik/database";
+'use server';
+
+import { prisma } from '@cubik/database';
+
 export const checkCubikProject = async (wallet: string): Promise<number> => {
   try {
     const res = await prisma.project.count({

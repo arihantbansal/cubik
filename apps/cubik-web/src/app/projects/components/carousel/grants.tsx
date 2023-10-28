@@ -1,7 +1,8 @@
-"use client";
-import { Box, HStack } from "@/utils/chakra";
-import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { Box, HStack } from '@/utils/chakra';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const MotionBox = motion(Box);
 
@@ -22,7 +23,7 @@ export function GrantsCarousel({ children }: GrantsCarouselProps) {
 
   const nextSlide = () => {
     setIndex((prevIndex) =>
-      prevIndex === childrenArray.length - 1 ? 0 : prevIndex + 1
+      prevIndex === childrenArray.length - 1 ? 0 : prevIndex + 1,
     );
   };
 
@@ -40,12 +41,12 @@ export function GrantsCarousel({ children }: GrantsCarouselProps) {
   return (
     <Box
       gap="16px"
-      position={"relative"}
-      width={"full"}
+      position={'relative'}
+      width={'full'}
       height="fit-content"
-      overflow={"hidden"}
+      overflow={'hidden'}
     >
-      <AnimatePresence mode={"wait"} initial={false}>
+      <AnimatePresence mode={'wait'} initial={false}>
         <MotionBox
           w="full"
           key={index}
@@ -68,10 +69,10 @@ export function GrantsCarousel({ children }: GrantsCarouselProps) {
           {childrenArray.map((_, i) => (
             <Box
               rounded="8px"
-              width={"14px"}
+              width={'14px'}
               height="4px"
               key={i}
-              bg={i === index ? "neutral.8" : "neutral.5"}
+              bg={i === index ? 'neutral.8' : 'neutral.5'}
               cursor="pointer"
               onClick={() => setIndex(i)}
             />

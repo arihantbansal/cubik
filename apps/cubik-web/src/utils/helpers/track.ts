@@ -8,9 +8,9 @@ interface TrackInfo {
 
 export const getTrackInfo = async (): Promise<TrackInfo | null> => {
   try {
-    const res = await fetch("https://cubik.so/api/track", {
-      method: "GET",
-      cache: "no-cache",
+    const res = await fetch('https://cubik.so/api/track', {
+      method: 'GET',
+      cache: 'no-cache',
     });
     const data = await res.json();
 

@@ -1,6 +1,8 @@
-import { uploadURLsToCloudflare } from "../utils/uploadToCloudflare";
-import { writeFileSync } from "fs";
-import { prisma } from "@cubik/database";
+import { writeFileSync } from 'fs';
+
+import { prisma } from '@cubik/database';
+
+import { uploadURLsToCloudflare } from '../utils/uploadToCloudflare';
 
 export const moveImagesToCloudflare = async () => {
   try {
@@ -9,14 +11,14 @@ export const moveImagesToCloudflare = async () => {
         profilePicture: {
           not: {
             equals: null,
-            contains: "imagedelivery.net",
+            contains: 'imagedelivery.net',
           },
         },
       },
     });
     userInfo.map(async (e) => {
       if (!e.profilePicture) return;
-      const r = await uploadURLsToCloudflare(e.profilePicture || "", e.id);
+      const r = await uploadURLsToCloudflare(e.profilePicture || '', e.id);
       console.log(e.profilePicture);
       if (!r) return;
       const updatedURL = r.result.variants[0];
@@ -32,7 +34,7 @@ export const moveImagesToCloudflare = async () => {
       });
     });
   } catch (error) {
-    writeFileSync("error.json", JSON.stringify(error));
-    console.log(error, "--error");
+    writeFileSync('error.json', JSON.stringify(error));
+    console.log(error, '--error');
   }
 };

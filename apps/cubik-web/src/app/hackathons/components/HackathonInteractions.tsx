@@ -1,7 +1,8 @@
-import React from "react";
-import { Avatar, Box, Center, HStack, Skeleton, VStack } from "@/utils/chakra";
-import type { HackathonHost } from "@/types/hackathon";
-import { formatNumberWithK } from "@/utils/helpers/formatWithK";
+import React from 'react';
+import type { HackathonHost } from '@/types/hackathon';
+import { Avatar, Box, Center, HStack, Skeleton, VStack } from '@/utils/chakra';
+import { formatNumberWithK } from '@/utils/helpers/formatWithK';
+
 export const HackathonInteractions = ({
   host,
   prizePool,
@@ -12,10 +13,10 @@ export const HackathonInteractions = ({
   return (
     <>
       <VStack w="full" gap="48px">
-        <VStack gap={{ base: "8px", md: "16px" }} align="start" w="full">
+        <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
           <Box
             as="p"
-            textStyle={{ base: "title4", md: "title3" }}
+            textStyle={{ base: 'title4', md: 'title3' }}
             color="white"
           >
             Organizer
@@ -24,26 +25,26 @@ export const HackathonInteractions = ({
             <HStack w="full" gap="0.6rem">
               <Avatar
                 border="2px solid #FFFFFF10"
-                borderRadius={"8px"}
-                size={{ base: "sm", md: "md" }}
+                borderRadius={'8px'}
+                size={{ base: 'sm', md: 'md' }}
                 src={
-                  "https://pbs.twimg.com/profile_images/1669101939164954624/AROCJGg5_400x400.jpg"
+                  'https://pbs.twimg.com/profile_images/1669101939164954624/AROCJGg5_400x400.jpg'
                 }
               />
               <Box
-                color={"white"}
+                color={'white'}
                 as="p"
-                textStyle={{ base: "title5", md: "title4" }}
+                textStyle={{ base: 'title5', md: 'title4' }}
               >
                 Lamport DAO
               </Box>
             </HStack>
           </VStack>
         </VStack>
-        <VStack gap={{ base: "8px", md: "16px" }} align="start" w="full">
+        <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
           <Box
             as="p"
-            textStyle={{ base: "title4", md: "title3" }}
+            textStyle={{ base: 'title4', md: 'title3' }}
             color="white"
           >
             Prize Pool
@@ -51,15 +52,15 @@ export const HackathonInteractions = ({
 
           <VStack
             border="1px solid"
-            borderColor={"surface.green.3"}
+            borderColor={'surface.green.3'}
             rounded="16px"
-            backgroundColor={"surface.green.0"}
+            backgroundColor={'surface.green.0'}
             w="full"
             p="24px 32px"
-            overflow={"hidden"}
-            position={"relative"}
+            overflow={'hidden'}
+            position={'relative'}
           >
-            {" "}
+            {' '}
             <Box
               as="svg"
               position="absolute"
@@ -72,24 +73,24 @@ export const HackathonInteractions = ({
               viewBox="0 0 100 100"
               xmlns="http://www.w3.org/2000/svg"
               style={{
-                filter: "blur(45px)",
+                filter: 'blur(45px)',
               }}
             >
               <circle cx="50" cy="50" r="50" fill="#31F57930" />
             </Box>
-            <HStack w="full" align={"start"}>
-              <VStack align={"start"} gap="8px">
+            <HStack w="full" align={'start'}>
+              <VStack align={'start'} gap="8px">
                 <Box
                   as="p"
-                  textStyle={"headline4"}
-                  textTransform={"uppercase"}
-                  color={"neutral.11"}
+                  textStyle={'headline4'}
+                  textTransform={'uppercase'}
+                  color={'neutral.11'}
                 >
                   $ {formatNumberWithK(prizePool)}
                 </Box>
               </VStack>
               <Center
-                position={"absolute"}
+                position={'absolute'}
                 right="0"
                 bottom="0"
                 boxShadow="0px 4px 24px rgba(0, 0, 0, 0.16)"
@@ -149,32 +150,32 @@ export const HackathonInteractions = ({
             </HStack>
           </VStack>
         </VStack>
-        <VStack gap={{ base: "8px", md: "16px" }} align="start" w="full">
+        <VStack gap={{ base: '8px', md: '16px' }} align="start" w="full">
           <Box
             as="p"
-            textStyle={{ base: "title4", md: "title3" }}
+            textStyle={{ base: 'title4', md: 'title3' }}
             color="white"
           >
             Hosts
           </Box>
-          <VStack gap={"2px"} align="start" w="full">
+          <VStack gap={'2px'} align="start" w="full">
             {host.map((team) => {
               return (
                 <>
                   <HStack py="8px" w="full" justify="space-between">
                     <HStack gap="0.6rem">
                       <Avatar
-                        borderRadius={"8px"}
-                        size={{ base: "sm", md: "sm" }}
+                        borderRadius={'8px'}
+                        size={{ base: 'sm', md: 'sm' }}
                         border="1px solid #FFFFFF10"
                         src={team.avatar}
                         name={team.name}
                       />
                       <Box
-                        color={"white"}
+                        color={'white'}
                         as="p"
-                        textStyle={{ base: "body4", md: "body3" }}
-                        fontWeight={"600 !important"}
+                        textStyle={{ base: 'body4', md: 'body3' }}
+                        fontWeight={'600 !important'}
                       >
                         @{team.name}
                       </Box>
@@ -183,7 +184,7 @@ export const HackathonInteractions = ({
                       <Box
                         color="#B4B0B2"
                         as="p"
-                        textStyle={{ base: "body5", md: "body4" }}
+                        textStyle={{ base: 'body5', md: 'body4' }}
                       >
                         {team.wallet.slice(0, 4)}...{team.wallet.slice(-4)}
                       </Box>

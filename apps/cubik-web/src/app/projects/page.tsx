@@ -1,12 +1,14 @@
-import { prisma } from "@cubik/database";
-import { Box, Container, VStack } from "@/utils/chakra";
+import type { Metadata } from 'next';
 import type {
   ProjectExploreBanner,
   ProjectExplorerType,
-} from "@/types/explorer";
-import type { Metadata } from "next";
-import { ExploreBanner } from "./components/Banner/ExploreBanner";
-import Projects from "./components";
+} from '@/types/explorer';
+import { Box, Container, VStack } from '@/utils/chakra';
+
+import { prisma } from '@cubik/database';
+
+import Projects from './components';
+import { ExploreBanner } from './components/Banner/ExploreBanner';
 
 function shuffle<T>(array: T[]): T[] {
   const shuffledArray = [...array];
@@ -18,7 +20,7 @@ export const projectExplorer = async () => {
   try {
     const projectJoinRoundPromise = prisma.projectJoinRound.findMany({
       where: {
-        status: "APPROVED",
+        status: 'APPROVED',
         round: {
           endTime: {
             gte: new Date(),
@@ -183,10 +185,10 @@ export const projectExplorer = async () => {
         logo: project.project.logo,
         industry: project.project.industry,
         title: project.project.name,
-        slug: project.project.slug || "",
+        slug: project.project.slug || '',
         contributorCount:
           project.round.contribution.filter(
-            (e) => e.projectId === project.project.id
+            (e) => e.projectId === project.project.id,
           ).length - 3 || 0,
         contributors:
           project.round.contribution
@@ -195,8 +197,8 @@ export const projectExplorer = async () => {
         projectShortDescription: project.project.shortDescription,
         ownerName: project.project.owner.username as string,
         projectEvent: {
-          eventName: "round",
-          color: "teal",
+          eventName: 'round',
+          color: 'teal',
           amount: project.amountRaise || 0,
           id: project.round.id,
           end: project.round.endTime,
@@ -212,7 +214,7 @@ export const projectExplorer = async () => {
       const users: string[] = [];
 
       const pr = project.hackathon.contribution.filter(
-        (e) => e.projectId === project.project.id
+        (e) => e.projectId === project.project.id,
       );
       pr.forEach((e) => {
         if (!users.includes(e.user.id)) {
@@ -224,24 +226,24 @@ export const projectExplorer = async () => {
         id: project.project.id,
         logo: project.project.logo,
         industry: project.project.industry,
-        slug: project.project.slug || "",
+        slug: project.project.slug || '',
         title: project.project.name,
         contributorCount: users.length > 3 ? users.length - 3 : 0,
         contributors:
           project.hackathon.contribution.filter(
-            (e) => e.projectId === project.project.id
+            (e) => e.projectId === project.project.id,
           ).length > 3
             ? project.hackathon.contribution
                 .filter((e) => e.projectId === project.project.id)
                 .slice(3)
             : project.hackathon.contribution.filter(
-                (e) => e.projectId === project.project.id
+                (e) => e.projectId === project.project.id,
               ),
         ownerName: project.project.owner.username as string,
         projectShortDescription: project.project.shortDescription,
         projectEvent: {
           tracks: project.tracks as any,
-          eventName: "hackathon",
+          eventName: 'hackathon',
           amount: project.amount,
           bg: project.hackathon.background,
           id: project.hackathon.id,
@@ -259,7 +261,7 @@ export const projectExplorer = async () => {
         id: hackathon.id,
         matchingPool: hackathon.prizePool,
         name: hackathon.name,
-        type: "hackathon",
+        type: 'hackathon',
         submissionEndDate: hackathon.hackathonEndDate as Date,
         endTime: hackathon.votingEndDate as Date,
         startTime: hackathon.votingStartDate as Date,
@@ -275,7 +277,7 @@ export const projectExplorer = async () => {
         id: round.id,
         matchingPool: round.matchedPool,
         name: round.name,
-        type: "round",
+        type: 'round',
         submissionEndDate: round.startTime,
         startTime: round.startTime,
         shortDescription: round.shortDescription,
@@ -298,44 +300,44 @@ export const projectExplorer = async () => {
 };
 
 export const metadata: Metadata = {
-  title: "Projects - Cubik",
-  metadataBase: new URL("https://res.cloudinary.com"),
-  description: "Browse projects and Cubik and support them",
+  title: 'Projects - Cubik',
+  metadataBase: new URL('https://res.cloudinary.com'),
+  description: 'Browse projects and Cubik and support them',
   openGraph: {
-    images: ["/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png"],
-    type: "website",
-    title: "Cubik",
-    description: "Browse projects and Cubik and support them",
+    images: ['/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png'],
+    type: 'website',
+    title: 'Cubik',
+    description: 'Browse projects and Cubik and support them',
   },
   twitter: {
-    title: "Cubik",
-    card: "summary_large_image",
-    images: ["/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png"],
-    description: "Browse projects and Cubik and support them",
+    title: 'Cubik',
+    card: 'summary_large_image',
+    images: ['/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png'],
+    description: 'Browse projects and Cubik and support them',
   },
 };
 export default async function () {
   const explorerData = await projectExplorer();
   return (
     <>
-      <Box bg={"black"} w="full" h="full" pt="4.5rem">
+      <Box bg={'black'} w="full" h="full" pt="4.5rem">
         <Container
-          px={{ base: "0.6rem", sm: "0.8rem", md: "2rem", xl: "0px" }}
+          px={{ base: '0.6rem', sm: '0.8rem', md: '2rem', xl: '0px' }}
           maxW="7xl"
-          py={{ base: "12px", md: "18px" }}
+          py={{ base: '12px', md: '18px' }}
         >
           <VStack
-            gap={{ base: "24px", sm: "30px", md: "42px" }}
+            gap={{ base: '24px', sm: '30px', md: '42px' }}
             w="full"
-            alignItems={"start"}
+            alignItems={'start'}
             justifyContent="start"
           >
             <ExploreBanner banner={explorerData.banner || []} />
             <Box
               color="neutral.11"
               as="p"
-              display={{ base: "block", md: "none" }}
-              textStyle={{ base: "title1", sm: "title2", md: "title1" }}
+              display={{ base: 'block', md: 'none' }}
+              textStyle={{ base: 'title1', sm: 'title2', md: 'title1' }}
             >
               Projects
             </Box>

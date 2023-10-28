@@ -1,7 +1,9 @@
-"use client";
-import React, { useState } from "react";
-import { VerifyModal } from "../modals/verifyModal";
-import { HandleConnect } from "./handleConnect";
+'use client';
+
+import React, { useState } from 'react';
+
+import { VerifyModal } from '../modals/verifyModal';
+import { HandleConnect } from './handleConnect';
 
 export const Header = () => {
   const [open, setOpen] = useState<boolean>(false);

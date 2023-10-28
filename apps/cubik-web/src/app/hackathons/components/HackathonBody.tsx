@@ -1,3 +1,5 @@
+import React from 'react';
+import type { HackathonHost } from '@/types/hackathon';
 import {
   Center,
   Container,
@@ -7,14 +9,15 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-} from "@/utils/chakra";
-import React from "react";
-import { prisma } from "@cubik/database";
-import { ProjectsDetailedDescription } from "./ProjectDetailedDescription";
-import { HackathonSchedule } from "./HackathonSchedule";
-import { HackathonInteractions } from "./HackathonInteractions";
-import type { HackathonHost } from "@/types/hackathon";
-import HackathonTracks from "./HackathonTracks";
+} from '@/utils/chakra';
+
+import { prisma } from '@cubik/database';
+
+import { HackathonInteractions } from './HackathonInteractions';
+import { HackathonSchedule } from './HackathonSchedule';
+import HackathonTracks from './HackathonTracks';
+import { ProjectsDetailedDescription } from './ProjectDetailedDescription';
+
 const fetchHackathon = async (slug: string) => {
   const res = await prisma.hackathon.findFirst({
     where: {
@@ -55,17 +58,17 @@ export const HackathonBody = async ({ slug }: Props) => {
     <>
       <Container p="0px" maxW="full">
         <Stack
-          gap={{ base: "12px", md: "24px", lg: "8rem" }}
+          gap={{ base: '12px', md: '24px', lg: '8rem' }}
           w="full"
           alignItems="top"
-          direction={{ base: "column-reverse", lg: "row" }}
+          direction={{ base: 'column-reverse', lg: 'row' }}
         >
           <Center w="full" flex={3.5}>
-            <Tabs variant={"cubik"} alignSelf={"start"} w="full">
+            <Tabs variant={'cubik'} alignSelf={'start'} w="full">
               <TabList
-                overflowY={{ base: "hidden", md: "inherit" }}
-                overflowX={{ base: "scroll", md: "inherit" }}
-                gap={{ base: "24px", md: "32px" }}
+                overflowY={{ base: 'hidden', md: 'inherit' }}
+                overflowX={{ base: 'scroll', md: 'inherit' }}
+                gap={{ base: '24px', md: '32px' }}
               >
                 <Tab>Details</Tab>
                 <Tab>Schedule</Tab>

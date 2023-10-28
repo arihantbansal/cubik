@@ -1,9 +1,10 @@
-import type { ProjectExploreBanner } from "@/types/explorer";
-import React from "react";
-import { GrantsCarousel } from "../carousel/grants";
-import { Center, Skeleton, VStack } from "@/utils/chakra";
-import FundingRoundBanner from "./FundingBanner";
-import { RoundsCarouselLoadingState } from "./LoadingState";
+import React from 'react';
+import type { ProjectExploreBanner } from '@/types/explorer';
+import { Center, Skeleton, VStack } from '@/utils/chakra';
+
+import { GrantsCarousel } from '../carousel/grants';
+import FundingRoundBanner from './FundingBanner';
+import { RoundsCarouselLoadingState } from './LoadingState';
 
 interface Props {
   banner: ProjectExploreBanner[];
@@ -11,7 +12,7 @@ interface Props {
 export const ExploreBanner = ({ banner }: Props) => {
   return (
     <>
-      <VStack display={{ base: "none", md: "flex" }} w="full">
+      <VStack display={{ base: 'none', md: 'flex' }} w="full">
         <GrantsCarousel>
           {banner ? (
             banner?.map((resource_distribution_event) => (
@@ -27,7 +28,7 @@ export const ExploreBanner = ({ banner }: Props) => {
                 id={resource_distribution_event.id}
                 name={resource_distribution_event.name}
                 description={
-                  resource_distribution_event?.shortDescription || ""
+                  resource_distribution_event?.shortDescription || ''
                 }
                 matchingPool={resource_distribution_event.matchingPool}
               />

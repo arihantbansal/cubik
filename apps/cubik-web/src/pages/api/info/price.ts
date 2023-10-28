@@ -1,9 +1,9 @@
-import { tokenPrice } from "@/utils/helpers/tokenprice";
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { tokenPrice } from '@/utils/helpers/tokenprice';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   try {
     const tokens = req.body.tokens as string[];
@@ -11,9 +11,9 @@ export default async function handler(
     const prices = await Promise.all(
       tokens.map(async (token: string) => {
         const price = await tokenPrice();
-        console.log("price", price);
-        return { token: token, price: parseFloat(price?.toFixed(3) || "0.0") };
-      })
+        console.log('price', price);
+        return { token: token, price: parseFloat(price?.toFixed(3) || '0.0') };
+      }),
     );
 
     res.status(200).json({ prices: prices });

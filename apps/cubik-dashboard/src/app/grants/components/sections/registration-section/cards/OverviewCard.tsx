@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+
 import {
   AvatarLabelGroup,
   Button,
@@ -7,7 +8,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@cubik/ui";
+} from '@cubik/ui';
 
 const OverviewCard = () => {
   return (

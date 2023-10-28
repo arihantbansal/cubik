@@ -1,8 +1,8 @@
-import { Icon } from "../../icons/icon";
-import { iconLibrary } from "../../icons/iconLibrary";
-import { cn } from "../../lib/utils";
-import { FunctionComponent } from "react";
-import React from "react";
+import React, { FunctionComponent } from 'react';
+
+import { Icon } from '../../icons/icon';
+import { iconLibrary } from '../../icons/iconLibrary';
+import { cn } from '../../lib/utils';
 
 interface Props {
   selected?: boolean;
@@ -23,8 +23,8 @@ export const Tag: FunctionComponent<Props> = ({
     <div className="">
       <div
         className={cn(
-          "inline-flex px-3 py-1 rounded-full space-x-1 items-center",
-          className
+          'inline-flex px-3 py-1 rounded-full space-x-1 items-center',
+          className,
         )}
       >
         <Icon

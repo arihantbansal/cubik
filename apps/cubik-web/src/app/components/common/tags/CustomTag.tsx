@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { Box, Tag } from "@/utils/chakra";
-import React, { forwardRef } from "react";
+import React, { forwardRef } from 'react';
+import { Box, Tag } from '@/utils/chakra';
 
 interface CustomTagProps {
   color?: string;
@@ -25,15 +25,15 @@ const CustomTag = forwardRef<HTMLDivElement, CustomTagProps>(
           as="p"
           whiteSpace="pre"
           color="#D7E0DF"
-          textStyle={{ base: "body6", md: "body5" }}
+          textStyle={{ base: 'body6', md: 'body5' }}
         >
           {children}
         </Box>
       </Tag>
     );
-  }
+  },
 );
 
-CustomTag.displayName = "CustomTag";
+CustomTag.displayName = 'CustomTag';
 
 export default CustomTag;

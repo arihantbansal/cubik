@@ -1,6 +1,7 @@
-import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
-import { prisma } from "@cubik/database";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+
+import { prisma } from '@cubik/database';
 
 export async function POST(request: NextRequest) {
   try {
@@ -45,11 +46,12 @@ export async function POST(request: NextRequest) {
     finalCheck.forEach((contri) => {
       if (
         projectMapContribution.findIndex(
-          (e) => e.projectId === contri.projectId && e.user === contri.user
+          (e) => e.projectId === contri.projectId && e.user === contri.user,
         ) >= 0 &&
         projectMapContribution[
           projectMapContribution?.findIndex(
-            (e) => e.projectId === contri?.projectId && e?.user === contri?.user
+            (e) =>
+              e.projectId === contri?.projectId && e?.user === contri?.user,
           )
         ]
       ) {
@@ -57,12 +59,13 @@ export async function POST(request: NextRequest) {
           projectMapContribution[
             projectMapContribution?.findIndex(
               (e) =>
-                e.projectId === contri?.projectId && e?.user === contri?.user
+                e.projectId === contri?.projectId && e?.user === contri?.user,
             )
           ];
         projectMapContribution[
           projectMapContribution?.findIndex(
-            (e) => e.projectId === contri?.projectId && e?.user === contri?.user
+            (e) =>
+              e.projectId === contri?.projectId && e?.user === contri?.user,
           )
         ] = {
           amount: (current?.amount || 0) + contri?.amount,
@@ -70,7 +73,7 @@ export async function POST(request: NextRequest) {
           user: current?.user as string,
         };
       } else {
-        console.log("pushed");
+        console.log('pushed');
         projectMapContribution.push(contri);
       }
     });

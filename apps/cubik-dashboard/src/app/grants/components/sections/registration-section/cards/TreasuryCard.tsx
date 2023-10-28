@@ -1,7 +1,8 @@
-import { Avatar, Icon } from "@cubik/ui";
-import { iconLibrary } from "@cubik/ui/icons/iconLibrary";
-import { cn } from "@cubik/ui/lib/utils";
-import React from "react";
+import React from 'react';
+
+import { Avatar, Icon } from '@cubik/ui';
+import { iconLibrary } from '@cubik/ui/icons/iconLibrary';
+import { cn } from '@cubik/ui/lib/utils';
 
 type Props = {
   iconName: keyof typeof iconLibrary;
@@ -18,7 +19,7 @@ const TreasuryCard = ({
   symbol,
   classname,
 }: Props) => {
-  console.log("iconBg", classname);
+  console.log('iconBg', classname);
   return (
     <div className="bg-[#262626] rounded-lg p-4 border border-[#333333] flex space-x-3 items-center">
       <Avatar
@@ -28,8 +29,8 @@ const TreasuryCard = ({
             fill="none"
             stroke="#050505"
             className={cn(
-              "p-2 rounded-sm w-auto h-full object-contain",
-              classname
+              'p-2 rounded-sm w-auto h-full object-contain',
+              classname,
             )}
           />
         }

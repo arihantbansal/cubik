@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import type { ProjectPageEventType } from "@/types/project";
-import { create } from "zustand";
+import type { ProjectPageEventType } from '@/types/project';
+import { create } from 'zustand';
 
 interface ProjectEventStore {
   event: ProjectPageEventType | null;

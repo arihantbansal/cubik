@@ -1,12 +1,13 @@
-import { AccessScope, AccessType } from "@cubik/common-types/src/admin";
-import { create } from "zustand";
+import { create } from 'zustand';
+
+import type { AccessScope, AccessType } from '@cubik/common-types/src/admin';
 
 interface AccessScopeType {
   scope: AccessScope | null;
   accessType: AccessType | undefined;
   setAccessScope: (
     accessScope: AccessScope | null,
-    type: AccessType | undefined
+    type: AccessType | undefined,
   ) => void;
 }
 export const AccessStore = create<AccessScopeType>()((set) => ({

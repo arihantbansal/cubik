@@ -1,5 +1,6 @@
-"use server";
-import { prisma } from "@cubik/database";
+'use server';
+
+import { prisma } from '@cubik/database';
 
 export const searchTeam = async (search: string) => {
   try {

@@ -1,10 +1,12 @@
-import Form from "../components/Form";
-import { Container } from "@/utils/chakra";
-import React from "react";
-import { prisma } from "@cubik/database";
-import { cookies } from "next/headers";
-import { decodeToken } from "@cubik/auth";
-import { notFound } from "next/navigation";
+import React from 'react';
+import { cookies } from 'next/headers';
+import { notFound } from 'next/navigation';
+import { Container } from '@/utils/chakra';
+
+import { decodeToken } from '@cubik/auth';
+import { prisma } from '@cubik/database';
+
+import Form from '../components/Form';
 
 const getProject = async (id: string) => {
   try {
@@ -31,7 +33,7 @@ interface Props {
   };
 }
 const EditProjectPage = async ({ params: { id } }: Props) => {
-  const authToken = cookies().get("authToken");
+  const authToken = cookies().get('authToken');
 
   if (!authToken) {
     notFound();
@@ -48,13 +50,13 @@ const EditProjectPage = async ({ params: { id } }: Props) => {
       <Container
         transition="all .25s ease"
         maxW="7xl"
-        p={{ base: "1rem", md: "0" }}
-        my={{ base: "2rem", md: "5rem", lg: "5rem", xl: "6rem" }}
+        p={{ base: '1rem', md: '0' }}
+        my={{ base: '2rem', md: '5rem', lg: '5rem', xl: '6rem' }}
         outline="none"
       >
         <Form
           projectId={id}
-          ownerPubkey={projectData?.ownerPublickey || ""}
+          ownerPubkey={projectData?.ownerPublickey || ''}
           _editorData={projectData?.longDescription || null}
           _imageURL={projectData?.logo || null}
           formState={{
@@ -70,9 +72,9 @@ const EditProjectPage = async ({ params: { id } }: Props) => {
             twitter: projectData?.twitterHandle,
             team: projectData?.team.map((member) => {
               return {
-                label: member.user.username || "",
+                label: member.user.username || '',
                 value: member.userId,
-                icon: member.user.profilePicture || "",
+                icon: member.user.profilePicture || '',
               };
             }),
           }}

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { ToggleSwitch } from './ToggleSwitch';
-import { InputLabel } from './inputLabel';
+
 import { HelperText } from './helperText';
+import { InputLabel } from './inputLabel';
+import { ToggleSwitch } from './ToggleSwitch';
 
 interface SwitchProps {
   labelText?: string;
@@ -9,7 +10,7 @@ interface SwitchProps {
   iconVariant?: 'info' | 'warning' | 'error' | 'default';
   checked?: boolean;
   onChange?: (checked: boolean) => void;
-  size?: "sm" | "md" | "default";
+  size?: 'sm' | 'md' | 'default';
   required?: boolean;
 }
 
@@ -19,7 +20,7 @@ const Switch: React.FC<SwitchProps> = ({
   iconVariant = 'default',
   checked: propsChecked = false,
   onChange,
-  size = "default",
+  size = 'default',
   required = false,
 }) => {
   // Introduce local state to manage checked status
@@ -27,11 +28,11 @@ const Switch: React.FC<SwitchProps> = ({
 
   // Handle toggle switch change
   const handleToggleChange = (isChecked: boolean) => {
-    setChecked(isChecked);  // Update local state
-    onChange && onChange(isChecked);  // Invoke parent's onChange if provided
-  }
+    setChecked(isChecked); // Update local state
+    onChange && onChange(isChecked); // Invoke parent's onChange if provided
+  };
 
-  const fontSize = size === "sm" ? "sm" : size === "md" ? "md" : "default";
+  const fontSize = size === 'sm' ? 'sm' : size === 'md' ? 'md' : 'default';
 
   return (
     <div className="flex flex-col gap-2">
@@ -42,10 +43,20 @@ const Switch: React.FC<SwitchProps> = ({
         </InputLabel>
       )}
       <div className="flex items-center gap-4">
-        <ToggleSwitch checked={checked} onChange={handleToggleChange} size={size} />
-        {helperText && <HelperText variant="default" 
-        // @ts-ignore
-        fontSize={fontSize}>{helperText}</HelperText>}
+        <ToggleSwitch
+          checked={checked}
+          onChange={handleToggleChange}
+          size={size}
+        />
+        {helperText && (
+          <HelperText
+            variant="default"
+            // @ts-ignore
+            fontSize={fontSize}
+          >
+            {helperText}
+          </HelperText>
+        )}
       </div>
     </div>
   );

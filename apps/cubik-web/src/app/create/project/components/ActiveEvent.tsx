@@ -1,11 +1,13 @@
-"use client";
-import React, { useState } from "react";
-import { Box, Button, VStack } from "@/utils/chakra";
-import { useQuery } from "@tanstack/react-query";
-import { handleEvent } from "./fetchEvents";
-import { Tile } from "./ActiveTile";
-import { createJoinHackathon } from "./joinEvent";
-import { Select } from "chakra-react-select";
+'use client';
+
+import React, { useState } from 'react';
+import { Box, Button, VStack } from '@/utils/chakra';
+import { useQuery } from '@tanstack/react-query';
+import { Select } from 'chakra-react-select';
+
+import { Tile } from './ActiveTile';
+import { handleEvent } from './fetchEvents';
+import { createJoinHackathon } from './joinEvent';
 
 interface Props {
   projectId: string;
@@ -13,11 +15,11 @@ interface Props {
 export const ActiveEvent = ({ projectId }: Props) => {
   const event = useQuery({
     queryFn: () => handleEvent(),
-    queryKey: ["event"],
+    queryKey: ['event'],
   });
   const [value, setValue] = useState([]);
   const [submitted, setSubmitted] = useState<boolean>(false);
-  const [selectedEventId, setSelectedEventId] = useState<string>("");
+  const [selectedEventId, setSelectedEventId] = useState<string>('');
   const handleEventSubmit = async () => {
     try {
       const selectedEvent = event.data?.find((e) => e.id === selectedEventId);
@@ -36,7 +38,7 @@ export const ActiveEvent = ({ projectId }: Props) => {
       {submitted ? (
         <>submitted</>
       ) : (
-        <VStack w="full" h={"max-content"}>
+        <VStack w="full" h={'max-content'}>
           {event.isLoading && <Box>loading...</Box>}
           {event.data?.map((el) => (
             <>
@@ -61,121 +63,121 @@ export const ActiveEvent = ({ projectId }: Props) => {
                 chakraStyles={{
                   container: (provided) => ({
                     ...provided,
-                    border: "none",
-                    background: "surface.input_field",
-                    outline: "0px !important",
-                    borderRadius: "8px",
-                    height: "40px",
-                    ps: "0rem",
-                    w: "full",
-                    ":focus": {
-                      outline: "none",
-                      boxShadow: "0",
-                      border: "none",
+                    border: 'none',
+                    background: 'surface.input_field',
+                    outline: '0px !important',
+                    borderRadius: '8px',
+                    height: '40px',
+                    ps: '0rem',
+                    w: 'full',
+                    ':focus': {
+                      outline: 'none',
+                      boxShadow: '0',
+                      border: 'none',
                     },
-                    ":hover": {
-                      outline: "none",
-                      boxShadow: "0 !important",
-                      border: "none !important",
+                    ':hover': {
+                      outline: 'none',
+                      boxShadow: '0 !important',
+                      border: 'none !important',
                     },
-                    ":active": {
-                      outline: "none",
-                      boxShadow: "0",
-                      border: "none",
+                    ':active': {
+                      outline: 'none',
+                      boxShadow: '0',
+                      border: 'none',
                     },
-                    ":selected": {
-                      outline: "none",
-                      boxShadow: "0",
-                      border: "none",
+                    ':selected': {
+                      outline: 'none',
+                      boxShadow: '0',
+                      border: 'none',
                     },
-                    ":invalid": {
-                      boxShadow: "0 0 0 2px #E53E3E",
+                    ':invalid': {
+                      boxShadow: '0 0 0 2px #E53E3E',
                     },
                   }),
                   inputContainer: (provided) => ({
                     ...provided,
-                    ps: "8px",
-                    fontSize: { base: "12px", md: "14px" },
-                    backgroundColor: "transparent",
+                    ps: '8px',
+                    fontSize: { base: '12px', md: '14px' },
+                    backgroundColor: 'transparent',
                     //  border: 'none',
-                    boxShadow: "none",
-                    outline: "none",
+                    boxShadow: 'none',
+                    outline: 'none',
                   }),
                   valueContainer: (provided) => ({
                     ...provided,
-                    ps: "8px",
-                    border: "none",
-                    backgroundColor: "transparent",
-                    boxShadow: "none",
-                    outline: "none",
+                    ps: '8px',
+                    border: 'none',
+                    backgroundColor: 'transparent',
+                    boxShadow: 'none',
+                    outline: 'none',
                   }),
 
                   clearIndicator: (provided) => ({
                     ...provided,
-                    display: "none",
+                    display: 'none',
                   }),
                   dropdownIndicator: (provided) => ({
                     ...provided,
-                    background: "",
-                    borderColor: "transparent !important",
-                    outline: "0px !important",
-                    boxShadow: "0",
+                    background: '',
+                    borderColor: 'transparent !important',
+                    outline: '0px !important',
+                    boxShadow: '0',
                     p: 0,
-                    w: "60px",
+                    w: '60px',
                   }),
                   indicatorSeparator: (provided) => ({
                     ...provided,
-                    display: "none",
+                    display: 'none',
                   }),
                   menu: (provided) => ({
                     ...provided,
                     //border: 'none',
-                    transform: "translateY(-10px)",
-                    backgroundColor: "#0F0F0F",
+                    transform: 'translateY(-10px)',
+                    backgroundColor: '#0F0F0F',
                   }),
                   menuList: (provided) => ({
                     ...provided,
-                    backgroundColor: "#0F0F0F",
-                    border: "1px solid #141414",
-                    borderTop: "none",
-                    borderTopRadius: "none",
-                    boxShadow: "none",
-                    padding: "0px",
+                    backgroundColor: '#0F0F0F',
+                    border: '1px solid #141414',
+                    borderTop: 'none',
+                    borderTopRadius: 'none',
+                    boxShadow: 'none',
+                    padding: '0px',
                   }),
                   option: (provided, state) => ({
                     ...provided,
-                    color: "neutral.11",
-                    fontSize: { base: "12px", md: "14px" },
-                    fontWeight: "400",
+                    color: 'neutral.11',
+                    fontSize: { base: '12px', md: '14px' },
+                    fontWeight: '400',
                     backgroundColor: state.isSelected
-                      ? "#010F0D"
+                      ? '#010F0D'
                       : state.isFocused
-                      ? "#010F0D"
-                      : "#0F0F0F",
+                      ? '#010F0D'
+                      : '#0F0F0F',
                     _hover: {
-                      backgroundColor: "#010F0D",
+                      backgroundColor: '#010F0D',
                     },
-                    ":active": {
-                      backgroundColor: "#0F0F0F",
+                    ':active': {
+                      backgroundColor: '#0F0F0F',
                     },
                   }),
                   control: (provided) => ({
                     ...provided,
-                    border: "none",
-                    backgroundColor: "#0F0F0F",
-                    boxShadow: "none",
-                    outline: "none",
-                    ":hover": {
-                      border: "none",
-                      backgroundColor: "#0F0F0F",
+                    border: 'none',
+                    backgroundColor: '#0F0F0F',
+                    boxShadow: 'none',
+                    outline: 'none',
+                    ':hover': {
+                      border: 'none',
+                      backgroundColor: '#0F0F0F',
                     },
                   }),
                   placeholder: (provided) => ({
                     ...provided,
-                    textAlign: "start",
-                    fontSize: { base: "12px", md: "14px" },
-                    color: "#3B3D3D",
-                    px: "1rem",
+                    textAlign: 'start',
+                    fontSize: { base: '12px', md: '14px' },
+                    color: '#3B3D3D',
+                    px: '1rem',
                   }),
                 }}
               ></Select>
@@ -184,7 +186,7 @@ export const ActiveEvent = ({ projectId }: Props) => {
           <Button
             w="full"
             isDisabled={event.isError || event.isLoading}
-            variant={"cubikFilled"}
+            variant={'cubikFilled'}
             mt={10}
             onClick={handleEventSubmit}
           >

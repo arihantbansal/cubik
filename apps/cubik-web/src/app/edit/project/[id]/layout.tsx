@@ -1,5 +1,5 @@
-import { Box } from "@/utils/chakra";
-import React from "react";
+import React from 'react';
+import { Box } from '@/utils/chakra';
 
 interface Props {
   children: React.JSX.Element | React.JSX.Element[];

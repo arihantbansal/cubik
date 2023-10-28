@@ -1,0 +1,20 @@
+module.exports = {
+  arrowParens: 'always',
+  printWidth: 80,
+  singleQuote: true,
+  semi: true,
+  trailingComma: 'all',
+  tabWidth: 2,
+  importOrder: [
+    '^(react/(.*)$)|^(react$)',
+    '^(next/(.*)$)|^(next$)',
+    '<THIRD_PARTY_MODULES>',
+    '',
+    '^@cubik/(.*)$',
+    '^cubik/(.*)$',
+    '',
+    '^~/(.*)$',
+    '^[./]',
+  ],
+  plugins: [require('@ianvs/prettier-plugin-sort-imports')],
+};

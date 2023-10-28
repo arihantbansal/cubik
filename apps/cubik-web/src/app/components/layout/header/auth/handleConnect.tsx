@@ -1,20 +1,22 @@
-"use client";
-import type { AuthCheckReturn } from "@/types/auth";
-import { Button, Center, Spinner, useDisclosure } from "@/utils/chakra";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { useWalletModal } from "@solana/wallet-adapter-react-ui";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { VerifyModal } from "./verifyModal";
-import { handleLogout } from "@/utils/helpers/auth";
-import { useUser } from "@/app/context/user";
-import UserNavbarMenuButton from "../cta/user-navbar-menu";
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useUser } from '@/app/context/user';
+import type { AuthCheckReturn } from '@/types/auth';
+import { Button, Center, Spinner, useDisclosure } from '@/utils/chakra';
+import { handleLogout } from '@/utils/helpers/auth';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+
+import UserNavbarMenuButton from '../cta/user-navbar-menu';
+import { VerifyModal } from './verifyModal';
 
 export const WalletConnect = () => {
   const { connected, publicKey, disconnect, signMessage } = useWallet();
   const { setVisible } = useWalletModal();
-  const [modalStatus, setModalStatus] = useState<"NEW_USER" | "EXISTING_USER">(
-    "NEW_USER"
+  const [modalStatus, setModalStatus] = useState<'NEW_USER' | 'EXISTING_USER'>(
+    'NEW_USER',
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -26,26 +28,26 @@ export const WalletConnect = () => {
       if (connected && publicKey && !user) {
         try {
           setIsLoading(true);
-          const res = await fetch("/api/auth/check", {
-            method: "POST",
+          const res = await fetch('/api/auth/check', {
+            method: 'POST',
             body: JSON.stringify({
               wallet: publicKey.toBase58(),
             }),
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
-            cache: "no-cache",
+            cache: 'no-cache',
           });
           const checkResponse = (await res.json()) as AuthCheckReturn;
 
-          if (checkResponse.data?.type === "USER_FOUND") {
+          if (checkResponse.data?.type === 'USER_FOUND') {
             // ********* Create token with verify message *********
-            setModalStatus("EXISTING_USER");
+            setModalStatus('EXISTING_USER');
             onOpen();
             return;
           }
           if (
-            checkResponse.data?.type === "AUTHENTICATED_USER" &&
+            checkResponse.data?.type === 'AUTHENTICATED_USER' &&
             checkResponse.data.user
           ) {
             // ********* Set User *********
@@ -62,22 +64,22 @@ export const WalletConnect = () => {
             } else {
               disconnect();
               await handleLogout();
-              throw new Error("Failed to decode token");
+              throw new Error('Failed to decode token');
             }
             return;
           }
 
           if (
-            checkResponse.data?.type === "NEW_WALLET" ||
-            checkResponse.data?.type === "EXISTING_WALLET"
+            checkResponse.data?.type === 'NEW_WALLET' ||
+            checkResponse.data?.type === 'EXISTING_WALLET'
           ) {
             // ********* Take sign message &&  Create User flow ************
-            setModalStatus("NEW_USER");
+            setModalStatus('NEW_USER');
             onOpen();
             return;
           }
 
-          throw new Error("Failed to connect");
+          throw new Error('Failed to connect');
         } catch (error) {
           console.log(error);
           return setIsLoading(false);
@@ -91,7 +93,7 @@ export const WalletConnect = () => {
   if (!connected && !publicKey && !user) {
     return (
       <Center
-        h={{ base: "2rem", md: "2.6rem" }}
+        h={{ base: '2rem', md: '2.6rem' }}
         justifyContent="flex-end"
         alignItems="end"
         w="max"
@@ -100,7 +102,7 @@ export const WalletConnect = () => {
         <Button
           onClick={() => setVisible(true)}
           variant="cubikFilled"
-          size={{ base: "cubikMini", md: "cubikSmall" }}
+          size={{ base: 'cubikMini', md: 'cubikSmall' }}
           className="bg-white"
         >
           Login

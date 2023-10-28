@@ -1,28 +1,30 @@
-import { data } from "./data";
-import fs from "fs";
+import fs from 'fs';
+
+import { data } from './data';
+
 function convertToCSS(styles: { [key: string]: string }): string {
-  let css = ":root {\n";
+  let css = ':root {\n';
   for (const [key, value] of Object.entries(styles)) {
     css += `    ${key}: ${value};\n`;
   }
-  css += "}";
+  css += '}';
   return css;
 }
 
 export const createComponentNames = () => {
   const componentColorDump = data.collections.find(
-    (e) => e.name === "Component ( Colors )"
+    (e) => e.name === 'Component ( Colors )',
   );
 
   let finalData = {};
   componentColorDump?.modes[0].variables.forEach((e) => {
-    if (typeof e.value !== "string") {
+    if (typeof e.value !== 'string') {
       finalData = {
-        ["--" + e.name.split("/")[e.name.split("/").length - 1]]: `var(${
-          "--" +
+        ['--' + e.name.split('/')[e.name.split('/').length - 1]]: `var(${
+          '--' +
           e.value.name
-            .split("/")
-            [e.value.name.split("/").length - 1].toLowerCase()
+            .split('/')
+            [e.value.name.split('/').length - 1].toLowerCase()
         })`,
         ...finalData,
       };
@@ -42,7 +44,7 @@ export const createComponentNames = () => {
     }
   });
   fs.writeFileSync(
-    "/Users/dhruvraj/Documents/cubik/frontend/cubik/packages/presets/styles/component.style.css",
-    convertToCSS(finalData)
+    '/Users/dhruvraj/Documents/cubik/frontend/cubik/packages/presets/styles/component.style.css',
+    convertToCSS(finalData),
   );
 };

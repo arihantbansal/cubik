@@ -1,6 +1,7 @@
-"use client";
-import { useWallet } from "@solana/wallet-adapter-react";
-import React, { createContext, useContext, useState } from "react";
+'use client';
+
+import React, { createContext, useContext, useState } from 'react';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 export interface User {
   id: string;

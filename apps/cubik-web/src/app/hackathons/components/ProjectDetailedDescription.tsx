@@ -1,19 +1,20 @@
-"use client";
-import type { LinkProps } from "@/utils/chakra";
+'use client';
+
+import { useState } from 'react';
+import type { LinkProps } from '@/utils/chakra';
 import {
   Box,
-  Stack,
-  Text,
-  VStack,
   Collapse,
   Link,
   SkeletonText,
-} from "@/utils/chakra";
-import ChakraUIRenderer from "chakra-ui-markdown-renderer";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import rehypeRaw from "rehype-raw";
-import remarkGfm from "remark-gfm";
-import { useState } from "react";
+  Stack,
+  Text,
+  VStack,
+} from '@/utils/chakra';
+import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
 
 export const ProjectsDetailedDescription = ({
   isLoading,
@@ -42,8 +43,8 @@ export const ProjectsDetailedDescription = ({
       const { children } = props;
       return (
         <Text
-          fontSize={{ base: "14px", md: "16px" }}
-          lineHeight={{ base: "22px", md: "24px" }}
+          fontSize={{ base: '14px', md: '16px' }}
+          lineHeight={{ base: '22px', md: '24px' }}
           fontWeight="400"
           letterSpacing="normal"
           color="#D7E0DF"
@@ -55,7 +56,7 @@ export const ProjectsDetailedDescription = ({
     h1: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={"title2"} color="#FFFFFF">
+        <Box as="p" textStyle={'title2'} color="#FFFFFF">
           {children}
         </Box>
       );
@@ -63,7 +64,7 @@ export const ProjectsDetailedDescription = ({
     h2: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={"title2"} color="#FFFFFF">
+        <Box as="p" textStyle={'title2'} color="#FFFFFF">
           {children}
         </Box>
       );
@@ -71,7 +72,7 @@ export const ProjectsDetailedDescription = ({
     h3: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={"title2"} color="#FFFFFF">
+        <Box as="p" textStyle={'title2'} color="#FFFFFF">
           {children}
         </Box>
       );
@@ -79,7 +80,7 @@ export const ProjectsDetailedDescription = ({
     h4: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={"title2"} color="#FFFFFF">
+        <Box as="p" textStyle={'title2'} color="#FFFFFF">
           {children}
         </Box>
       );
@@ -87,7 +88,7 @@ export const ProjectsDetailedDescription = ({
     h5: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={"title2"} color="#FFFFFF">
+        <Box as="p" textStyle={'title2'} color="#FFFFFF">
           {children}
         </Box>
       );
@@ -98,8 +99,8 @@ export const ProjectsDetailedDescription = ({
         <Text
           as="li"
           ml="1rem"
-          fontSize={{ base: "14px", md: "16px" }}
-          lineHeight={{ base: "24px", md: "24px" }}
+          fontSize={{ base: '14px', md: '16px' }}
+          lineHeight={{ base: '24px', md: '24px' }}
           fontWeight="400"
           letterSpacing="normal"
           color="#D7E0DF"
@@ -111,20 +112,20 @@ export const ProjectsDetailedDescription = ({
   };
 
   return (
-    <Stack alignSelf={"start"} w="full" direction={"column"} gap="0.5rem">
+    <Stack alignSelf={'start'} w="full" direction={'column'} gap="0.5rem">
       <SkeletonText
         isLoaded={!isLoading}
         w="full"
         fadeDuration={1.6}
         noOfLines={6}
-        opacity={isLoading ? "0.4" : "1"}
+        opacity={isLoading ? '0.4' : '1'}
         skeletonHeight="12px"
         spacing="6"
       >
-        <Collapse startingHeight={"100%"} in={show}>
+        <Collapse startingHeight={'100%'} in={show}>
           <VStack
             maxH={maxH}
-            overflow={overflow ? overflow : "scroll"}
+            overflow={overflow ? overflow : 'scroll'}
             align="start"
             gap="0.5rem"
           >
@@ -133,7 +134,7 @@ export const ProjectsDetailedDescription = ({
               rehypePlugins={[rehypeRaw]}
               remarkPlugins={[remarkGfm]}
             >
-              {description ? description : ""}
+              {description ? description : ''}
             </ReactMarkdown>
           </VStack>
         </Collapse>

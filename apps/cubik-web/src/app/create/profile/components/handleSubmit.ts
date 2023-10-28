@@ -1,14 +1,15 @@
-"use server";
+'use server';
 
-import type { NFTProfile } from "@/types/NFTProfile";
-import { prisma } from "@cubik/database";
+import type { NFTProfile } from '@/types/NFTProfile';
+
+import { prisma } from '@cubik/database';
 
 export const createUser = async (
   publicKey: string,
   username: string,
   pfp: string,
   profileNFT: NFTProfile,
-  txId: string
+  txId: string,
 ) => {
   try {
     const res = await prisma.user.upsert({

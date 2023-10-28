@@ -1,5 +1,5 @@
-import { Box, Button, Center, Stack, VStack } from "@/utils/chakra";
-import Image from "next/image";
+import Image from 'next/image';
+import { Box, Button, Center, Stack, VStack } from '@/utils/chakra';
 
 const DetailsSection = () => {
   return (
@@ -10,46 +10,46 @@ const DetailsSection = () => {
       w="100%"
     >
       <Center
-        zIndex={"1"}
+        zIndex={'1'}
         w="100%"
         rounded="50px 50px 0px 0px"
-        height={{ base: "24rem", md: "18rem" }}
+        height={{ base: '24rem', md: '18rem' }}
         bgGradient="linear-gradient(180deg, #021412 0%, #000000 100%)"
         backgroundColor="#000000"
         position="relative"
-        overflow={"hidden"}
+        overflow={'hidden'}
         borderTop="2px solid #162624"
         _before={{
           content: '""',
-          zIndex: "-2",
-          position: "absolute",
-          top: "100%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "full",
-          height: "full",
-          backgroundColor: "#000000",
-          filter: "blur(240px)",
-          borderRadius: "full",
+          zIndex: '-2',
+          position: 'absolute',
+          top: '100%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 'full',
+          height: 'full',
+          backgroundColor: '#000000',
+          filter: 'blur(240px)',
+          borderRadius: 'full',
         }}
       >
         <VStack
           zIndex="1"
-          textAlign={"center"}
+          textAlign={'center'}
           maxW="3xl"
-          px={{ base: "1rem", md: "2rem" }}
+          px={{ base: '1rem', md: '2rem' }}
           gap="0.6rem"
         >
           <Box
             as="p"
-            textStyle={{ base: "headline3", sm: "headline2", lg: "display3" }}
+            textStyle={{ base: 'headline3', sm: 'headline2', lg: 'display3' }}
           >
             Built on transparency, accountability, & community driven support
           </Box>
           <Box
             as="p"
-            px={{ base: "2.5rem", md: "0" }}
-            textStyle={{ base: "title5", sm: "title4", md: "title3" }}
+            px={{ base: '2.5rem', md: '0' }}
+            textStyle={{ base: 'title5', sm: 'title4', md: 'title3' }}
             color="neutral.8"
           >
             With Cubik, you can create a project and start receiving funding in
@@ -58,33 +58,33 @@ const DetailsSection = () => {
         </VStack>
       </Center>
       <Box
-        height={{ base: "40rem", md: "55rem" }}
+        height={{ base: '40rem', md: '55rem' }}
         width="100%"
         position="relative"
         backgroundColor="#000000"
       >
         <Center
           backgroundColor="#000000"
-          position={"absolute"}
-          top={"0"}
+          position={'absolute'}
+          top={'0'}
           left="50%"
-          objectPosition={"center"}
-          objectFit={"cover"}
-          transform={"translate(-50%, -00%)"}
+          objectPosition={'center'}
+          objectFit={'cover'}
+          transform={'translate(-50%, -00%)'}
           width="200%"
           height="full"
           _before={{
             content: '""',
-            zIndex: "1",
-            position: "absolute",
-            top: "0%",
-            left: "50%",
-            transform: "translate(-50%, 0%)",
-            width: "full",
-            height: "8rem",
+            zIndex: '1',
+            position: 'absolute',
+            top: '0%',
+            left: '50%',
+            transform: 'translate(-50%, 0%)',
+            width: 'full',
+            height: '8rem',
             backgroundImage:
-              "linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%)",
-            borderRadius: "full",
+              'linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%)',
+            borderRadius: 'full',
           }}
         >
           <Image
@@ -99,45 +99,45 @@ const DetailsSection = () => {
       <Center w="full" backgroundColor="#000000" zIndex="1">
         <Center
           maxW="7xl"
-          transform={{ base: "translateY(-14rem)", lg: "translateY(-20rem)" }}
-          px={{ base: "1rem", md: "4rem", lg: "5rem" }}
-          position={"relative"}
+          transform={{ base: 'translateY(-14rem)', lg: 'translateY(-20rem)' }}
+          px={{ base: '1rem', md: '4rem', lg: '5rem' }}
+          position={'relative'}
         >
           <Stack
             p="3rem"
-            pb={{ base: "15rem", lg: "3rem" }}
-            backdropFilter={"blur(100px)"}
-            position={"relative"}
+            pb={{ base: '15rem', lg: '3rem' }}
+            backdropFilter={'blur(100px)'}
+            position={'relative'}
             backgroundColor="#00000020"
             border="1px solid #1C2726"
             rounded="16px"
-            textAlign={"start"}
+            textAlign={'start'}
             overflow="hidden"
             alignItems="start"
-            direction={{ base: "column", lg: "row" }}
+            direction={{ base: 'column', lg: 'row' }}
             gap="4rem"
           >
             <VStack
               gap="1rem"
-              zIndex={"1"}
+              zIndex={'1'}
               alignItems="start"
               position="relative"
-              flex={"50%"}
+              flex={'50%'}
             >
-              <Box as="p" textStyle={{ base: "headline3", md: "display3" }}>
+              <Box as="p" textStyle={{ base: 'headline3', md: 'display3' }}>
                 How does the magic happen?
               </Box>
               <Box
                 opacity="0.8"
                 as="p"
-                textStyle={{ base: "body4", md: "body3" }}
+                textStyle={{ base: 'body4', md: 'body3' }}
                 color="neutral.9"
               >
                 Quadratic funding is a method of funding public goods that
                 involves matching small individual contributions with larger
                 matching funds.
               </Box>
-              <Center position={"absolute"} right="1rem" top="0.5rem">
+              <Center position={'absolute'} right="1rem" top="0.5rem">
                 <svg
                   width="28"
                   height="28"
@@ -173,14 +173,14 @@ const DetailsSection = () => {
                 </svg>
               </Center>
             </VStack>
-            <VStack flex="50%" zIndex={"1"} gap="3rem" alignItems="start">
+            <VStack flex="50%" zIndex={'1'} gap="3rem" alignItems="start">
               <VStack alignItems="start">
                 <Box color="brand.teal5" as="p" textStyle="title6">
                   01
                 </Box>
                 <Box
                   as="p"
-                  textStyle={{ base: "title4", md: "title3" }}
+                  textStyle={{ base: 'title4', md: 'title3' }}
                   color="neutral.11"
                 >
                   Quadratic funding matches small individual contributions with
@@ -188,12 +188,12 @@ const DetailsSection = () => {
                 </Box>
               </VStack>
               <VStack alignItems="start">
-                <Box color="brand.teal5" as="p" textStyle={"title6"}>
+                <Box color="brand.teal5" as="p" textStyle={'title6'}>
                   02
                 </Box>
                 <Box
                   as="p"
-                  textStyle={{ base: "title4", md: "title3" }}
+                  textStyle={{ base: 'title4', md: 'title3' }}
                   color="neutral.11"
                 >
                   Matching funds are allocated fairly, giving more weight to
@@ -202,12 +202,12 @@ const DetailsSection = () => {
                 </Box>
               </VStack>
               <VStack alignItems="start">
-                <Box color="brand.teal5" as="p" textStyle={"title6"}>
+                <Box color="brand.teal5" as="p" textStyle={'title6'}>
                   03
                 </Box>
                 <Box
                   as="p"
-                  textStyle={{ base: "title4", md: "title3" }}
+                  textStyle={{ base: 'title4', md: 'title3' }}
                   color="neutral.11"
                 >
                   Quadratic funding encourages broad support from many small
@@ -216,12 +216,12 @@ const DetailsSection = () => {
               </VStack>
             </VStack>
             <Center
-              position={"absolute"}
+              position={'absolute'}
               bottom="0"
-              left={{ base: "0%", md: "0%" }}
-              zIndex={"0"}
-              transform={"translate(0%, 50%)"}
-              width={{ base: "100%", lg: "50%" }}
+              left={{ base: '0%', md: '0%' }}
+              zIndex={'0'}
+              transform={'translate(0%, 50%)'}
+              width={{ base: '100%', lg: '50%' }}
               height="100%"
             >
               <Image
@@ -235,65 +235,65 @@ const DetailsSection = () => {
         </Center>
       </Center>
       <Center
-        transform={"translateY(-8rem)"}
-        zIndex={"1"}
+        transform={'translateY(-8rem)'}
+        zIndex={'1'}
         w="100%"
         rounded="0px 0px 50px 50px"
         height="full"
-        pb={"3rem"}
+        pb={'3rem'}
         bgGradient="linear-gradient(0deg, #021412 0%, #000000 100%)"
         borderBottom="2px solid #162624"
         position="relative"
-        overflow={"hidden"}
+        overflow={'hidden'}
         flexDir="column"
         gap="4rem"
         _before={{
           content: '""',
-          zIndex: "0",
-          position: "absolute",
-          top: "0%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "full",
-          height: "full",
-          backgroundColor: "#000000",
-          filter: "blur(240px)",
-          rounded: "full",
+          zIndex: '0',
+          position: 'absolute',
+          top: '0%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 'full',
+          height: 'full',
+          backgroundColor: '#000000',
+          filter: 'blur(240px)',
+          rounded: 'full',
         }}
       >
         <Center w="full" p="0">
           <Center
             maxW="7xl"
             w="full"
-            px={{ base: "1rem", md: "4rem", lg: "5rem" }}
+            px={{ base: '1rem', md: '4rem', lg: '5rem' }}
           >
             <Center
               maxW="7xl"
-              zIndex={"1"}
-              w={"100%"}
+              zIndex={'1'}
+              w={'100%'}
               rounded="xl"
               bg="#000"
               border="1px solid #1C2726"
-              overflow={"hidden"}
+              overflow={'hidden'}
               h="19rem"
-              position={"relative"}
+              position={'relative'}
               justifyContent="flex-start"
-              p={{ base: "2rem", md: "2rem 3rem" }}
+              p={{ base: '2rem', md: '2rem 3rem' }}
             >
-              <VStack alignItems={"start"} zIndex="1">
+              <VStack alignItems={'start'} zIndex="1">
                 <Box
-                  textStyle={"overline3"}
+                  textStyle={'overline3'}
                   textTransform="capitalize"
                   color="brand.teal5"
                 >
                   JOIN OUR NEWSLETTER
                 </Box>
-                <Box textStyle={{ base: "headline3", md: "headline1" }}>
+                <Box textStyle={{ base: 'headline3', md: 'headline1' }}>
                   Stay in loop with all things Cubik
                 </Box>
-                <Box textStyle={{ base: "body3", md: "body2" }} color="#566664">
+                <Box textStyle={{ base: 'body3', md: 'body2' }} color="#566664">
                   We promise we won’t spam you
-                </Box>{" "}
+                </Box>{' '}
                 <Center w="full" py="1rem">
                   {/* <HStack
                     zIndex={'1'}
@@ -350,26 +350,26 @@ const DetailsSection = () => {
                 </Center>
               </VStack>
               <Center
-                zIndex={"0"}
-                position={"absolute"}
-                right={"0%"}
-                top={"0%"}
+                zIndex={'0'}
+                position={'absolute'}
+                right={'0%'}
+                top={'0%'}
                 width="70rem"
                 height="70rem"
-                transform={"translate(50%, -10%)"}
+                transform={'translate(50%, -10%)'}
                 overflow="hidden"
                 _before={{
                   content: '""',
-                  zIndex: "2",
-                  position: "absolute",
-                  top: "100%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  width: "full",
-                  height: "full",
-                  backgroundColor: "#000",
-                  filter: "blur(240px)",
-                  borderRadius: "full",
+                  zIndex: '2',
+                  position: 'absolute',
+                  top: '100%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: 'full',
+                  height: 'full',
+                  backgroundColor: '#000',
+                  filter: 'blur(240px)',
+                  borderRadius: 'full',
                 }}
               >
                 <Image
@@ -381,19 +381,19 @@ const DetailsSection = () => {
             </Center>
           </Center>
         </Center>
-        <VStack zIndex="1" textAlign={"center"} maxW="3xl" px="2rem" gap="2rem">
+        <VStack zIndex="1" textAlign={'center'} maxW="3xl" px="2rem" gap="2rem">
           <Box
             w="100%"
-            zIndex={"1"}
+            zIndex={'1'}
             sx={{
               bgGradient:
-                "linear-gradient(to-r, #ffffff00, #ffffff24, #ffffff00)",
+                'linear-gradient(to-r, #ffffff00, #ffffff24, #ffffff00)',
             }}
             height="1px"
           />
           <Box
             as="p"
-            textStyle={{ base: "headline3", sm: "headline2", lg: "display3" }}
+            textStyle={{ base: 'headline3', sm: 'headline2', lg: 'display3' }}
           >
             Join us in revolutionizing the grants landscape today!
           </Box>

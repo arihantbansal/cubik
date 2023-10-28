@@ -1,12 +1,12 @@
-"use client";
-import React, { Dispatch, SetStateAction } from "react";
-import { useRef } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { CheckIcon } from "@heroicons/react/24/outline";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { useMutation } from "@tanstack/react-query";
-import { verifyUser } from "@/utils/helpers/verifyUser";
-import { useUser } from "@/context/user";
+'use client';
+
+import { Dispatch, SetStateAction, useRef } from 'react';
+import { useUser } from '@/context/user';
+import { verifyUser } from '@/utils/helpers/verifyUser';
+import { Dialog, Transition } from '@headlessui/react';
+import { CheckIcon } from '@heroicons/react/24/outline';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useMutation } from '@tanstack/react-query';
 
 interface Props {
   open: boolean;
@@ -19,7 +19,7 @@ export const VerifyModal = ({ open, setOpen }: Props) => {
 
   const verifyMutation = useMutation({
     mutationFn: verifyUser,
-    mutationKey: ["verify", "user"],
+    mutationKey: ['verify', 'user'],
     onSuccess: (data) => {
       if (data?.error === "User Doesn't have access") {
         // when user does'nt have
@@ -36,7 +36,6 @@ export const VerifyModal = ({ open, setOpen }: Props) => {
       }
     },
     onError: (error) => {
-      const e = error as Error;
     },
   });
 
@@ -100,7 +99,7 @@ export const VerifyModal = ({ open, setOpen }: Props) => {
                       })
                     }
                   >
-                    {verifyMutation.isLoading ? "LOADING" : "VERIFY"}
+                    {verifyMutation.isLoading ? 'LOADING' : 'VERIFY'}
                   </button>
                   <button
                     type="button"

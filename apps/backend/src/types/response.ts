@@ -12,7 +12,7 @@ export type ErrorResponseWithData<T> = {
 
 export type SuccessResponse<T> = {
   code: number;
-  error: "";
+  error: '';
   data: T;
 };
 
@@ -23,7 +23,7 @@ export type ApiResponse<T> =
 
 export function createFailureResponse(
   code: number,
-  error: string
+  error: string,
 ): ErrorResponse {
   const response: ErrorResponse = {
     code: code,
@@ -36,7 +36,7 @@ export function createFailureResponse(
 export function createFailureResponseData<T>(
   code: number,
   error: string,
-  data: T
+  data: T,
 ): ErrorResponseWithData<T> {
   const response: ErrorResponseWithData<T> = {
     code: code,
@@ -48,12 +48,12 @@ export function createFailureResponseData<T>(
 
 export function createSuccessResponse<T>(
   code: number,
-  data: T
+  data: T,
 ): SuccessResponse<T> {
   const response: SuccessResponse<T> = {
     code: code,
     data: data,
-    error: "",
+    error: '',
   };
   return response;
 }

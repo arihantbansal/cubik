@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Box,
   HStack,
@@ -6,11 +7,11 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-} from "@/utils/chakra";
-import React from "react";
-import { DetailSection } from "./details";
-import { ContributionSection } from "./contributions/index";
-import { TeamSection } from "./team";
+} from '@/utils/chakra';
+
+import { ContributionSection } from './contributions/index';
+import { DetailSection } from './details';
+import { TeamSection } from './team';
 
 interface Props {
   slug: string;
@@ -20,20 +21,20 @@ export const ProjectTabs = ({ slug }: Props) => {
   return (
     <>
       <Box
-        display={"flex"}
+        display={'flex'}
         w="full"
         flexDir="column"
-        alignItems={{ base: "end", lg: "center" }}
-        minH={"30rem"}
+        alignItems={{ base: 'end', lg: 'center' }}
+        minH={'30rem'}
       >
-        <Tabs variant={"cubik"} alignSelf={"start"} w="full">
-          <Box bg={"cubik.grey.700"} w={"full"}>
+        <Tabs variant={'cubik'} alignSelf={'start'} w="full">
+          <Box bg={'cubik.grey.700'} w={'full'}>
             <TabList
               w="full"
-              maxW={"7xl"}
-              mx={"auto"}
-              overflowY={{ base: "hidden", md: "inherit" }}
-              overflowX={{ base: "scroll", md: "inherit" }}
+              maxW={'7xl'}
+              mx={'auto'}
+              overflowY={{ base: 'hidden', md: 'inherit' }}
+              overflowX={{ base: 'scroll', md: 'inherit' }}
             >
               <Tab>About</Tab>
               <Tab>Contributions</Tab>

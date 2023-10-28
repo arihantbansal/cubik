@@ -1,1503 +1,1503 @@
 export interface CubikContractV2 {
-  version: "0.1.0";
-  name: "cubik_contract_v2";
+  version: '0.1.0';
+  name: 'cubik_contract_v2';
   instructions: [
     {
-      name: "createUser";
+      name: 'createUser';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "userAccount";
+          name: 'userAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "username";
-          type: "string";
-        }
+          name: 'username';
+          type: 'string';
+        },
       ];
     },
     {
-      name: "createProject";
+      name: 'createProject';
       accounts: [
         {
-          name: "owners";
+          name: 'owners';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "projectAccount";
+          name: 'projectAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "adminAccount";
+          name: 'adminAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "userAccount";
+          name: 'userAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "counter";
-          type: "string";
+          name: 'counter';
+          type: 'string';
         },
         {
-          name: "multiSig";
-          type: "publicKey";
-        }
+          name: 'multiSig';
+          type: 'publicKey';
+        },
       ];
     },
     {
-      name: "createRound";
+      name: 'createRound';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "roundAccount";
+          name: 'roundAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "counter";
-          type: "string";
+          name: 'counter';
+          type: 'string';
         },
         {
-          name: "matchingPool";
-          type: "u64";
+          name: 'matchingPool';
+          type: 'u64';
         },
         {
-          name: "projectSize";
-          type: "u64";
+          name: 'projectSize';
+          type: 'u64';
         },
         {
-          name: "limit";
-          type: "u64";
-        }
+          name: 'limit';
+          type: 'u64';
+        },
       ];
     },
     {
-      name: "createAdmin";
+      name: 'createAdmin';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "adminAccount";
+          name: 'adminAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [];
     },
     {
-      name: "projectRoundJoin";
+      name: 'projectRoundJoin';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "roundVerficationAccount";
+          name: 'roundVerficationAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "roundAccount";
-          type: "publicKey";
+          name: 'roundAccount';
+          type: 'publicKey';
         },
         {
-          name: "projectAccount";
-          type: "publicKey";
-        }
+          name: 'projectAccount';
+          type: 'publicKey';
+        },
       ];
     },
     {
-      name: "updateApproveRound";
+      name: 'updateApproveRound';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "adminAccount";
+          name: 'adminAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "roundAccount";
+          name: 'roundAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "projectAccount";
+          name: 'projectAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "roundVerficationAccount";
+          name: 'roundVerficationAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "roundId";
-          type: "string";
+          name: 'roundId';
+          type: 'string';
         },
         {
-          name: "counter";
-          type: "string";
+          name: 'counter';
+          type: 'string';
         },
         {
-          name: "owner";
-          type: "publicKey";
-        }
+          name: 'owner';
+          type: 'publicKey';
+        },
       ];
     },
     {
-      name: "updateRejectRound";
+      name: 'updateRejectRound';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "adminAccount";
+          name: 'adminAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "roundAccount";
+          name: 'roundAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "projectAccount";
+          name: 'projectAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "roundVerficationAccount";
+          name: 'roundVerficationAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "roundId";
-          type: "string";
+          name: 'roundId';
+          type: 'string';
         },
         {
-          name: "counter";
-          type: "string";
+          name: 'counter';
+          type: 'string';
         },
         {
-          name: "owner";
-          type: "publicKey";
-        }
+          name: 'owner';
+          type: 'publicKey';
+        },
       ];
     },
     {
-      name: "updateProjectStatusVerified";
+      name: 'updateProjectStatusVerified';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "adminAccount";
+          name: 'adminAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "projectAccount";
+          name: 'projectAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "userAccount";
+          name: 'userAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "counter";
-          type: "string";
+          name: 'counter';
+          type: 'string';
         },
         {
-          name: "owner";
-          type: "publicKey";
-        }
+          name: 'owner';
+          type: 'publicKey';
+        },
       ];
     },
     {
-      name: "updateProjectStatusFailed";
+      name: 'updateProjectStatusFailed';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "adminAccount";
+          name: 'adminAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "projectAccount";
+          name: 'projectAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "userAccount";
+          name: 'userAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "counter";
-          type: "string";
+          name: 'counter';
+          type: 'string';
         },
         {
-          name: "owner";
-          type: "publicKey";
-        }
+          name: 'owner';
+          type: 'publicKey';
+        },
       ];
     },
     {
-      name: "createContributionSpl";
+      name: 'createContributionSpl';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "tokenMint";
+          name: 'tokenMint';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "tokenAtaSender";
+          name: 'tokenAtaSender';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "tokenAtaReceiver";
+          name: 'tokenAtaReceiver';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "tokenAtaAdmin";
+          name: 'tokenAtaAdmin';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "adminAccount";
+          name: 'adminAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "roundAccount";
+          name: 'roundAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "projectAccount";
+          name: 'projectAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "contributionAccount";
+          name: 'contributionAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "tokenProgram";
+          name: 'tokenProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "roundId";
-          type: "string";
+          name: 'roundId';
+          type: 'string';
         },
         {
-          name: "counter";
-          type: "string";
+          name: 'counter';
+          type: 'string';
         },
         {
-          name: "owner";
-          type: "publicKey";
+          name: 'owner';
+          type: 'publicKey';
         },
         {
-          name: "usdAmount";
-          type: "u64";
+          name: 'usdAmount';
+          type: 'u64';
         },
         {
-          name: "total";
-          type: "u64";
+          name: 'total';
+          type: 'u64';
         },
         {
-          name: "split";
-          type: "u64";
-        }
+          name: 'split';
+          type: 'u64';
+        },
       ];
     },
     {
-      name: "updateContributionSpl";
+      name: 'updateContributionSpl';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "tokenMint";
+          name: 'tokenMint';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "tokenAtaSender";
+          name: 'tokenAtaSender';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "tokenAtaReceiver";
+          name: 'tokenAtaReceiver';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "tokenAtaAdmin";
+          name: 'tokenAtaAdmin';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "adminAccount";
+          name: 'adminAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "roundAccount";
+          name: 'roundAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "projectAccount";
+          name: 'projectAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "contributionAccount";
+          name: 'contributionAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "tokenProgram";
+          name: 'tokenProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "roundId";
-          type: "string";
+          name: 'roundId';
+          type: 'string';
         },
         {
-          name: "counter";
-          type: "string";
+          name: 'counter';
+          type: 'string';
         },
         {
-          name: "owner";
-          type: "publicKey";
+          name: 'owner';
+          type: 'publicKey';
         },
         {
-          name: "usdAmount";
-          type: "u64";
+          name: 'usdAmount';
+          type: 'u64';
         },
         {
-          name: "total";
-          type: "u64";
+          name: 'total';
+          type: 'u64';
         },
         {
-          name: "split";
-          type: "u64";
-        }
+          name: 'split';
+          type: 'u64';
+        },
       ];
     },
     {
-      name: "createContributionSol";
+      name: 'createContributionSol';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "receiverAccount";
+          name: 'receiverAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "adminAccountInfo";
+          name: 'adminAccountInfo';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "adminAccount";
+          name: 'adminAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "roundAccount";
+          name: 'roundAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "projectAccount";
+          name: 'projectAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "contributionAccount";
+          name: 'contributionAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "tokenProgram";
+          name: 'tokenProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "roundId";
-          type: "string";
+          name: 'roundId';
+          type: 'string';
         },
         {
-          name: "counter";
-          type: "string";
+          name: 'counter';
+          type: 'string';
         },
         {
-          name: "owner";
-          type: "publicKey";
+          name: 'owner';
+          type: 'publicKey';
         },
         {
-          name: "usdAmount";
-          type: "u64";
+          name: 'usdAmount';
+          type: 'u64';
         },
         {
-          name: "total";
-          type: "u64";
+          name: 'total';
+          type: 'u64';
         },
         {
-          name: "split";
-          type: "u64";
-        }
+          name: 'split';
+          type: 'u64';
+        },
       ];
     },
     {
-      name: "updateContributionSol";
+      name: 'updateContributionSol';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "receiverAccount";
+          name: 'receiverAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "adminAccountInfo";
+          name: 'adminAccountInfo';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "adminAccount";
+          name: 'adminAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "roundAccount";
+          name: 'roundAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "projectAccount";
+          name: 'projectAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "contributionAccount";
+          name: 'contributionAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "tokenProgram";
+          name: 'tokenProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "roundId";
-          type: "string";
+          name: 'roundId';
+          type: 'string';
         },
         {
-          name: "counter";
-          type: "string";
+          name: 'counter';
+          type: 'string';
         },
         {
-          name: "owner";
-          type: "publicKey";
+          name: 'owner';
+          type: 'publicKey';
         },
         {
-          name: "usdAmount";
-          type: "u64";
+          name: 'usdAmount';
+          type: 'u64';
         },
         {
-          name: "total";
-          type: "u64";
+          name: 'total';
+          type: 'u64';
         },
         {
-          name: "split";
-          type: "u64";
-        }
+          name: 'split';
+          type: 'u64';
+        },
       ];
     },
     {
-      name: "addProof";
+      name: 'addProof';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "userAccount";
+          name: 'userAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "admin";
+          name: 'admin';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "adminProofAccount";
+          name: 'adminProofAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "proof";
-          type: "string";
-        }
+          name: 'proof';
+          type: 'string';
+        },
       ];
     },
     {
-      name: "removeProof";
+      name: 'removeProof';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "userAccount";
+          name: 'userAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "admin";
+          name: 'admin';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "adminProofAccount";
+          name: 'adminProofAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "proof";
-          type: "string";
-        }
+          name: 'proof';
+          type: 'string';
+        },
       ];
     },
     {
-      name: "adminProof";
+      name: 'adminProof';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "adminProofAccount";
+          name: 'adminProofAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [];
     },
     {
-      name: "createContributionV2";
+      name: 'createContributionV2';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "tokenMint";
+          name: 'tokenMint';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "tokenAtaSender";
+          name: 'tokenAtaSender';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "tokenAtaReceiver";
+          name: 'tokenAtaReceiver';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "tokenAtaAdmin";
+          name: 'tokenAtaAdmin';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "adminAccount";
+          name: 'adminAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "projectAccount";
+          name: 'projectAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "contributionAccount";
+          name: 'contributionAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "tokenProgram";
+          name: 'tokenProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "amount";
-          type: "u64";
+          name: 'amount';
+          type: 'u64';
         },
         {
-          name: "split";
-          type: "u64";
+          name: 'split';
+          type: 'u64';
         },
         {
-          name: "createKey";
-          type: "publicKey";
+          name: 'createKey';
+          type: 'publicKey';
         },
         {
-          name: "owner";
-          type: "publicKey";
+          name: 'owner';
+          type: 'publicKey';
         },
         {
-          name: "roundId";
-          type: "string";
+          name: 'roundId';
+          type: 'string';
         },
         {
-          name: "counter";
-          type: "string";
-        }
+          name: 'counter';
+          type: 'string';
+        },
       ];
     },
     {
-      name: "projectJoinHackathon";
+      name: 'projectJoinHackathon';
       accounts: [
         {
-          name: "authority";
+          name: 'authority';
           isMut: true;
           isSigner: true;
         },
         {
-          name: "hackathonJoinAccount";
+          name: 'hackathonJoinAccount';
           isMut: true;
           isSigner: false;
         },
         {
-          name: "systemProgram";
+          name: 'systemProgram';
           isMut: false;
           isSigner: false;
         },
         {
-          name: "rent";
+          name: 'rent';
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
-          name: "hackathonAccount";
-          type: "publicKey";
+          name: 'hackathonAccount';
+          type: 'publicKey';
         },
         {
-          name: "projectAccount";
-          type: "publicKey";
-        }
+          name: 'projectAccount';
+          type: 'publicKey';
+        },
       ];
-    }
+    },
   ];
   accounts: [
     {
-      name: "admin";
+      name: 'admin';
       type: {
-        kind: "struct";
+        kind: 'struct';
         fields: [
           {
-            name: "authority";
-            type: "publicKey";
+            name: 'authority';
+            type: 'publicKey';
           },
           {
-            name: "bump";
-            type: "u8";
-          }
+            name: 'bump';
+            type: 'u8';
+          },
         ];
       };
     },
     {
-      name: "contribution";
+      name: 'contribution';
       type: {
-        kind: "struct";
+        kind: 'struct';
         fields: [
           {
-            name: "authority";
-            type: "publicKey";
+            name: 'authority';
+            type: 'publicKey';
           },
           {
-            name: "bump";
-            type: "u8";
+            name: 'bump';
+            type: 'u8';
           },
           {
-            name: "total";
-            type: "u64";
+            name: 'total';
+            type: 'u64';
           },
           {
-            name: "usd";
-            type: "u64";
-          }
+            name: 'usd';
+            type: 'u64';
+          },
         ];
       };
     },
     {
-      name: "contributionV2";
+      name: 'contributionV2';
       type: {
-        kind: "struct";
+        kind: 'struct';
         fields: [
           {
-            name: "authority";
-            type: "publicKey";
+            name: 'authority';
+            type: 'publicKey';
           },
           {
-            name: "bump";
-            type: "u8";
-          }
+            name: 'bump';
+            type: 'u8';
+          },
         ];
       };
     },
     {
-      name: "project";
+      name: 'project';
       type: {
-        kind: "struct";
+        kind: 'struct';
         fields: [
           {
-            name: "owner";
-            type: "publicKey";
+            name: 'owner';
+            type: 'publicKey';
           },
           {
-            name: "authority";
-            type: "publicKey";
+            name: 'authority';
+            type: 'publicKey';
           },
           {
-            name: "counter";
-            type: "u64";
+            name: 'counter';
+            type: 'u64';
           },
           {
-            name: "status";
+            name: 'status';
             type: {
-              defined: "ProjectVerification";
+              defined: 'ProjectVerification';
             };
           },
           {
-            name: "multiSig";
-            type: "publicKey";
+            name: 'multiSig';
+            type: 'publicKey';
           },
           {
-            name: "bump";
-            type: "u8";
-          }
+            name: 'bump';
+            type: 'u8';
+          },
         ];
       };
     },
     {
-      name: "round";
+      name: 'round';
       type: {
-        kind: "struct";
+        kind: 'struct';
         fields: [
           {
-            name: "authority";
-            type: "publicKey";
+            name: 'authority';
+            type: 'publicKey';
           },
           {
-            name: "roundId";
-            type: "string";
+            name: 'roundId';
+            type: 'string';
           },
           {
-            name: "bump";
-            type: "u8";
+            name: 'bump';
+            type: 'u8';
           },
           {
-            name: "matchingPoolSize";
-            type: "u64";
+            name: 'matchingPoolSize';
+            type: 'u64';
           },
           {
-            name: "limit";
-            type: "u64";
+            name: 'limit';
+            type: 'u64';
           },
           {
-            name: "projectSize";
-            type: "u64";
-          }
+            name: 'projectSize';
+            type: 'u64';
+          },
         ];
       };
     },
     {
-      name: "roundJoin";
+      name: 'roundJoin';
       type: {
-        kind: "struct";
+        kind: 'struct';
         fields: [
           {
-            name: "authority";
-            type: "publicKey";
+            name: 'authority';
+            type: 'publicKey';
           },
           {
-            name: "roundAccount";
-            type: "publicKey";
+            name: 'roundAccount';
+            type: 'publicKey';
           },
           {
-            name: "projectAccount";
-            type: "publicKey";
+            name: 'projectAccount';
+            type: 'publicKey';
           },
           {
-            name: "status";
+            name: 'status';
             type: {
-              defined: "RoundProjectStatus";
+              defined: 'RoundProjectStatus';
             };
           },
           {
-            name: "bump";
-            type: "u8";
-          }
+            name: 'bump';
+            type: 'u8';
+          },
         ];
       };
     },
     {
-      name: "joinHackathon";
+      name: 'joinHackathon';
       type: {
-        kind: "struct";
+        kind: 'struct';
         fields: [
           {
-            name: "authority";
-            type: "publicKey";
+            name: 'authority';
+            type: 'publicKey';
           },
           {
-            name: "bump";
-            type: "u8";
-          }
+            name: 'bump';
+            type: 'u8';
+          },
         ];
       };
     },
     {
-      name: "user";
+      name: 'user';
       type: {
-        kind: "struct";
+        kind: 'struct';
         fields: [
           {
-            name: "authority";
-            type: "publicKey";
+            name: 'authority';
+            type: 'publicKey';
           },
           {
-            name: "project";
-            type: "u64";
+            name: 'project';
+            type: 'u64';
           },
           {
-            name: "proof";
+            name: 'proof';
             type: {
               vec: {
-                defined: "PROOF";
+                defined: 'PROOF';
               };
             };
           },
           {
-            name: "bump";
-            type: "u8";
-          }
+            name: 'bump';
+            type: 'u8';
+          },
         ];
       };
-    }
+    },
   ];
   types: [
     {
-      name: "ProjectVerification";
+      name: 'ProjectVerification';
       type: {
-        kind: "enum";
+        kind: 'enum';
         variants: [
           {
-            name: "REVIEW";
+            name: 'REVIEW';
           },
           {
-            name: "VERIFIED";
+            name: 'VERIFIED';
           },
           {
-            name: "FAILED";
-          }
+            name: 'FAILED';
+          },
         ];
       };
     },
     {
-      name: "RoundProjectStatus";
+      name: 'RoundProjectStatus';
       type: {
-        kind: "enum";
+        kind: 'enum';
         variants: [
           {
-            name: "PENDING";
+            name: 'PENDING';
           },
           {
-            name: "APPROVED";
+            name: 'APPROVED';
           },
           {
-            name: "REJECTED";
-          }
+            name: 'REJECTED';
+          },
         ];
       };
     },
     {
-      name: "PROOF";
+      name: 'PROOF';
       type: {
-        kind: "enum";
+        kind: 'enum';
         variants: [
           {
-            name: "LAMPORT";
+            name: 'LAMPORT';
           },
           {
-            name: "SUPERTEAM";
+            name: 'SUPERTEAM';
           },
           {
-            name: "MONKEYDAO";
+            name: 'MONKEYDAO';
           },
           {
-            name: "CIVIC";
+            name: 'CIVIC';
           },
           {
-            name: "SOCIAL";
+            name: 'SOCIAL';
           },
           {
-            name: "DROPS01";
-          }
+            name: 'DROPS01';
+          },
         ];
       };
-    }
+    },
   ];
   events: [
     {
-      name: "NewContribution";
+      name: 'NewContribution';
       fields: [
         {
-          name: "user";
-          type: "publicKey";
+          name: 'user';
+          type: 'publicKey';
           index: false;
         },
         {
-          name: "usdAmount";
-          type: "u64";
+          name: 'usdAmount';
+          type: 'u64';
           index: false;
         },
         {
-          name: "total";
-          type: "u64";
+          name: 'total';
+          type: 'u64';
           index: false;
         },
         {
-          name: "totalContribution";
-          type: "u64";
+          name: 'totalContribution';
+          type: 'u64';
           index: false;
         },
         {
-          name: "totalUsdAmount";
-          type: "u64";
+          name: 'totalUsdAmount';
+          type: 'u64';
           index: false;
         },
         {
-          name: "split";
-          type: "u64";
+          name: 'split';
+          type: 'u64';
           index: false;
-        }
+        },
       ];
     },
     {
-      name: "NewContributionV2";
+      name: 'NewContributionV2';
       fields: [
         {
-          name: "user";
-          type: "publicKey";
+          name: 'user';
+          type: 'publicKey';
           index: false;
         },
         {
-          name: "createKey";
-          type: "publicKey";
+          name: 'createKey';
+          type: 'publicKey';
           index: false;
         },
         {
-          name: "amount";
-          type: "u64";
+          name: 'amount';
+          type: 'u64';
           index: false;
         },
         {
-          name: "split";
-          type: "u64";
+          name: 'split';
+          type: 'u64';
           index: false;
-        }
+        },
       ];
     },
     {
-      name: "NewUser";
+      name: 'NewUser';
       fields: [
         {
-          name: "authority";
-          type: "publicKey";
+          name: 'authority';
+          type: 'publicKey';
           index: false;
         },
         {
-          name: "username";
-          type: "string";
+          name: 'username';
+          type: 'string';
           index: false;
-        }
+        },
       ];
     },
     {
-      name: "NewHackathonJoin";
+      name: 'NewHackathonJoin';
       fields: [
         {
-          name: "authority";
-          type: "publicKey";
+          name: 'authority';
+          type: 'publicKey';
           index: false;
         },
         {
-          name: "hackathonAccount";
-          type: "publicKey";
+          name: 'hackathonAccount';
+          type: 'publicKey';
           index: false;
         },
         {
-          name: "projectAccount";
-          type: "publicKey";
+          name: 'projectAccount';
+          type: 'publicKey';
           index: false;
-        }
+        },
       ];
-    }
+    },
   ];
   errors: [
     {
       code: 6000;
-      name: "MaxLengthExceeded";
-      msg: "max length is 32";
+      name: 'MaxLengthExceeded';
+      msg: 'max length is 32';
     },
     {
       code: 6001;
-      name: "InvalidStatus";
-      msg: "invalid status";
+      name: 'InvalidStatus';
+      msg: 'invalid status';
     },
     {
       code: 6002;
-      name: "InvalidRoundAccount";
-      msg: "invalid round account";
+      name: 'InvalidRoundAccount';
+      msg: 'invalid round account';
     },
     {
       code: 6003;
-      name: "InvalidProjectVerification";
-      msg: "project not verified";
+      name: 'InvalidProjectVerification';
+      msg: 'project not verified';
     },
     {
       code: 6004;
-      name: "ContributionSizeExceded";
-      msg: "contribution size exceded";
+      name: 'ContributionSizeExceded';
+      msg: 'contribution size exceded';
     },
     {
       code: 6005;
-      name: "ProofAlreadyExists";
-      msg: "Proof Already Exists";
+      name: 'ProofAlreadyExists';
+      msg: 'Proof Already Exists';
     },
     {
       code: 6006;
-      name: "ProofDoesNotExists";
-      msg: "Proof Does Not Exists";
+      name: 'ProofDoesNotExists';
+      msg: 'Proof Does Not Exists';
     },
     {
       code: 6007;
-      name: "InvalidProofType";
-      msg: "Invalid Proof type";
-    }
+      name: 'InvalidProofType';
+      msg: 'Invalid Proof type';
+    },
   ];
 }
 
 export const IDL: CubikContractV2 = {
-  version: "0.1.0",
-  name: "cubik_contract_v2",
+  version: '0.1.0',
+  name: 'cubik_contract_v2',
   instructions: [
     {
-      name: "createUser",
+      name: 'createUser',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "userAccount",
+          name: 'userAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "username",
-          type: "string",
+          name: 'username',
+          type: 'string',
         },
       ],
     },
     {
-      name: "createProject",
+      name: 'createProject',
       accounts: [
         {
-          name: "owners",
+          name: 'owners',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "projectAccount",
+          name: 'projectAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "adminAccount",
+          name: 'adminAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "userAccount",
+          name: 'userAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "counter",
-          type: "string",
+          name: 'counter',
+          type: 'string',
         },
         {
-          name: "multiSig",
-          type: "publicKey",
+          name: 'multiSig',
+          type: 'publicKey',
         },
       ],
     },
     {
-      name: "createRound",
+      name: 'createRound',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "roundAccount",
+          name: 'roundAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "counter",
-          type: "string",
+          name: 'counter',
+          type: 'string',
         },
         {
-          name: "matchingPool",
-          type: "u64",
+          name: 'matchingPool',
+          type: 'u64',
         },
         {
-          name: "projectSize",
-          type: "u64",
+          name: 'projectSize',
+          type: 'u64',
         },
         {
-          name: "limit",
-          type: "u64",
+          name: 'limit',
+          type: 'u64',
         },
       ],
     },
     {
-      name: "createAdmin",
+      name: 'createAdmin',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "adminAccount",
+          name: 'adminAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
@@ -1505,684 +1505,684 @@ export const IDL: CubikContractV2 = {
       args: [],
     },
     {
-      name: "projectRoundJoin",
+      name: 'projectRoundJoin',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "roundVerficationAccount",
+          name: 'roundVerficationAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "roundAccount",
-          type: "publicKey",
+          name: 'roundAccount',
+          type: 'publicKey',
         },
         {
-          name: "projectAccount",
-          type: "publicKey",
+          name: 'projectAccount',
+          type: 'publicKey',
         },
       ],
     },
     {
-      name: "updateApproveRound",
+      name: 'updateApproveRound',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "adminAccount",
+          name: 'adminAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "roundAccount",
+          name: 'roundAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "projectAccount",
+          name: 'projectAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "roundVerficationAccount",
+          name: 'roundVerficationAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "roundId",
-          type: "string",
+          name: 'roundId',
+          type: 'string',
         },
         {
-          name: "counter",
-          type: "string",
+          name: 'counter',
+          type: 'string',
         },
         {
-          name: "owner",
-          type: "publicKey",
+          name: 'owner',
+          type: 'publicKey',
         },
       ],
     },
     {
-      name: "updateRejectRound",
+      name: 'updateRejectRound',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "adminAccount",
+          name: 'adminAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "roundAccount",
+          name: 'roundAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "projectAccount",
+          name: 'projectAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "roundVerficationAccount",
+          name: 'roundVerficationAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "roundId",
-          type: "string",
+          name: 'roundId',
+          type: 'string',
         },
         {
-          name: "counter",
-          type: "string",
+          name: 'counter',
+          type: 'string',
         },
         {
-          name: "owner",
-          type: "publicKey",
+          name: 'owner',
+          type: 'publicKey',
         },
       ],
     },
     {
-      name: "updateProjectStatusVerified",
+      name: 'updateProjectStatusVerified',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "adminAccount",
+          name: 'adminAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "projectAccount",
+          name: 'projectAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "userAccount",
+          name: 'userAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "counter",
-          type: "string",
+          name: 'counter',
+          type: 'string',
         },
         {
-          name: "owner",
-          type: "publicKey",
+          name: 'owner',
+          type: 'publicKey',
         },
       ],
     },
     {
-      name: "updateProjectStatusFailed",
+      name: 'updateProjectStatusFailed',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "adminAccount",
+          name: 'adminAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "projectAccount",
+          name: 'projectAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "userAccount",
+          name: 'userAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "counter",
-          type: "string",
+          name: 'counter',
+          type: 'string',
         },
         {
-          name: "owner",
-          type: "publicKey",
+          name: 'owner',
+          type: 'publicKey',
         },
       ],
     },
     {
-      name: "createContributionSpl",
+      name: 'createContributionSpl',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "tokenMint",
+          name: 'tokenMint',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "tokenAtaSender",
+          name: 'tokenAtaSender',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "tokenAtaReceiver",
+          name: 'tokenAtaReceiver',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "tokenAtaAdmin",
+          name: 'tokenAtaAdmin',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "adminAccount",
+          name: 'adminAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "roundAccount",
+          name: 'roundAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "projectAccount",
+          name: 'projectAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "contributionAccount",
+          name: 'contributionAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "tokenProgram",
+          name: 'tokenProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "roundId",
-          type: "string",
+          name: 'roundId',
+          type: 'string',
         },
         {
-          name: "counter",
-          type: "string",
+          name: 'counter',
+          type: 'string',
         },
         {
-          name: "owner",
-          type: "publicKey",
+          name: 'owner',
+          type: 'publicKey',
         },
         {
-          name: "usdAmount",
-          type: "u64",
+          name: 'usdAmount',
+          type: 'u64',
         },
         {
-          name: "total",
-          type: "u64",
+          name: 'total',
+          type: 'u64',
         },
         {
-          name: "split",
-          type: "u64",
+          name: 'split',
+          type: 'u64',
         },
       ],
     },
     {
-      name: "updateContributionSpl",
+      name: 'updateContributionSpl',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "tokenMint",
+          name: 'tokenMint',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "tokenAtaSender",
+          name: 'tokenAtaSender',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "tokenAtaReceiver",
+          name: 'tokenAtaReceiver',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "tokenAtaAdmin",
+          name: 'tokenAtaAdmin',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "adminAccount",
+          name: 'adminAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "roundAccount",
+          name: 'roundAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "projectAccount",
+          name: 'projectAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "contributionAccount",
+          name: 'contributionAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "tokenProgram",
+          name: 'tokenProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "roundId",
-          type: "string",
+          name: 'roundId',
+          type: 'string',
         },
         {
-          name: "counter",
-          type: "string",
+          name: 'counter',
+          type: 'string',
         },
         {
-          name: "owner",
-          type: "publicKey",
+          name: 'owner',
+          type: 'publicKey',
         },
         {
-          name: "usdAmount",
-          type: "u64",
+          name: 'usdAmount',
+          type: 'u64',
         },
         {
-          name: "total",
-          type: "u64",
+          name: 'total',
+          type: 'u64',
         },
         {
-          name: "split",
-          type: "u64",
+          name: 'split',
+          type: 'u64',
         },
       ],
     },
     {
-      name: "createContributionSol",
+      name: 'createContributionSol',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "receiverAccount",
+          name: 'receiverAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "adminAccountInfo",
+          name: 'adminAccountInfo',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "adminAccount",
+          name: 'adminAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "roundAccount",
+          name: 'roundAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "projectAccount",
+          name: 'projectAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "contributionAccount",
+          name: 'contributionAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "tokenProgram",
+          name: 'tokenProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "roundId",
-          type: "string",
+          name: 'roundId',
+          type: 'string',
         },
         {
-          name: "counter",
-          type: "string",
+          name: 'counter',
+          type: 'string',
         },
         {
-          name: "owner",
-          type: "publicKey",
+          name: 'owner',
+          type: 'publicKey',
         },
         {
-          name: "usdAmount",
-          type: "u64",
+          name: 'usdAmount',
+          type: 'u64',
         },
         {
-          name: "total",
-          type: "u64",
+          name: 'total',
+          type: 'u64',
         },
         {
-          name: "split",
-          type: "u64",
+          name: 'split',
+          type: 'u64',
         },
       ],
     },
     {
-      name: "updateContributionSol",
+      name: 'updateContributionSol',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "receiverAccount",
+          name: 'receiverAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "adminAccountInfo",
+          name: 'adminAccountInfo',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "adminAccount",
+          name: 'adminAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "roundAccount",
+          name: 'roundAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "projectAccount",
+          name: 'projectAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "contributionAccount",
+          name: 'contributionAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "tokenProgram",
+          name: 'tokenProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "roundId",
-          type: "string",
+          name: 'roundId',
+          type: 'string',
         },
         {
-          name: "counter",
-          type: "string",
+          name: 'counter',
+          type: 'string',
         },
         {
-          name: "owner",
-          type: "publicKey",
+          name: 'owner',
+          type: 'publicKey',
         },
         {
-          name: "usdAmount",
-          type: "u64",
+          name: 'usdAmount',
+          type: 'u64',
         },
         {
-          name: "total",
-          type: "u64",
+          name: 'total',
+          type: 'u64',
         },
         {
-          name: "split",
-          type: "u64",
+          name: 'split',
+          type: 'u64',
         },
       ],
     },
     {
-      name: "addProof",
+      name: 'addProof',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "userAccount",
+          name: 'userAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "admin",
+          name: 'admin',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "adminProofAccount",
+          name: 'adminProofAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "proof",
-          type: "string",
+          name: 'proof',
+          type: 'string',
         },
       ],
     },
     {
-      name: "removeProof",
+      name: 'removeProof',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "userAccount",
+          name: 'userAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "admin",
+          name: 'admin',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "adminProofAccount",
+          name: 'adminProofAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "proof",
-          type: "string",
+          name: 'proof',
+          type: 'string',
         },
       ],
     },
     {
-      name: "adminProof",
+      name: 'adminProof',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "adminProofAccount",
+          name: 'adminProofAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
@@ -2190,320 +2190,320 @@ export const IDL: CubikContractV2 = {
       args: [],
     },
     {
-      name: "createContributionV2",
+      name: 'createContributionV2',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "tokenMint",
+          name: 'tokenMint',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "tokenAtaSender",
+          name: 'tokenAtaSender',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "tokenAtaReceiver",
+          name: 'tokenAtaReceiver',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "tokenAtaAdmin",
+          name: 'tokenAtaAdmin',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "adminAccount",
+          name: 'adminAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "projectAccount",
+          name: 'projectAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "contributionAccount",
+          name: 'contributionAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "tokenProgram",
+          name: 'tokenProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "amount",
-          type: "u64",
+          name: 'amount',
+          type: 'u64',
         },
         {
-          name: "split",
-          type: "u64",
+          name: 'split',
+          type: 'u64',
         },
         {
-          name: "createKey",
-          type: "publicKey",
+          name: 'createKey',
+          type: 'publicKey',
         },
         {
-          name: "owner",
-          type: "publicKey",
+          name: 'owner',
+          type: 'publicKey',
         },
         {
-          name: "roundId",
-          type: "string",
+          name: 'roundId',
+          type: 'string',
         },
         {
-          name: "counter",
-          type: "string",
+          name: 'counter',
+          type: 'string',
         },
       ],
     },
     {
-      name: "projectJoinHackathon",
+      name: 'projectJoinHackathon',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "hackathonJoinAccount",
+          name: 'hackathonJoinAccount',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "hackathonAccount",
-          type: "publicKey",
+          name: 'hackathonAccount',
+          type: 'publicKey',
         },
         {
-          name: "projectAccount",
-          type: "publicKey",
+          name: 'projectAccount',
+          type: 'publicKey',
         },
       ],
     },
   ],
   accounts: [
     {
-      name: "admin",
+      name: 'admin',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "authority",
-            type: "publicKey",
+            name: 'authority',
+            type: 'publicKey',
           },
           {
-            name: "bump",
-            type: "u8",
+            name: 'bump',
+            type: 'u8',
           },
         ],
       },
     },
     {
-      name: "contribution",
+      name: 'contribution',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "authority",
-            type: "publicKey",
+            name: 'authority',
+            type: 'publicKey',
           },
           {
-            name: "bump",
-            type: "u8",
+            name: 'bump',
+            type: 'u8',
           },
           {
-            name: "total",
-            type: "u64",
+            name: 'total',
+            type: 'u64',
           },
           {
-            name: "usd",
-            type: "u64",
+            name: 'usd',
+            type: 'u64',
           },
         ],
       },
     },
     {
-      name: "contributionV2",
+      name: 'contributionV2',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "authority",
-            type: "publicKey",
+            name: 'authority',
+            type: 'publicKey',
           },
           {
-            name: "bump",
-            type: "u8",
+            name: 'bump',
+            type: 'u8',
           },
         ],
       },
     },
     {
-      name: "project",
+      name: 'project',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "owner",
-            type: "publicKey",
+            name: 'owner',
+            type: 'publicKey',
           },
           {
-            name: "authority",
-            type: "publicKey",
+            name: 'authority',
+            type: 'publicKey',
           },
           {
-            name: "counter",
-            type: "u64",
+            name: 'counter',
+            type: 'u64',
           },
           {
-            name: "status",
+            name: 'status',
             type: {
-              defined: "ProjectVerification",
+              defined: 'ProjectVerification',
             },
           },
           {
-            name: "multiSig",
-            type: "publicKey",
+            name: 'multiSig',
+            type: 'publicKey',
           },
           {
-            name: "bump",
-            type: "u8",
-          },
-        ],
-      },
-    },
-    {
-      name: "round",
-      type: {
-        kind: "struct",
-        fields: [
-          {
-            name: "authority",
-            type: "publicKey",
-          },
-          {
-            name: "roundId",
-            type: "string",
-          },
-          {
-            name: "bump",
-            type: "u8",
-          },
-          {
-            name: "matchingPoolSize",
-            type: "u64",
-          },
-          {
-            name: "limit",
-            type: "u64",
-          },
-          {
-            name: "projectSize",
-            type: "u64",
+            name: 'bump',
+            type: 'u8',
           },
         ],
       },
     },
     {
-      name: "roundJoin",
+      name: 'round',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "authority",
-            type: "publicKey",
+            name: 'authority',
+            type: 'publicKey',
           },
           {
-            name: "roundAccount",
-            type: "publicKey",
+            name: 'roundId',
+            type: 'string',
           },
           {
-            name: "projectAccount",
-            type: "publicKey",
+            name: 'bump',
+            type: 'u8',
           },
           {
-            name: "status",
+            name: 'matchingPoolSize',
+            type: 'u64',
+          },
+          {
+            name: 'limit',
+            type: 'u64',
+          },
+          {
+            name: 'projectSize',
+            type: 'u64',
+          },
+        ],
+      },
+    },
+    {
+      name: 'roundJoin',
+      type: {
+        kind: 'struct',
+        fields: [
+          {
+            name: 'authority',
+            type: 'publicKey',
+          },
+          {
+            name: 'roundAccount',
+            type: 'publicKey',
+          },
+          {
+            name: 'projectAccount',
+            type: 'publicKey',
+          },
+          {
+            name: 'status',
             type: {
-              defined: "RoundProjectStatus",
+              defined: 'RoundProjectStatus',
             },
           },
           {
-            name: "bump",
-            type: "u8",
+            name: 'bump',
+            type: 'u8',
           },
         ],
       },
     },
     {
-      name: "joinHackathon",
+      name: 'joinHackathon',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "authority",
-            type: "publicKey",
+            name: 'authority',
+            type: 'publicKey',
           },
           {
-            name: "bump",
-            type: "u8",
+            name: 'bump',
+            type: 'u8',
           },
         ],
       },
     },
     {
-      name: "user",
+      name: 'user',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "authority",
-            type: "publicKey",
+            name: 'authority',
+            type: 'publicKey',
           },
           {
-            name: "project",
-            type: "u64",
+            name: 'project',
+            type: 'u64',
           },
           {
-            name: "proof",
+            name: 'proof',
             type: {
               vec: {
-                defined: "PROOF",
+                defined: 'PROOF',
               },
             },
           },
           {
-            name: "bump",
-            type: "u8",
+            name: 'bump',
+            type: 'u8',
           },
         ],
       },
@@ -2511,61 +2511,61 @@ export const IDL: CubikContractV2 = {
   ],
   types: [
     {
-      name: "ProjectVerification",
+      name: 'ProjectVerification',
       type: {
-        kind: "enum",
+        kind: 'enum',
         variants: [
           {
-            name: "REVIEW",
+            name: 'REVIEW',
           },
           {
-            name: "VERIFIED",
+            name: 'VERIFIED',
           },
           {
-            name: "FAILED",
+            name: 'FAILED',
           },
         ],
       },
     },
     {
-      name: "RoundProjectStatus",
+      name: 'RoundProjectStatus',
       type: {
-        kind: "enum",
+        kind: 'enum',
         variants: [
           {
-            name: "PENDING",
+            name: 'PENDING',
           },
           {
-            name: "APPROVED",
+            name: 'APPROVED',
           },
           {
-            name: "REJECTED",
+            name: 'REJECTED',
           },
         ],
       },
     },
     {
-      name: "PROOF",
+      name: 'PROOF',
       type: {
-        kind: "enum",
+        kind: 'enum',
         variants: [
           {
-            name: "LAMPORT",
+            name: 'LAMPORT',
           },
           {
-            name: "SUPERTEAM",
+            name: 'SUPERTEAM',
           },
           {
-            name: "MONKEYDAO",
+            name: 'MONKEYDAO',
           },
           {
-            name: "CIVIC",
+            name: 'CIVIC',
           },
           {
-            name: "SOCIAL",
+            name: 'SOCIAL',
           },
           {
-            name: "DROPS01",
+            name: 'DROPS01',
           },
         ],
       },
@@ -2573,96 +2573,96 @@ export const IDL: CubikContractV2 = {
   ],
   events: [
     {
-      name: "NewContribution",
+      name: 'NewContribution',
       fields: [
         {
-          name: "user",
-          type: "publicKey",
+          name: 'user',
+          type: 'publicKey',
           index: false,
         },
         {
-          name: "usdAmount",
-          type: "u64",
+          name: 'usdAmount',
+          type: 'u64',
           index: false,
         },
         {
-          name: "total",
-          type: "u64",
+          name: 'total',
+          type: 'u64',
           index: false,
         },
         {
-          name: "totalContribution",
-          type: "u64",
+          name: 'totalContribution',
+          type: 'u64',
           index: false,
         },
         {
-          name: "totalUsdAmount",
-          type: "u64",
+          name: 'totalUsdAmount',
+          type: 'u64',
           index: false,
         },
         {
-          name: "split",
-          type: "u64",
+          name: 'split',
+          type: 'u64',
           index: false,
         },
       ],
     },
     {
-      name: "NewContributionV2",
+      name: 'NewContributionV2',
       fields: [
         {
-          name: "user",
-          type: "publicKey",
+          name: 'user',
+          type: 'publicKey',
           index: false,
         },
         {
-          name: "createKey",
-          type: "publicKey",
+          name: 'createKey',
+          type: 'publicKey',
           index: false,
         },
         {
-          name: "amount",
-          type: "u64",
+          name: 'amount',
+          type: 'u64',
           index: false,
         },
         {
-          name: "split",
-          type: "u64",
+          name: 'split',
+          type: 'u64',
           index: false,
         },
       ],
     },
     {
-      name: "NewUser",
+      name: 'NewUser',
       fields: [
         {
-          name: "authority",
-          type: "publicKey",
+          name: 'authority',
+          type: 'publicKey',
           index: false,
         },
         {
-          name: "username",
-          type: "string",
+          name: 'username',
+          type: 'string',
           index: false,
         },
       ],
     },
     {
-      name: "NewHackathonJoin",
+      name: 'NewHackathonJoin',
       fields: [
         {
-          name: "authority",
-          type: "publicKey",
+          name: 'authority',
+          type: 'publicKey',
           index: false,
         },
         {
-          name: "hackathonAccount",
-          type: "publicKey",
+          name: 'hackathonAccount',
+          type: 'publicKey',
           index: false,
         },
         {
-          name: "projectAccount",
-          type: "publicKey",
+          name: 'projectAccount',
+          type: 'publicKey',
           index: false,
         },
       ],
@@ -2671,43 +2671,43 @@ export const IDL: CubikContractV2 = {
   errors: [
     {
       code: 6000,
-      name: "MaxLengthExceeded",
-      msg: "max length is 32",
+      name: 'MaxLengthExceeded',
+      msg: 'max length is 32',
     },
     {
       code: 6001,
-      name: "InvalidStatus",
-      msg: "invalid status",
+      name: 'InvalidStatus',
+      msg: 'invalid status',
     },
     {
       code: 6002,
-      name: "InvalidRoundAccount",
-      msg: "invalid round account",
+      name: 'InvalidRoundAccount',
+      msg: 'invalid round account',
     },
     {
       code: 6003,
-      name: "InvalidProjectVerification",
-      msg: "project not verified",
+      name: 'InvalidProjectVerification',
+      msg: 'project not verified',
     },
     {
       code: 6004,
-      name: "ContributionSizeExceded",
-      msg: "contribution size exceded",
+      name: 'ContributionSizeExceded',
+      msg: 'contribution size exceded',
     },
     {
       code: 6005,
-      name: "ProofAlreadyExists",
-      msg: "Proof Already Exists",
+      name: 'ProofAlreadyExists',
+      msg: 'Proof Already Exists',
     },
     {
       code: 6006,
-      name: "ProofDoesNotExists",
-      msg: "Proof Does Not Exists",
+      name: 'ProofDoesNotExists',
+      msg: 'Proof Does Not Exists',
     },
     {
       code: 6007,
-      name: "InvalidProofType",
-      msg: "Invalid Proof type",
+      name: 'InvalidProofType',
+      msg: 'Invalid Proof type',
     },
   ],
 };

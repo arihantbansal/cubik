@@ -1,1 +1,0 @@
-module.exports = require("../../packages/config/tailwind/tailwind.config")

@@ -1,11 +1,13 @@
-"use server";
-import { prisma } from "@cubik/database";
+'use server';
+
+import { prisma } from '@cubik/database';
+
 interface Event {
   name: string;
   id: string;
   shortDescription: string;
   tracks?: { label: string; value: string }[];
-  type: "hackathon" | "round";
+  type: 'hackathon' | 'round';
 }
 export const handleEvent = async (): Promise<Event[]> => {
   try {
@@ -52,13 +54,13 @@ export const handleEvent = async (): Promise<Event[]> => {
               value: t.name,
             };
           }),
-          type: "hackathon",
+          type: 'hackathon',
         };
       }),
       ...round.map((e) => {
         return {
           ...e,
-          type: "round",
+          type: 'round',
         };
       }),
     ];

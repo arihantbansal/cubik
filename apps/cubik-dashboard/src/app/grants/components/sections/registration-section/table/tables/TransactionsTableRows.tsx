@@ -1,6 +1,11 @@
-import { AvatarGroup, AvatarLabelGroup, TableCell, TableRow } from "@cubik/ui";
-import { Tag } from "@cubik/ui";
-import React from "react";
+import React from 'react';
+
+import {
+  AvatarLabelGroup,
+  TableCell,
+  TableRow,
+  Tag,
+} from '@cubik/ui';
 
 export const TransactionsTableRows = () => {
   return (
@@ -9,8 +14,8 @@ export const TransactionsTableRows = () => {
         <TableCell className="font-medium">
           <AvatarLabelGroup
             avatarSrc={[
-              { src: "/projectLogo.jpeg", alt: "Description 1" },
-              { src: "/dhruvAvatar.jpeg", alt: "Description 2" },
+              { src: '/projectLogo.jpeg', alt: 'Description 1' },
+              { src: '/dhruvAvatar.jpeg', alt: 'Description 2' },
             ]}
             shape="square"
             title="2 Assets"
@@ -48,8 +53,8 @@ export const TransactionsTableRows = () => {
         <TableCell className="font-medium">
           <AvatarLabelGroup
             avatarSrc={[
-              { src: "/projectLogo.jpeg", alt: "Description 1" },
-              { src: "/dhruvAvatar.jpeg", alt: "Description 2" },
+              { src: '/projectLogo.jpeg', alt: 'Description 1' },
+              { src: '/dhruvAvatar.jpeg', alt: 'Description 2' },
             ]}
             shape="square"
             title="2 Assets"
@@ -87,8 +92,8 @@ export const TransactionsTableRows = () => {
         <TableCell className="font-medium">
           <AvatarLabelGroup
             avatarSrc={[
-              { src: "/projectLogo.jpeg", alt: "Description 1" },
-              { src: "/dhruvAvatar.jpeg", alt: "Description 2" },
+              { src: '/projectLogo.jpeg', alt: 'Description 1' },
+              { src: '/dhruvAvatar.jpeg', alt: 'Description 2' },
             ]}
             shape="square"
             title="2 Assets"

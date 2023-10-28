@@ -1,8 +1,10 @@
+import Link from 'next/link';
+import Username from '@/app/components/common/username';
+import { WalletAddress } from '@/app/components/common/wallet';
+import { useUser } from '@/app/context/user';
+import ChevronDown from '@/theme/icons/chevron_down.svg';
 import {
   Avatar,
-  Menu,
-  MenuButton,
-  MenuList,
   Box,
   Button,
   Center,
@@ -11,18 +13,17 @@ import {
   DrawerContent,
   DrawerOverlay,
   HStack,
+  Menu,
+  MenuButton,
   MenuDivider,
+  MenuList,
   Skeleton,
-  VStack,
   useDisclosure,
-} from "@/utils/chakra";
-import Link from "next/link";
-import ChevronDown from "@/theme/icons/chevron_down.svg";
-import Username from "@/app/components/common/username";
-import { WalletAddress } from "@/app/components/common/wallet";
-import { useUser } from "@/app/context/user";
-import { WalletBalance } from "./WalletBalance";
-import { handleLogout } from "@/utils/helpers/auth";
+  VStack,
+} from '@/utils/chakra';
+import { handleLogout } from '@/utils/helpers/auth';
+
+import { WalletBalance } from './WalletBalance';
 
 const ProfileDetails = () => {
   const { user } = useUser();
@@ -43,7 +44,7 @@ const ProfileDetails = () => {
           src={user?.profilePicture as string}
         />
       </Skeleton>
-      <VStack alignItems={"start"} justify="center" w="full" spacing="6px">
+      <VStack alignItems={'start'} justify="center" w="full" spacing="6px">
         <Username
           isLoading={!user?.username}
           username={user?.username}
@@ -80,7 +81,7 @@ const UserNavbarMenuButton = () => {
           isLoaded={!!user?.username}
           w="full"
         >
-          <Link href={"/" + user?.username}>
+          <Link href={'/' + user?.username}>
             <Button
               isDisabled
               disabled
@@ -88,11 +89,11 @@ const UserNavbarMenuButton = () => {
               bg="transparent"
               w="full"
               rounded="md"
-              textStyle={"body4"}
+              textStyle={'body4'}
               color="white"
-              display={"flex"}
+              display={'flex'}
               alignItems="center"
-              justifyContent={"start"}
+              justifyContent={'start'}
               // leftIcon={
               //   {
               //     /*  @todo  */
@@ -104,18 +105,18 @@ const UserNavbarMenuButton = () => {
               //   // />
               // }
               iconSpacing="8px"
-              p={{ base: "12px", md: "8px" }}
+              p={{ base: '12px', md: '8px' }}
               sx={{
-                width: "-webkit-fill-available",
+                width: '-webkit-fill-available',
               }}
               _hover={{
-                backgroundColor: "#141414",
+                backgroundColor: '#141414',
               }}
               _active={{
-                backgroundColor: "#141414",
+                backgroundColor: '#141414',
               }}
             >
-              <Box as="p" textStyle={{ base: "body5", md: "body4" }}>
+              <Box as="p" textStyle={{ base: 'body5', md: 'body4' }}>
                 Profile
               </Box>
             </Button>
@@ -127,17 +128,17 @@ const UserNavbarMenuButton = () => {
           fadeDuration={2.5}
           isLoaded={!!user?.username}
         >
-          <Link href={"/create/project"}>
+          <Link href={'/create/project'}>
             <Box
               as={Button}
               bg="transparent"
               rounded="md"
               w="full"
-              textStyle={"body4"}
+              textStyle={'body4'}
               color="white"
-              display={"flex"}
+              display={'flex'}
               alignItems="center"
-              justifyContent={"start"}
+              justifyContent={'start'}
               // leftIcon={
               //   <Box
               //     as={MdUpload}
@@ -147,18 +148,18 @@ const UserNavbarMenuButton = () => {
               // }
               //   @todo
               iconSpacing="8px"
-              p={{ base: "12px", md: "8px" }}
+              p={{ base: '12px', md: '8px' }}
               sx={{
-                width: "-webkit-fill-available",
+                width: '-webkit-fill-available',
               }}
               _hover={{
-                backgroundColor: "#141414",
+                backgroundColor: '#141414',
               }}
               _active={{
-                backgroundColor: "#141414",
+                backgroundColor: '#141414',
               }}
             >
-              <Box textStyle={{ base: "body5", md: "body4" }}>
+              <Box textStyle={{ base: 'body5', md: 'body4' }}>
                 Create new Project
               </Box>
             </Box>
@@ -174,11 +175,11 @@ const UserNavbarMenuButton = () => {
             bg="transparent"
             rounded="md"
             w="full"
-            textStyle={"body4"}
+            textStyle={'body4'}
             color="white"
-            display={"flex"}
+            display={'flex'}
             alignItems="center"
-            justifyContent={"start"}
+            justifyContent={'start'}
             // leftIcon={
             //   <Box
             //     as={MdPowerSettingsNew}
@@ -187,19 +188,19 @@ const UserNavbarMenuButton = () => {
             //   />
             // }
             //   @todo
-            p={{ base: "12px", md: "8px" }}
+            p={{ base: '12px', md: '8px' }}
             onClick={handleSignOut}
             sx={{
-              width: "-webkit-fill-available",
+              width: '-webkit-fill-available',
             }}
             _hover={{
-              backgroundColor: "#141414",
+              backgroundColor: '#141414',
             }}
             _active={{
-              backgroundColor: "#141414",
+              backgroundColor: '#141414',
             }}
           >
-            <Box as="p" textStyle={{ base: "body5", md: "body4" }}>
+            <Box as="p" textStyle={{ base: 'body5', md: 'body4' }}>
               Disconnect Wallet
             </Box>
           </Button>
@@ -213,16 +214,16 @@ const UserNavbarMenuButton = () => {
       <Skeleton
         fadeDuration={1.5}
         isLoaded={!!user?.profilePicture}
-        width={{ base: "30px", md: "36px" }}
-        height={{ base: "30px", md: "36px" }}
-        display={{ base: "flex", md: "none" }}
+        width={{ base: '30px', md: '36px' }}
+        height={{ base: '30px', md: '36px' }}
+        display={{ base: 'flex', md: 'none' }}
         borderRadius="8px"
       >
         <Avatar
           as="button"
           onClick={onOpen}
-          width={{ base: "30px", md: "36px" }}
-          height={{ base: "30px", md: "36px" }}
+          width={{ base: '30px', md: '36px' }}
+          height={{ base: '30px', md: '36px' }}
           name={user?.username as string}
           src={user?.profilePicture as string}
         />
@@ -236,11 +237,11 @@ const UserNavbarMenuButton = () => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerBody>
-            <VStack gap="16px" w="full" align={"start"}>
+            <VStack gap="16px" w="full" align={'start'}>
               <ProfileDetails />
               <WalletBalance />
-              <Box w="full" h="1px" backgroundColor={"#1D1F1E"} />
-              <VStack spacing="0px" align={"start"} w="full">
+              <Box w="full" h="1px" backgroundColor={'#1D1F1E'} />
+              <VStack spacing="0px" align={'start'} w="full">
                 <NavMenuButtons />
               </VStack>
             </VStack>
@@ -249,24 +250,24 @@ const UserNavbarMenuButton = () => {
       </Drawer>
       <Menu>
         <MenuButton
-          display={{ base: "none", md: "flex" }}
-          backgroundColor={"transparent"}
+          display={{ base: 'none', md: 'flex' }}
+          backgroundColor={'transparent'}
           _hover={{
-            backgroundColor: "transparent",
+            backgroundColor: 'transparent',
           }}
           _active={{
-            backgroundColor: "transparent",
+            backgroundColor: 'transparent',
           }}
           _focus={{
-            backgroundColor: "transparent",
+            backgroundColor: 'transparent',
           }}
           as={Button}
-          w={"fit-content"}
+          w={'fit-content'}
           p="0"
           rightIcon={
             <Center
-              width={{ base: "18px", md: "20px" }}
-              height={{ base: "18px", md: "20px" }}
+              width={{ base: '18px', md: '20px' }}
+              height={{ base: '18px', md: '20px' }}
               color="#FFF"
             >
               <ChevronDown size={26} />
@@ -276,23 +277,23 @@ const UserNavbarMenuButton = () => {
           <Skeleton
             fadeDuration={2.5}
             isLoaded={!!user?.profilePicture}
-            width={{ base: "28px", md: "40px" }}
-            height={{ base: "28px", md: "40px" }}
+            width={{ base: '28px', md: '40px' }}
+            height={{ base: '28px', md: '40px' }}
             borderRadius="8px"
           >
             <Avatar
-              width={{ base: "28px", md: "40px" }}
-              height={{ base: "28px", md: "40px" }}
+              width={{ base: '28px', md: '40px' }}
+              height={{ base: '28px', md: '40px' }}
               name={user?.username as string}
               src={user?.profilePicture as string}
             />
           </Skeleton>
         </MenuButton>
         <MenuList
-          background={"linear-gradient(322.35deg, #000000 0%, #0F0F0F 100%)"}
+          background={'linear-gradient(322.35deg, #000000 0%, #0F0F0F 100%)'}
           border="1px solid #1D1F1E"
           gap="8px"
-          display={"flex"}
+          display={'flex'}
           flexDir="column"
         >
           <ProfileDetails />
@@ -300,8 +301,8 @@ const UserNavbarMenuButton = () => {
             opacity={!user?.profilePicture ? 0.6 : 1}
             fadeDuration={2}
             isLoaded={!!user?.profilePicture}
-            width={"full"}
-            height={!user?.profilePicture ? "3rem" : "auto"}
+            width={'full'}
+            height={!user?.profilePicture ? '3rem' : 'auto'}
             borderRadius="8px"
           >
             <WalletBalance />

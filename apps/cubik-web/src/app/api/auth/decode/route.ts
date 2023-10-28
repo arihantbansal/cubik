@@ -1,21 +1,22 @@
-import { decodeToken } from "@cubik/auth";
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
+
+import { decodeToken } from '@cubik/auth';
 
 export const GET = async () => {
   const cookieStore = cookies();
-  const authCookie = cookieStore.get("authToken");
+  const authCookie = cookieStore.get('authToken');
 
   if (!authCookie?.value) {
     return NextResponse.json(
       {
         data: null,
-        error: "No auth token found",
+        error: 'No auth token found',
       },
       {
         status: 400,
-        statusText: "No auth token found",
-      }
+        statusText: 'No auth token found',
+      },
     );
   }
 
@@ -25,12 +26,12 @@ export const GET = async () => {
       return NextResponse.json(
         {
           data: null,
-          error: "INVALID_TOKEN",
+          error: 'INVALID_TOKEN',
         },
         {
           status: 400,
-          statusText: "INVALID_TOKEN",
-        }
+          statusText: 'INVALID_TOKEN',
+        },
       );
     }
     return NextResponse.json({
@@ -43,12 +44,12 @@ export const GET = async () => {
     return NextResponse.json(
       {
         data: null,
-        error: "INTERNAL_SERVER_ERROR",
+        error: 'INTERNAL_SERVER_ERROR',
       },
       {
         status: 500,
-        statusText: "INTERNAL_SERVER_ERROR",
-      }
+        statusText: 'INTERNAL_SERVER_ERROR',
+      },
     );
   }
 };

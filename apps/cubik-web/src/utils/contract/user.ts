@@ -1,11 +1,13 @@
-"use client";
-import type { web3 } from "@coral-xyz/anchor";
-import { getSdk } from "./sdk";
-import type NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
+'use client';
+
+import type { web3 } from '@coral-xyz/anchor';
+import type NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+
+import { getSdk } from './sdk';
 
 export const createUserIx = (
   wallet: NodeWallet,
-  username: string
+  username: string,
 ): Promise<web3.TransactionInstruction> => {
   const sdk = getSdk(wallet);
 
@@ -15,7 +17,7 @@ export const createUserIx = (
 };
 
 export const createAdmin = (
-  wallet: NodeWallet
+  wallet: NodeWallet,
 ): Promise<web3.TransactionInstruction> => {
   const sdk = getSdk(wallet);
 

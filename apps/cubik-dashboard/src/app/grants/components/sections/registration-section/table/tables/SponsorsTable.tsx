@@ -1,13 +1,16 @@
+import React from 'react';
+
 import {
+  Button,
   Table,
+  TableBody,
+  TableHead,
   TableHeader,
   TableRow,
-  TableHead,
-  TableBody,
-  Button,
-} from "@cubik/ui";
-import React from "react";
-import { SponsorsTableRows } from "./SponsorsTableRows";
+} from '@cubik/ui';
+
+import { SponsorsTableRows } from './SponsorsTableRows';
+
 export const SponsorsTable = () => {
   return (
     <>

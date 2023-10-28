@@ -1,4 +1,4 @@
-import type { Prisma } from "@cubik/database";
+import type { Prisma } from '@cubik/database';
 
 export type ProjectLayoutType = Prisma.ProjectGetPayload<{
   select: {
@@ -15,7 +15,7 @@ export type ProjectPageEventType = {
   eventId: string;
   name: string;
   joinId: string;
-  eventType: "round" | "hackathon";
+  eventType: 'round' | 'hackathon';
   startTime: Date;
   endTime: Date;
 };

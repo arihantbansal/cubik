@@ -1,6 +1,7 @@
-"use server";
-import type { ProofType } from "@cubik/database";
-import { prisma } from "@cubik/database";
+'use server';
+
+import type { ProofType } from '@cubik/database';
+import { prisma } from '@cubik/database';
 
 interface Data {
   proofInfo: any;
@@ -15,7 +16,7 @@ export const createProof = async (data: Data) => {
         proofInfo: {
           equals: data.proofInfo.username,
           string_contains: data.proofInfo.username,
-          path: "$.username",
+          path: '$.username',
         },
       },
     });

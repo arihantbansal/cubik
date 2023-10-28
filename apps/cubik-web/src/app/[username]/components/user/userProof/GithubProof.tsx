@@ -1,6 +1,11 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
+import Image from 'next/image';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { SuccessToast } from '@/app/components/toasts/Toasts';
+import { useUser } from '@/app/context/user';
+import { env } from '@/env.mjs';
 import {
   Box,
   Button,
@@ -12,20 +17,18 @@ import {
   ModalContent,
   ModalOverlay,
   Tag,
-  VStack,
   useDisclosure,
   useToast,
-} from "@/utils/chakra";
-import { Player } from "@lottiefiles/react-lottie-player";
-import type { Proof } from "@cubik/database";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { supabase, useUserSupabase } from "@/utils/helpers/supabase";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { env } from "@/env.mjs";
-import { createProof, getUser } from "./createProof";
-import { useUser } from "@/app/context/user";
-import { SuccessToast } from "@/app/components/toasts/Toasts";
+  VStack,
+} from '@/utils/chakra';
+import { supabase, useUserSupabase } from '@/utils/helpers/supabase';
+import { Player } from '@lottiefiles/react-lottie-player';
+import { motion } from 'framer-motion';
+
+import type { Proof } from '@cubik/database';
+
+import { createProof, getUser } from './createProof';
+
 interface Props {
   username: string;
   proofs: Proof[];
@@ -42,26 +45,26 @@ export const GithubProof = ({ username, proofs }: Props) => {
   const { user, loading } = useUserSupabase(supabase);
   const [isLoading, setIsLoading] = React.useState(false);
   const connetGithub = async () => {
-    localStorage.setItem("authId", AuthUser?.id as string);
-    localStorage.setItem("tempUser", JSON.stringify(AuthUser));
+    localStorage.setItem('authId', AuthUser?.id as string);
+    localStorage.setItem('tempUser', JSON.stringify(AuthUser));
     await supabase.auth.signInWithOAuth({
-      provider: "github",
+      provider: 'github',
       options: {
-        redirectTo: env.NEXT_PUBLIC_URL_BASE + pathName + "?github=true",
+        redirectTo: env.NEXT_PUBLIC_URL_BASE + pathName + '?github=true',
       },
     });
   };
   useEffect(() => {
     const checkGithub = async () => {
       console.log(
-        searchParams?.get("github"),
+        searchParams?.get('github'),
         !isLoading,
         user?.data.user?.user_metadata.user_name,
         !loading,
-        !isOpen
+        !isOpen,
       );
       if (
-        searchParams?.get("github") &&
+        searchParams?.get('github') &&
         !isLoading &&
         user?.data.user?.user_metadata.user_name &&
         !loading &&
@@ -73,7 +76,7 @@ export const GithubProof = ({ username, proofs }: Props) => {
     };
     checkGithub();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams?.get("github"), user?.data.user?.user_metadata.user_name]);
+  }, [searchParams?.get('github'), user?.data.user?.user_metadata.user_name]);
   const toast = useToast();
   const createGithubProof = async () => {
     setIsLoading(true);
@@ -81,11 +84,11 @@ export const GithubProof = ({ username, proofs }: Props) => {
       proofInfo: {
         username: user?.data.user?.user_metadata.user_name as string,
       },
-      proofType: "GITHUB",
-      userId: localStorage.getItem("authId") as string,
+      proofType: 'GITHUB',
+      userId: localStorage.getItem('authId') as string,
     });
     if (res) {
-      const tempUser = await getUser(localStorage.getItem("authId") as string);
+      const tempUser = await getUser(localStorage.getItem('authId') as string);
       if (tempUser) {
         setUser({
           id: tempUser.id,
@@ -98,13 +101,13 @@ export const GithubProof = ({ username, proofs }: Props) => {
       onClose();
       SuccessToast({
         toast,
-        message: "Proof minted successfully",
+        message: 'Proof minted successfully',
       });
 
       // await supabase.auth.signOut();
-      localStorage.removeItem("authId");
-      localStorage.removeItem("tempUser");
-      router.push("/" + username);
+      localStorage.removeItem('authId');
+      localStorage.removeItem('tempUser');
+      router.push('/' + username);
       setIsLoading(false);
       return res;
     } else {
@@ -119,7 +122,7 @@ export const GithubProof = ({ username, proofs }: Props) => {
         <MotionBox
           as={Card}
           cursor="pointer"
-          w={{ base: "full", sm: "full", md: "17.8rem" }}
+          w={{ base: 'full', sm: 'full', md: '17.8rem' }}
           height="fit-content"
           h="full"
           whileHover={{ y: -8, scale: 1 }}
@@ -127,44 +130,44 @@ export const GithubProof = ({ username, proofs }: Props) => {
         >
           <VStack
             onClick={onOpen}
-            p={{ base: "24px", md: "32px" }}
+            p={{ base: '24px', md: '32px' }}
             gap="8px"
             align="start"
           >
-            <Center width={"60px"} height={"60px"}>
+            <Center width={'60px'} height={'60px'}>
               <Image
                 src="https://res.cloudinary.com/demonicirfan/image/upload/v1686469723/google_proof_tlsuyi.png"
                 alt="Twitter Logo"
-                width={"300"}
-                height={"300"}
+                width={'300'}
+                height={'300'}
               />
             </Center>
             <HStack spacing="8px">
               <Box
                 as="p"
-                textStyle={{ base: "title4", md: "title3" }}
-                color={"neutral.11"}
+                textStyle={{ base: 'title4', md: 'title3' }}
+                color={'neutral.11'}
               >
                 Github
               </Box>
               <Tag
-                size={{ base: "xs", md: "sm" }}
+                size={{ base: 'xs', md: 'sm' }}
                 px="12px"
                 py="4px"
                 color="surface.green.2"
-                background={"surface.green.3"}
+                background={'surface.green.3'}
                 rounded="full"
-                fontSize={{ base: "10px", sm: "12px", md: "14px" }}
+                fontSize={{ base: '10px', sm: '12px', md: '14px' }}
               >
-                {proofs.find((e) => e.proofType === "GITHUB")
-                  ? "Claimed"
-                  : "Claim"}
+                {proofs.find((e) => e.proofType === 'GITHUB')
+                  ? 'Claimed'
+                  : 'Claim'}
               </Tag>
             </HStack>
             <Box
               as="p"
-              textStyle={{ base: "body5", md: "body5" }}
-              color={"neutral.7"}
+              textStyle={{ base: 'body5', md: 'body5' }}
+              color={'neutral.7'}
             >
               To claim this proof you have to connect your github account .
             </Box>
@@ -172,40 +175,40 @@ export const GithubProof = ({ username, proofs }: Props) => {
           <Modal
             size="sm"
             motionPreset="scale"
-            variant={"cubik"}
+            variant={'cubik'}
             isOpen={isOpen}
             onClose={onClose}
           >
             <ModalOverlay />
             <ModalContent
-              position={"relative"}
-              overflow={"hidden"}
+              position={'relative'}
+              overflow={'hidden'}
               _before={{
                 content: '""',
-                position: "absolute",
-                top: "-10%",
-                left: "50%",
-                transform: "translateX(-50%)",
-                rounded: "50%",
-                filter: "blur(80px)",
-                width: "6rem",
-                height: "6rem",
-                background: "linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)",
-                borderRadius: "8px 8px 0px 0px",
-                zIndex: "-1",
+                position: 'absolute',
+                top: '-10%',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                rounded: '50%',
+                filter: 'blur(80px)',
+                width: '6rem',
+                height: '6rem',
+                background: 'linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)',
+                borderRadius: '8px 8px 0px 0px',
+                zIndex: '-1',
               }}
             >
               <ModalBody>
                 <VStack
-                  py={{ base: "24px", md: "32px" }}
-                  gap={{ base: "18px", md: "32px" }}
-                  textAlign={"center"}
+                  py={{ base: '24px', md: '32px' }}
+                  gap={{ base: '18px', md: '32px' }}
+                  textAlign={'center'}
                   maxW="16rem"
                   mx="auto"
                 >
-                  <VStack spacing={{ base: "12px", md: "24px" }}>
+                  <VStack spacing={{ base: '12px', md: '24px' }}>
                     <Center
-                      transform={"scale(2)"}
+                      transform={'scale(2)'}
                       h="130px"
                       position="relative"
                     >
@@ -221,23 +224,23 @@ export const GithubProof = ({ username, proofs }: Props) => {
                           controls={true}
                           speed={0.7}
                           src={
-                            "https://assets4.lottiefiles.com/packages/lf20_obhph3sh.json"
+                            'https://assets4.lottiefiles.com/packages/lf20_obhph3sh.json'
                           }
                           style={{ height: `300px`, width: `300px` }}
                         />
                       </Center>
-                      <Center width={"60px"} height={"60px"}>
+                      <Center width={'60px'} height={'60px'}>
                         <Image
                           src="https://res.cloudinary.com/demonicirfan/image/upload/v1686469723/google_proof_tlsuyi.png"
                           alt="Twitter Logo"
-                          width={"300"}
-                          height={"300"}
+                          width={'300'}
+                          height={'300'}
                         />
                       </Center>
                     </Center>
                     <Box
                       as="p"
-                      textStyle={{ base: "title3", md: "title2" }}
+                      textStyle={{ base: 'title3', md: 'title2' }}
                       color="neutral.11"
                     >
                       Github Proof
@@ -245,7 +248,7 @@ export const GithubProof = ({ username, proofs }: Props) => {
 
                     <Box
                       as="p"
-                      textStyle={{ base: "title6", md: "title5" }}
+                      textStyle={{ base: 'title6', md: 'title5' }}
                       color="neutral.11"
                     >
                       Claim your proof by connecting your github account.
@@ -253,7 +256,7 @@ export const GithubProof = ({ username, proofs }: Props) => {
                   </VStack>
                   <Box
                     as="p"
-                    textStyle={{ base: "title6", md: "title5" }}
+                    textStyle={{ base: 'title6', md: 'title5' }}
                     color="neutral.11"
                   >
                     {user?.data.user?.email}
@@ -265,20 +268,20 @@ export const GithubProof = ({ username, proofs }: Props) => {
                   ) : (
                     <Button
                       disabled={
-                        proofs.find((e) => e.proofType === "GITHUB")
+                        proofs.find((e) => e.proofType === 'GITHUB')
                           ? true
                           : false
                       }
                       isDisabled={
-                        proofs.find((e) => e.proofType === "GITHUB")
+                        proofs.find((e) => e.proofType === 'GITHUB')
                           ? true
                           : false
                       }
                       onClick={connetGithub}
                     >
-                      {proofs.find((e) => e.proofType === "GITHUB")
-                        ? "Claimed"
-                        : "Connect Github"}
+                      {proofs.find((e) => e.proofType === 'GITHUB')
+                        ? 'Claimed'
+                        : 'Connect Github'}
                     </Button>
                   )}
 

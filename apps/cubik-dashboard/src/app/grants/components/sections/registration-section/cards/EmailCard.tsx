@@ -1,8 +1,9 @@
-import { cn } from "@cubik/ui/lib/utils";
-import React from "react";
+import React from 'react';
+
+import { cn } from '@cubik/ui/lib/utils';
 
 interface Props {
-  type: "Accepted" | "Received" | "Declined";
+  type: 'Accepted' | 'Received' | 'Declined';
   color: string;
   count: number;
 }
@@ -11,11 +12,11 @@ export const EmailCard = (props: Props) => {
     <div className="bg-neutral-800 w-full p-3 h-28 rounded-md flex-col flex gap-3">
       <div className="flex justify-between">
         <div className="flex justify-start items-center gap-2">
-          <div className={cn("w-3 h-3 rounded-full", props.color)} />
+          <div className={cn('w-3 h-3 rounded-full', props.color)} />
           <p className="text-surface-neutral-500">{props.type}</p>
         </div>
         <div className="flex justify-center items-center gap-1">
-          {props.type === "Accepted" && (
+          {props.type === 'Accepted' && (
             <button className="text-white text-sm bg-[#2E2E2E] px-4 py-1 rounded">
               New Mail
             </button>

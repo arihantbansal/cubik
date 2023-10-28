@@ -1,8 +1,9 @@
-"use client";
-import { AuthConnectWallet } from "@/app/components/common/wallet/AuthConnectWallet";
-import { Box } from "@/utils/chakra";
-import { useWallet } from "@solana/wallet-adapter-react";
-import React from "react";
+'use client';
+
+import React from 'react';
+import { AuthConnectWallet } from '@/app/components/common/wallet/AuthConnectWallet';
+import { Box } from '@/utils/chakra';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 interface Props {
   children: React.JSX.Element | React.JSX.Element[];

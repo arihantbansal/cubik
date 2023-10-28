@@ -1,7 +1,8 @@
-import { Card, CardHeader, VStack } from "@/utils/chakra";
-import React from "react";
-import { VisitorViewCardHeader } from "./VisitorViewCardHeader";
-import type { ProjectCommonType } from "./type";
+import React from 'react';
+import { Card, CardHeader, VStack } from '@/utils/chakra';
+
+import type { ProjectCommonType } from './type';
+import { VisitorViewCardHeader } from './VisitorViewCardHeader';
 
 interface Props {
   projects: ProjectCommonType;

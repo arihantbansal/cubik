@@ -1,14 +1,14 @@
-import { useUser } from "@/context/user";
-import { Button } from "@/utils/ui";
+import React, { useEffect, useState } from 'react';
+import { AccessStore } from '@/context/scope';
+import { useUser } from '@/context/user';
+import { Button } from '@/utils/ui';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 
-import { useWallet } from "@solana/wallet-adapter-react";
-import { useWalletModal } from "@solana/wallet-adapter-react-ui";
-import React, { useEffect, useState } from "react";
-import { VerifyModal } from "../modals/verifyModal";
-import { UserInteraction } from "./userInteraction";
-import { AuthPayload } from "@cubik/common-types/src/admin";
-import { useStore } from "zustand";
-import { AccessStore } from "@/context/scope";
+import { AuthPayload } from '@cubik/common-types/src/admin';
+
+import { VerifyModal } from '../modals/verifyModal';
+import { UserInteraction } from './userInteraction';
 
 interface AuthDecodeResponse {
   data: AuthPayload | null;
@@ -25,7 +25,7 @@ export const HandleConnect = () => {
     const fetchUser = async () => {
       setIsLoading(true);
       try {
-        const userResponse = await fetch("/api/auth/decode");
+        const userResponse = await fetch('/api/auth/decode');
         const userRes =
           (await userResponse.json()) as unknown as AuthDecodeResponse;
 

@@ -1,5 +1,5 @@
-import { Box, HStack, VStack } from "@/utils/chakra";
-import React from "react";
+import React from 'react';
+import { Box, HStack, VStack } from '@/utils/chakra';
 
 export const Comments = () => {
   return (
@@ -23,7 +23,7 @@ export const Comments = () => {
               />
             </svg>
           </Box>
-          <Box color={"white"} fontWeight={600} fontSize={"lg"}>
+          <Box color={'white'} fontWeight={600} fontSize={'lg'}>
             Comments
           </Box>
         </HStack>

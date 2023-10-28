@@ -1,7 +1,10 @@
 // import LandingPage from "@/app/components/landing-page/landingPage";
-import type { Metadata } from "next";
-import { Explorer } from "./components/explorer-page/Explorer";
-import { prisma } from "@cubik/database";
+import type { Metadata } from 'next';
+
+import { prisma } from '@cubik/database';
+
+import { Explorer } from './components/explorer-page/Explorer';
+
 // import { createAdmin } from "@/utils/contract";
 // import { connection } from "@/utils/contract/sdk";
 // import { Button } from "@chakra-ui/react";
@@ -10,16 +13,16 @@ import { prisma } from "@cubik/database";
 // import { useAnchorWallet } from "@solana/wallet-adapter-react";
 
 export const metadata: Metadata = {
-  title: "Cubik",
-  metadataBase: new URL("https://res.cloudinary.com"),
-  description: "Fund Public Goods Through Community Voting On Solana",
+  title: 'Cubik',
+  metadataBase: new URL('https://res.cloudinary.com'),
+  description: 'Fund Public Goods Through Community Voting On Solana',
   openGraph: {
-    images: ["/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png"],
+    images: ['/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png'],
   },
   twitter: {
-    title: "Cubik",
-    card: "summary_large_image",
-    images: ["/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png"],
+    title: 'Cubik',
+    card: 'summary_large_image',
+    images: ['/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png'],
   },
 };
 
@@ -31,8 +34,8 @@ export default async function Home() {
       logo: true,
       shortDescription: true,
     },
-    take: 10
-  })
+    take: 10,
+  });
   return (
     <>
       {/* <Button

@@ -1,11 +1,12 @@
-"use client";
+'use client';
 
-import type { NFTProfile, NftResponseCarousel } from "@/types/NFTProfile";
-import { Box, Flex, Skeleton } from "@/utils/chakra";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { motion } from "framer-motion";
-import type { Dispatch, Key, SetStateAction } from "react";
-import { memo, useState } from "react";
+import type { Dispatch, Key, SetStateAction } from 'react';
+import { memo, useState } from 'react';
+import type { NFTProfile, NftResponseCarousel } from '@/types/NFTProfile';
+import { Box, Flex, Skeleton } from '@/utils/chakra';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { motion } from 'framer-motion';
+
 // import { useUserStore } from "~/store/userStore";
 
 const Carousel = memo(function Carousel({
@@ -45,7 +46,7 @@ const Carousel = memo(function Carousel({
       minH="5rem"
       as={motion.div}
       _hover={{
-        outline: "1px solid #fff",
+        outline: '1px solid #fff',
       }}
       onClick={() => {
         if (!isDragging) {
@@ -53,12 +54,12 @@ const Carousel = memo(function Carousel({
           setNFTProfile({
             collection: nft.name,
             name: nft.metadataName,
-            owner: publicKey?.toBase58() || "",
+            owner: publicKey?.toBase58() || '',
             token: nft.tokenMint,
           });
         }
       }}
-      pointerEvents={isDragging ? "none" : "all"}
+      pointerEvents={isDragging ? 'none' : 'all'}
     >
       <Skeleton
         isLoaded={!isDragging}
@@ -76,11 +77,11 @@ const Carousel = memo(function Carousel({
           style={{
             // outline:
             //   user?.profilePicture === nft.image ? "1px solid #fff" : "none",
-            pointerEvents: "none",
-            borderRadius: "6px",
-            width: "5rem",
-            height: "5rem",
-            objectFit: "cover",
+            pointerEvents: 'none',
+            borderRadius: '6px',
+            width: '5rem',
+            height: '5rem',
+            objectFit: 'cover',
           }}
         />
       </Skeleton>
@@ -101,7 +102,7 @@ const Carousel = memo(function Carousel({
       as={motion.div}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      px={"6px"}
+      px={'6px'}
     >
       {nftsData.map((nft: any, key: Key) => (
         <NFTImg nft={nft} key={key} />

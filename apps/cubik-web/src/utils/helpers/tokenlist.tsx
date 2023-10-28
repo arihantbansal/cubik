@@ -1,4 +1,5 @@
-import type { JSX } from "react";
+import type { JSX } from 'react';
+
 export interface tokenListType {
   name: string;
   label: string;
@@ -25,11 +26,11 @@ export const tokenList = [
 
   // },
   {
-    name: "USDC",
-    symbol: "USDC",
-    label: "USDC",
+    name: 'USDC',
+    symbol: 'USDC',
+    label: 'USDC',
     decimals: 6,
-    address: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
     // icon: (
     //   <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
     //     <g clipPath="url(#clip0_789_9405)">
@@ -57,24 +58,24 @@ export const tokenList = [
 ];
 export const fullTokenList = [
   {
-    label: "SOL",
-    name: "Solana",
-    symbol: "SOL",
+    label: 'SOL',
+    name: 'Solana',
+    symbol: 'SOL',
     decimals: 9,
-    address: "So11111111111111111111111111111111111111111",
+    address: 'So11111111111111111111111111111111111111111',
   },
   {
-    name: "Wrapped Solana",
-    symbol: "WSOL",
-    label: "WSOL",
+    name: 'Wrapped Solana',
+    symbol: 'WSOL',
+    label: 'WSOL',
     decimals: 9,
-    address: "So11111111111111111111111111111111111111112",
+    address: 'So11111111111111111111111111111111111111112',
   },
   {
-    name: "USDC",
-    symbol: "USDC",
-    label: "USDC",
+    name: 'USDC',
+    symbol: 'USDC',
+    label: 'USDC',
     decimals: 6,
-    address: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
   },
 ];

@@ -1,5 +1,8 @@
-"use client";
-import { TruncatedAddr } from "@/app/components/common/wallet";
+'use client';
+
+import type { Dispatch, SetStateAction } from 'react';
+import React from 'react';
+import { TruncatedAddr } from '@/app/components/common/wallet';
 import {
   Alert,
   AlertDescription,
@@ -16,10 +19,8 @@ import {
   ModalHeader,
   ModalOverlay,
   VStack,
-} from "@/utils/chakra";
-import { useWallet } from "@solana/wallet-adapter-react";
-import type { Dispatch, SetStateAction } from "react";
-import React from "react";
+} from '@/utils/chakra';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 interface Props {
   isTransactionModalOpen: boolean;
@@ -49,34 +50,34 @@ export const TransactionModel = ({
   return (
     <Modal
       closeOnOverlayClick={!profileCreated}
-      variant={"cubik"}
+      variant={'cubik'}
       isOpen={isTransactionModalOpen}
       onClose={onTransactionModalClose}
     >
       <ModalOverlay />
       <ModalContent
-        mx={{ base: "1rem", md: "0rem" }}
-        overflow={"hidden"}
-        position={"relative"}
-        gap={{ base: "28px", md: "40px" }}
+        mx={{ base: '1rem', md: '0rem' }}
+        overflow={'hidden'}
+        position={'relative'}
+        gap={{ base: '28px', md: '40px' }}
         _before={{
           content: '""',
-          position: "absolute",
-          top: "-10%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          rounded: "50%",
-          filter: "blur(80px)",
-          width: "6rem",
-          height: "6rem",
-          background: "linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)",
-          borderRadius: "8px 8px 0px 0px",
-          zIndex: "-1",
+          position: 'absolute',
+          top: '-10%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          rounded: '50%',
+          filter: 'blur(80px)',
+          width: '6rem',
+          height: '6rem',
+          background: 'linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)',
+          borderRadius: '8px 8px 0px 0px',
+          zIndex: '-1',
         }}
       >
         <ModalHeader>
           {profileCreated ? (
-            <VStack w="full" gap={{ base: "18px", md: "24px" }}>
+            <VStack w="full" gap={{ base: '18px', md: '24px' }}>
               <Center>
                 <svg
                   width="96"
@@ -222,17 +223,17 @@ export const TransactionModel = ({
                   </defs>
                 </svg>
               </Center>
-              <VStack spacing={{ base: "4px", md: "8px" }} w="full">
+              <VStack spacing={{ base: '4px', md: '8px' }} w="full">
                 <Box
-                  textAlign={"center"}
+                  textAlign={'center'}
                   as="p"
-                  textStyle={{ base: "title2", md: "headline4" }}
+                  textStyle={{ base: 'title2', md: 'headline4' }}
                 >
                   Welcome to Cubik @{userName}
                 </Box>
                 <Box
                   as="p"
-                  textStyle={{ base: "title4", md: "body3" }}
+                  textStyle={{ base: 'title4', md: 'body3' }}
                   color="neutral.8"
                 >
                   You are all set to help your favorite projects.
@@ -240,7 +241,7 @@ export const TransactionModel = ({
               </VStack>
               <Link href={`/${userName}`}>
                 <Button
-                  size={{ base: "cubikMini", md: "cubikSmall" }}
+                  size={{ base: 'cubikMini', md: 'cubikSmall' }}
                   variant="cubikFilled"
                 >
                   Go to profile
@@ -250,20 +251,20 @@ export const TransactionModel = ({
           ) : (
             <VStack
               w="full"
-              spacing={{ base: "4px", md: "8px" }}
-              align={"center"}
+              spacing={{ base: '4px', md: '8px' }}
+              align={'center'}
               justify="center"
             >
               <Box
                 as="p"
-                textStyle={{ base: "title2", md: "title1" }}
+                textStyle={{ base: 'title2', md: 'title1' }}
                 color="neutral.11"
               >
                 Review & Sign
               </Box>
               <Box
                 as="p"
-                textStyle={{ base: "body5", md: "body4" }}
+                textStyle={{ base: 'body5', md: 'body4' }}
                 color="neutral.9"
               >
                 Sign transaction to create Profile
@@ -274,43 +275,43 @@ export const TransactionModel = ({
         {!profileCreated && (
           <>
             <ModalBody>
-              <VStack align={"start"} spacing={{ base: "16px", md: "32px" }}>
+              <VStack align={'start'} spacing={{ base: '16px', md: '32px' }}>
                 <Avatar
                   outline="1px solid white"
                   src={pfp}
-                  width={{ base: "64px", md: "84px" }}
-                  height={{ base: "64px", md: "84px" }}
-                  borderRadius={"8px"}
+                  width={{ base: '64px', md: '84px' }}
+                  height={{ base: '64px', md: '84px' }}
+                  borderRadius={'8px'}
                 />
-                <VStack align={"start"} spacing={{ base: "4px", md: "8px" }}>
+                <VStack align={'start'} spacing={{ base: '4px', md: '8px' }}>
                   <Box
                     as="p"
-                    textStyle={{ base: "title6", md: "title5" }}
-                    color={"neutral.6"}
+                    textStyle={{ base: 'title6', md: 'title5' }}
+                    color={'neutral.6'}
                   >
                     Username
                   </Box>
                   <Box
                     as="p"
-                    textStyle={{ base: "title5", md: "title4" }}
-                    color={"neutral.11"}
+                    textStyle={{ base: 'title5', md: 'title4' }}
+                    color={'neutral.11'}
                   >
                     @{userName}
                   </Box>
                 </VStack>
-                <VStack align={"start"} spacing={{ base: "4px", md: "8px" }}>
+                <VStack align={'start'} spacing={{ base: '4px', md: '8px' }}>
                   <Box
                     as="p"
-                    textStyle={{ base: "title6", md: "title5" }}
-                    color={"neutral.6"}
+                    textStyle={{ base: 'title6', md: 'title5' }}
+                    color={'neutral.6'}
                   >
                     Wallet Address
                   </Box>
                   {publicKey && (
                     <Box
                       as="p"
-                      textStyle={{ base: "title5", md: "title4" }}
-                      color={"neutral.11"}
+                      textStyle={{ base: 'title5', md: 'title4' }}
+                      color={'neutral.11'}
                     >
                       {TruncatedAddr({
                         walletAddress: publicKey?.toBase58(),
@@ -322,8 +323,8 @@ export const TransactionModel = ({
                   <Alert status="error" variant="cubik">
                     <AlertIcon />
                     <AlertDescription
-                      fontSize={{ base: "10px", md: "11px", xl: "12px" }}
-                      lineHeight={{ base: "14px", md: "14px", xl: "16px" }}
+                      fontSize={{ base: '10px', md: '11px', xl: '12px' }}
+                      lineHeight={{ base: '14px', md: '14px', xl: '16px' }}
                     >
                       {transactionError}
                     </AlertDescription>
@@ -333,12 +334,12 @@ export const TransactionModel = ({
             </ModalBody>
             <ModalFooter
               display="flex"
-              h={"fit-content"}
-              justifyContent={profileCreated ? "center" : "space-between"}
+              h={'fit-content'}
+              justifyContent={profileCreated ? 'center' : 'space-between'}
               w="full"
             >
               <Button
-                size={{ base: "cubikMini", md: "cubikSmall" }}
+                size={{ base: 'cubikMini', md: 'cubikSmall' }}
                 variant="cubikOutlined"
                 onClick={() => {
                   onTransactionModalClose();
@@ -349,7 +350,7 @@ export const TransactionModel = ({
                 Cancel
               </Button>
               <Button
-                size={{ base: "cubikMini", md: "cubikSmall" }}
+                size={{ base: 'cubikMini', md: 'cubikSmall' }}
                 variant="cubikFilled"
                 px="32px"
                 loadingText="Confirming"

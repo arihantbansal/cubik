@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const uploadFromURLSchema = z.object({
   body: z.object({

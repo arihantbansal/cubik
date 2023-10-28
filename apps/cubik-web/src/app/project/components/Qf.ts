@@ -1,5 +1,6 @@
-"use server";
-import { prisma } from "@cubik/database";
+'use server';
+
+import { prisma } from '@cubik/database';
 
 export const checkProofs = async (userId: string) => {
   try {
@@ -54,11 +55,12 @@ export const updateData = async (eventId: string) => {
     finalCheck.forEach((contri) => {
       if (
         projectMapContribution.findIndex(
-          (e) => e.projectId === contri.projectId && e.user === contri.user
+          (e) => e.projectId === contri.projectId && e.user === contri.user,
         ) >= 0 &&
         projectMapContribution[
           projectMapContribution?.findIndex(
-            (e) => e.projectId === contri?.projectId && e?.user === contri?.user
+            (e) =>
+              e.projectId === contri?.projectId && e?.user === contri?.user,
           )
         ]
       ) {
@@ -66,12 +68,13 @@ export const updateData = async (eventId: string) => {
           projectMapContribution[
             projectMapContribution?.findIndex(
               (e) =>
-                e.projectId === contri?.projectId && e?.user === contri?.user
+                e.projectId === contri?.projectId && e?.user === contri?.user,
             )
           ];
         projectMapContribution[
           projectMapContribution?.findIndex(
-            (e) => e.projectId === contri?.projectId && e?.user === contri?.user
+            (e) =>
+              e.projectId === contri?.projectId && e?.user === contri?.user,
           )
         ] = {
           amount: (current?.amount || 0) + contri?.amount,
@@ -122,19 +125,19 @@ export const updateData = async (eventId: string) => {
           data: {
             amount: e.amount,
           },
-        })
+        }),
     );
 
-    return "success";
+    return 'success';
   } catch (error) {
     console.log(error);
-    return "error";
+    return 'error';
   }
 };
 
 interface Props {
   eventId: string;
-  eventType: "hackathon" | "round";
+  eventType: 'hackathon' | 'round';
   projectId: string;
   amount: number;
   user: string;
@@ -146,7 +149,7 @@ export const EstimateUpdate = async ({
   user,
 }: Props) => {
   try {
-    console.log(amount, "----------------");
+    console.log(amount, '----------------');
     const matchingPool = 2000;
     let summed = 0;
     const res = await prisma.contribution.findMany({
@@ -177,11 +180,12 @@ export const EstimateUpdate = async ({
     [...finalCheck, { projectId, amount, user }].forEach((contri) => {
       if (
         projectMapContribution.findIndex(
-          (e) => e.projectId === contri.projectId && e.user === contri.user
+          (e) => e.projectId === contri.projectId && e.user === contri.user,
         ) >= 0 &&
         projectMapContribution[
           projectMapContribution?.findIndex(
-            (e) => e.projectId === contri?.projectId && e?.user === contri?.user
+            (e) =>
+              e.projectId === contri?.projectId && e?.user === contri?.user,
           )
         ]
       ) {
@@ -189,12 +193,13 @@ export const EstimateUpdate = async ({
           projectMapContribution[
             projectMapContribution?.findIndex(
               (e) =>
-                e.projectId === contri?.projectId && e?.user === contri?.user
+                e.projectId === contri?.projectId && e?.user === contri?.user,
             )
           ];
         projectMapContribution[
           projectMapContribution?.findIndex(
-            (e) => e.projectId === contri?.projectId && e?.user === contri?.user
+            (e) =>
+              e.projectId === contri?.projectId && e?.user === contri?.user,
           )
         ] = {
           amount: (current?.amount || 0) + contri?.amount,
@@ -228,9 +233,9 @@ export const EstimateUpdate = async ({
     let divisor = matchingPool / summed;
     console.log(
       arrOfMatch.find(
-        (e) => e.projectId === "e027dba6-529c-4439-aad3-61b674e74363"
+        (e) => e.projectId === 'e027dba6-529c-4439-aad3-61b674e74363',
       ),
-      "---Divisor---"
+      '---Divisor---',
     );
     const finalMatch = projects.map((project) => {
       return {
@@ -243,10 +248,10 @@ export const EstimateUpdate = async ({
     // console.log(ar, "----------------");
     console.log(
       finalMatch.filter((e) => e.projectId === projectId)[0]?.amount,
-      projects.find((e) => e.projectId === projectId)?.amount
+      projects.find((e) => e.projectId === projectId)?.amount,
     );
     return isNaN(
-      finalMatch.filter((e) => e.projectId === projectId)[0]?.amount!
+      finalMatch.filter((e) => e.projectId === projectId)[0]?.amount!,
     )
       ? 0
       : finalMatch.find((e) => e.projectId === projectId)?.amount! -

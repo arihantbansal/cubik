@@ -1,7 +1,10 @@
-console.log("Helper Script Started");
-import { config } from "dotenv";
-import { generateSemantic } from "./src/color/semantic";
-import { createComponentNames } from "./src/color/component";
+import { config } from 'dotenv';
+
+import { createComponentNames } from './src/color/component';
+import { generateSemantic } from './src/color/semantic';
+
+console.log('Helper Script Started');
+
 config();
 
 createComponentNames();

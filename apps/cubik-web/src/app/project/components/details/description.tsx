@@ -1,11 +1,13 @@
-"use client";
-import type { LinkProps } from "@/utils/chakra";
-import { Box, Button, Link, Stack, Text, VStack } from "@/utils/chakra";
-import ChakraUIRenderer from "chakra-ui-markdown-renderer";
-import React, { useState } from "react";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import rehypeRaw from "rehype-raw";
-import remarkGfm from "remark-gfm";
+'use client';
+
+import React, { useState } from 'react';
+import type { LinkProps } from '@/utils/chakra';
+import { Box, Button, Link, Stack, Text, VStack } from '@/utils/chakra';
+import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
+
 interface Props {
   longDescription: string;
 }
@@ -23,8 +25,8 @@ export const Description = ({ longDescription }: Props) => {
       const { children } = props;
       return (
         <Text
-          fontSize={{ base: "14px", md: "16px" }}
-          lineHeight={{ base: "22px", md: "24px" }}
+          fontSize={{ base: '14px', md: '16px' }}
+          lineHeight={{ base: '22px', md: '24px' }}
           fontWeight="400"
           letterSpacing="normal"
           color="#D7E0DF"
@@ -36,7 +38,7 @@ export const Description = ({ longDescription }: Props) => {
     h1: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={"title2"} color="#FFFFFF">
+        <Box as="p" textStyle={'title2'} color="#FFFFFF">
           {children}
         </Box>
       );
@@ -44,7 +46,7 @@ export const Description = ({ longDescription }: Props) => {
     h2: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={"title2"} color="#FFFFFF">
+        <Box as="p" textStyle={'title2'} color="#FFFFFF">
           {children}
         </Box>
       );
@@ -52,7 +54,7 @@ export const Description = ({ longDescription }: Props) => {
     h3: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={"title2"} color="#FFFFFF">
+        <Box as="p" textStyle={'title2'} color="#FFFFFF">
           {children}
         </Box>
       );
@@ -60,7 +62,7 @@ export const Description = ({ longDescription }: Props) => {
     h4: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={"title2"} color="#FFFFFF">
+        <Box as="p" textStyle={'title2'} color="#FFFFFF">
           {children}
         </Box>
       );
@@ -68,7 +70,7 @@ export const Description = ({ longDescription }: Props) => {
     h5: (props: any) => {
       const { children } = props;
       return (
-        <Box as="p" textStyle={"title2"} color="#FFFFFF">
+        <Box as="p" textStyle={'title2'} color="#FFFFFF">
           {children}
         </Box>
       );
@@ -79,8 +81,8 @@ export const Description = ({ longDescription }: Props) => {
         <Text
           as="li"
           ml="1rem"
-          fontSize={{ base: "14px", md: "16px" }}
-          lineHeight={{ base: "24px", md: "24px" }}
+          fontSize={{ base: '14px', md: '16px' }}
+          lineHeight={{ base: '24px', md: '24px' }}
           fontWeight="400"
           letterSpacing="normal"
           color="#D7E0DF"
@@ -95,21 +97,21 @@ export const Description = ({ longDescription }: Props) => {
   return (
     <>
       <Stack
-        alignSelf={"start"}
+        alignSelf={'start'}
         minH="10rem"
         w="full"
-        direction={"column"}
+        direction={'column'}
         gap="0.5rem"
       >
         <VStack
-          position={"relative"}
+          position={'relative'}
           align="start"
           gap="0.5rem"
-          w={"full"}
-          overflow={"hidden"}
+          w={'full'}
+          overflow={'hidden'}
           maxW={{
-            base: "20rem",
-            md: "full",
+            base: '20rem',
+            md: 'full',
           }}
         >
           <ReactMarkdown
@@ -120,19 +122,19 @@ export const Description = ({ longDescription }: Props) => {
             {readMore ? longDescription : longDescription.slice(0, 800)}
           </ReactMarkdown>
           <Box
-            position={"absolute"}
+            position={'absolute'}
             bottom={0}
             left={0}
-            display={isShortDescription ? "none" : !readMore ? "block" : "none"}
+            display={isShortDescription ? 'none' : !readMore ? 'block' : 'none'}
             right={0}
             bg="linear-gradient(180deg, rgba(13, 13, 13, 0.00) -86.99%, #0D0D0D 100%)"
-            w={"full"}
-            h={"10rem"}
+            w={'full'}
+            h={'10rem'}
           ></Box>
           <Box pt={5}>
             {/* Need to update the icon */}
             <Button
-              display={isShortDescription ? "none" : "flex"}
+              display={isShortDescription ? 'none' : 'flex'}
               p={0}
               rightIcon={
                 <svg
@@ -151,18 +153,18 @@ export const Description = ({ longDescription }: Props) => {
                   />
                 </svg>
               }
-              color={"white"}
+              color={'white'}
               borderRadius={5}
-              h={"full"}
+              h={'full'}
               variant="ghost"
               w="full"
               minH={10}
               _hover={{
-                bg: "transparent",
+                bg: 'transparent',
               }}
               onClick={() => setReadMore(!readMore)}
             >
-              Read {readMore ? "Less" : "More"}
+              Read {readMore ? 'Less' : 'More'}
             </Button>
           </Box>
         </VStack>

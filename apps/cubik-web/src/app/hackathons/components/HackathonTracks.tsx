@@ -1,18 +1,18 @@
+import React from 'react';
 import {
   Accordion,
-  AccordionItem,
   AccordionButton,
-  HStack,
-  Avatar,
-  VStack,
-  Center,
   AccordionIcon,
+  AccordionItem,
   AccordionPanel,
-  Box,
+  Avatar,
   AvatarGroup,
-} from "@/utils/chakra";
-import { formatNumberWithK } from "@/utils/helpers/formatWithK";
-import React from "react";
+  Box,
+  Center,
+  HStack,
+  VStack,
+} from '@/utils/chakra';
+import { formatNumberWithK } from '@/utils/helpers/formatWithK';
 
 type PropsType = {
   tracks: {
@@ -23,7 +23,7 @@ type PropsType = {
         name: string;
         logo: string;
         url: string;
-      }
+      },
     ];
     prize: {
       unit: string;
@@ -36,7 +36,7 @@ type PropsType = {
         userId?: string;
         position?: string;
         url?: string;
-      }
+      },
     ];
     judges: [
       {
@@ -44,7 +44,7 @@ type PropsType = {
         userId?: string;
         position?: string;
         url?: string;
-      }
+      },
     ];
   }[];
 };
@@ -65,7 +65,7 @@ const HackathonTracks = ({ tracks }: PropsType) => {
             >
               <>
                 <AccordionButton
-                  p={{ base: "16px", md: "24px" }}
+                  p={{ base: '16px', md: '24px' }}
                   rounded="16px"
                   backgroundColor="neutral.2"
                 >
@@ -80,19 +80,19 @@ const HackathonTracks = ({ tracks }: PropsType) => {
                               src={org.logo}
                             />
                           ))
-                        : ""}
+                        : ''}
                     </AvatarGroup>
                     <VStack color="neutral.11" align="start" spacing="12px">
-                      <Box as="p" textStyle={"title2"} textAlign="left">
+                      <Box as="p" textStyle={'title2'} textAlign="left">
                         {track.name}
                       </Box>
                       <Box
                         as="p"
-                        textStyle={"body4"}
-                        fontWeight={"500 !important"}
+                        textStyle={'body4'}
+                        fontWeight={'500 !important'}
                         textAlign="left"
                         color="neutral.9"
-                        maxW={"90%"}
+                        maxW={'90%'}
                         noOfLines={1}
                       >
                         {track.description}
@@ -106,7 +106,7 @@ const HackathonTracks = ({ tracks }: PropsType) => {
                 <AccordionPanel pb={4}>
                   <VStack align="start" gap="16px">
                     <VStack color="white" align="start" gap="18px" p="12px">
-                      <Box as="p" textStyle={"body4"} textAlign="left">
+                      <Box as="p" textStyle={'body4'} textAlign="left">
                         {track.description}
                       </Box>
                       {/*  <HStack gap="8px">
@@ -128,7 +128,7 @@ const HackathonTracks = ({ tracks }: PropsType) => {
                       <Box
                         color="white"
                         as="p"
-                        textStyle={"title2"}
+                        textStyle={'title2'}
                         textAlign="left"
                       >
                         Prize
@@ -142,27 +142,27 @@ const HackathonTracks = ({ tracks }: PropsType) => {
                             shadow="0px 4px 24px rgba(0, 0, 0, 0.08)"
                             outline="1px solid #ffffff16"
                             p={{
-                              base: "8px",
-                              md: "12px 24px",
+                              base: '8px',
+                              md: '12px 24px',
                             }}
-                            align={"flex-end"}
+                            align={'flex-end'}
                             gap="8px"
                           >
                             <Box
                               as="p"
                               textTransform="uppercase"
                               color="neutral.11"
-                              textStyle={{ base: "body6", md: "title5" }}
+                              textStyle={{ base: 'body6', md: 'title5' }}
                             >
                               {formatNumberWithK(prize.value)}
-                            </Box>{" "}
+                            </Box>{' '}
                             <Box
                               color="#B4B0B2"
-                              textTransform={"uppercase"}
+                              textTransform={'uppercase'}
                               as="p"
                               textStyle={{
-                                base: "body6",
-                                md: "overline3",
+                                base: 'body6',
+                                md: 'overline3',
                               }}
                             >
                               ${prize.unit}

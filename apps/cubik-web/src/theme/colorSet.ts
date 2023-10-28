@@ -1,23 +1,23 @@
 export const ColorSet = [
   {
-    border: "#001F26",
-    color: "#00D1FF",
+    border: '#001F26',
+    color: '#00D1FF',
   },
   {
-    border: "#383301",
-    color: "#FFE818",
+    border: '#383301',
+    color: '#FFE818',
   },
   {
-    border: "#34003E",
-    color: "#DC1FFF",
+    border: '#34003E',
+    color: '#DC1FFF',
   },
   {
-    border: "#003810",
-    color: "#18FF59",
+    border: '#003810',
+    color: '#18FF59',
   },
   {
-    border: "#1B0D2E",
-    color: "#9747FF",
+    border: '#1B0D2E',
+    color: '#9747FF',
   },
 ];
 export const randomColorSet = (n: number) => {

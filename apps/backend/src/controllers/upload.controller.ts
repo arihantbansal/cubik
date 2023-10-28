@@ -1,11 +1,12 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 import {
   createFailureResponse,
   createFailureResponseData,
   createSuccessResponse,
-} from "types/response";
-import { UploadURLs, uploadURLsToCloudflare } from "utils/upload";
-import { prisma } from "@cubik/database";
+} from 'types/response';
+import { UploadURLs, uploadURLsToCloudflare } from 'utils/upload';
+
+import { prisma } from '@cubik/database';
 
 export const uploadFromURL = async (req: Request, res: Response) => {
   try {
@@ -52,6 +53,6 @@ export const uploadFromURL = async (req: Request, res: Response) => {
 
     return res
       .status(500)
-      .send(createFailureResponseData(500, "Error while uploading", null));
+      .send(createFailureResponseData(500, 'Error while uploading', null));
   }
 };

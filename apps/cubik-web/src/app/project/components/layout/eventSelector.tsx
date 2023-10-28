@@ -1,16 +1,17 @@
-"use client";
+'use client';
 
-import type { ProjectPageEventType } from "@/types/project";
-import { Button, Menu, MenuButton, MenuItem, MenuList } from "@/utils/chakra";
-import React, { useEffect } from "react";
-import { useProjectEventStore } from "../store";
+import React, { useEffect } from 'react';
+import type { ProjectPageEventType } from '@/types/project';
+import { Button, Menu, MenuButton, MenuItem, MenuList } from '@/utils/chakra';
 import {
   isFutureAndHowMuch,
   isPastAndHowMuch,
   parseDateISO,
-} from "@/utils/helpers/date";
-import { DateTime } from "luxon";
-import { daysInWeek, isFuture, isPast } from "date-fns";
+} from '@/utils/helpers/date';
+import { daysInWeek, isFuture, isPast } from 'date-fns';
+import { DateTime } from 'luxon';
+
+import { useProjectEventStore } from '../store';
 
 interface Props {
   events: ProjectPageEventType[];
@@ -23,7 +24,7 @@ export const EventSelector = ({ events }: Props) => {
       const findFutureTime = events.find(
         (event) =>
           isFuture(parseDateISO(event.endTime.toISOString())) &&
-          isPast(parseDateISO(event.startTime.toISOString()))
+          isPast(parseDateISO(event.startTime.toISOString())),
       );
       if (events[0] && !event && findFutureTime) {
         setEvent(findFutureTime);
@@ -38,13 +39,13 @@ export const EventSelector = ({ events }: Props) => {
         <MenuButton
           mt={1}
           as={Button}
-          color={"#9A9A9A"}
-          variant={"ghost"}
+          color={'#9A9A9A'}
+          variant={'ghost'}
           _hover={{
-            bg: "transparent",
+            bg: 'transparent',
           }}
           _active={{
-            bg: "transparent",
+            bg: 'transparent',
           }}
           rightIcon={
             <svg
@@ -64,20 +65,20 @@ export const EventSelector = ({ events }: Props) => {
             </svg>
           }
         >
-          {event ? event.name : "No Active Grants Round"}
+          {event ? event.name : 'No Active Grants Round'}
         </MenuButton>
-        <MenuList borderRadius={8} bg={"#212121"}>
+        <MenuList borderRadius={8} bg={'#212121'}>
           <MenuItem
             bg="#212121"
             onClick={() => setEvent(null)}
             _hover={{
-              bg: "transparent",
+              bg: 'transparent',
             }}
             _focus={{
-              bg: "transparent",
+              bg: 'transparent',
             }}
             _active={{
-              bg: "transparent",
+              bg: 'transparent',
             }}
           >
             Tip Project Team
@@ -89,13 +90,13 @@ export const EventSelector = ({ events }: Props) => {
                 key={event.eventId}
                 onClick={() => setEvent(event)}
                 _hover={{
-                  bg: "transparent",
+                  bg: 'transparent',
                 }}
                 _focus={{
-                  bg: "transparent",
+                  bg: 'transparent',
                 }}
                 _active={{
-                  bg: "transparent",
+                  bg: 'transparent',
                 }}
               >
                 {event.name}

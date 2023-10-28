@@ -1,8 +1,9 @@
-import type { ProjectExplorerType } from "@/types/explorer";
-import { Collapse, Stack } from "@/utils/chakra";
-import React from "react";
-import { Sort } from "./Sort";
-import { TrackFilter } from "./TrackFilter";
+import React from 'react';
+import type { ProjectExplorerType } from '@/types/explorer';
+import { Collapse, Stack } from '@/utils/chakra';
+
+import { Sort } from './Sort';
+import { TrackFilter } from './TrackFilter';
 
 interface Props {
   _projects: ProjectExplorerType[];
@@ -23,17 +24,17 @@ const CollapsedFilters = ({
   setProjects,
 }: CollapsedFiltersProps) => {
   return (
-    <Collapse style={{ width: "100%" }} in={isOpen} animateOpacity>
+    <Collapse style={{ width: '100%' }} in={isOpen} animateOpacity>
       <Stack
         p="12px"
-        direction={{ base: "row", md: "row" }}
-        spacing={{ base: "16px", md: "32px" }}
-        pt={{ base: "16px", md: "32px" }}
+        direction={{ base: 'row', md: 'row' }}
+        spacing={{ base: '16px', md: '32px' }}
+        pt={{ base: '16px', md: '32px' }}
         w="full"
         maxW="7xl"
         justify="start"
         zIndex={1}
-        overflow={"visible"}
+        overflow={'visible'}
       >
         <Sort
           _projects={_projects}

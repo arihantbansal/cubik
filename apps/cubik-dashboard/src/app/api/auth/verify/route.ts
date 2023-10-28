@@ -1,16 +1,17 @@
-import { env } from "@/env.mjs";
-import { utils, web3 } from "@coral-xyz/anchor";
-import { verifyMessage } from "@cubik/auth";
-import { createToken } from "@cubik/auth/src/admin";
-import { AccessScope, AuthPayload } from "@cubik/common-types/src/admin";
-import { prisma } from "@cubik/database";
-import { headers } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { headers } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
+import { env } from '@/env.mjs';
+import { utils, web3 } from '@coral-xyz/anchor';
+
+import { verifyMessage } from '@cubik/auth';
+import { createToken } from '@cubik/auth/src/admin';
+import { AccessScope, AuthPayload } from '@cubik/common-types/src/admin';
+import { prisma } from '@cubik/database';
 
 export const POST = async (req: NextRequest) => {
   const { signature, publicKey } = await req.json();
   const headersList = headers();
-  const nonce = headersList.get("x-cubik-nonce") as string;
+  const nonce = headersList.get('x-cubik-nonce') as string;
 
   const hash = nonce + env.SECRET_ADMIN?.slice(0, 10);
   const check = utils.sha256.hash(hash);
@@ -18,29 +19,29 @@ export const POST = async (req: NextRequest) => {
   if (!signature || !publicKey || !nonce) {
     return NextResponse.json(
       {
-        error: "Missing params",
+        error: 'Missing params',
       },
       {
         status: 400,
-        statusText: "Missing params",
-      }
+        statusText: 'Missing params',
+      },
     );
   }
   try {
     const result = verifyMessage(
       signature,
       new web3.PublicKey(publicKey),
-      check
+      check,
     );
     if (!result) {
       return NextResponse.json(
         {
-          error: "Verification failed",
+          error: 'Verification failed',
         },
         {
           status: 400,
-          statusText: "Verification failed",
-        }
+          statusText: 'Verification failed',
+        },
       );
     }
 
@@ -78,8 +79,8 @@ export const POST = async (req: NextRequest) => {
           event_name: e.roundId
             ? (e.round?.name as string)
             : (e.hackathon?.name as string),
-          event_type: e.roundId ? "grant" : "hackathon",
-        })
+          event_type: e.roundId ? 'grant' : 'hackathon',
+        }),
       );
 
       const session = await createToken({
@@ -89,7 +90,7 @@ export const POST = async (req: NextRequest) => {
         username: user[0].user.username as string,
         profileNft: user[0].user.profileNft as any,
         accessScope: accessScope,
-        accessType: "ADMIN",
+        accessType: 'ADMIN',
       });
 
       const userSessionPayload: AuthPayload = {
@@ -99,7 +100,7 @@ export const POST = async (req: NextRequest) => {
         username: user[0].user.username as string,
         profileNft: user[0].user.profileNft as any,
         accessScope: accessScope,
-        accessType: "ADMIN",
+        accessType: 'ADMIN',
       };
 
       const response = NextResponse.json({
@@ -108,12 +109,12 @@ export const POST = async (req: NextRequest) => {
         error: null,
       });
 
-      response.cookies.set("authToken", session as string, {
+      response.cookies.set('authToken', session as string, {
         expires: new Date(Date.now() + 3600000),
         secure: true,
         httpOnly: true,
-        sameSite: "strict",
-        path: "/",
+        sameSite: 'strict',
+        path: '/',
       });
 
       return response;
@@ -127,12 +128,12 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json(
       {
         data: false,
-        error: "Error while making message",
+        error: 'Error while making message',
       },
       {
         status: 500,
-        statusText: "Error while making message",
-      }
+        statusText: 'Error while making message',
+      },
     );
   }
 };

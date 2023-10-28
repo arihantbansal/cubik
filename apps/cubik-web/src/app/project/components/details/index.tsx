@@ -1,15 +1,17 @@
-import { Box, Container, VStack } from "@/utils/chakra";
-import React from "react";
-import { Description } from "./description";
-import { Comments } from "./comments";
-import { ProjectTags } from "./tags";
-import { RoundStats } from "./RoundStats";
-import { Socials } from "./Socials";
-import { prisma } from "@cubik/database";
-import type { ProjectPageDetailsType } from "@/types/project";
+import React from 'react';
+import type { ProjectPageDetailsType } from '@/types/project';
+import { Box, Container, VStack } from '@/utils/chakra';
+
+import { prisma } from '@cubik/database';
+
+import { Comments } from './comments';
+import { Description } from './description';
+import { RoundStats } from './RoundStats';
+import { Socials } from './Socials';
+import { ProjectTags } from './tags';
 
 const getDetails = async (
-  slug: string
+  slug: string,
 ): Promise<[ProjectPageDetailsType | null, Error | null]> => {
   try {
     const res = await prisma.project.findFirst({
@@ -50,37 +52,37 @@ export const DetailSection = async ({ slug }: Props) => {
   return (
     <>
       <Container
-        display={"flex"}
+        display={'flex'}
         flexDirection={{
-          base: "column-reverse",
-          lg: "row",
+          base: 'column-reverse',
+          lg: 'row',
         }}
-        w={"full"}
-        maxW={"7xl"}
-        mx={"auto"}
+        w={'full'}
+        maxW={'7xl'}
+        mx={'auto'}
         gap={10}
       >
-        <VStack align={"start"} w="full">
-          <VStack gap={5} align={"start"}>
-            <Box color={"white"} fontWeight={700} fontSize={"xl"}>
+        <VStack align={'start'} w="full">
+          <VStack gap={5} align={'start'}>
+            <Box color={'white'} fontWeight={700} fontSize={'xl'}>
               About {details?.name}
             </Box>
-            <Description longDescription={details?.longDescription || ""} />
-            <Box bg="#1E1E1E" w={"full"} h={"0.5"} />
+            <Description longDescription={details?.longDescription || ''} />
+            <Box bg="#1E1E1E" w={'full'} h={'0.5'} />
             <Comments />
           </VStack>
         </VStack>
         <VStack
-          w={"full"}
-          align={"start"}
+          w={'full'}
+          align={'start'}
           maxW={{
-            base: "full",
-            lg: "sm",
+            base: 'full',
+            lg: 'sm',
           }}
           gap={8}
-          color={"white"}
+          color={'white'}
         >
-          <ProjectTags tags={details?.industry || ""} />
+          <ProjectTags tags={details?.industry || ''} />
           <RoundStats />
           <Socials
             projectLink={details?.projectLink}

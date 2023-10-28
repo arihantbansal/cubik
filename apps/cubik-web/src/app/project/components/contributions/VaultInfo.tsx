@@ -1,12 +1,12 @@
-import { Box, HStack, VStack } from "@/utils/chakra";
-import React from "react";
+import React from 'react';
+import { Box, HStack, VStack } from '@/utils/chakra';
 
 export const VaultInfo = () => {
   return (
-    <VStack align={"start"} w="full">
-      <HStack align={"center"} justify={"space-between"} w="full">
+    <VStack align={'start'} w="full">
+      <HStack align={'center'} justify={'space-between'} w="full">
         <HStack>
-          <Box borderRadius={4} border={"1.5px solid #241E00"} p={2}>
+          <Box borderRadius={4} border={'1.5px solid #241E00'} p={2}>
             <svg
               width="18"
               height="18"
@@ -23,7 +23,7 @@ export const VaultInfo = () => {
               />
             </svg>
           </Box>
-          <Box color={"white"} fontSize={"lg"} fontWeight={600}>
+          <Box color={'white'} fontSize={'lg'} fontWeight={600}>
             Project Treasury
           </Box>
         </HStack>
@@ -59,9 +59,9 @@ export const VaultInfo = () => {
           </svg>
         </Box>
       </HStack>
-      <HStack h={20} align={"end"}>
-        <VStack gap={0} align={"start"}>
-          <Box color={"white"} fontSize={"xl"} fontWeight={600}>
+      <HStack h={20} align={'end'}>
+        <VStack gap={0} align={'start'}>
+          <Box color={'white'} fontSize={'xl'} fontWeight={600}>
             $333
           </Box>
           <HStack gap={0}>
@@ -81,7 +81,7 @@ export const VaultInfo = () => {
                 />
               </svg>
             </Box>
-            <Box color={"#31B702"} fontSize={"md"} fontWeight={600}>
+            <Box color={'#31B702'} fontSize={'md'} fontWeight={600}>
               00%
             </Box>
           </HStack>

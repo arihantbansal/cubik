@@ -1,41 +1,41 @@
-import { cn } from "../../lib/utils";
-import { VariantProps, cva } from "class-variance-authority";
-import { forwardRef } from "react";
-import { Icon } from "../../icons/icon";
-import React from "react";
+import React, { forwardRef } from 'react';
+import { cva, VariantProps } from 'class-variance-authority';
 
-const inputLabelVariants = cva("transition-colors", {
+import { Icon } from '../../icons/icon';
+import { cn } from '../../lib/utils';
+
+const inputLabelVariants = cva('transition-colors', {
   variants: {
     variant: {
-      default: "text-[#808080]",
-      error: "text-[#F53D6B]",
-      icon: "flex items-center space-x-2",
+      default: 'text-[#808080]',
+      error: 'text-[#F53D6B]',
+      icon: 'flex items-center space-x-2',
     },
     fontSize: {
-      xl: "text-xl",
-      lg: "text-lg",
-      md: "text-md",
-      sm: "text-sm",
-      xs: "text-xs",
+      xl: 'text-xl',
+      lg: 'text-lg',
+      md: 'text-md',
+      sm: 'text-sm',
+      xs: 'text-xs',
     },
     fontWeight: {
-      light: "font-light",
-      regular: "font-normal",
-      medium: "font-medium",
-      bold: "font-bold",
+      light: 'font-light',
+      regular: 'font-normal',
+      medium: 'font-medium',
+      bold: 'font-bold',
     },
   },
   defaultVariants: {
-    fontSize: "md",
-    fontWeight: "medium",
-    variant: "icon",
+    fontSize: 'md',
+    fontWeight: 'medium',
+    variant: 'icon',
   },
 });
 
 type InputLabelProps = React.HTMLAttributes<HTMLElement> &
   VariantProps<typeof inputLabelVariants> & {
     asChild?: boolean;
-    as?: "p" | "span" | "div" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+    as?: 'p' | 'span' | 'div' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   };
 
 const InputLabel = forwardRef<HTMLSpanElement, InputLabelProps>(
@@ -44,7 +44,7 @@ const InputLabel = forwardRef<HTMLSpanElement, InputLabelProps>(
       <span
         className={cn(
           inputLabelVariants({ className }),
-          "flex items-center space-x-2"
+          'flex items-center space-x-2',
         )}
         {...props}
         ref={ref}
@@ -59,9 +59,9 @@ const InputLabel = forwardRef<HTMLSpanElement, InputLabelProps>(
         {children}
       </span>
     );
-  }
+  },
 );
 
-InputLabel.displayName = "InputLabel";
+InputLabel.displayName = 'InputLabel';
 
 export { InputLabel, inputLabelVariants };

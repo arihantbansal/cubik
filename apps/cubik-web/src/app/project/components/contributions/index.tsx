@@ -1,13 +1,16 @@
-"use client";
-import { Container, VStack } from "@/utils/chakra";
-import React, { Suspense, useState } from "react";
-import { VaultInfo } from "./VaultInfo";
-import { TopEarner } from "./TopEarner";
-import { useProjectEventStore } from "../store";
-import { useQuery } from "@tanstack/react-query";
-import type { Prisma } from "@cubik/database";
-import { Contributions } from "./Contributions";
-import { getContributions } from "./getContributors";
+'use client';
+
+import React, { Suspense, useState } from 'react';
+import { Container, VStack } from '@/utils/chakra';
+import { useQuery } from '@tanstack/react-query';
+
+import type { Prisma } from '@cubik/database';
+
+import { useProjectEventStore } from '../store';
+import { Contributions } from './Contributions';
+import { getContributions } from './getContributors';
+import { TopEarner } from './TopEarner';
+import { VaultInfo } from './VaultInfo';
 
 export type ContributionRowType = Prisma.ContributionGetPayload<{
   select: {
@@ -34,22 +37,22 @@ export const ContributionSection = () => {
 
   const contributions = useQuery({
     queryFn: () => getContributions(event, page),
-    queryKey: ["contributions"],
+    queryKey: ['contributions'],
     enabled: event ? true : false,
   });
 
   return (
     <>
-      <Suspense fallback={"Loading..."}>
+      <Suspense fallback={'Loading...'}>
         <Container
-          display={"flex"}
+          display={'flex'}
           flexDirection={{
-            base: "column",
-            lg: "row",
+            base: 'column',
+            lg: 'row',
           }}
-          w={"full"}
-          maxW={"7xl"}
-          mx={"auto"}
+          w={'full'}
+          maxW={'7xl'}
+          mx={'auto'}
           gap={10}
         >
           <VStack w="full">
@@ -59,10 +62,10 @@ export const ContributionSection = () => {
             />
           </VStack>
           <VStack
-            w={"full"}
+            w={'full'}
             maxW={{
-              base: "full",
-              lg: "sm",
+              base: 'full',
+              lg: 'sm',
             }}
           >
             <VaultInfo />

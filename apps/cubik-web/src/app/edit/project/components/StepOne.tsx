@@ -1,4 +1,9 @@
-"use client";
+'use client';
+
+import { useCallback, useState } from 'react';
+import Image from 'next/image';
+import ChevronRight from '@/theme/icons/chevron_right.svg';
+import UploadIcon from '@/theme/icons/upload.svg';
 import {
   Box,
   Button,
@@ -13,11 +18,9 @@ import {
   Input,
   Textarea,
   VStack,
-} from "@/utils/chakra";
-import Image from "next/image";
-import { useCallback, useState } from "react";
-import type { FileWithPath } from "react-dropzone";
-import { useDropzone } from "react-dropzone";
+} from '@/utils/chakra';
+import type { FileWithPath } from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
 import type {
   Control,
   FieldErrors,
@@ -28,11 +31,10 @@ import type {
   UseFormSetValue,
   UseFormTrigger,
   UseFormWatch,
-} from "react-hook-form";
-import UploadIcon from "@/theme/icons/upload.svg";
-import ChevronRight from "@/theme/icons/chevron_right.svg";
-import type { FormData } from "./Form";
-import { CategorySelect, TeamSelect } from "./ChakraReactSelect";
+} from 'react-hook-form';
+
+import { CategorySelect, TeamSelect } from './ChakraReactSelect';
+import type { FormData } from './Form';
 
 type StepOneProps = {
   onSubmit: (data: any) => void;
@@ -64,14 +66,14 @@ const StepOne: React.FC<StepOneProps> = ({
 
   const onDrop = useCallback(
     (acceptedFiles: FileWithPath[]) => {
-      setValue("logo", acceptedFiles);
+      setValue('logo', acceptedFiles);
     },
-    [setValue]
+    [setValue],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     //@ts-ignore
-    accept: "image/*",
+    accept: 'image/*',
     multiple: false, // prevent multiple file selection
     onDrop,
   });
@@ -87,7 +89,7 @@ const StepOne: React.FC<StepOneProps> = ({
             isInvalid={Boolean(errors.projectName)}
           >
             <FormLabel
-              fontSize={{ base: "12px", md: "14px" }}
+              fontSize={{ base: '12px', md: '14px' }}
               pb="0.5rem"
               htmlFor="projectName"
             >
@@ -95,26 +97,26 @@ const StepOne: React.FC<StepOneProps> = ({
             </FormLabel>
             <Input
               id="projectName"
-              fontSize={{ base: "12px", md: "14px" }}
+              fontSize={{ base: '12px', md: '14px' }}
               placeholder="Enter your project name"
               _placeholder={{
-                fontSize: { base: "12px", md: "14px" },
-                color: "#3B3D3D",
+                fontSize: { base: '12px', md: '14px' },
+                color: '#3B3D3D',
               }}
-              {...register("projectName", {
+              {...register('projectName', {
                 required: true,
-                maxLength: { value: 36, message: "Max length is 36" },
+                maxLength: { value: 36, message: 'Max length is 36' },
               })}
             />
             {errors.projectName && (
-              <FormErrorMessage fontSize={{ base: "12px", md: "14px" }}>
+              <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
                 {errors.projectName.message}
               </FormErrorMessage>
             )}
-          </FormControl>{" "}
+          </FormControl>{' '}
           <FormControl isRequired isInvalid={Boolean(errors.email)} w="full">
             <FormLabel
-              fontSize={{ base: "12px", md: "14px" }}
+              fontSize={{ base: '12px', md: '14px' }}
               pb="0.5rem"
               htmlFor="email"
             >
@@ -124,14 +126,14 @@ const StepOne: React.FC<StepOneProps> = ({
               id="email"
               placeholder="Enter your email address"
               _placeholder={{
-                fontSize: { base: "12px", md: "14px" },
-                color: "#3B3D3D",
+                fontSize: { base: '12px', md: '14px' },
+                color: '#3B3D3D',
               }}
-              {...register("email", {
+              {...register('email', {
                 required: true,
               })}
             />
-            <FormErrorMessage fontSize={{ base: "12px", md: "14px" }}>
+            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
               {errors.email && errors.email.message}
             </FormErrorMessage>
             {/* {getFieldState("email")?.isDirty && (
@@ -146,54 +148,54 @@ const StepOne: React.FC<StepOneProps> = ({
           </FormControl>
         </HStack>
         <FormControl isRequired isInvalid={Boolean(errors.tagline)}>
-          <HStack w="full" pb="0.5rem" justify={"space-between"}>
+          <HStack w="full" pb="0.5rem" justify={'space-between'}>
             <FormLabel
-              fontSize={{ base: "12px", md: "14px" }}
+              fontSize={{ base: '12px', md: '14px' }}
               htmlFor="tagline"
             >
               Tagline
             </FormLabel>
             <Box
               as="p"
-              fontSize={{ base: "10px", md: "12px" }}
+              fontSize={{ base: '10px', md: '12px' }}
               color={
-                watch("tagline")?.length === 0
-                  ? "neutral.7"
-                  : watch("tagline")?.length > 80
-                  ? "surface.red.2"
-                  : "surface.green.2"
+                watch('tagline')?.length === 0
+                  ? 'neutral.7'
+                  : watch('tagline')?.length > 80
+                  ? 'surface.red.2'
+                  : 'surface.green.2'
               }
-              fontWeight={"600"}
+              fontWeight={'600'}
             >
-              {watch("tagline") ? watch("tagline").length + "/80" : "0/80"}
+              {watch('tagline') ? watch('tagline').length + '/80' : '0/80'}
             </Box>
           </HStack>
           <Textarea
-            height={"100px"}
+            height={'100px'}
             resize="none"
             id="tagline"
-            fontSize={{ base: "12px", md: "14px" }}
+            fontSize={{ base: '12px', md: '14px' }}
             placeholder="A one sentence description of the project"
             _invalid={{
-              boxShadow: "0 0 0 2px #E53E3E",
+              boxShadow: '0 0 0 2px #E53E3E',
             }}
             _placeholder={{
-              fontSize: { base: "12px", md: "14px" },
-              color: "#3B3D3D",
+              fontSize: { base: '12px', md: '14px' },
+              color: '#3B3D3D',
             }}
-            {...register("tagline", {
+            {...register('tagline', {
               required: true,
-              maxLength: { value: 240, message: "Max length is 240" },
+              maxLength: { value: 240, message: 'Max length is 240' },
             })}
           />
           {errors.tagline ? (
-            <FormErrorMessage fontSize={{ base: "12px", md: "14px" }}>
+            <FormErrorMessage fontSize={{ base: '12px', md: '14px' }}>
               {errors.tagline.message}
             </FormErrorMessage>
           ) : (
-            getFieldState("tagline")?.isDirty && (
+            getFieldState('tagline')?.isDirty && (
               <FormHelperText
-                fontSize={{ base: "12px", md: "14px" }}
+                fontSize={{ base: '12px', md: '14px' }}
                 color="neutral.6"
               >
                 Keep the tagline concise, engaging, and descriptive. It should
@@ -206,7 +208,7 @@ const StepOne: React.FC<StepOneProps> = ({
         <TeamSelect control={control} errors={errors} watch={watch} />
         <FormControl isRequired isInvalid={Boolean(errors.logo)} id="logo">
           <FormLabel
-            fontSize={{ base: "12px", md: "14px" }}
+            fontSize={{ base: '12px', md: '14px' }}
             pb="0.5rem"
             htmlFor="logo"
           >
@@ -215,18 +217,18 @@ const StepOne: React.FC<StepOneProps> = ({
           <HStack h="full" gap="1rem">
             {isDragActive ? (
               <Center
-                maxW={"7xl"}
+                maxW={'7xl'}
                 mx="auto"
                 w="full"
-                py={{ base: "16px", sm: "24px" }}
+                py={{ base: '16px', sm: '24px' }}
                 border="1px dashed"
-                borderColor={"#1D1F1E"}
+                borderColor={'#1D1F1E'}
                 rounded="12px"
               >
                 <Box
                   as="p"
-                  textStyle={{ base: "body4", md: "body3" }}
-                  color={"neutral.7"}
+                  textStyle={{ base: 'body4', md: 'body3' }}
+                  color={'neutral.7'}
                 >
                   Drop File Here...
                 </Box>
@@ -234,72 +236,72 @@ const StepOne: React.FC<StepOneProps> = ({
             ) : (
               <>
                 <Center
-                  border={"2px dashed"}
+                  border={'2px dashed'}
                   rounded="12px"
-                  borderColor={errors.logo ? " #E53E3E" : "neutral.6"}
-                  minW={{ base: "5rem", md: "6rem" }}
-                  h={{ base: "5rem", md: "6rem" }}
-                  position={"relative"}
+                  borderColor={errors.logo ? ' #E53E3E' : 'neutral.6'}
+                  minW={{ base: '5rem', md: '6rem' }}
+                  h={{ base: '5rem', md: '6rem' }}
+                  position={'relative'}
                 >
-                  {getValues("logo") ? (
+                  {getValues('logo') ? (
                     <Center
                       position="absolute"
-                      w={{ base: "3rem", md: "5rem" }}
-                      h={{ base: "3rem", md: "5rem" }}
-                      rounded={"12px"}
+                      w={{ base: '3rem', md: '5rem' }}
+                      h={{ base: '3rem', md: '5rem' }}
+                      rounded={'12px'}
                       overflow="hidden"
                     >
                       <Image
                         src={
-                          getValues("logo") &&
+                          getValues('logo') &&
                           // @ts-ignore
-                          URL.createObjectURL(watch("logo")[0])
+                          URL.createObjectURL(watch('logo')[0])
                         }
                         alt="project logo"
                         fill={true}
-                        style={{ objectFit: "cover" }}
+                        style={{ objectFit: 'cover' }}
                       />
                     </Center>
                   ) : imageURL ? (
                     <Center
                       position="absolute"
-                      w={{ base: "3rem", md: "5rem" }}
-                      h={{ base: "3rem", md: "5rem" }}
-                      rounded={"12px"}
+                      w={{ base: '3rem', md: '5rem' }}
+                      h={{ base: '3rem', md: '5rem' }}
+                      rounded={'12px'}
                       overflow="hidden"
                     >
                       <Image
                         src={imageURL}
                         alt="project logo"
                         fill={true}
-                        style={{ objectFit: "cover" }}
+                        style={{ objectFit: 'cover' }}
                       />
                     </Center>
                   ) : (
                     <Center width="20px" height="20px">
-                      <UploadIcon width="20" height="20" color={"neutral.6"} />
+                      <UploadIcon width="20" height="20" color={'neutral.6'} />
                     </Center>
                   )}
                 </Center>
                 <VStack
-                  align={"start"}
+                  align={'start'}
                   justify="space-between"
                   gap="12px"
-                  height={"full"}
+                  height={'full'}
                 >
                   <Center {...getRootProps()}>
                     <input {...getInputProps()} />
                     <Button
-                      variant={"cubikFilled"}
-                      size={{ base: "cubikSmall", md: "cubikMedium" }}
+                      variant={'cubikFilled'}
+                      size={{ base: 'cubikSmall', md: 'cubikMedium' }}
                     >
-                      {getValues("logo") ? "Upload New Image" : "Upload Image"}
+                      {getValues('logo') ? 'Upload New Image' : 'Upload Image'}
                     </Button>
                   </Center>
                   <Box
-                    textAlign={"start"}
+                    textAlign={'start'}
                     as="p"
-                    textStyle={{ base: "body5", md: "body4" }}
+                    textStyle={{ base: 'body5', md: 'body4' }}
                     color="neutral.6"
                   >
                     Upload a 1:1 aspect ration Image of size at max 5MB.
@@ -316,23 +318,23 @@ const StepOne: React.FC<StepOneProps> = ({
       <CardFooter>
         <CardFooter>
           <Button
-            variant={"cubikText"}
-            size={{ base: "cubikSmall", md: "cubikMedium" }}
+            variant={'cubikText'}
+            size={{ base: 'cubikSmall', md: 'cubikMedium' }}
             rightIcon={
               <Center width="20px" height="20px">
-                <ChevronRight width="14" height="14" />{" "}
+                <ChevronRight width="14" height="14" />{' '}
               </Center>
             }
             ml="auto"
             onClick={async () => {
               setIsSubmitting(true);
               const isValid = await trigger([
-                "projectName",
-                "tagline",
-                "category",
-                "team",
-                "email",
-                "logo",
+                'projectName',
+                'tagline',
+                'category',
+                'team',
+                'email',
+                'logo',
               ]);
               if (isValid) {
                 //@ts-ignore

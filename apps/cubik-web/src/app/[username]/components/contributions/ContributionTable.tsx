@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Box,
   Table,
@@ -6,8 +7,7 @@ import {
   Th,
   Thead,
   Tr,
-} from "@/utils/chakra";
-import React from "react";
+} from '@/utils/chakra';
 
 interface Props {
   children: React.JSX.Element[];
@@ -24,8 +24,8 @@ export const ContributionTable = ({ children }: Props) => {
                 <Box
                   as="p"
                   color="#ADB8B6"
-                  textStyle={{ base: "body4", md: "body3" }}
-                  textTransform={"capitalize"}
+                  textStyle={{ base: 'body4', md: 'body3' }}
+                  textTransform={'capitalize'}
                 >
                   Projects
                 </Box>
@@ -34,8 +34,8 @@ export const ContributionTable = ({ children }: Props) => {
                 <Box
                   as="p"
                   color="#ADB8B6"
-                  textStyle={{ base: "body4", md: "body3" }}
-                  textTransform={"capitalize"}
+                  textStyle={{ base: 'body4', md: 'body3' }}
+                  textTransform={'capitalize'}
                 >
                   Category
                 </Box>
@@ -44,8 +44,8 @@ export const ContributionTable = ({ children }: Props) => {
                 <Box
                   as="p"
                   color="#ADB8B6"
-                  textStyle={{ base: "body4", md: "body3" }}
-                  textTransform={"capitalize"}
+                  textStyle={{ base: 'body4', md: 'body3' }}
+                  textTransform={'capitalize'}
                 >
                   Amount Contributed
                 </Box>
@@ -54,8 +54,8 @@ export const ContributionTable = ({ children }: Props) => {
                 <Box
                   as="p"
                   color="#ADB8B6"
-                  textStyle={{ base: "body4", md: "body3" }}
-                  textTransform={"capitalize"}
+                  textStyle={{ base: 'body4', md: 'body3' }}
+                  textTransform={'capitalize'}
                 >
                   Round
                 </Box>
@@ -64,8 +64,8 @@ export const ContributionTable = ({ children }: Props) => {
                 <Box
                   as="p"
                   color="#ADB8B6"
-                  textStyle={{ base: "body4", md: "body3" }}
-                  textTransform={"capitalize"}
+                  textStyle={{ base: 'body4', md: 'body3' }}
+                  textTransform={'capitalize'}
                   fontWeight="500"
                 >
                   Total Amount Raised

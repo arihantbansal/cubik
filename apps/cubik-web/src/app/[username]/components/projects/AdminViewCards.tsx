@@ -1,8 +1,9 @@
-import { Card, CardFooter, CardHeader } from "@chakra-ui/react";
-import React from "react";
-import { AdminProjectDetails } from "./AdminProjectDetails";
-import type { ProjectCommonType } from "./type";
-import { ProjectVerificationStatusBanner } from "./ProjectVerificationStatusBanner";
+import React from 'react';
+import { Card, CardFooter, CardHeader } from '@chakra-ui/react';
+
+import { AdminProjectDetails } from './AdminProjectDetails';
+import { ProjectVerificationStatusBanner } from './ProjectVerificationStatusBanner';
+import type { ProjectCommonType } from './type';
 
 interface Props {
   project: ProjectCommonType;
@@ -10,7 +11,7 @@ interface Props {
 export const AdminViewCards = ({ project }: Props) => {
   return (
     <>
-      <Card px="0px" w="100%" gap={0} border={"none"}>
+      <Card px="0px" w="100%" gap={0} border={'none'}>
         <ProjectVerificationStatusBanner
           status={project?.status}
           projectJoinRoundStatus={true}

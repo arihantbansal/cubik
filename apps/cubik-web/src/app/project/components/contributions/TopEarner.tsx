@@ -1,3 +1,5 @@
+import React from 'react';
+import ProfilePictureAvatar from '@/app/components/common/profile-picture';
 import {
   Box,
   HStack,
@@ -10,27 +12,27 @@ import {
   Thead,
   Tr,
   VStack,
-} from "@/utils/chakra";
-import React from "react";
-import { useProjectEventStore } from "../store";
-import { getTopEarner } from "./getContributors";
-import { useQuery } from "@tanstack/react-query";
-import type { NFTProfile } from "@cubik/common-types";
-import ProfilePictureAvatar from "@/app/components/common/profile-picture";
+} from '@/utils/chakra';
+import { useQuery } from '@tanstack/react-query';
+
+import type { NFTProfile } from '@cubik/common-types';
+
+import { useProjectEventStore } from '../store';
+import { getTopEarner } from './getContributors';
 
 export const TopEarner = () => {
   const { event } = useProjectEventStore();
 
   const topEarner = useQuery({
     queryFn: () => getTopEarner(event),
-    queryKey: ["topEarner"],
+    queryKey: ['topEarner'],
     enabled: event ? true : false,
   });
 
   return (
-    <VStack mt={4} w="full" align={"start"}>
-      <HStack align={"center"}>
-        <Box borderRadius={4} border={"1.5px solid #2B1449"} p={2}>
+    <VStack mt={4} w="full" align={'start'}>
+      <HStack align={'center'}>
+        <Box borderRadius={4} border={'1.5px solid #2B1449'} p={2}>
           <svg
             width="18"
             height="18"
@@ -47,29 +49,29 @@ export const TopEarner = () => {
             />
           </svg>
         </Box>
-        <Box color={"white"} fontSize={"lg"} fontWeight={600}>
+        <Box color={'white'} fontSize={'lg'} fontWeight={600}>
           Top Contributors
         </Box>
       </HStack>
-      <TableContainer mt={4} w={"full"}>
-        <Table variant={"unstyled"} w={"full"}>
-          <Thead color="neutral.8" fontFamily={"Inter"}>
+      <TableContainer mt={4} w={'full'}>
+        <Table variant={'unstyled'} w={'full'}>
+          <Thead color="neutral.8" fontFamily={'Inter'}>
             <Tr>
-              <Th textAlign={"start"} p={1}>
-                <Text fontSize={{ base: "12px", md: "14px" }} color={"#515251"}>
+              <Th textAlign={'start'} p={1}>
+                <Text fontSize={{ base: '12px', md: '14px' }} color={'#515251'}>
                   Rank
                 </Text>
               </Th>
-              <Th textAlign={"start"} p={1}>
-                <Text color={"#515251"} fontSize={{ base: "12px", md: "14px" }}>
+              <Th textAlign={'start'} p={1}>
+                <Text color={'#515251'} fontSize={{ base: '12px', md: '14px' }}>
                   Contributor
                 </Text>
               </Th>
               <Th
                 p={1}
                 textAlign="end"
-                fontSize={{ base: "12px", md: "14px" }}
-                color={"#515251"}
+                fontSize={{ base: '12px', md: '14px' }}
+                color={'#515251'}
               >
                 Amount
               </Th>
@@ -79,28 +81,28 @@ export const TopEarner = () => {
             {topEarner.data?.map((earner, index: number) => {
               return (
                 <Tr key={earner.id}>
-                  <Td p={1} textAlign={"center"}>
+                  <Td p={1} textAlign={'center'}>
                     <span
                       style={{
-                        color: "#3B3D3D",
+                        color: '#3B3D3D',
                         fontWeight: 600,
-                        fontSize: "16px",
+                        fontSize: '16px',
                       }}
                     >
                       #
                     </span>
                     <span
                       style={{
-                        color: "white",
+                        color: 'white',
                         fontWeight: 600,
-                        fontSize: "20px",
+                        fontSize: '20px',
                       }}
                     >
                       {index + 1}
                     </span>
                   </Td>
                   <Td p={1}>
-                    <HStack align={"start"} gap={2}>
+                    <HStack align={'start'} gap={2}>
                       <ProfilePictureAvatar
                         NFTProfile={
                           earner.user?.profileNft as unknown as NFTProfile
@@ -113,27 +115,27 @@ export const TopEarner = () => {
                         }
                         username={earner.user?.username as string}
                         width={{
-                          base: "36px",
-                          sm: "36px",
-                          md: "36px",
-                          lg: "36px",
-                          xl: "36px",
+                          base: '36px',
+                          sm: '36px',
+                          md: '36px',
+                          lg: '36px',
+                          xl: '36px',
                         }}
                         height={{
-                          base: "36px",
-                          sm: "36px",
-                          md: "36px",
-                          lg: "36px",
-                          xl: "36px",
+                          base: '36px',
+                          sm: '36px',
+                          md: '36px',
+                          lg: '36px',
+                          xl: '36px',
                         }}
                       />
-                      <Box color={"white"} fontWeight={600} fontSize={"md"}>
+                      <Box color={'white'} fontWeight={600} fontSize={'md'}>
                         @{earner.user?.username}
                       </Box>
                     </HStack>
                   </Td>
                   <Td textAlign="end" p={1}>
-                    <Text color={"white"} fontWeight={600}>
+                    <Text color={'white'} fontWeight={600}>
                       ${earner.totalUsdAmount}
                     </Text>
                   </Td>

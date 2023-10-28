@@ -1,17 +1,17 @@
-import * as anchor from "@coral-xyz/anchor";
-import type NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
-import type { PublicKey } from "@solana/web3.js";
-import type { TransactionAccount, InstructionAccount } from "@sqds/sdk";
-import Squads, { getTxPDA, getIxPDA } from "@sqds/sdk";
-import { env } from "@/env.mjs";
+import { env } from '@/env.mjs';
+import * as anchor from '@coral-xyz/anchor';
+import type NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import type { PublicKey } from '@solana/web3.js';
+import type { InstructionAccount, TransactionAccount } from '@sqds/sdk';
+import Squads, { getIxPDA, getTxPDA } from '@sqds/sdk';
 
 const RPC_URL =
-  env.NEXT_PUBLIC_SOLANA_NETWORK === "mainnet-beta"
+  env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta'
     ? env.NEXT_PUBLIC_RPC_MAINNET_URL
     : env.NEXT_PUBLIC_RPC_DEVNET_URL;
 
 const getSquads = (wallet: NodeWallet): Squads => {
-  if (env.NEXT_PUBLIC_SOLANA_NETWORK === "mainnet-beta") {
+  if (env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta') {
     const squads = Squads.endpoint(RPC_URL, wallet);
 
     return squads;
@@ -25,7 +25,7 @@ export const createVault = async (
   username: string,
   wallet: NodeWallet,
   name: string,
-  image: string
+  image: string,
 ) => {
   const squads = getSquads(wallet);
   const createKey = anchor.web3.Keypair.generate();
@@ -35,25 +35,25 @@ export const createVault = async (
     [wallet.publicKey, new anchor.web3.PublicKey(env.NEXT_PUBLIC_ADMIN_VAULT)],
     `Cubik Vault`,
     `This treasured holds the funds raised on cubik by @${username} for @${name}`,
-    image
+    image,
   );
 
   return { ix: ix, key: ix.keys[0]!.pubkey, createKey: createKey.publicKey };
 };
 export const getVault = (
   wallet: NodeWallet,
-  mutliSigAccount: anchor.web3.PublicKey
+  mutliSigAccount: anchor.web3.PublicKey,
 ): string => {
   const squads = getSquads(wallet);
 
   const [authority] = anchor.web3.PublicKey.findProgramAddressSync(
     [
-      anchor.utils.bytes.utf8.encode("squad"),
+      anchor.utils.bytes.utf8.encode('squad'),
       mutliSigAccount.toBuffer(),
-      new anchor.BN(1).toArrayLike(Buffer, "le", 4),
-      anchor.utils.bytes.utf8.encode("authority"),
+      new anchor.BN(1).toArrayLike(Buffer, 'le', 4),
+      anchor.utils.bytes.utf8.encode('authority'),
     ],
-    squads.multisigProgramId
+    squads.multisigProgramId,
   );
 
   return authority.toBase58();
@@ -64,11 +64,11 @@ export const getMsAddress = (wallet: NodeWallet, createKey: string) => {
 
   const [multiSigAccount] = anchor.web3.PublicKey.findProgramAddressSync(
     [
-      anchor.utils.bytes.utf8.encode("squad"),
+      anchor.utils.bytes.utf8.encode('squad'),
       new anchor.web3.PublicKey(createKey).toBuffer(),
-      anchor.utils.bytes.utf8.encode("multisig"),
+      anchor.utils.bytes.utf8.encode('multisig'),
     ],
-    squads.multisigProgramId
+    squads.multisigProgramId,
   );
 
   return multiSigAccount.toBase58();
@@ -84,11 +84,11 @@ export const getAllTx = async (wallet: NodeWallet, createKey: string) => {
 
     const [multiSigAccount] = anchor.web3.PublicKey.findProgramAddressSync(
       [
-        anchor.utils.bytes.utf8.encode("squad"),
+        anchor.utils.bytes.utf8.encode('squad'),
         new anchor.web3.PublicKey(createKey).toBuffer(),
-        anchor.utils.bytes.utf8.encode("multisig"),
+        anchor.utils.bytes.utf8.encode('multisig'),
       ],
-      squads.multisigProgramId
+      squads.multisigProgramId,
     );
 
     const nextIndex = await squads.getNextTransactionIndex(multiSigAccount);
@@ -97,7 +97,7 @@ export const getAllTx = async (wallet: NodeWallet, createKey: string) => {
       const [txPDA] = getTxPDA(
         multiSigAccount,
         new anchor.BN(index + 1, 10),
-        squads.multisigProgramId
+        squads.multisigProgramId,
       );
       txsPDA.push(txPDA);
     }
@@ -124,7 +124,7 @@ export const getAllTx = async (wallet: NodeWallet, createKey: string) => {
 export const getAllIxAcc = async (
   wallet: NodeWallet,
   multiSigAccount: anchor.web3.PublicKey,
-  txPDA: anchor.web3.PublicKey[]
+  txPDA: anchor.web3.PublicKey[],
 ) => {
   try {
     const squads = getSquads(wallet);
@@ -135,7 +135,7 @@ export const getAllIxAcc = async (
       const [pda] = getIxPDA(
         txPDA[index]!,
         new anchor.BN(1),
-        squads.multisigProgramId
+        squads.multisigProgramId,
       );
       IxsPDA.push(pda);
     }
@@ -149,14 +149,14 @@ export const getAllIxAcc = async (
 export const approveTxVault = async (
   wallet: NodeWallet,
   multiSig: anchor.web3.PublicKey,
-  index: number
+  index: number,
 ) => {
   try {
     const squads = getSquads(wallet);
     const [txPDA] = getTxPDA(
       multiSig,
       new anchor.BN(index),
-      squads.multisigProgramId
+      squads.multisigProgramId,
     );
     const tx = await squads.approveTransaction(txPDA);
 
@@ -169,7 +169,7 @@ export const approveTxVault = async (
 };
 export const exceuteTxVault = async (
   wallet: NodeWallet,
-  txPDA: anchor.web3.PublicKey
+  txPDA: anchor.web3.PublicKey,
 ) => {
   try {
     const squads = getSquads(wallet);

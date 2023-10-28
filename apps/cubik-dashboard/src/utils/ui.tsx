@@ -1,2 +1,2 @@
-"use client";
-export * from "@cubik/ui";
+'use client';
+export * from '@cubik/ui';

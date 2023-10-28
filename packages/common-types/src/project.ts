@@ -1,13 +1,13 @@
-export type ExplorerType = "round" | "hackathon";
+export type ExplorerType = 'round' | 'hackathon';
 
 enum event {
-  HACKATHON = "hackathon",
-  ROUND = "round",
-  MISC = "misc",
+  HACKATHON = 'hackathon',
+  ROUND = 'round',
+  MISC = 'misc',
 }
 export type HackathonEvent = {
   id: string;
-  eventName: "hackathon";
+  eventName: 'hackathon';
   amount: number;
   name: string;
   hackathonStart: Date;
@@ -20,7 +20,7 @@ export type HackathonEvent = {
 
 export type RoundEvent = {
   id: string;
-  eventName: "round";
+  eventName: 'round';
   amount: number;
   name: string;
   registrationStart?: Date;
@@ -33,7 +33,7 @@ export type RoundEvent = {
 
 export type UnknownEvent = {
   id: string;
-  eventName: "unknown";
+  eventName: 'unknown';
   bg?: string;
   color?: string;
   start: Date;

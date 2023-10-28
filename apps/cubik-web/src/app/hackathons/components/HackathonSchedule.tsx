@@ -1,22 +1,24 @@
-"use client";
-import React from "react";
+'use client';
+
+import React from 'react';
 import {
   Box,
+  Center,
   HStack,
   Step,
   StepIndicator,
+  Stepper,
   StepSeparator,
   StepStatus,
-  Stepper,
   useSteps,
   VStack,
-  Center,
-} from "@/utils/chakra";
-//import { CgTimelapse } from "react-icons/cg";
-import { isFuture, isPast } from "date-fns";
+} from '@/utils/chakra';
 //import { BsCheckCircle } from "react-icons/bs";
 //import { BiCalendar } from "react-icons/bi";
-import { formateDateInMonths } from "@/utils/helpers/formateDateInMonths";
+import { formateDateInMonths } from '@/utils/helpers/formateDateInMonths';
+//import { CgTimelapse } from "react-icons/cg";
+import { isFuture, isPast } from 'date-fns';
+
 interface Props {
   slug: string;
   resultDate: Date;
@@ -59,25 +61,25 @@ export const HackathonSchedule = ({
   const steps: { title: string; start: Date; endDate?: Date; index: number }[] =
     [
       {
-        title: "Registration",
+        title: 'Registration',
         start: registrationStartDate,
         endDate: registrationEndDate,
         index: 0,
       },
       {
-        title: "Hackathon",
+        title: 'Hackathon',
         start: hackathonStartDate,
         endDate: hackathonEndDate,
         index: 1,
       },
       {
-        title: "Voting Period",
+        title: 'Voting Period',
         start: votingStartDate,
         endDate: votingEndDate,
         index: 2,
       },
       {
-        title: "Results",
+        title: 'Results',
         start: resultDate,
         index: 3,
       },
@@ -96,10 +98,10 @@ export const HackathonSchedule = ({
         w="full"
       >
         {steps.slice(0, 3).map((event) => (
-          <Step key={event.index} style={{ width: "100%" }}>
+          <Step key={event.index} style={{ width: '100%' }}>
             <StepIndicator
-              borderColor={activeStep === event.index ? "#14665B" : "#1D1F1E"}
-              bg={activeStep === event.index ? "#14665B" : "#1D1F1E"}
+              borderColor={activeStep === event.index ? '#14665B' : '#1D1F1E'}
+              bg={activeStep === event.index ? '#14665B' : '#1D1F1E'}
             >
               <StepStatus
                 complete={
@@ -144,22 +146,22 @@ export const HackathonSchedule = ({
             </StepIndicator>
             <VStack
               w="90%"
-              ml={"1rem"}
+              ml={'1rem'}
               mb="32px"
               border="1px solid"
-              borderColor={"neutral.3"}
-              backgroundColor={"neutral.2"}
+              borderColor={'neutral.3'}
+              backgroundColor={'neutral.2'}
               padding="24px"
               h="fit-content"
-              rounded={"12px"}
+              rounded={'12px'}
               flexShrink="0"
-              align={"start"}
+              align={'start'}
               spacing="12px"
             >
               <Box
-                textTransform={"capitalize"}
+                textTransform={'capitalize'}
                 as="p"
-                textStyle={"title2"}
+                textStyle={'title2'}
                 color="neutral.11"
               >
                 {event.title}
@@ -171,7 +173,7 @@ export const HackathonSchedule = ({
                     color="white"
                     boxSize={{ base: "16px", md: "22px" }}
                   /> */}
-                  <Box as="p" textStyle={"title4"} color="neutral.11">
+                  <Box as="p" textStyle={'title4'} color="neutral.11">
                     {formateDateInMonths(event.start)}
                   </Box>
                 </HStack>
@@ -182,7 +184,7 @@ export const HackathonSchedule = ({
                       color="white"
                       boxSize={{ base: "16px", md: "22px" }}
                     /> */}
-                    <Box as="p" textStyle={"title4"} color="neutral.11">
+                    <Box as="p" textStyle={'title4'} color="neutral.11">
                       {formateDateInMonths(event.endDate)}
                     </Box>
                   </HStack>

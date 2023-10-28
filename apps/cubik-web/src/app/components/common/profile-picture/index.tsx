@@ -1,19 +1,22 @@
-"use client";
+'use client';
+
+import React, { useRef, useState } from 'react';
+//import { TbCurrencySolana } from "react-icons/tb";
+import type { NFTProfile } from '@/types/NFTProfile';
 import {
+  Avatar,
   Box,
+  Button,
   Center,
   HStack,
-  VStack,
-  Avatar,
   useDisclosure,
-  Button,
-} from "@/utils/chakra";
-import React, { useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Portal, Skeleton } from "@chakra-ui/react";
-//import { TbCurrencySolana } from "react-icons/tb";
-import type { NFTProfile } from "@/types/NFTProfile";
-import { TruncatedAddr } from "../wallet";
+  VStack,
+} from '@/utils/chakra';
+import { Portal, Skeleton } from '@chakra-ui/react';
+import { AnimatePresence, motion } from 'framer-motion';
+
+import { TruncatedAddr } from '../wallet';
+
 const MotionBox = motion(Box);
 
 type profilePictureProps = {
@@ -52,13 +55,13 @@ const ProfilePictureAvatar = (props: profilePictureProps) => {
   return (
     <Center
       ref={myDiv}
-      cursor={props.asNFT ? "pointer" : ""}
-      position={"relative"}
+      cursor={props.asNFT ? 'pointer' : ''}
+      position={'relative'}
     >
       <Avatar
         zIndex={isOpen ? 2 : 0}
-        rounded={props.rounded || "full"}
-        borderRadius={props.rounded || "full"}
+        rounded={props.rounded || 'full'}
+        borderRadius={props.rounded || 'full'}
         onMouseEnter={handleClick}
         ignoreFallback={true}
         loading="lazy"
@@ -82,14 +85,14 @@ const ProfilePictureAvatar = (props: profilePictureProps) => {
                 bottom={0}
                 bg="rgba(0,0,0,0.4)"
                 backdropFilter="blur(6px)"
-                transition={{ duration: 0.3, ease: "easeOut" }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={onClose}
               >
                 <MotionBox
-                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  transition={{ duration: 0.2, ease: 'easeOut' }}
                   initial={{ opacity: 1, scale: 0.95, originX: 0, originY: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
@@ -138,7 +141,7 @@ const ProfilePictureAvatar = (props: profilePictureProps) => {
                       height="14rem"
                     />
                     <VStack
-                      position={"absolute"}
+                      position={'absolute'}
                       bottom={0}
                       left={0}
                       p="12px 8px"
@@ -146,7 +149,7 @@ const ProfilePictureAvatar = (props: profilePictureProps) => {
                       align="start"
                       gap="8px"
                       bgGradient={
-                        "linear-gradient(180deg, rgba(0,0,0,0) 0%, #141414 100%)"
+                        'linear-gradient(180deg, rgba(0,0,0,0) 0%, #141414 100%)'
                       }
                     >
                       {/* <HStack>
@@ -169,16 +172,16 @@ const ProfilePictureAvatar = (props: profilePictureProps) => {
                           as="p"
                           color="neutral.11"
                           noOfLines={1}
-                          textStyle={"title3"}
+                          textStyle={'title3'}
                         >
-                          {props.NFTProfile?.name || "NFT Name"}
+                          {props.NFTProfile?.name || 'NFT Name'}
                         </Box>
                       </Skeleton>
                     </VStack>
                   </HStack>
                   <VStack spacing="0px" py="4px">
                     <HStack w="full" p="4px 8px" justify="space-between">
-                      <Box as="p" color="neutral.7" textStyle={"title4"}>
+                      <Box as="p" color="neutral.7" textStyle={'title4'}>
                         Collection
                       </Box>
                       <Skeleton
@@ -186,13 +189,13 @@ const ProfilePictureAvatar = (props: profilePictureProps) => {
                         opacity={0.5}
                         fadeDuration={0.2}
                       >
-                        <Box as="p" color="neutral.10" textStyle={"title4"}>
-                          {props.NFTProfile?.collection || "Collection Name"}
+                        <Box as="p" color="neutral.10" textStyle={'title4'}>
+                          {props.NFTProfile?.collection || 'Collection Name'}
                         </Box>
                       </Skeleton>
                     </HStack>
                     <HStack w="full" p="4px 8px" justify="space-between">
-                      <Box as="p" color="neutral.7" textStyle={"title4"}>
+                      <Box as="p" color="neutral.7" textStyle={'title4'}>
                         Owner
                       </Box>
                       <Skeleton
@@ -200,9 +203,9 @@ const ProfilePictureAvatar = (props: profilePictureProps) => {
                         opacity={0.5}
                         fadeDuration={0.2}
                       >
-                        <Box as="p" color="neutral.10" textStyle={"title4"}>
+                        <Box as="p" color="neutral.10" textStyle={'title4'}>
                           {TruncatedAddr({
-                            walletAddress: props.NFTProfile?.owner || "",
+                            walletAddress: props.NFTProfile?.owner || '',
                           })}
                         </Box>
                       </Skeleton>
@@ -220,13 +223,13 @@ const ProfilePictureAvatar = (props: profilePictureProps) => {
                       bg="neutral.3"
                       variant="unstyled"
                       _hover={{
-                        bg: "neutral.4",
+                        bg: 'neutral.4',
                       }}
                     >
                       <Box
                         as="p"
                         color="neutral.7"
-                        textStyle={"title4"}
+                        textStyle={'title4'}
                         onClick={onClose}
                         w="full"
                       >

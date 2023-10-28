@@ -1,6 +1,8 @@
-import mysql, { Pool } from "mysql2";
-import logger from "../middleware/logger";
-import { config } from "dotenv";
+import { config } from 'dotenv';
+import mysql, { Pool } from 'mysql2';
+
+import logger from '../middleware/logger';
+
 config();
 export const dbInit = () => {
   const pool: Pool = mysql.createPool({

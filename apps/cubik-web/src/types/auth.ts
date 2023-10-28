@@ -1,5 +1,6 @@
-import type { NFTProfile } from "./NFTProfile";
-import type { JwtPayload } from "jsonwebtoken";
+import type { JwtPayload } from 'jsonwebtoken';
+
+import type { NFTProfile } from './NFTProfile';
 
 export type AuthPayload = {
   id: string;
@@ -14,10 +15,10 @@ export interface AuthCheckReturn {
   data: {
     user?: AuthPayload | null;
     type:
-      | "NEW_WALLET"
-      | "EXISTING_WALLET"
-      | "USER_FOUND"
-      | "AUTHENTICATED_USER";
+      | 'NEW_WALLET'
+      | 'EXISTING_WALLET'
+      | 'USER_FOUND'
+      | 'AUTHENTICATED_USER';
   } | null;
   error: string | null;
 }

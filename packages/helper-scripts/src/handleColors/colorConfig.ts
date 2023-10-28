@@ -1,5 +1,7 @@
-import { colorDump } from "../utils/color";
-import fs from "fs";
+import fs from 'fs';
+
+import { colorDump } from '../utils/color';
+
 interface ColorObject {
   id: string;
   name: string;
@@ -29,11 +31,11 @@ function convertColorsToHex(inputArray: ColorObject[]): newColorObj[] {
 
   for (const colorObj of inputArray) {
     const { name, valuesByMode, ...rest } = colorObj;
-    const rgbValue = valuesByMode["202:2"];
+    const rgbValue = valuesByMode['202:2'];
 
     if (rgbValue) {
       const hexValue = rgbToHex(rgbValue.r, rgbValue.g, rgbValue.b);
-      const updatedName = name.replace("Color/", "").replace(/\//g, "-");
+      const updatedName = name.replace('Color/', '').replace(/\//g, '-');
 
       const newColorObj: newColorObj = {
         name: updatedName.toLowerCase(),
@@ -51,7 +53,7 @@ function rgbToHex(r: number, g: number, b: number): string {
   const toHex = (value: number) =>
     Math.round(value * 255)
       .toString(16)
-      .padStart(2, "0");
+      .padStart(2, '0');
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
 
@@ -68,8 +70,8 @@ export const createColor = () => {
 
   // Sort the color keys based on their numeric index
   colorKeys.sort((a, b) => {
-    const [, aIndex] = a.split("-");
-    const [, bIndex] = b.split("-");
+    const [, aIndex] = a.split('-');
+    const [, bIndex] = b.split('-');
     return Number(bIndex) - Number(aIndex);
   });
 
@@ -80,5 +82,5 @@ export const createColor = () => {
     reorderedColors[key] = colors[key];
   }
 
-  fs.writeFileSync("colors.json", JSON.stringify(colors));
+  fs.writeFileSync('colors.json', JSON.stringify(colors));
 };

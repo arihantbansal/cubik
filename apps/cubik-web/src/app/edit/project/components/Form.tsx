@@ -1,29 +1,32 @@
-"use client";
+'use client';
 
+import React, { Suspense, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useUser } from '@/app/context/user';
 import {
   Box,
   Button,
   Card,
   HStack,
-  VStack,
   useDisclosure,
-} from "@/utils/chakra";
-import React, { Suspense, useState } from "react";
-import { Cardheader } from "./CardHeader";
-import { StepThree } from "./StepThree";
-import { StepTwo } from "./StepTwo";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { StepOne } from "./StepOne";
-import { useUploadThing } from "@/utils/helpers/uploadthing";
-import { useUser } from "@/app/context/user";
-import { useWalletModal } from "@solana/wallet-adapter-react-ui";
-import { ConfirmUpdateModal } from "./ConfirmUpdateModal";
-import { handleUpdate } from "./handleUpdate";
-import type { Team } from "@cubik/database";
-import { v4 as uuidV4 } from "uuid";
-import { useRouter } from "next/navigation";
+  VStack,
+} from '@/utils/chakra';
+import { useUploadThing } from '@/utils/helpers/uploadthing';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+import { useForm } from 'react-hook-form';
+import { v4 as uuidV4 } from 'uuid';
+import { z } from 'zod';
+
+import type { Team } from '@cubik/database';
+
+import { Cardheader } from './CardHeader';
+import { ConfirmUpdateModal } from './ConfirmUpdateModal';
+import { handleUpdate } from './handleUpdate';
+import { StepOne } from './StepOne';
+import { StepThree } from './StepThree';
+import { StepTwo } from './StepTwo';
+
 export type FormData = {
   projectName: string;
   tagline: string;
@@ -98,7 +101,7 @@ const Form = ({
     setError,
     getFieldState,
   } = useForm<FormData>({
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: formState,
     resolver: zodResolver(
       z.object({
@@ -107,14 +110,14 @@ const Form = ({
           .nonempty({ message: "Project name can't be empty" })
           .min(1)
           .max(36, {
-            message: "Must be at most 36 characters",
+            message: 'Must be at most 36 characters',
           }),
 
         tagline: z
           .string()
           .nonempty({ message: "Tagline can't be empty" })
           .max(80, {
-            message: "Tagline can not be more than 80 characters",
+            message: 'Tagline can not be more than 80 characters',
           }),
 
         logo: z.custom<File[]>(),
@@ -126,10 +129,10 @@ const Form = ({
               label: z.string().nonempty(),
               value: z.string().nonempty(),
               colorScheme: z.string().nonempty(),
-            })
+            }),
           )
-          .max(3, { message: "Must be at most 3 categories" })
-          .nonempty({ message: "Must select at least one category" }),
+          .max(3, { message: 'Must be at most 3 categories' })
+          .nonempty({ message: 'Must select at least one category' }),
 
         twitter: z
           .string()
@@ -144,40 +147,40 @@ const Form = ({
           .string()
           .nonempty({ message: "Description can't be empty" })
           .max(30000, {
-            message: "Description can not be more than 30000 characters",
+            message: 'Description can not be more than 30000 characters',
           }),
-      })
+      }),
     ),
   });
 
-  const { startUpload, isUploading } = useUploadThing("imageUploader", {
+  const { startUpload, isUploading } = useUploadThing('imageUploader', {
     onClientUploadComplete: (res) => {
       if (res) {
         setImageUrl(res[0]?.url as string);
         onConfirmModalOpen();
       } else {
-        setError("logo", {
-          message: "uploading error. Please try again",
+        setError('logo', {
+          message: 'uploading error. Please try again',
         });
       }
     },
 
     onUploadError: (e) => {
-      console.log("error", e);
+      console.log('error', e);
     },
   });
 
   const handleStepThreeSubmit = async (editorData: string) => {
     try {
-      if (watch("logo")) {
-        startUpload(watch("logo"));
+      if (watch('logo')) {
+        startUpload(watch('logo'));
       } else {
         setImageUrl(_imageURL);
         onConfirmModalOpen();
       }
       setEditorData(editorData);
     } catch (e) {
-      console.error("There was an error uploading the image", e);
+      console.error('There was an error uploading the image', e);
     } finally {
       setLoadingSubmit(false);
     }
@@ -186,7 +189,7 @@ const Form = ({
     try {
       setIsLoading(true);
       let team: Team[] = [];
-      if (getValues("team") && getValues("team").length > 0) {
+      if (getValues('team') && getValues('team').length > 0) {
         team = getValues()
           ?.team?.map((member) => member.value)
           .map((teamId) => {
@@ -206,7 +209,7 @@ const Form = ({
         {
           id: uuidV4(),
           projectId: projectId,
-          userId: user?.id || "",
+          userId: user?.id || '',
           createdAt: new Date(),
           isActive: true,
           isArchive: false,
@@ -221,19 +224,19 @@ const Form = ({
       });
       const res = await handleUpdate(
         {
-          email: getValues("email"),
-          discordLink: getValues("discord"),
-          githubLink: getValues("github"),
-          industry: JSON.stringify(getValues("category")),
+          email: getValues('email'),
+          discordLink: getValues('discord'),
+          githubLink: getValues('github'),
+          industry: JSON.stringify(getValues('category')),
           longDescription: editorData as string,
           logo: imageUrl as string,
-          name: getValues("projectName"),
-          projectLink: getValues("projectLink"),
-          shortDescription: getValues("tagline"),
-          telegramLink: getValues("telegram"),
-          twitterHandle: getValues("twitter"),
+          name: getValues('projectName'),
+          projectLink: getValues('projectLink'),
+          shortDescription: getValues('tagline'),
+          telegramLink: getValues('telegram'),
+          twitterHandle: getValues('twitter'),
           id: projectId,
-        }
+        },
         // finalTeam
       );
       if (res) {
@@ -296,23 +299,23 @@ const Form = ({
       <Suspense fallback={<>loading</>}>
         <Card
           maxW={{
-            base: !increasedSize ? "28rem" : "98%",
-            md: !increasedSize ? "full" : "3xl",
+            base: !increasedSize ? '28rem' : '98%',
+            md: !increasedSize ? 'full' : '3xl',
           }}
-          minW={{ base: "full", md: "48rem" }}
+          minW={{ base: 'full', md: '48rem' }}
           w="full"
           mx="auto"
-          padding={{ base: "24px", md: "38px" }}
+          padding={{ base: '24px', md: '38px' }}
         >
           {!(step === 4) && <Cardheader step={step} />}
           <form
             onSubmit={handleSubmit(() => {})}
             style={{
-              width: "full",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-              gap: "2rem",
+              width: 'full',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'start',
+              gap: '2rem',
             }}
           >
             {step === 1 && (

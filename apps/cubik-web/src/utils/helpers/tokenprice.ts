@@ -1,14 +1,11 @@
-import type { PriceReturnType } from "@/types/token";
-import { useQuery } from "@tanstack/react-query";
-
-import axios from "axios";
-
-import type { TokenPriceResponse } from "@/types/token";
+import type { PriceReturnType, TokenPriceResponse } from '@/types/token';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 export const tokenPrice = async () => {
   try {
     const response = await axios.get<TokenPriceResponse>(
-      `https://price.jup.ag/v4/price?ids=SOL`
+      `https://price.jup.ag/v4/price?ids=SOL`,
     );
     const price = response.data.data.SOL?.price;
     return price;
@@ -19,10 +16,10 @@ export const tokenPrice = async () => {
 };
 
 export const fetchPrice = async (
-  type: ("solana" | "bonk")[]
+  type: ('solana' | 'bonk')[],
 ): Promise<PriceReturnType[]> => {
   try {
-    const res = await axios.post("/api/info/price", {
+    const res = await axios.post('/api/info/price', {
       tokens: type || [],
     });
 
@@ -32,8 +29,8 @@ export const fetchPrice = async (
   }
 };
 
-export const useCurrentTokenPrice = (type: ("solana" | "bonk")[]) => {
-  return useQuery<PriceReturnType[]>(["price", type], () => fetchPrice(type), {
+export const useCurrentTokenPrice = (type: ('solana' | 'bonk')[]) => {
+  return useQuery<PriceReturnType[]>(['price', type], () => fetchPrice(type), {
     retry: false,
     refetchOnMount: false,
     refetchOnWindowFocus: false,

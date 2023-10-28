@@ -1,5 +1,5 @@
-import { Box, HStack, VStack } from "@/utils/chakra";
-import React from "react";
+import React from 'react';
+import { Box, HStack, VStack } from '@/utils/chakra';
 
 interface Props {
   discordLink?: string;
@@ -17,40 +17,40 @@ export const Socials = ({
 }: Props) => {
   function getGithubRepoName(url: string) {
     const parsedUrl = new URL(url);
-    if (parsedUrl.host !== "github.com") {
-      return "Not a GitHub URL";
+    if (parsedUrl.host !== 'github.com') {
+      return 'Not a GitHub URL';
     }
 
     const pathParts = parsedUrl.pathname
-      .split("/")
+      .split('/')
       .filter((part) => part.length > 0);
 
     if (pathParts.length < 2) {
-      return parsedUrl.pathname.replace("/", "");
+      return parsedUrl.pathname.replace('/', '');
     }
 
     return `${pathParts[0]}/${pathParts[1]}`;
   }
   function getTwitterName(url: string) {
     const parsedUrl = new URL(url);
-    if (parsedUrl.host !== "twitter.com" && parsedUrl.host !== "x.com") {
-      return "Not a GitHub URL";
+    if (parsedUrl.host !== 'twitter.com' && parsedUrl.host !== 'x.com') {
+      return 'Not a GitHub URL';
     }
 
     const pathParts = parsedUrl.pathname
-      .split("/")
+      .split('/')
       .filter((part) => part.length > 0);
 
     if (pathParts.length < 1) {
-      return "Invalid Twitter URL";
+      return 'Invalid Twitter URL';
     }
 
     return pathParts[0];
   }
   return (
     <>
-      <VStack gap={4} align={"start"} w="full">
-        <HStack align={"start"}>
+      <VStack gap={4} align={'start'} w="full">
+        <HStack align={'start'}>
           <Box>
             <svg
               width="28"
@@ -68,7 +68,7 @@ export const Socials = ({
               />
             </svg>
           </Box>
-          <Box color={"white"} fontSize={"xl"} fontWeight={700}>
+          <Box color={'white'} fontSize={'xl'} fontWeight={700}>
             Socials
           </Box>
         </HStack>
@@ -77,12 +77,12 @@ export const Socials = ({
           <HStack
             p={5}
             gap={5}
-            w={"full"}
-            border={"1px solid"}
-            borderColor={"#383301"}
+            w={'full'}
+            border={'1px solid'}
+            borderColor={'#383301'}
             borderRadius={10}
             bg="rgba(0, 0, 0, 0.20)"
-            overflow={"hidden"}
+            overflow={'hidden'}
           >
             <Box>
               <svg
@@ -103,8 +103,8 @@ export const Socials = ({
             </Box>
             <Box
               noOfLines={1}
-              fontSize={"lg"}
-              color={"#FFE818"}
+              fontSize={'lg'}
+              color={'#FFE818'}
               fontWeight={600}
             >
               {projectLink}
@@ -116,10 +116,10 @@ export const Socials = ({
           <HStack
             p={5}
             gap={5}
-            overflow={"hidden"}
-            w={"full"}
-            border={"1px solid"}
-            borderColor={"#400253"}
+            overflow={'hidden'}
+            w={'full'}
+            border={'1px solid'}
+            borderColor={'#400253'}
             borderRadius={10}
             bg="rgba(0, 0, 0, 0.20)"
           >
@@ -142,8 +142,8 @@ export const Socials = ({
             </Box>
             <Box
               noOfLines={1}
-              fontSize={"lg"}
-              color={"#D14AFA"}
+              fontSize={'lg'}
+              color={'#D14AFA'}
               fontWeight={600}
             >
               {getGithubRepoName(githubLink)}
@@ -154,11 +154,11 @@ export const Socials = ({
         {twitterHandle && (
           <HStack
             p={5}
-            overflow={"hidden"}
+            overflow={'hidden'}
             gap={5}
-            w={"full"}
-            border={"1px solid"}
-            borderColor={"#004A5A"}
+            w={'full'}
+            border={'1px solid'}
+            borderColor={'#004A5A'}
             borderRadius={10}
             bg="rgba(0, 0, 0, 0.20)"
           >
@@ -181,8 +181,8 @@ export const Socials = ({
             </Box>
             <Box
               noOfLines={1}
-              fontSize={"lg"}
-              color={"#00D1FF"}
+              fontSize={'lg'}
+              color={'#00D1FF'}
               fontWeight={600}
             >
               {getTwitterName(twitterHandle)}
@@ -194,10 +194,10 @@ export const Socials = ({
           <HStack
             p={5}
             gap={5}
-            overflow={"hidden"}
-            w={"full"}
-            border={"1px solid"}
-            borderColor={"#004A5A"}
+            overflow={'hidden'}
+            w={'full'}
+            border={'1px solid'}
+            borderColor={'#004A5A'}
             borderRadius={10}
             bg="rgba(0, 0, 0, 0.20)"
           >
@@ -220,8 +220,8 @@ export const Socials = ({
             </Box>
             <Box
               noOfLines={1}
-              fontSize={"lg"}
-              color={"#00D1FF"}
+              fontSize={'lg'}
+              color={'#00D1FF'}
               fontWeight={600}
             >
               {discordLink}

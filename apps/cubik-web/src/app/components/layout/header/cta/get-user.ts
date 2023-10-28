@@ -1,5 +1,6 @@
-"use server";
-import { prisma } from "@cubik/database";
+'use server';
+
+import { prisma } from '@cubik/database';
 
 export const getOrCreateUser = async (publicKey: string) => {
   const user = await prisma.user.findUnique({

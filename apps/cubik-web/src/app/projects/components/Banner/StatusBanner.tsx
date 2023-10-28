@@ -1,9 +1,9 @@
-import { Box, Center, HStack, chakra, keyframes } from "@chakra-ui/react";
-import { differenceInDays, isFuture, isPast } from "date-fns";
 // import { AiTwotoneClock } from "react-icons/ai";
 // import { BiInfoCircle } from "react-icons/bi";
-import Clock from "@/theme/icons/clock.svg";
-import InfoCircle from "@/theme/icons/info_circle.svg";
+import Clock from '@/theme/icons/clock.svg';
+import InfoCircle from '@/theme/icons/info_circle.svg';
+import { Box, Center, chakra, HStack, keyframes } from '@chakra-ui/react';
+import { differenceInDays, isFuture, isPast } from 'date-fns';
 
 const random = () => Math.floor(Math.random() * 10);
 
@@ -24,10 +24,10 @@ const ripple = keyframes`
 
 const CircleRipple = chakra(Box, {
   baseStyle: {
-    backgroundColor: "#31F579",
-    width: { base: "0.8em", md: "1em" },
-    height: { base: "0.8em", md: "1em" },
-    rounded: "full",
+    backgroundColor: '#31F579',
+    width: { base: '0.8em', md: '1em' },
+    height: { base: '0.8em', md: '1em' },
+    rounded: 'full',
     animation: `${ripple} 1.${random()}s linear infinite`,
   },
 });
@@ -66,12 +66,12 @@ export const StatusBanner = ({
         backgroundColor="#1D1F1E"
         p="0px 12px"
         spacing="8px"
-        minH={"22px"}
+        minH={'22px'}
         mx={1}
       >
         <Center
-          width={["12px", "14px", "16px"]}
-          height={["12px", "14px", "16px"]}
+          width={['12px', '14px', '16px']}
+          height={['12px', '14px', '16px']}
         >
           <Clock color="#fff" />
         </Center>
@@ -81,25 +81,25 @@ export const StatusBanner = ({
           as="p"
           whiteSpace="pre"
           color="neutral.11"
-          textStyle={{ base: "body6", md: "body5" }}
+          textStyle={{ base: 'body6', md: 'body5' }}
         >
           {isFuture(submissionEndDate)
-            ? "Submissions" + ` at 07:30 AM PST`
-            : "Contributions Period Starts" + ` at 7:30 AM PST`}
+            ? 'Submissions' + ` at 07:30 AM PST`
+            : 'Contributions Period Starts' + ` at 7:30 AM PST`}
         </Box>
       </HStack>
     );
   } else if (isFuture(endDate)) {
     return (
       <HStack
-        rounded={"full"}
+        rounded={'full'}
         backgroundColor="#071A0F"
         mx={1}
         spacing="0"
-        overflow={"hidden"}
-        w={"fit-content"}
+        overflow={'hidden'}
+        w={'fit-content'}
       >
-        <Center rounded="full" p={{ base: "6px", md: "8px" }}>
+        <Center rounded="full" p={{ base: '6px', md: '8px' }}>
           <CircleRipple />
         </Center>
         <Box
@@ -109,13 +109,13 @@ export const StatusBanner = ({
           as="p"
           whiteSpace="pre"
           color="neutral.11"
-          textStyle={{ base: "body6", md: "overline3" }}
-          display={{ base: show ? "block" : "none", md: "block" }}
+          textStyle={{ base: 'body6', md: 'overline3' }}
+          display={{ base: show ? 'block' : 'none', md: 'block' }}
         >
-          {isHackathon ? "Voting" : "Round"}
+          {isHackathon ? 'Voting' : 'Round'}
           {daysToEnd > 1
             ? `Live - ends in ${daysToEnd + 1} days`
-            : "Live - ending in a day"}
+            : 'Live - ending in a day'}
         </Box>
       </HStack>
     );
@@ -124,13 +124,13 @@ export const StatusBanner = ({
       <HStack
         rounded="full"
         backgroundColor="#1D1F1E"
-        p={{ base: "7px", md: "8px 12px" }}
+        p={{ base: '7px', md: '8px 12px' }}
         spacing="8px"
         mx={1}
       >
         <Center
-          width={["12px", "14px", "18px"]}
-          height={["12px", "14px", "18px"]}
+          width={['12px', '14px', '18px']}
+          height={['12px', '14px', '18px']}
         >
           <InfoCircle color="#fff" />
         </Center>
@@ -138,11 +138,11 @@ export const StatusBanner = ({
           as="p"
           whiteSpace="pre"
           color="neutral.11"
-          textStyle={{ base: "body6", md: "body5" }}
-          display={{ base: show ? "block" : "none", md: "block" }}
+          textStyle={{ base: 'body6', md: 'body5' }}
+          display={{ base: show ? 'block' : 'none', md: 'block' }}
         >
-          {isHackathon ? "Voting" : "Round"}
-          {daysSinceEnd > 1 ? ` ended ${daysSinceEnd} days ago` : " ended"}
+          {isHackathon ? 'Voting' : 'Round'}
+          {daysSinceEnd > 1 ? ` ended ${daysSinceEnd} days ago` : ' ended'}
         </Box>
       </HStack>
     );

@@ -3,8 +3,8 @@
   "scripts": {
     "build": "dotenv -- turbo run build",
     "dev": "dotenv -- turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\" --ignore-path .prettierignore",
+    "lint": "dotenv -- run lint",
+    "format": "prettier  --write \"**/*.{ts,tsx,md}\" --ignore-path .prettierignore",
     "generate": "dotenv -- turbo run db:generate",
     "db:push": "dotenv -- turbo run db:push",
     "db:studio": "dotenv -- pnpm -F @cubik/database dev",

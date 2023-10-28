@@ -1,8 +1,11 @@
-import React from "react";
-import TreasuryCard from "../registration-section/cards/TreasuryCard";
-import Subhead from "@cubik/ui/components/ui/subhead";
-import MultisigCard from "../registration-section/cards/MultisigCard";
-import OverviewCard from "../registration-section/cards/OverviewCard";
+import React from 'react';
+
+import Subhead from '@cubik/ui/components/ui/subhead';
+
+import MultisigCard from '../registration-section/cards/MultisigCard';
+import OverviewCard from '../registration-section/cards/OverviewCard';
+import TreasuryCard from '../registration-section/cards/TreasuryCard';
+
 export const MultisigSection = () => {
   return (
     <div className="flex justify-between items-center my-5 px-3 md:px-0 ">

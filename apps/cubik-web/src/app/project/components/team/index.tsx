@@ -1,9 +1,10 @@
-import { Box, Button, Container, HStack, VStack } from "@/utils/chakra";
-import React from "react";
-import type { Prisma } from "@cubik/database";
-import { prisma } from "@cubik/database";
-import ProfilePictureAvatar from "@/app/components/common/profile-picture";
-import type { NFTProfile } from "@/types/NFTProfile";
+import React from 'react';
+import ProfilePictureAvatar from '@/app/components/common/profile-picture';
+import type { NFTProfile } from '@/types/NFTProfile';
+import { Box, Button, Container, HStack, VStack } from '@/utils/chakra';
+
+import type { Prisma } from '@cubik/database';
+import { prisma } from '@cubik/database';
 
 type getTeamReturn = Prisma.ProjectGetPayload<{
   select: {
@@ -25,7 +26,7 @@ type getTeamReturn = Prisma.ProjectGetPayload<{
 }>;
 
 export const getTeam = async (
-  slug: string
+  slug: string,
 ): Promise<[getTeamReturn | null, Error | null]> => {
   try {
     const res = await prisma.project.findFirst({
@@ -69,20 +70,20 @@ export const TeamSection = async ({ slug }: Props) => {
   return (
     <>
       <Container
-        display={"flex"}
+        display={'flex'}
         flexDirection={{
-          base: "column",
-          lg: "row",
+          base: 'column',
+          lg: 'row',
         }}
-        w={"full"}
-        maxW={"7xl"}
-        mx={"auto"}
+        w={'full'}
+        maxW={'7xl'}
+        mx={'auto'}
         gap={10}
       >
         <VStack w="full">
-          <VStack w={"full"} align={"start"}>
-            <HStack align={"start"}>
-              <Box p={2} borderRadius={3} border={"1px solid #0D2F00"}>
+          <VStack w={'full'} align={'start'}>
+            <HStack align={'start'}>
+              <Box p={2} borderRadius={3} border={'1px solid #0D2F00'}>
                 <svg
                   width="18"
                   height="18"
@@ -99,11 +100,11 @@ export const TeamSection = async ({ slug }: Props) => {
                   />
                 </svg>
               </Box>
-              <Box color={"white"} fontWeight={600} fontSize={"2xl"}>
+              <Box color={'white'} fontWeight={600} fontSize={'2xl'}>
                 {team?.name} Team
               </Box>
             </HStack>
-            <Box color={"#AAA"} fontSize={"lg"} fontWeight={500}>
+            <Box color={'#AAA'} fontSize={'lg'} fontWeight={500}>
               These are the Founders, developers, designers and product people
               behind {team?.name.toLocaleLowerCase()}
             </Box>
@@ -114,10 +115,10 @@ export const TeamSection = async ({ slug }: Props) => {
                     <HStack
                       p={5}
                       w="full"
-                      align={"start"}
-                      justify={"space-between"}
+                      align={'start'}
+                      justify={'space-between'}
                     >
-                      <HStack align={"center"}>
+                      <HStack align={'center'}>
                         <ProfilePictureAvatar
                           NFTProfile={
                             team.user.profileNft as unknown as NFTProfile
@@ -130,37 +131,37 @@ export const TeamSection = async ({ slug }: Props) => {
                           }
                           username={team.user.username as string}
                           width={{
-                            base: "56px",
-                            sm: "56px",
-                            md: "56px",
-                            lg: "56px",
-                            xl: "56px",
+                            base: '56px',
+                            sm: '56px',
+                            md: '56px',
+                            lg: '56px',
+                            xl: '56px',
                           }}
                           height={{
-                            base: "56px",
-                            sm: "56px",
-                            md: "56px",
-                            lg: "56px",
-                            xl: "56px",
+                            base: '56px',
+                            sm: '56px',
+                            md: '56px',
+                            lg: '56px',
+                            xl: '56px',
                           }}
                         />
-                        <VStack align={"start"} gap={0}>
-                          <Box fontSize={"lg"} color={"#FFFFFF"}>
+                        <VStack align={'start'} gap={0}>
+                          <Box fontSize={'lg'} color={'#FFFFFF'}>
                             {team.user.username}
                           </Box>
-                          <Box fontSize={"md"} color={"#6F6F6F"}>
+                          <Box fontSize={'md'} color={'#6F6F6F'}>
                             {team.user.username}
                           </Box>
                         </VStack>
                       </HStack>
 
                       <Button
-                        variant={"outline"}
-                        border={"1.5px solid #2C2500"}
-                        w={"36"}
+                        variant={'outline'}
+                        border={'1.5px solid #2C2500'}
+                        w={'36'}
                         _hover={{
-                          bg: "#2C2500",
-                          color: "#FFD600",
+                          bg: '#2C2500',
+                          color: '#FFD600',
                         }}
                         h={14}
                         rightIcon={
@@ -180,7 +181,7 @@ export const TeamSection = async ({ slug }: Props) => {
                             />
                           </svg>
                         }
-                        color={"#FFD600"}
+                        color={'#FFD600'}
                       >
                         Tip
                       </Button>
@@ -192,15 +193,15 @@ export const TeamSection = async ({ slug }: Props) => {
           </VStack>
         </VStack>
         <VStack
-          w={"full"}
+          w={'full'}
           maxW={{
-            base: "full",
-            lg: "sm",
+            base: 'full',
+            lg: 'sm',
           }}
         >
-          <VStack w={"full"} align={"start"}>
-            <HStack align={"start"}>
-              <Box p={2} borderRadius={3} border={"1px solid #0D2F00"}>
+          <VStack w={'full'} align={'start'}>
+            <HStack align={'start'}>
+              <Box p={2} borderRadius={3} border={'1px solid #0D2F00'}>
                 <svg
                   width="18"
                   height="18"
@@ -217,11 +218,11 @@ export const TeamSection = async ({ slug }: Props) => {
                   />
                 </svg>
               </Box>
-              <Box color={"white"} fontWeight={600} fontSize={"2xl"}>
+              <Box color={'white'} fontWeight={600} fontSize={'2xl'}>
                 {team?.name} Communities
               </Box>
             </HStack>
-            <Box color={"#AAA"} fontSize={"lg"} fontWeight={500}>
+            <Box color={'#AAA'} fontSize={'lg'} fontWeight={500}>
               These are the communities which gum team is a part of
             </Box>
           </VStack>

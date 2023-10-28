@@ -1,6 +1,7 @@
-import { Stat, StatLabel, StatNumber, VStack } from "@/utils/chakra";
-import { formatNumberWithK } from "@/utils/helpers/formatNumberWithK";
-import React from "react";
+import React from 'react';
+import { Stat, StatLabel, StatNumber, VStack } from '@/utils/chakra';
+import { formatNumberWithK } from '@/utils/helpers/formatNumberWithK';
+
 export const OverviewStatsCard = ({
   height,
   children,
@@ -16,18 +17,18 @@ export const OverviewStatsCard = ({
   return (
     <Stat
       variant="cubik"
-      w={"full"}
-      maxW={{ base: "88vw", sm: "90vw" }}
+      w={'full'}
+      maxW={{ base: '88vw', sm: '90vw' }}
       minW="12rem"
       overflow="hidden"
-      h={height ? height : "auto"}
-      justifyContent={"space-between"}
+      h={height ? height : 'auto'}
+      justifyContent={'space-between'}
     >
       <VStack p="24px" mb="12px" align="start" h="full">
         <StatLabel
-          whiteSpace={"nowrap"}
+          whiteSpace={'nowrap'}
           overflow="hidden"
-          textStyle={{ base: "title6", md: "title5" }}
+          textStyle={{ base: 'title6', md: 'title5' }}
           color="neutral8"
         >
           {title}

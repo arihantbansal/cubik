@@ -1,11 +1,12 @@
-import type NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
-import { getSdk } from "./sdk";
-import type { web3 } from "@coral-xyz/anchor";
+import type { web3 } from '@coral-xyz/anchor';
+import type NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+
+import { getSdk } from './sdk';
 
 export const createProjectIx = (
   wallet: NodeWallet,
   counter: number,
-  multiSig: web3.PublicKey
+  multiSig: web3.PublicKey,
 ): Promise<web3.TransactionInstruction> => {
   const sdk = getSdk(wallet);
 
@@ -19,7 +20,7 @@ export const createProjectIx = (
     projectAccount,
     userAccount,
     counter,
-    multiSig
+    multiSig,
   );
 };
 
@@ -27,7 +28,7 @@ export const createProjectJoinRoundIx = (
   wallet: NodeWallet,
   counter: number,
   id: string,
-  owner: web3.PublicKey
+  owner: web3.PublicKey,
 ): Promise<web3.TransactionInstruction> => {
   const sdk = getSdk(wallet);
 
@@ -35,13 +36,13 @@ export const createProjectJoinRoundIx = (
   const [roundAccount] = sdk.round.getRoundPDA(id);
   const [projectJoinRound] = sdk.project.getProjectJoinRoundPDA(
     roundAccount,
-    projectAccount
+    projectAccount,
   );
 
   return sdk.project.projectJoinRound(
     wallet.publicKey,
     projectJoinRound,
     roundAccount,
-    projectAccount
+    projectAccount,
   );
 };

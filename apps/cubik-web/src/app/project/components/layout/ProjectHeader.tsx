@@ -1,4 +1,9 @@
-"use client";
+'use client';
+
+import React, { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import type { ProjectPageLayoutType } from '@/types/project';
 import {
   Box,
   Button,
@@ -12,16 +17,13 @@ import {
   Portal,
   Stack,
   VStack,
-} from "@/utils/chakra";
-import React, { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { InterFont } from "@/utils/fonts/inter";
-import type { ProjectPageLayoutType } from "@/types/project";
-import { EventSelector } from "./eventSelector";
-import { useProjectEventStore } from "../store";
-import { isFuture } from "date-fns";
-import { parseDateISO } from "@/utils/helpers/date";
+} from '@/utils/chakra';
+import { InterFont } from '@/utils/fonts/inter';
+import { parseDateISO } from '@/utils/helpers/date';
+import { isFuture } from 'date-fns';
+
+import { useProjectEventStore } from '../store';
+import { EventSelector } from './eventSelector';
 
 interface Props {
   projectWithEvent: ProjectPageLayoutType;
@@ -33,53 +35,53 @@ export const ProjectHeader = ({ projectWithEvent }: Props) => {
     <>
       <Stack
         className={InterFont.className}
-        direction={{ base: "column", md: "row" }}
+        direction={{ base: 'column', md: 'row' }}
         gap={12}
-        width={"full"}
+        width={'full'}
         alignItems={{
-          base: "center",
-          md: "end",
+          base: 'center',
+          md: 'end',
         }}
         py={{
           base: 8,
           md: 10,
         }}
         h="full"
-        justifyContent={"center"}
+        justifyContent={'center'}
       >
         <Stack
-          direction={{ base: "row", md: "row" }}
+          direction={{ base: 'row', md: 'row' }}
           gap={{
             base: 4,
             md: 6,
           }}
-          width={"full"}
-          align={"start"}
-          flexDirection={"column"}
+          width={'full'}
+          align={'start'}
+          flexDirection={'column'}
         >
-          <Box position={"relative"} width={24} height={24}>
+          <Box position={'relative'} width={24} height={24}>
             <Image
               src={projectWithEvent.logo}
               alt={projectWithEvent.name}
               priority
               fill
               style={{
-                borderRadius: "10px",
-                objectFit: "cover",
+                borderRadius: '10px',
+                objectFit: 'cover',
               }}
             />
           </Box>
           <VStack
-            justify={"center"}
+            justify={'center'}
             gap={{ base: 3, md: 5 }}
-            alignItems={"start"}
+            alignItems={'start'}
             justifyContent="center"
             w="full"
           >
             <HStack align="center" spacing="1px">
               <Box
-                textStyle={{ base: "title2", sm: "title1", md: "headline3" }}
-                fontSize={{ base: "1.5rem", md: "2rem" }}
+                textStyle={{ base: 'title2', sm: 'title1', md: 'headline3' }}
+                fontSize={{ base: '1.5rem', md: '2rem' }}
                 textTransform="capitalize"
                 color="neutral.11"
                 noOfLines={1}
@@ -94,7 +96,7 @@ export const ProjectHeader = ({ projectWithEvent }: Props) => {
             <Box
               color="cubik.grey.100"
               noOfLines={2}
-              fontSize={{ base: "1rem", md: "1.25rem" }}
+              fontSize={{ base: '1rem', md: '1.25rem' }}
               fontWeight={600}
               textOverflow="ellipsis"
             >
@@ -104,25 +106,25 @@ export const ProjectHeader = ({ projectWithEvent }: Props) => {
         </Stack>
         <Box
           minW={{
-            base: "full",
-            md: "20rem",
+            base: 'full',
+            md: '20rem',
           }}
-          maxW={"30rem"}
-          w={"full"}
+          maxW={'30rem'}
+          w={'full'}
           minH={20}
           gap={{
             base: 10,
             md: 0,
           }}
-          alignItems={"end"}
-          display={"flex"}
-          flexDirection={"column"}
+          alignItems={'end'}
+          display={'flex'}
+          flexDirection={'column'}
         >
           <HStack
             w="full"
             flexDirection={{
-              base: "column",
-              md: "row",
+              base: 'column',
+              md: 'row',
             }}
             h={{
               base: 28,
@@ -151,29 +153,29 @@ export const ProjectHeader = ({ projectWithEvent }: Props) => {
                   />
                 </svg>
               }
-              color={"#848484"}
+              color={'#848484'}
               borderRadius={5}
-              h={"full"}
+              h={'full'}
               variant="ghost"
               w="full"
               minH={10}
               _hover={{
-                bg: "white",
-                color: "black",
+                bg: 'white',
+                color: 'black',
               }}
             >
               Collect
             </Button>
             <Link
               style={{
-                width: "100%",
-                height: "100%",
+                width: '100%',
+                height: '100%',
               }}
               href={projectWithEvent.projectLink}
             >
               <Button
                 borderRadius={5}
-                h={"full"}
+                h={'full'}
                 minH={10}
                 variant="cubikOutlined"
                 w="full"
@@ -186,7 +188,7 @@ export const ProjectHeader = ({ projectWithEvent }: Props) => {
               <Popover
                 isOpen={isHovered}
                 onClose={() => setIsHovered(false)}
-                placement={"top"}
+                placement={'top'}
                 closeOnBlur={false}
               >
                 <PopoverTrigger>
@@ -210,11 +212,11 @@ export const ProjectHeader = ({ projectWithEvent }: Props) => {
                       </svg>
                     }
                     borderRadius={5}
-                    h={"full"}
-                    w={"full"}
+                    h={'full'}
+                    w={'full'}
                     fontWeight={600}
-                    fontFamily={"Inter"}
-                    variant={"cubikFilled"}
+                    fontFamily={'Inter'}
+                    variant={'cubikFilled'}
                   >
                     Contribute
                   </Button>
@@ -223,25 +225,25 @@ export const ProjectHeader = ({ projectWithEvent }: Props) => {
                 <Portal>
                   <PopoverContent
                     display={{
-                      base: "none",
-                      md: "block",
+                      base: 'none',
+                      md: 'block',
                     }}
                   >
                     <PopoverArrow />
-                    <PopoverCloseButton color={"black"} />
+                    <PopoverCloseButton color={'black'} />
                     <PopoverBody
                       p={4}
                       borderRadius={5}
-                      bg={"#FFD600"}
+                      bg={'#FFD600'}
                       minH={32}
                     >
-                      <Box color={"black"} fontSize={"sm"} fontWeight={600}>
+                      <Box color={'black'} fontSize={'sm'} fontWeight={600}>
                         WTF is Contribute?
                       </Box>
                       <Box
                         my={2}
-                        color={"black"}
-                        fontSize={"xs"}
+                        color={'black'}
+                        fontSize={'xs'}
                         fontWeight={500}
                       >
                         When you contribute to a project your contribution
@@ -249,14 +251,14 @@ export const ProjectHeader = ({ projectWithEvent }: Props) => {
                         amount of your donation.
                       </Box>
                       <Button
-                        fontSize={"sm"}
+                        fontSize={'sm'}
                         py={0}
                         px={3}
-                        borderRadius={"full"}
-                        color={"white"}
-                        bg={"black"}
+                        borderRadius={'full'}
+                        color={'white'}
+                        bg={'black'}
                         _hover={{
-                          bg: "black",
+                          bg: 'black',
                         }}
                         onClick={() => setIsHovered(false)}
                       >
@@ -270,7 +272,7 @@ export const ProjectHeader = ({ projectWithEvent }: Props) => {
               <Popover
                 isOpen={isHovered}
                 onClose={() => setIsHovered(false)}
-                placement={"top"}
+                placement={'top'}
                 closeOnBlur={false}
               >
                 <PopoverTrigger>
@@ -294,12 +296,12 @@ export const ProjectHeader = ({ projectWithEvent }: Props) => {
                       </svg>
                     }
                     borderRadius={5}
-                    h={"full"}
-                    w={"full"}
+                    h={'full'}
+                    w={'full'}
                     px={10}
                     fontWeight={600}
-                    fontFamily={"Inter"}
-                    variant={"cubikFilled"}
+                    fontFamily={'Inter'}
+                    variant={'cubikFilled'}
                   >
                     Send Donation
                   </Button>
@@ -308,21 +310,21 @@ export const ProjectHeader = ({ projectWithEvent }: Props) => {
                 <Portal>
                   <PopoverContent
                     display={{
-                      base: "none",
-                      md: "block",
+                      base: 'none',
+                      md: 'block',
                     }}
-                    bg={"white"}
+                    bg={'white'}
                   >
                     <PopoverArrow />
-                    <PopoverCloseButton color={"black"} />
+                    <PopoverCloseButton color={'black'} />
                     <PopoverBody p={4} borderRadius={5} minH={32}>
-                      <Box color={"black"} fontSize={"sm"} fontWeight={600}>
+                      <Box color={'black'} fontSize={'sm'} fontWeight={600}>
                         WTF is Donation?
                       </Box>
                       <Box
                         my={2}
-                        color={"black"}
-                        fontSize={"xs"}
+                        color={'black'}
+                        fontSize={'xs'}
                         fontWeight={500}
                       >
                         Currently, the project isn't in a active grants round.
@@ -330,14 +332,14 @@ export const ProjectHeader = ({ projectWithEvent }: Props) => {
                         without any matching with any additional funds.
                       </Box>
                       <Button
-                        fontSize={"sm"}
+                        fontSize={'sm'}
                         py={0}
                         px={3}
-                        borderRadius={"full"}
-                        color={"black"}
-                        bg={"#FFD600"}
+                        borderRadius={'full'}
+                        color={'black'}
+                        bg={'#FFD600'}
                         _hover={{
-                          bg: "#FFD600",
+                          bg: '#FFD600',
                         }}
                         onClick={() => setIsHovered(false)}
                       >

@@ -1,13 +1,15 @@
+import React from 'react';
+
 import {
   Table,
+  TableBody,
+  TableHead,
   TableHeader,
   TableRow,
-  TableHead,
-  TableBody,
-  Button,
-} from "@cubik/ui";
-import React from "react";
-import { TransactionsTableRows } from "./TransactionsTableRows";
+} from '@cubik/ui';
+
+import { TransactionsTableRows } from './TransactionsTableRows';
+
 export const TransactionsTable = () => {
   return (
     <>

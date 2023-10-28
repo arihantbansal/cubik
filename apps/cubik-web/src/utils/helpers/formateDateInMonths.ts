@@ -1,31 +1,31 @@
 export const formateDateInMonths = (date?: Date | string): string => {
-  if (!date) return "";
+  if (!date) return '';
 
-  const parsedDate = typeof date === "string" ? new Date(date) : date;
+  const parsedDate = typeof date === 'string' ? new Date(date) : date;
 
   if (
-    Object.prototype.toString.call(parsedDate) !== "[object Date]" ||
+    Object.prototype.toString.call(parsedDate) !== '[object Date]' ||
     isNaN(parsedDate.getTime())
   ) {
-    return "";
+    return '';
   }
 
-  const day = String(parsedDate.getDate()).padStart(2, "0");
+  const day = String(parsedDate.getDate()).padStart(2, '0');
 
   const monthIndex = parsedDate.getMonth();
   const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ];
   const monthName = monthNames[monthIndex];
 

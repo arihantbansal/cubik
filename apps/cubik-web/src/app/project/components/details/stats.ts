@@ -1,7 +1,8 @@
-"use server";
+'use server';
 
-import type { ProjectPageEventType } from "@/types/project";
-import { prisma } from "@cubik/database";
+import type { ProjectPageEventType } from '@/types/project';
+
+import { prisma } from '@cubik/database';
 
 interface StatsReturn {
   estimatedMatch: number;
@@ -10,13 +11,13 @@ interface StatsReturn {
 }
 
 export const getStats = async (
-  event: ProjectPageEventType | null
+  event: ProjectPageEventType | null,
 ): Promise<StatsReturn | null> => {
   if (!event) {
     return null;
   }
 
-  if (event.eventType === "round") {
+  if (event.eventType === 'round') {
     const joinRound = await prisma.projectJoinRound.findFirst({
       where: {
         id: event.joinId,
@@ -45,7 +46,7 @@ export const getStats = async (
       communityMatch: communityMatch,
       contributors: users.length,
     };
-  } else if (event.eventType === "hackathon") {
+  } else if (event.eventType === 'hackathon') {
     const joinHackathon = await prisma.projectJoinHackathon.findFirst({
       where: {
         id: event.joinId,

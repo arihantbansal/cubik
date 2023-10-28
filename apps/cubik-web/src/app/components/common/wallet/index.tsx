@@ -1,7 +1,9 @@
-"use client";
-import { useClipboard, Center, HStack, Text } from "@/utils/chakra";
-import type { FC, SetStateAction } from "react";
-import { useEffect } from "react";
+'use client';
+
+import type { FC, SetStateAction } from 'react';
+import { useEffect } from 'react';
+import { Center, HStack, Text, useClipboard } from '@/utils/chakra';
+
 //import { TbCopy } from "react-icons/tb";
 // import { SuccessToast } from "../toasts/Toasts";
 
@@ -20,7 +22,7 @@ export const WalletAddress: FC<PropsType> = ({
   walletAddress,
   children,
 }: PropsType) => {
-  const { onCopy, value, setValue, hasCopied } = useClipboard("");
+  const { onCopy, value, setValue, hasCopied } = useClipboard('');
   const addr = walletAddress;
 
   useEffect(() => {
@@ -33,26 +35,26 @@ export const WalletAddress: FC<PropsType> = ({
 
   let first = addr.slice(0, 4);
   let last = addr.slice(addr.length - 4, addr.length);
-  let truncatedAddr = first + "..." + last;
-  const fillColor = color ? color : "#A6A6A6";
+  let truncatedAddr = first + '...' + last;
+  const fillColor = color ? color : '#A6A6A6';
 
-  const propsSize = size ? size : "md";
+  const propsSize = size ? size : 'md';
   let logoSize = { base: 3, md: 3 };
 
   switch (propsSize) {
-    case "xs":
+    case 'xs':
       logoSize = { base: 3, md: 3 };
       break;
-    case "sm":
+    case 'sm':
       logoSize = { base: 3, md: 4 };
       break;
-    case "md":
+    case 'md':
       logoSize = { base: 4, md: 6 };
       break;
-    case "lg":
+    case 'lg':
       logoSize = { base: 6, md: 8 };
       break;
-    case "xl":
+    case 'xl':
       logoSize = { base: 6, md: 8 };
       break;
     default:
@@ -60,25 +62,25 @@ export const WalletAddress: FC<PropsType> = ({
       break;
   }
 
-  let textSize = { base: "sm", md: "md" };
+  let textSize = { base: 'sm', md: 'md' };
   switch (propsSize) {
-    case "xs":
-      textSize = { base: "sm", md: "sm" };
+    case 'xs':
+      textSize = { base: 'sm', md: 'sm' };
       break;
-    case "sm":
-      textSize = { base: "sm", md: "md" };
+    case 'sm':
+      textSize = { base: 'sm', md: 'md' };
       break;
-    case "md":
-      textSize = { base: "md", md: "lg" };
+    case 'md':
+      textSize = { base: 'md', md: 'lg' };
       break;
-    case "lg":
-      textSize = { base: "lg", md: "xl" };
+    case 'lg':
+      textSize = { base: 'lg', md: 'xl' };
       break;
-    case "xl":
-      textSize = { base: "lg", md: "xl" };
+    case 'xl':
+      textSize = { base: 'lg', md: 'xl' };
       break;
     default:
-      textSize = { base: "md", md: "lg" };
+      textSize = { base: 'md', md: 'lg' };
       break;
   }
 
@@ -86,8 +88,8 @@ export const WalletAddress: FC<PropsType> = ({
     <HStack
       w="100%"
       height={logoSize}
-      transform={{ base: "translateX(-5px) scale(0.9)", sm: "none" }}
-      justify={"space-between"}
+      transform={{ base: 'translateX(-5px) scale(0.9)', sm: 'none' }}
+      justify={'space-between'}
     >
       <HStack>
         <Center height={logoSize} width={logoSize}>
@@ -126,13 +128,13 @@ export const WalletAddress: FC<PropsType> = ({
             onCopy(); // todo: this is not working
             // SuccessToast({ toast, message: "Wallet Address Copied" });
           }}
-          transform={"scale(0.95)"}
-          opacity={"0.8"}
-          transition={"all 0.2s"}
+          transform={'scale(0.95)'}
+          opacity={'0.8'}
+          transition={'all 0.2s'}
           _hover={{
             //transform: 'scale(1)',
-            opacity: "1",
-            transition: "all 0.2s",
+            opacity: '1',
+            transition: 'all 0.2s',
           }}
           as="button"
         >
@@ -153,6 +155,6 @@ export const TruncatedAddr = ({
 
   let first = addr.slice(0, 4);
   let last = addr.slice(addr.length - 4, addr.length);
-  let truncatedAdd = first + "..." + last;
+  let truncatedAdd = first + '...' + last;
   return truncatedAdd;
 };

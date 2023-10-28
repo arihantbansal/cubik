@@ -1,7 +1,10 @@
-import { VStack } from "@/utils/chakra";
-import React from "react";
-import { ProofWrapper } from "./ProofWrapper";
-import { prisma } from "@cubik/database";
+import React from 'react';
+import { VStack } from '@/utils/chakra';
+
+import { prisma } from '@cubik/database';
+
+import { ProofWrapper } from './ProofWrapper';
+
 interface Props {
   username: string;
 }

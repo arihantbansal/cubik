@@ -1,5 +1,6 @@
-"use server";
-import { prisma } from "@cubik/database";
+'use server';
+
+import { prisma } from '@cubik/database';
 
 export async function checkUsername(username: string) {
   try {

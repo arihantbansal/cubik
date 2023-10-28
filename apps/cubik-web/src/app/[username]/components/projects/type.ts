@@ -1,4 +1,4 @@
-import type { Prisma } from "@cubik/database";
+import type { Prisma } from '@cubik/database';
 
 export type ProjectCommonType = Prisma.ProjectGetPayload<{
   select: {

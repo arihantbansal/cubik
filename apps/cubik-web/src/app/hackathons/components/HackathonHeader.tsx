@@ -1,9 +1,12 @@
-import { Box, HStack, Stack, VStack } from "@/utils/chakra";
-import React from "react";
-import { HackathonStatus } from "./HackathonStatus";
-import { prisma } from "@cubik/database";
-import Image from "next/image";
-import { SubmitNowButton } from "./SubmitNowButton";
+import React from 'react';
+import Image from 'next/image';
+import { Box, HStack, Stack, VStack } from '@/utils/chakra';
+
+import { prisma } from '@cubik/database';
+
+import { HackathonStatus } from './HackathonStatus';
+import { SubmitNowButton } from './SubmitNowButton';
+
 interface Props {
   slug: string;
 }
@@ -39,29 +42,29 @@ export const HackathonHeader = async ({ slug }: Props) => {
 
   return (
     <>
-      <VStack w="full" gap="24px" align={"start"}>
+      <VStack w="full" gap="24px" align={'start'}>
         <Image
           alt="hackathon logo"
           loading="lazy"
           style={{
-            borderRadius: "12px",
-            backgroundColor: "#1C1C1C",
+            borderRadius: '12px',
+            backgroundColor: '#1C1C1C',
           }}
           width={100}
           height={100}
           src={hackathon?.logo as string}
         />
         <Stack
-          gap={{ base: "16px", md: "24px", lg: "12vw" }}
+          gap={{ base: '16px', md: '24px', lg: '12vw' }}
           w="full"
           alignItems="end"
-          direction={{ base: "column", lg: "row" }}
+          direction={{ base: 'column', lg: 'row' }}
         >
           <VStack flex={3} alignItems="start" w="full" spacing="16px">
             <HStack>
               <Box
                 as="p"
-                textStyle={{ base: "title1", md: "headline3" }}
+                textStyle={{ base: 'title1', md: 'headline3' }}
                 textTransform="capitalize"
                 color="neutral.11"
                 noOfLines={1}
@@ -85,7 +88,7 @@ export const HackathonHeader = async ({ slug }: Props) => {
 
             <Box
               as="p"
-              textStyle={{ base: "body4", md: "body2" }}
+              textStyle={{ base: 'body4', md: 'body2' }}
               color="neutral.9"
               noOfLines={2}
               textOverflow="ellipsis"
@@ -93,7 +96,7 @@ export const HackathonHeader = async ({ slug }: Props) => {
               {hackathon?.shortDescription}
             </Box>
           </VStack>
-          <VStack w={"full"} alignItems="start" flex={1.5} spacing="16px">
+          <VStack w={'full'} alignItems="start" flex={1.5} spacing="16px">
             <SubmitNowButton
               id={hackathon?.id as string}
               logo={hackathon?.logo as string}

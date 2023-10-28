@@ -1,9 +1,11 @@
-"use client";
-import { useUser } from "@/app/context/user";
-import React from "react";
-import { VisitorViewCard } from "./VisitorViewCards";
-import type { ProjectCommonType } from "./type";
-import { AdminViewCards } from "./AdminViewCards";
+'use client';
+
+import React from 'react';
+import { useUser } from '@/app/context/user';
+
+import { AdminViewCards } from './AdminViewCards';
+import type { ProjectCommonType } from './type';
+import { VisitorViewCard } from './VisitorViewCards';
 
 interface Props {
   username: string;

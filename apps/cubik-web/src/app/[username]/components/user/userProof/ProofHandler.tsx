@@ -1,9 +1,11 @@
-import { Wrap } from "@chakra-ui/react";
-import React from "react";
-import { GithubProof } from "./GithubProof";
-import type { Proof } from "@cubik/database";
-import { SuperteamProof } from "./SuperteamProof";
-import { CubikVerifiedProject } from "./CubikVerifiedProject";
+import React from 'react';
+import { Wrap } from '@chakra-ui/react';
+
+import type { Proof } from '@cubik/database';
+
+import { CubikVerifiedProject } from './CubikVerifiedProject';
+import { GithubProof } from './GithubProof';
+import { SuperteamProof } from './SuperteamProof';
 
 interface Props {
   username: string;

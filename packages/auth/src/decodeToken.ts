@@ -1,14 +1,15 @@
-import { AuthPayload } from "@cubik/common-types";
-import { jwtVerify } from "jose";
+import { jwtVerify } from 'jose';
+
+import { AuthPayload } from '@cubik/common-types';
 
 export const decodeToken = async (
-  token: string
+  token: string,
 ): Promise<AuthPayload | null> => {
   try {
     const secret = new TextEncoder().encode(process.env.SECRET);
 
     const decodedToken = await jwtVerify(token, secret, {
-      algorithms: ["HS256"],
+      algorithms: ['HS256'],
     });
 
     if (!decodedToken) {

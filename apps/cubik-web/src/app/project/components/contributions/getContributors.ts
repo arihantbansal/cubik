@@ -1,17 +1,19 @@
-"use server";
+'use server';
 
-import type { ProjectPageEventType } from "@/types/project";
-import type { ContributionRowType } from "./index";
-import { prisma } from "@cubik/database";
+import type { ProjectPageEventType } from '@/types/project';
+
+import { prisma } from '@cubik/database';
+
+import type { ContributionRowType } from './index';
 
 export const getContributions = async (
   event: ProjectPageEventType | null,
-  skip: number
+  skip: number,
 ): Promise<ContributionRowType[] | null> => {
   try {
     if (event === null) return [];
 
-    if (event?.eventType === "hackathon") {
+    if (event?.eventType === 'hackathon') {
       const res = await prisma.contribution.findMany({
         where: {
           projectJoinHackathonId: event?.joinId,
@@ -35,7 +37,7 @@ export const getContributions = async (
         take: 10,
         skip: skip,
         orderBy: {
-          createdAt: "asc",
+          createdAt: 'asc',
         },
       });
 
@@ -64,7 +66,7 @@ export const getContributions = async (
         take: 10,
         skip: skip,
         orderBy: {
-          createdAt: "asc",
+          createdAt: 'asc',
         },
       });
 
@@ -78,7 +80,7 @@ export const getContributions = async (
 
 export const getTopEarner = async (event: ProjectPageEventType | null) => {
   try {
-    if (event?.eventType === "hackathon") {
+    if (event?.eventType === 'hackathon') {
       const res = await prisma.contribution.findMany({
         where: {
           projectJoinHackathonId: event?.joinId,
@@ -97,7 +99,7 @@ export const getTopEarner = async (event: ProjectPageEventType | null) => {
           },
         },
         orderBy: {
-          createdAt: "asc",
+          createdAt: 'asc',
         },
       });
 
@@ -141,7 +143,7 @@ export const getTopEarner = async (event: ProjectPageEventType | null) => {
           },
         },
         orderBy: {
-          createdAt: "asc",
+          createdAt: 'asc',
         },
       });
 

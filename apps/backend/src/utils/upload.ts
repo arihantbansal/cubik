@@ -1,7 +1,7 @@
-import FormData from "form-data";
-import axios from "axios";
-import { CloudflareResponseType } from "types/cloudflare";
-import { UTApi } from "uploadthing/server";
+import axios from 'axios';
+import FormData from 'form-data';
+import { CloudflareResponseType } from 'types/cloudflare';
+import { UTApi } from 'uploadthing/server';
 
 export const utapi = new UTApi({
   apiKey: process.env.UPLOADTHING_SECRET,
@@ -17,7 +17,7 @@ export const UploadURLs = async (urls: string[]) => {
 
     urls.forEach((url) => {
       let newUrl = new URL(url);
-      const filename = newUrl.pathname.split("/").pop() ?? "unknown-filename";
+      const filename = newUrl.pathname.split('/').pop() ?? 'unknown-filename';
 
       const newfile = uploadedFiles.find((e) => e.data?.name === filename);
 
@@ -34,18 +34,18 @@ export const UploadURLs = async (urls: string[]) => {
   }
 };
 const API_URL =
-  "https://api.cloudflare.com/client/v4/accounts/45b542611c912b111b00f7a4e8271ab9/images/v1";
+  'https://api.cloudflare.com/client/v4/accounts/45b542611c912b111b00f7a4e8271ab9/images/v1';
 
 export const uploadURLsToCloudflare = async (url: string, id: string) => {
   const headers = {
     Authorization: `Bearer ${process.env.CLOUDFLARE_KEY}`,
-    "Content-Type": "multipart/form-data",
+    'Content-Type': 'multipart/form-data',
   };
 
   const formData = new FormData();
-  formData.append("url", url);
-  formData.append("id", id);
-  formData.append("requireSignedURLs", "false");
+  formData.append('url', url);
+  formData.append('id', id);
+  formData.append('requireSignedURLs', 'false');
 
   const response = await axios.post(API_URL, formData, {
     headers,

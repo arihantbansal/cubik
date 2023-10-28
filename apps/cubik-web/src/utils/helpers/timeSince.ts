@@ -29,7 +29,7 @@ export const timeSince = (date: Date): string => {
   // Seconds
   seconds = Math.floor(seconds);
   if (seconds >= 50) {
-    return "A minute ago";
+    return 'A minute ago';
   }
 
   return `${Math.max(seconds, 0)} seconds ago`; // Ensure we don't return negative seconds

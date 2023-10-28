@@ -1,20 +1,21 @@
-"use server";
+'use server';
 
-import { decodeToken } from "@cubik/auth";
-import type { Project } from "@cubik/database";
-import { prisma } from "@cubik/database";
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers';
+
+import { decodeToken } from '@cubik/auth';
+import type { Project } from '@cubik/database';
+import { prisma } from '@cubik/database';
 
 export const handleUpdate = async (project: Partial<Project>) => {
   try {
-    const auth = cookies().get("authToken");
+    const auth = cookies().get('authToken');
     if (!auth) {
-      throw new Error("Not authorized");
+      throw new Error('Not authorized');
     }
     const user = await decodeToken(auth.value);
 
     if (!user?.username) {
-      throw new Error("Not authorized");
+      throw new Error('Not authorized');
     }
 
     const projectCheck = await prisma.project.findFirst({
@@ -27,7 +28,7 @@ export const handleUpdate = async (project: Partial<Project>) => {
     });
 
     if (projectCheck?.ownerPublickey !== user.mainWallet) {
-      throw new Error("Not authorized");
+      throw new Error('Not authorized');
     }
 
     await prisma.project.update({
@@ -53,6 +54,6 @@ export const handleUpdate = async (project: Partial<Project>) => {
     return null;
   } catch (error) {
     console.log(error);
-    throw new Error("Error while updating project");
+    throw new Error('Error while updating project');
   }
 };

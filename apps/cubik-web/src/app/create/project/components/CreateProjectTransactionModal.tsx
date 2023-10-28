@@ -1,7 +1,9 @@
-"use client";
-import React, { useState } from "react";
-import type { UseFormGetValues } from "react-hook-form";
-import type { FormData } from "./Form";
+'use client';
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { WalletAddress } from '@/app/components/common/wallet';
+import { useUser } from '@/app/context/user';
 import {
   Alert,
   AlertDescription,
@@ -19,19 +21,21 @@ import {
   ModalOverlay,
   Stack,
   VStack,
-} from "@/utils/chakra";
-import { WalletAddress } from "@/app/components/common/wallet";
-import { useUser } from "@/app/context/user";
-import { createProjectIx } from "@/utils/contract";
-import { useAnchorWallet } from "@solana/wallet-adapter-react";
-import { createVault, getVault } from "@/utils/squads";
-import type NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
-import { web3 } from "@coral-xyz/anchor";
-import { v4 as uuidV4 } from "uuid";
-import { connection } from "@/utils/contract/sdk";
-import { createProject } from "./createProjects";
-import type { Team } from "@cubik/database";
-import Link from "next/link";
+} from '@/utils/chakra';
+import { createProjectIx } from '@/utils/contract';
+import { connection } from '@/utils/contract/sdk';
+import { createVault, getVault } from '@/utils/squads';
+import { web3 } from '@coral-xyz/anchor';
+import type NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import { useAnchorWallet } from '@solana/wallet-adapter-react';
+import type { UseFormGetValues } from 'react-hook-form';
+import { v4 as uuidV4 } from 'uuid';
+
+import type { Team } from '@cubik/database';
+
+import { createProject } from './createProjects';
+import type { FormData } from './Form';
+
 interface Props {
   getValues: UseFormGetValues<FormData>;
   isTransactionModalOpen: boolean;
@@ -65,7 +69,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
     // }
     if (!user) {
       setTransactionLoading(false);
-      return setTransactionError("Something went wrong. Invalid user data");
+      return setTransactionError('Something went wrong. Invalid user data');
     }
     try {
       const count = Math.floor(1000 + Math.random() * 9000);
@@ -77,7 +81,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
         user?.username as string,
         anchorWallet as NodeWallet,
         props.getValues().projectName,
-        props.imageUrl as string
+        props.imageUrl as string,
       );
       const vaultAuth = await getVault(anchorWallet as NodeWallet, key);
       const tx = new web3.Transaction();
@@ -85,7 +89,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
       const ix = await createProjectIx(
         anchorWallet as NodeWallet,
         count,
-        new web3.PublicKey(vaultAuth)
+        new web3.PublicKey(vaultAuth),
       );
       const { blockhash } = await connection.getLatestBlockhash();
       tx.recentBlockhash = blockhash;
@@ -99,7 +103,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
       console.log(sig);
       if (!sig) return;
       let team: Team[] = [];
-      if (props.getValues("team") && props.getValues("team").length > 0) {
+      if (props.getValues('team') && props.getValues('team').length > 0) {
         team = props
           .getValues()
           ?.team?.map((member) => member.value)
@@ -120,7 +124,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
         {
           id: uuidV4(),
           projectId: id,
-          userId: user?.id || "",
+          userId: user?.id || '',
           createdAt: new Date(),
           isActive: true,
           isArchive: false,
@@ -139,7 +143,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
           createKey: createKey.toBase58(),
           discordLink: props.getValues().discord as string,
           email: props.getValues().email,
-          failedReason: "",
+          failedReason: '',
           githubLink: props.getValues().github as string,
           id: id,
           industry: JSON.stringify(props.getValues().category),
@@ -154,55 +158,55 @@ export const CreateProjectTransactionModal = (props: Props) => {
           projectLink: props.getValues().projectLink,
           projectUserCount: count,
           shortDescription: props.getValues().tagline,
-          status: "REVIEW",
+          status: 'REVIEW',
           twitterHandle: props.getValues().twitter,
           telegramLink: props.getValues().telegram,
           tx: sig,
           updatedAt: new Date(),
         },
-        finalTeam
+        finalTeam,
       );
       setProjectId(id);
       setProjectSubmitted(true);
     } catch (error) {
       console.log(error);
-      setTransactionError("Something went wrong. Please try again.");
+      setTransactionError('Something went wrong. Please try again.');
       setTransactionLoading(false);
     }
   };
   return (
     <>
       <Modal
-        variant={"cubik"}
+        variant={'cubik'}
         isOpen={props.isTransactionModalOpen}
         onClose={props.onTransactionModalClose}
       >
         <ModalOverlay />
         <ModalContent
-          minW={{ base: "80vw", sm: "26rem", md: "36rem" }}
-          overflow={"hidden"}
-          position={"relative"}
-          gap={{ base: "32px", md: "48px" }}
-          textAlign={"center"}
+          minW={{ base: '80vw', sm: '26rem', md: '36rem' }}
+          overflow={'hidden'}
+          position={'relative'}
+          gap={{ base: '32px', md: '48px' }}
+          textAlign={'center'}
           _before={{
             content: '""',
-            position: "absolute",
-            top: "-10%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            rounded: "50%",
-            filter: "blur(80px)",
-            width: "6rem",
-            height: "6rem",
-            background: "linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)",
-            borderRadius: "8px 8px 0px 0px",
-            zIndex: "-1",
+            position: 'absolute',
+            top: '-10%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            rounded: '50%',
+            filter: 'blur(80px)',
+            width: '6rem',
+            height: '6rem',
+            background: 'linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)',
+            borderRadius: '8px 8px 0px 0px',
+            zIndex: '-1',
           }}
         >
           {projectSubmitted ? (
             <>
               <ModalHeader
-                display={"flex"}
+                display={'flex'}
                 flexDirection="column"
                 gap="24px"
                 w="full"
@@ -352,14 +356,14 @@ export const CreateProjectTransactionModal = (props: Props) => {
                     </defs>
                   </svg>
                 </Center>
-                <VStack h={"max-content"} gap="6px">
-                  <Box as="p" textStyle={{ base: "title3", md: "headline4" }}>
+                <VStack h={'max-content'} gap="6px">
+                  <Box as="p" textStyle={{ base: 'title3', md: 'headline4' }}>
                     Project Created Successfully
                   </Box>
                   <Box
                     maxW="22rem"
                     as="p"
-                    textStyle={"body3"}
+                    textStyle={'body3'}
                     color="neutral.8"
                   >
                     Now you can apply for hackathons and grants with this
@@ -368,22 +372,22 @@ export const CreateProjectTransactionModal = (props: Props) => {
                 </VStack>
                 <VStack
                   backgroundColor="#0C0D0D"
-                  rounded={"20px"}
-                  gap={"16px"}
+                  rounded={'20px'}
+                  gap={'16px'}
                   maxW="24rem"
                   w="full"
                   p="24px"
-                  alignItems={"start"}
+                  alignItems={'start'}
                   align="center"
                 >
                   <VStack align="center">
-                    <Box as="p" textStyle={"title4"} color="white">
+                    <Box as="p" textStyle={'title4'} color="white">
                       Submit to OPOS
                     </Box>
                     <Box
                       textAlign="center"
                       as="p"
-                      textStyle={"body5"}
+                      textStyle={'body5'}
                       color="neutral.8"
                     >
                       Hackathon Submissions are open. You can submit your
@@ -399,14 +403,14 @@ export const CreateProjectTransactionModal = (props: Props) => {
                     backgroundColor="#A459FF16"
                     borderColor="transparent"
                     _hover={{
-                      borderColor: "#A459FF",
+                      borderColor: '#A459FF',
                     }}
                     p="12px"
                     as="a"
                     target="_blank"
                   >
-                    <Link style={{ width: "full" }} href={"/hackathons/opos"}>
-                      <Box fontWeight="400" as="p" fontSize={"16px"}>
+                    <Link style={{ width: 'full' }} href={'/hackathons/opos'}>
+                      <Box fontWeight="400" as="p" fontSize={'16px'}>
                         Go to Hackathon Page
                       </Box>
                     </Link>
@@ -420,19 +424,19 @@ export const CreateProjectTransactionModal = (props: Props) => {
                 <VStack
                   w="full"
                   spacing="8px"
-                  align={"center"}
+                  align={'center'}
                   justify="center"
                 >
                   <Box
                     as="p"
-                    textStyle={{ base: "title3", md: "title1" }}
+                    textStyle={{ base: 'title3', md: 'title1' }}
                     color="neutral.11"
                   >
                     Almost there! Just one more step
                   </Box>
                   <Box
                     as="p"
-                    textStyle={{ base: "body5", md: "body4" }}
+                    textStyle={{ base: 'body5', md: 'body4' }}
                     color="neutral.9"
                   >
                     Review project details, sign the transaction, and submit for
@@ -441,75 +445,75 @@ export const CreateProjectTransactionModal = (props: Props) => {
                 </VStack>
               </ModalHeader>
               <ModalBody>
-                <VStack textAlign={"start"} align={"start"} spacing="24px">
+                <VStack textAlign={'start'} align={'start'} spacing="24px">
                   <VStack
-                    align={"start"}
-                    spacing={{ base: "14px", md: "16px" }}
+                    align={'start'}
+                    spacing={{ base: '14px', md: '16px' }}
                   >
-                    <HStack align={"start"} gap={{ base: "14px", md: "16px" }}>
+                    <HStack align={'start'} gap={{ base: '14px', md: '16px' }}>
                       <Avatar
                         src={props.imageUrl}
-                        name={props.getValues("projectName")}
+                        name={props.getValues('projectName')}
                         borderRadius="8px"
-                        width={{ base: "60px", md: "80px" }}
-                        height={{ base: "60px", md: "80px" }}
+                        width={{ base: '60px', md: '80px' }}
+                        height={{ base: '60px', md: '80px' }}
                       />
                       <VStack
-                        textAlign={"start"}
-                        align={"start"}
-                        spacing={"8px"}
+                        textAlign={'start'}
+                        align={'start'}
+                        spacing={'8px'}
                       >
                         <Box
                           as="p"
-                          textStyle={{ base: "title4", md: "title2" }}
+                          textStyle={{ base: 'title4', md: 'title2' }}
                           color="neutral.11"
                         >
-                          {props.getValues("projectName")}
+                          {props.getValues('projectName')}
                         </Box>
                         <Box
                           as="p"
-                          textStyle={{ base: "title7", md: "title5" }}
+                          textStyle={{ base: 'title7', md: 'title5' }}
                           color="neutral.8"
                         >
-                          {props.getValues("tagline")}
+                          {props.getValues('tagline')}
                         </Box>
                       </VStack>
                     </HStack>
                   </VStack>
                   <Stack
-                    justify={"start"}
+                    justify={'start'}
                     gap="32px"
-                    direction={{ base: "column", md: "row" }}
+                    direction={{ base: 'column', md: 'row' }}
                   >
-                    <VStack align={"start"} textAlign="start" spacing="8px">
+                    <VStack align={'start'} textAlign="start" spacing="8px">
                       <Box
                         as="p"
-                        textStyle={{ base: "title6", md: "title5" }}
+                        textStyle={{ base: 'title6', md: 'title5' }}
                         color="neutral.6"
-                        textTransform={"uppercase"}
+                        textTransform={'uppercase'}
                       >
                         Email Address
                       </Box>
                       <Box
                         as="p"
-                        textStyle={{ base: "title6", md: "title5" }}
+                        textStyle={{ base: 'title6', md: 'title5' }}
                         color="neutral.11"
                       >
-                        {props.getValues("email")}
+                        {props.getValues('email')}
                       </Box>
                     </VStack>
-                    <VStack align={"start"} textAlign="start" spacing="8px">
+                    <VStack align={'start'} textAlign="start" spacing="8px">
                       <Box
                         as="p"
-                        textStyle={{ base: "title6", md: "title5" }}
+                        textStyle={{ base: 'title6', md: 'title5' }}
                         color="neutral.6"
-                        textTransform={"uppercase"}
+                        textTransform={'uppercase'}
                       >
                         Wallet Address
                       </Box>
                       <Box
                         as="p"
-                        textStyle={{ base: "title6", md: "title5" }}
+                        textStyle={{ base: 'title6', md: 'title5' }}
                         color="neutral.11"
                       >
                         <WalletAddress
@@ -520,13 +524,13 @@ export const CreateProjectTransactionModal = (props: Props) => {
                       </Box>
                     </VStack>
                   </Stack>
-                  <VStack align={"start"} spacing="32px" w="full">
+                  <VStack align={'start'} spacing="32px" w="full">
                     {transactionError ? (
                       <Alert status="error" variant="cubik">
                         <AlertIcon />
                         <AlertDescription
-                          fontSize={{ base: "10px", md: "11px", xl: "12px" }}
-                          lineHeight={{ base: "14px", md: "14px", xl: "16px" }}
+                          fontSize={{ base: '10px', md: '11px', xl: '12px' }}
+                          lineHeight={{ base: '14px', md: '14px', xl: '16px' }}
                         >
                           {transactionError}
                         </AlertDescription>
@@ -535,8 +539,8 @@ export const CreateProjectTransactionModal = (props: Props) => {
                       <Alert status="info" variant="cubik">
                         <AlertIcon />
                         <AlertDescription
-                          fontSize={{ base: "10px", md: "11px", xl: "12px" }}
-                          lineHeight={{ base: "14px", md: "14px", xl: "16px" }}
+                          fontSize={{ base: '10px', md: '11px', xl: '12px' }}
+                          lineHeight={{ base: '14px', md: '14px', xl: '16px' }}
                         >
                           By signing the transaction, you agree to our Terms of
                           Service and acknowledge that your project may be
@@ -549,12 +553,12 @@ export const CreateProjectTransactionModal = (props: Props) => {
               </ModalBody>
               <ModalFooter
                 display="flex"
-                h={"fit-content"}
+                h={'fit-content'}
                 justifyContent="space-between"
               >
                 <Button
                   w="8rem"
-                  size={{ base: "cubikMini", md: "cubikSmall" }}
+                  size={{ base: 'cubikMini', md: 'cubikSmall' }}
                   variant="cubikOutlined"
                   onClick={() => {
                     props.onTransactionModalClose();
@@ -565,7 +569,7 @@ export const CreateProjectTransactionModal = (props: Props) => {
                 </Button>
                 <Button
                   px="32px"
-                  size={{ base: "cubikMini", md: "cubikSmall" }}
+                  size={{ base: 'cubikMini', md: 'cubikSmall' }}
                   variant="cubikFilled"
                   onClick={() => HandleTransactionSign()}
                   loadingText="Confirming"

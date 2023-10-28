@@ -1,5 +1,6 @@
 :root {
     --subhead-fg-tertiary: var(--color-fg-tertiary);
+    /* avatar */
     --avatar-label-description: var(--color-fg-secondary);
     --avatar-label-subtitle: var(--color-fg-tertiary);
     --avatar-label-title: var(--color-fg-primary);
@@ -10,6 +11,7 @@
     --avatar-status-icon: var(--color-fg-info);
     --avatar-status: var(--color-bg-primary);
     --avatar-surface: var(--color-surface-tertiary);
+     /* button */
     --button-success-border-focused: var(--green-500);
     --button-success-text-disabled: var(--neutral-400);
     --button-success-text-focused: var(--black);
@@ -28,6 +30,7 @@
     --button-danger-surface-focused: var(--color-bg-error);
     --button-danger-surface-hovered: var(--color-bg-error);
     --button-danger-surface-default: var(--color-bg-error);
+     /* tab */
     --tab-border-active: var(--tab-fg-active);
     --tab-surface-inactive: var(--color-surface-overlay);
     --tab-surface-active: var(--color-surface-secondary);

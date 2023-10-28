@@ -1,5 +1,9 @@
-"use client";
-import { EmptyStateHOC } from "@/app/components/common/empty-state/EmptyStateHOC";
+'use client';
+
+import React, { useState } from 'react';
+import { EmptyStateHOC } from '@/app/components/common/empty-state/EmptyStateHOC';
+import { SuccessToast } from '@/app/components/toasts/Toasts';
+import { useUser } from '@/app/context/user';
 import {
   Alert,
   AlertDescription,
@@ -23,25 +27,24 @@ import {
   Spinner,
   Stack,
   Tag,
-  VStack,
   useToast,
-} from "@/utils/chakra";
+  VStack,
+} from '@/utils/chakra';
+import { useQuery } from '@tanstack/react-query';
+import { Select } from 'chakra-react-select';
+import type { SubmitHandler } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+
 import type {
   ProjectJoinRoundStatus,
   ProjectVerifyStatus,
-} from "@cubik/database";
-import { useQuery } from "@tanstack/react-query";
-import { Select } from "chakra-react-select";
-import React, { useState } from "react";
-import type { SubmitHandler } from "react-hook-form";
-import { Controller, useForm } from "react-hook-form";
+} from '@cubik/database';
+
 import {
   createJoinHackathon,
   getUserProjects,
   isValidProject,
-} from "./userProjects";
-import { useUser } from "@/app/context/user";
-import { SuccessToast } from "@/app/components/toasts/Toasts";
+} from './userProjects';
 
 interface Props {
   isOpen: boolean;
@@ -79,7 +82,7 @@ export const SubmitNowModal = ({
     getValues,
   } = useForm<FormData>({
     defaultValues: {
-      mainTrack: "fully_on_chain_game",
+      mainTrack: 'fully_on_chain_game',
     },
   });
 
@@ -87,18 +90,18 @@ export const SubmitNowModal = ({
   const [signTransactionLoading, setsignTransactionLoading] = useState(false);
   const [transactionSignError] = useState(null);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
-    null
+    null,
   );
   const { user } = useUser();
   const toast = useToast();
   const userProjects = useQuery({
-    queryKey: ["userProjects", user?.mainWallet],
+    queryKey: ['userProjects', user?.mainWallet],
     queryFn: ({ queryKey }) => getUserProjects(queryKey[1] as string),
     enabled: user ? true : false,
   });
 
   const selectedArray = useQuery({
-    queryKey: ["selectArray", user?.mainWallet],
+    queryKey: ['selectArray', user?.mainWallet],
     queryFn: ({ queryKey }) => isValidProject(queryKey[1] as string),
     enabled: user ? true : false,
   });
@@ -116,12 +119,12 @@ export const SubmitNowModal = ({
       await createJoinHackathon(
         hackathonId,
         selectedProjectId as string,
-        getValues("tracks")
+        getValues('tracks'),
       );
       setsignTransactionLoading(false);
       onClose();
       setStep(0);
-      SuccessToast({ toast, message: "Submission Successful" });
+      SuccessToast({ toast, message: 'Submission Successful' });
     } catch (error) {
       error;
       setsignTransactionLoading(false);
@@ -131,7 +134,7 @@ export const SubmitNowModal = ({
 
   const onSubmit: SubmitHandler<FormData> = async () => {
     const project = userProjects?.data?.find(
-      (project) => project.id === selectedProjectId
+      (project) => project.id === selectedProjectId,
     );
     if (!project) return;
 
@@ -159,63 +162,63 @@ export const SubmitNowModal = ({
 
     return (
       <HStack
-        border={isSelectAble && isSelected ? "2px solid" : "2px dashed"}
-        borderColor={isSelectAble && isSelected ? "#14665B" : "#ffffff10"}
-        backgroundColor={isSelectAble && isSelected ? "#010F0D" : "transparent"}
-        p={{ base: "16px", md: "18px" }}
+        border={isSelectAble && isSelected ? '2px solid' : '2px dashed'}
+        borderColor={isSelectAble && isSelected ? '#14665B' : '#ffffff10'}
+        backgroundColor={isSelectAble && isSelected ? '#010F0D' : 'transparent'}
+        p={{ base: '16px', md: '18px' }}
         w="full"
         minH="5rem"
         gap="24px"
         rounded="16px"
-        justify={"space-between"}
+        justify={'space-between'}
         align="center"
-        direction={{ base: "column", md: "row" }}
+        direction={{ base: 'column', md: 'row' }}
         onClick={() => {
           if (isHackathon && isSelectAble) {
             setSelectedProjectId(tileIndex);
             return;
           }
-          if (status === "VERIFIED" || !joinRoundStatus) {
+          if (status === 'VERIFIED' || !joinRoundStatus) {
             setSelectedProjectId(tileIndex);
           } else {
             return;
           }
         }}
         position="relative"
-        overflow={"hidden"}
+        overflow={'hidden'}
         _after={{
           content: '""',
-          zIndex: "1",
-          position: "absolute",
-          bottom: "50%",
-          left: "0%",
-          transform: "translate(0%, -50%)",
-          width: "8rem",
-          height: "8rem",
-          backgroundColor: isSelectAble && isSelected ? "#14665B" : "#ffffff10",
-          filter: "blur(100px)",
-          borderRadius: "full",
+          zIndex: '1',
+          position: 'absolute',
+          bottom: '50%',
+          left: '0%',
+          transform: 'translate(0%, -50%)',
+          width: '8rem',
+          height: '8rem',
+          backgroundColor: isSelectAble && isSelected ? '#14665B' : '#ffffff10',
+          filter: 'blur(100px)',
+          borderRadius: 'full',
         }}
       >
-        <VStack align={"start"} spacing="24px">
+        <VStack align={'start'} spacing="24px">
           <VStack align="start" w="full" spacing="12px">
             <Stack
               w="full"
               direction="row"
-              gap={{ base: "8px", sm: "12px", md: "16px" }}
+              gap={{ base: '8px', sm: '12px', md: '16px' }}
               align="center"
             >
               <Avatar
                 src={logo}
                 name={name}
-                borderRadius={"8px"}
-                width={{ base: "36px", sm: "48px" }}
-                height={{ base: "36px", sm: "48px" }}
+                borderRadius={'8px'}
+                width={{ base: '36px', sm: '48px' }}
+                height={{ base: '36px', sm: '48px' }}
               />
               <HStack gap="8px">
                 <Box
                   as="p"
-                  textStyle={{ base: "title4", sm: "title3", md: "title2" }}
+                  textStyle={{ base: 'title4', sm: 'title3', md: 'title2' }}
                   noOfLines={1}
                   textAlign="left"
                   color="white"
@@ -233,14 +236,14 @@ export const SubmitNowModal = ({
             border="2px solid"
             w="22px"
             h="22px"
-            borderColor={isSelectAble && isSelected ? "#14665B" : "#ADB8B6"}
+            borderColor={isSelectAble && isSelected ? '#14665B' : '#ADB8B6'}
             p="4px"
           >
             <Center
               rounded="full"
               w="full"
               h="full"
-              backgroundColor={isSelectAble && isSelected ? "#14665B" : ""}
+              backgroundColor={isSelectAble && isSelected ? '#14665B' : ''}
             />
           </Center>
         )}
@@ -250,7 +253,7 @@ export const SubmitNowModal = ({
   return (
     <>
       <Modal
-        variant={"cubik"}
+        variant={'cubik'}
         isOpen={isOpen}
         onClose={() => {
           reset(undefined, { keepValues: false });
@@ -261,46 +264,46 @@ export const SubmitNowModal = ({
       >
         <ModalOverlay />
         <ModalContent
-          minW={{ base: "24rem", md: "36rem" }}
-          overflow={"hidden"}
-          position={"relative"}
-          gap={{ base: "32px", md: "48px" }}
-          textAlign={"center"}
+          minW={{ base: '24rem', md: '36rem' }}
+          overflow={'hidden'}
+          position={'relative'}
+          gap={{ base: '32px', md: '48px' }}
+          textAlign={'center'}
           _before={{
             content: '""',
-            position: "absolute",
-            top: "-10%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            rounded: "50%",
-            filter: "blur(80px)",
-            width: "6rem",
-            height: "6rem",
-            background: "linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)",
-            borderRadius: "8px 8px 0px 0px",
-            zIndex: "-1",
+            position: 'absolute',
+            top: '-10%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            rounded: '50%',
+            filter: 'blur(80px)',
+            width: '6rem',
+            height: '6rem',
+            background: 'linear-gradient(180deg, #A8F0E6 0%, #A8F0E6 100%)',
+            borderRadius: '8px 8px 0px 0px',
+            zIndex: '-1',
           }}
         >
           <ModalHeader>
-            <VStack w="full" spacing="8px" align={"center"} justify="center">
+            <VStack w="full" spacing="8px" align={'center'} justify="center">
               <Box as="p" textStyle="title1" color="neutral.11">
-                {step === 0 ? "Submit Project" : "Sign Transaction"}
+                {step === 0 ? 'Submit Project' : 'Sign Transaction'}
               </Box>
               <Box as="p" textStyle="body4" color="neutral.9">
                 {step === 0
-                  ? "Select Project and tracks for the hackathon"
-                  : "Confirm and Sign transaction to submit project"}
+                  ? 'Select Project and tracks for the hackathon'
+                  : 'Confirm and Sign transaction to submit project'}
               </Box>
             </VStack>
           </ModalHeader>
           <ModalCloseButton />
-          <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+          <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
             <ModalBody>
               {step === 0 ? (
                 <VStack
                   pb="4rem"
-                  align={"start"}
-                  spacing={{ base: "24px", md: "32px" }}
+                  align={'start'}
+                  spacing={{ base: '24px', md: '32px' }}
                   w="full"
                 >
                   {userProjects.isLoading ? (
@@ -309,14 +312,14 @@ export const SubmitNowModal = ({
                     </Center>
                   ) : userProjects.data && userProjects.data.length > 0 ? (
                     <VStack
-                      align={"start"}
+                      align={'start'}
                       w="full"
-                      spacing={{ base: "24px", md: "32px" }}
+                      spacing={{ base: '24px', md: '32px' }}
                     >
                       <VStack align="start" gap="12px" w="full">
                         <Box
                           as="p"
-                          fontSize={{ base: "12px", md: "14px" }}
+                          fontSize={{ base: '12px', md: '14px' }}
                           pb="0.5rem"
                           color="neutral.11"
                         >
@@ -332,7 +335,7 @@ export const SubmitNowModal = ({
                             <Tile
                               isSelectAble={
                                 selectedArray.data?.find(
-                                  (e) => e.project.id === project.id
+                                  (e) => e.project.id === project.id,
                                 )
                                   ? false
                                   : true
@@ -343,7 +346,7 @@ export const SubmitNowModal = ({
                               name={project.name}
                               status={project.status}
                               isHackathon={true}
-                              joinRoundStatus={"APPROVED"}
+                              joinRoundStatus={'APPROVED'}
                             />
                           ))}
                         </VStack>
@@ -363,10 +366,10 @@ export const SubmitNowModal = ({
                             <HStack
                               w="full"
                               // pb="0.5rem"
-                              justify={"space-between"}
+                              justify={'space-between'}
                             >
                               <FormLabel
-                                fontSize={{ base: "12px", md: "14px" }}
+                                fontSize={{ base: '12px', md: '14px' }}
                                 pb="0.5rem"
                                 htmlFor="tracks"
                                 color="neutral.11"
@@ -375,11 +378,11 @@ export const SubmitNowModal = ({
                               </FormLabel>
                               <Box
                                 as="p"
-                                fontSize={{ base: "10px", md: "12px" }}
-                                color={"neutral.7"}
-                                fontWeight={"600"}
+                                fontSize={{ base: '10px', md: '12px' }}
+                                color={'neutral.7'}
+                                fontWeight={'600'}
                               >
-                                {watch("tracks") ? watch("tracks").length : ""}
+                                {watch('tracks') ? watch('tracks').length : ''}
                               </Box>
                             </HStack>
                             <Select
@@ -399,125 +402,125 @@ export const SubmitNowModal = ({
                               chakraStyles={{
                                 container: (provided) => ({
                                   ...provided,
-                                  border: "none",
-                                  background: "surface.input_field",
-                                  outline: "0px !important",
-                                  borderRadius: "8px",
-                                  minH: "40px",
+                                  border: 'none',
+                                  background: 'surface.input_field',
+                                  outline: '0px !important',
+                                  borderRadius: '8px',
+                                  minH: '40px',
                                   boxShadow: errors.tracks
-                                    ? "0 0 0 2px #E53E3E"
-                                    : "0",
-                                  ps: "0rem",
-                                  w: "full",
-                                  ":focus": {
-                                    outline: "none",
-                                    boxShadow: "0",
-                                    border: "none",
+                                    ? '0 0 0 2px #E53E3E'
+                                    : '0',
+                                  ps: '0rem',
+                                  w: 'full',
+                                  ':focus': {
+                                    outline: 'none',
+                                    boxShadow: '0',
+                                    border: 'none',
                                   },
-                                  ":hover": {
-                                    outline: "none",
-                                    boxShadow: "0 !important",
-                                    border: "none !important",
+                                  ':hover': {
+                                    outline: 'none',
+                                    boxShadow: '0 !important',
+                                    border: 'none !important',
                                   },
-                                  ":active": {
-                                    outline: "none",
-                                    boxShadow: "0",
-                                    border: "none",
+                                  ':active': {
+                                    outline: 'none',
+                                    boxShadow: '0',
+                                    border: 'none',
                                   },
-                                  ":selected": {
-                                    outline: "none",
-                                    boxShadow: "0",
-                                    border: "none",
+                                  ':selected': {
+                                    outline: 'none',
+                                    boxShadow: '0',
+                                    border: 'none',
                                   },
-                                  ":invalid": {
-                                    boxShadow: "0 0 0 2px #E53E3E",
+                                  ':invalid': {
+                                    boxShadow: '0 0 0 2px #E53E3E',
                                   },
                                 }),
                                 inputContainer: (provided) => ({
                                   ...provided,
-                                  ps: "8px",
-                                  fontSize: { base: "12px", md: "14px" },
-                                  backgroundColor: "transparent",
+                                  ps: '8px',
+                                  fontSize: { base: '12px', md: '14px' },
+                                  backgroundColor: 'transparent',
                                   //  border: 'none',
-                                  boxShadow: "none",
-                                  outline: "none",
+                                  boxShadow: 'none',
+                                  outline: 'none',
                                 }),
                                 valueContainer: (provided) => ({
                                   ...provided,
-                                  ps: "8px",
-                                  minH: "40px",
-                                  border: "none",
-                                  backgroundColor: "transparent",
-                                  boxShadow: "none",
-                                  outline: "none",
+                                  ps: '8px',
+                                  minH: '40px',
+                                  border: 'none',
+                                  backgroundColor: 'transparent',
+                                  boxShadow: 'none',
+                                  outline: 'none',
                                 }),
 
                                 clearIndicator: (provided) => ({
                                   ...provided,
-                                  display: "none",
+                                  display: 'none',
                                 }),
                                 dropdownIndicator: (provided) => ({
                                   ...provided,
-                                  background: "",
-                                  borderColor: "transparent !important",
-                                  outline: "0px !important",
-                                  boxShadow: "0",
+                                  background: '',
+                                  borderColor: 'transparent !important',
+                                  outline: '0px !important',
+                                  boxShadow: '0',
                                   p: 0,
-                                  w: "60px",
+                                  w: '60px',
                                 }),
                                 indicatorSeparator: (provided) => ({
                                   ...provided,
-                                  display: "none",
+                                  display: 'none',
                                 }),
                                 menu: (provided) => ({
                                   ...provided,
                                   //border: 'none',
-                                  transform: "translateY(-10px)",
-                                  backgroundColor: "#0F0F0F",
+                                  transform: 'translateY(-10px)',
+                                  backgroundColor: '#0F0F0F',
                                 }),
                                 menuList: (provided) => ({
                                   ...provided,
-                                  backgroundColor: "#0F0F0F",
-                                  border: "1px solid #141414",
-                                  borderTop: "none",
-                                  borderTopRadius: "none",
-                                  boxShadow: "none",
-                                  padding: "0px",
+                                  backgroundColor: '#0F0F0F',
+                                  border: '1px solid #141414',
+                                  borderTop: 'none',
+                                  borderTopRadius: 'none',
+                                  boxShadow: 'none',
+                                  padding: '0px',
                                 }),
                                 option: (provided, state) => ({
                                   ...provided,
-                                  color: "neutral.11",
-                                  fontSize: { base: "12px", md: "14px" },
-                                  fontWeight: "400",
+                                  color: 'neutral.11',
+                                  fontSize: { base: '12px', md: '14px' },
+                                  fontWeight: '400',
                                   backgroundColor: state.isSelected
-                                    ? "#010F0D"
+                                    ? '#010F0D'
                                     : state.isFocused
-                                    ? "#010F0D"
-                                    : "#0F0F0F",
+                                    ? '#010F0D'
+                                    : '#0F0F0F',
                                   _hover: {
-                                    backgroundColor: "#010F0D",
+                                    backgroundColor: '#010F0D',
                                   },
-                                  ":active": {
-                                    backgroundColor: "#0F0F0F",
+                                  ':active': {
+                                    backgroundColor: '#0F0F0F',
                                   },
                                 }),
                                 control: (provided) => ({
                                   ...provided,
-                                  border: "none",
-                                  backgroundColor: "#0F0F0F",
-                                  boxShadow: "none",
-                                  outline: "none",
-                                  ":hover": {
-                                    border: "none",
-                                    backgroundColor: "#0F0F0F",
+                                  border: 'none',
+                                  backgroundColor: '#0F0F0F',
+                                  boxShadow: 'none',
+                                  outline: 'none',
+                                  ':hover': {
+                                    border: 'none',
+                                    backgroundColor: '#0F0F0F',
                                   },
                                 }),
                                 placeholder: (provided) => ({
                                   ...provided,
-                                  textAlign: "start",
-                                  fontSize: { base: "12px", md: "14px" },
-                                  color: "#3B3D3D",
-                                  px: "1rem",
+                                  textAlign: 'start',
+                                  fontSize: { base: '12px', md: '14px' },
+                                  color: '#3B3D3D',
+                                  px: '1rem',
                                 }),
                               }}
                             />
@@ -535,17 +538,17 @@ export const SubmitNowModal = ({
                       rounded="8px"
                       w="full"
                       pb="3rem"
-                      justify={"center"}
+                      justify={'center'}
                     >
                       <EmptyStateHOC
-                        heading={"No Project Found"}
+                        heading={'No Project Found'}
                         subHeading={
-                          "To submit a project in a hackathon you have to create a project first"
+                          'To submit a project in a hackathon you have to create a project first'
                         }
-                        margin={"1rem"}
+                        margin={'1rem'}
                       />
                       <Link href="/create/project">
-                        <Button variant="cubikFilled" size={"cubikSmall"}>
+                        <Button variant="cubikFilled" size={'cubikSmall'}>
                           Create Project
                         </Button>
                       </Link>
@@ -553,52 +556,52 @@ export const SubmitNowModal = ({
                   )}
                 </VStack>
               ) : (
-                <VStack textAlign={"start"} align={"start"} gap={"24px"}>
-                  <VStack align={"start"} spacing="16px">
+                <VStack textAlign={'start'} align={'start'} gap={'24px'}>
+                  <VStack align={'start'} spacing="16px">
                     <Box
                       as="p"
-                      textStyle={{ base: "title6", md: "title5" }}
+                      textStyle={{ base: 'title6', md: 'title5' }}
                       color="neutral.6"
-                      textTransform={"uppercase"}
+                      textTransform={'uppercase'}
                     >
                       Project
                     </Box>
-                    <HStack align={"start"} gap="16px">
+                    <HStack align={'start'} gap="16px">
                       <Avatar
                         src={
                           userProjects.data?.find(
-                            (e) => e.id === selectedProject
+                            (e) => e.id === selectedProject,
                           )?.logo
                         }
                         name={
                           userProjects.data?.find(
-                            (e) => e.id === selectedProject
+                            (e) => e.id === selectedProject,
                           )?.name
                         }
                         borderRadius="8px"
-                        width={{ base: "60px", md: "80px" }}
-                        height={{ base: "60px", md: "80px" }}
+                        width={{ base: '60px', md: '80px' }}
+                        height={{ base: '60px', md: '80px' }}
                       />
-                      <VStack textAlign={"start"} align={"start"} gap="8px">
+                      <VStack textAlign={'start'} align={'start'} gap="8px">
                         <Box
                           as="p"
-                          textStyle={{ base: "title3", md: "title2" }}
+                          textStyle={{ base: 'title3', md: 'title2' }}
                           color="neutral.11"
                         >
                           {
                             userProjects.data?.find(
-                              (e) => e.id === selectedProject
+                              (e) => e.id === selectedProject,
                             )?.name
                           }
                         </Box>
                         <Box
                           as="p"
-                          textStyle={{ base: "title6", md: "title5" }}
+                          textStyle={{ base: 'title6', md: 'title5' }}
                           color="neutral.8"
                         >
                           {
                             userProjects.data?.find(
-                              (e) => e.id === selectedProject
+                              (e) => e.id === selectedProject,
                             )?.shortDescription
                           }
                         </Box>
@@ -607,67 +610,67 @@ export const SubmitNowModal = ({
                   </VStack>
                   <Stack
                     pb="3rem"
-                    justify={"start"}
+                    justify={'start'}
                     gap="32px"
-                    direction={{ base: "column", md: "column" }}
+                    direction={{ base: 'column', md: 'column' }}
                   >
-                    <VStack align={"start"} textAlign="start" spacing="8px">
+                    <VStack align={'start'} textAlign="start" spacing="8px">
                       <Box
                         as="p"
-                        textStyle={{ base: "title6", md: "title5" }}
+                        textStyle={{ base: 'title6', md: 'title5' }}
                         color="neutral.6"
-                        textTransform={"uppercase"}
+                        textTransform={'uppercase'}
                       >
                         Tracks
                       </Box>
-                      {getValues("tracks") ? (
-                        <HStack flexWrap={"wrap"}>
-                          {getValues("tracks").map((track) => {
+                      {getValues('tracks') ? (
+                        <HStack flexWrap={'wrap'}>
+                          {getValues('tracks').map((track) => {
                             return <Tag key={track.value}>{track.label}</Tag>;
                           })}
                         </HStack>
                       ) : (
                         <Box
                           as="p"
-                          textStyle={{ base: "title6", md: "title5" }}
+                          textStyle={{ base: 'title6', md: 'title5' }}
                           color="neutral.11"
                         >
                           No Track Selected
                         </Box>
                       )}
                     </VStack>
-                    <VStack align={"start"} textAlign="start" spacing="8px">
+                    <VStack align={'start'} textAlign="start" spacing="8px">
                       <Box
                         as="p"
-                        textStyle={{ base: "title6", md: "title5" }}
+                        textStyle={{ base: 'title6', md: 'title5' }}
                         color="neutral.6"
-                        textTransform={"uppercase"}
+                        textTransform={'uppercase'}
                       >
                         Submitting to
                       </Box>
                       <Box
                         as="p"
-                        textStyle={{ base: "title6", md: "title5" }}
+                        textStyle={{ base: 'title6', md: 'title5' }}
                         color="neutral.11"
                       >
                         {hackathonName}
                       </Box>
                     </VStack>
                   </Stack>
-                  <VStack align={"start"} spacing="32px">
+                  <VStack align={'start'} spacing="32px">
                     {transactionSignError && (
                       <Alert status="error" variant="cubik">
                         <AlertIcon />
                         <AlertDescription
                           fontSize={{
-                            base: "10px",
-                            md: "11px",
-                            xl: "12px",
+                            base: '10px',
+                            md: '11px',
+                            xl: '12px',
                           }}
                           lineHeight={{
-                            base: "14px",
-                            md: "14px",
-                            xl: "16px",
+                            base: '14px',
+                            md: '14px',
+                            xl: '16px',
                           }}
                         >
                           {}
@@ -676,11 +679,11 @@ export const SubmitNowModal = ({
                     )}
                   </VStack>
                 </VStack>
-              )}{" "}
+              )}{' '}
             </ModalBody>
             <ModalFooter
               display="flex"
-              h={"fit-content"}
+              h={'fit-content'}
               justifyContent="space-between"
             >
               <Button
@@ -710,7 +713,7 @@ export const SubmitNowModal = ({
               ) : (
                 <Button
                   w="8rem"
-                  ms={"auto"}
+                  ms={'auto'}
                   variant="cubikFilled"
                   type="submit"
                   isDisabled={selectedProjectId === null}

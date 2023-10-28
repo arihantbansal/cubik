@@ -1,10 +1,12 @@
-"use client";
+'use client';
 
-import { Box, HStack } from "@/utils/chakra";
-import React from "react";
-import { ProofHandler } from "./ProofHandler";
-import type { Proof } from "@cubik/database";
-import { useUser } from "@/app/context/user";
+import React from 'react';
+import { useUser } from '@/app/context/user';
+import { Box, HStack } from '@/utils/chakra';
+
+import type { Proof } from '@cubik/database';
+
+import { ProofHandler } from './ProofHandler';
 
 interface Props {
   username: string;
@@ -20,7 +22,7 @@ export const ProofWrapper = ({ proofs, username }: Props) => {
       <HStack gap="8px">
         <Box
           as="p"
-          textStyle={{ base: "title4", md: "title3" }}
+          textStyle={{ base: 'title4', md: 'title3' }}
           color="neutral.11"
         >
           Proofs

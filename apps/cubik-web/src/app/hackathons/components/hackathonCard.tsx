@@ -1,8 +1,8 @@
-import { Box, Center, HStack, LinkBox, VStack } from "@/utils/chakra";
-import { formatNumberWithK } from "@/utils/helpers/formatWithK";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Box, Center, HStack, LinkBox, VStack } from '@/utils/chakra';
+import { formatNumberWithK } from '@/utils/helpers/formatWithK';
 
 interface Props {
   id: string;
@@ -19,42 +19,42 @@ export const HackathonCard = (props: Props) => {
       <Link
         key={props.id}
         style={{
-          width: "100%",
+          width: '100%',
         }}
-        href={"/hackathons/" + props.slug}
+        href={'/hackathons/' + props.slug}
       >
         <LinkBox
-          display={"flex"}
-          flexDirection={{ base: "column", md: "row" }}
-          alignItems={{ base: "start", md: "center" }}
+          display={'flex'}
+          flexDirection={{ base: 'column', md: 'row' }}
+          alignItems={{ base: 'start', md: 'center' }}
           justifyContent="space-between"
           key={props.id}
-          border={"1px solid"}
+          border={'1px solid'}
           borderColor="#ffffff10"
           transition="all 0.3s ease-in-out"
           _hover={{
-            borderColor: "#ffffff10",
-            transform: "translateY(-2px)",
-            transition: "transform 0.3s ease-in-out",
-            shadow: "2xl",
+            borderColor: '#ffffff10',
+            transform: 'translateY(-2px)',
+            transition: 'transform 0.3s ease-in-out',
+            shadow: '2xl',
           }}
           backgroundColor="#080808"
-          p={"0"}
+          p={'0'}
           w="full"
           rounded="20px"
           position="relative"
-          overflow={"hidden"}
-          textAlign={"start"}
+          overflow={'hidden'}
+          textAlign={'start'}
         >
           <HStack
-            position={"relative"}
+            position={'relative'}
             align="start"
             w="full"
-            spacing={{ base: "32px", md: "24px" }}
+            spacing={{ base: '32px', md: '24px' }}
           >
             {/* hackathon image */}
             <Center
-              position={"absolute"}
+              position={'absolute'}
               w="40rem"
               top="0%"
               h="full"
@@ -62,41 +62,41 @@ export const HackathonCard = (props: Props) => {
               //  transform="translate(-50%, 0%)"
             >
               <Center
-                zIndex={"0"}
-                alignItems={"end"}
+                zIndex={'0'}
+                alignItems={'end'}
                 w="40rem"
-                h={"14rem"}
-                position={"relative"}
-                overflow={"hidden"}
+                h={'14rem'}
+                position={'relative'}
+                overflow={'hidden'}
                 _before={{
                   content: '""',
-                  position: "absolute",
+                  position: 'absolute',
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  height: "14rem",
-                  w: "40rem",
+                  height: '14rem',
+                  w: '40rem',
                   background:
-                    "linear-gradient(90deg, #080808 0%, #08080800 100%)",
+                    'linear-gradient(90deg, #080808 0%, #08080800 100%)',
                   zIndex: 1,
                 }}
               >
                 <Image
                   src={props.background}
-                  alt={"hackathon"}
+                  alt={'hackathon'}
                   layout="fill"
                   style={{
-                    objectFit: "cover",
-                    objectPosition: "center",
+                    objectFit: 'cover',
+                    objectPosition: 'center',
                   }}
                 />
               </Center>
             </Center>
             <HStack
               w="full"
-              gap={{ base: "14px", md: "18px" }}
-              align={"start"}
-              zIndex={"1"}
+              gap={{ base: '14px', md: '18px' }}
+              align={'start'}
+              zIndex={'1'}
               p="28px"
             >
               {/* hackathon avatar */}
@@ -122,25 +122,25 @@ export const HackathonCard = (props: Props) => {
                 zIndex="3"
                 align="start"
                 w="full"
-                spacing={{ base: "32px", md: "32px" }}
+                spacing={{ base: '32px', md: '32px' }}
               >
                 <VStack
                   align="start"
                   w="full"
-                  spacing={{ base: "12px", md: "12px" }}
+                  spacing={{ base: '12px', md: '12px' }}
                 >
                   <HStack
                     w="full"
                     gap="8px"
-                    align={"flex-end"}
-                    justify={"start"}
+                    align={'flex-end'}
+                    justify={'start'}
                   >
                     <Box
                       color="neutral.11"
                       as="p"
                       noOfLines={1}
-                      textStyle={{ base: "title3", md: "title1" }}
-                      textTransform={"capitalize"}
+                      textStyle={{ base: 'title3', md: 'title1' }}
+                      textTransform={'capitalize'}
                     >
                       {props.name}
                     </Box>
@@ -153,7 +153,7 @@ export const HackathonCard = (props: Props) => {
                     as="p"
                     noOfLines={2}
                     maxW="38rem"
-                    textStyle={{ base: "body5", md: "body4" }}
+                    textStyle={{ base: 'body5', md: 'body4' }}
                     color="neutral.9"
                   >
                     {props.shortDescription}
@@ -165,17 +165,17 @@ export const HackathonCard = (props: Props) => {
                   shadow="0px 4px 24px rgba(0, 0, 0, 0.08)"
                   outline="1px solid #ffffff16"
                   p={{
-                    base: "0.6rem 1.2rem",
-                    md: "0.8rem 1.5rem",
+                    base: '0.6rem 1.2rem',
+                    md: '0.8rem 1.5rem',
                   }}
                 >
                   <Box
                     color="#B4B0B2"
-                    textTransform={"uppercase"}
+                    textTransform={'uppercase'}
                     as="p"
                     textStyle={{
-                      base: "body6",
-                      md: "overline3",
+                      base: 'body6',
+                      md: 'overline3',
                     }}
                   >
                     Prize Pool
@@ -184,7 +184,7 @@ export const HackathonCard = (props: Props) => {
                     as="p"
                     textTransform="uppercase"
                     color="neutral.11"
-                    textStyle={{ base: "body5", md: "title4" }}
+                    textStyle={{ base: 'body5', md: 'title4' }}
                   >
                     {formatNumberWithK(props.prizePool)} USDC
                   </Box>

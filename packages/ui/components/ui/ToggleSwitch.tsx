@@ -6,7 +6,11 @@ interface ToggleSwitchProps {
   size?: 'sm' | 'md' | 'default';
 }
 
-const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ checked, onChange, size = 'default' }) => {
+const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
+  checked,
+  onChange,
+  size = 'default',
+}) => {
   const sizes = {
     default: {
       wrapper: 'w-14 h-8',
@@ -28,20 +32,24 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ checked, onChange, size = '
   const bgColorClass = checked ? 'bg-blue-600' : 'bg-neutral-600';
 
   return (
-    <div className='relative inline-block'>
-      <input 
+    <div className="relative inline-block">
+      <input
         id="toggleSwitch"
-        type="checkbox" 
-        checked={checked} 
+        type="checkbox"
+        checked={checked}
         onChange={(e) => onChange(e.target.checked)}
         className="opacity-0 absolute w-0 h-0"
       />
-      <label 
+      <label
         htmlFor="toggleSwitch"
         className={`cursor-pointer block ${sizes[size].box} ${bgColorClass} rounded-full transition-colors duration-300 ease-in-out`}
       >
         <span
-          className={`block absolute ${sizes[size].thumb} bg-white rounded-full transition-transform duration-300 ease-in-out ${checked ? 'translate-x-full' : ''}`}
+          className={`block absolute ${
+            sizes[size].thumb
+          } bg-white rounded-full transition-transform duration-300 ease-in-out ${
+            checked ? 'translate-x-full' : ''
+          }`}
         ></span>
       </label>
     </div>

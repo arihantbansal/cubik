@@ -1,7 +1,8 @@
-import type NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
-import { connection, getSdk } from "./sdk";
-import { web3 } from "@coral-xyz/anchor";
-import * as spl from "@solana/spl-token";
+import { web3 } from '@coral-xyz/anchor';
+import type NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import * as spl from '@solana/spl-token';
+
+import { connection, getSdk } from './sdk';
 
 export const createContributorIx = async (
   wallet: NodeWallet,
@@ -11,7 +12,7 @@ export const createContributorIx = async (
   projectCount: number,
   token: string,
   projectOwnerAddress: string,
-  multiSig: web3.PublicKey
+  multiSig: web3.PublicKey,
 ): Promise<(web3.TransactionInstruction | null)[]> => {
   const sdk = getSdk(wallet);
   const createKey = web3.Keypair.generate();
@@ -24,21 +25,21 @@ export const createContributorIx = async (
     wallet.publicKey,
     false,
     spl.TOKEN_PROGRAM_ID,
-    spl.ASSOCIATED_TOKEN_PROGRAM_ID
+    spl.ASSOCIATED_TOKEN_PROGRAM_ID,
   );
   const ataAdmin = await spl.getAssociatedTokenAddress(
     tokenMint,
-    new web3.PublicKey("52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ"),
+    new web3.PublicKey('52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ'),
     false,
     spl.TOKEN_PROGRAM_ID,
-    spl.ASSOCIATED_TOKEN_PROGRAM_ID
+    spl.ASSOCIATED_TOKEN_PROGRAM_ID,
   );
   const ataReciver = await spl.getAssociatedTokenAddress(
     tokenMint,
     multiSig,
     true,
     spl.TOKEN_PROGRAM_ID,
-    spl.ASSOCIATED_TOKEN_PROGRAM_ID
+    spl.ASSOCIATED_TOKEN_PROGRAM_ID,
   );
   const info = await connection.getAccountInfo(ataReciver);
   const info2 = await connection.getAccountInfo(ataAdmin);
@@ -49,27 +50,27 @@ export const createContributorIx = async (
       wallet.publicKey,
       ataReciver,
       multiSig,
-      tokenMint
+      tokenMint,
     );
   }
   if (!info2) {
     tokenAccountIx2 = spl.createAssociatedTokenAccountInstruction(
       wallet.publicKey,
       ataAdmin,
-      new web3.PublicKey("52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ"),
-      tokenMint
+      new web3.PublicKey('52atj3jAYAq33rdDi4usSNpAozFF1foPTuyw8vkD6mtQ'),
+      tokenMint,
     );
   }
 
   const [contributorAccount] = sdk.contribution.getContributionV2PDA(
     wallet.publicKey,
-    createKey.publicKey
+    createKey.publicKey,
   );
   const [adminAccount] = sdk.admin.getAdminPDA();
 
   const [projectAccount] = sdk.project.getProjectPDA(
     new web3.PublicKey(projectOwnerAddress),
-    projectCount
+    projectCount,
   );
 
   const ix = await sdk.contribution.create(
@@ -86,7 +87,7 @@ export const createContributorIx = async (
     ataSender,
     ataReciver,
     projectOwnerAddress,
-    createKey.publicKey
+    createKey.publicKey,
   );
   return [ix, tokenAccountIx, tokenAccountIx2];
 };

@@ -1,16 +1,18 @@
-"use client";
-import { Box, HStack, VStack } from "@chakra-ui/react";
-import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useProjectEventStore } from "../store";
-import { getStats } from "./stats";
+'use client';
+
+import React from 'react';
+import { Box, HStack, VStack } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+
+import { useProjectEventStore } from '../store';
+import { getStats } from './stats';
 
 export const RoundStats = () => {
   const { event } = useProjectEventStore();
 
   const stats = useQuery({
     queryFn: () => getStats(event),
-    queryKey: ["round-stats"],
+    queryKey: ['round-stats'],
     enabled: event ? true : false,
   });
 
@@ -18,8 +20,8 @@ export const RoundStats = () => {
 
   return (
     <>
-      <VStack gap={4} align={"start"} w="full">
-        <HStack align={"start"}>
+      <VStack gap={4} align={'start'} w="full">
+        <HStack align={'start'}>
           <Box>
             <svg
               width="24"
@@ -37,7 +39,7 @@ export const RoundStats = () => {
               />
             </svg>
           </Box>
-          <Box color={"white"} fontSize={"xl"} fontWeight={700}>
+          <Box color={'white'} fontSize={'xl'} fontWeight={700}>
             Round Stats
           </Box>
         </HStack>
@@ -45,16 +47,16 @@ export const RoundStats = () => {
           borderRadius={8}
           p={4}
           w="full"
-          border={"1.5px solid"}
-          borderColor={"#1A1A1A"}
+          border={'1.5px solid'}
+          borderColor={'#1A1A1A'}
         >
           <Box
-            border={"1.5px solid"}
-            borderColor={"#003810"}
-            fontSize={"md"}
-            display={"flex"}
-            justifyContent={"center"}
-            alignItems={"center"}
+            border={'1.5px solid'}
+            borderColor={'#003810'}
+            fontSize={'md'}
+            display={'flex'}
+            justifyContent={'center'}
+            alignItems={'center'}
             p={3}
             borderRadius={8}
           >
@@ -74,11 +76,11 @@ export const RoundStats = () => {
               />
             </svg>
           </Box>
-          <VStack align={"start"} spacing={0}>
-            <Box color={"white"} opacity={0.6} fontSize={"sm"} fontWeight={700}>
+          <VStack align={'start'} spacing={0}>
+            <Box color={'white'} opacity={0.6} fontSize={'sm'} fontWeight={700}>
               Estimated Match
             </Box>
-            <Box color={"white"} fontSize={"lg"} fontWeight={700}>
+            <Box color={'white'} fontSize={'lg'} fontWeight={700}>
               ${stats.data?.estimatedMatch.toFixed(2)}
             </Box>
           </VStack>
@@ -88,16 +90,16 @@ export const RoundStats = () => {
           borderRadius={8}
           p={4}
           w="full"
-          border={"1.5px solid"}
-          borderColor={"#1A1A1A"}
+          border={'1.5px solid'}
+          borderColor={'#1A1A1A'}
         >
           <Box
-            border={"1.5px solid"}
-            borderColor={"#312C00"}
-            fontSize={"md"}
-            display={"flex"}
-            justifyContent={"center"}
-            alignItems={"center"}
+            border={'1.5px solid'}
+            borderColor={'#312C00'}
+            fontSize={'md'}
+            display={'flex'}
+            justifyContent={'center'}
+            alignItems={'center'}
             p={3}
             borderRadius={8}
           >
@@ -117,11 +119,11 @@ export const RoundStats = () => {
               />
             </svg>
           </Box>
-          <VStack align={"start"} spacing={0}>
-            <Box color={"white"} opacity={0.6} fontSize={"sm"} fontWeight={700}>
+          <VStack align={'start'} spacing={0}>
+            <Box color={'white'} opacity={0.6} fontSize={'sm'} fontWeight={700}>
               Community Contributions
             </Box>
-            <Box color={"white"} fontSize={"lg"} fontWeight={700}>
+            <Box color={'white'} fontSize={'lg'} fontWeight={700}>
               ${stats.data?.communityMatch}
             </Box>
           </VStack>
@@ -131,16 +133,16 @@ export const RoundStats = () => {
           borderRadius={8}
           p={4}
           w="full"
-          border={"1.5px solid"}
-          borderColor={"#1A1A1A"}
+          border={'1.5px solid'}
+          borderColor={'#1A1A1A'}
         >
           <Box
-            border={"1.5px solid"}
-            borderColor={"#1B0D2E"}
-            fontSize={"md"}
-            display={"flex"}
-            justifyContent={"center"}
-            alignItems={"center"}
+            border={'1.5px solid'}
+            borderColor={'#1B0D2E'}
+            fontSize={'md'}
+            display={'flex'}
+            justifyContent={'center'}
+            alignItems={'center'}
             p={3}
             borderRadius={8}
           >
@@ -160,11 +162,11 @@ export const RoundStats = () => {
               />
             </svg>
           </Box>
-          <VStack align={"start"} spacing={0}>
-            <Box color={"white"} opacity={0.6} fontSize={"sm"} fontWeight={700}>
+          <VStack align={'start'} spacing={0}>
+            <Box color={'white'} opacity={0.6} fontSize={'sm'} fontWeight={700}>
               Contributors
             </Box>
-            <Box color={"white"} fontSize={"lg"} fontWeight={700}>
+            <Box color={'white'} fontSize={'lg'} fontWeight={700}>
               {stats.data?.contributors}
             </Box>
           </VStack>

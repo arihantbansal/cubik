@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Accordion,
   AccordionContent,
@@ -9,22 +11,22 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@cubik/ui";
-import React from "react";
+} from '@cubik/ui';
+
 const STATUS_DATA = [
-  { label: "Total Raised", value: "$4.5k" },
-  { label: "Unique Contributors", value: "143" },
-  { label: "Rounds", value: "1" },
-  { label: "Community Contributions", value: "$796.5" },
+  { label: 'Total Raised', value: '$4.5k' },
+  { label: 'Unique Contributors', value: '143' },
+  { label: 'Rounds', value: '1' },
+  { label: 'Community Contributions', value: '$796.5' },
 ];
 export const ProjectInfo = () => {
   return (
     <div className="flex flex-grow flex-col overflow-scroll">
       <div className="bg-muted">
-        <img src={"/projectBg.jpeg"} alt="project background" />
+        <img src={'/projectBg.jpeg'} alt="project background" />
 
         <img
-          src={"/projectLogo.jpeg"}
+          src={'/projectLogo.jpeg'}
           alt="project background"
           className="h-20 w-20 rounded-md -mt-16 mx-4"
         />
@@ -114,7 +116,7 @@ export const ProjectInfo = () => {
                   <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-2">
                       <img
-                        src={"/dhruvAvatar.jpeg"}
+                        src={'/dhruvAvatar.jpeg'}
                         alt="Dhruv"
                         className="w-10 h-10 rounded-full"
                       />
@@ -137,7 +139,7 @@ export const ProjectInfo = () => {
                   <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-2">
                       <img
-                        src={"/dhruvAvatar.jpeg"}
+                        src={'/dhruvAvatar.jpeg'}
                         alt="Kash"
                         className="w-10 h-10 rounded-full"
                       />

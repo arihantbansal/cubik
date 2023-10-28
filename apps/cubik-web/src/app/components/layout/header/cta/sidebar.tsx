@@ -1,4 +1,5 @@
-import { Center, HStack, useBreakpointValue } from "@chakra-ui/react";
+import { Center, HStack, useBreakpointValue } from '@chakra-ui/react';
+
 // import { RxHamburgerMenu } from "react-icons/rx";
 
 const Sidebar = () => {
@@ -6,7 +7,7 @@ const Sidebar = () => {
 
   return !isDesktop ? (
     <HStack justify="end" align="center" w="full" gap="12px">
-      <Center display={{ base: "flex", md: "none" }} gap="12px">
+      <Center display={{ base: 'flex', md: 'none' }} gap="12px">
         {/*  @todo  */}
         {/* <Box
           as={RxHamburgerMenu}

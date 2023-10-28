@@ -1,14 +1,15 @@
-import { Container, Stack } from "@/utils/chakra";
-import { prisma } from "@cubik/database";
-import React from "react";
+import React from 'react';
+import { notFound } from 'next/navigation';
+import { CustomModal } from '@/app/components/common/modal';
+import { ProjectHeader } from '@/app/project/components/layout/ProjectHeader';
 import type {
   ProjectPageEventType,
   ProjectPageLayoutType,
-} from "@/types/project";
-import { notFound } from "next/navigation";
-import { ProjectHeader } from "@/app/project/components/layout/ProjectHeader";
-import { InterFont } from "@/utils/fonts/inter";
-import { CustomModal } from "@/app/components/common/modal";
+} from '@/types/project';
+import { Container, Stack } from '@/utils/chakra';
+import { InterFont } from '@/utils/fonts/inter';
+
+import { prisma } from '@cubik/database';
 
 interface Props {
   params: {
@@ -18,7 +19,7 @@ interface Props {
 }
 
 const fetchProject = async (
-  slug: string
+  slug: string,
 ): Promise<[ProjectPageLayoutType | null, Error | null]> => {
   try {
     const project = await prisma.project.findFirst({
@@ -75,25 +76,25 @@ const fetchProject = async (
       (hackathon) => {
         return {
           eventId: hackathon.hackathonId,
-          eventType: "hackathon",
+          eventType: 'hackathon',
           name: hackathon.hackathon.name,
           joinId: hackathon.id,
           startTime: hackathon.hackathon.votingStartDate || new Date(),
           endTime: hackathon.hackathon.votingEndDate || new Date(),
         };
-      }
+      },
     );
     const rounds: ProjectPageEventType[] = project.projectJoinRound.map(
       (round) => {
         return {
           eventId: round.roundId,
-          eventType: "round",
+          eventType: 'round',
           name: round.round.name,
           joinId: round.id,
           startTime: round.round.startTime,
           endTime: round.round.endTime,
         };
-      }
+      },
     );
     const layoutData: ProjectPageLayoutType = {
       id: project?.id,
@@ -121,15 +122,15 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
   return (
     <>
       <CustomModal>
-        <Container bg={"cubik.grey.700"} maxW={"full"} p="0">
+        <Container bg={'cubik.grey.700'} maxW={'full'} p="0">
           <Stack
             maxW="7xl"
             mx="auto"
             gap={10}
-            px={{ base: "1rem", sm: "2rem", md: "2rem", xl: "1rem" }}
-            py={{ base: "24px", md: "64px" }}
-            alignItems={"start"}
-            justifyContent={"start"}
+            px={{ base: '1rem', sm: '2rem', md: '2rem', xl: '1rem' }}
+            py={{ base: '24px', md: '64px' }}
+            alignItems={'start'}
+            justifyContent={'start'}
             pt={{
               base: 24,
               md: 32,
@@ -140,9 +141,9 @@ const ProjectPageLayout = async ({ params, children }: Props) => {
         </Container>
         <Container
           className={InterFont.className}
-          bg={"#0D0D0D"}
-          w={"full"}
-          maxW={"full"}
+          bg={'#0D0D0D'}
+          w={'full'}
+          maxW={'full'}
           p="0"
         >
           {children}

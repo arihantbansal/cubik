@@ -1,6 +1,6 @@
-"use server";
+'use server';
 
-import { prisma } from "@cubik/database";
+import { prisma } from '@cubik/database';
 
 export const saveSession = async (
   mainWallet: string,
@@ -10,7 +10,7 @@ export const saveSession = async (
   }: {
     ip: string;
     userAgent: string;
-  }
+  },
 ) => {
   await prisma.session.create({
     data: {

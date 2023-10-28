@@ -1,7 +1,7 @@
-import type { Meta, StoryObj, StoryFn } from '@storybook/react';
+import React from 'react';
+import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 
 import { Button } from '../components/ui/button';
-import React from 'react';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta = {
@@ -21,22 +21,20 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 const Template: StoryFn<typeof Button> = (args: any) => <Button {...args} />;
 export const Default: StoryFn<typeof Button> = Template.bind({});
-Default.args = {
-
-};
+Default.args = {};
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Primary: Story = {
   args: {
     label: 'Button',
-    type: "button"
+    type: 'button',
   },
 };
 
 export const Secondary: Story = {
   args: {
     label: 'Button',
-    variant: "secondary"
+    variant: 'secondary',
   },
 };
 
@@ -44,7 +42,7 @@ export const Destructive: Story = {
   args: {
     size: 'lg',
     label: 'Button',
-    variant: 'destructive'
+    variant: 'destructive',
   },
 };
 
@@ -52,6 +50,6 @@ export const Outline: Story = {
   args: {
     size: 'sm',
     label: 'Button',
-    variant: 'outline'
+    variant: 'outline',
   },
 };

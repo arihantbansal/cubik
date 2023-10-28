@@ -1,8 +1,9 @@
-"use client";
+'use client';
 
-import { useUser } from "@/app/context/user";
-import { VisitorProjectEmptyState } from "./VisitorViewEmptyPage";
-import { AdminProjectEmptyState } from "./AdminViewEmptyPage";
+import { useUser } from '@/app/context/user';
+
+import { AdminProjectEmptyState } from './AdminViewEmptyPage';
+import { VisitorProjectEmptyState } from './VisitorViewEmptyPage';
 
 interface Props {
   username: string;

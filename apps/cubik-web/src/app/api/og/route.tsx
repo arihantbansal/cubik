@@ -1,132 +1,132 @@
 /* eslint-disable @next/next/no-img-element */
-import type { NextRequest } from "next/server";
-import { ImageResponse } from "next/server";
+import type { NextRequest } from 'next/server';
+import { ImageResponse } from 'next/server';
 
-export const runtime = "edge";
+export const runtime = 'edge';
 
 export async function GET(req: NextRequest) {
-  const nameBase64 = req.nextUrl.searchParams.get("name");
-  const nameBuffer = Buffer.from(nameBase64 as string, "base64");
+  const nameBase64 = req.nextUrl.searchParams.get('name');
+  const nameBuffer = Buffer.from(nameBase64 as string, 'base64');
   const name = nameBuffer.toString();
 
-  const taglineBase64 = req.nextUrl.searchParams.get("tagline");
-  const taglineBuffer = Buffer.from(taglineBase64 as string, "base64");
+  const taglineBase64 = req.nextUrl.searchParams.get('tagline');
+  const taglineBuffer = Buffer.from(taglineBase64 as string, 'base64');
   const tagline = taglineBuffer.toString();
 
-  const logoBase64 = req.nextUrl.searchParams.get("logo");
-  const logoBuffer = Buffer.from(logoBase64 as string, "base64");
+  const logoBase64 = req.nextUrl.searchParams.get('logo');
+  const logoBuffer = Buffer.from(logoBase64 as string, 'base64');
   const logo = logoBuffer.toString();
 
   const contributors =
-    parseInt(req.nextUrl.searchParams.get("contributors") ?? "0") ?? 10;
+    parseInt(req.nextUrl.searchParams.get('contributors') ?? '0') ?? 10;
   const comments =
-    parseInt(req.nextUrl.searchParams.get("comments") ?? "0") ?? 10;
+    parseInt(req.nextUrl.searchParams.get('comments') ?? '0') ?? 10;
   const participatingGrantsRound =
-    req.nextUrl.searchParams.get("eventName") ?? undefined;
+    req.nextUrl.searchParams.get('eventName') ?? undefined;
 
   const interRegular = await fetch(
-    new URL("./Inter-Regular.otf", import.meta.url)
+    new URL('./Inter-Regular.otf', import.meta.url),
   ).then((res) => res.arrayBuffer());
   const interMedium = await fetch(
-    new URL("./Inter-Medium.otf", import.meta.url)
+    new URL('./Inter-Medium.otf', import.meta.url),
   ).then((res) => res.arrayBuffer());
   const interSemiBold = await fetch(
-    new URL("./Inter-SemiBold.otf", import.meta.url)
+    new URL('./Inter-SemiBold.otf', import.meta.url),
   ).then((res) => res.arrayBuffer());
   const interBold = await fetch(
-    new URL("./Inter-Bold.otf", import.meta.url)
+    new URL('./Inter-Bold.otf', import.meta.url),
   ).then((res) => res.arrayBuffer());
 
   return new ImageResponse(
     (
       <div
         style={{
-          width: "100%",
-          height: "100%",
-          fontFamily: "Inter",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "space-between",
-          display: "flex",
-          backgroundColor: "#FFFFFF",
+          width: '100%',
+          height: '100%',
+          fontFamily: 'Inter',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          display: 'flex',
+          backgroundColor: '#FFFFFF',
         }}
       >
         <div
           style={{
-            width: "100%",
-            height: "480px",
-            display: "flex",
-            overflow: "hidden",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "0px 140px",
+            width: '100%',
+            height: '480px',
+            display: 'flex',
+            overflow: 'hidden',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0px 140px',
           }}
         >
           <div
             style={{
-              margin: "auto",
-              width: "100%",
-              height: "380px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              flexDirection: "column",
+              margin: 'auto',
+              width: '100%',
+              height: '380px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexDirection: 'column',
             }}
           >
             {/*cubik logo*/}
             <div
               style={{
-                display: "flex",
-                width: "100%",
+                display: 'flex',
+                width: '100%',
               }}
             >
               <div
                 style={{
-                  display: "flex",
+                  display: 'flex',
                   width: 140,
                   height: 40,
-                  justifyContent: "center",
-                  alignItems: "flex-end",
+                  justifyContent: 'center',
+                  alignItems: 'flex-end',
                 }}
               >
                 <img
                   src={
-                    "https://res.cloudinary.com/demonicirfan/image/upload/v1693936199/logo_demkfz.png"
+                    'https://res.cloudinary.com/demonicirfan/image/upload/v1693936199/logo_demkfz.png'
                   }
-                  alt={"og icon"}
+                  alt={'og icon'}
                 />
               </div>
             </div>
             {/*project info*/}
             <div
               style={{
-                display: "flex",
-                width: "100%",
-                gap: "48px",
+                display: 'flex',
+                width: '100%',
+                gap: '48px',
               }}
             >
               <div
                 style={{
-                  color: "#000",
-                  width: "600px",
-                  display: "flex",
-                  alignItems: "flex-start",
-                  justifyContent: "center",
-                  flexDirection: "column",
-                  gap: "12px",
+                  color: '#000',
+                  width: '600px',
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'center',
+                  flexDirection: 'column',
+                  gap: '12px',
                 }}
               >
                 {/*project name*/}
                 <p
                   style={{
-                    fontSize: "58px",
+                    fontSize: '58px',
                     fontWeight: 700,
                     margin: 0,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    display: "-webkit-box",
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: '-webkit-box',
                     WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
+                    WebkitBoxOrient: 'vertical',
                   }}
                 >
                   {name}
@@ -134,15 +134,15 @@ export async function GET(req: NextRequest) {
                 {/*project tagline*/}
                 <p
                   style={{
-                    fontSize: "28px",
-                    color: "#515251",
+                    fontSize: '28px',
+                    color: '#515251',
                     fontWeight: 500,
                     margin: 0,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    display: "-webkit-box",
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: '-webkit-box',
                     WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
+                    WebkitBoxOrient: 'vertical',
                   }}
                 >
                   {tagline}
@@ -150,20 +150,20 @@ export async function GET(req: NextRequest) {
                 {/*project stats*/}
                 <div
                   style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginTop: "12px",
-                    gap: "20px",
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: '12px',
+                    gap: '20px',
                   }}
                 >
                   <div
                     style={{
-                      display: contributors === 0 ? "none" : "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "14px",
+                      display: contributors === 0 ? 'none' : 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '14px',
                     }}
                   >
                     <svg
@@ -183,8 +183,8 @@ export async function GET(req: NextRequest) {
                     </svg>
                     <p
                       style={{
-                        fontSize: "22px",
-                        color: "#8C8D8C",
+                        fontSize: '22px',
+                        color: '#8C8D8C',
                         fontWeight: 600,
                         margin: 0,
                       }}
@@ -195,19 +195,19 @@ export async function GET(req: NextRequest) {
                   <div
                     style={{
                       display:
-                        comments === 0 || contributors === 0 ? "none" : "flex",
-                      background: "#8C8D8C",
-                      width: "4px",
-                      height: "4px",
-                      borderRadius: "100%",
+                        comments === 0 || contributors === 0 ? 'none' : 'flex',
+                      background: '#8C8D8C',
+                      width: '4px',
+                      height: '4px',
+                      borderRadius: '100%',
                     }}
                   />
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "10px",
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '10px',
                     }}
                   >
                     <svg
@@ -227,8 +227,8 @@ export async function GET(req: NextRequest) {
                     </svg>
                     <p
                       style={{
-                        fontSize: "22px",
-                        color: "#8C8D8C",
+                        fontSize: '22px',
+                        color: '#8C8D8C',
                         fontWeight: 600,
                         margin: 0,
                       }}
@@ -241,26 +241,26 @@ export async function GET(req: NextRequest) {
               {/*project logo*/}
               <div
                 style={{
-                  width: "280px",
-                  height: "280px",
-                  overflow: "hidden",
-                  borderRadius: "1000px",
-                  backgroundColor: "#FFFFFF",
-                  display: "flex",
-                  alignItems: "center",
-                  objectFit: "fill",
-                  objectPosition: "center",
+                  width: '280px',
+                  height: '280px',
+                  overflow: 'hidden',
+                  borderRadius: '1000px',
+                  backgroundColor: '#FFFFFF',
+                  display: 'flex',
+                  alignItems: 'center',
+                  objectFit: 'fill',
+                  objectPosition: 'center',
                 }}
               >
                 <img
                   style={{
-                    borderRadius: "1000px",
-                    width: "280px",
-                    height: "280px",
-                    maxHeight: "280px",
-                    maxWidth: "280px",
-                    objectFit: "cover",
-                    objectPosition: "center",
+                    borderRadius: '1000px',
+                    width: '280px',
+                    height: '280px',
+                    maxHeight: '280px',
+                    maxWidth: '280px',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
                   }}
                   src={logo as string}
                   alt="project logo"
@@ -272,39 +272,39 @@ export async function GET(req: NextRequest) {
         {/*image footer*/}
         <div
           style={{
-            display: "flex",
-            overflow: "hidden",
-            position: "relative",
-            backgroundColor: "#DCDCDC40",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "0px 140px",
+            display: 'flex',
+            overflow: 'hidden',
+            position: 'relative',
+            backgroundColor: '#DCDCDC40',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0px 140px',
           }}
         >
           {/* Blurred Background */}
           <div
             style={{
-              width: "100%",
-              height: "125px",
-              position: "absolute", // Absolute positioning
+              width: '100%',
+              height: '125px',
+              position: 'absolute', // Absolute positioning
               //  zIndex: 1, // Keep it below the content
-              filter: "blur(60px)",
-              WebkitFilter: "blur(60px)",
+              filter: 'blur(60px)',
+              WebkitFilter: 'blur(60px)',
               backgroundImage: `url(${logo})`,
-              backgroundSize: "60%",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "20% 60%",
+              backgroundSize: '60%',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: '20% 60%',
             }}
           />
           <div
             style={{
-              width: "100%",
-              height: "125px",
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "flex-start",
-              gap: "12px",
+              width: '100%',
+              height: '125px',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              gap: '12px',
             }}
           >
             {participatingGrantsRound ? (
@@ -335,10 +335,10 @@ export async function GET(req: NextRequest) {
                 </svg>
                 <p
                   style={{
-                    fontSize: "16px",
-                    letterSpacing: "1.6px",
-                    textTransform: "uppercase",
-                    color: "#000",
+                    fontSize: '16px',
+                    letterSpacing: '1.6px',
+                    textTransform: 'uppercase',
+                    color: '#000',
                     fontWeight: 600,
                     marginTop: 6,
                     marginLeft: 4,
@@ -350,10 +350,10 @@ export async function GET(req: NextRequest) {
             ) : (
               <p
                 style={{
-                  fontSize: "16px",
-                  letterSpacing: "1.6px",
-                  textTransform: "uppercase",
-                  color: "#000",
+                  fontSize: '16px',
+                  letterSpacing: '1.6px',
+                  textTransform: 'uppercase',
+                  color: '#000',
                   fontWeight: 600,
                   margin: 0,
                 }}
@@ -370,26 +370,26 @@ export async function GET(req: NextRequest) {
       height: 627,
       fonts: [
         {
-          name: "Inter",
+          name: 'Inter',
           data: interRegular,
           weight: 400,
         },
         {
-          name: "Inter",
+          name: 'Inter',
           data: interMedium,
           weight: 500,
         },
         {
-          name: "Inter",
+          name: 'Inter',
           data: interSemiBold,
           weight: 600,
         },
         {
-          name: "Inter",
+          name: 'Inter',
           data: interBold,
           weight: 700,
         },
       ],
-    }
+    },
   );
 }

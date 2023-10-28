@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import {
   check,
+  getDecodedToken,
+  getMessage,
   logout,
   verify,
-  getMessage,
-  getDecodedToken,
-} from "controllers/auth.controller";
-import { Router } from "express";
+} from 'controllers/auth.controller';
+import { Router } from 'express';
 
 export const authRouter = Router();
 
-authRouter.post("/check", check);
-authRouter.post("/logout", logout);
-authRouter.post("/verify", verify);
-authRouter.get("/create-message", getMessage);
-authRouter.get("/decode", getDecodedToken);
+authRouter.post('/check', check);
+authRouter.post('/logout', logout);
+authRouter.post('/verify', verify);
+authRouter.get('/create-message', getMessage);
+authRouter.get('/decode', getDecodedToken);

@@ -1,6 +1,6 @@
-import { randomColorSet } from "@/theme/colorSet";
-import { Box, HStack, VStack } from "@/utils/chakra";
-import React from "react";
+import React from 'react';
+import { randomColorSet } from '@/theme/colorSet';
+import { Box, HStack, VStack } from '@/utils/chakra';
 
 interface Props {
   tags: string;
@@ -15,7 +15,7 @@ export const ProjectTags = (props: Props) => {
 
   return (
     <>
-      <VStack align={"start"} gap={3}>
+      <VStack align={'start'} gap={3}>
         <HStack>
           <Box>
             <svg
@@ -34,11 +34,11 @@ export const ProjectTags = (props: Props) => {
               />
             </svg>
           </Box>
-          <Box color={"white"} fontSize={"xl"} fontWeight={700}>
+          <Box color={'white'} fontSize={'xl'} fontWeight={700}>
             Tags
           </Box>
         </HStack>
-        <HStack flexWrap={"wrap"}>
+        <HStack flexWrap={'wrap'}>
           {tags.map((tag, index) => {
             return (
               <>
@@ -46,7 +46,7 @@ export const ProjectTags = (props: Props) => {
                   py={2}
                   px={5}
                   borderRadius={8}
-                  border={"1.5px solid"}
+                  border={'1.5px solid'}
                   borderColor={randomColor[index]?.border}
                   color={randomColor[index]?.color}
                 >

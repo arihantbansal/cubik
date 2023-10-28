@@ -1,4 +1,4 @@
-import type { Prisma } from "@cubik/database";
+import type { Prisma } from '@cubik/database';
 
 export interface HackathonHost {
   name: string;
@@ -46,7 +46,7 @@ export interface HackathonTracks {
 }
 
 export interface HackathonSocial {
-  type: "TWITTER" | "DISCORD" | "GITHUB" | "LINKEDIN" | "OTHER";
+  type: 'TWITTER' | 'DISCORD' | 'GITHUB' | 'LINKEDIN' | 'OTHER';
   icon_link: string;
   link: string;
 }

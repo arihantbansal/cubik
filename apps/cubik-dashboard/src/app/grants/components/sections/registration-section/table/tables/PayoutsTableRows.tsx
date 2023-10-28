@@ -1,6 +1,12 @@
-import { AvatarGroup, AvatarLabelGroup, TableCell, TableRow } from "@cubik/ui";
-import { Tag } from "@cubik/ui";
-import React from "react";
+import React from 'react';
+
+import {
+  AvatarGroup,
+  AvatarLabelGroup,
+  TableCell,
+  TableRow,
+  Tag,
+} from '@cubik/ui';
 
 export const PayoutsTableRows = () => {
   return (

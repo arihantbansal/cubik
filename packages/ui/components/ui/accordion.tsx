@@ -1,9 +1,10 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { cn } from "../../lib/utils";
-import { Icon } from "../../icons/icon";
+import * as React from 'react';
+import * as AccordionPrimitive from '@radix-ui/react-accordion';
+
+import { Icon } from '../../icons/icon';
+import { cn } from '../../lib/utils';
 
 const Accordion = AccordionPrimitive.Root;
 
@@ -14,8 +15,8 @@ const AccordionItem = React.forwardRef<
   <AccordionPrimitive.Item
     ref={ref}
     className={cn(
-      "items-center justify-center text-base font-semibold",
-      className
+      'items-center justify-center text-base font-semibold',
+      className,
     )}
     {...props}
   >
@@ -33,8 +34,8 @@ const AccordionTrigger = React.forwardRef<
       <AccordionPrimitive.Trigger
         ref={ref}
         className={cn(
-          "inline-flex w-full items-center justify-between whitespace-nowrap px-3 py-3 text-base font-medium transition-all focus-visible:outline-none",
-          className
+          'inline-flex w-full items-center justify-between whitespace-nowrap px-3 py-3 text-base font-medium transition-all focus-visible:outline-none',
+          className,
         )}
         {...props}
       >
@@ -59,8 +60,8 @@ const AccordionContent = React.forwardRef<
   <AccordionPrimitive.Content
     ref={ref}
     className={cn(
-      "data-[state=open]:animate-slideDown data-[state=open]:border-b border-gray-700 data-[state=closed]:animate-slideUp overflow-hidden ",
-      className
+      'data-[state=open]:animate-slideDown data-[state=open]:border-b border-gray-700 data-[state=closed]:animate-slideUp overflow-hidden ',
+      className,
     )}
     {...props}
   >

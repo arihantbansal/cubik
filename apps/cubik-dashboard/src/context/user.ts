@@ -1,5 +1,5 @@
-import { User } from "@/types/auth";
-import { create } from "zustand";
+import type { User } from '@/types/auth';
+import { create } from 'zustand';
 
 interface UserState {
   user: User | null;

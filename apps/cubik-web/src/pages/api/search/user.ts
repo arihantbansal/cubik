@@ -1,9 +1,10 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "@cubik/database";
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+import { prisma } from '@cubik/database';
 
 export default async function handler(
   request: NextApiRequest,
-  response: NextApiResponse
+  response: NextApiResponse,
 ) {
   const search = request.query.search as string;
   try {
@@ -23,7 +24,7 @@ export default async function handler(
           label: item.username,
           icon: item.profilePicture,
         };
-      })
+      }),
     );
   } catch (error) {
     console.log(error);

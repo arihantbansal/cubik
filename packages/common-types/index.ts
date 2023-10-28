@@ -1,3 +1,3 @@
-export * from "./src/project";
-export * from "./src/hackathon";
-export * from "./src/auth";
+export * from './src/project';
+export * from './src/hackathon';
+export * from './src/auth';

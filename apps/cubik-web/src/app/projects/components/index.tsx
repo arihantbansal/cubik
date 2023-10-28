@@ -1,13 +1,15 @@
-"use client";
-import { Wrap } from "@/utils/chakra";
-import Filters from "./filters";
-import { useState } from "react";
+'use client';
+
+import { useState } from 'react';
+import { EmptyStateHOC } from '@/app/components/common/empty-state/EmptyStateHOC';
 import type {
   ProjectExploreBanner,
   ProjectExplorerType,
-} from "@/types/explorer";
-import { EmptyStateHOC } from "@/app/components/common/empty-state/EmptyStateHOC";
-import { ProjectCard } from "./card";
+} from '@/types/explorer';
+import { Wrap } from '@/utils/chakra';
+
+import { ProjectCard } from './card';
+import Filters from './filters';
 
 const Projects = ({
   projects: _projects,
@@ -27,13 +29,13 @@ const Projects = ({
         setProjects={setProjects}
       />
       <Wrap
-        overflow={"visible"}
-        spacing={{ base: "1.8rem", md: "1.5rem" }}
+        overflow={'visible'}
+        spacing={{ base: '1.8rem', md: '1.5rem' }}
         w="100%"
         margin="0"
-        justify={"start"}
+        justify={'start'}
         align="center"
-        direction={{ base: "column", sm: "row", md: "row" }}
+        direction={{ base: 'column', sm: 'row', md: 'row' }}
       >
         {projects.length > 0 ? (
           projects.map((project, key: React.Key | null | undefined) => {
@@ -43,9 +45,9 @@ const Projects = ({
           <>
             <EmptyStateHOC
               margin="0"
-              heading={"No Project Found"}
+              heading={'No Project Found'}
               subHeading={
-                "We couldn`t find any projects matching your search. Please try a different query or check back later."
+                'We couldn`t find any projects matching your search. Please try a different query or check back later.'
               }
             />
           </>

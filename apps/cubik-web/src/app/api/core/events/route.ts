@@ -1,5 +1,7 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@cubik/database";
+import { NextResponse } from 'next/server';
+
+import { prisma } from '@cubik/database';
+
 export async function GET() {
   try {
     const hackathonPromise = prisma.hackathon.findMany({
@@ -45,13 +47,13 @@ export async function GET() {
               value: t.name,
             };
           }),
-          type: "hackathon",
+          type: 'hackathon',
         };
       }),
       ...round.map((e) => {
         return {
           ...e,
-          type: "round",
+          type: 'round',
         };
       }),
     ];

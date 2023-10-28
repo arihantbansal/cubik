@@ -1,5 +1,10 @@
-"use client";
-import { WalletAddress } from "@/app/components/common/wallet";
+'use client';
+
+import React, { useState } from 'react';
+import { WalletAddress } from '@/app/components/common/wallet';
+import { useUser } from '@/app/context/user';
+import type { AuthVerifyReturn } from '@/types/auth';
+import type { NFTProfile } from '@/types/NFTProfile';
 import {
   Alert,
   AlertDescription,
@@ -18,31 +23,28 @@ import {
   InputGroup,
   InputRightElement,
   Spinner,
-  VStack,
   useDisclosure,
-} from "@/utils/chakra";
-import { Controller, useForm } from "react-hook-form";
+  VStack,
+} from '@/utils/chakra';
+import { createUserIx } from '@/utils/contract';
+import { connection, web3 } from '@/utils/contract/sdk';
+import type NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+import { useMutation } from '@tanstack/react-query';
+import { Controller, useForm } from 'react-hook-form';
 //import { HiCheck } from "react-icons/hi";
-import * as yup from "yup";
-import React, { useState } from "react";
-import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
-import { useWalletModal } from "@solana/wallet-adapter-react-ui";
-import ProfilePicture from "./ProfilePicture";
-import FramerCarousel from "./FramerCarousel";
-import { createUserIx } from "@/utils/contract";
-import type NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
-import { connection, web3 } from "@/utils/contract/sdk";
-import { TransactionModel } from "./TransactionModel";
-import type { NFTProfile } from "@/types/NFTProfile";
-import { createUser } from "./handleSubmit";
-import { useUser } from "@/app/context/user";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useMutation } from "@tanstack/react-query";
-import { checkUsername } from "./checkUsername";
-import type { AuthVerifyReturn } from "@/types/auth";
+import * as yup from 'yup';
+
+import { checkUsername } from './checkUsername';
+import FramerCarousel from './FramerCarousel';
+import { createUser } from './handleSubmit';
+import ProfilePicture from './ProfilePicture';
+import { TransactionModel } from './TransactionModel';
 
 export const Form = () => {
-  const [, setUsername] = useState<string>("");
+  const [, setUsername] = useState<string>('');
   const [userNameIsAvailable, setUserNameIsAvailable] =
     useState<boolean>(false);
 
@@ -51,7 +53,7 @@ export const Form = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [profileCreated, setProfileCreated] = useState(false);
   const [profileNFT, setProfileNFT] = useState<NFTProfile | undefined>(
-    undefined
+    undefined,
   );
   const { setUser } = useUser();
   const { publicKey } = useWallet();
@@ -59,22 +61,22 @@ export const Form = () => {
   const { setVisible } = useWalletModal();
   const anchorWallet = useAnchorWallet();
   const [pfp, setPFP] = useState<string>(
-    `https://source.boringavatars.com/marble/120/${publicKey?.toBase58()}?square&?colors=05299E,5E4AE3,947BD3,F0A7A0,F26CA7,FFFFFF,CAF0F8,CCA43B`
+    `https://source.boringavatars.com/marble/120/${publicKey?.toBase58()}?square&?colors=05299E,5E4AE3,947BD3,F0A7A0,F26CA7,FFFFFF,CAF0F8,CCA43B`,
   );
   const checkUsernameMutation = useMutation({
     mutationFn: checkUsername,
-    mutationKey: ["username"],
+    mutationKey: ['username'],
   });
 
   const schema = yup.object().shape({
     username: yup
       .string()
-      .required("Username is required")
-      .min(0, "Username must be at least 4 characters")
+      .required('Username is required')
+      .min(0, 'Username must be at least 4 characters')
       .max(15)
-      .matches(/^[a-zA-Z0-9]+$/, "Username must be alphanumeric and no spaces")
+      .matches(/^[a-zA-Z0-9]+$/, 'Username must be alphanumeric and no spaces')
       .test(
-        "is-unique",
+        'is-unique',
         // @ts-ignore
         async function (username: string) {
           setLoadingUserName(true); // Set loading state
@@ -85,9 +87,9 @@ export const Form = () => {
             // await refetch();
             if (usercheck) {
               throw new yup.ValidationError(
-                username + " is not available",
+                username + ' is not available',
                 null,
-                "username"
+                'username',
               );
             } else {
               return true;
@@ -95,7 +97,7 @@ export const Form = () => {
           } finally {
             setLoadingUserName(false); // Clear loading state
           }
-        }
+        },
       ),
   });
 
@@ -118,7 +120,7 @@ export const Form = () => {
     try {
       const ix = await createUserIx(
         anchorWallet as NodeWallet,
-        getValues("username")
+        getValues('username'),
       );
 
       const tx = new web3.Transaction();
@@ -146,26 +148,26 @@ export const Form = () => {
       if (!txId) return;
       const res = await createUser(
         publicKey?.toBase58() as string,
-        getValues("username"),
+        getValues('username'),
         pfp,
         profileNFT as NFTProfile,
-        txId
+        txId,
       );
       if (
-        localStorage.getItem("wallet_sig") &&
-        localStorage.getItem("wallet_nonce")
+        localStorage.getItem('wallet_sig') &&
+        localStorage.getItem('wallet_nonce')
       ) {
-        const verifyRes = await fetch("/api/auth/verify", {
-          method: "POST",
+        const verifyRes = await fetch('/api/auth/verify', {
+          method: 'POST',
           body: JSON.stringify({
-            signature: localStorage.getItem("wallet_sig"),
+            signature: localStorage.getItem('wallet_sig'),
             publicKey: publicKey,
           }),
           headers: {
-            ["x-cubik-nonce"]: localStorage.getItem("wallet_nonce") ?? "",
-            ["Content-Type"]: "application/json",
+            ['x-cubik-nonce']: localStorage.getItem('wallet_nonce') ?? '',
+            ['Content-Type']: 'application/json',
           },
-          cache: "no-cache",
+          cache: 'no-cache',
         });
 
         const verifyResponse = (await verifyRes.json()) as AuthVerifyReturn;
@@ -204,7 +206,7 @@ export const Form = () => {
           setTransactionError={setTransactionError}
           signingTransaction={isLoading}
           transactionError={transactionError}
-          userName={getValues("username")}
+          userName={getValues('username')}
           handleTx={onSubmit}
         />
       )}
@@ -212,15 +214,15 @@ export const Form = () => {
       <CardBody>
         <form
           style={{
-            gap: "32px",
-            display: "flex",
-            flexDirection: "column",
+            gap: '32px',
+            display: 'flex',
+            flexDirection: 'column',
           }}
           onSubmit={handleSubmit(() => transactionOnOpen())}
         >
-          <FormControl w="full" variant={"outline"} colorScheme={"pink"}>
+          <FormControl w="full" variant={'outline'} colorScheme={'pink'}>
             <FormLabel
-              fontSize={{ base: "xs", md: "sm" }}
+              fontSize={{ base: 'xs', md: 'sm' }}
               htmlFor="profilePicture"
             >
               Profile Picture
@@ -241,12 +243,12 @@ export const Form = () => {
             />
           </Collapse>
           <FormControl
-            variant={"outline"}
-            colorScheme={"pink"}
+            variant={'outline'}
+            colorScheme={'pink'}
             isInvalid={!!errors.username}
             isRequired
           >
-            <FormLabel fontSize={{ base: "xs", md: "sm" }} htmlFor="username">
+            <FormLabel fontSize={{ base: 'xs', md: 'sm' }} htmlFor="username">
               Username
             </FormLabel>
 
@@ -267,7 +269,7 @@ export const Form = () => {
                       setUserNameIsAvailable(false);
                       onChange(value);
                       if (value.length > 3)
-                        trigger("username")
+                        trigger('username')
                           .then((res: boolean) => {
                             if (res) {
                               setUserNameIsAvailable(true);
@@ -275,7 +277,7 @@ export const Form = () => {
                           })
                           .catch(
                             (e: any) =>
-                              new Error(e.message || "there was an error")
+                              new Error(e.message || 'there was an error'),
                           );
                     }}
                   />
@@ -283,7 +285,7 @@ export const Form = () => {
               />
               {
                 <InputRightElement fontSize="18px">
-                  {loadingUserName && <Spinner size={"xs"} thickness="1px" />}
+                  {loadingUserName && <Spinner size={'xs'} thickness="1px" />}
                   {!errors.username && userNameIsAvailable && (
                     // @todo <HiCheck color={"#A8F0E6"} />
                     <></>
@@ -292,12 +294,12 @@ export const Form = () => {
               }
             </InputGroup>
             {errors.username ? (
-              <FormErrorMessage textAlign={"start"}>
+              <FormErrorMessage textAlign={'start'}>
                 {errors.username && <>{errors.username.message}</>}
               </FormErrorMessage>
             ) : (
               <FormHelperText
-                fontSize={{ base: "12px", md: "14px" }}
+                fontSize={{ base: '12px', md: '14px' }}
                 color="neutral.6"
               >
                 Username can&apos;t be changed.
@@ -305,7 +307,7 @@ export const Form = () => {
             )}
           </FormControl>
           <FormControl isRequired>
-            <FormLabel fontSize={{ base: "xs", md: "sm" }} htmlFor="publickey">
+            <FormLabel fontSize={{ base: 'xs', md: 'sm' }} htmlFor="publickey">
               Wallet Address
             </FormLabel>
             <HStack>
@@ -324,17 +326,17 @@ export const Form = () => {
                 />
               </Center>
               <Button
-                variant={"unstyled"}
+                variant={'unstyled'}
                 border="1px solid #A8F0E630"
                 w="10rem"
-                lineHeight={{ base: "14px", md: "16px" }}
-                fontSize={"14px"}
+                lineHeight={{ base: '14px', md: '16px' }}
+                fontSize={'14px'}
                 fontWeight="400"
                 background="#A8F0E610"
                 color="#A8F0E6"
                 height="2.5rem"
                 _hover={{
-                  background: "#A8F0E630",
+                  background: '#A8F0E630',
                 }}
                 onClick={() => {
                   setVisible(true);
@@ -349,17 +351,17 @@ export const Form = () => {
           </FormControl>
           <VStack
             p="0"
-            pt={{ base: "24px", md: "56px" }}
+            pt={{ base: '24px', md: '56px' }}
             w="full"
-            align={"start"}
+            align={'start'}
             justify="start"
-            gap={{ base: "8px", md: "18px" }}
+            gap={{ base: '8px', md: '18px' }}
           >
-            {" "}
+            {' '}
             <CardFooter>
               <Button
                 w="full"
-                size={{ base: "cubikMini", md: "cubikSmall" }}
+                size={{ base: 'cubikMini', md: 'cubikSmall' }}
                 variant="cubikFilled"
                 loadingText="Submitting"
                 type="submit"
@@ -371,8 +373,8 @@ export const Form = () => {
             <Alert status="info" variant="cubik">
               <AlertIcon />
               <AlertDescription
-                fontSize={{ base: "10px", md: "11px", xl: "12px" }}
-                lineHeight={{ base: "14px", md: "14px", xl: "16px" }}
+                fontSize={{ base: '10px', md: '11px', xl: '12px' }}
+                lineHeight={{ base: '14px', md: '14px', xl: '16px' }}
               >
                 By clicking submit, you&apos;ll initiate a profile creation
                 transaction from connected wallet. Ensure you have enough SOL to

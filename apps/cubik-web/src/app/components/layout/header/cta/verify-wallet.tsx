@@ -1,5 +1,6 @@
-"use client";
+'use client';
 
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -12,10 +13,10 @@ import {
   ModalHeader,
   ModalOverlay,
   VStack,
-} from "@/utils/chakra";
-import { WalletAddress } from "../../../common/wallet";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { useState } from "react";
+} from '@/utils/chakra';
+import { useWallet } from '@solana/wallet-adapter-react';
+
+import { WalletAddress } from '../../../common/wallet';
 
 const VerifyWallet = () => {
   const { publicKey, disconnect } = useWallet();
@@ -66,15 +67,15 @@ const VerifyWallet = () => {
           <HStack>
             <Box
               as="p"
-              textStyle={{ base: "title3", md: "title2" }}
+              textStyle={{ base: 'title3', md: 'title2' }}
               color="neutral.11"
             >
               Verify Wallet
             </Box>
             {publicKey && (
               <Center
-                backgroundColor={"neutral.5"}
-                p={{ base: "6px 10px", md: "8px 12px" }}
+                backgroundColor={'neutral.5'}
+                p={{ base: '6px 10px', md: '8px 12px' }}
                 rounded="8px"
               >
                 <WalletAddress
@@ -86,14 +87,14 @@ const VerifyWallet = () => {
           </HStack>
         </ModalHeader>
         <ModalBody>
-          <VStack pt="16px" align={"start"} gap="16px">
+          <VStack pt="16px" align={'start'} gap="16px">
             <Box
               as="p"
-              textStyle={{ base: "body5", md: "body3" }}
+              textStyle={{ base: 'body5', md: 'body3' }}
               color="white"
             >
               Verify Wallet to prove ownership. No SOL will be charged
-            </Box>{" "}
+            </Box>{' '}
             {/* {verifyWalletError && (
               <Alert status="error" variant="cubik">
                 <AlertIcon />
@@ -110,7 +111,7 @@ const VerifyWallet = () => {
 
         <ModalFooter display="flex" justifyContent="space-between">
           <Button
-            variant={"cubikOutlined"}
+            variant={'cubikOutlined'}
             onClick={async () => {
               await disconnect();
             }}
@@ -119,12 +120,12 @@ const VerifyWallet = () => {
           </Button>
 
           <Button
-            variant={"cubikFilled"}
+            variant={'cubikFilled'}
             loadingText="Verifying"
             // onClick={verify}
             isLoading={isLoading}
           >
-            {"Verify Wallet"}
+            {'Verify Wallet'}
           </Button>
         </ModalFooter>
       </ModalContent>

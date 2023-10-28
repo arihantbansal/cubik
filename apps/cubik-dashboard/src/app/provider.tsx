@@ -1,14 +1,16 @@
-"use client";
-import React, { useMemo, useState } from "react";
-import { web3 } from "@coral-xyz/anchor";
-import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+'use client';
+
+import React, { useMemo, useState } from 'react';
+import { web3 } from '@coral-xyz/anchor';
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import {
   ConnectionProvider,
   WalletProvider,
-} from "@solana/wallet-adapter-react";
-import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
-require("@solana/wallet-adapter-react-ui/styles.css");
+} from '@solana/wallet-adapter-react';
+import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+require('@solana/wallet-adapter-react-ui/styles.css');
 interface Props {
   children: React.JSX.Element;
 }

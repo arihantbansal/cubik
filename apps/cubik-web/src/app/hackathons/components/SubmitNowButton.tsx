@@ -1,9 +1,11 @@
-"use client";
-import React from "react";
-import { SubmitNowModal } from "./SubmitNowModal";
-import { Button, useDisclosure } from "@/utils/chakra";
-import { useUser } from "@/app/context/user";
-import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+'use client';
+
+import React from 'react';
+import { useUser } from '@/app/context/user';
+import { Button, useDisclosure } from '@/utils/chakra';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+
+import { SubmitNowModal } from './SubmitNowModal';
 
 interface Props {
   name: string;
@@ -41,7 +43,7 @@ export const SubmitNowButton = ({
         isDisabled
         disabled
         onClick={() => {}}
-        variant={"cubikFilled"}
+        variant={'cubikFilled'}
         w="full"
       >
         Submit Project

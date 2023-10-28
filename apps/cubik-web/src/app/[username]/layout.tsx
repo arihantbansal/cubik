@@ -1,9 +1,11 @@
-import { prisma } from "@cubik/database";
+import { notFound } from 'next/navigation';
+import type { NFTProfile } from '@/types/NFTProfile';
 // import Details from "./components/details";
-import { Container, Flex } from "@/utils/chakra";
-import { notFound } from "next/navigation";
-import User from "./components/user";
-import type { NFTProfile } from "@/types/NFTProfile";
+import { Container, Flex } from '@/utils/chakra';
+
+import { prisma } from '@cubik/database';
+
+import User from './components/user';
 
 const getProfile = async (username: string) => {
   return await prisma.user.findUnique({
@@ -36,10 +38,10 @@ const Profile = async ({
     <Container
       maxW="7xl"
       w="full"
-      p={{ base: "23px 20px", sm: "32px", md: "48px", lg: "64px 20px" }}
+      p={{ base: '23px 20px', sm: '32px', md: '48px', lg: '64px 20px' }}
       mt="4rem"
     >
-      <Flex flexDir={"column"} gap="48px">
+      <Flex flexDir={'column'} gap="48px">
         <User
           NFTProfile={profile.profileNft as unknown as NFTProfile}
           username={username}

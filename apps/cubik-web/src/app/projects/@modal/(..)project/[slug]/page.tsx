@@ -1,8 +1,9 @@
-import React from "react";
-import { prisma } from "@cubik/database";
-import type { Metadata, ResolvingMetadata } from "next";
-import { utils } from "@coral-xyz/anchor";
-import { ProjectTabs } from "@/app/project/components/ProjectTabs";
+import React from 'react';
+import type { Metadata, ResolvingMetadata } from 'next';
+import { ProjectTabs } from '@/app/project/components/ProjectTabs';
+import { utils } from '@coral-xyz/anchor';
+
+import { prisma } from '@cubik/database';
 
 interface OgProps {
   params: { slug: string };
@@ -11,7 +12,7 @@ interface OgProps {
 
 export async function generateMetadata(
   { params }: OgProps,
-  parent?: ResolvingMetadata
+  parent?: ResolvingMetadata,
 ): Promise<Metadata> {
   let contributors = 0;
   let eventName = undefined;
@@ -85,11 +86,11 @@ export async function generateMetadata(
   }
 
   const newImage = `/api/og?name=${utils.bytes.base64.encode(
-    Buffer.from(project?.name ?? "default")
+    Buffer.from(project?.name ?? 'default'),
   )}&tagline=${utils.bytes.base64.encode(
-    Buffer.from(project?.shortDescription ?? "default")
+    Buffer.from(project?.shortDescription ?? 'default'),
   )}&logo=${utils.bytes.base64.encode(
-    Buffer.from(project?.logo ?? "default")
+    Buffer.from(project?.logo ?? 'default'),
   )}&contributors=${contributors}&comments=${
     project?._count.comments
   }&eventName=${eventName}`;
@@ -99,15 +100,15 @@ export async function generateMetadata(
   return {
     title: project?.name,
     description: project?.shortDescription,
-    metadataBase: new URL("https://www.cubik.so"),
+    metadataBase: new URL('https://www.cubik.so'),
     openGraph: {
-      type: "website",
+      type: 'website',
       images: [`${newImage}`, ...previousImages],
       title: project?.name,
       description: project?.shortDescription,
     },
     twitter: {
-      card: "summary_large_image",
+      card: 'summary_large_image',
       images: [`${newImage}`, ...previousImages],
       title: project?.name,
       description: project?.shortDescription,

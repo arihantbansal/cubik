@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import type { SupabaseClient, UserResponse } from "@supabase/supabase-js";
-import { createClient } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
-import { env } from "@/env.mjs";
+import { useEffect, useState } from 'react';
+import { env } from '@/env.mjs';
+import type { SupabaseClient, UserResponse } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 
 export const supabase = createClient(
   env.NEXT_PUBLIC_SUPABASE_URL,
-  env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
 );
 
 const useUserSupabase = (client: SupabaseClient) => {
@@ -23,9 +23,9 @@ const useUserSupabase = (client: SupabaseClient) => {
   useEffect(() => {
     client.auth.onAuthStateChange(async (event) => {
       await fetchUser();
-      event === "SIGNED_IN"
+      event === 'SIGNED_IN'
         ? setUser(user)
-        : event === "SIGNED_OUT"
+        : event === 'SIGNED_OUT'
         ? setUser(null)
         : null;
 

@@ -1,7 +1,10 @@
-import { prisma } from "@cubik/database";
-import React from "react";
-import { EmptyState } from "./EmptyState";
-import { ProjectCards } from "./ProjectCards";
+import React from 'react';
+
+import { prisma } from '@cubik/database';
+
+import { EmptyState } from './EmptyState';
+import { ProjectCards } from './ProjectCards';
+
 interface Props {
   username: string;
 }

@@ -1,10 +1,11 @@
-"use client";
-import { Box, HStack, useMediaQuery } from "@chakra-ui/react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Box, HStack, useMediaQuery } from '@chakra-ui/react';
 
 const Links = () => {
-  const [isDesktop] = useMediaQuery("(min-width: 768px)");
+  const [isDesktop] = useMediaQuery('(min-width: 768px)');
 
   const path = usePathname();
 
@@ -14,17 +15,17 @@ const Links = () => {
 
   return isDesktop ? (
     <HStack
-      gap={{ base: "28px", lg: "32px" }}
-      alignItems={"center"}
-      justifyContent={"flex-start"}
+      gap={{ base: '28px', lg: '32px' }}
+      alignItems={'center'}
+      justifyContent={'flex-start'}
       // mx="auto"
     >
       <Link href="/projects">
         <Box
           as="p"
-          textStyle={"title4"}
-          color={isActiveRoute("/projects") ? "neutral.11" : "neutral.8"}
-          cursor={"pointer"}
+          textStyle={'title4'}
+          color={isActiveRoute('/projects') ? 'neutral.11' : 'neutral.8'}
+          cursor={'pointer'}
         >
           Projects
         </Box>
@@ -32,9 +33,9 @@ const Links = () => {
       <Link href="/grants">
         <Box
           as="p"
-          textStyle={"title4"}
-          color={isActiveRoute("/grants") ? "neutral.11" : "neutral.8"}
-          cursor={"pointer"}
+          textStyle={'title4'}
+          color={isActiveRoute('/grants') ? 'neutral.11' : 'neutral.8'}
+          cursor={'pointer'}
         >
           Grants
         </Box>
@@ -42,9 +43,9 @@ const Links = () => {
       <Link href="/hackathons">
         <Box
           as="p"
-          textStyle={"title4"}
-          color={isActiveRoute("/hackathons") ? "neutral.11" : "neutral.8"}
-          cursor={"pointer"}
+          textStyle={'title4'}
+          color={isActiveRoute('/hackathons') ? 'neutral.11' : 'neutral.8'}
+          cursor={'pointer'}
         >
           Hackathons
         </Box>

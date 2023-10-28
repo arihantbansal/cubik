@@ -1,4 +1,4 @@
-import { utils } from "@coral-xyz/anchor";
+import { utils } from '@coral-xyz/anchor';
 
 export const createMessage = (hash: string) => {
   try {
