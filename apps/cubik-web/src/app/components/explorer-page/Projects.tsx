@@ -1,11 +1,6 @@
-import React, { FC, useState } from 'react';
-import { Button } from '@ui/components/button';
+import React, { FC} from 'react';
 import Subhead from '@ui/components/subhead';
-import { Avatar } from '@ui/components/ui/Avatar/Avatar';
-import { Tag } from '@ui/components/ui/tag';
 import { FilterLines } from '@ui/icons/svgs/filter-lines';
-import { SaveIcon } from '@ui/icons/svgs/save';
-import { toast } from 'sonner';
 
 import { Project } from '@cubik/database';
 
@@ -25,11 +20,12 @@ const ProjectTabs: FC<{ projects: Partial<Project>[] }> = ({ projects }) => {
   ];
 
   return (
-    <div className="w-full sm:w-2/3 mx-auto mt-8">
+    <div className="mx-auto mt-8 w-full sm:w-2/3">
       <Subhead text="Projects" endElement={<FilterLines />} />
-      <div className="flex space-x-2 mt-2 overflow-y-scroll">
+      {/* <div className="mt-2 flex space-x-2 overflow-y-scroll">
         {categories.map((category) => (
           <Tag
+          
             // size="sm"
             key={category}
             selected={true}
@@ -41,19 +37,19 @@ const ProjectTabs: FC<{ projects: Partial<Project>[] }> = ({ projects }) => {
             {category}
           </Tag>
         ))}
-      </div>
-      <div className="mt-4 gap-2">
+      </div> */}
+      {/* <div className="mt-4 gap-2">
         {projects.map((project, index) => (
-          <div className="flex flex-row justify-between gap-2 max-w-lg">
-            <div key={index} className="mb-2 rounded-xl p-4 gap-2 flex">
-              {/* <img src={project.image} alt={project.name} className="w-20 h-20 mr-4 rounded-lg" /> */}
+          <div key={project.id} className="flex max-w-lg flex-row justify-between gap-2">
+            <div key={index} className="mb-2 flex gap-2 rounded-xl p-4">
+              <img src={project.image} alt={project.name} className="w-20 h-20 mr-4 rounded-lg" />
               <Avatar
-                className="rounded-[10px] min-w-fit"
+                className="min-w-fit rounded-[10px]"
                 size="xl"
                 shape="square"
                 src={project.logo}
               />
-              <div className="flex-grow">
+              <div className="grow">
                 <h3 className="text-xl font-semibold">{project.name}</h3>
                 <p className="mt-2">{project.shortDescription}</p>
               </div>
@@ -67,7 +63,7 @@ const ProjectTabs: FC<{ projects: Partial<Project>[] }> = ({ projects }) => {
                   },
                 })
               }
-              className="gap-2 rounded-[8px] mt-3"
+              className="mt-3 gap-2 rounded-[8px]"
               variant="outline"
             >
               <SaveIcon />
@@ -75,7 +71,7 @@ const ProjectTabs: FC<{ projects: Partial<Project>[] }> = ({ projects }) => {
             </Button>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

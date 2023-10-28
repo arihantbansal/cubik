@@ -327,9 +327,9 @@ export const ProjectHeader = ({ projectWithEvent }: Props) => {
                         fontSize={'xs'}
                         fontWeight={500}
                       >
-                        Currently, the project isn't in a active grants round.
+                       {`Currently, the project isn't in a active grants round.
                         Contributions done now go directly to the project
-                        without any matching with any additional funds.
+                        without any matching with any additional funds.`}
                       </Box>
                       <Button
                         fontSize={'sm'}
