@@ -4,6 +4,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
+  "javascript.validate.enable": false,
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]

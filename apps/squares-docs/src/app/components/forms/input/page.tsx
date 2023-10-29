@@ -6,7 +6,7 @@ import { InputField } from '@cubik/ui';
 
 const Input = () => {
   return (
-    <div className="flex justify-start px-10 flex-col gap-5">
+    <div className="flex flex-col justify-start gap-5 px-10">
       <div className="font-2xl font-semibold">Input Field</div>
 
       <div className="space-y-2">

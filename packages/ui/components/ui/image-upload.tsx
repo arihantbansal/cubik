@@ -4,11 +4,11 @@ import { useDropzone } from 'react-dropzone';
 import Spinner from '../../icons/svgs/spinner';
 import Upload02 from '../../icons/svgs/upload-02';
 
-interface Props extends React.InputHTMLAttributes<HTMLElement> {
-  symbol: React.ReactNode;
-  heading: React.ReactNode;
-  sub: React.ReactNode;
-}
+// interface Props extends React.InputHTMLAttributes<HTMLElement> {
+//   symbol: React.ReactNode;
+//   heading: React.ReactNode;
+//   sub: React.ReactNode;
+// }
 
 const ImageUpload: FC = () => {
   const onDrop = useCallback((acceptedFiles: File[]) => {

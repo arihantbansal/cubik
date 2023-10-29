@@ -3,10 +3,10 @@ import Logo from './logo';
 
 export default function Header() {
   return (
-    <header className="bg-[var(--color-surface-secondary)]  fixed top-0 left-0 z-10 border border-[var(--color-border-primary)] lg:static lg:overflow-y-visible">
+    <header className="fixed  left-0 top-0 z-10 border border-[var(--color-border-primary)] bg-[var(--color-surface-secondary)] lg:static lg:overflow-y-visible">
       <div className="mx-auto w-full px-4 sm:px-6 lg:px-8">
-        <div className="relative items-center flex justify-between">
-          <div className="flex flex-shrink-0 items-center">
+        <div className="relative flex items-center justify-between">
+          <div className="flex shrink-0 items-center">
             <a href="#">
               <Logo />
             </a>

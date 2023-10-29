@@ -10,7 +10,7 @@ const ComponentHeading = ({
   description: string;
 }) => {
   return (
-    <div className="w-full flex flex-col gap-6">
+    <div className="flex w-full flex-col gap-6">
       <p className="text-5xl text-[var(--color-fg-primary)]">{heading}</p>
       <div className="text-md text-[var(--color-fg-secondary)]">
         {description}

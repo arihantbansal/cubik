@@ -6,7 +6,7 @@ import { Icon } from '@cubik/ui';
 
 const HeaderButtons = () => {
   return (
-    <div className="flex flex-row gap-8 items-center justify-center h-fit">
+    <div className="flex h-fit flex-row items-center justify-center gap-8">
       <button
         onClick={() => {
           const ele = document.querySelector('html');

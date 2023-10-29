@@ -15,7 +15,7 @@ const PageHOC = ({
   description: string;
 }) => {
   return (
-    <div className="w-full max-w-[1200px] mx-auto flex justify-start flex-col gap-12">
+    <div className="mx-auto flex w-full max-w-[1200px] flex-col justify-start gap-12">
       <BreadCrumb pages={pages} />
       <ComponentHeading heading={heading} description={description} />
       {children}

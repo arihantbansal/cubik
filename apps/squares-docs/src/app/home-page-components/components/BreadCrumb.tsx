@@ -20,7 +20,7 @@ export default function BreadCrumb({
           <li key={page.name}>
             <div className="flex items-center">
               <svg
-                className="h-5 w-5 flex-shrink-0 text-[var(--color-fg-tertiary)]"
+                className="h-5 w-5 shrink-0 text-[var(--color-fg-tertiary)]"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 aria-hidden="true"
@@ -29,7 +29,7 @@ export default function BreadCrumb({
               </svg>
               <a
                 href={page.href}
-                className={`ml-4 text-md hover:text-[var(--color-purple-500)] ${
+                className={`text-md ml-4 hover:text-[var(--color-purple-500)] ${
                   page.current
                     ? 'text-[var(--color-purple-500)]'
                     : 'text-[var(--color-fg-secondary)]'

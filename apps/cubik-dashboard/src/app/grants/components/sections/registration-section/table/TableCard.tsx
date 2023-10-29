@@ -8,25 +8,25 @@ export const TableCard = () => {
   return (
     <>
       <div className="px-3">
-        <div className="bg-neutral-800 w-full rounded-md">
-          <div className="p-5 border-b border-b-surface-neutral-800">
-            <p className="text-white text-2xl font-semibold">Projects</p>
+        <div className="w-full rounded-md bg-neutral-800">
+          <div className="border-b-surface-neutral-800 border-b p-5">
+            <p className="text-2xl font-semibold text-white">Projects</p>
           </div>
-          <div className="h-20 flex justify-start gap-4 md:gap-20 py-5 px-10">
-            <div className="font-normal flex justify-start items-start flex-col gap-3 text-surface-neutral-600">
+          <div className="flex h-20 justify-start gap-4 px-10 py-5 md:gap-20">
+            <div className="text-surface-neutral-600 flex flex-col items-start justify-start gap-3 font-normal">
               <p className="text-xl font-semibold ">
                 <span className="text-3xl font-extrabold text-white">29</span>
                 /50
               </p>
               <p className="text-xs">Projects Participating</p>
             </div>
-            <div className="font-normal flex justify-start items-start flex-col gap-3 text-surface-neutral-600">
+            <div className="text-surface-neutral-600 flex flex-col items-start justify-start gap-3 font-normal">
               <p className="text-xl font-semibold ">
                 <span className="text-3xl font-extrabold text-white">129</span>
               </p>
               <p className="text-xs">Projects Applied</p>
             </div>
-            <div className="font-normal flex justify-start items-start flex-col gap-3 text-surface-neutral-600">
+            <div className="text-surface-neutral-600 flex flex-col items-start justify-start gap-3 font-normal">
               <p className="text-xl font-semibold ">
                 <span className="text-3xl font-extrabold text-white">
                   12 hrs
@@ -37,14 +37,14 @@ export const TableCard = () => {
           </div>
           <div>
             <Tabs defaultValue="pending" className="my-6">
-              <TabsList className="bg-neutral-800 w-full overflow-x-auto whitespace-nowrap">
-                <div className="w-full max-w-7xl border-b border-b-surface-neutral-800 px-10">
+              <TabsList className="w-full overflow-x-auto whitespace-nowrap bg-neutral-800">
+                <div className="border-b-surface-neutral-800 w-full max-w-7xl border-b px-10">
                   <TabsTrigger value="pending">Pending</TabsTrigger>
                   <TabsTrigger value="rejected">Rejected</TabsTrigger>
                   <TabsTrigger value="accepted">Accepted</TabsTrigger>
                 </div>
               </TabsList>
-              <div className="w-full max-w-7xl mx-auto ">
+              <div className="mx-auto w-full max-w-7xl ">
                 <TabsContent value="pending">
                   <PendingTable />
                 </TabsContent>

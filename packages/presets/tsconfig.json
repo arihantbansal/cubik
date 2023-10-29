@@ -1,0 +1,3 @@
+{
+  "extends": "@cubik/config/tsconfig/react-library.json"
+}

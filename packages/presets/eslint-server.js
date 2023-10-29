@@ -47,4 +47,4 @@ module.exports = {
     },
   ],
   ignorePatterns: ['**/*.js', 'node_modules', '.turbo', 'dist', 'coverage'],
-}
+};

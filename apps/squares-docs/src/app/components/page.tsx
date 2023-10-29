@@ -9,7 +9,7 @@ import navigationData from '../navigationData';
 export default function ComponentPage() {
   console.log('navigation data - ', navigationData);
   return (
-    <div className="w-full max-w-[1200px] mx-auto flex justify-start flex-col gap-12">
+    <div className="mx-auto flex w-full max-w-[1200px] flex-col justify-start gap-12">
       <BreadCrumb
         pages={[{ name: 'Components', href: '/component', current: true }]}
       />
@@ -24,12 +24,12 @@ export default function ComponentPage() {
           component.name === 'Components' &&
           component.children?.map((subItem) => (
             <div key={subItem.id} className="flex flex-col gap-6">
-              <div className={`block text-[#0D0D0D] text-xl`}>
+              <div className={`block text-xl text-[#0D0D0D]`}>
                 {subItem.name}
               </div>
               {subItem.children && (
                 // this is a card
-                <ul className="list-none flex flex-row gap-6 flex-wrap">
+                <ul className="flex list-none flex-row flex-wrap gap-6">
                   {subItem.children.map((thirdItem) => (
                     <Link
                       key={thirdItem.id}
@@ -38,7 +38,7 @@ export default function ComponentPage() {
                       <li className="flex flex-col gap-3">
                         {/*add a image here using next image */}
 
-                        <div className="flex-1 overflow-hidden bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)] rounded-[8px] min-w-0">
+                        <div className="min-w-0 flex-1 overflow-hidden rounded-[8px] border border-[var(--color-border-primary)] bg-[var(--color-surface-primary)]">
                           <Image
                             src={thirdItem.image ? thirdItem.image : ''}
                             alt="My Image"
@@ -46,7 +46,7 @@ export default function ComponentPage() {
                             height={180}
                           />
                         </div>
-                        <span className=" text-[var(--color-fg-primary)] text-md">
+                        <span className=" text-md text-[var(--color-fg-primary)]">
                           {thirdItem.name}
                         </span>
                         {/* Implement logic for fourth level here if needed */}

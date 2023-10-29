@@ -22,10 +22,10 @@ const AcceptProjectModal = ({
       <Dialog.Trigger />
       <Dialog.Portal>
         <Dialog.Overlay className="bg-blackA6 data-[state=open]:animate-overlayShow fixed inset-0 bg-[rgba(0,0,0,0.7)]" />
-        <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-neutral-900  shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
-          <Dialog.Title className="text-black top-0 rounded-t-md text-base font-medium bg-neutral-600 h-12 flex items-center space-x-6">
+        <Dialog.Content className="data-[state=open]:animate-contentShow fixed left-[50%] top-[50%] max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-neutral-900  shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
+          <Dialog.Title className="top-0 flex h-12 items-center space-x-6 rounded-t-md bg-neutral-600 text-base font-medium text-black">
             <svg
-              className="absolute top-0 left-0 "
+              className="absolute left-0 top-0 "
               xmlns="http://www.w3.org/2000/svg"
               width="106"
               height="48"
@@ -105,29 +105,29 @@ const AcceptProjectModal = ({
                 d="m8.073 11.012 4.013 4.01a21.936 21.936 0 0 1 8.692-9.393L21 5.5m-5-1.563a9 9 0 1 0 4.842 6.376"
               />
             </svg>
-            <p className="text-white text-xl">Accept Application</p>
+            <p className="text-xl text-white">Accept Application</p>
           </Dialog.Title>
-          <Dialog.Description className="text-gray-500 text-xs px-6 py-4  leading-normal">
+          <Dialog.Description className="px-6 py-4 text-xs leading-normal  text-gray-500">
             <p>
               By Rejecting a grant application the project will no longer be
               able to participate in the grant round. This will send a email to
               the project notifying them about the rejection.
             </p>
           </Dialog.Description>
-          <div className="flex items-center flex-col p-6">
-            <div className="flex justify-between items-center w-full">
+          <div className="flex flex-col items-center p-6">
+            <div className="flex w-full items-center justify-between">
               <label
-                className="text-white text-md font-light leading-none"
+                className="text-md font-light leading-none text-white"
                 htmlFor="airplane-mode"
               >
                 Send Custom Email
               </label>
               <Switch.Root
-                className="w-[42px] h-[25px] bg-blackA6 rounded-full relative shadow-[0_2px_10px] shadow-blackA4 focus:shadow-[0_0_0_2px] focus:shadow-black data-[state=checked]:bg-black outline-none cursor-default"
+                className="bg-blackA6 shadow-blackA4 relative h-[25px] w-[42px] cursor-default rounded-full shadow-[0_2px_10px] outline-none focus:shadow-[0_0_0_2px] focus:shadow-black data-[state=checked]:bg-black"
                 id="airplane-mode"
                 onCheckedChange={(newChecked) => setChecked(newChecked)}
               >
-                <Switch.Thumb className="block w-[21px] h-[21px] bg-white rounded-full shadow-[0_2px_2px] shadow-blackA4 transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[19px]" />
+                <Switch.Thumb className="shadow-blackA4 block h-[21px] w-[21px] translate-x-0.5 rounded-full bg-white shadow-[0_2px_2px] transition-transform duration-100 will-change-transform data-[state=checked]:translate-x-[19px]" />
               </Switch.Root>
             </div>
             {checked && (
@@ -138,7 +138,7 @@ const AcceptProjectModal = ({
                       Subject
                     </label>
                     <input
-                      className="bg-neutral-600 py-2 px-4 inline-flex w-full flex-1 items-center justify-center rounded-md "
+                      className="inline-flex w-full flex-1 items-center justify-center rounded-md bg-neutral-600 px-4 py-2 "
                       id="subject"
                       placeholder="Subject for Email"
                     />
@@ -148,7 +148,7 @@ const AcceptProjectModal = ({
                       Body
                     </label>
                     <input
-                      className="bg-neutral-600 py-2 px-4 inline-flex w-full flex-1 items-center justify-center rounded-md "
+                      className="inline-flex w-full flex-1 items-center justify-center rounded-md bg-neutral-600 px-4 py-2 "
                       id="body"
                       placeholder="Email body"
                     />
@@ -156,9 +156,9 @@ const AcceptProjectModal = ({
                 </div>
               </div>
             )}
-            <div className=" flex justify-end w-full mt-8">
+            <div className=" mt-8 flex w-full justify-end">
               <Dialog.Close asChild>
-                <button className="bg-green-500 text-black w-full items-center justify-center rounded-lg py-2 font-medium focus:shadow-[0_0_0_2px] focus:outline-none">
+                <button className="w-full items-center justify-center rounded-lg bg-green-500 py-2 font-medium text-black focus:shadow-[0_0_0_2px] focus:outline-none">
                   Sign Transaction
                 </button>
               </Dialog.Close>
@@ -167,7 +167,7 @@ const AcceptProjectModal = ({
 
           <Dialog.Close asChild>
             <button
-              className="absolute top-[10px] right-[10px] inline-flex  appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none focus:border-none"
+              className="absolute right-[10px] top-[10px] inline-flex  appearance-none items-center justify-center rounded-full focus:border-none focus:shadow-[0_0_0_2px] focus:outline-none"
               aria-label="Close"
               onClick={() => setIsAcceptDialogOpen(false)}
             >

@@ -11,8 +11,8 @@ export const TabsSection = () => {
   return (
     <div className="mx-auto w-full  text-white">
       <Tabs defaultValue="details" className="">
-        <TabsList className="bg-neutral-800  whitespace-nowrap w-full overflow-x-auto ">
-          <div className="w-full max-w-7xl mx-auto">
+        <TabsList className="w-full  overflow-x-auto whitespace-nowrap bg-neutral-800 ">
+          <div className="mx-auto w-full max-w-7xl">
             <TabsTrigger value="details">Details</TabsTrigger>
             <TabsTrigger value="registrations">Registrations</TabsTrigger>
             <TabsTrigger value="multisigs">Multisigs</TabsTrigger>
@@ -20,7 +20,7 @@ export const TabsSection = () => {
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </div>
         </TabsList>
-        <div className="w-full max-w-7xl mx-auto">
+        <div className="mx-auto w-full max-w-7xl">
           <TabsContent value="details">
             Make changes to your account here.
           </TabsContent>

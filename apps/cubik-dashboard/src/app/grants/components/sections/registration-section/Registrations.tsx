@@ -12,17 +12,17 @@ export const RegistrationsSection = () => {
   return (
     <>
       <div>
-        <div className="flex justify-between items-center my-5 px-3 md:px-0 ">
-          <h3 className="dark:text-white text-black font-semibold text-2xl flex gap-2">
+        <div className="my-5 flex items-center justify-between px-3 md:px-0 ">
+          <h3 className="flex gap-2 text-2xl font-semibold text-black dark:text-white">
             Registration
             <span className="hidden md:block">Overview</span>
           </h3>
           <div className="flex gap-5">
-            <button className="btn-base bg-white text-surface-blue-500 dark:text-white dark:bg-neutral-800 flex justify-center items-center gap-2">
+            <button className="btn-base text-surface-blue-500 flex items-center justify-center gap-2 bg-white dark:bg-neutral-800 dark:text-white">
               <p className="hidden md:block">Set Capacity</p>
               <div>
                 <svg
-                  className="w-4 h-4"
+                  className="h-4 w-4"
                   viewBox="0 0 16 16"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -41,15 +41,15 @@ export const RegistrationsSection = () => {
           </div>
         </div>
         <div className="flex flex-col gap-5 px-3 md:px-0">
-          <div className="flex justify-between items-center mt-10">
-            <h3 className="text-surface-blue-400 font-normal text-lg">
-              <span className="font-semibold text-2xl">5</span> New Registration
+          <div className="mt-10 flex items-center justify-between">
+            <h3 className="text-surface-blue-400 text-lg font-normal">
+              <span className="text-2xl font-semibold">5</span> New Registration
             </h3>
-            <h3 className="text-surface-neutral-500 font-normal text-lg">
-              capacity <span className="font-semibold text-2xl">10</span>
+            <h3 className="text-surface-neutral-500 text-lg font-normal">
+              capacity <span className="text-2xl font-semibold">10</span>
             </h3>
           </div>
-          <div className="w-full h-6 bg-surface-neutral-880 rounded-lg overflow-hidden flex ">
+          <div className="bg-surface-neutral-880 flex h-6 w-full overflow-hidden rounded-lg ">
             {segments.map((segment, index) => (
               <div
                 key={index}
@@ -58,7 +58,7 @@ export const RegistrationsSection = () => {
               ></div>
             ))}
           </div>
-          <div className="flex justify-between items-center gap-5 flex-col md:flex-row ">
+          <div className="flex flex-col items-center justify-between gap-5 md:flex-row ">
             <EmailCard
               color="bg-surface-orange-500"
               count={10}
@@ -69,9 +69,9 @@ export const RegistrationsSection = () => {
           </div>
         </div>
         <div className="px-3 md:px-0">
-          <div className="flex justify-between items-center h-14 my-7">
-            <p className="font-semibold text-2xl">Project</p>
-            <button className="bg-neutral-800 px-5 py-2 rounded-md text-base flex items-center gap-2">
+          <div className="my-7 flex h-14 items-center justify-between">
+            <p className="text-2xl font-semibold">Project</p>
+            <button className="flex items-center gap-2 rounded-md bg-neutral-800 px-5 py-2 text-base">
               <span>Download List</span>
               <svg
                 width="16"

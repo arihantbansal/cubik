@@ -15,7 +15,7 @@ import { TransactionsTable } from '../table/tables/TransactionsTable';
 
 const MultisigCard = () => {
   return (
-    <div className="bg-muted rounded-lg w-full">
+    <div className="bg-muted w-full rounded-lg">
       <div className="flex items-center justify-between border-b border-gray-700 p-4">
         <h3 className="text-lg font-semibold">Cubik Multisig</h3>
         <div>
@@ -24,7 +24,7 @@ const MultisigCard = () => {
           </Button>
           <Button
             variant={'ghost'}
-            className="border border-neutral-800 space-x-1 "
+            className="space-x-1 border border-neutral-800 "
           >
             <p>Add Funds</p>
             <Icon
@@ -38,9 +38,9 @@ const MultisigCard = () => {
         </div>
       </div>
 
-      <div className="flex justify-between flex-col px-10 py-16">
-        <p className="text-xs text-white mb-2">Matching Pool</p>
-        <h3 className="flex font-mono items-end mb-1">
+      <div className="flex flex-col justify-between px-10 py-16">
+        <p className="mb-2 text-xs text-white">Matching Pool</p>
+        <h3 className="mb-1 flex items-end font-mono">
           <h6 className="text-sm">$</h6> 40,000
         </h3>
         <div className="flex items-center">
@@ -53,16 +53,16 @@ const MultisigCard = () => {
           >
             <circle cx="3" cy="3" r="3" fill="#F53D6B" />
           </svg>
-          <p className="text-[10px] opacity-60 font-mono ml-1">$</p>
-          <p className="text-xs opacity-60 font-mono mr-1">10,000 </p>
+          <p className="ml-1 font-mono text-[10px] opacity-60">$</p>
+          <p className="mr-1 font-mono text-xs opacity-60">10,000 </p>
           <p className="text-xs text-white opacity-60">Pending to add</p>
         </div>
       </div>
 
       <div className="">
         <Tabs defaultValue="sponsors" className="mt-6">
-          <TabsList className="bg-neutral-800  w-full overflow-x-auto whitespace-nowrap">
-            <div className="w-full max-w-7xl border-b border-b-surface-neutral-800 ">
+          <TabsList className="w-full  overflow-x-auto whitespace-nowrap bg-neutral-800">
+            <div className="border-b-surface-neutral-800 w-full max-w-7xl border-b ">
               <TabsTrigger className="text-sm font-normal" value="sponsors">
                 Sponsors
               </TabsTrigger>
@@ -74,14 +74,14 @@ const MultisigCard = () => {
               </TabsTrigger>
             </div>
           </TabsList>
-          <div className="w-full max-w-7xl mx-auto bg-[#1F1F1F] p-4 rounded-b-lg">
+          <div className="mx-auto w-full max-w-7xl rounded-b-lg bg-[#1F1F1F] p-4">
             <TabsContent value="sponsors">
               <>
                 <SponsorsTable />
                 <Button
                   variant={'ghost'}
                   size={'lg'}
-                  className=" border-neutral-800 border w-full space-x-1 mt-4 "
+                  className=" mt-4 w-full space-x-1 border border-neutral-800 "
                 >
                   <p>Add a Sponsor</p>
                   <Icon

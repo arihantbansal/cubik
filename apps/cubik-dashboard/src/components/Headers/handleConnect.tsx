@@ -56,7 +56,7 @@ export const HandleConnect = () => {
         <div role="status" onClick={disconnect}>
           <svg
             aria-hidden="true"
-            className="w-4 h-4 mr-2 text-gray-600 animate-spin  fill-black"
+            className="mr-2 h-4 w-4 animate-spin fill-black  text-gray-600"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

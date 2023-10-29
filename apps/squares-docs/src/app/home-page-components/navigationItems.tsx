@@ -12,15 +12,15 @@ const ListItem: FC<{ item: any; pathname: string }> = ({ item, pathname }) => {
   const [toggledSubItem, setToggledSubItem] = useState<number | null>(null);
   return (
     <li key={item.id} className="flex flex-col gap-2">
-      <div className={`block rounded gap-4`}>
+      <div className={`block gap-4 rounded`}>
         {item.children && (
-          <span className="text-[var(--color-fg-tertiary)] uppercase tracking-[3px] font-medium text-[14px]">
+          <span className="text-[14px] font-medium uppercase tracking-[3px] text-[var(--color-fg-tertiary)]">
             {item.name}
           </span>
         )}
       </div>
       {item.children && (
-        <ul className="list-none flex flex-col gap-2">
+        <ul className="flex list-none flex-col gap-2">
           {item.children.map((subItem: any) => (
             <SubItem
               key={subItem.id}
@@ -44,10 +44,10 @@ const SubItem: FC<{
 }> = ({ subItem, pathname, toggledSubItem, setToggledSubItem }) => {
   const [toggledThirdItem, setToggledThirdItem] = useState<number | null>(null);
   return (
-    <li key={subItem.id} className="flex flex-col gap-2 min-w-[220px]">
+    <li key={subItem.id} className="flex min-w-[220px] flex-col gap-2">
       <Link href={subItem.link ? subItem.link : ''}>
         <div
-          className={`block px-4 py-2 rounded ${
+          className={`block rounded px-4 py-2 ${
             pathname === subItem.link
               ? 'bg-[var(--color-purple-500)]'
               : 'hover:bg-gray-100'
@@ -60,16 +60,16 @@ const SubItem: FC<{
                   toggledSubItem === subItem.id ? null : subItem.id,
                 )
               }
-              className="mr-2 flex flex-row items-center justify-between w-full"
+              className="mr-2 flex w-full flex-row items-center justify-between"
             >
-              <span className="text-[var(--color-fg-primary)]  text-[14px] font-regular">
+              <span className="font-regular  text-[14px] text-[var(--color-fg-primary)]">
                 {subItem.name}
               </span>
               <Icon
                 name={'chevronDown'}
                 stroke={'var(--color-fg-secondary)'}
                 className={
-                  toggledThirdItem === subItem.id ? 'transform rotate-180' : ''
+                  toggledThirdItem === subItem.id ? 'rotate-180' : ''
                 }
                 strokeWidth={2}
                 fill="none"
@@ -78,8 +78,8 @@ const SubItem: FC<{
               />
             </button>
           ) : (
-            <div className="mr-2 flex flex-row items-center justify-between w-full">
-              <span className="text-[var(--color-fg-primary)] text-[14px] font-regular">
+            <div className="mr-2 flex w-full flex-row items-center justify-between">
+              <span className="font-regular text-[14px] text-[var(--color-fg-primary)]">
                 {subItem.name}
               </span>
             </div>
@@ -113,9 +113,9 @@ const ThirdItem: FC<{
     <li key={thirdItem.id} className="my-1">
       <Link href={thirdItem.link ? thirdItem.link : '#'}>
         <div
-          className={`block px-4 py-2 rounded ${
+          className={`block rounded px-4 py-2 ${
             pathname === thirdItem.link
-              ? 'bg-[var(--color-surface-purple)] font-medium focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition duration-300'
+              ? 'bg-[var(--color-surface-purple)] font-medium transition duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50'
               : 'hover:bg-gray-100'
           }`}
         >
@@ -138,7 +138,7 @@ const ThirdItem: FC<{
               <Icon
                 className={
                   toggledThirdItem === thirdItem.id
-                    ? 'transform rotate-180'
+                    ? 'rotate-180'
                     : ''
                 }
                 name={'chevronDown'}
@@ -150,7 +150,7 @@ const ThirdItem: FC<{
               />
             </button>
           ) : (
-            <div className="mr-2 flex flex-row items-center justify-between w-full">
+            <div className="mr-2 flex w-full flex-row items-center justify-between">
               <span
                 className={`${
                   pathname === thirdItem.link
@@ -172,7 +172,7 @@ const NavigationItems: FC = () => {
   const pathname = usePathname();
 
   return (
-    <ul className="list-none pl-0 w-fit flex flex-col gap-4">
+    <ul className="flex w-fit list-none flex-col gap-4 pl-0">
       {navigationData.map((item) => (
         <ListItem key={item.id} item={item} pathname={pathname} />
       ))}

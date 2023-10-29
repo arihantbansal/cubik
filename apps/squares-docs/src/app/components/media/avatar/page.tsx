@@ -8,8 +8,8 @@ import TitleWithIcon from '@cubik/ui/components/ui/Avatar/TitleWithIcon';
 const Page = () => {
   return (
     <>
-      <div className="flex justify-start px-10 flex-col gap-5">
-        <div className="gap-4 flex flex-col">
+      <div className="flex flex-col justify-start gap-5 px-10">
+        <div className="flex flex-col gap-4">
           <h3 className="text-xl font-bold">Avatar with Title and Icon</h3>
           <div className="flex gap-10">
             <div>
@@ -34,7 +34,7 @@ const Page = () => {
         </div>
         <div>
           <h3 className="text-xl font-bold">Avatar</h3>
-          <div className="flex justify-start items-center flex-wrap gap-7">
+          <div className="flex flex-wrap items-center justify-start gap-7">
             <Avatar
               shape="circle"
               src="https://pbs.twimg.com/profile_images/1694008102709055488/ESkPDhR-_400x400.jpg"
@@ -78,55 +78,55 @@ const Page = () => {
               size="3xl"
             />
           </div>
-          <div className="flex justify-start items-center flex-wrap gap-7">
+          <div className="flex flex-wrap items-center justify-start gap-7">
             <Avatar
               shape="square"
               src="https://pbs.twimg.com/profile_images/1694008102709055488/ESkPDhR-_400x400.jpg"
               alt="Image"
               size="xs"
-              Icon={<Icon className="w-2 h-2" name="github" />}
+              Icon={<Icon className="h-2 w-2" name="github" />}
             />
             <Avatar
               shape="square"
               src="https://pbs.twimg.com/profile_images/1694008102709055488/ESkPDhR-_400x400.jpg"
               alt="Image"
               size="sm"
-              Icon={<Icon className="w-2 h-2" name="github" />}
+              Icon={<Icon className="h-2 w-2" name="github" />}
             />
             <Avatar
               shape="square"
               src="https://pbs.twimg.com/profile_images/1694008102709055488/ESkPDhR-_400x400.jpg"
               alt="Image"
               size="md"
-              Icon={<Icon className="w-2 h-2" name="github" />}
+              Icon={<Icon className="h-2 w-2" name="github" />}
             />
             <Avatar
               shape="square"
               src="https://pbs.twimg.com/profile_images/1694008102709055488/ESkPDhR-_400x400.jpg"
               alt="Image"
               size="lg"
-              Icon={<Icon className="w-2 h-2" name="github" />}
+              Icon={<Icon className="h-2 w-2" name="github" />}
             />
             <Avatar
               shape="square"
               src="https://pbs.twimg.com/profile_images/1694008102709055488/ESkPDhR-_400x400.jpg"
               alt="Image"
               size="xl"
-              Icon={<Icon className="w-2 h-2" name="github" />}
+              Icon={<Icon className="h-2 w-2" name="github" />}
             />
             <Avatar
               shape="square"
               src="https://pbs.twimg.com/profile_images/1694008102709055488/ESkPDhR-_400x400.jpg"
               alt="Image"
               size="2xl"
-              Icon={<Icon className="w-2 h-2" name="github" />}
+              Icon={<Icon className="h-2 w-2" name="github" />}
             />
             <Avatar
               shape="square"
               src="https://pbs.twimg.com/profile_images/1694008102709055488/ESkPDhR-_400x400.jpg"
               alt="Image"
               size="3xl"
-              Icon={<Icon className="w-2 h-2" name="github" />}
+              Icon={<Icon className="h-2 w-2" name="github" />}
             />
           </div>
         </div>

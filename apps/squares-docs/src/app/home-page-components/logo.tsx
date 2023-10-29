@@ -17,7 +17,7 @@ const Logo = () => {
           alt={'Squares Design System Logo'}
         />
       </div>
-      <span className="text-[var(--color-fg-primary)] text-[18px] uppercase tracking-[2.4px] font-[600]">
+      <span className="text-[18px] font-[600] uppercase tracking-[2.4px] text-[var(--color-fg-primary)]">
         Squares
       </span>
     </div>

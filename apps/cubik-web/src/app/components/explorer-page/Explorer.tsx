@@ -22,50 +22,50 @@ export const Explorer: FC<{ projects: Partial<Project>[] }> = ({
         <div className="col-span-1 p-4">
           <Input
             placeholder="Search..."
-            className="rounded-xl bg-[#333333] border-gray-600 max-w-sm"
+            className="max-w-sm rounded-xl border-gray-600 bg-[#333333]"
             leftIcon={<Search />}
           />
           <div className="mt-4">
             <div className="flex flex-col">
-              <div className="flex justify-between max-w-sm flex-row gap-2">
+              <div className="flex max-w-sm flex-row justify-between gap-2">
                 <div className="flex flex-row gap-2">
                   <GridOne className="w-5" />
-                  <h1 className="font-bold text-lg">Collections</h1>
+                  <h1 className="text-lg font-bold">Collections</h1>
                 </div>
                 <div className="flex flex-col items-start justify-start text-[#3776CC]">
-                  <div className="relative leading-[16px] font-medium text-sm mt-2">
+                  <div className="relative mt-2 text-sm font-medium leading-[16px]">
                     View More
                   </div>
                 </div>
               </div>
-              <div className="relative w-sm flex flex-row items-center justify-start py-1 px-4 box-border gap-[14px] text-left text-xl text-colors-foreground-color-fg-primary font-text-xl-600">
-                <div className="relative w-24 h-24 overflow-hidden shrink-0">
+              <div className="w-sm text-colors-foreground-color-fg-primary font-text-xl-600 relative box-border flex flex-row items-center justify-start gap-[14px] px-4 py-1 text-left text-xl">
+                <div className="relative h-24 w-24 shrink-0 overflow-hidden">
                   <img
-                    className="absolute top-[4px] left-[4px] rounded w-[42px] h-[42px] object-cover"
+                    className="absolute left-[4px] top-[4px] h-[42px] w-[42px] rounded object-cover"
                     alt=""
                     src="https://pbs.twimg.com/profile_images/1621492955868545024/CpsOM4M3_400x400.jpg"
                   />
                   <img
-                    className="absolute top-[4px] left-[50px] rounded w-[42px] h-[42px] object-cover"
+                    className="absolute left-[50px] top-[4px] h-[42px] w-[42px] rounded object-cover"
                     alt=""
                     src="https://pbs.twimg.com/profile_images/1621492955868545024/CpsOM4M3_400x400.jpg"
                   />
                   <img
-                    className="absolute top-[50px] left-[4px] rounded w-[42px] h-[42px] object-cover"
+                    className="absolute left-[4px] top-[50px] h-[42px] w-[42px] rounded object-cover"
                     alt=""
                     src="https://pbs.twimg.com/profile_images/1621492955868545024/CpsOM4M3_400x400.jpg"
                   />
-                  <div className="absolute top-[60px] left-[57px] leading-[16px] font-medium">
+                  <div className="absolute left-[57px] top-[60px] font-medium leading-[16px]">
                     +9
                   </div>
                 </div>
-                <div className="flex-1 flex flex-col items-start justify-start gap-[4px]">
-                  <div className="w-[271px] flex flex-row items-end justify-start">
-                    <div className="relative leading-[28px] font-semibold">
+                <div className="flex flex-1 flex-col items-start justify-start gap-[4px]">
+                  <div className="flex w-[271px] flex-row items-end justify-start">
+                    <div className="relative font-semibold leading-[28px]">
                       Solana Social
                     </div>
                   </div>
-                  <div className="self-stretch relative text-[12px] leading-[18px] [display:-webkit-inline-box] overflow-hidden text-ellipsis [-webkit-line-clamp:2] [-webkit-box-orient:vertical]">
+                  <div className="relative self-stretch overflow-hidden text-ellipsis text-[12px] leading-[18px] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] [display:-webkit-inline-box]">
                     Web3 Social apps that are built on Solana blockchain
                   </div>
                 </div>

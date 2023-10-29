@@ -21,7 +21,7 @@ const TreasuryCard = ({
 }: Props) => {
   console.log('iconBg', classname);
   return (
-    <div className="bg-[#262626] rounded-lg p-4 border border-[#333333] flex space-x-3 items-center">
+    <div className="flex items-center space-x-3 rounded-lg border border-[#333333] bg-[#262626] p-4">
       <Avatar
         src={
           <Icon
@@ -36,9 +36,9 @@ const TreasuryCard = ({
         }
         shape="square"
       />
-      <div className="flex justify-between flex-col">
+      <div className="flex flex-col justify-between">
         <p className="text-xs text-white opacity-60">{title}</p>
-        <h3 className="flex font-mono items-end">
+        <h3 className="flex items-end font-mono">
           <h6 className="text-sm">{symbol}</h6> {amount}
         </h3>
       </div>
