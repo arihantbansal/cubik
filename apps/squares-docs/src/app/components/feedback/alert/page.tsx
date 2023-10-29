@@ -1,6 +1,7 @@
 import React from 'react';
 import CodeComponent from '@/app/home-page-components/code-component';
 import PageHOC from '@/app/home-page-components/components/pageHOC';
+import { AlertColors, AlertTypes, AlertVariants } from '@cubik/ui';
 
 const page = () => {
   const alertVariants: AlertVariants[] = [
