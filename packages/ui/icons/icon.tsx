@@ -33,11 +33,11 @@ export const Icon = ({
     <svg
       viewBox={viewBox}
       className={clsx(' text-white', className)}
-      stroke-width={strokeWidth}
+      strokeWidth={strokeWidth}
       fill={fill}
       stroke={stroke}
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       width={width}
       height={height}
     >

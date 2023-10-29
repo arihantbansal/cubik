@@ -1,5 +1,5 @@
+"use client";
 import React, { useState } from 'react';
-
 import { HelperText } from './helperText';
 import { InputLabel } from './inputLabel';
 import { ToggleSwitch } from './ToggleSwitch';

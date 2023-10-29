@@ -1,8 +1,11 @@
+"use client"
+
 import React from 'react';
 
-import PageHOC from '../../components/pageHOC';
+import PageHOC from '../../../home-page-components/components/pageHOC';
 
-const page = () => {
+
+const ToastPage = () => {
   return (
     <PageHOC
       pages={[
@@ -13,10 +16,9 @@ const page = () => {
       description={
         'Use the toast component to display important messages to users.'
       }
-    >
-      <></>
+    >x
     </PageHOC>
   );
 };
 
-export default page;
+export default ToastPage;

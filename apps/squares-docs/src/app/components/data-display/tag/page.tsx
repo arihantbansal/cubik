@@ -4,9 +4,9 @@ import React from 'react';
 
 import { Tag } from '@cubik/ui';
 
-import BreadCrumb from '../../components/BreadCrumb';
-import ComponentHeading from '../../components/ComponentHeading';
-import PageHOC from '../../components/pageHOC';
+import BreadCrumb from '../../../home-page-components/components/BreadCrumb';
+import ComponentHeading from '../../../home-page-components/components/ComponentHeading';
+import PageHOC from '../../../home-page-components/components/pageHOC';
 
 const Tags = () => {
   return (

@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from 'react';
 
 interface CheckboxProps {
@@ -61,20 +62,18 @@ const Checkbox: React.FC<CheckboxProps> = ({
     <div
       tabIndex={0}
       role="checkbox"
-      aria-checked={isChecked}
+      aria-checked={isChecked === 'minus' ? 'mixed' : isChecked}
       className={`${currentStyle.container} p-2 relative rounded 
-                        ${
-                          isChecked === true
-                            ? 'bg-blue-600 border-blue-600'
-                            : isChecked === 'minus'
-                            ? 'bg-neutral-600 border-neutral-600'
-                            : 'bg-zinc-800 border-zinc-800'
-                        } 
-                        ${
-                          isDisabled
-                            ? 'cursor-not-allowed opacity-60'
-                            : 'cursor-pointer'
-                        } 
+                        ${isChecked === true
+          ? 'bg-blue-600 border-blue-600'
+          : isChecked === 'minus'
+            ? 'bg-neutral-600 border-neutral-600'
+            : 'bg-zinc-800 border-zinc-800'
+        } 
+                        ${isDisabled
+          ? 'cursor-not-allowed opacity-60'
+          : 'cursor-pointer'
+        } 
                         focus:outline-none focus:ring-2 focus:ring-blue-500`}
       onClick={handleToggle}
     >

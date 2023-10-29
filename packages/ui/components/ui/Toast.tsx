@@ -1,6 +1,6 @@
+"use client";
 import React, { useEffect, useState } from 'react';
-
-import Alert from './Alert';
+import { Alert, AlertColors, AlertTypes, AlertVariants } from './Alert';
 
 interface ToastProps {
   title: string;
@@ -8,7 +8,9 @@ interface ToastProps {
   buttonText?: string;
   onButtonClick?: () => void;
   duration?: number;
-  variant?: 'violet' | 'green' | 'blue';
+  color?: AlertColors;
+  type?: AlertTypes;
+  variant?: AlertVariants;
 }
 
 const Toast: React.FC<ToastProps> = ({
@@ -17,15 +19,13 @@ const Toast: React.FC<ToastProps> = ({
   buttonText,
   onButtonClick,
   duration = 5000,
-  variant = 'violet',
+  color = 'Blue',
+  type = 'Inline',
+  variant = 'Info',
 }) => {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    // Commented out the audio play code
-    // const audio = new Audio('./');
-    // audio.play();
-
     const timeout = setTimeout(() => {
       setVisible(false);
     }, duration);
@@ -44,9 +44,11 @@ const Toast: React.FC<ToastProps> = ({
       <Alert
         title={title}
         content={content}
+        color={color}
+        type={type}
+        variant={variant}
         buttonText={buttonText}
         onButtonClick={onButtonClick}
-        variant={variant}
       />
     </div>
   );

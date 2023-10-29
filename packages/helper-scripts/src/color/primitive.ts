@@ -1,4 +1,5 @@
 export const primitiveColors = {
+  '--color-neutral-25': '#f7f7f7',
   '--color-neutral-250': '#bfbfbf',
   '--color-neutral-150': '#d9d9d9',
   '--color-neutral-820': '#2e2e2e',

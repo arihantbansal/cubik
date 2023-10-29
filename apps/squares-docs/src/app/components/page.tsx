@@ -1,8 +1,8 @@
 import React from "react";
-import BreadCrumb from "./components/BreadCrumb";
+import BreadCrumb from "../home-page-components/components/BreadCrumb";
 import navigationData from "../navigationData";
 import Link from "next/link";
-import ComponentHeading from "./components/ComponentHeading";
+import ComponentHeading from "../home-page-components/components/ComponentHeading";
 import Image from "next/image";
 
 export default function ComponentPage() {

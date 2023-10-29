@@ -2,7 +2,7 @@ import "./src/env.mjs"
 import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
+  reactStrictMode: true,
   swcMinify: true,
   webpack: (config, { isServer }) => {
     if (!isServer) {

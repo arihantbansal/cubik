@@ -1,94 +1,107 @@
 import React from 'react';
-import { Button } from '@ui/components/ui/button';
-import { Icon } from '@ui/icons/icon';
-import { cva, VariantProps } from 'class-variance-authority';
+import { Icon } from "../../icons/icon";
+import { Button } from "./button";
 
-import { cn } from '../../lib/utils';
+type AlertTypes = "Inline" | "Text" | "Border";
+type AlertVariants = "Info" | "Loading" | "Success" | "Warning" | "Error";
+type AlertColors = "Purple" | "Red" | "Green" | "Blue" | "Yellow";
 
-const alertVariants = {
-  violet: {
-    container: 'bg-violet-100',
-    title: 'text-violet-400',
-    content: 'text-violet-500',
-    button: 'text-violet-400',
-  },
-  green: {},
-  blue: {},
-};
-
-interface AlertProps extends VariantProps<typeof alertVariants> {
+interface AlertProps {
+  type: AlertTypes;
+  variant: AlertVariants;
+  color: AlertColors;
   title: string;
   content: string;
   buttonText?: string;
   onButtonClick?: () => void;
+  crossButton?: boolean;
+  size?: "small" | "large";
 }
 
 const Alert: React.FC<AlertProps> = ({
+  type,
+  variant,
+  color,
   title,
   content,
   buttonText,
   onButtonClick,
-  variant = 'violet',
+  crossButton = true,
+  size = "large"
 }) => {
-  const classes = alertVariants[variant] || alertVariants.violet;
+  const icons: Record<AlertVariants, "infoCircle" | "Spinner" | "doubleTick" | "infoTriangle" | "danger"> = {
+    Info: 'infoCircle',
+    Loading: 'Spinner',
+    Success: 'doubleTick',
+    Warning: 'infoTriangle',
+    Error: 'danger'
+  };  
+
+  const colorClasses = {
+    Purple: {
+      bg: 'bg-purple-100',
+      border: 'border-purple-500',
+      text: 'text-purple-700'
+    },
+    Red: {
+      bg: 'bg-red-100',
+      border: 'border-red-500',
+      text: 'text-red-700'
+    },
+    Green: {
+      bg: 'bg-green-100',
+      border: 'border-green-500',
+      text: 'text-green-700'
+    },
+    Blue: {
+      bg: 'bg-blue-100',
+      border: 'border-blue-500',
+      text: 'text-blue-700'
+    },
+    Yellow: {
+      bg: 'bg-yellow-100',
+      border: 'border-yellow-500',
+      text: 'text-yellow-700'
+    }
+  };
+
+  const alertClasses = colorClasses[color];
+
+  const typeStyles = {
+    Inline: `${alertClasses.bg} rounded-[10px]`,
+    Text: ``,
+    Border: `${alertClasses.bg} border-l-2 border-solid ${alertClasses.border} rounded-r-[10px] pl-4`
+  };
+
+  const sizeStyles = {
+    small: "text-xs sm:text-sm p-1 sm:p-2",
+    large: "text-md sm:text-lg p-2 sm:p-4"
+  };
+
+  const iconStyles = {
+    small: "w-4 h-4 sm:w-5 sm:h-5",
+    large: "w-6 h-6 sm:w-8 sm:h-8"
+  };
+
 
   return (
-    <div
-      className={cn(
-        'w-[428px] h-12 px-3 py-2.5 rounded-[10px] flex justify-start items-center gap-2',
-        classes.container,
-      )}
-    >
-      <Icon
-        name="Spinner"
-        stroke="#9D7FF5"
-        fill="none"
-        height={16}
-        width={16}
-      />
-
-      <div className="flex-grow flex h-7 justify-between items-center">
-        <div className="flex-grow flex h-5 gap-2">
-          <div
-            className={cn(
-              "text-center text-sm font-semibold font-['Inter'] leading-tight",
-              classes.title,
-            )}
-          >
-            {title}
-          </div>
-          <div
-            className={cn(
-              "text-sm font-normal font-['Inter'] leading-tight",
-              classes.content,
-            )}
-          >
-            {content}
-          </div>
-        </div>
-
-        {buttonText && (
-          <Button
-            onClick={onButtonClick}
-            className={cn(
-              "text-sm font-semibold font-['Inter'] underline leading-tight",
-              classes.button,
-            )}
-          >
-            {buttonText}
-          </Button>
-        )}
+    <div className={`flex flex-col sm:flex-row items-center gap-2 sm:gap-4 ${typeStyles[type]} ${alertClasses.text} ${sizeStyles[size]}`}>
+      <Icon name={icons[variant]} className={`${alertClasses.text} ${iconStyles[size]}`} fill="none" />
+      <div className="flex-grow mt-2 sm:mt-0">
+        <div className="font-semibold">{title}</div>
+        <div>{content}</div>
       </div>
-
-      <Icon
-        name={'Cross'}
-        stroke="#4D4D4D"
-        fill="none"
-        height={16}
-        width={16}
-      />
+      {buttonText && (
+        <Button onClick={onButtonClick} className={`${alertClasses.border} ${alertClasses.text}`}>
+          {buttonText}
+        </Button>
+      )}
+      {crossButton && (
+        <Icon name="cross" className={`${alertClasses.text} ${iconStyles[size]}`} fill="none" />
+      )}
     </div>
   );
 };
 
-export default Alert;
+export { Alert };
+export type { AlertVariants, AlertColors, AlertTypes };
