@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Checkbox } from './Checkbox';
 
 type Variant = {
@@ -27,11 +28,14 @@ const variants: Array<Omit<CheckboxVariantProps, 'size' | 'label'>> = [
 const BaseCheckbox: React.FC = () => {
   return (
     <div className="w-[415px] h-auto relative rounded-[5px] border border-purple-500 p-4 grid grid-cols-2 gap-4">
-      {(['md', 'sm'] as const).map(size =>
-        variants.map(variantProps => {
+      {(['md', 'sm'] as const).map((size) =>
+        variants.map((variantProps) => {
           let labelState = variantProps.isChecked ? 'Checked' : 'Unchecked';
           if (variantProps.indeterminate) labelState = 'Indeterminate';
-          const variantLabel = `${variantProps.state.charAt(0).toUpperCase() + variantProps.state.slice(1)} (${labelState})`;
+          const variantLabel = `${
+            variantProps.state.charAt(0).toUpperCase() +
+            variantProps.state.slice(1)
+          } (${labelState})`;
 
           return (
             <CheckboxVariant
@@ -41,7 +45,7 @@ const BaseCheckbox: React.FC = () => {
               {...variantProps}
             />
           );
-        })
+        }),
       )}
     </div>
   );
@@ -57,16 +61,19 @@ const CheckboxVariant: React.FC<CheckboxVariantProps> = ({
 }) => {
   return (
     <div
-      className={`flex items-center ${state === 'hover' ? 'hover:bg-gray-200' : ''
-        } ${state === 'focus' ? 'focus:bg-gray-300' : ''}`}
+      className={`flex items-center ${
+        state === 'hover' ? 'hover:bg-gray-200' : ''
+      } ${state === 'focus' ? 'focus:bg-gray-300' : ''}`}
     >
       <Checkbox
         size={size}
         isChecked={isChecked}
         isDisabled={isDisabled}
-        variant={indeterminate ? 'minus' : 'checked'} onChange={function (value: boolean | 'minus'): void {
+        variant={indeterminate ? 'minus' : 'checked'}
+        onChange={function (value: boolean | 'minus'): void {
           throw new Error('Function not implemented.');
-        } }      />
+        }}
+      />
       <span className={`ml-4 ${isDisabled ? 'text-gray-400' : ''}`}>
         {label}
       </span>

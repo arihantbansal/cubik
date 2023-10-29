@@ -35,8 +35,7 @@ export const VerifyModal = ({ open, setOpen }: Props) => {
         });
       }
     },
-    onError: (error) => {
-    },
+    onError: (error) => {},
   });
 
   return (

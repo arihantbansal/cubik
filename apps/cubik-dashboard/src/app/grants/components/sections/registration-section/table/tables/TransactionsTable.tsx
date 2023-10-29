@@ -1,12 +1,6 @@
 import React from 'react';
 
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@cubik/ui';
+import { Table, TableBody, TableHead, TableHeader, TableRow } from '@cubik/ui';
 
 import { TransactionsTableRows } from './TransactionsTableRows';
 

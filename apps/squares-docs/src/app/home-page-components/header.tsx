@@ -1,5 +1,5 @@
-import HeaderButtons from "./header-buttons";
-import Logo from "./logo";
+import HeaderButtons from './header-buttons';
+import Logo from './logo';
 
 export default function Header() {
   return (

@@ -1,9 +1,8 @@
-"use client"
+'use client';
 
 import React from 'react';
 
 import PageHOC from '../../../home-page-components/components/pageHOC';
-
 
 const ToastPage = () => {
   return (
@@ -16,7 +15,8 @@ const ToastPage = () => {
       description={
         'Use the toast component to display important messages to users.'
       }
-    >x
+    >
+      x
     </PageHOC>
   );
 };

@@ -1,5 +1,5 @@
-import Image from "next/image";
-import React from "react";
+import React from 'react';
+import Image from 'next/image';
 
 const Logo = () => {
   return (
@@ -10,11 +10,11 @@ const Logo = () => {
       <div>
         <Image
           src={
-            "https://imagedelivery.net/rWTckr21FEHs39XCNFz7Yw/5f5c4183-040d-4ba7-07a1-bbd109d81500/public"
+            'https://imagedelivery.net/rWTckr21FEHs39XCNFz7Yw/5f5c4183-040d-4ba7-07a1-bbd109d81500/public'
           }
           width={34}
           height={34}
-          alt={"Squares Design System Logo"}
+          alt={'Squares Design System Logo'}
         />
       </div>
       <span className="text-[var(--color-fg-primary)] text-[18px] uppercase tracking-[2.4px] font-[600]">

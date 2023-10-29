@@ -4,10 +4,6 @@ import { PrismaClient } from '@prisma/client';
 import { config } from 'dotenv';
 import { fetch as undiciFetch } from 'undici';
 
-
-
-
-
 export * from '@prisma/client';
 
 config();
@@ -17,9 +13,7 @@ declare global {
 
 let prisma: PrismaClient;
 
-
 if (typeof window === 'undefined') {
-
   const connection = connect({
     url: process.env.PROD_DATABASE_URL,
     fetch: undiciFetch,
@@ -32,8 +26,7 @@ if (typeof window === 'undefined') {
     if (!global.prisma) {
       global.prisma = new PrismaClient({ adapter });
     }
-    prisma = global.prisma; 
-
+    prisma = global.prisma;
   }
 }
 

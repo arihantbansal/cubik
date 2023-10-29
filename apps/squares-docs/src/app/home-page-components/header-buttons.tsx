@@ -1,24 +1,26 @@
-"use client";
-import { Icon } from "@cubik/ui";
-import React from "react";
+'use client';
+
+import React from 'react';
+
+import { Icon } from '@cubik/ui';
 
 const HeaderButtons = () => {
   return (
     <div className="flex flex-row gap-8 items-center justify-center h-fit">
       <button
         onClick={() => {
-          const ele = document.querySelector("html");
+          const ele = document.querySelector('html');
           if (!ele?.className) return;
-          if (ele.className === "dark") {
-            ele.className = "light";
+          if (ele.className === 'dark') {
+            ele.className = 'light';
           } else {
-            ele.className = "dark";
+            ele.className = 'dark';
           }
         }}
       >
         <Icon
-          name={"github"}
-          stroke={"var(--color-fg-primary)"}
+          name={'github'}
+          stroke={'var(--color-fg-primary)'}
           strokeWidth={2}
           fill="none"
           height={26}
@@ -26,16 +28,16 @@ const HeaderButtons = () => {
         />
       </button>
       <Icon
-        name={"github"}
-        stroke={"var(--color-fg-primary)"}
+        name={'github'}
+        stroke={'var(--color-fg-primary)'}
         strokeWidth={2}
         fill="none"
         height={26}
         width={26}
       />
       <Icon
-        name={"figma"}
-        stroke={"var(--color-fg-primary)"}
+        name={'figma'}
+        stroke={'var(--color-fg-primary)'}
         strokeWidth={2}
         fill="none"
         height={26}

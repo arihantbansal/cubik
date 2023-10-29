@@ -1,9 +1,10 @@
-import React from "react";
-import BreadCrumb from "../home-page-components/components/BreadCrumb";
-import navigationData from "../navigationData";
-import Link from "next/link";
-import ComponentHeading from "../home-page-components/components/ComponentHeading";
-import Image from "next/image";
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+
+import BreadCrumb from '../home-page-components/components/BreadCrumb';
+import ComponentHeading from '../home-page-components/components/ComponentHeading';
+import navigationData from '../navigationData';
 
 export default function ComponentPage() {
   console.log('navigation data - ', navigationData);

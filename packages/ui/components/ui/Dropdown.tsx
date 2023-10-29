@@ -1,5 +1,7 @@
-"use client";
+'use client';
+
 import React, { useState } from 'react';
+
 import { Icon } from '../../icons/icon';
 import { AvatarLabelGroup } from './Avatar/AvatarLabelGroup';
 import { Button } from './button';

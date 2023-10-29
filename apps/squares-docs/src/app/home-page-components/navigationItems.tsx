@@ -1,9 +1,12 @@
-"use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { FC, useState } from "react";
-import navigationData from "../navigationData";
-import { Icon } from "@cubik/ui";
+'use client';
+
+import { FC, useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+import { Icon } from '@cubik/ui';
+
+import navigationData from '../navigationData';
 
 const ListItem: FC<{ item: any; pathname: string }> = ({ item, pathname }) => {
   const [toggledSubItem, setToggledSubItem] = useState<number | null>(null);
@@ -42,19 +45,19 @@ const SubItem: FC<{
   const [toggledThirdItem, setToggledThirdItem] = useState<number | null>(null);
   return (
     <li key={subItem.id} className="flex flex-col gap-2 min-w-[220px]">
-      <Link href={subItem.link ? subItem.link : ""}>
+      <Link href={subItem.link ? subItem.link : ''}>
         <div
           className={`block px-4 py-2 rounded ${
             pathname === subItem.link
-              ? "bg-[var(--color-purple-500)]"
-              : "hover:bg-gray-100"
+              ? 'bg-[var(--color-purple-500)]'
+              : 'hover:bg-gray-100'
           }`}
         >
           {subItem.children ? (
             <button
               onClick={() =>
                 setToggledSubItem(
-                  toggledSubItem === subItem.id ? null : subItem.id
+                  toggledSubItem === subItem.id ? null : subItem.id,
                 )
               }
               className="mr-2 flex flex-row items-center justify-between w-full"
@@ -63,12 +66,10 @@ const SubItem: FC<{
                 {subItem.name}
               </span>
               <Icon
-                name={"chevronDown"}
-                stroke={"var(--color-fg-secondary)"}
+                name={'chevronDown'}
+                stroke={'var(--color-fg-secondary)'}
                 className={
-                  toggledThirdItem === subItem.id
-                    ? "transform rotate-180"
-                    : ""
+                  toggledThirdItem === subItem.id ? 'transform rotate-180' : ''
                 }
                 strokeWidth={2}
                 fill="none"
@@ -110,26 +111,26 @@ const ThirdItem: FC<{
 }> = ({ thirdItem, pathname, toggledThirdItem, setToggledThirdItem }) => {
   return (
     <li key={thirdItem.id} className="my-1">
-      <Link href={thirdItem.link ? thirdItem.link : "#"}>
+      <Link href={thirdItem.link ? thirdItem.link : '#'}>
         <div
           className={`block px-4 py-2 rounded ${
             pathname === thirdItem.link
-              ? "bg-[var(--color-surface-purple)] font-medium focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition duration-300"
-              : "hover:bg-gray-100"
+              ? 'bg-[var(--color-surface-purple)] font-medium focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition duration-300'
+              : 'hover:bg-gray-100'
           }`}
         >
           {thirdItem.children ? (
             <button
               onClick={() =>
                 setToggledThirdItem(
-                  toggledThirdItem === thirdItem.id ? null : thirdItem.id
+                  toggledThirdItem === thirdItem.id ? null : thirdItem.id,
                 )
               }
               className="mr-2"
             >
               <span
                 className={`${
-                  pathname === thirdItem.link ? "text-purple-500" : "text-black"
+                  pathname === thirdItem.link ? 'text-purple-500' : 'text-black'
                 } text-[14px]`}
               >
                 {thirdItem.name}
@@ -137,11 +138,11 @@ const ThirdItem: FC<{
               <Icon
                 className={
                   toggledThirdItem === thirdItem.id
-                    ? "transform rotate-180"
-                    : ""
+                    ? 'transform rotate-180'
+                    : ''
                 }
-                name={"chevronDown"}
-                stroke={"var(--color-fg-secondary)"}
+                name={'chevronDown'}
+                stroke={'var(--color-fg-secondary)'}
                 strokeWidth={2}
                 fill="none"
                 height={16}
@@ -153,8 +154,8 @@ const ThirdItem: FC<{
               <span
                 className={`${
                   pathname === thirdItem.link
-                    ? "text-[var(--color-purple-500)]"
-                    : "text-[var(--color-fg-primary)]"
+                    ? 'text-[var(--color-purple-500)]'
+                    : 'text-[var(--color-fg-primary)]'
                 } text-[14px]`}
               >
                 {thirdItem.name}

@@ -1,11 +1,6 @@
 import React from 'react';
 
-import {
-  AvatarLabelGroup,
-  TableCell,
-  TableRow,
-  Tag,
-} from '@cubik/ui';
+import { AvatarLabelGroup, TableCell, TableRow, Tag } from '@cubik/ui';
 
 export const TransactionsTableRows = () => {
   return (

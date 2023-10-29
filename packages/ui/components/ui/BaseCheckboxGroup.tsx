@@ -1,5 +1,7 @@
-"use client";
+'use client';
+
 import React, { useState } from 'react';
+
 import { Checkbox } from './Checkbox';
 import { InputLabel } from './inputLabel';
 

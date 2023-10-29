@@ -1,10 +1,10 @@
-import { instructions, getMultisigPda, types } from "@sqds/multisig";
-import { web3 } from "@coral-xyz/anchor";
+import { web3 } from '@coral-xyz/anchor';
+import { getMultisigPda, instructions, types } from '@sqds/multisig';
 
 export const createMultisig = async (
   creator: web3.PublicKey,
   threshold: number,
-  members: types.Member[]
+  members: types.Member[],
 ) => {
   const createKey = web3.Keypair.generate();
 

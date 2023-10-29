@@ -1,1 +1,1 @@
-export * from "./src/createMultisig";
+export * from './src/createMultisig';

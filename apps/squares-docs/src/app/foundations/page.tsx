@@ -31,7 +31,7 @@ export default function ComponentPage() {
                     <Image
                       src={subItem.image ? subItem.image : ''}
                       alt="My Image"
-                      className='h-[180px] object-cover object-left-top'
+                      className="h-[180px] object-cover object-left-top"
                       width={960}
                       height={540}
                     />

@@ -1,5 +1,7 @@
-"use client";
+'use client';
+
 import React, { useEffect, useState } from 'react';
+
 import { Alert, AlertColors, AlertTypes, AlertVariants } from './Alert';
 
 interface ToastProps {

@@ -3,12 +3,22 @@ import CodeComponent from '@/app/home-page-components/code-component';
 import PageHOC from '@/app/home-page-components/components/pageHOC';
 
 const page = () => {
-
-  const alertVariants: AlertVariants[] = ["Info", "Loading", "Success", "Warning", "Error"];
-  const alertTypes: AlertTypes[] = ["Inline", "Text", "Border"];
-  const alertColors: AlertColors[] = ["Purple", "Red", "Green", "Blue", "Yellow"];
+  const alertVariants: AlertVariants[] = [
+    'Info',
+    'Loading',
+    'Success',
+    'Warning',
+    'Error',
+  ];
+  const alertTypes: AlertTypes[] = ['Inline', 'Text', 'Border'];
+  const alertColors: AlertColors[] = [
+    'Purple',
+    'Red',
+    'Green',
+    'Blue',
+    'Yellow',
+  ];
   const alertSizes: Array<'small' | 'large'> = ['small', 'large'];
-
 
   return (
     <>

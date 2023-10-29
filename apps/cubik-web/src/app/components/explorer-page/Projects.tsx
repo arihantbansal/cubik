@@ -1,4 +1,4 @@
-import React, { FC} from 'react';
+import React, { FC } from 'react';
 import Subhead from '@ui/components/subhead';
 import { FilterLines } from '@ui/icons/svgs/filter-lines';
 
