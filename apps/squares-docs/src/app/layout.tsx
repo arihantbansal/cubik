@@ -7,9 +7,11 @@ import '@cubik/presets/styles/lightColor.style.css';
 import '@cubik/presets/styles/darkColors.styles.css';
 import '@cubik/presets/styles/component.style.css';
 
+import { Toaster } from 'sonner'
 import Background from './home-page-components/components';
 import Header from './home-page-components/header';
 import Sidebar from './home-page-components/sidebar';
+import { ThemeProvider } from '@/app/home-page-components/hooks/useTheme';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,12 +28,15 @@ export default function RootLayout({
   return (
     <html className="light" lang="en">
       <body className={`${inter.className}`}>
+        <ThemeProvider>
         <Background />
         <Header />
-        <div className="Z-1 flex w-full flex-row bg-[var(--color-bg-secondary)] ">
+        <div className="z-0 flex w-full flex-row bg-[var(--color-bg-secondary)] ">
+        <Toaster />
           <Sidebar />
           {children}
         </div>
+        </ThemeProvider>
       </body>
     </html>
   );

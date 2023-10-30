@@ -1,7 +1,8 @@
 import React from 'react';
 import CodeComponent from '@/app/home-page-components/code-component';
 import PageHOC from '@/app/home-page-components/components/pageHOC';
-import { AlertColors, AlertTypes, AlertVariants } from '@cubik/ui';
+import { Alert, AlertColors, AlertTypes, AlertVariants } from '@cubik/ui';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@cubik/ui';
 
 const page = () => {
   const alertVariants: AlertVariants[] = [
@@ -33,45 +34,56 @@ const page = () => {
           'Use the alert component to display important messages to users.'
         }
       >
-        <div className="border-[var(--color-border-primary) overflow-hidden rounded-[8px] border bg-[#fff] px-6 py-4">
-          <CodeComponent />
-        </div>
-        {/* <div className="p-8">
-          <h1 className="mb-6 text-2xl">Alert Variants Display</h1>
-          <div className="p-8">
-            <h1 className="mb-6 text-2xl">Alert Variants Display</h1>
-
-            {alertColors.map((color) => (
-              <div key={color} className="mb-4">
-                <h2 className="mb-4 text-xl">Color: {color}</h2>
-                {alertTypes.map((type) => (
-                  <div key={type} className="mb-2">
-                    <h3 className="mb-2 text-lg">Type: {type}</h3>
-                    {alertVariants.map((variant) => (
-                      <div key={variant} className="mb-2">
-                        {alertSizes.map((size) => (
-                          <div key={size} className="mb-2">
-                            <Alert
-                              size={size as any}
-                              color={color as any}
-                              title={`Sample Title ${variant}`}
-                              content={`This is a sample content (${size} size)`}
-                              type={type as any}
-                              variant={variant as any}
+        {alertColors.map((color) => (
+          <div key={color} className="mb-4 dark:text-white">
+            <h2 className="mb-4 text-xl">Color: {color}</h2>
+            <Accordion type='multiple'>
+              {alertTypes.map((type, idx) => (
+                <AccordionItem value={`${idx}`} key={type} className="mb-2">
+                  <AccordionTrigger>Type: {type}</AccordionTrigger>
+                  <AccordionContent>
+                    <Accordion type='single'>
+                      {alertVariants.map((variant) => (
+                        <AccordionItem key={variant} value={variant}>
+                          <AccordionTrigger>{variant}</AccordionTrigger>
+                          <AccordionContent>
+                            {alertSizes.map((size) => (
+                              <div key={size} className="mb-6 grid gap-2">
+                                <Alert
+                                  size={size as any}
+                                  color={color as any}
+                                  title={`Sample Title ${variant}`}
+                                  content={`This is a sample content (${size} size)`}
+                                  type={type as any}
+                                  variant={variant as any}
+                                  buttonText={
+                                    variant === 'Loading' ? 'Retry' : 'Click Me'
+                                  }
+                                />
+                                <CodeComponent codeString={`
+                              <Alert 
+                              size='${size}'
+                              color='${color}'
+                              title="Sample Title ${variant}"
+                              content="This is a sample content (${size} size)"
+                              type='${type}'
+                              variant='${variant}'
                               buttonText={
                                 variant === 'Loading' ? 'Retry' : 'Click Me'
                               }
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            ))}
+                              `} />
+                              </div>
+                            ))}
+                          </AccordionContent>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
-        </div> */}
+        ))}
       </PageHOC>
     </>
   );

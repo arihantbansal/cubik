@@ -147,6 +147,12 @@ const navigationData: INavigationData[] = [
             link: '/components/data-display/tag',
             description: '',
           },
+          {
+            id: 212,
+            name: 'Table',
+            link: '/components/data-display/table',
+            description: '',
+          },
         ],
       },
       {

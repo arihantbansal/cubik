@@ -3,20 +3,23 @@
 import React from 'react';
 
 import { Icon } from '@cubik/ui';
+import {useTheme} from '@/app/home-page-components/hooks/useTheme';
 
 const HeaderButtons = () => {
+  const {toggleTheme} =  useTheme();
   return (
-    <div className="flex h-fit flex-row items-center justify-center gap-8">
+    <div className="hidden h-fit flex-row items-center justify-center gap-8 sm:flex">
       <button
-        onClick={() => {
-          const ele = document.querySelector('html');
-          if (!ele?.className) return;
-          if (ele.className === 'dark') {
-            ele.className = 'light';
-          } else {
-            ele.className = 'dark';
-          }
-        }}
+        // onClick={() => {
+        //   const ele = document.querySelector('html');
+        //   if (!ele?.className) return;
+        //   if (ele.className === 'dark') {
+        //     ele.className = 'light';
+        //   } else {
+        //     ele.className = 'dark';
+        //   }
+        // }}
+        onClick={toggleTheme}
       >
         <Icon
           name={'github'}

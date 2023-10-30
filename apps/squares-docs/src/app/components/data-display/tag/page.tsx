@@ -4,9 +4,10 @@ import React from 'react';
 
 import { Tag } from '@cubik/ui';
 
-import BreadCrumb from '../../../home-page-components/components/BreadCrumb';
-import ComponentHeading from '../../../home-page-components/components/ComponentHeading';
+// import BreadCrumb from '../../../home-page-components/components/BreadCrumb';
+// import ComponentHeading from '../../../home-page-components/components/ComponentHeading';
 import PageHOC from '../../../home-page-components/components/pageHOC';
+import CodeComponent from '@/app/home-page-components/code-component';
 
 const Tags = () => {
   return (
@@ -21,6 +22,7 @@ const Tags = () => {
       }
     >
       <Tag text="Pending" iconName="spinner" color="#000" />
+      <CodeComponent codeString='<Tag text="Pending" iconName="spinner" color="#000" />'/>
     </PageHOC>
   );
 };
