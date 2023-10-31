@@ -173,6 +173,12 @@ const navigationData: INavigationData[] = [
             link: '/components/disclosure/accordion',
             description: '',
           },
+          {
+            id: 223,
+            name: 'Segment Control',
+            link: '/components/disclosure/segment',
+            description: '',
+          },
         ],
       },
       {
@@ -223,20 +229,14 @@ const navigationData: INavigationData[] = [
         children: [
           {
             id: 251,
-            name: 'Avatar',
-            link: '/components/overlay/avatar',
+            name: 'Modal',
+            link: '/components/overlay/modal',
             description: '',
           },
           {
             id: 252,
-            name: 'Icons',
-            link: '/components/overlay/icons',
-            description: '',
-          },
-          {
-            id: 253,
-            name: 'Images',
-            link: '/components/overlay/images',
+            name: 'Drawer',
+            link: '/components/overlay/drawer',
             description: '',
           },
         ],

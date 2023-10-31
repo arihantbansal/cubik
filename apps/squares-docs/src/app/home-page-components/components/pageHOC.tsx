@@ -23,4 +23,5 @@ const PageHOC = ({
   );
 };
 
+
 export default PageHOC;

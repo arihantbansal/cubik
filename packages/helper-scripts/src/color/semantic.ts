@@ -3,9 +3,12 @@ import fs from 'fs';
 import { data } from './data';
 
 function convertStringToPrimitive(s: string) {
-  let result = s.replace('Color/', 'color-').replace(/\//g, '-').toLowerCase();
+  const result = s
+    .replace('Color/', 'color-')
+    .replace(/\//g, '-')
+    .toLowerCase();
 
-  let split = result.split('-');
+  const split = result.split('-');
   if (split.length === 3) {
     return '--' + result;
   } else if (split.length > 3) {

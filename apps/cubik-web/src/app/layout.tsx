@@ -30,7 +30,7 @@ export default function RootLayout({
         <WalletContext>
           <AuthProvider>
             <Providers>
-              <Header />
+             <Header />
               {children}
               <Toaster />
             </Providers>
