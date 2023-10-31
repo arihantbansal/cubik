@@ -13,8 +13,7 @@
     "@prisma/adapter-planetscale": "^5.5.2",
     "@prisma/client": "^5.5.2",
     "dotenv": "^16.3.1",
-    "dotenv-cli": "latest",
-    "undici": "^5.27.0"
+    "dotenv-cli": "latest"
   },
   "devDependencies": {
     "prisma": "^5.5.2",
