@@ -34,3 +34,4 @@ export * from './components/ui/Progress';
 export * from './components/ui/Popover';
 export * from './components/ui/Tooltip';
 export * from './components/ui/Divider';
+export * from './components/ui/Select';
