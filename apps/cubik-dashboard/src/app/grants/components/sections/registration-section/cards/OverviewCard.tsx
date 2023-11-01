@@ -4,10 +4,11 @@ import {
   AvatarLabelGroup,
   Button,
   Icon,
+  Tab,
+  TabPanel,
+  TabPanels,
   Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
+  TabList,
 } from '@cubik/ui';
 
 const OverviewCard = () => {
@@ -16,22 +17,22 @@ const OverviewCard = () => {
       <div className="flex items-center justify-between p-4 pb-0">
         <h3 className="text-lg font-semibold">Overview</h3>
       </div>
-      <Tabs defaultValue="owners" className="mt-6 rounded-b-lg">
-        <TabsList className="w-full  overflow-x-auto whitespace-nowrap bg-neutral-800">
+      <Tabs defaultValue="owners" size='md' className="mt-6 rounded-b-lg">
+        <TabList className="w-full  overflow-x-auto whitespace-nowrap bg-neutral-800">
           <div className="border-b-surface-neutral-800 w-full max-w-7xl border-b ">
-            <TabsTrigger className="text-sm font-normal" value="owners">
+            <Tab className="text-sm font-normal" value="owners">
               Owners
-            </TabsTrigger>
-            <TabsTrigger value="threshold" className="text-sm font-normal">
+            </Tab>
+            <Tab value="threshold" className="text-sm font-normal">
               Threshold
-            </TabsTrigger>
-            <TabsTrigger value="assets" className="text-sm font-normal">
+            </Tab>
+            <Tab value="assets" className="text-sm font-normal">
               Assets
-            </TabsTrigger>
+            </Tab>
           </div>
-        </TabsList>
-        <div className="mx-auto w-full max-w-7xl rounded-b-lg bg-[#1F1F1F] p-4">
-          <TabsContent value="owners">
+        </TabList>
+        <TabPanels className="mx-auto w-full max-w-7xl rounded-b-lg bg-[#1F1F1F] p-4">
+          <TabPanel value="owners">
             <div className="space-y-3">
               <AvatarLabelGroup
                 avatarSrc="/dhruvAvatar.jpeg"
@@ -52,10 +53,10 @@ const OverviewCard = () => {
                 size="sm"
               />
             </div>
-          </TabsContent>
-          <TabsContent value="threshold">asdfdsf</TabsContent>
-          <TabsContent value="assets">asdffs</TabsContent>
-        </div>
+          </TabPanel>
+          <TabPanel value="threshold">asdfdsf</TabPanel>
+          <TabPanel value="assets">asdffs</TabPanel>
+        </TabPanels>
       </Tabs>
     </div>
   );

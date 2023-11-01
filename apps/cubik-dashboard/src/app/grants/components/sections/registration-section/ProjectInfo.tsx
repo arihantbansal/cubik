@@ -1,24 +1,21 @@
 import React from 'react';
 
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
+  // Accordion,
+  // AccordionContent,
+  // AccordionItem,
+  // AccordionTrigger,
   Button,
   Icon,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
+
 } from '@cubik/ui';
 
-const STATUS_DATA = [
-  { label: 'Total Raised', value: '$4.5k' },
-  { label: 'Unique Contributors', value: '143' },
-  { label: 'Rounds', value: '1' },
-  { label: 'Community Contributions', value: '$796.5' },
-];
+// const STATUS_DATA = [
+//   { label: 'Total Raised', value: '$4.5k' },
+//   { label: 'Unique Contributors', value: '143' },
+//   { label: 'Rounds', value: '1' },
+//   { label: 'Community Contributions', value: '$796.5' },
+// ];
 export const ProjectInfo = () => {
   return (
     <div className="flex grow flex-col overflow-scroll">
@@ -58,7 +55,7 @@ export const ProjectInfo = () => {
         </div>
       </div>
 
-      <Tabs defaultValue="details" className="">
+      {/* <Tabs defaultValue="details" className="">
         <TabsList className="w-full  overflow-x-auto whitespace-nowrap bg-neutral-800">
           <div className="mx-auto w-full max-w-7xl">
             <TabsTrigger value="details">Details</TabsTrigger>
@@ -186,7 +183,7 @@ export const ProjectInfo = () => {
 
           <TabsContent value="emails">Change your password here.</TabsContent>
         </div>
-      </Tabs>
+      </Tabs> */}
     </div>
   );
 };

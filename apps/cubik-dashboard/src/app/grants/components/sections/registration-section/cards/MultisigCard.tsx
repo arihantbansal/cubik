@@ -3,10 +3,11 @@ import React from 'react';
 import {
   Button,
   Icon,
+  Tab,
+  TabPanel,
+  TabPanels,
   Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
+  TabList,
 } from '@cubik/ui';
 
 import { PayoutsTable } from '../table/tables/PayoutsTable';
@@ -60,23 +61,23 @@ const MultisigCard = () => {
       </div>
 
       <div className="">
-        <Tabs defaultValue="sponsors" className="mt-6">
-          <TabsList className="w-full  overflow-x-auto whitespace-nowrap bg-neutral-800">
+        <Tabs defaultValue="sponsors" size='lg' className="mt-6">
+          <TabList className="w-full  overflow-x-auto whitespace-nowrap bg-neutral-800">
             <div className="border-b-surface-neutral-800 w-full max-w-7xl border-b ">
-              <TabsTrigger className="text-sm font-normal" value="sponsors">
+              <Tab className="text-sm font-normal" value="sponsors">
                 Sponsors
-              </TabsTrigger>
-              <TabsTrigger value="payout" className="text-sm font-normal">
+              </Tab>
+              <Tab value="payout" className="text-sm font-normal">
                 Payout
-              </TabsTrigger>
-              <TabsTrigger value="transactions" className="text-sm font-normal">
+              </Tab>
+              <Tab value="transactions" className="text-sm font-normal">
                 Transactions
-              </TabsTrigger>
+              </Tab>
             </div>
-          </TabsList>
+          </TabList>
           <div className="mx-auto w-full max-w-7xl rounded-b-lg bg-[#1F1F1F] p-4">
-            <TabsContent value="sponsors">
-              <>
+            <TabPanels >
+              <TabPanel value="sponsors">
                 <SponsorsTable />
                 <Button
                   variant={'ghost'}
@@ -92,14 +93,15 @@ const MultisigCard = () => {
                     width={14}
                   />
                 </Button>
-              </>
-            </TabsContent>
-            <TabsContent value="payout">
+              </TabPanel>
+              <TabPanel value="payout">
               <PayoutsTable />
-            </TabsContent>
-            <TabsContent value="transactions">
+            </TabPanel>
+            <TabPanel value="transactions">
               <TransactionsTable />
-            </TabsContent>
+            </TabPanel>
+            </TabPanels>
+           
           </div>
         </Tabs>
       </div>

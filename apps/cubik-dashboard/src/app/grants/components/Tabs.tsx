@@ -2,15 +2,15 @@
 
 import React from 'react';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@cubik/ui';
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from '@cubik/ui';
 
-import { MultisigSection } from './sections/multisig-section/Multisigs';
-import { RegistrationsSection } from './sections/registration-section/Registrations';
+// import { MultisigSection } from './sections/multisig-section/Multisigs';
+// import { RegistrationsSection } from './sections/registration-section/Registrations';
 
 export const TabsSection = () => {
   return (
     <div className="mx-auto w-full  text-white">
-      <Tabs defaultValue="details" className="">
+      {/* <Tabs defaultValue="details" className="">
         <TabsList className="w-full  overflow-x-auto whitespace-nowrap bg-neutral-800 ">
           <div className="mx-auto w-full max-w-7xl">
             <TabsTrigger value="details">Details</TabsTrigger>
@@ -35,7 +35,7 @@ export const TabsSection = () => {
           </TabsContent>
           <TabsContent value="settings">Change your password here.</TabsContent>
         </div>
-      </Tabs>
+      </Tabs> */}
     </div>
   );
 };
