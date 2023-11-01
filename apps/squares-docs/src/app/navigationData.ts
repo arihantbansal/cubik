@@ -153,6 +153,12 @@ const navigationData: INavigationData[] = [
             link: '/components/data-display/table',
             description: '',
           },
+          {
+            id: 213,
+            name: 'Divider',
+            link: '/components/data-display/divider',
+            description: '',
+          },
         ],
       },
       {
@@ -192,9 +198,15 @@ const navigationData: INavigationData[] = [
             description: '',
           },
           {
-            id: 132, // Should this be 232?
+            id: 232, // Should this be 232?
             name: 'Toast',
             link: '/components/feedback/toast',
+            description: '',
+          },
+          {
+            id: 233, // Should this be 232?
+            name: 'Progress',
+            link: '/components/feedback/progress',
             description: '',
           },
         ],
@@ -237,6 +249,30 @@ const navigationData: INavigationData[] = [
             id: 252,
             name: 'Drawer',
             link: '/components/overlay/drawer',
+            description: '',
+          },
+          {
+            id: 253,
+            name: 'Popover',
+            link: '/components/overlay/popover',
+            description: '',
+          },
+          {
+            id: 254,
+            name: 'Tooltip',
+            link: '/components/overlay/tooltip',
+            description: '',
+          },
+        ],
+      },
+      {
+        id: 26,
+        name: 'Form',
+        children: [
+          {
+            id: 261,
+            name: 'Input',
+            link: '/components/forms/input',
             description: '',
           },
         ],

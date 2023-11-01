@@ -1,87 +1,37 @@
 'use client';
 
 import React from 'react';
+import CodeComponent from '@/app/home-page-components/code-component';
+import PageHOC from '@/app/home-page-components/components/pageHOC';
+import { Input } from "@cubik/ui"
 
-import { InputField } from '@cubik/ui';
-
-const Input = () => {
+const InputPage = () => {
   return (
-    <div className="flex flex-col justify-start gap-5 px-10">
-      <div className="font-2xl font-semibold">Input Field</div>
-
-      <div className="space-y-2">
-        <div className="font-lg font-semibold">Normal Input Field</div>
-        <InputField inputSize={'sm'} />
-        <InputField inputSize={'md'} />
-      </div>
-
-      <div className="space-y-2">
-        <div className="font-lg font-semibold">Placeholder Input Field</div>
-        <InputField inputSize={'sm'} placeholderVariant placeholder="input" />
-        <InputField inputSize={'md'} placeholderVariant placeholder="input" />
-      </div>
-
-      <div className="space-y-2">
-        <div className="font-lg font-semibold">
-          Placeholder left element Input Field
+    <>
+      <PageHOC
+        pages={[
+          { name: 'Component', href: '/component', current: false },
+          {
+            name: 'Input',
+            href: '/component/input',
+            current: true,
+          },
+        ]}
+        heading={'Input'}
+        description=""
+      >
+        <div>
+          <div className="border-[var(--color-border-primary) overflow-hidden rounded-[8px] border bg-[var(--white)] px-6 py-4">
+            <CodeComponent codeString='import { Input } from "@cubik/ui"' />
+          </div>
+          <Input leftIcon={
+            <p>https://</p>
+          } 
+          id='aa' name='aa' placeholder='test@cubik.com' type='text'  />
         </div>
-        <InputField
-          inputSize={'sm'}
-          placeholderVariant
-          placeholder="input"
-          leftElement
-          leftElementContent="USDC"
-        />
-        <InputField
-          inputSize={'md'}
-          placeholderVariant
-          placeholder="input"
-          leftElement
-          leftElementContent="USDC"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <div className="font-lg font-semibold">
-          Placeholder right element Input Field
-        </div>
-        <InputField
-          inputSize={'sm'}
-          placeholderVariant
-          placeholder="input"
-          rightElement
-        />
-        <InputField
-          inputSize={'md'}
-          placeholderVariant
-          placeholder="input"
-          rightElement
-        />
-      </div>
-
-      <div className="space-y-2">
-        <div className="font-lg font-semibold">
-          Placeholder right and left element Input Field
-        </div>
-        <InputField
-          inputSize={'sm'}
-          placeholderVariant
-          placeholder="input"
-          leftElement
-          rightElement
-          leftElementContent="USDC"
-        />
-        <InputField
-          inputSize={'md'}
-          placeholderVariant
-          placeholder="input"
-          leftElement
-          rightElement
-          leftElementContent="USDC"
-        />
-      </div>
-    </div>
+      </PageHOC>
+    </>
   );
 };
 
-export default Input;
+export default InputPage;

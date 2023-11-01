@@ -2,7 +2,6 @@
 
 import { FC } from 'react';
 import { Container } from '@chakra-ui/react';
-import { Input } from '@ui/components/input';
 import { GridOne } from '@ui/icons/svgs/grid-one';
 import Search from '@ui/icons/svgs/search';
 
@@ -20,11 +19,7 @@ export const Explorer: FC<{ projects: Partial<Project>[] }> = ({
           <Projects projects={projects} />
         </div>
         <div className="col-span-1 p-4">
-          <Input
-            placeholder="Search..."
-            className="max-w-sm rounded-xl border-gray-600 bg-[#333333]"
-            leftIcon={<Search />}
-          />
+         
           <div className="mt-4">
             <div className="flex flex-col">
               <div className="flex max-w-sm flex-row justify-between gap-2">
