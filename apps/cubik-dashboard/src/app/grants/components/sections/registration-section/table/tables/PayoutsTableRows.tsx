@@ -28,12 +28,13 @@ export const PayoutsTableRows = () => {
           <p className="flex tracking-widest">$12,596.6</p>
         </TableCell>
         <TableCell>
-          <Tag
+          {/* // @todo: add new tag component here
+                <Tag
             text="Executed"
             iconName="doubleTick"
             color="#000"
             className="bg-green-500 text-black"
-          />
+          /> */}
         </TableCell>
       </TableRow>
 
@@ -54,12 +55,13 @@ export const PayoutsTableRows = () => {
           <p className="flex tracking-widest">$12,596.6</p>
         </TableCell>
         <TableCell>
-          <Tag
+          {/* // @todo: add new tag component here
+                 <Tag
             text="Not Executed"
             iconName="spinner"
             color="#000"
             className="bg-[#F5D431] text-black"
-          />
+          /> */}
         </TableCell>
       </TableRow>
 
@@ -80,12 +82,13 @@ export const PayoutsTableRows = () => {
           <p className="flex tracking-widest">$12,596.6</p>
         </TableCell>
         <TableCell>
+          {/* // @todo: add new tag component here
           <Tag
             text="Not Signed"
             iconName="clock"
             color="#fff"
             className="bg-blue-500 text-white"
-          />
+          /> */}
         </TableCell>
       </TableRow>
     </>

@@ -21,12 +21,13 @@ export const TransactionsTableRows = () => {
         </TableCell>
 
         <TableCell>
-          <Tag
+          {/* @todo: add new tag component here 
+           <Tag
             text="Executed"
             iconName="doubleTick"
             color="#000"
             className="bg-green-500 text-black"
-          />
+          /> */}
         </TableCell>
         <TableCell className="">
           <p className="flex tracking-widest text-neutral-500">
@@ -60,12 +61,13 @@ export const TransactionsTableRows = () => {
         </TableCell>
 
         <TableCell>
-          <Tag
+          {/* @todo
+           <Tag
             text="Pending"
             iconName="spinner"
             color="#000"
             className="bg-[#F5D431] text-black"
-          />
+          /> */}
         </TableCell>
         <TableCell className="">
           <p className="flex tracking-widest text-neutral-500">
@@ -99,12 +101,13 @@ export const TransactionsTableRows = () => {
         </TableCell>
 
         <TableCell>
-          <Tag
+          {/*
+           <Tag
             text="Failed"
             iconName="danger"
             color="#fff"
             className="bg-red-500 text-white"
-          />
+          /> */}
         </TableCell>
         <TableCell className="">
           <p className="flex tracking-widest text-neutral-500">

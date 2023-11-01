@@ -21,8 +21,8 @@ const Tags = () => {
         'Use the label component to add contextual metadata to a design.'
       }
     >
-      <Tag text="Pending" iconName="spinner" color="#000" />
-      <CodeComponent codeString='<Tag text="Pending" iconName="spinner" color="#000" />' />
+      {/* <Tag text="Pending" iconName="spinner" color="#000" /> */}
+      <CodeComponent codeString='<Tag text="Pending" iconName="spinner" color="#000" />'/>
     </PageHOC>
   );
 };

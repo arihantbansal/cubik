@@ -20,8 +20,14 @@ import {
 import { serializeSemantic } from '../../../lib/colors';
 import PageHOC from '../../home-page-components/components/pageHOC';
 
+type objectType = {
+  name: string;
+  value: objectType | objectType[];
+};
+
 export default function ComponentPage() {
-  const serialized = serializeSemantic();
+  const serialized: objectType[] = serializeSemantic();
+
   return (
     <PageHOC
       pages={[
@@ -33,105 +39,90 @@ export default function ComponentPage() {
         'Our color tokens are a foundational part of our design system. We use color to visually communicate information, functions, and personality in our experiences.'
       }
     >
-      <Tabs size="md" defaultValue="bg">
-        <TabList>
-          <Tab value="bg">Background</Tab>
-          <Tab value="surface">Surface</Tab>
-          <Tab value="fg">Foregroud</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel value="bg">
-            <Table className="dark:text-white">
-              <TableCaption>A list of Background Colors</TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[100px]">Variation</TableHead>
-                  <TableHead>Token Name</TableHead>
-                  <TableHead>Dark Mode</TableHead>
-                  <TableHead className="text-right">Light Mode</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {serialized.bg.map((v, idx) => (
-                  <TableRow key={idx}>
-                    <TableCell className="font-medium">{v.variant}</TableCell>
-                    <TableCell>{v.name}</TableCell>
-                    <TableCell>{v.dark}</TableCell>
-                    <TableCell className="text-right">{v.light}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TabPanel>
-          <TabPanel value="surface">
-            <Table className="dark:text-white">
-              <TableCaption>A list of Surface Colors</TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[100px]">Variation</TableHead>
-                  <TableHead>Token Name</TableHead>
-                  <TableHead>Dark Mode</TableHead>
-                  <TableHead className="text-right">Light Mode</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {serialized.surface.map((v, idx) => (
-                  <TableRow key={idx}>
-                    <TableCell className="font-medium">{v.variant}</TableCell>
-                    <TableCell>{v.name}</TableCell>
-                    <TableCell>{v.dark}</TableCell>
-                    <TableCell className="text-right">{v.light}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TabPanel>
-          <Table className="dark:text-white">
-            <TableCaption>A list of Background Colors</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Variation</TableHead>
-                <TableHead>Token Name</TableHead>
-                <TableHead>Dark Mode</TableHead>
-                <TableHead className="text-right">Light Mode</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {serialized.bg.map((v, idx) => (
-                <TableRow key={idx}>
-                  <TableCell className="font-medium">{v.variant}</TableCell>
-                  <TableCell>{v.name}</TableCell>
-                  <TableCell>{v.dark}</TableCell>
-                  <TableCell className="text-right">{v.light}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <TabPanel value="fg">
-            <Table className="dark:text-white">
-              <TableCaption>A list of Foreground Colors</TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[100px]">Variation</TableHead>
-                  <TableHead>Token Name</TableHead>
-                  <TableHead>Dark Mode</TableHead>
-                  <TableHead className="text-right">Light Mode</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {serialized.fg.map((v, idx) => (
-                  <TableRow key={idx}>
-                    <TableCell className="font-medium">{v.variant}</TableCell>
-                    <TableCell>{v.name}</TableCell>
-                    <TableCell>{v.dark}</TableCell>
-                    <TableCell className="text-right">{v.light}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+      <>
+        {' '}
+        {serialized.map((token, key) => (
+          <div key={key}>
+            <Tabs defaultValue="three" size="sm" className="">
+              <TabList>
+                {(token.value as objectType[]).map(
+                  (tokenVariant: any, key: any) => (
+                    <Tab key={key} value={tokenVariant.name}>
+                      {tokenVariant.name}
+                    </Tab>
+                  ),
+                )}
+              </TabList>
+              <TabPanels>
+                {(token.value as objectType[]).map(
+                  (tokenVariant: any, key: any) => (
+                    <TabPanel key={key} value={tokenVariant.name}>
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>Name</TableHead>
+                            <TableHead>Value</TableHead>
+                            <TableHead>Dark Mode</TableHead>
+                            <TableHead>Light Mode</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {tokenVariant.value.map(
+                            (colorGroup: any, index: any) => (
+                              <TableRow key={index}>
+                                <TableCell className="">
+                                  {colorGroup.name}
+                                </TableCell>
+                                <TableCell className="flex w-fit flex-col gap-4">
+                                  {colorGroup.value.map(
+                                    (color: any, index: any) => (
+                                      <div key={index}>
+                                        <div className="w-fit bg-yellow-200 ">
+                                          --{color.name}
+                                        </div>
+                                      </div>
+                                    ),
+                                  )}
+                                </TableCell>
+                                <TableCell>
+                                  {colorGroup.value.map(
+                                    (color: any, index: any) => (
+                                      <div key={index}>
+                                        <div>{color.lightValue}</div>
+                                      </div>
+                                    ),
+                                  )}
+                                </TableCell>
+                                <TableCell>
+                                  {colorGroup.value.map(
+                                    (color: any, index: any) => (
+                                      <div key={index}>{color.darkValue}</div>
+                                    ),
+                                  )}
+                                </TableCell>
+                              </TableRow>
+                            ),
+                          )}
+                        </TableBody>
+                      </Table>
+                      {/* {tokenVariant.value.map((colorGroup, index) => (
+                    <div key={index}>
+                      <div>{colorGroup.name}</div>
+                      {colorGroup.value.map((color, index) => (
+                        <div key={index}>
+                          <div>--{color.name}</div>
+                        </div>
+                      ))}
+                    </div>
+                  ))} */}
+                    </TabPanel>
+                  ),
+                )}
+              </TabPanels>
+            </Tabs>
+          </div>
+        ))}
+      </>
     </PageHOC>
   );
 }

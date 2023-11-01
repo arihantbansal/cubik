@@ -24,12 +24,13 @@ export const SponsorsTableRows = () => {
           </div>
         </TableCell>
         <TableCell className="">
-          <Tag
+          {/* @todo: add new tag component here 
+           <Tag
             text="Paid"
             iconName="doubleTick"
             color="#71F587"
             className="bg-[#005C0F] text-[#71F587]"
-          />
+          /> */}
         </TableCell>
       </TableRow>
       <TableRow className="hover:bg-surface-neutral-820">
@@ -51,12 +52,13 @@ export const SponsorsTableRows = () => {
           </div>
         </TableCell>
         <TableCell className="">
-          <Tag
+         {/* @todo: add new tag component here 
+           <Tag
             text="Pending"
             iconName="clock"
             color="#FFE45C"
             className="bg-[#5C4D00] text-[#FFE45C]"
-          />
+          /> */}
         </TableCell>
       </TableRow>
     </>
