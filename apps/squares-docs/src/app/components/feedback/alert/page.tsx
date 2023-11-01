@@ -13,7 +13,7 @@ import {
   AlertVariants,
 } from '@cubik/ui';
 
-const page = () => {
+const AlertPage = () => {
   const alertVariants: AlertVariants[] = [
     'Info',
     'Loading',
@@ -100,4 +100,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default AlertPage;
