@@ -32,7 +32,7 @@ const Page = () => {
             <CodeComponent codeString='import { Segment } from "@cubik/ui"' />
           </div>
           <div className="mt-10 flex w-full flex-col gap-5">
-            <SegmentContainer size='sm'>
+            <SegmentContainer size="sm">
               <Segment defaultValue="account">
                 <SegmentList position="end">
                   <SegmentTrigger value="account">Account</SegmentTrigger>
@@ -49,7 +49,7 @@ const Page = () => {
                 </SegmentContent> */}
               </Segment>
             </SegmentContainer>
-            <SegmentContainer size='md'>
+            <SegmentContainer size="md">
               <Segment defaultValue="account">
                 <SegmentList position="end">
                   <SegmentTrigger value="account">Account</SegmentTrigger>
@@ -66,7 +66,7 @@ const Page = () => {
                 </SegmentContent> */}
               </Segment>
             </SegmentContainer>
-            <SegmentContainer size='lg'>
+            <SegmentContainer size="lg">
               <Segment defaultValue="account">
                 <SegmentList position="end">
                   <SegmentTrigger value="account">Account</SegmentTrigger>
@@ -83,7 +83,7 @@ const Page = () => {
                 </SegmentContent> */}
               </Segment>
             </SegmentContainer>
-            <SegmentContainer size='xl'>
+            <SegmentContainer size="xl">
               <Segment defaultValue="account">
                 <SegmentList position="end">
                   <SegmentTrigger value="account">Account</SegmentTrigger>
@@ -100,7 +100,7 @@ const Page = () => {
                 </SegmentContent> */}
               </Segment>
             </SegmentContainer>
-            <SegmentContainer size='2xl'>
+            <SegmentContainer size="2xl">
               <Segment defaultValue="account">
                 <SegmentList position="end">
                   <SegmentTrigger value="account">Account</SegmentTrigger>

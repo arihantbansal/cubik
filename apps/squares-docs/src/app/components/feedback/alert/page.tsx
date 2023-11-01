@@ -1,8 +1,17 @@
 import React from 'react';
 import CodeComponent from '@/app/home-page-components/code-component';
 import PageHOC from '@/app/home-page-components/components/pageHOC';
-import { Alert, AlertColors, AlertTypes, AlertVariants } from '@cubik/ui';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@cubik/ui';
+
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  Alert,
+  AlertColors,
+  AlertTypes,
+  AlertVariants,
+} from '@cubik/ui';
 
 const page = () => {
   const alertVariants: AlertVariants[] = [
@@ -37,12 +46,12 @@ const page = () => {
         {alertColors.map((color) => (
           <div key={color} className="mb-4 dark:text-white">
             <h2 className="mb-4 text-xl">Color: {color}</h2>
-            <Accordion type='multiple'>
+            <Accordion type="multiple">
               {alertTypes.map((type, idx) => (
                 <AccordionItem value={`${idx}`} key={type} className="mb-2">
                   <AccordionTrigger>Type: {type}</AccordionTrigger>
                   <AccordionContent>
-                    <Accordion type='single'>
+                    <Accordion type="single">
                       {alertVariants.map((variant) => (
                         <AccordionItem key={variant} value={variant}>
                           <AccordionTrigger>{variant}</AccordionTrigger>
@@ -60,7 +69,8 @@ const page = () => {
                                     variant === 'Loading' ? 'Retry' : 'Click Me'
                                   }
                                 />
-                                <CodeComponent codeString={`
+                                <CodeComponent
+                                  codeString={`
                               <Alert 
                               size='${size}'
                               color='${color}'
@@ -71,7 +81,8 @@ const page = () => {
                               buttonText={
                                 variant === 'Loading' ? 'Retry' : 'Click Me'
                               }
-                              `} />
+                              `}
+                                />
                               </div>
                             ))}
                           </AccordionContent>

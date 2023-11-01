@@ -22,7 +22,7 @@ const ProgressPage = () => {
         <div className="border-[var(--color-border-primary) overflow-hidden rounded-[8px] border bg-[var(--white)] px-6 py-4">
           <CodeComponent codeString='import { Progress } from "@cubik/ui"' />
         </div>
-        <div className='mt-10'>
+        <div className="mt-10">
           <Progress defaultProgress={50} />
         </div>
       </div>

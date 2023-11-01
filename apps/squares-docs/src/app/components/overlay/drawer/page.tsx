@@ -22,9 +22,14 @@ const Page = () => {
           <div className="border-[var(--color-border-primary) overflow-hidden rounded-[8px] border bg-[var(--white)] px-6 py-4">
             <CodeComponent codeString='import { Drawer } from "@cubik/ui"' />
           </div>
-          <button onClick={()=> setOpen(true)}>Test Button</button>
-          <Drawer drawerPosition='right' drawerSize='md' onClose={() => setOpen(false)} open={open}>
-            <div className='h-80 w-full bg-red-400'></div>
+          <button onClick={() => setOpen(true)}>Test Button</button>
+          <Drawer
+            drawerPosition="right"
+            drawerSize="md"
+            onClose={() => setOpen(false)}
+            open={open}
+          >
+            <div className="h-80 w-full bg-red-400"></div>
           </Drawer>
         </div>
       </PageHOC>

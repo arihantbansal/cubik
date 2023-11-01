@@ -5,10 +5,10 @@ import {
   Button,
   Icon,
   Tab,
+  TabList,
   TabPanel,
   TabPanels,
   Tabs,
-  TabList,
 } from '@cubik/ui';
 
 const OverviewCard = () => {
@@ -17,7 +17,7 @@ const OverviewCard = () => {
       <div className="flex items-center justify-between p-4 pb-0">
         <h3 className="text-lg font-semibold">Overview</h3>
       </div>
-      <Tabs defaultValue="owners" size='md' className="mt-6 rounded-b-lg">
+      <Tabs defaultValue="owners" size="md" className="mt-6 rounded-b-lg">
         <TabList className="w-full  overflow-x-auto whitespace-nowrap bg-neutral-800">
           <div className="border-b-surface-neutral-800 w-full max-w-7xl border-b ">
             <Tab className="text-sm font-normal" value="owners">

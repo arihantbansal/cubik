@@ -7,7 +7,6 @@ import {
   // AccordionTrigger,
   Button,
   Icon,
-
 } from '@cubik/ui';
 
 // const STATUS_DATA = [

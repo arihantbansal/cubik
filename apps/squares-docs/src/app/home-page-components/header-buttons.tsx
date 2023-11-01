@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
+import { useTheme } from '@/app/home-page-components/hooks/useTheme';
 
 import { Icon } from '@cubik/ui';
-import {useTheme} from '@/app/home-page-components/hooks/useTheme';
 
 const HeaderButtons = () => {
-  const {toggleTheme} =  useTheme();
+  const { toggleTheme } = useTheme();
   return (
     <div className="hidden h-fit flex-row items-center justify-center gap-8 sm:flex">
       <button

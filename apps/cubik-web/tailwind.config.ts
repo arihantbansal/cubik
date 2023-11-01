@@ -1,2 +1,3 @@
-import config from "@cubik/config/tailwind/tailwind.config";
+import config from '@cubik/config/tailwind/tailwind.config';
+
 export default config;

@@ -4,10 +4,10 @@ import {
   Button,
   Icon,
   Tab,
+  TabList,
   TabPanel,
   TabPanels,
   Tabs,
-  TabList,
 } from '@cubik/ui';
 
 import { PayoutsTable } from '../table/tables/PayoutsTable';
@@ -61,7 +61,7 @@ const MultisigCard = () => {
       </div>
 
       <div className="">
-        <Tabs defaultValue="sponsors" size='lg' className="mt-6">
+        <Tabs defaultValue="sponsors" size="lg" className="mt-6">
           <TabList className="w-full  overflow-x-auto whitespace-nowrap bg-neutral-800">
             <div className="border-b-surface-neutral-800 w-full max-w-7xl border-b ">
               <Tab className="text-sm font-normal" value="sponsors">
@@ -76,7 +76,7 @@ const MultisigCard = () => {
             </div>
           </TabList>
           <div className="mx-auto w-full max-w-7xl rounded-b-lg bg-[#1F1F1F] p-4">
-            <TabPanels >
+            <TabPanels>
               <TabPanel value="sponsors">
                 <SponsorsTable />
                 <Button
@@ -95,13 +95,12 @@ const MultisigCard = () => {
                 </Button>
               </TabPanel>
               <TabPanel value="payout">
-              <PayoutsTable />
-            </TabPanel>
-            <TabPanel value="transactions">
-              <TransactionsTable />
-            </TabPanel>
+                <PayoutsTable />
+              </TabPanel>
+              <TabPanel value="transactions">
+                <TransactionsTable />
+              </TabPanel>
             </TabPanels>
-           
           </div>
         </Tabs>
       </div>

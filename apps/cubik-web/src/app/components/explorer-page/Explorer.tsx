@@ -19,7 +19,6 @@ export const Explorer: FC<{ projects: Partial<Project>[] }> = ({
           <Projects projects={projects} />
         </div>
         <div className="col-span-1 p-4">
-         
           <div className="mt-4">
             <div className="flex flex-col">
               <div className="flex max-w-sm flex-row justify-between gap-2">

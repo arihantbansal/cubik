@@ -1,10 +1,13 @@
-"use client";
-import { Button } from '@cubik/ui';
-import HeaderButtons from './header-buttons';
-import Logo from './logo';
+'use client';
+
 import React from 'react';
 import Drawer from '@/app/home-page-components/drawer';
 import NavigationItems from '@/app/home-page-components/navigationItems';
+
+import { Button } from '@cubik/ui';
+
+import HeaderButtons from './header-buttons';
+import Logo from './logo';
 
 export default function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -38,8 +41,6 @@ export default function Header() {
             </div>
           </div>
           <HeaderButtons />
-         
-     
         </div>
       </div>
     </header>

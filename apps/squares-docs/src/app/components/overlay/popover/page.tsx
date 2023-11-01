@@ -1,4 +1,5 @@
-"use client"
+'use client';
+
 import React from 'react';
 import CodeComponent from '@/app/home-page-components/code-component';
 import PageHOC from '@/app/home-page-components/components/pageHOC';
@@ -21,8 +22,8 @@ const PopOverPage = () => {
             <CodeComponent codeString='import { Popover } from "@cubik/ui"' />
           </div>
           <div className="mt-10">
-            <Popover> 
-                <div className='h-40 w-full bg-red-400'></div>
+            <Popover>
+              <div className="h-40 w-full bg-red-400"></div>
             </Popover>
           </div>
         </div>
