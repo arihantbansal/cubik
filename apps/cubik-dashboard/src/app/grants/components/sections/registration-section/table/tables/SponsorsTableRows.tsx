@@ -10,7 +10,6 @@ export const SponsorsTableRows = () => {
           <AvatarLabelGroup
             avatarSrc="/projectLogo.jpeg"
             title="Superteam"
-            variant={1}
             subtitle="by @kash"
             size="md"
           />
@@ -38,7 +37,6 @@ export const SponsorsTableRows = () => {
           <AvatarLabelGroup
             avatarSrc="/projectLogo.jpeg"
             title="Superteam"
-            variant={1}
             subtitle="by @kash"
             size="md"
           />

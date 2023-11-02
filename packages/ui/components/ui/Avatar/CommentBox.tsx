@@ -14,7 +14,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ size, sticker, replies }) => {
     <div>
       <div className="comment-header">
         {sticker && <div className="sticker">Sticker Icon Here</div>}
-        <AvatarLabelGroup size={size} variant={1} avatarSrc={''} title={''} />
+        <AvatarLabelGroup size={size} avatarSrc={''} title={''} />
       </div>
 
       <div className="comment-content">Comment content here...</div>

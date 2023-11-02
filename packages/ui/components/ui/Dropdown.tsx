@@ -75,7 +75,6 @@ const Dropdown: React.FC<DropdownProps> = ({
                 subtitle="Software Developer"
                 description="5 years of experience"
                 size="md"
-                variant={1}
               />
             </li>
             <li>

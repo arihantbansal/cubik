@@ -16,7 +16,6 @@ export const TransactionsTableRows = () => {
             title="2 Assets"
             description="$320"
             size="sm"
-            variant={1}
           />
         </TableCell>
 
@@ -40,7 +39,6 @@ export const TransactionsTableRows = () => {
             shape="square"
             title="dreader"
             size="xs"
-            variant={1}
           />
         </TableCell>
       </TableRow>
@@ -56,7 +54,6 @@ export const TransactionsTableRows = () => {
             title="2 Assets"
             description="$320"
             size="sm"
-            variant={1}
           />
         </TableCell>
 
@@ -80,7 +77,6 @@ export const TransactionsTableRows = () => {
             shape="square"
             title="dreader"
             size="xs"
-            variant={1}
           />
         </TableCell>
       </TableRow>
@@ -96,7 +92,6 @@ export const TransactionsTableRows = () => {
             title="2 Assets"
             description="$320"
             size="sm"
-            variant={1}
           />
         </TableCell>
 
@@ -120,7 +115,6 @@ export const TransactionsTableRows = () => {
             shape="square"
             title="dreader"
             size="xs"
-            variant={1}
           />
         </TableCell>
       </TableRow>

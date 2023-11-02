@@ -4,7 +4,7 @@ import React, { createContext, ReactNode, useContext } from 'react';
 import * as RadixTabs from '@radix-ui/react-tabs';
 import { cva } from 'class-variance-authority';
 
-import { cn } from '../../lib/utils';
+import { cn } from '../../../lib/utils';
 
 type TabContextType = {
   size: 'xxs' | 'xs' | 'sm' | 'md' | 'lg';

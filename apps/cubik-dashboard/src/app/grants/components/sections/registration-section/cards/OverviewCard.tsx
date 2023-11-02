@@ -37,19 +37,16 @@ const OverviewCard = () => {
               <AvatarLabelGroup
                 avatarSrc="/dhruvAvatar.jpeg"
                 title="@leatha.Ritchie77"
-                variant={1}
                 size="sm"
               />
               <AvatarLabelGroup
                 avatarSrc="/dhruvAvatar.jpeg"
                 title="@margie17"
-                variant={1}
                 size="sm"
               />
               <AvatarLabelGroup
                 avatarSrc="/dhruvAvatar.jpeg"
                 title="@Leatha.Ritchie77"
-                variant={1}
                 size="sm"
               />
             </div>

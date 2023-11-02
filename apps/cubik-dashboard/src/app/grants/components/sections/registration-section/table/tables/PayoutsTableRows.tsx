@@ -16,7 +16,6 @@ export const PayoutsTableRows = () => {
           <AvatarLabelGroup
             avatarSrc="/projectLogo.jpeg"
             title="Superteam"
-            variant={1}
             subtitle="by @kash"
             size="md"
             shape="square"
@@ -43,7 +42,6 @@ export const PayoutsTableRows = () => {
           <AvatarLabelGroup
             avatarSrc="/projectLogo.jpeg"
             title="Superteam"
-            variant={1}
             subtitle="by @kash"
             size="md"
             shape="square"
@@ -70,7 +68,6 @@ export const PayoutsTableRows = () => {
           <AvatarLabelGroup
             avatarSrc="/projectLogo.jpeg"
             title="Superteam"
-            variant={1}
             subtitle="by @kash"
             size="md"
             shape="square"

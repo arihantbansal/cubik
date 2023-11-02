@@ -27,7 +27,7 @@ const CommentReplies: React.FC<CommentRepliesProps> = ({
 
   return (
     <div className="flex items-center gap-2">
-      <AvatarLabelGroup avatarSrc={''} title={''} size={'sm'} variant={1} />
+      <AvatarLabelGroup avatarSrc={''} title={''} size={'sm'} />
       <span className={textSize}>{`${repliesCount} replies`}</span>
     </div>
   );
