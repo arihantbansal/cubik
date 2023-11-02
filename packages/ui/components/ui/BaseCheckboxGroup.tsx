@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 
 import { Checkbox } from './Checkbox';
-import { InputLabel } from './inputLabel';
 
 interface CheckboxItem {
   id: string;
@@ -45,7 +44,7 @@ export const BaseCheckboxGroup: React.FC<BaseCheckboxGroupProps> = ({
             variant={item.indeterminate ? 'minus' : 'checked'}
             onChange={(state) => handleCheckboxChange(item.id, state)}
           />
-          <InputLabel>{item.label}</InputLabel>
+          {/* <InputLabel>{item.label}</InputLabel> */}
         </div>
       ))}
     </div>

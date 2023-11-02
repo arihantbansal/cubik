@@ -277,8 +277,20 @@ const navigationData: INavigationData[] = [
           },
           {
             id: 262,
+            name: 'InputField',
+            link: '/components/forms/inputfield',
+            description: '',
+          },
+          {
+            id: 263,
             name: 'Select',
             link: '/components/forms/select',
+            description: '',
+          },
+          {
+            id: 264,
+            name: 'Input Label',
+            link: '/components/forms/inputlabel',
             description: '',
           },
         ],
