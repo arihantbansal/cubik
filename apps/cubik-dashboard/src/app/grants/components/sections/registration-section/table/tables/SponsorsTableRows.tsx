@@ -52,7 +52,7 @@ export const SponsorsTableRows = () => {
           </div>
         </TableCell>
         <TableCell className="">
-         {/* @todo: add new tag component here 
+          {/* @todo: add new tag component here 
            <Tag
             text="Pending"
             iconName="clock"

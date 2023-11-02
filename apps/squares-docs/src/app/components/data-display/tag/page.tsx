@@ -22,7 +22,7 @@ const Tags = () => {
       }
     >
       {/* <Tag text="Pending" iconName="spinner" color="#000" /> */}
-      <CodeComponent codeString='<Tag text="Pending" iconName="spinner" color="#000" />'/>
+      <CodeComponent codeString='<Tag text="Pending" iconName="spinner" color="#000" />' />
     </PageHOC>
   );
 };

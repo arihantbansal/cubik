@@ -1,10 +1,8 @@
+'use client';
 
-"use client"
 import React from 'react';
 import CodeComponent from '@/app/home-page-components/code-component';
 import PageHOC from '@/app/home-page-components/components/pageHOC';
-
-
 
 import {
   Select,
@@ -43,9 +41,9 @@ const SelectPage = () => {
           />
         </div>
 
-        <div className='mt-10 flex flex-col gap-10'>
+        <div className="mt-10 flex flex-col gap-10">
           <Select>
-            <SelectTrigger >
+            <SelectTrigger>
               <SelectValue placeholder="light" />
             </SelectTrigger>
             <SelectContent>
@@ -54,9 +52,8 @@ const SelectPage = () => {
               <SelectItem value="system">System</SelectItem>
             </SelectContent>
           </Select>
-          <Select >
+          <Select>
             <SelectTrigger isError={true}>
-
               <SelectValue placeholder="light" />
             </SelectTrigger>
             <SelectContent>
@@ -65,9 +62,8 @@ const SelectPage = () => {
               <SelectItem value="system">System</SelectItem>
             </SelectContent>
           </Select>
-          <Select disabled={true} >
-            <SelectTrigger >
-
+          <Select disabled={true}>
+            <SelectTrigger>
               <SelectValue placeholder="light" />
             </SelectTrigger>
             <SelectContent>
