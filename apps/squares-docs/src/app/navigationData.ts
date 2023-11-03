@@ -305,6 +305,12 @@ const navigationData: INavigationData[] = [
             link: '/components/forms/button',
             description: '',
           },
+          {
+            id: 266,
+            name: 'Textarea',
+            link: '/components/forms/textarea',
+            description: '',
+          },
         ],
       },
     ],

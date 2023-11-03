@@ -1,20 +1,64 @@
 'use client';
 
 import React from 'react';
+import CodeComponent from '@/app/home-page-components/code-component';
+import PageHOC from '@/app/home-page-components/components/pageHOC';
 
-import { Textarea } from '@cubik/ui';
+import { InputLabel, Textarea } from '@cubik/ui';
 
-const Textareas = () => {
+const TextAreaPage = () => {
   return (
-    <div className="flex flex-col justify-start gap-5 px-10">
-      <div className="font-2xl font-semibold">Textareas</div>
-
-      <div className="space-y-2">
-        <div className="font-lg font-semibold">size</div>
-        <Textarea size="sm" state="default" resizable={true} />
-      </div>
-    </div>
+    <>
+      <PageHOC
+        pages={[
+          { name: 'Component', href: '/component', current: false },
+          {
+            name: 'Input',
+            href: '/component/textarea',
+            current: true,
+          },
+        ]}
+        heading={'textarea'}
+        description=""
+      >
+        <div className="border-[var(--color-border-primary) overflow-hidden rounded-[8px] border bg-[var(--white)] px-6 py-4">
+          <CodeComponent codeString='import { InputLabel } from "@cubik/ui"' />
+        </div>
+        <div className="flex flex-col gap-10">
+          <Textarea
+            size="md"
+            state="default"
+            resizable
+            placeholder="Placeholder"
+          />
+          <Textarea
+            size="md"
+            state="hovered"
+            resizable
+            placeholder="Placeholder"
+          />
+          <Textarea
+            size="md"
+            state="focused"
+            resizable
+            placeholder="Placeholder"
+          />
+          <Textarea
+            size="md"
+            state="error"
+            resizable
+            placeholder="Placeholder"
+          />
+          <Textarea
+            size="md"
+            state="disabled"
+            resizable
+            placeholder="Placeholder"
+          />
+        </div>
+      </PageHOC>
+    </>
   );
 };
 
-export default Textareas;
+export default TextAreaPage;
