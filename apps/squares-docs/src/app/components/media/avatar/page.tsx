@@ -1,17 +1,17 @@
 'use client';
 
 import React from 'react';
+import CodeComponent from '@/app/home-page-components/code-component';
 
 import { Avatar, AvatarGroup, AvatarLabelGroup } from '@cubik/ui';
 import TitleWithIcon from '@cubik/ui/components/ui/Avatar/TitleWithIcon';
-import CodeComponent from '@/app/home-page-components/code-component';
 
 const Page = () => {
   return (
     <>
       <div className="flex flex-col justify-start gap-5 px-10">
         <div className="flex flex-col gap-4">
-        <CodeComponent codeString='import {Avatar} from "@cubik/ui"' />
+          <CodeComponent codeString='import {Avatar} from "@cubik/ui"' />
           <h3 className="text-xl font-bold">Avatar with Title and Icon</h3>
           <div className="flex gap-10">
             <div>
