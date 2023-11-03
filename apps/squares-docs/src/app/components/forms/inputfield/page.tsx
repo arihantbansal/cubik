@@ -1,10 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import CodeComponent from '@/app/home-page-components/code-component';
 import PageHOC from '@/app/home-page-components/components/pageHOC';
 
-import { InputField } from '@cubik/ui';
+import { InputContainer, InputField, InputLeftElement, InputRightElement } from '@cubik/ui';
 
 const InputPage = () => {
   return (
@@ -26,58 +26,16 @@ const InputPage = () => {
             <CodeComponent codeString='import { InputField } from "@cubik/ui"' />
           </div>
           <div className="flex flex-col gap-10">
-            <InputField
-              isError={false}
-              isHttps={true}
-              rightElement={<p>https://</p>}
-              variant="md"
-              leftElement={<p>https://</p>}
-              id="aa"
-              name="aa"
-              placeholder="test@cubik.com"
-              type="text"
-            />
-            <InputField
-              isError={true}
-              isHttps={true}
-              rightElement={<p>USD</p>}
-              variant="md"
-              id="aa"
-              name="aa"
-              placeholder="test@cubik.com"
-              type="text"
-            />
-            <InputField
-              isError={false}
-              isHttps={true}
-              variant="md"
-              leftElement={<p>https://</p>}
-              id="aa"
-              name="aa"
-              placeholder="test@cubik.com"
-              type="text"
-            />
-            <InputField
-              isError={false}
-              isHttps={true}
-              variant="md"
-              leftElement={<p>https://</p>}
-              id="aa"
-              name="aa"
-              placeholder="test@cubik.com"
-              type="text"
-            />
-            <InputField
-              isError={false}
-              isHttps={true}
-              isDisabled={true}
-              rightElement={<p>USDC</p>}
-              variant="md"
-              id="aa"
-              name="aa"
-              placeholder="test@cubik.com"
-              type="text"
-            />
+            <InputContainer  isDisabled={false} variant='md'>
+              <InputLeftElement withBorder={true}>https</InputLeftElement>
+              <InputField
+                id="aa"
+                name="aa"
+                placeholder="test@cubik.com"
+                type="text"
+              />
+              <InputRightElement>https</InputRightElement>
+            </InputContainer>
           </div>
         </div>
       </PageHOC>
