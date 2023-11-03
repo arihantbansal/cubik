@@ -104,7 +104,7 @@ html[class="dark"], :root {
     --color-bg-success: var(--color-green-500);
     --color-surface-tertiary: var(--color-neutral-800);
     --color-surface-secondary: var(--color-neutral-850);
-    --color-bg-Error: var(--color-red-500);
+    --color-bg-error: var(--color-red-500);
     --color-surface-primary: var(--color-neutral-880);
     --color-bg-tertiary: var(--color-neutral-900);
     --color-bg-secondary: var(--color-neutral-920);

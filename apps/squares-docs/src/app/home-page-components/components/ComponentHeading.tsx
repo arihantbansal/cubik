@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Subhead from '@cubik/ui/components/ui/subhead';
-
 const ComponentHeading = ({
   heading,
   description,

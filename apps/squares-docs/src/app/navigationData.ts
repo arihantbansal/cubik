@@ -159,6 +159,12 @@ const navigationData: INavigationData[] = [
             link: '/components/data-display/divider',
             description: '',
           },
+          {
+            id: 214,
+            name: 'Subhead',
+            link: '/components/data-display/subhead',
+            description: '',
+          },
         ],
       },
       {
@@ -291,6 +297,12 @@ const navigationData: INavigationData[] = [
             id: 264,
             name: 'Input Label',
             link: '/components/forms/inputlabel',
+            description: '',
+          },
+          {
+            id: 265,
+            name: 'Button',
+            link: '/components/forms/button',
             description: '',
           },
         ],

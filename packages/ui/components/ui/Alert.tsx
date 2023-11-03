@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { Button } from '../../components/ui/Button';
 import { Icon } from '../../icons/icon';
-import { Button } from './button';
 
 type AlertTypes = 'Inline' | 'Text' | 'Border';
 type AlertVariants = 'Info' | 'Loading' | 'Success' | 'Warning' | 'Error';
@@ -102,6 +102,8 @@ const Alert: React.FC<AlertProps> = ({
       </div>
       {buttonText && (
         <Button
+          sizeVariant="sm"
+          variant="secondary"
           onClick={onButtonClick}
           className={`${alertClasses.border} ${alertClasses.text}`}
         >

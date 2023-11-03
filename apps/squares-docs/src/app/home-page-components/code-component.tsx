@@ -37,6 +37,7 @@ const CodeComponent = ({ codeString }: { codeString: string }) => {
   return (
     <div>
       <Button
+        sizeVariant="sm"
         onClick={() => {
           navigator.clipboard.writeText(codeString);
           toast.success('Copied to clipboard!');

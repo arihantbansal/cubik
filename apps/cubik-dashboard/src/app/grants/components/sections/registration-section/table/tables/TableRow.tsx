@@ -75,9 +75,8 @@ export const TableRows = () => {
             <div className="flex w-full justify-start border-none bg-neutral-600 p-4">
               <div className="flex w-full space-x-2 pb-4">
                 <Button
-                  variant="destructive"
+                  variant="danger"
                   className="flex-1 space-x-2"
-                  size="sm"
                   onClick={() => {
                     setIsDeclineDialogOpen(true);
                     setIsModalOpen(false);
@@ -88,8 +87,8 @@ export const TableRows = () => {
                 </Button>
 
                 <Button
-                  className="flex-1 space-x-2 bg-green-500 text-black"
-                  size="sm"
+                  variant="success"
+                  className="flex-1 space-x-2  text-black"
                   onClick={() => {
                     setIsAcceptDialogOpen(true);
                     setIsModalOpen(false);

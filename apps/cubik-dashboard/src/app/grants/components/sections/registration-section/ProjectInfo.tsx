@@ -36,7 +36,6 @@ export const ProjectInfo = () => {
             <Button
               variant="secondary"
               className="flex flex-1 space-x-1 bg-neutral-600"
-              size="sm"
             >
               <p>View Project on Cubik</p>
               <Icon
@@ -47,7 +46,7 @@ export const ProjectInfo = () => {
                 width={14}
               />
             </Button>
-            <Button className="flex-1 bg-white text-black" size="sm">
+            <Button className="flex-1 bg-white text-black" variant="outline">
               Visit Website
             </Button>
           </div>

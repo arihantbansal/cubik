@@ -4,7 +4,12 @@ import React, { useState } from 'react';
 import CodeComponent from '@/app/home-page-components/code-component';
 import PageHOC from '@/app/home-page-components/components/pageHOC';
 
-import { InputContainer, InputField, InputLeftElement, InputRightElement } from '@cubik/ui';
+import {
+  InputContainer,
+  InputField,
+  InputLeftElement,
+  InputRightElement,
+} from '@cubik/ui';
 
 const InputPage = () => {
   return (
@@ -26,7 +31,7 @@ const InputPage = () => {
             <CodeComponent codeString='import { InputField } from "@cubik/ui"' />
           </div>
           <div className="flex flex-col gap-10">
-            <InputContainer  isDisabled={false} variant='md'>
+            <InputContainer isDisabled={false} variant="md">
               <InputLeftElement withBorder={true}>https</InputLeftElement>
               <InputField
                 id="aa"

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Subhead from '@cubik/ui/components/ui/subhead';
-
 import MultisigCard from '../registration-section/cards/MultisigCard';
 import OverviewCard from '../registration-section/cards/OverviewCard';
 import TreasuryCard from '../registration-section/cards/TreasuryCard';
@@ -10,7 +8,7 @@ export const MultisigSection = () => {
   return (
     <div className="my-5 flex items-center justify-between px-3 md:px-0 ">
       <div className="w-full">
-        <Subhead text="Overview" />
+        {/* <Subhead text=Overview" /> */}
         <div className="my-6 grid w-full grid-cols-3 space-x-6">
           <TreasuryCard
             iconName="USDC"
@@ -34,7 +32,7 @@ export const MultisigSection = () => {
             classname="bg-purple-500"
           />
         </div>
-        <Subhead text="Multisigs" />
+        {/* <Subhead text="Multisigs" /> */}
         <div className="flex space-x-4">
           <div className="flex w-full flex-[0.7]">
             <MultisigCard />

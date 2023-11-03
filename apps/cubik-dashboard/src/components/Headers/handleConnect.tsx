@@ -47,7 +47,11 @@ export const HandleConnect = () => {
   }, [publicKey, connected]);
 
   if (!connected && !publicKey && !user) {
-    return <Button onClick={() => setVisible(true)}>Login</Button>;
+    return (
+      <Button variant="primary" onClick={() => setVisible(true)}>
+        Login
+      </Button>
+    );
   }
   if (connected && publicKey && !user && isLoading) {
     return (

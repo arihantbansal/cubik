@@ -5,9 +5,6 @@
   "compilerOptions": {
     "jsx": "react",
     "baseUrl": ".",
-    "resolveJsonModule": true,
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "resolveJsonModule": true
   }
 }

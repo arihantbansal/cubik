@@ -20,11 +20,15 @@ const MultisigCard = () => {
       <div className="flex items-center justify-between border-b border-gray-700 p-4">
         <h3 className="text-lg font-semibold">Cubik Multisig</h3>
         <div>
-          <Button variant={'ghost'} className="underline underline-offset-4">
+          <Button
+            sizeVariant="sm"
+            variant={'outline'}
+            className="underline underline-offset-4"
+          >
             Open Multisig
           </Button>
           <Button
-            variant={'ghost'}
+            variant={'outline'}
             className="space-x-1 border border-neutral-800 "
           >
             <p>Add Funds</p>
@@ -80,8 +84,7 @@ const MultisigCard = () => {
               <TabPanel value="sponsors">
                 <SponsorsTable />
                 <Button
-                  variant={'ghost'}
-                  size={'lg'}
+                  variant={'outline'}
                   className=" mt-4 w-full space-x-1 border border-neutral-800 "
                 >
                   <p>Add a Sponsor</p>
