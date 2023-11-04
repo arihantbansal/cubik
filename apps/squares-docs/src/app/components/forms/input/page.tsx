@@ -29,7 +29,13 @@ const InputPage = () => {
       description=""
     >
       <div className="border-[var(--color-border-primary) overflow-hidden rounded-[8px] border bg-[var(--white)] px-6 py-4">
-        <CodeComponent codeString='import { Input } from "@cubik/ui"' />
+        <CodeComponent codeString='import {   HelperText,
+  InputContainer,
+  InputField,
+  InputFieldContainer,
+  InputLabel,
+  InputLeftElement,
+  InputRightElement, } from "@cubik/ui"' />
       </div>
       <div className="flex flex-col gap-10">
         <InputContainer>
