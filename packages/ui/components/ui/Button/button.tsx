@@ -59,6 +59,7 @@ const buttonVariant = cva(' rounded-[8px]', {
   },
   defaultVariants: {
     variant: 'primary',
+    sizeVariant: 'sm',
   },
 });
 interface Props extends React.HTMLProps<HTMLButtonElement> {

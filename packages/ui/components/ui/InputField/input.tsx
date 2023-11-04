@@ -63,7 +63,7 @@ export const InputRightElement = ({
   );
 };
 
-export const InputContainer = ({
+export const InputFieldContainer = ({
   children,
   isError,
   isDisabled,

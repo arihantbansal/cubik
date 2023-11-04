@@ -25,7 +25,6 @@ const Tags = () => {
         </div>
         <div className="mt-10">
           <Tag size="lg" variant="solid-blue">
-            {' '}
             hello world
           </Tag>
         </div>
