@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useTheme } from '@/app/home-page-components/hooks/useTheme';
+import { useTheme } from './../home-page-components/utils';
 
 import { Icon } from '@cubik/ui';
 

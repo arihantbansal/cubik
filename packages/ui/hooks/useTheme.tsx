@@ -1,13 +1,11 @@
-'use client';
-
-import {
+import React, {
   createContext,
   ReactNode,
   useContext,
   useEffect,
   useState,
 } from 'react';
-import Cookies from 'js-cookie';
+import { useCookies } from 'next-client-cookies';
 
 type Theme = 'light' | 'dark';
 
@@ -31,8 +29,9 @@ interface ThemeProviderProps {
 }
 
 function ThemeProvider({ children }: ThemeProviderProps) {
+  const cookies = useCookies();
   const [theme, setTheme] = useState<Theme>(() => {
-    const storedTheme = Cookies.get('theme');
+    const storedTheme = cookies.get('theme');
     return (storedTheme ?? 'dark') as Theme;
   });
 
@@ -40,7 +39,7 @@ function ThemeProvider({ children }: ThemeProviderProps) {
   const toggleTheme = () => {
     setTheme((currentTheme) => {
       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      Cookies.set('theme', newTheme);
+      cookies.set('theme', newTheme);
       return newTheme;
     });
   };

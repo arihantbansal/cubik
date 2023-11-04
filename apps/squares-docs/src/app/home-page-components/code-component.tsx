@@ -12,7 +12,7 @@ import { toast } from 'sonner';
 
 import { Button } from '@cubik/ui';
 
-import { useTheme } from './hooks/useTheme';
+import { useTheme } from '@cubik/ui';
 
 interface Props {
   codeString?: string;

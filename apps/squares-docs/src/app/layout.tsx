@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { cookies } from 'next/headers';
+import { ClientCookiesProvider } from '../app/home-page-components/providers/cookies';
 
 import './globals.css';
 import '@cubik/presets/styles/style.css';
@@ -7,7 +9,7 @@ import '@cubik/presets/styles/lightColor.style.css';
 import '@cubik/presets/styles/darkColors.styles.css';
 import '@cubik/presets/styles/component.style.css';
 
-import { ThemeProvider } from '@/app/home-page-components/hooks/useTheme';
+import { ThemeProvider } from './home-page-components/utils';
 import { Toaster } from 'sonner';
 
 import Background from './home-page-components/components';
@@ -29,15 +31,17 @@ export default function RootLayout({
   return (
     <html className="light" lang="en">
       <body className={`${inter.className}`}>
-        <ThemeProvider>
-          <Background />
-          <Header />
-          <div className="z-0 flex w-full flex-row bg-[var(--color-bg-secondary)] ">
-            <Toaster />
-            <Sidebar />
-            {children}
-          </div>
-        </ThemeProvider>
+        <ClientCookiesProvider value={cookies().getAll()}>
+          <ThemeProvider>
+            <Background />
+            <Header />
+            <div className="z-0 flex w-full flex-row bg-[var(--color-bg-secondary)] ">
+              <Toaster />
+              <Sidebar />
+              {children}
+            </div>
+          </ThemeProvider>
+        </ClientCookiesProvider>
       </body>
     </html>
   );

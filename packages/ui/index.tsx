@@ -33,3 +33,4 @@ export * from './components/ui/Input';
 export * from './components/ui/Tag';
 export * from './components/ui/Button';
 export * from './components/ui/Subhead';
+export * from './hooks/useTheme';
