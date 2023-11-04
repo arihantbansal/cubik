@@ -13,7 +13,7 @@ const textareaVariants = cva(
       },
       state: {
         default:
-          'bg-[var(--form-input-surface-default)] border-[var(--form-input-border-default)] placeholder:text-[var(--form-input-placholder-default)]',
+          'bg-[var(--form-input-surface-default)] border-[var(--form-input-border-default)] placeholder:text-[var(--form-input-placeholder-default)]',
         focused:
           'bg-[var(--form-input-surface-focused)] border-[var(--form-input-border-focused)] placeholder:text-[var(--form-input-placeholder-focused)]',
         error:
