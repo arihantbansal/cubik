@@ -40,7 +40,6 @@ const CodeComponent = ({ codeString }: { codeString: string }) => {
           navigator.clipboard.writeText(codeString);
           toast.success('Copied to clipboard!');
         }}
-
         variant="outline"
       >
         Copy

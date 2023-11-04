@@ -68,7 +68,7 @@ const FormSuccess = () => {
             id="password"
             placeholder="random"
             type="text"
-              onChange={(e) => setValue('password', e.currentTarget.value)}
+            onChange={(e) => setValue('password', e.currentTarget.value)}
           />
         </InputFieldContainer>
         <HelperText variant={'error'} fontSize={'md'}>
@@ -86,7 +86,8 @@ const FormError = () => {
     register,
     getValues,
     setError,
-    handleSubmit,setValue,
+    handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormType>({
     defaultValues: {
@@ -110,12 +111,15 @@ const FormError = () => {
       >
         <InputContainer>
           <InputLabel isRequired>Email</InputLabel>
-          <InputFieldContainer isError={errors.email ? true : false} isDisabled={false} variant="md">
+          <InputFieldContainer
+            isError={errors.email ? true : false}
+            isDisabled={false}
+            variant="md"
+          >
             <InputField
               id="email"
               placeholder="test@cubik.com"
               type="text"
-              
               onChange={(e) => setValue('email', e.currentTarget.value)}
             />
           </InputFieldContainer>
@@ -125,12 +129,16 @@ const FormError = () => {
         </InputContainer>
         <InputContainer>
           <InputLabel isRequired>Password</InputLabel>
-          <InputFieldContainer isError={errors.email ? true : false} isDisabled={false} variant="md">
+          <InputFieldContainer
+            isError={errors.email ? true : false}
+            isDisabled={false}
+            variant="md"
+          >
             <InputField
               id="password"
               placeholder="random"
               type="text"
-                onChange={(e) => setValue('password', e.currentTarget.value)}
+              onChange={(e) => setValue('password', e.currentTarget.value)}
             />
           </InputFieldContainer>
           <HelperText variant={'error'} fontSize={'md'}>

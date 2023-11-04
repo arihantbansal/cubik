@@ -5,8 +5,8 @@ import CodeComponent from '@/app/home-page-components/code-component';
 import PageHOC from '@/app/home-page-components/components/pageHOC';
 
 import {
-  InputFieldContainer,
   InputField,
+  InputFieldContainer,
   InputLeftElement,
   InputRightElement,
 } from '@cubik/ui';
