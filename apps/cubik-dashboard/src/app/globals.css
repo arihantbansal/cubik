@@ -68,23 +68,3 @@
   }
 }
  
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground 
-  }
-}
-
-@layer components {
-
-  .btn-base {
-    @apply  font-semibold py-3 px-6 rounded-lg
-  }
-  .btn-danger {
-    background-color:#F53D6B;
-    @apply text-white  font-semibold py-1 px-3 md:py-3 md:px-6 rounded-lg text-xs md:text-lg
-  }
-
-}
