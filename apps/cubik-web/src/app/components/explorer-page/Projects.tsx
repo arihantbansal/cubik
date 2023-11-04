@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import Subhead from '@ui/components/subhead';
 import { FilterLines } from '@ui/icons/svgs/filter-lines';
 
 import { Project } from '@cubik/database';
@@ -21,7 +20,6 @@ const ProjectTabs: FC<{ projects: Partial<Project>[] }> = ({ projects }) => {
 
   return (
     <div className="mx-auto mt-8 w-full sm:w-2/3">
-      <Subhead text="Projects" endElement={<FilterLines />} />
       {/* <div className="mt-2 flex space-x-2 overflow-y-scroll">
         {categories.map((category) => (
           <Tag
