@@ -12,8 +12,6 @@ export * from './components/ui/text-area';
 export * from './components/ui/Alert';
 export * from './components/ui/Avatar/CommentBox';
 export * from './components/ui/Avatar/CommentReplies';
-export * from './components/ui/BaseCheckbox';
-export * from './components/ui/BaseCheckboxGroup';
 export * from './components/ui/Checkbox';
 export * from './components/ui/Toast';
 export * from './components/ui/ToggleSwitch';

@@ -307,10 +307,18 @@ const navigationData: INavigationData[] = [
           },
           {
             id: 266,
+            name: 'Checkbox',
+            link: '/components/forms/checkbox',
+            description: '',
+  
+          },
+          {
+            id: 267,
             name: 'Textarea',
             link: '/components/forms/textarea',
             description: '',
-          },
+            
+          }
         ],
       },
     ],
