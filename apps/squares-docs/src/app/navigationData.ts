@@ -301,9 +301,9 @@ const navigationData: INavigationData[] = [
           },
           {
             id: 265,
-            name: 'Button',
-            link: '/components/forms/button',
-            description: '',
+            name: 'Switch',
+            link: '/components/forms/switch',
+              description: '',
           },
           {
             id: 266,
@@ -318,6 +318,12 @@ const navigationData: INavigationData[] = [
             link: '/components/forms/textarea',
             description: '',
             
+          },
+          {
+            id: 268
+            name: 'Button',
+            link: '/components/forms/button',
+            description: '',
           }
         ],
       },

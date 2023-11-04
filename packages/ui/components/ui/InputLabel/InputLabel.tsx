@@ -27,8 +27,8 @@ const InputLabel = forwardRef<HTMLElement | null, TextProps>(
   ({ className, children, fontSize, ...props }) => {
     return (
       <>
-        <div className="flex justify-between items-center w-full">
-          <div className="flex justify-start items-center gap-1">
+        <div className="flex justify-between items-start w-full">
+          <div className="flex justify-start items-start gap-1">
             <p
               className={cn(
                 InputLabelVariants({
