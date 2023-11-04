@@ -1,9 +1,10 @@
 'use client';
 
 import React from 'react';
-import { useTheme } from './../home-page-components/utils';
 
 import { Icon } from '@cubik/ui';
+
+import { useTheme } from './../home-page-components/utils';
 
 const HeaderButtons = () => {
   const { toggleTheme } = useTheme();

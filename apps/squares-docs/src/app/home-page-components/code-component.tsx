@@ -10,9 +10,7 @@ import {
 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { toast } from 'sonner';
 
-import { Button } from '@cubik/ui';
-
-import { useTheme } from '@cubik/ui';
+import { Button, useTheme } from '@cubik/ui';
 
 interface Props {
   codeString?: string;

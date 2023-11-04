@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
+
 import { ClientCookiesProvider } from '../app/home-page-components/providers/cookies';
 
 import './globals.css';
@@ -9,12 +10,12 @@ import '@cubik/presets/styles/lightColor.style.css';
 import '@cubik/presets/styles/darkColors.styles.css';
 import '@cubik/presets/styles/component.style.css';
 
-import { ThemeProvider } from './home-page-components/utils';
 import { Toaster } from 'sonner';
 
 import Background from './home-page-components/components';
 import Header from './home-page-components/header';
 import Sidebar from './home-page-components/sidebar';
+import { ThemeProvider } from './home-page-components/utils';
 
 const inter = Inter({ subsets: ['latin'] });
 
