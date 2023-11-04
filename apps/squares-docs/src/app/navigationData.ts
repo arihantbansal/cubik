@@ -303,28 +303,26 @@ const navigationData: INavigationData[] = [
             id: 265,
             name: 'Switch',
             link: '/components/forms/switch',
-              description: '',
+            description: '',
           },
           {
             id: 266,
             name: 'Checkbox',
             link: '/components/forms/checkbox',
             description: '',
-  
           },
           {
             id: 267,
             name: 'Textarea',
             link: '/components/forms/textarea',
             description: '',
-            
           },
           {
-            id: 268
+            id: 268,
             name: 'Button',
             link: '/components/forms/button',
             description: '',
-          }
+          },
         ],
       },
     ],
