@@ -10,7 +10,6 @@ interface Props extends React.HTMLProps<HTMLInputElement> {
   placeholder?: string;
   isError?: boolean;
   variant?: 'md' | 'sm';
-  isDisabled?: boolean;
   setIsFocused?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -30,8 +29,7 @@ export const InputLeftElement = ({
           ? 'text-[var(--form-input-fg-disabled)]'
           : 'text-[var(--form-input-fg-default)]',
         'inline-flex items-center rounded-l-[8px] px-3',
-        withBorder &&
-          'border-r-1 border border-[var(--form-input-border-default)]',
+        withBorder && 'border-r  border-[var(--form-input-border-default)]',
       )}
     >
       {children}
@@ -54,8 +52,7 @@ export const InputRightElement = ({
           ? 'text-[var(--form-input-fg-disabled)]'
           : 'text-[var(--form-input-fg-default)]',
         'relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-[8px] px-3 py-2 text-sm font-semibold border-0 border-l-0',
-        withBorder &&
-          'border-r-1 border border-[var(--form-input-border-default)]',
+        withBorder && 'border-r  border-[var(--form-input-border-default)]',
       )}
     >
       {children}
@@ -85,6 +82,7 @@ export const InputFieldContainer = ({
         isFocused,
         variant,
         setIsFocused,
+        disabled: isDisabled,
       } as Partial<typeof child.props>);
     }
     return child;
@@ -111,21 +109,12 @@ export const InputFieldContainer = ({
 };
 
 export const InputField = (props: Props) => {
-  const {
-    id,
-    name,
-    placeholder,
-    isError = false,
-    isDisabled,
-    setIsFocused,
-  } = props;
+  const { id, name, isError = false, setIsFocused } = props;
   return (
     <>
       <input
         name={name}
         id={id}
-        disabled={isDisabled}
-        placeholder={placeholder}
         onFocus={() => !isError && setIsFocused && setIsFocused(true)}
         onBlur={() => !isError && setIsFocused && setIsFocused(false)}
         className={cn(
