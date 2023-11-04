@@ -83,8 +83,9 @@ model Project {
   status               ProjectVerifyStatus    @default(REVIEW)
   failedReason         String?                @default("")
   mutliSigAddress      String?                @default("")
+  multiSigAddress_v3   String? @default("")
+  multiSigAddress_v4   String? @default("")
   email                String                 @default("")
-  ogImage              String                 @default("")
   createKey            String?                @default("")
   createdAt            DateTime               @default(now())
   updatedAt            DateTime               @updatedAt

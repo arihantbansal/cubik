@@ -1,10 +1,9 @@
 import { config } from 'dotenv';
 
-import { createComponentNames } from './src/color/component';
-import { generateSemantic } from './src/color/semantic';
+import { generateSlug } from './src/data-move/generate_slug';
 
 console.log('Helper Script Started');
 
 config();
 
-createComponentNames();
+generateSlug();
