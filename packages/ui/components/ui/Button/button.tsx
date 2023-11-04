@@ -6,25 +6,25 @@ import { cn } from '../../../lib/utils';
 const Variant = {
   primary: cn(
     'focus:bg-[var(--button-primary-surface-focused)] focus:border-2 focus:border-[var(--button-primary-border-focused)]',
-    'bg-[var(--button-primary-surface-default)] border border-[var(--button-primary-border-default)]',
+    'bg-[var(--button-primary-surface-default)] focus:border',
     'hover:bg-[var(--button-primary-surface-hovered)]',
     'disabled:bg-[var(--button-primary-surface-disabled)]',
   ),
   secondary: cn(
     'focus:bg-[var(--button-secondary-surface-focused)] focus:border-2 focus:border-[var(--button-secondary-border-focused)]',
-    'bg-[var(--button-secondary-surface-default)] border border-[var(--button-secondary-border-default)]',
+    'bg-[var(--button-secondary-surface-default)] focus:border',
     'hover:bg-[var(--button-secondary-surface-hovered)] ',
     'disabled:bg-[var(--button-secondary-surface-disabled)]',
   ),
   outline: cn(
     'focus:bg-[var(--button-outline-surface-focused)] focus:border-2 focus:border-[var(--button-outline-border-focused)]',
-    'bg-[var(--button-outline-surface-default)] border border-[var(--button-outline-border-default)]',
+    'bg-[var(--button-outline-surface-default)] focus:border',
     'hover:bg-[var(--button-outline-surface-hovered)]',
     'disabled:bg-[var(--button-outline-surface-disabled)]',
   ),
   tertiary: cn(
     'focus:bg-[var(--button-tertiary-surface-focused)] focus:border-2 focus:border-[var(--button-tertiary-border-focused)]',
-    'bg-[var(--button-tertiary-surface-default)] border border-[var(--button-tertiary-border-default)]',
+    'bg-[var(--button-tertiary-surface-default)] focus:border',
     'hover:bg-[var(--button-tertiary-surface-hovered)]',
     'disabled:bg-[var(--button-tertiary-surface-disabled)]',
   ),
@@ -36,13 +36,13 @@ const Variant = {
   ),
   danger: cn(
     'focus:bg-[var(--button-danger-surface-focused)] focus:border-2 focus:border-[var(--button-danger-border-focused)]',
-    'bg-[var(--button-danger-surface-default)] border border-[var(--button-danger-border-default)]',
+    'bg-[var(--button-danger-surface-default)] focus:border',
     'hover:bg-[var(--button-danger-surface-hovered)]',
     'disabled:bg-[var(--button-danger-surface-disabled)]',
   ),
   success: cn(
     'focus:bg-[var(--button-success-surface-focused)] focus:border-2 focus:border-[var(--button-success-border-focused)]',
-    'bg-[var(--button-success-surface-default)] border border-[var(--button-success-border-default)]',
+    'bg-[var(--button-success-surface-default)] focus:border',
     'hover:bg-[var(--button-success-surface-hovered)]',
     'disabled:bg-[var(--button-success-surface-disabled)]',
   ),
