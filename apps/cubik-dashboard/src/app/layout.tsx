@@ -7,6 +7,7 @@ import '@cubik/presets/styles/component.style.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Header } from '@/components/Headers';
+import { AxiomWebVitals } from 'next-axiom';
 
 import { Provider } from './provider';
 
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: JSX.Element }) {
       >
         <Provider>
           <>
+            <AxiomWebVitals />
             <Header />
             {children}
           </>

@@ -1,5 +1,17 @@
-import "./src/env.mjs"
-import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
+
+
+
+import "./src/env.mjs";
+
+
+
+import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
+import { withAxiom } from 'next-axiom';
+
+
+
+
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -20,4 +32,4 @@ const nextConfig = {
   transpilePackages: ["@cubik/database"],
 }
 
-export default nextConfig
+export default withAxiom(nextConfig)

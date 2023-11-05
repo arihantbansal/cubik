@@ -14,6 +14,7 @@
     "@cubik/ui": "workspace:*",
     "@types/react-syntax-highlighter": "^15.5.9",
     "next": "14.0.0",
+    "next-axiom": "^1.1.0",
     "next-client-cookies": "^1.0.6",
     "react": "^18",
     "react-dom": "^18",

@@ -1,7 +1,7 @@
 import "./src/env.mjs";
 // @ts-ignore
 import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
-
+import {withAxiom} from "next-axiom"
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
@@ -36,4 +36,4 @@ const config = {
   },
   
 };
-export default config;
+export default withAxiom(config);

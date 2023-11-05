@@ -246,6 +246,9 @@ importers:
       next:
         specifier: 14.0.0
         version: 14.0.0(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)
+      next-axiom:
+        specifier: ^1.1.0
+        version: 1.1.0(next@14.0.0)(react@18.2.0)
       prettier-plugin-tailwindcss:
         specifier: ^0.5.5
         version: 0.5.5(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier@3.0.3)
@@ -451,6 +454,9 @@ importers:
       next:
         specifier: 14.0.0
         version: 14.0.0(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)
+      next-axiom:
+        specifier: ^1.1.0
+        version: 1.1.0(next@14.0.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -563,6 +569,9 @@ importers:
       next:
         specifier: 14.0.0
         version: 14.0.0(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)
+      next-axiom:
+        specifier: ^1.1.0
+        version: 1.1.0(next@14.0.0)(react@18.2.0)
       next-client-cookies:
         specifier: ^1.0.6
         version: 1.0.6(next@14.0.0)(react@18.2.0)
@@ -15784,6 +15793,18 @@ packages:
     resolution: {integrity: sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==}
     engines: {node: '>= 0.4.0'}
     dev: true
+
+  /next-axiom@1.1.0(next@14.0.0)(react@18.2.0):
+    resolution: {integrity: sha512-/Fh8MOM7gzeR58SA0HfF2ZyNp4WY3cv0hbH3XW3e0u3FG4IGPfFoRuNtpWx3qv4YCqm3jmoR3CVP/dc0VF6xMQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      next: '>=13.4'
+      react: '>=18.0.0'
+    dependencies:
+      next: 14.0.0(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      whatwg-fetch: 3.6.17
+    dev: false
 
   /next-client-cookies@1.0.6(next@14.0.0)(react@18.2.0):
     resolution: {integrity: sha512-fa3oeQT4WAvW8NcgbjoqeV9ZIOF62WREXL0Ikq2nARJC8yqWyDgtyOIF5t16YkYvw6pUUwO2wTcpwJMKcCYGhw==}

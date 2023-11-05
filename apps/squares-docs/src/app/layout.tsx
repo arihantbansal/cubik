@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
+import { AxiomWebVitals } from 'next-axiom';
 
 import { ClientCookiesProvider } from '../app/home-page-components/providers/cookies';
 
@@ -36,6 +37,7 @@ export default function RootLayout({
           <ThemeProvider>
             <Background />
             <Header />
+            <AxiomWebVitals />
             <div className="z-0 flex w-full flex-row bg-[var(--color-bg-secondary)] ">
               <Toaster />
               <Sidebar />

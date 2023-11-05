@@ -7,6 +7,7 @@ import '@cubik/presets/styles/component.style.css';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import Header from '@/app/components/layout/header';
 import WalletContext from '@/app/components/wallet/context';
+import { AxiomWebVitals } from 'next-axiom';
 import { Toaster } from 'sonner';
 
 import { AuthProvider } from './context/user';
@@ -31,6 +32,7 @@ export default function RootLayout({
           <AuthProvider>
             <Providers>
               <Header />
+              <AxiomWebVitals />
               {children}
               <Toaster />
             </Providers>
