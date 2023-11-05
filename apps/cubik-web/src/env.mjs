@@ -1,13 +1,17 @@
 import { createEnv } from '@t3-oss/env-nextjs';
 import { z } from 'zod';
 
+
+
+
+
 export const env = createEnv({
   server: {
     PROD_DATABASE_URL: z.string().url(),
-    NODE_ENV: z.enum(["development", "test", "production"]),
     UPLOADTHING_APP_ID: z.string().min(1),
     UPLOADTHING_SECRET: z.string().min(1),
     SECRET: z.string().min(1),
+    EDGE_CONFIG: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_RPC_MAINNET_URL: z.string().min(1),
@@ -27,7 +31,7 @@ export const env = createEnv({
     UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
     NEXT_PUBLIC_BACKEND: process.env.NEXT_PUBLIC_BACKEND,
     PROD_DATABASE_URL: process.env.PROD_DATABASE_URL,
-    NODE_ENV: process.env.NODE_ENV,
+    EDGE_CONFIG:process.env.EDGE_CONFIG,
     NEXT_PUBLIC_RPC_MAINNET_URL: process.env.NEXT_PUBLIC_RPC_MAINNET_URL,
     NEXT_PUBLIC_RPC_DEVNET_URL: process.env.NEXT_PUBLIC_RPC_DEVNET_URL,
     NEXT_PUBLIC_HELIUS_API_KEY: process.env.NEXT_PUBLIC_HELIUS_API_KEY,
