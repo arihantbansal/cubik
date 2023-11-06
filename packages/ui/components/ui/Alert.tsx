@@ -1,125 +1,156 @@
 import React from 'react';
+import { cva, VariantProps } from 'class-variance-authority';
 
-import { Button } from '../../components/ui/Button';
 import { Icon } from '../../icons/icon';
+import { iconLibrary } from '../../icons/iconLibrary';
+import { cn } from '../../lib/utils';
+import { Button } from './Button/button';
 
-type AlertTypes = 'Inline' | 'Text' | 'Border';
-type AlertVariants = 'Info' | 'Loading' | 'Success' | 'Warning' | 'Error';
-type AlertColors = 'Purple' | 'Red' | 'Green' | 'Blue' | 'Yellow';
+const alertVariants = cva('', {
+  variants: {
+    type: {
+      inline: 'items-center border-0 rounded-lg',
+      text: 'items-center border-0 rounded-lg',
+      border: 'border-l-2 rounded-r-lg',
+    },
+    contentSpacing: {
+      inline: 'flex justify-between items-center w-full',
+      text: 'flex justify-between items-center w-full',
+      border: 'flex flex-col items-start gap-2 grow',
+    },
+    textSpacing: {
+      inline: 'flex',
+      text: '',
+      border: 'flex-col',
+    },
+    variant: {
+      loading: 'input-sm',
+      success: '',
+      info: '',
+      warning: '',
+      error: '',
+    },
+    color: {
+      purple: 'var(--alert-loading-icon-fill)',
+      green: 'var(--alert-success-icon-fill)',
+      blue: 'var(--alert-info-icon-fill)',
+      yellow: 'var(--alert-warning-icon-fill)',
+      red: 'var(--alert-error-icon-fill)',
+    },
+    fill: {
+      purple: 'none',
+      green: 'none',
+      blue: 'var(--alert-info-icon-stroke)',
+      yellow: 'var(--alert-warning-icon-stroke)',
+      red: 'var(--alert-error-icon-stroke)',
+    },
+    titleColor: {
+      purple: 'text-[var(--alert-loading-title)]',
+      green: 'text-[var(--alert-success-title)]',
+      blue: 'text-[var(--alert-info-title)]',
+      yellow: 'text-[var(--alert-warning-title)]',
+      red: 'text-[var(--alert-error-title)]',
+    },
+    textColor: {
+      purple: 'text-[var(--alert-loading-text)]',
+      green: 'text-[var(--alert-success-text)]',
+      blue: 'text-[var(--alert-info-text)]',
+      yellow: 'text-[var(--alert-warning-text)]',
+      red: 'text-[var(--alert-error-text)]',
+    },
+    bgColor: {
+      purple:
+        'bg-[var(--alert-loading-surface)] border-[var(--alert-loading-border)]',
+      green:
+        'bg-[var(--alert-success-surface)]  border-[var(--alert-success-border)]',
+      blue: 'bg-[var(--alert-info-surface)] border-[var(--alert-info-border)]',
+      yellow:
+        'bg-[var(--alert-warning-surface)] border-[var(--alert-warning-border)]',
+      red: 'bg-[var(--alert-error-surface)] border-[var(--alert-error-border)]',
+    },
+  },
+});
 
-interface AlertProps {
-  type: AlertTypes;
-  variant: AlertVariants;
-  color: AlertColors;
+interface AlertProps extends VariantProps<typeof alertVariants> {
+  iconName: keyof typeof iconLibrary;
   title: string;
-  content: string;
-  buttonText?: string;
-  onButtonClick?: () => void;
-  crossButton?: boolean;
-  size?: 'small' | 'large';
+  content?: string;
+  button?: string;
+  buttonClick?: string;
+  closeIcon: boolean;
+  className?: string;
 }
 
 const Alert: React.FC<AlertProps> = ({
-  type,
-  variant,
+  iconName,
   color,
   title,
   content,
-  buttonText,
-  onButtonClick,
-  crossButton = true,
-  size = 'large',
+  button,
+  className,
+  type,
+  buttonClick,
 }) => {
-  const icons: Record<
-    AlertVariants,
-    'infoCircle' | 'Spinner' | 'doubleTick' | 'infoTriangle' | 'danger'
-  > = {
-    Info: 'infoCircle',
-    Loading: 'Spinner',
-    Success: 'doubleTick',
-    Warning: 'infoTriangle',
-    Error: 'danger',
-  };
-
-  const colorClasses = {
-    Purple: {
-      bg: 'bg-purple-100',
-      border: 'border-purple-500',
-      text: 'text-purple-700',
-    },
-    Red: {
-      bg: 'bg-red-100',
-      border: 'border-red-500',
-      text: 'text-red-700',
-    },
-    Green: {
-      bg: 'bg-green-100',
-      border: 'border-green-500',
-      text: 'text-green-700',
-    },
-    Blue: {
-      bg: 'bg-blue-100',
-      border: 'border-blue-500',
-      text: 'text-blue-700',
-    },
-    Yellow: {
-      bg: 'bg-yellow-100',
-      border: 'border-yellow-500',
-      text: 'text-yellow-700',
-    },
-  };
-
-  const alertClasses = colorClasses[color];
-
-  const typeStyles = {
-    Inline: `${alertClasses.bg} rounded-[10px]`,
-    Text: ``,
-    Border: `${alertClasses.bg} border-l-2 border-solid ${alertClasses.border} rounded-r-[10px] pl-4`,
-  };
-
-  const sizeStyles = {
-    small: 'text-xs sm:text-sm p-1 sm:p-2',
-    large: 'text-md sm:text-lg p-2 sm:p-4',
-  };
-
-  const iconStyles = {
-    small: 'w-4 h-4 sm:w-5 sm:h-5',
-    large: 'w-6 h-6 sm:w-8 sm:h-8',
-  };
-
   return (
     <div
-      className={`flex flex-col sm:flex-row items-center gap-2 sm:gap-4 ${typeStyles[type]} ${alertClasses.text} ${sizeStyles[size]}`}
+      className={cn(
+        'flex gap-2  p-3',
+        className,
+        alertVariants(
+          type === 'inline' || type === 'border'
+            ? { type, bgColor: color }
+            : { type },
+        ),
+      )}
     >
       <Icon
-        name={icons[variant]}
-        className={`${alertClasses.text} ${iconStyles[size]}`}
-        fill="none"
+        name={iconName}
+        stroke={cn(alertVariants({ color }))}
+        fill={cn(alertVariants({ fill: color }))}
+        strokeWidth={1}
       />
-      <div className="flex-grow mt-2 sm:mt-0">
-        <div className="font-semibold">{title}</div>
-        <div>{content}</div>
-      </div>
-      {buttonText && (
+      <div
+        className={cn('items-center', alertVariants({ contentSpacing: type }))}
+      >
+        <div className={cn('gap-1 flex', alertVariants({ textSpacing: type }))}>
+          <h3
+            className={cn(
+              'text-sm font-semibold',
+              alertVariants({ titleColor: color }),
+            )}
+          >
+            {title}
+          </h3>
+          <p
+            className={cn(
+              'text-sm font-normal',
+              alertVariants({ titleColor: color }),
+            )}
+          >
+            {content}
+          </p>
+        </div>
+
         <Button
-          sizeVariant="sm"
-          variant="secondary"
-          onClick={onButtonClick}
-          className={`${alertClasses.border} ${alertClasses.text}`}
+          variant="link"
+          className={cn(
+            'border-0 underline underline-offset-4 text-sm font-semibold',
+            alertVariants({ titleColor: color }),
+          )}
+          onClick={() => buttonClick}
         >
-          {buttonText}
+          {button}
         </Button>
-      )}
-      {crossButton && (
-        <Icon
-          name="cross"
-          className={`${alertClasses.text} ${iconStyles[size]}`}
-          fill="none"
-        />
-      )}
+      </div>
+      <Icon
+        name="cross"
+        stroke="#999999"
+        strokeWidth={1.5}
+        height={20}
+        width={20}
+      />
     </div>
   );
 };
 
 export { Alert };
-export type { AlertVariants, AlertColors, AlertTypes };

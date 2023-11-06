@@ -14,7 +14,6 @@ export * from './components/ui/Alert';
 export * from './components/ui/Avatar/CommentBox';
 export * from './components/ui/Avatar/CommentReplies';
 export * from './components/ui/Checkbox';
-export * from './components/ui/Toast';
 export * from './components/ui/ToggleSwitch';
 export * from './components/ui/heading';
 export * from './components/ui/ProjectCard';
