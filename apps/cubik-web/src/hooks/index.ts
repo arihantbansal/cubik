@@ -1,3 +1,3 @@
-"use client"
+'use client';
 
-export * from "@uidotdev/usehooks"
+export * from '@uidotdev/usehooks';

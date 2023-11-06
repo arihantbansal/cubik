@@ -1,21 +1,27 @@
 'use client';
 
 import React, { useState } from 'react';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { WalletAddress } from '@/app/components/common/wallet';
 import type { User } from '@/app/context/user';
 import type { AuthVerifyReturn } from '@/types/auth';
-import { Box, Button, Center, HStack, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, VStack } from '@/utils/chakra';
+import {
+  Box,
+  Button,
+  Center,
+  HStack,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  VStack,
+} from '@/utils/chakra';
 import { getMessage } from '@/utils/helpers/auth';
 import { utils } from '@coral-xyz/anchor';
 
-
-
 import { createMessage } from '@cubik/auth';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-
-
-
-
 
 interface Props {
   publicKey?: string;

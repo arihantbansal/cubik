@@ -4,11 +4,12 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/app/context/user';
 import type { AuthCheckReturn } from '@/types/auth';
-import {  Spinner, useDisclosure } from '@/utils/chakra';
-import {Button} from "@cubik/ui"
+import { Spinner, useDisclosure } from '@/utils/chakra';
 import { handleLogout } from '@/utils/helpers/auth';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+
+import { Button } from '@cubik/ui';
 
 import UserNavbarMenuButton from '../cta/user-navbar-menu';
 import { VerifyModal } from './verifyModal';
@@ -93,14 +94,13 @@ export const WalletConnect = () => {
 
   if (!connected && !publicKey && !user) {
     return (
-      
-        <Button
-        variant='primary'
-      sizeVariant='md'
+      <Button
+        variant="primary"
+        sizeVariant="md"
         onClick={() => setVisible(true)}
-        >
-          Login
-        </Button>
+      >
+        Login
+      </Button>
     );
   }
   if (connected && publicKey && !user && isLoading) {
