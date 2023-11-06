@@ -8,6 +8,7 @@ const Size = {
   xs: 'text-[16px]',
   sm: 'text-[18px]',
   md: 'text-[18px]',
+  lg: 'text-[20px]',
 };
 
 const subheadingVariant = cva('text-[var(--subhead-fg-primary)]', {
@@ -17,13 +18,14 @@ const subheadingVariant = cva('text-[var(--subhead-fg-primary)]', {
       xs: 'text-[12px]',
       sm: 'text-[12px]',
       md: 'text-[14px]',
+      lg: 'text-[14px]',
     },
   },
   defaultVariants: {
     size: 'md',
   },
 });
-const headingVariant = cva('text-[var(--subhead-fg-primary)]', {
+const headingVariant = cva('text-[var(--subhead-fg-primary)] font-semibold', {
   variants: {
     size: Size,
   },

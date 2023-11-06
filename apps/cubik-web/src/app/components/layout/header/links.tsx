@@ -2,56 +2,46 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Box, HStack, useMediaQuery } from '@chakra-ui/react';
+
+import { cn } from '@cubik/ui/lib/utils';
 
 const Links = () => {
-  const [isDesktop] = useMediaQuery('(min-width: 768px)');
-
   const path = usePathname();
 
   const isActiveRoute = (route: string): boolean => {
     return path === route;
   };
 
-  return isDesktop ? (
-    <HStack
-      gap={{ base: '28px', lg: '32px' }}
-      alignItems={'center'}
-      justifyContent={'flex-start'}
-      // mx="auto"
-    >
-      <Link href="/projects">
-        <Box
-          as="p"
-          textStyle={'title4'}
-          color={isActiveRoute('/projects') ? 'neutral.11' : 'neutral.8'}
-          cursor={'pointer'}
+  return (
+    <>
+      <div className="hidden items-center justify-start gap-6 lg:flex">
+        <Link
+          className={cn(isActiveRoute('/projects') ? 'text-[var(--white)] font-bold text-[16px] leading-6' : 'text-[var(--color-neutral-300)] font-medium text-[16px] leading-6')}
+          href="/projects"
         >
           Projects
-        </Box>
-      </Link>
-      <Link href="/grants">
-        <Box
-          as="p"
-          textStyle={'title4'}
-          color={isActiveRoute('/grants') ? 'neutral.11' : 'neutral.8'}
-          cursor={'pointer'}
+        </Link>
+        <Link
+          className={cn(isActiveRoute('/grants') ? 'text-[var(--white)] font-bold text-[16px] leading-6' : 'text-[var(--color-neutral-300)] font-medium text-[16px] leading-6')}
+          href="/grants"
         >
           Grants
-        </Box>
-      </Link>
-      <Link href="/hackathons">
-        <Box
-          as="p"
-          textStyle={'title4'}
-          color={isActiveRoute('/hackathons') ? 'neutral.11' : 'neutral.8'}
-          cursor={'pointer'}
+        </Link>
+        <Link
+          className={cn(isActiveRoute('/communities') ? 'text-[var(--white)] font-bold text-[16px] leading-6' : 'text-[var(--color-neutral-300)] font-medium text-[16px] leading-6')}
+          href="/communities"
         >
-          Hackathons
-        </Box>
-      </Link>
-    </HStack>
-  ) : null;
+          Communities
+        </Link>
+        <Link
+          className={cn(isActiveRoute('/lLeaderboard') ? 'text-[var(--white)] font-bold text-[16px] leading-6' : 'text-[var(--color-neutral-300)] font-medium text-[16px] leading-6')}
+          href="/leaderboard"
+        >
+          Leaderboard
+        </Link>
+      </div>
+    </>
+  );
 };
 
 export default Links;

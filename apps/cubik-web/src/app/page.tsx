@@ -1,16 +1,8 @@
-// import LandingPage from "@/app/components/landing-page/landingPage";
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
 import { prisma } from '@cubik/database';
-
-import { Explorer } from './components/explorer-page/Explorer';
-
-// import { createAdmin } from "@/utils/contract";
-// import { connection } from "@/utils/contract/sdk";
-// import { Button } from "@chakra-ui/react";
-// import { web3 } from "@coral-xyz/anchor";
-// import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
-// import { useAnchorWallet } from "@solana/wallet-adapter-react";
+import { Icon, ProjectCard, SaveButton, SubHead } from '@cubik/ui';
 
 export const metadata: Metadata = {
   title: 'Cubik',
@@ -25,8 +17,7 @@ export const metadata: Metadata = {
     images: ['/demonicirfan/image/upload/v1692786112/OG-Grant_23_tbhrsg.png'],
   },
 };
-
-export default async function Home() {
+const getProjects = async () => {
   const projects = await prisma.project.findMany({
     select: {
       id: true,
@@ -34,31 +25,58 @@ export default async function Home() {
       logo: true,
       shortDescription: true,
     },
-    take: 10,
+    take: 30,
   });
+  return projects;
+};
+export default async function Home() {
+  const projects = await getProjects();
   return (
     <>
-      {/* <Button
-        mt={"10rem"}
-        onClick={async () => {
-          const ix = await createAdmin(anchorWallet as NodeWallet);
-          const tx = new web3.Transaction();
-          tx.add(ix);
-          const { blockhash } = await connection.getLatestBlockhash();
-          tx.recentBlockhash = blockhash;
-          tx.feePayer = anchorWallet?.publicKey;
-          const signTx = await anchorWallet?.signTransaction(tx);
-          if (!signTx) return;
-          const serialized_transaction = signTx.serialize();
-          const sig = await connection.sendRawTransaction(
-            serialized_transaction
-          );
-          console.log(sig);
-        }}
-      >
-        Admin
-      </Button> */}
-      <Explorer projects={projects} />
+      <div className="mt-20 flex min-h-screen w-full flex-col items-center  lg:flex-row 2xl:mx-auto 2xl:max-w-7xl">
+        <div className="h-full w-full lg:w-2/3">
+          <div className="px-6 pt-10 lg:px-20">
+            <SubHead
+              heading="Projects"
+              size="lg"
+              leftElement={
+                <Icon
+                  name="filter"
+                  className="stroke-[var(--color-neutral-500)]"
+                />
+              }
+            />
+          </div>
+          <div className="flex flex-col lg:px-14">
+            {projects.map((project) => {
+              return (
+                <ProjectCard
+                  Button={<SaveButton />}
+                  description={project.shortDescription}
+                  name={project.name}
+                  logo={project.logo}
+                  key={project.id}
+                />
+              );
+            })}
+          </div>
+        </div>
+        <div className="block h-full w-full border-l border-[var(--color-bg-tertiary)] px-4 py-3 lg:fixed lg:right-0 lg:top-24 lg:w-1/3 lg:px-10 lg:py-8 xl:px-20 2xl:block ">
+          <SubHead
+            heading="Collection"
+            size="lg"
+            icon={<Icon name="grid" className="fill-none stroke-white" />}
+            leftElement={
+              <Link
+                href={'/'}
+                className="text-[12px] font-medium leading-4 text-blue-500"
+              >
+                View More
+              </Link>
+            }
+          />
+        </div>
+      </div>
     </>
   );
 }

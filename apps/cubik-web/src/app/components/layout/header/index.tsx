@@ -40,39 +40,22 @@ const Header = () => {
   }, []);
   return (
     <>
-      <main>
-        <Container
-          w="100vw"
-          zIndex="10"
-          maxW={'full'}
-          position="fixed"
-          top="0px"
-          left="0px"
-          minH="3.6rem"
-          p="0"
-          bg="transparent"
-          sx={{
-            backdropFilter: 'blur(18px)',
-            margin: '0px !important',
-            marginTop: '0px !important',
-          }}
-        >
-          <Flex
-            mx="auto"
-            p={{ base: '14px 12px', sm: '16px 24px', md: '20px 20px' }}
-            maxW="7xl"
-            alignItems={'center'}
-            justifyContent={'space-between'}
-            gap={'24px'}
-          >
-            <HStack flexGrow="1" gap={{ base: '28px', lg: '42px' }}>
-              <Logo />
-              <Links />
-            </HStack>
-            <WalletConnect />
-          </Flex>
-        </Container>
-      </main>
+      <div
+        style={{
+          backdropFilter: 'blur(18px)',
+          margin: '0px !important',
+          marginTop: '0px !important',
+        }}
+        className="fixed left-0 top-0 z-10  min-h-[3.6rem] w-screen max-w-full border-b border-[var(--color-bg-tertiary)] bg-transparent  py-6"
+      >
+        <div className="mx-auto flex w-full max-w-5xl items-center justify-between lg:max-w-6xl xl:max-w-screen-2xl">
+          <div className='flex items-center justify-start gap-10'>
+            <Logo/>
+            <Links/>
+          </div>
+          <WalletConnect />
+        </div>
+      </div>
     </>
   );
 };

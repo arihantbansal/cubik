@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/app/context/user';
 import type { AuthCheckReturn } from '@/types/auth';
-import { Button, Center, Spinner, useDisclosure } from '@/utils/chakra';
+import {  Spinner, useDisclosure } from '@/utils/chakra';
+import {Button} from "@cubik/ui"
 import { handleLogout } from '@/utils/helpers/auth';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
@@ -92,22 +93,14 @@ export const WalletConnect = () => {
 
   if (!connected && !publicKey && !user) {
     return (
-      <Center
-        h={{ base: '2rem', md: '2.6rem' }}
-        justifyContent="flex-end"
-        alignItems="end"
-        w="max"
-        zIndex="99"
-      >
+      
         <Button
-          onClick={() => setVisible(true)}
-          variant="cubikFilled"
-          size={{ base: 'cubikMini', md: 'cubikSmall' }}
-          className="bg-white"
+        variant='primary'
+      sizeVariant='md'
+        onClick={() => setVisible(true)}
         >
           Login
         </Button>
-      </Center>
     );
   }
   if (connected && publicKey && !user && isLoading) {

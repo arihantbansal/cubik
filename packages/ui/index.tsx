@@ -1,3 +1,4 @@
+'use client';
 export * from './components/ui/text';
 export * from './components/ui/Tabs/tabs';
 export * from './components/ui/table';
@@ -16,7 +17,7 @@ export * from './components/ui/Checkbox';
 export * from './components/ui/Toast';
 export * from './components/ui/ToggleSwitch';
 export * from './components/ui/heading';
-export * from './components/ui/project-card';
+export * from './components/ui/ProjectCard';
 export * from './components/ui/image-upload';
 export * from './components/ui/Modal';
 export * from './components/ui/Drawer';

@@ -1,8 +1,4 @@
-
 import { withAxiom } from "next-axiom";
-
-
-
 
 
 
@@ -10,10 +6,10 @@ import { withAxiom } from "next-axiom";
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
-  transpilePackages: ["@cubik/ui"],
+  transpilePackages: ['@cubik/ui'],
   reactStrictMode: true,
   images: {
-    domains: ["imagedelivery.net"],
+    domains: ['imagedelivery.net', 'pbs.twimg.com'],
   },
 };
 
