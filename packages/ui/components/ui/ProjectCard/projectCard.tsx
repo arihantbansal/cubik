@@ -33,11 +33,11 @@ export const SaveButton = (props: ButtonProps) => {
       <div className="flex items-center justify-center gap-2">
         <Icon
           name="bookmark"
-          width={18}
-          height={18}
+          width={16}
+          height={16}
           className="fill-none stroke-white"
         />
-        <span className={cn('text-base', 'lg:text-lg')}>Save</span>
+        <span className={cn('text-xs', 'lg:text-sm')}>Save</span>
       </div>
     </Button>
   );
