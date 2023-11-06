@@ -5,8 +5,8 @@ import { cn, handleMediaQuery } from '../../../lib/utils';
 
 const Variant = {
   primary: cn(
-    'focus:bg-[var(--button-primary-surface-focused)] focus:border-2 focus:border-[var(--button-primary-border-focused)]',
-    'bg-[var(--button-primary-surface-default)] text-[var(--button-primary-text-default)] focus:border',
+    'focus:bg-[var(--button-primary-surface-focused)] focus:border-2  focus:text-[var(--button-primary-text-focused)] focus:border-[var(--button-primary-border-focused)]',
+    'bg-[var(--button-primary-surface-default)] text-[var(--button-primary-text-default)] focus:border ',
     'hover:bg-[var(--button-primary-surface-hovered)] hover:text-[var(--button-primary-text-hovered)]',
     'disabled:bg-[var(--button-primary-surface-disabled)]',
   ),

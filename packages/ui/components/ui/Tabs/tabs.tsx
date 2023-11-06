@@ -21,11 +21,11 @@ const tabVariants = cva(
   {
     variants: {
       size: {
-        xxs: 'text-xs leading-3 pb-[0.375rem] mr-2',
-        xs: 'text-sm leading-4 pb-[0.375rem] mr-3',
-        sm: 'text-base leading-5 pb-2 mr-4',
-        md: 'text-lg leading-6 pb-4 mr-5',
-        lg: 'text-xl leading-7 pb-4 mr-8',
+        xxs: 'text-xs leading-3 pb-[0.375rem]',
+        xs: 'text-sm leading-4 pb-[0.375rem]',
+        sm: 'text-base leading-5 pb-2',
+        md: 'text-lg leading-6 pb-4',
+        lg: 'text-xl leading-7 pb-4',
       },
     },
     defaultVariants: {

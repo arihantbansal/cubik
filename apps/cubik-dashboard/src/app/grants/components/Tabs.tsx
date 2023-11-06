@@ -2,40 +2,38 @@
 
 import React from 'react';
 
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from '@cubik/ui';
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@cubik/ui';
 
-// import { MultisigSection } from './sections/multisig-section/Multisigs';
-// import { RegistrationsSection } from './sections/registration-section/Registrations';
+import { MultisigSection } from './sections/multisig-section/Multisigs';
+import { RegistrationsSection } from './sections/registration-section/Registrations';
 
 export const TabsSection = () => {
   return (
     <div className="mx-auto w-full  text-white">
-      {/* <Tabs defaultValue="details" className="">
-        <TabsList className="w-full  overflow-x-auto whitespace-nowrap bg-neutral-800 ">
-          <div className="mx-auto w-full max-w-7xl">
-            <TabsTrigger value="details">Details</TabsTrigger>
-            <TabsTrigger value="registrations">Registrations</TabsTrigger>
-            <TabsTrigger value="multisigs">Multisigs</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
+      <Tabs size="sm" defaultValue="details">
+        <TabList className="w-full  overflow-x-auto whitespace-nowrap bg-neutral-800">
+          <div className="mx-auto flex w-full  max-w-7xl justify-start gap-4">
+            <Tab value="details">Details</Tab>
+            <Tab value="registrations">Registrations</Tab>
+            <Tab value="multi">Multi</Tab>
+            <Tab value="analytics">Analytics</Tab>
+            <Tab value="settings">Settings</Tab>
           </div>
-        </TabsList>
-        <div className="mx-auto w-full max-w-7xl">
-          <TabsContent value="details">
+        </TabList>
+        <TabPanels className="mx-auto w-full max-w-7xl">
+          <TabPanel value="details">
             Make changes to your account here.
-          </TabsContent>
-          <TabsContent value="registrations">
+          </TabPanel>
+          <TabPanel value="registrations">
             <RegistrationsSection />
-          </TabsContent>
-          <TabsContent value="multisigs">
+          </TabPanel>
+          <TabPanel value="multi">
             <MultisigSection />
-          </TabsContent>
-          <TabsContent value="analytics">
-            Change your password here.
-          </TabsContent>
-          <TabsContent value="settings">Change your password here.</TabsContent>
-        </div>
-      </Tabs> */}
+          </TabPanel>
+          <TabPanel value="analytics">Change your password here.</TabPanel>
+          <TabPanel value="settings">Change your password here.</TabPanel>
+        </TabPanels>
+      </Tabs>
     </div>
   );
 };
