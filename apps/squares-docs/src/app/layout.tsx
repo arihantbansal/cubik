@@ -35,13 +35,14 @@ export default function RootLayout({
       <body className={`${inter.className}`}>
         <ClientCookiesProvider value={cookies().getAll()}>
           <ThemeProvider>
-            <Background />
-            <Header />
-            <AxiomWebVitals />
-            <div className="z-0 flex w-full flex-row bg-[var(--color-bg-secondary)] ">
-              <Toaster />
-              <Sidebar />
-              {children}
+            <div className="min-h-screen">
+              <Header />
+              <AxiomWebVitals />
+              <div className="z-0 mt-14 flex w-full flex-row bg-[var(--color-bg-secondary)] md:mt-0 ">
+                <Toaster />
+                <Sidebar />
+                {children}
+              </div>
             </div>
           </ThemeProvider>
         </ClientCookiesProvider>
