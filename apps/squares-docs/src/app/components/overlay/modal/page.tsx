@@ -22,11 +22,7 @@ const Page = () => {
           <div className="border-[var(--color-border-primary) overflow-hidden rounded-[8px] border bg-[var(--white)] px-6 py-4">
             <CodeComponent codeString='import { Modal } from "@cubik/ui"' />
           </div>
-          <Button
-            variant="secondary"
-            sizeVariant="md"
-            onClick={() => setOpen(true)}
-          >
+          <Button variant="secondary" size="md" onClick={() => setOpen(true)}>
             Test Button
           </Button>
           <Modal dialogSize="md" onClose={() => setOpen(false)} open={open}>

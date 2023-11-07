@@ -26,62 +26,62 @@ const ButtonPage = () => {
         </div>
         <div className="flex justify-center gap-20">
           <div className="flex w-fit flex-col justify-start gap-10">
-            <Button sizeVariant="xs" variant="primary">
+            <Button size="xs" variant="primary">
               Hello World
             </Button>
-            <Button sizeVariant="xs" variant="secondary">
+            <Button size="xs" variant="secondary">
               Hello World
             </Button>
-            <Button sizeVariant="xs" variant="outline">
+            <Button size="xs" variant="outline">
               Hello World
             </Button>
-            <Button sizeVariant="xs" variant="link">
+            <Button size="xs" variant="link">
               Hello World
             </Button>
-            <Button sizeVariant="xs" variant="danger">
+            <Button size="xs" variant="danger">
               Hello World
             </Button>
-            <Button sizeVariant="xs" variant="success">
-              Hello World
-            </Button>
-          </div>
-          <div className="flex w-fit flex-col justify-start gap-10">
-            <Button sizeVariant="sm" variant="primary">
-              Hello World
-            </Button>
-            <Button sizeVariant="sm" variant="secondary">
-              Hello World
-            </Button>
-            <Button sizeVariant="sm" variant="outline">
-              Hello World
-            </Button>
-            <Button sizeVariant="sm" variant="link">
-              Hello World
-            </Button>
-            <Button sizeVariant="sm" variant="danger">
-              Hello World
-            </Button>
-            <Button sizeVariant="sm" variant="success">
+            <Button size="xs" variant="success">
               Hello World
             </Button>
           </div>
           <div className="flex w-fit flex-col justify-start gap-10">
-            <Button sizeVariant="md" variant="primary">
+            <Button size="sm" variant="primary">
               Hello World
             </Button>
-            <Button sizeVariant="md" variant="secondary">
+            <Button size="sm" variant="secondary">
               Hello World
             </Button>
-            <Button sizeVariant="md" variant="outline">
+            <Button size="sm" variant="outline">
               Hello World
             </Button>
-            <Button sizeVariant="md" variant="link">
+            <Button size="sm" variant="link">
               Hello World
             </Button>
-            <Button sizeVariant="md" variant="danger">
+            <Button size="sm" variant="danger">
               Hello World
             </Button>
-            <Button sizeVariant="md" variant="success">
+            <Button size="sm" variant="success">
+              Hello World
+            </Button>
+          </div>
+          <div className="flex w-fit flex-col justify-start gap-10">
+            <Button size="md" variant="primary">
+              Hello World
+            </Button>
+            <Button size="md" variant="secondary">
+              Hello World
+            </Button>
+            <Button size="md" variant="outline">
+              Hello World
+            </Button>
+            <Button size="md" variant="link">
+              Hello World
+            </Button>
+            <Button size="md" variant="danger">
+              Hello World
+            </Button>
+            <Button size="md" variant="success">
               Hello World
             </Button>
           </div>

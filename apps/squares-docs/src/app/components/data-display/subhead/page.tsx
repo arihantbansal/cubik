@@ -51,7 +51,7 @@ const SubHeadPage = () => {
               </svg>
             }
             leftElement={
-              <Button sizeVariant="sm" variant="danger">
+              <Button size="sm" variant="danger">
                 Hello world
               </Button>
             }

@@ -21,7 +21,7 @@ const MultisigCard = () => {
         <h3 className="text-lg font-semibold">Cubik Multisig</h3>
         <div>
           <Button
-            sizeVariant="sm"
+            size="sm"
             variant={'outline'}
             className="underline underline-offset-4"
           >

@@ -27,7 +27,7 @@ export const SaveButton = (props: ButtonProps) => {
         border: '2px solid rgba(138, 138, 138, 0.25)',
       }}
       variant="tertiary"
-      sizeVariant={'md'}
+      size={'md'}
       {...props}
     >
       <div className="flex items-center justify-center gap-2">

@@ -94,11 +94,7 @@ export const WalletConnect = () => {
 
   if (!connected && !publicKey && !user) {
     return (
-      <Button
-        variant="primary"
-        sizeVariant="md"
-        onClick={() => setVisible(true)}
-      >
+      <Button variant="primary" size="md" onClick={() => setVisible(true)}>
         Login
       </Button>
     );
