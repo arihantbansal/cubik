@@ -1,7 +1,5 @@
-import {
-  data,
-  Variable,
-} from '../../../../packages/helper-scripts/src/color/data';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { data, Variable } from './data';
 
 type NestedObject = {
   [key: string]: NestedObject | string | ColorItem;

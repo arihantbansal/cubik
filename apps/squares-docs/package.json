@@ -20,7 +20,8 @@
     "react-dom": "^18",
     "react-hook-form": "^7.43.7",
     "react-syntax-highlighter": "^15.5.0",
-    "sonner": "^1.0.3"
+    "sonner": "^1.0.3",
+    "@cubik/helper-scripts": "workspace:*"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.5",

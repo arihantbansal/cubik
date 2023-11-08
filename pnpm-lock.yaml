@@ -563,6 +563,9 @@ importers:
       '@cubik/config':
         specifier: workspace:*
         version: link:../../packages/config
+      '@cubik/helper-scripts':
+        specifier: workspace:*
+        version: link:../../packages/helper-scripts
       '@cubik/presets':
         specifier: workspace:*
         version: link:../../packages/presets

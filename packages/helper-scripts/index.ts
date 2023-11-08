@@ -1,9 +1,4 @@
-import { config } from 'dotenv';
-
-import { generateSlug } from './src/data-move/generate_slug';
-
-console.log('Helper Script Started');
-
-config();
-
-generateSlug();
+export * from './src/color/serializeSemantic';
+export * from './src/color/generateCSS';
+export * from './src/color/primitive';
+export * from './src/color/data';

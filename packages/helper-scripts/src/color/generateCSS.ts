@@ -1,6 +1,12 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 import { data } from './data';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function convertStringToPrimitive(s: string) {
   const result = s
@@ -25,13 +31,53 @@ function convertToCSS(styles: { [key: string]: string }): string {
   css += '}';
   return css;
 }
-export const generateSemantic = () => {
-  const semanticDump = data.collections.find(
-    (e) => e.name === 'Semantic ( Colors )',
+export const createComponentNames = () => {
+  const componentColorDump = data.collections2.find(
+    (e) => e.name === 'Component ( Colors )',
   );
 
-  const lightColors = semanticDump?.modes.find((e) => e.name == 'Light');
-  const darkColors = semanticDump?.modes.find((e) => e.name == 'Dark');
+  let finalData = {};
+  componentColorDump?.modes[0].variables.forEach((e) => {
+    if (typeof e.value !== 'string') {
+      finalData = {
+        ['--' + e.name.split('/')[e.name.split('/').length - 1]]: `var(${
+          '--' +
+          e.value.name
+            .split('/')
+            [e.value.name.split('/').length - 1].toLowerCase()
+        })`,
+        ...finalData,
+      };
+    } else {
+      //   if (e.name.split("/").length > 3) {
+      //     finalData = {
+      //       [e.name]: "--" + e.value.split("/")[4],
+      //       ...finalData,
+      //     };
+      //   } else if (e.name.split("/").length === 3) {
+      //     finalData = {
+      //       [e.name]: "--" + e.value.split("/")[2],
+      //       ...finalData,
+      //     };
+      //   }
+      console.log(e.value);
+    }
+  });
+  fs.writeFileSync(
+    __dirname.replace('/helper-scripts/src/color', '') +
+      '/presets/styles/component.style.css',
+    convertToCSS(finalData),
+  );
+};
+export const generateSemantic = () => {
+  // const semanticDump = data.collections.find(
+  //   (e) => e.name === 'Semantic ( Colors )',
+  // );
+
+  const newSemanticDump = data.collections2.find((e) => e.modes.length > 1);
+
+  const lightColors = newSemanticDump?.modes.find((e) => e.name == 'Light');
+  const darkColors = newSemanticDump?.modes.find((e) => e.name == 'Dark');
   let finalLight = {};
   let finalDark = {};
   darkColors?.variables.forEach((e) => {
@@ -80,11 +126,13 @@ export const generateSemantic = () => {
   });
 
   fs.writeFileSync(
-    '/Users/dhruvraj/Documents/cubik/frontend/cubik/packages/presets/styles/lightColor.style.css',
+    __dirname.replace('/helper-scripts/src/color', '') +
+      '/presets/styles/lightColor.style.css',
     convertToCSS(finalLight),
   );
   fs.writeFileSync(
-    '/Users/dhruvraj/Documents/cubik/frontend/cubik/packages/presets/styles/darkColors.styles.css',
+    __dirname.replace('/helper-scripts/src/color', '') +
+      '/presets/styles/darkColors.styles.css',
     convertToCSS(finalDark),
   );
 };
