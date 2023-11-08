@@ -757,6 +757,15 @@ importers:
         specifier: ^5.1.3
         version: 5.1.3
 
+  packages/dayjs:
+    dependencies:
+      dayjs:
+        specifier: 1.11.2
+        version: 1.11.2
+      dayjs-business-days2:
+        specifier: 1.1.0
+        version: 1.1.0
+
   packages/email-templates:
     dependencies:
       '@types/react':
@@ -11238,6 +11247,16 @@ packages:
     engines: {node: '>=0.11'}
     dependencies:
       '@babel/runtime': 7.22.6
+    dev: false
+
+  /dayjs-business-days2@1.1.0:
+    resolution: {integrity: sha512-/7FuR6vBKD2Jgbz3XdmboIR0H0IEZ5B/17uCISV26fH5GC7EPreJTdl0ALzhKDaqfhc2DQFC4kqpkU/6Es0noA==}
+    dependencies:
+      dayjs: 1.11.9
+    dev: false
+
+  /dayjs@1.11.2:
+    resolution: {integrity: sha512-F4LXf1OeU9hrSYRPTTj/6FbO4HTjPKXvEIC1P2kcnFurViINCVk3ZV0xAS3XVx9MkMsXbbqlK6hjseaYbgKEHw==}
     dev: false
 
   /dayjs@1.11.9:

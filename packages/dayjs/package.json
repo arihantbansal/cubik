@@ -1,0 +1,9 @@
+{
+  "name": "@cubik/dayjs",
+  "description": "Day.js shared library",
+  "version": "1.0.0",
+  "main": "./index.ts",
+  "dependencies": {
+    "dayjs": "1.11.2"
+  }
+}
