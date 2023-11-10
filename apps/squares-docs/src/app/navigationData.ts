@@ -165,6 +165,12 @@ const navigationData: INavigationData[] = [
             link: '/components/data-display/subhead',
             description: '',
           },
+          {
+            id: 215,
+            name: 'Text',
+            link: '/components/data-display/text',
+            description: '',
+          },
         ],
       },
       {

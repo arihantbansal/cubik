@@ -1,5 +1,5 @@
 'use client';
-export * from './components/ui/text';
+export * from './components/ui/text/text';
 export * from './components/ui/Tabs/tabs';
 export * from './components/ui/table';
 export * from './components/ui/accordion';

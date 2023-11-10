@@ -1,4 +1,4 @@
-
+@import './text.style.css';
 
 :root {
   --color-neutral-25: #f7f7f7;
@@ -106,4 +106,5 @@
   --color-white: #ffffff;
   --black: #000000;
   --color-black: #000000;
+  /* --weight-xs: 700; */
 }
