@@ -83,9 +83,10 @@ export const generateSemantic = () => {
   darkColors?.variables.forEach((e) => {
     if (typeof e.value !== 'string') {
       finalDark = {
-        ['--' + e.name.split('/')[2]]: `var(${convertStringToPrimitive(
-          e.value.name,
-        )})`,
+        ['--' +
+        e.name.split('/')[
+          e.name.split('/').length - 1
+        ]]: `var(${convertStringToPrimitive(e.value.name)})`,
         ...finalDark,
       };
     } else {
@@ -105,9 +106,10 @@ export const generateSemantic = () => {
   lightColors?.variables.forEach((e) => {
     if (typeof e.value !== 'string') {
       finalLight = {
-        ['--' + e.name.split('/')[2]]: `var(${convertStringToPrimitive(
-          e.value.name,
-        )})`,
+        ['--' +
+        e.name.split('/')[
+          e.name.split('/').length - 1
+        ]]: `var(${convertStringToPrimitive(e.value.name)})`,
         ...finalLight,
       };
     } else {
@@ -121,18 +123,18 @@ export const generateSemantic = () => {
           ['--' + e.name.split('/')[2]]: e.value,
           ...finalLight,
         };
+      } else {
       }
     }
   });
-
-  fs.writeFileSync(
-    __dirname.replace('/helper-scripts/src/color', '') +
-      '/presets/styles/lightColor.style.css',
-    convertToCSS(finalLight),
-  );
-  fs.writeFileSync(
-    __dirname.replace('/helper-scripts/src/color', '') +
-      '/presets/styles/darkColors.styles.css',
-    convertToCSS(finalDark),
-  );
+  // fs.writeFileSync(
+  //   __dirname.replace('/helper-scripts/src/color', '') +
+  //     '/presets/styles/lightColor.style.css',
+  //   convertToCSS(finalLight),
+  // );
+  // fs.writeFileSync(
+  //   __dirname.replace('/helper-scripts/src/color', '') +
+  //     '/presets/styles/darkColors.styles.css',
+  //   convertToCSS(finalDark),
+  // );
 };
